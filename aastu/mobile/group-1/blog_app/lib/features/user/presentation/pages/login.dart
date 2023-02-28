@@ -1,6 +1,6 @@
+import 'package:blog_app/features/onboarding/widgets/signUp_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:blog_app/features/onboarding/widgets/login_widget.dart';
-import 'package:blog_app/features/onboarding/widgets/SignUp_widget.dart';
 
 class Login extends StatefulWidget {
   const Login({Key? key}) : super(key: key);
