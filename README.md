@@ -15,8 +15,8 @@ Link [code-review-guideline](link-here)
 Folder [on-boarding/task-4](folder-link-here)
 
 ## Task 5 - Circular Counter
-Folder [on-boarding/circular_counter](https://github.com/gemechis-elias/2023-project-phase-mobile-tasks/tree/main/on-boarding/circular_counter)
-Screenshots:
+Folder [on-boarding/circular_counter](https://github.com/gemechis-elias/2023-project-phase-mobile-tasks/tree/main/on-boarding/circular_counter) </br>
+Screenshots:</br>
 <img src="https://github.com/gemechis-elias/2023-project-phase-mobile-tasks/blob/main/on-boarding/add_task/screenshot/image1.jpg" alt="Image 1" width="250">
 <img src="https://github.com/gemechis-elias/2023-project-phase-mobile-tasks/blob/main/on-boarding/add_task/screenshot/image2.jpg" alt="Image 2" width="250">
 
