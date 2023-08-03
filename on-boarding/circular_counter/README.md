@@ -9,4 +9,7 @@ This repository contains a Flutter application that implements a circular counte
 
 Click on the thumbnail below to watch the video demo:
 
-[![Video](screenshot/image.jpg)](screenshot/video.mp4)
+<a href="screenshot/video.mp4">
+  <img src="screenshot/image.jpg" alt="Video" width="300">
+</a>
+

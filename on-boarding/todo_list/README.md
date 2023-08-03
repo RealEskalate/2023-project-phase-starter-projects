@@ -6,4 +6,4 @@ This repository contains a Flutter application that implements a Todo List App U
 
 ## Screenshot Demo
 
-<img src="screenshot/image.jpg" alt="Mobile App Screenshot" width="300" height="600">
+<img src="screenshot/image.jpg" alt="Mobile App Screenshot" width="300" >
