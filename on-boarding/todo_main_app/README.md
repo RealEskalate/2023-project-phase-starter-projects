@@ -4,10 +4,13 @@ A TODO List App for A2SV 2023 Project Phase Learning Track
 
 ## Screenshot Demo
 
-<img src="screenshot/image1.jpg" alt="Mobile App Screenshot" width="180" >
-<img src="screenshot/image2.jpg" alt="Mobile App Screenshot" width="180"  >
-<img src="screenshot/image3.jpg" alt="Mobile App Screenshot" width="180"  >
-<img src="screenshot/image4.jpg" alt="Mobile App Screenshot" width="180"  >
+<div style="display: flex; flex-direction: row;">
+  <img src="screenshot/image1.jpg" alt="Mobile App Screenshot" width="180" />
+  <img src="screenshot/image2.jpg" alt="Mobile App Screenshot" width="180" />
+  <img src="screenshot/image3.jpg" alt="Mobile App Screenshot" width="180" />
+  <img src="screenshot/image4.jpg" alt="Mobile App Screenshot" width="180" />
+</div>
+
 
 
 ## Folder Stracture
