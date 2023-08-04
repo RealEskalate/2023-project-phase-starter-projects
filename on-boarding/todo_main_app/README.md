@@ -4,16 +4,19 @@ A TODO List App for A2SV 2023 Project Phase Learning Track
 
 ## Screenshot Demo
 
-<img src="screenshot/image1.jpg" alt="Mobile App Screenshot" width="230" >
-<img src="screenshot/image2.jpg" alt="Mobile App Screenshot" width="230"  >
+<img src="screenshot/image1.jpg" alt="Mobile App Screenshot" width="180" >
+<img src="screenshot/image2.jpg" alt="Mobile App Screenshot" width="180"  >
+<img src="screenshot/image3.jpg" alt="Mobile App Screenshot" width="180"  >
+<img src="screenshot/image4.jpg" alt="Mobile App Screenshot" width="180"  >
+
 
 ## Folder Stracture
 
 - lib/core  -- utilities and tools
 - lib/feature  -- design and Ui pages
-    - add_task 
-    - home_screen
-    - task_detail
+    - /add_task 
+    - /home_screen
+    - /task_detail
 - main.dart  --  main starter file
 
 ## Updates
@@ -27,11 +30,28 @@ A TODO List App for A2SV 2023 Project Phase Learning Track
         '/home': (context) => const HomePage(),
         '/taskDetail': (context) => const TaskDetail(title: ""),
       },
+
+- Handling Navigation Events:
+  ```dart
+  leading: IconButton(
+          icon: const Icon(Icons.arrow_back_ios),
+          onPressed: () {
+            // Navigate back to the home screen when the button is pressed
+            Navigator.popUntil(context, ModalRoute.withName('/home'));
+          },
+        ),
+
 - Implemented Passing data in Navigation:
   ```dart
-  onTap: () {
-              const TaskDetail(title: 'UI/UX App Design');
+   onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => const TaskDetail(title: "UI/UX App Design"),
+                ),
+              );
             },
+
 - Implemented Animation between Navigation:
     ```dart
     class CustomPageRoute<T> extends PageRouteBuilder<T> {

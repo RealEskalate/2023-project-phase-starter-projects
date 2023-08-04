@@ -52,7 +52,13 @@ class HomePageState extends State<HomePage> {
           ),
           GestureDetector(
             onTap: () {
-              const TaskDetail(title: 'UI/UX App Design');
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) =>
+                      const TaskDetail(title: "UI/UX App Design"),
+                ),
+              );
             },
             child: Card(
               surfaceTintColor: Colors.white,
@@ -124,7 +130,13 @@ class HomePageState extends State<HomePage> {
           ),
           GestureDetector(
             onTap: () {
-              const TaskDetail(title: 'UI/UX App Design');
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) =>
+                      const TaskDetail(title: "View Candidates"),
+                ),
+              );
             },
             child: Card(
               surfaceTintColor: Colors.white,

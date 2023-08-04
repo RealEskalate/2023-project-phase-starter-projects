@@ -66,7 +66,7 @@ class _TaskDetailState extends State<TaskDetail> {
                       color: Color.fromARGB(255, 255, 248, 250), width: 1),
                   borderRadius: BorderRadius.circular(8),
                 ),
-                hintText: 'Enter Title',
+                hintText: widget.title,
               ),
               style: const TextStyle(
                 fontSize: 17,

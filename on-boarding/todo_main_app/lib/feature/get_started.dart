@@ -62,7 +62,7 @@ class CustomPageRoute<T> extends PageRouteBuilder<T> {
 
   CustomPageRoute({required this.page})
       : super(
-          transitionDuration: const Duration(milliseconds: 500),
+          transitionDuration: const Duration(milliseconds: 1000),
           pageBuilder: (context, animation, secondaryAnimation) => page,
           transitionsBuilder: (context, animation, secondaryAnimation, child) {
             var begin = const Offset(1.0, 0.0);
