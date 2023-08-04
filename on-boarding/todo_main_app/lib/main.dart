@@ -20,12 +20,11 @@ class MyApp extends StatelessWidget {
             seedColor: Colors.white, secondary: const Color(0xffEE6F57)),
         useMaterial3: true,
       ),
-      home: const HomePage(), // Remove const
+      home: const GetStartedRoute(), // Remove const
       routes: {
-        // '/getStarted': (context) => const GetStartedRoute(), // Remove const
-        '/addTask': (context) => const AddTask(), // Remove const
-        '/home': (context) => const HomePage(), // Remove const
-        '/taskDetail': (context) => const TaskDetail(), // Remove const
+        '/addTask': (context) => const AddTask(),
+        '/home': (context) => const HomePage(),
+        '/taskDetail': (context) => const TaskDetail(title: ""),
       },
     );
   }

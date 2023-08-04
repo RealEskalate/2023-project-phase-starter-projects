@@ -1,16 +1,57 @@
-# todo_main_app
+# TODO APP
 
-A new Flutter project.
+A TODO List App for A2SV 2023 Project Phase Learning Track
 
-## Getting Started
+## Screenshot Demo
 
-This project is a starting point for a Flutter application.
+<img src="screenshot/image1.jpg" alt="Mobile App Screenshot" width="230" >
+<img src="screenshot/image2.jpg" alt="Mobile App Screenshot" width="230"  >
 
-A few resources to get you started if this is your first Flutter project:
+## Folder Stracture
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+- lib/core  -- utilities and tools
+- lib/feature  -- design and Ui pages
+    - add_task 
+    - home_screen
+    - task_detail
+- main.dart  --  main starter file
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+## Updates
+
+### Aug 4, 2023
+
+- Implemented Named Navigation:
+  ```dart
+   routes: {
+        '/addTask': (context) => const AddTask(),
+        '/home': (context) => const HomePage(),
+        '/taskDetail': (context) => const TaskDetail(title: ""),
+      },
+- Implemented Passing data in Navigation:
+  ```dart
+  onTap: () {
+              const TaskDetail(title: 'UI/UX App Design');
+            },
+- Implemented Animation between Navigation:
+    ```dart
+    class CustomPageRoute<T> extends PageRouteBuilder<T> {
+    final Widget page;
+
+    CustomPageRoute({required this.page})
+        : super(
+            transitionDuration: const Duration(milliseconds: 500),
+            pageBuilder: (context, animation, secondaryAnimation) => page,
+            transitionsBuilder: (context, animation, secondaryAnimation, child) {
+            var begin = const Offset(1.0, 0.0);
+            var end = Offset.zero;
+
+            var tween = Tween(begin: begin, end: end);
+            var offsetAnimation = animation.drive(tween);
+            return SlideTransition(
+                position: offsetAnimation,
+                child: child,
+            );
+            },
+        );
+    }
+

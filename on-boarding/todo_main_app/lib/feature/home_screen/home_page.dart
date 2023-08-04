@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:todo_main_app/feature/task_detail/task_detail.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -49,136 +50,146 @@ class HomePageState extends State<HomePage> {
           Container(
             height: 10,
           ),
-          Card(
-            surfaceTintColor: Colors.white,
-            color: Colors.white,
-            elevation: 4,
-            shadowColor: const Color.fromRGBO(149, 157, 165, 0.2),
-            margin: const EdgeInsets.only(left: 10, right: 10),
-            child: Padding(
-              padding: const EdgeInsets.symmetric(vertical: 10),
-              child: Row(
-                children: <Widget>[
-                  Container(
-                    margin: const EdgeInsets.only(left: 20, right: 20),
-                    child: const Text(
-                      'U',
-                      style: TextStyle(
-                        fontSize: 25,
-                        fontWeight: FontWeight.bold,
+          GestureDetector(
+            onTap: () {
+              const TaskDetail(title: 'UI/UX App Design');
+            },
+            child: Card(
+              surfaceTintColor: Colors.white,
+              color: Colors.white,
+              elevation: 4,
+              shadowColor: const Color.fromRGBO(149, 157, 165, 0.2),
+              margin: const EdgeInsets.only(left: 10, right: 10),
+              child: Padding(
+                padding: const EdgeInsets.symmetric(vertical: 10),
+                child: Row(
+                  children: <Widget>[
+                    Container(
+                      margin: const EdgeInsets.only(left: 20, right: 20),
+                      child: const Text(
+                        'U',
+                        style: TextStyle(
+                          fontSize: 25,
+                          fontWeight: FontWeight.bold,
+                        ),
                       ),
                     ),
-                  ),
-                  const SizedBox(
-                      width:
-                          10), // Use SizedBox instead of Container for spacing
-                  const Expanded(
-                    // Use Expanded to take remaining space in the row
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: <Widget>[
-                        Text(
-                          'UI/UX App Design',
-                          style: TextStyle(
-                            fontSize: 16,
-                            fontWeight: FontWeight.bold,
+                    const SizedBox(
+                        width:
+                            10), // Use SizedBox instead of Container for spacing
+                    const Expanded(
+                      // Use Expanded to take remaining space in the row
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: <Widget>[
+                          Text(
+                            'UI/UX App Design',
+                            style: TextStyle(
+                              fontSize: 16,
+                              fontWeight: FontWeight.bold,
+                            ),
                           ),
+                        ],
+                      ),
+                    ),
+                    const Spacer(),
+                    Container(
+                      margin: const EdgeInsets.only(right: 5, bottom: 20),
+                      child: const Text(
+                        'Aug 3, 2023',
+                        style: TextStyle(
+                          fontSize: 15,
+                        ),
+                      ),
+                    ),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.end,
+                      children: <Widget>[
+                        Container(
+                          margin: const EdgeInsets.only(right: 3),
+                          width: 2,
+                          height: 50,
+                          color: const Color(0xffEE6F57),
                         ),
                       ],
                     ),
-                  ),
-                  const Spacer(),
-                  Container(
-                    margin: const EdgeInsets.only(right: 5, bottom: 20),
-                    child: const Text(
-                      'Aug 3, 2023',
-                      style: TextStyle(
-                        fontSize: 15,
-                      ),
-                    ),
-                  ),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.end,
-                    children: <Widget>[
-                      Container(
-                        margin: const EdgeInsets.only(right: 3),
-                        width: 2,
-                        height: 50,
-                        color: const Color(0xffEE6F57),
-                      ),
-                    ],
-                  ),
-                  const SizedBox(width: 10),
-                ],
+                    const SizedBox(width: 10),
+                  ],
+                ),
               ),
             ),
           ),
           Container(
             height: 10,
           ),
-          Card(
-            surfaceTintColor: Colors.white,
-            color: Colors.white,
-            elevation: 4,
-            shadowColor: const Color.fromRGBO(149, 157, 165, 0.2),
-            margin: const EdgeInsets.only(left: 10, right: 10),
-            child: Padding(
-              padding: const EdgeInsets.symmetric(vertical: 10),
-              child: Row(
-                children: <Widget>[
-                  Container(
-                    margin: const EdgeInsets.only(left: 20, right: 20),
-                    child: const Text(
-                      'U',
-                      style: TextStyle(
-                        fontSize: 25,
-                        fontWeight: FontWeight.bold,
+          GestureDetector(
+            onTap: () {
+              const TaskDetail(title: 'UI/UX App Design');
+            },
+            child: Card(
+              surfaceTintColor: Colors.white,
+              color: Colors.white,
+              elevation: 4,
+              shadowColor: const Color.fromRGBO(149, 157, 165, 0.2),
+              margin: const EdgeInsets.only(left: 10, right: 10),
+              child: Padding(
+                padding: const EdgeInsets.symmetric(vertical: 10),
+                child: Row(
+                  children: <Widget>[
+                    Container(
+                      margin: const EdgeInsets.only(left: 20, right: 20),
+                      child: const Text(
+                        'U',
+                        style: TextStyle(
+                          fontSize: 25,
+                          fontWeight: FontWeight.bold,
+                        ),
                       ),
                     ),
-                  ),
-                  const SizedBox(
-                      width:
-                          10), // Use SizedBox instead of Container for spacing
-                  const Expanded(
-                    // Use Expanded to take remaining space in the row
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: <Widget>[
-                        Text(
-                          'UI/UX App Design',
-                          style: TextStyle(
-                            fontSize: 16,
-                            fontWeight: FontWeight.bold,
+                    const SizedBox(
+                        width:
+                            10), // Use SizedBox instead of Container for spacing
+                    const Expanded(
+                      // Use Expanded to take remaining space in the row
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: <Widget>[
+                          Text(
+                            'UI/UX App Design',
+                            style: TextStyle(
+                              fontSize: 16,
+                              fontWeight: FontWeight.bold,
+                            ),
                           ),
+                        ],
+                      ),
+                    ),
+                    const Spacer(),
+                    Container(
+                      margin: const EdgeInsets.only(right: 5, bottom: 20),
+                      child: const Text(
+                        'Aug 3, 2023',
+                        style: TextStyle(
+                          fontSize: 15,
+                        ),
+                      ),
+                    ),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.end,
+                      children: <Widget>[
+                        Container(
+                          margin: const EdgeInsets.only(right: 3),
+                          width: 2,
+                          height: 50,
+                          color: const Color.fromARGB(255, 12, 196, 27),
                         ),
                       ],
                     ),
-                  ),
-                  const Spacer(),
-                  Container(
-                    margin: const EdgeInsets.only(right: 5, bottom: 20),
-                    child: const Text(
-                      'Aug 3, 2023',
-                      style: TextStyle(
-                        fontSize: 15,
-                      ),
-                    ),
-                  ),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.end,
-                    children: <Widget>[
-                      Container(
-                        margin: const EdgeInsets.only(right: 3),
-                        width: 2,
-                        height: 50,
-                        color: const Color.fromARGB(255, 12, 196, 27),
-                      ),
-                    ],
-                  ),
-                  const SizedBox(
-                      width:
-                          10), // Add some spacing to the right of the last widget
-                ],
+                    const SizedBox(
+                        width:
+                            10), // Add some spacing to the right of the last widget
+                  ],
+                ),
               ),
             ),
           ),

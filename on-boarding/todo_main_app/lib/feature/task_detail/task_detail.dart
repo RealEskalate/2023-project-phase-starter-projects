@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 
 class TaskDetail extends StatefulWidget {
-  const TaskDetail({Key? key}) : super(key: key);
+  final String title; // Add a field to receive the title
+  const TaskDetail({Key? key, required this.title}) : super(key: key);
 
   @override
   State<TaskDetail> createState() => _TaskDetailState();
