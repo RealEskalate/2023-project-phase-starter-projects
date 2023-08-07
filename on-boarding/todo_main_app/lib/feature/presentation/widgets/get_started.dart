@@ -1,4 +1,4 @@
-import 'package:todo_main_app/feature/home_screen/home_page.dart';
+import 'package:todo_main_app/feature/presentation/widgets/home_page.dart';
 import 'package:flutter/material.dart';
 
 class GetStartedRoute extends StatefulWidget {

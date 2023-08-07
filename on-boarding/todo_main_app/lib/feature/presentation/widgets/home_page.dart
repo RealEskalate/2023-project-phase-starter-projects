@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:todo_main_app/feature/task_detail/task_detail.dart';
+import 'package:todo_main_app/feature/presentation/widgets/task_detail.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
