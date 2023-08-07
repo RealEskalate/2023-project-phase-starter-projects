@@ -1,7 +1,7 @@
-import 'package:todo_main_app/feature/add_task/add_task.dart';
-import 'package:todo_main_app/feature/home_screen/home_page.dart';
-import 'package:todo_main_app/feature/task_detail/task_detail.dart';
-import 'package:todo_main_app/feature/get_started.dart';
+import 'package:todo_main_app/feature/presentation/widgets/add_task.dart';
+import 'package:todo_main_app/feature/presentation/widgets/home_page.dart';
+import 'package:todo_main_app/feature/presentation/widgets/task_detail.dart';
+import 'package:todo_main_app/feature/presentation/widgets/get_started.dart';
 import 'package:flutter/material.dart';
 
 void main() {

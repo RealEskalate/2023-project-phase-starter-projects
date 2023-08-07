@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 
 class TaskDetail extends StatefulWidget {
-  final String title; // Add a field to receive the title
+  // Add a field to receive the title
   const TaskDetail({Key? key, required this.title}) : super(key: key);
+  final String title;
 
   @override
   State<TaskDetail> createState() => _TaskDetailState();
@@ -28,7 +29,7 @@ class _TaskDetailState extends State<TaskDetail> {
         ],
         centerTitle: true,
       ),
-      body: Column(
+      body: ListView(
         children: <Widget>[
           // add image from asset
           Image.asset(
