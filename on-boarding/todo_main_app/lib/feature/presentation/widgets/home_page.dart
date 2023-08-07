@@ -26,7 +26,7 @@ class HomePageState extends State<HomePage> {
         ],
         centerTitle: true,
       ),
-      body: Column(
+      body: ListView(
         children: <Widget>[
           // add image from asset
           Image.asset(
@@ -55,8 +55,10 @@ class HomePageState extends State<HomePage> {
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) =>
-                      const TaskDetail(title: "UI/UX App Design"),
+                  builder: (context) => const TaskDetail(
+                      title: "Todo App UI Design",
+                      description:
+                          "Design a UI/UX for a mobile app. This discrition is passed from the home page."),
                 ),
               );
             },
@@ -89,7 +91,7 @@ class HomePageState extends State<HomePage> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: <Widget>[
                           Text(
-                            'UI/UX App Design',
+                            'Todo App UI Design',
                             style: TextStyle(
                               fontSize: 16,
                               fontWeight: FontWeight.bold,
@@ -133,8 +135,9 @@ class HomePageState extends State<HomePage> {
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) =>
-                      const TaskDetail(title: "View Candidates"),
+                  builder: (context) => const TaskDetail(
+                      title: "UI/UX App Design",
+                      description: "Design a UI/UX for a mobile app."),
                 ),
               );
             },
@@ -208,69 +211,81 @@ class HomePageState extends State<HomePage> {
           Container(
             height: 10,
           ),
-          Card(
-            surfaceTintColor: Colors.white,
-            color: Colors.white,
-            elevation: 4,
-            shadowColor: const Color.fromRGBO(149, 157, 165, 0.2),
-            margin: const EdgeInsets.only(left: 10, right: 10),
-            child: Padding(
-              padding: const EdgeInsets.symmetric(vertical: 10),
-              child: Row(
-                children: <Widget>[
-                  Container(
-                    margin: const EdgeInsets.only(left: 20, right: 20),
-                    child: const Text(
-                      'V',
-                      style: TextStyle(
-                        fontSize: 25,
-                        fontWeight: FontWeight.bold,
+          GestureDetector(
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => const TaskDetail(
+                      title: "View Candidates",
+                      description: "View candidates for the new project."),
+                ),
+              );
+            },
+            child: Card(
+              surfaceTintColor: Colors.white,
+              color: Colors.white,
+              elevation: 4,
+              shadowColor: const Color.fromRGBO(149, 157, 165, 0.2),
+              margin: const EdgeInsets.only(left: 10, right: 10),
+              child: Padding(
+                padding: const EdgeInsets.symmetric(vertical: 10),
+                child: Row(
+                  children: <Widget>[
+                    Container(
+                      margin: const EdgeInsets.only(left: 20, right: 20),
+                      child: const Text(
+                        'V',
+                        style: TextStyle(
+                          fontSize: 25,
+                          fontWeight: FontWeight.bold,
+                        ),
                       ),
                     ),
-                  ),
-                  const SizedBox(
-                      width:
-                          10), // Use SizedBox instead of Container for spacing
-                  const Expanded(
-                    // Use Expanded to take remaining space in the row
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: <Widget>[
-                        Text(
-                          'View Candidates',
-                          style: TextStyle(
-                            fontSize: 16,
-                            fontWeight: FontWeight.bold,
+                    const SizedBox(
+                        width:
+                            10), // Use SizedBox instead of Container for spacing
+                    const Expanded(
+                      // Use Expanded to take remaining space in the row
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: <Widget>[
+                          Text(
+                            'View Candidates',
+                            style: TextStyle(
+                              fontSize: 16,
+                              fontWeight: FontWeight.bold,
+                            ),
                           ),
+                        ],
+                      ),
+                    ),
+                    const Spacer(),
+                    Container(
+                      margin: const EdgeInsets.only(right: 5, bottom: 20),
+                      child: const Text(
+                        'Aug 3, 2023',
+                        style: TextStyle(
+                          fontSize: 15,
+                        ),
+                      ),
+                    ),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.end,
+                      children: <Widget>[
+                        Container(
+                          margin: const EdgeInsets.only(right: 3),
+                          width: 2,
+                          height: 50,
+                          color: const Color.fromARGB(255, 238, 185, 10),
                         ),
                       ],
                     ),
-                  ),
-                  const Spacer(),
-                  Container(
-                    margin: const EdgeInsets.only(right: 5, bottom: 20),
-                    child: const Text(
-                      'Aug 3, 2023',
-                      style: TextStyle(
-                        fontSize: 15,
-                      ),
-                    ),
-                  ),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.end,
-                    children: <Widget>[
-                      Container(
-                        margin: const EdgeInsets.only(right: 3),
-                        width: 2,
-                        height: 50,
-                        color: const Color.fromARGB(255, 238, 185, 10),
-                      ),
-                    ],
-                  ),
-                  const SizedBox(
-                      width:
-                          10), // Add some spacing to the right of the last widget
-                ],
+                    const SizedBox(
+                        width:
+                            10), // Add some spacing to the right of the last widget
+                  ],
+                ),
               ),
             ),
           ),

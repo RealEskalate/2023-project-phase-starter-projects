@@ -1,7 +1,7 @@
 import 'package:todo_main_app/feature/presentation/widgets/add_task.dart';
 import 'package:todo_main_app/feature/presentation/widgets/home_page.dart';
 import 'package:todo_main_app/feature/presentation/widgets/task_detail.dart';
-import 'package:todo_main_app/feature/presentation/widgets/get_started.dart';
+import 'package:todo_main_app/feature/presentation/widgets/on_boarding.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -24,7 +24,8 @@ class MyApp extends StatelessWidget {
       routes: {
         '/addTask': (context) => const AddTask(),
         '/home': (context) => const HomePage(),
-        '/taskDetail': (context) => const TaskDetail(title: ""),
+        '/taskDetail': (context) =>
+            const TaskDetail(title: "", description: ""),
       },
     );
   }

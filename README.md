@@ -27,3 +27,6 @@ Folder -  Task Detail [on-boarding/add_task](https://github.com/gemechis-elias/2
 ## Task 7 - Navigation and Routing 
 Folder - Todo List [on-boarding/todo_main_app](https://github.com/gemechis-elias/2023-project-phase-mobile-tasks/tree/main/on-boarding/todo_main_app) </br>
 
+## Task 7 - Widget Testing 
+Folder - Todo List [on-boarding/todo_main_app](https://github.com/gemechis-elias/2023-project-phase-mobile-tasks/tree/main/on-boarding/todo_main_app) </br>
+

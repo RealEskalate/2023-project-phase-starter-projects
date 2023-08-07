@@ -21,9 +21,9 @@ class GetStartedRouteState extends State<GetStartedRoute> {
               'assets/images/getstarted.jpg',
               height: 400,
             ),
-            const SizedBox(height: 40),
+            const SizedBox(height: 100),
             Container(
-              margin: const EdgeInsets.only(left: 25, right: 25),
+              margin: const EdgeInsets.only(left: 25, right: 25, top: 30),
               child: ElevatedButton(
                 onPressed: () {
                   // Navigate to Home Screen with custom animation
@@ -36,7 +36,7 @@ class GetStartedRouteState extends State<GetStartedRoute> {
                   backgroundColor: const Color.fromARGB(255, 124, 122, 223),
                   minimumSize: const Size(150, 50),
                   shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(0),
+                    borderRadius: BorderRadius.circular(5),
                   ),
                 ),
                 child: const Text(
@@ -62,7 +62,7 @@ class CustomPageRoute<T> extends PageRouteBuilder<T> {
 
   CustomPageRoute({required this.page})
       : super(
-          transitionDuration: const Duration(milliseconds: 1000),
+          transitionDuration: const Duration(milliseconds: 500),
           pageBuilder: (context, animation, secondaryAnimation) => page,
           transitionsBuilder: (context, animation, secondaryAnimation, child) {
             var begin = const Offset(1.0, 0.0);

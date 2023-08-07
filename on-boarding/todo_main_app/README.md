@@ -14,31 +14,75 @@ A TODO List App for A2SV 2023 Project Phase Learning Track
 
 
 ## Folder Stracture
-
+I'm using Flutter Clean Architecture and Bloc State Management 
 - lib/core  -- utilities and tools
 - lib/feature  -- design and Ui pages
-    - /add_task 
-    - /home_screen
-    - /task_detail
-- main.dart  --  main starter file
+    - /bloc 
+    - /pages
+    - /widgets
+- main.dart  --  app starter file
 
 ## Updates
 
 ### Aug 7, 2023
 
-- Widget Testing IMplementation:
-  ```dart
-  testWidgets('TaskDetail widget displays title correctly', (tester) async {
-    const String testTitle = 'Test Title'; // Define the test title
+- Widget Testing SetUp Implementation:
+  ```yaml
+  dev_dependencies:
+  flutter_test:
+    sdk: flutter
 
+- Widget Test Task Creation:
+  ```dart
+  testWidgets('AddTask widget does not add task with empty name',
+      (tester) async {
     await tester.pumpWidget(
       const MaterialApp(
-        home: TaskDetail(title: testTitle),
+        home: AddTask(),
       ),
     );
 
-    final titleFinder = find.text(testTitle);
-    expect(titleFinder, findsOneWidget);
+    final textFieldFinder = find.byKey(const Key('task_name_field'));
+    final textField = tester.widget<TextField>(textFieldFinder);
+
+    expect(textField.controller!.text.isEmpty, isTrue);
+  });
+
+- Widget Test Task Listing :
+  ```dart
+  testWidgets('AddTask widget displays UI elements correctly', (tester) async {
+    await tester.pumpWidget(
+      const MaterialApp(
+        home: AddTask(),
+      ),
+    );
+
+    // Test various UI elements' presence
+    expect(find.text('Create New Task'), findsOneWidget);
+    expect(find.text('Main Task Name'), findsOneWidget);
+    expect(find.text('Due Date'), findsOneWidget);
+    expect(find.text('Description'), findsOneWidget);
+    expect(find.byType(TextField),
+        findsNWidgets(2)); // Task name and Description fields
+    expect(find.byType(ElevatedButton), findsOneWidget);
+  });
+
+- Widget Test Onboarding Page Navigation:
+  ```dart
+  testWidgets('Tapping Get Started navigates to the main page', (tester) async {
+    await tester.pumpWidget(
+      const MaterialApp(
+        home: GetStartedRoute(),
+      ),
+    );
+
+    // Find the Get Started button and tap it
+    final getStartedButton = find.text('Get Started');
+    await tester.tap(getStartedButton);
+    await tester.pumpAndSettle();
+
+    // Verify that the main To-Do list page is displayed
+    expect(find.byType(HomePage), findsOneWidget);
   });
 
 ### Aug 4, 2023

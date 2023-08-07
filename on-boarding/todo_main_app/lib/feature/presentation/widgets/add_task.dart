@@ -1,5 +1,6 @@
-import 'package:todo_main_app/feature/presentation/widgets/get_started.dart';
+import 'package:intl/intl.dart';
 import 'package:flutter/material.dart';
+import 'package:todo_main_app/feature/presentation/widgets/home_page.dart';
 
 class AddTask extends StatefulWidget {
   const AddTask({Key? key}) : super(key: key);
@@ -9,6 +10,23 @@ class AddTask extends StatefulWidget {
 }
 
 class _AddTaskState extends State<AddTask> {
+  TextEditingController taskNameController = TextEditingController();
+  DateTime selectedDate = DateTime.now();
+
+  Future<void> _selectDate(BuildContext context) async {
+    final DateTime? picked = await showDatePicker(
+      context: context,
+      initialDate: selectedDate,
+      firstDate: DateTime(2000),
+      lastDate: DateTime(2101),
+    );
+    if (picked != null && picked != selectedDate) {
+      setState(() {
+        selectedDate = picked;
+      });
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -17,8 +35,7 @@ class _AddTaskState extends State<AddTask> {
         leading: IconButton(
           icon: const Icon(Icons.arrow_back_ios),
           onPressed: () {
-            // Navigate back to the home screen when the button is pressed
-            Navigator.popUntil(context, ModalRoute.withName('/home'));
+            Navigator.pop(context);
           },
         ),
         actions: [
@@ -29,13 +46,17 @@ class _AddTaskState extends State<AddTask> {
         ],
         centerTitle: true,
       ),
-      body: Column(
+      body: ListView(
         children: <Widget>[
-          const Text(
-            'Create New Task',
-            style: TextStyle(
-              fontSize: 25,
-              fontWeight: FontWeight.bold,
+          // centered container
+          Container(
+            alignment: Alignment.center,
+            child: const Text(
+              'Create New Task',
+              style: TextStyle(
+                fontSize: 25,
+                fontWeight: FontWeight.bold,
+              ),
             ),
           ),
           const Divider(
@@ -61,39 +82,35 @@ class _AddTaskState extends State<AddTask> {
           Container(
             height: 8,
           ),
-          const Card(
-            surfaceTintColor: Colors.white,
-            color: Colors.white,
-            elevation: 4,
-            shadowColor: Color.fromRGBO(149, 157, 165, 0.2),
-            margin: EdgeInsets.only(left: 10, right: 10),
-            child: Padding(
-              padding: EdgeInsets.symmetric(vertical: 20, horizontal: 20),
-              child: Row(
-                children: <Widget>[
-                  // Use SizedBox instead of Container for spacing
-                  Expanded(
-                    // Use Expanded to take remaining space in the row
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: <Widget>[
-                        Text(
-                          'UI/UX App Design',
-                          style: TextStyle(
-                            fontSize: 16,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ],
+          Container(
+            margin: const EdgeInsets.only(left: 20, right: 20),
+            child: TextField(
+              controller: taskNameController,
+              key: const Key('task_name_field'),
+              decoration: InputDecoration(
+                filled: true,
+                fillColor: const Color.fromARGB(255, 255, 255, 255),
+                border: OutlineInputBorder(
+                  borderSide: BorderSide.none,
+                  borderRadius: BorderRadius.circular(8),
+                ),
+                focusedBorder: OutlineInputBorder(
+                  borderSide: const BorderSide(
+                      color: Color.fromARGB(255, 255, 248, 250), width: 1),
+                  borderRadius: BorderRadius.circular(8),
+                ),
+                hintText: "Enter Task Name",
+              ),
+              style: const TextStyle(
+                fontSize: 17,
               ),
             ),
           ),
+
           Container(
             height: 10,
           ),
+
           Container(
             margin: const EdgeInsets.only(left: 20),
             alignment: Alignment.centerLeft,
@@ -106,38 +123,38 @@ class _AddTaskState extends State<AddTask> {
               ),
             ),
           ),
+
           Container(
             height: 8,
           ),
-          const Card(
+
+          Card(
             surfaceTintColor: Colors.white,
-            color: Colors.white,
             elevation: 4,
-            shadowColor: Color.fromRGBO(149, 157, 165, 0.2),
-            margin: EdgeInsets.only(left: 10, right: 10),
+            shadowColor: const Color.fromRGBO(149, 157, 165, 0.2),
+            margin: const EdgeInsets.symmetric(horizontal: 10),
             child: Padding(
-              padding: EdgeInsets.symmetric(vertical: 20, horizontal: 20),
+              padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 20),
               child: Row(
                 children: <Widget>[
                   Expanded(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: <Widget>[
-                        Text(
-                          'April, 20 2023 12:30 PM',
-                          style: TextStyle(
-                            fontSize: 16,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                      ],
+                    child: Text(
+                      DateFormat('MMM d, yyyy').format(selectedDate),
+                      style: const TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
                   ),
-                  // Add the date selector icon here
-                  Icon(
-                    Icons.date_range,
-                    size: 24,
-                    color: Color.fromRGBO(238, 111, 87, 1),
+                  // Date selector icon
+                  GestureDetector(
+                    onTap: () => _selectDate(context),
+                    child: const Icon(
+                      key: Key('date_picker_icon'),
+                      Icons.date_range,
+                      size: 24,
+                      color: Color.fromRGBO(238, 111, 87, 1),
+                    ),
                   ),
                 ],
               ),
@@ -161,33 +178,26 @@ class _AddTaskState extends State<AddTask> {
           Container(
             height: 8,
           ),
-          const Card(
-            surfaceTintColor: Colors.white,
-            color: Colors.white,
-            elevation: 4,
-            shadowColor: Color.fromRGBO(149, 157, 165, 0.2),
-            margin: EdgeInsets.only(left: 10, right: 10),
-            child: Padding(
-              padding: EdgeInsets.symmetric(vertical: 20, horizontal: 20),
-              child: Row(
-                children: <Widget>[
-                  // Use SizedBox instead of Container for spacing
-                  Expanded(
-                    // Use Expanded to take remaining space in the row
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: <Widget>[
-                        Text(
-                          'First I have to animate the logo and later prototyping my design. is is very important to make the design user friendly.',
-                          style: TextStyle(
-                            fontSize: 15,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ],
+          Container(
+            margin: const EdgeInsets.only(left: 20, right: 20),
+            child: TextField(
+              maxLines: 4,
+              decoration: InputDecoration(
+                filled: true,
+                fillColor: const Color.fromARGB(255, 255, 255, 255),
+                border: OutlineInputBorder(
+                  borderSide: BorderSide.none,
+                  borderRadius: BorderRadius.circular(8),
+                ),
+                focusedBorder: OutlineInputBorder(
+                  borderSide: const BorderSide(
+                      color: Color.fromARGB(255, 255, 248, 250), width: 1),
+                  borderRadius: BorderRadius.circular(8),
+                ),
+                hintText: 'Enter Description',
+              ),
+              style: const TextStyle(
+                fontSize: 17,
               ),
             ),
           ),
@@ -197,12 +207,12 @@ class _AddTaskState extends State<AddTask> {
           Container(
             margin: const EdgeInsets.only(left: 25, right: 25),
             child: ElevatedButton(
+              key: const Key('add_task_button'),
               onPressed: () {
-                // navigate to GetStartedRoute
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => const GetStartedRoute(),
+                    builder: (context) => const HomePage(),
                   ),
                 );
               },
@@ -223,5 +233,11 @@ class _AddTaskState extends State<AddTask> {
         ],
       ),
     );
+  }
+
+  @override
+  void dispose() {
+    taskNameController.dispose();
+    super.dispose();
   }
 }

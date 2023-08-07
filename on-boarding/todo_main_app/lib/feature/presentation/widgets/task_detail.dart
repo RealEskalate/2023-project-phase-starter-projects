@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 
 class TaskDetail extends StatefulWidget {
-  // Add a field to receive the title
-  const TaskDetail({Key? key, required this.title}) : super(key: key);
+  const TaskDetail({Key? key, required this.title, required this.description})
+      : super(key: key);
   final String title;
+  final String description;
 
   @override
   State<TaskDetail> createState() => _TaskDetailState();
@@ -17,7 +18,9 @@ class _TaskDetailState extends State<TaskDetail> {
         title: const Text('Task Detail'),
         leading: IconButton(
           icon: const Icon(Icons.arrow_back_ios),
-          onPressed: () {},
+          onPressed: () {
+            Navigator.pop(context);
+          },
         ),
         actions: [
           IconButton(
@@ -31,7 +34,6 @@ class _TaskDetailState extends State<TaskDetail> {
       ),
       body: ListView(
         children: <Widget>[
-          // add image from asset
           Image.asset(
             'assets/images/task_img2.png',
             height: 250,
@@ -107,7 +109,7 @@ class _TaskDetailState extends State<TaskDetail> {
                       color: Color.fromARGB(255, 255, 248, 250), width: 1),
                   borderRadius: BorderRadius.circular(8),
                 ),
-                hintText: 'Enter Description',
+                hintText: widget.description,
               ),
               style: const TextStyle(
                 fontSize: 17,
