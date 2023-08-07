@@ -24,6 +24,23 @@ A TODO List App for A2SV 2023 Project Phase Learning Track
 
 ## Updates
 
+### Aug 7, 2023
+
+- Widget Testing IMplementation:
+  ```dart
+  testWidgets('TaskDetail widget displays title correctly', (tester) async {
+    const String testTitle = 'Test Title'; // Define the test title
+
+    await tester.pumpWidget(
+      const MaterialApp(
+        home: TaskDetail(title: testTitle),
+      ),
+    );
+
+    final titleFinder = find.text(testTitle);
+    expect(titleFinder, findsOneWidget);
+  });
+
 ### Aug 4, 2023
 
 - Implemented Named Navigation:
