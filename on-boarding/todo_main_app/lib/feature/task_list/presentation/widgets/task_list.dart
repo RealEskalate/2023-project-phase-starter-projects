@@ -1,5 +1,4 @@
 import 'dart:developer';
-
 import 'package:flutter/material.dart'; // Make sure to import the correct Task class
 import 'package:todo_main_app/core/usecases/usescases.dart';
 import 'package:todo_main_app/feature/task_list/domain/entities/task_list.dart';
@@ -30,10 +29,19 @@ class TaskListRouteState extends State<TaskListRoute> {
   }
 
   Future<void> loadTasks() async {
-    final tasks = await viewAllTasksUsecase(NoParams());
-    setState(() {
-      sampleTasks = tasks;
-    });
+    final tasksEither = await viewAllTasksUsecase(NoParams());
+
+    tasksEither.fold(
+      (failure) {
+        // Handle failure here (e.g., show an error message)
+        log("Error: ${failure.message}");
+      },
+      (tasks) {
+        setState(() {
+          sampleTasks = tasks.cast<Task>();
+        });
+      },
+    );
   }
 
   @override

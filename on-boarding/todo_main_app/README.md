@@ -110,19 +110,35 @@ I'm using Flutter Clean Architecture and Bloc State Management
       child: const Text(
         'Mark as Completed')
 
-- Clean Architecture and TDD: </br>
-    lib/ </br>
-    |-- ... </br>
-      core/ </br>
-        |-- usecases/ </br>
-      feature/ </br>
-        |-- data/ </br>
-        |   |-- model </br>
-        |-- domain/ </br>
-        |   |-- entities </br>
-        |-- ... </br>
+- Clean Architecture and TDD:
+    - lib/
+    - |-- ...
+      - core/
+        - |-- usecases/
+      - feature/
+        - |-- data/
+        -     |-- model
+        - |-- domain/
+        -     |-- entities
 
 - Error Handling and Either Type:
+  ```dart
+    class ViewAllTasksUsecase
+      implements UseCase<Either<Failure, List<Task>>, NoParams> {
+    final TaskRepository repository;
+
+    ViewAllTasksUsecase(this.repository);
+
+    @override
+    Future<Either<Failure, List<Task>>> call(NoParams params) async {
+      try {
+        final tasks = await repository.getAllTasks();
+        return Right(tasks.cast<Task>());
+      } catch (e) {
+        return Left(Failure("Failed to load tasks")); // Create a Failure object
+      }
+    }
+  }
 
 ### Aug 7, 2023
 
