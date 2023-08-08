@@ -49,7 +49,7 @@ I'm using Flutter Clean Architecture and Bloc State Management
     }
   }
 
-2. ViewTask
+- ViewTask
   ```dart
   class ViewTaskUsecase implements UseCase<Task, int> {
     final TaskRepository repository;
@@ -62,7 +62,7 @@ I'm using Flutter Clean Architecture and Bloc State Management
     }
   }
 
-3. CreateTask
+- CreateTask
   ```dart
   class CreateTaskUsecase implements UseCase<void, Task> {
   final TaskRepository repository;
@@ -73,7 +73,7 @@ I'm using Flutter Clean Architecture and Bloc State Management
   Future<void> call(Task newTask) async {
     await repository.createTask(newTask);
   }
-}
+  }
 
 ### Aug 8, 2023 Task 1
 - Set Due Date Feature:
