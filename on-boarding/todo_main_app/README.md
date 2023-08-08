@@ -9,6 +9,8 @@ A TODO List App for A2SV 2023 Project Phase Learning Track
   <img src="screenshot/image2.jpg" alt="Mobile App Screenshot" width="180" />
   <img src="screenshot/image3.jpg" alt="Mobile App Screenshot" width="180" />
   <img src="screenshot/image4.jpg" alt="Mobile App Screenshot" width="180" />
+  <img src="screenshot/image5.jpg" alt="Mobile App Screenshot" width="180" />
+
 </div>
 
 
@@ -110,7 +112,7 @@ I'm using Flutter Clean Architecture and Bloc State Management
       child: const Text(
         'Mark as Completed')
 
-- Clean Architecture and TDD:
+- Clean Architecture and TDD:</br>
   ✅ I successfully organized my folder structure with Flutter Clean Architecture
 
 - Error Handling and Either Type:
