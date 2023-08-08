@@ -110,17 +110,17 @@ I'm using Flutter Clean Architecture and Bloc State Management
       child: const Text(
         'Mark as Completed')
 
-- Clean Architecture and TDD:
-    lib/
-    |-- ...
-      core/
-        |-- usecases/
-      feature/
-        |-- data/
-        |   |-- model
-        |-- domain/
-        |   |-- entities
-        |-- ...
+- Clean Architecture and TDD: </br>
+    lib/ </br>
+    |-- ... </br>
+      core/ </br>
+        |-- usecases/ </br>
+      feature/ </br>
+        |-- data/ </br>
+        |   |-- model </br>
+        |-- domain/ </br>
+        |   |-- entities </br>
+        |-- ... </br>
 
 - Error Handling and Either Type:
 
