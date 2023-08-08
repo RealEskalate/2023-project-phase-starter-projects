@@ -36,7 +36,7 @@ I'm using Flutter Clean Architecture and Bloc State Management
   // .....
   }
 -  Implement the following use cases using callable classes:
- 1. ViewAllTasks
+- ViewAllTasks
   ```dart
   class ViewAllTasksUsecase implements UseCase<List<Task>, NoParams> {
     final TaskRepository repository;
