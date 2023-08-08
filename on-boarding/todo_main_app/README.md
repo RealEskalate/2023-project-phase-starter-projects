@@ -15,14 +15,13 @@ A TODO List App for A2SV 2023 Project Phase Learning Track
 
 
 
-## Folder Stracture
-I'm using Flutter Clean Architecture and Bloc State Management 
-- lib/core  -- utilities and tools
-- lib/feature  -- design and Ui pages
-    - /bloc 
-    - /pages
-    - /widgets
-- main.dart  --  app starter file
+## Description
+A2SV 2023 project phase Mobile Team,This repository serves as a central hub for tracking the progress of my app development tasks. 
+## Features Added Yet:
+- Task List
+- Adding Task
+- Editing Task
+- Marking Task as Completed 
 
 ## Updates
 

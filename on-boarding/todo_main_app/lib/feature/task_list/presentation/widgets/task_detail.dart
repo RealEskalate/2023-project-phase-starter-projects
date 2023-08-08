@@ -20,38 +20,44 @@ class _TaskDetailState extends State<TaskDetail> {
   DateTime selectedDate = DateTime.now();
   late ViewTaskUsecase viewTaskUsecase;
   late Task task;
-  //  List<Task> tasks = [
-  //   Task(
-  //     id: 0,
-  //     title: 'Todo App UI Design',
-  //     description:
-  //         'Design a UI/UX for mobile app. We can use figma or Adobe for designing the UI.',
-  //     dueDate: DateTime.now(),
-  //     isCompleted: false,
-  //   ),
-  //   Task(
-  //     id: 1,
-  //     title: 'Attending Study Session',
-  //     description: 'Attend the study session at 8:00 PM.',
-  //     dueDate: DateTime.now(),
-  //     isCompleted: false,
-  //   ),
-  //   Task(
-  //     id: 2,
-  //     title: 'View Candidates',
-  //     description:
-  //         'View the candidates for the job opening and then shortlist them.',
-  //     dueDate: DateTime.now(),
-  //     isCompleted: false,
-  //   ),
-  //   Task(
-  //     id: 3,
-  //     title: 'Football Match',
-  //     description: 'Watching the football match at 9:00 PM with friends.',
-  //     dueDate: DateTime.now(),
-  //     isCompleted: true,
-  //   ),
-  // ];
+
+  // Loading Data From Array For Testing
+  List<Task> tasks = [
+    Task(
+      id: 0,
+      title: 'Todo App UI Design',
+      description:
+          'Design a UI/UX for mobile app. We can use figma or Adobe for designing the UI.',
+      dueDate: DateTime.now(),
+      isCompleted: false,
+    ),
+    Task(
+      id: 1,
+      title: 'Attending Study Session',
+      description: 'Attend the study session at 8:00 PM.',
+      dueDate: DateTime.now(),
+      isCompleted: false,
+    ),
+    Task(
+      id: 2,
+      title: 'View Candidates',
+      description:
+          'View the candidates for the job opening and then shortlist them.',
+      dueDate: DateTime.now(),
+      isCompleted: false,
+    ),
+    Task(
+      id: 3,
+      title: 'Football Match',
+      description: 'Watching the football match at 9:00 PM with friends.',
+      dueDate: DateTime.now(),
+      isCompleted: true,
+    ),
+  ];
+  Future<void> fetchTask() async {
+    task = tasks[widget.taskId];
+    setState(() {});
+  }
 
   @override
   void initState() {
@@ -59,11 +65,11 @@ class _TaskDetailState extends State<TaskDetail> {
     fetchTask();
   }
 
-  Future<void> fetchTask() async {
-    final tasks = await widget.viewAllTasksUsecase.call(NoParams());
-    task = tasks.firstWhere((t) => t.id == widget.taskId);
-    setState(() {});
-  }
+  // Future<void> fetchTask() async {
+  //   final tasks = await widget.viewAllTasksUsecase.call(NoParams());
+  //   task = tasks.firstWhere((t) => t.id == widget.taskId);
+  //   setState(() {});
+  // }
 
   Future<void> _selectDate(BuildContext context) async {
     final DateTime? picked = await showDatePicker(
