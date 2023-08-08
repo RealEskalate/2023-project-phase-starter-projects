@@ -1,7 +1,8 @@
-import 'package:todo_main_app/feature/presentation/widgets/add_task.dart';
-import 'package:todo_main_app/feature/presentation/widgets/home_page.dart';
-import 'package:todo_main_app/feature/presentation/widgets/task_detail.dart';
-import 'package:todo_main_app/feature/presentation/widgets/on_boarding.dart';
+import 'package:todo_main_app/feature/task_list/domain/usecases/view_all_tasks_usecase.dart';
+import 'package:todo_main_app/feature/task_list/presentation/widgets/add_task.dart';
+import 'package:todo_main_app/feature/task_list/presentation/widgets/task_list.dart';
+import 'package:todo_main_app/feature/task_list/presentation/widgets/task_detail.dart';
+import 'package:todo_main_app/feature/task_list/presentation/widgets/on_boarding.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -23,9 +24,7 @@ class MyApp extends StatelessWidget {
       home: const GetStartedRoute(), // Remove const
       routes: {
         '/addTask': (context) => const AddTask(),
-        '/home': (context) => const HomePage(),
-        '/taskDetail': (context) =>
-            const TaskDetail(title: "", description: ""),
+        '/home': (context) => const TaskListRoute(),
       },
     );
   }

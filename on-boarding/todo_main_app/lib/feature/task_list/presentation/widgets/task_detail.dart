@@ -1,17 +1,37 @@
-import 'package:intl/intl.dart';
 import 'package:flutter/material.dart';
-import 'package:todo_main_app/feature/presentation/widgets/home_page.dart';
+import 'package:intl/intl.dart';
+import 'package:todo_main_app/core/usecases/usescases.dart';
+import 'package:todo_main_app/feature/task_list/domain/entities/task_list.dart';
+import 'package:todo_main_app/feature/task_list/domain/usecases/view_all_tasks_usecase.dart';
+import 'package:todo_main_app/feature/task_list/domain/usecases/view_task.dart';
 
-class AddTask extends StatefulWidget {
-  const AddTask({Key? key}) : super(key: key);
+class TaskDetail extends StatefulWidget {
+  final ViewAllTasksUsecase viewAllTasksUsecase;
+  final int taskId;
+
+  const TaskDetail(
+      {super.key, required this.taskId, required this.viewAllTasksUsecase});
 
   @override
-  State<AddTask> createState() => _AddTaskState();
+  State<TaskDetail> createState() => _TaskDetailState();
 }
 
-class _AddTaskState extends State<AddTask> {
-  TextEditingController taskNameController = TextEditingController();
+class _TaskDetailState extends State<TaskDetail> {
   DateTime selectedDate = DateTime.now();
+  late ViewTaskUsecase viewTaskUsecase;
+  late Task task;
+
+  @override
+  void initState() {
+    super.initState();
+    fetchTask();
+  }
+
+  Future<void> fetchTask() async {
+    final tasks = await widget.viewAllTasksUsecase.call(NoParams());
+    task = tasks[widget.taskId];
+    setState(() {});
+  }
 
   Future<void> _selectDate(BuildContext context) async {
     final DateTime? picked = await showDatePicker(
@@ -31,7 +51,7 @@ class _AddTaskState extends State<AddTask> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text(''),
+        title: const Text('Task Detail'),
         leading: IconButton(
           icon: const Icon(Icons.arrow_back_ios),
           onPressed: () {
@@ -48,48 +68,32 @@ class _AddTaskState extends State<AddTask> {
       ),
       body: ListView(
         children: <Widget>[
-          // centered container
-          Container(
-            alignment: Alignment.center,
-            child: const Text(
-              'Create New Task',
-              style: TextStyle(
-                fontSize: 25,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-          ),
-          const Divider(
-            color: Color.fromARGB(255, 243, 243, 243),
-            height: 20,
-            thickness: 1,
+          Image.asset(
+            'assets/images/task_img2.png',
+            height: 200,
           ),
           Container(
-            height: 5,
+            height: 10,
           ),
           Container(
             margin: const EdgeInsets.only(left: 20),
             alignment: Alignment.centerLeft,
             child: const Text(
-              'Main Task Name',
+              'Title',
               style: TextStyle(
-                fontSize: 16,
-                color: Color.fromRGBO(238, 111, 87, 1),
-                fontWeight: FontWeight.bold,
+                fontSize: 17,
               ),
             ),
           ),
           Container(
-            height: 8,
+            height: 10,
           ),
           Container(
             margin: const EdgeInsets.only(left: 20, right: 20),
             child: TextField(
-              controller: taskNameController,
-              key: const Key('task_name_field'),
               decoration: InputDecoration(
                 filled: true,
-                fillColor: const Color.fromARGB(255, 255, 255, 255),
+                fillColor: const Color(0xffF1EEEE),
                 border: OutlineInputBorder(
                   borderSide: BorderSide.none,
                   borderRadius: BorderRadius.circular(8),
@@ -99,18 +103,55 @@ class _AddTaskState extends State<AddTask> {
                       color: Color.fromARGB(255, 255, 248, 250), width: 1),
                   borderRadius: BorderRadius.circular(8),
                 ),
-                hintText: "Enter Task Name",
+                hintText: task.title,
               ),
               style: const TextStyle(
                 fontSize: 17,
               ),
             ),
           ),
-
           Container(
             height: 10,
           ),
-
+          Container(
+            margin: const EdgeInsets.only(left: 20),
+            alignment: Alignment.centerLeft,
+            child: const Text(
+              'Description',
+              style: TextStyle(
+                fontSize: 17,
+              ),
+            ),
+          ),
+          Container(
+            height: 10,
+          ),
+          Container(
+            margin: const EdgeInsets.only(left: 20, right: 20),
+            child: TextField(
+              maxLines: 5,
+              decoration: InputDecoration(
+                filled: true,
+                fillColor: const Color(0xffF1EEEE),
+                border: OutlineInputBorder(
+                  borderSide: BorderSide.none,
+                  borderRadius: BorderRadius.circular(8),
+                ),
+                focusedBorder: OutlineInputBorder(
+                  borderSide: const BorderSide(
+                      color: Color.fromARGB(255, 255, 248, 250), width: 1),
+                  borderRadius: BorderRadius.circular(8),
+                ),
+                hintText: task.description,
+              ),
+              style: const TextStyle(
+                fontSize: 17,
+              ),
+            ),
+          ),
+          Container(
+            height: 10,
+          ),
           Container(
             margin: const EdgeInsets.only(left: 20),
             alignment: Alignment.centerLeft,
@@ -123,13 +164,11 @@ class _AddTaskState extends State<AddTask> {
               ),
             ),
           ),
-
           Container(
-            height: 8,
+            height: 5,
           ),
-
           Card(
-            surfaceTintColor: Colors.white,
+            surfaceTintColor: const Color.fromARGB(255, 255, 251, 251),
             elevation: 4,
             shadowColor: const Color.fromRGBO(149, 157, 165, 0.2),
             margin: const EdgeInsets.symmetric(horizontal: 10),
@@ -161,83 +200,37 @@ class _AddTaskState extends State<AddTask> {
             ),
           ),
           Container(
-            height: 10,
-          ),
-          Container(
-            margin: const EdgeInsets.only(left: 20),
-            alignment: Alignment.centerLeft,
-            child: const Text(
-              'Description',
-              style: TextStyle(
-                fontSize: 16,
-                color: Color.fromRGBO(238, 111, 87, 1),
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-          ),
-          Container(
-            height: 8,
+            height: 15,
           ),
           Container(
             margin: const EdgeInsets.only(left: 20, right: 20),
-            child: TextField(
-              maxLines: 4,
-              decoration: InputDecoration(
-                filled: true,
-                fillColor: const Color.fromARGB(255, 255, 255, 255),
-                border: OutlineInputBorder(
-                  borderSide: BorderSide.none,
-                  borderRadius: BorderRadius.circular(8),
-                ),
-                focusedBorder: OutlineInputBorder(
-                  borderSide: const BorderSide(
-                      color: Color.fromARGB(255, 255, 248, 250), width: 1),
-                  borderRadius: BorderRadius.circular(8),
-                ),
-                hintText: 'Enter Description',
-              ),
-              style: const TextStyle(
-                fontSize: 17,
-              ),
-            ),
-          ),
-          Container(
-            height: 30,
-          ),
-          Container(
-            margin: const EdgeInsets.only(left: 25, right: 25),
             child: ElevatedButton(
-              key: const Key('add_task_button'),
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => const HomePage(),
-                  ),
-                );
+              onPressed: () async {
+                await viewTaskUsecase.updateTaskCompletionStatus(task.id, true);
+                Navigator.pop(context); // Navigate back to the previous screen
               },
               style: ElevatedButton.styleFrom(
-                backgroundColor: const Color(0xffEE6F57),
+                backgroundColor: const Color.fromRGBO(238, 111, 87, 1),
                 minimumSize: const Size(150, 50),
                 shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(30),
+                  borderRadius: BorderRadius.circular(5),
                 ),
               ),
-              child: const Text('Add Task',
-                  style: TextStyle(
-                      fontSize: 17,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.white)),
+              child: const Text(
+                'Mark as Completed',
+                style: TextStyle(
+                  fontSize: 17,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.white,
+                ),
+              ),
             ),
+          ),
+          Container(
+            height: 20,
           ),
         ],
       ),
     );
-  }
-
-  @override
-  void dispose() {
-    taskNameController.dispose();
-    super.dispose();
   }
 }

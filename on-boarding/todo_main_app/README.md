@@ -24,6 +24,106 @@ I'm using Flutter Clean Architecture and Bloc State Management
 
 ## Updates
 
+### Aug 8, 2023 Task 2
+- Create an entity class named Task:
+  ```dart
+  class Task extends Equatable {
+  final int id;
+  final String title;
+  final String description;
+  final DateTime dueDate;
+  final bool isCompleted;
+  // .....
+  }
+-  Implement the following use cases using callable classes:
+ 1. ViewAllTasks
+  ```dart
+  class ViewAllTasksUsecase implements UseCase<List<Task>, NoParams> {
+    final TaskRepository repository;
+
+    ViewAllTasksUsecase(this.repository);
+
+    @override
+    Future<List<Task>> call(NoParams params) async {
+      return await repository.getAllTasks();
+    }
+  }
+
+2. ViewTask
+  ```dart
+  class ViewTaskUsecase implements UseCase<Task, int> {
+    final TaskRepository repository;
+
+    ViewTaskUsecase(this.repository);
+
+    @override
+    Future<Task> call(int taskId) async {
+      return await repository.getTaskById(taskId);
+    }
+  }
+
+3. CreateTask
+  ```dart
+  class CreateTaskUsecase implements UseCase<void, Task> {
+  final TaskRepository repository;
+
+  CreateTaskUsecase(this.repository);
+
+  @override
+  Future<void> call(Task newTask) async {
+    await repository.createTask(newTask);
+  }
+}
+
+### Aug 8, 2023 Task 1
+- Set Due Date Feature:
+  ```dart
+  Row(
+    children: <Widget>[
+      Expanded(
+        child: Text(
+          DateFormat('MMM d, yyyy').format(selectedDate),
+          style: const TextStyle(
+            fontSize: 16,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+      ),
+      // Other OnTab implementaion check on file
+    ],
+  ),
+
+- Mark Task as Completed Feature:
+  ```dart
+  ElevatedButton(
+      onPressed: () async {
+        await viewTaskUsecase.updateTaskCompletionStatus(task.id, true);
+        Navigator.pop(context); // Navigate back to the previous screen
+      },
+      style: ElevatedButton.styleFrom(
+        backgroundColor: const Color.fromRGBO(238, 111, 87, 1),
+        minimumSize: const Size(150, 50),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(5),
+        ),
+      ),
+      child: const Text(
+        'Mark as Completed')
+
+- Clean Architecture and TDD:
+    lib/
+    |-- ...
+      core/
+        |-- usecases/
+      feature/
+        |-- data/
+        |   |-- model
+        |-- domain/
+        |   |-- entities
+        |-- ...
+
+- Error Handling and Either Type:
+
 ### Aug 7, 2023
 
 - Widget Testing SetUp Implementation:
