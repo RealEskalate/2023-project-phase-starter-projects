@@ -111,15 +111,16 @@ I'm using Flutter Clean Architecture and Bloc State Management
         'Mark as Completed')
 
 - Clean Architecture and TDD:
-    - lib/
-    - |-- ...
-      - core/
-        - |-- usecases/
-      - feature/
-        - |-- data/
-        -     |-- model
-        - |-- domain/
-        -     |-- entities
+  My Working Folder Strucutre 
+    └── lib
+        ├── core
+        │   └── usecases
+        └── feature
+            ├── data
+            │   └── model
+            └── domain
+                └── entities
+
 
 - Error Handling and Either Type:
   ```dart
