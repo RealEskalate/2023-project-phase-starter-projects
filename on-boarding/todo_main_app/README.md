@@ -1,6 +1,5 @@
-# TODO APP
-
-A TODO List App for A2SV 2023 Project Phase Learning Track
+## Description
+A2SV 2023 project phase Mobile Team,This repository serves as a central hub for tracking the progress of my app development tasks.
 
 ## Screenshot Demo
 
@@ -13,10 +12,7 @@ A TODO List App for A2SV 2023 Project Phase Learning Track
 
 </div>
 
-
-
-## Description
-A2SV 2023 project phase Mobile Team,This repository serves as a central hub for tracking the progress of my app development tasks. 
+ 
 ## Features Added Yet:
 - Task List
 - Adding Task
