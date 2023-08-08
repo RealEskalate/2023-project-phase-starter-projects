@@ -111,16 +111,7 @@ I'm using Flutter Clean Architecture and Bloc State Management
         'Mark as Completed')
 
 - Clean Architecture and TDD:
-  - My Working Folder Structure
-    - lib
-      - core
-        - usecases
-      - feature
-        - data
-          - model
-        - domain
-          - entities
-
+  ✅ I successfully organized my folder structure with Flutter Clean Architecture
 
 - Error Handling and Either Type:
   ```dart
