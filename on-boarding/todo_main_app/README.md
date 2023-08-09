@@ -82,6 +82,9 @@ A2SV 2023 project phase Mobile Team,This repository serves as a central hub for 
 </details>
 
 ### Aug 9, 2023 Task 1
+<details>
+  <summary>Click To Expand </summary>
+
 - Organize the project structure according to Clean Architecture principles: </br>
   ✅ Project Structure is Organized
 
@@ -169,7 +172,12 @@ A2SV 2023 project phase Mobile Team,This repository serves as a central hub for 
 - Test coverage: Comprehensive unit tests, widget tests to ensure correctness, and error-free execution:</br></br>
   <img src="screenshot/test1.png" alt="Test Screenshot" width="700" />
 
+</details>
+
 ### Aug 8, 2023 Task 2
+<details>
+  <summary>Click To Expand </summary>
+
 - Create an entity class named Task:
   ```dart
   class Task extends Equatable {
@@ -220,7 +228,12 @@ A2SV 2023 project phase Mobile Team,This repository serves as a central hub for 
   }
   }
 
+</details>
+
 ### Aug 8, 2023 Task 1
+<details>
+  <summary>Click To Expand </summary>
+
 - Set Due Date Feature:
   ```dart
   Row(
@@ -277,7 +290,11 @@ A2SV 2023 project phase Mobile Team,This repository serves as a central hub for 
     }
   }
 
+</details>
+
 ### Aug 7, 2023
+<details>
+  <summary>Click To Expand </summary>
 
 - Widget Testing SetUp Implementation:
   ```yaml
@@ -338,7 +355,11 @@ A2SV 2023 project phase Mobile Team,This repository serves as a central hub for 
     expect(find.byType(HomePage), findsOneWidget);
   });
 
+</details>
+
 ### Aug 4, 2023
+<details>
+  <summary>Click To Expand </summary>
 
 - Implemented Named Navigation:
   ```dart
@@ -391,6 +412,8 @@ A2SV 2023 project phase Mobile Team,This repository serves as a central hub for 
             },
         );
     }
+
+</details>
 
 ### Folder Structure 
 - Flutter Clean Architect 
