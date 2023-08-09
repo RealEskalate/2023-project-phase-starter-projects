@@ -106,8 +106,8 @@ A2SV 2023 project phase Mobile Team,This repository serves as a central hub for 
     }
   }
 
-- Test coverage: Comprehensive unit tests, widget tests to ensure correctness, and error-free execution:</br>
-  <img src="screenshot/test1.png" alt="Test Screenshot" width="900" />
+- Test coverage: Comprehensive unit tests, widget tests to ensure correctness, and error-free execution:</br></br>
+  <img src="screenshot/test1.png" alt="Test Screenshot" width="700" />
 
 ### Aug 8, 2023 Task 2
 - Create an entity class named Task:
