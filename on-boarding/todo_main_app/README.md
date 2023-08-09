@@ -22,9 +22,6 @@ A2SV 2023 project phase Mobile Team,This repository serves as a central hub for 
 ## Updates
 
 ### Aug 9, 2023 Task 2
-<details>
-  <summary>Click To Expand </summary>
-
 - Implementation of a contract defining repository methods:
   ```dart
   // lib/feature/data/repositories/todo_repository_impl.dart
@@ -79,12 +76,8 @@ A2SV 2023 project phase Mobile Team,This repository serves as a central hub for 
     Future<bool> get isConnected => connectionChecker.hasConnection;
   }
 
-</details>
 
 ### Aug 9, 2023 Task 1
-<details>
-  <summary>Click To Expand </summary>
-
 - Organize the project structure according to Clean Architecture principles: </br>
   ✅ Project Structure is Organized
 
@@ -172,7 +165,6 @@ A2SV 2023 project phase Mobile Team,This repository serves as a central hub for 
 - Test coverage: Comprehensive unit tests, widget tests to ensure correctness, and error-free execution:</br></br>
   <img src="screenshot/test1.png" alt="Test Screenshot" width="700" />
 
-</details>
 
 ### Aug 8, 2023 Task 2
 <details>
