@@ -408,7 +408,7 @@ A2SV 2023 project phase Mobile Team,This repository serves as a central hub for 
 </details>
 
 ### Folder Structure 
-- Flutter Clean Architect 
+- Flutter Clean Architecture  
   ```md
   todo_main_app/
     ├── lib/
