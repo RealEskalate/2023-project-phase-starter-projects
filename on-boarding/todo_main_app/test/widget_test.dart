@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:todo_main_app/feature/todo/domain/repositories/task_repository_impl.dart';
-import 'package:todo_main_app/feature/todo/domain/usecases/view_all_tasks_usecase.dart';
 import 'package:todo_main_app/feature/todo/presentation/widgets/add_task.dart';
 import 'package:todo_main_app/feature/todo/presentation/widgets/task_list.dart';
 import 'package:todo_main_app/feature/todo/presentation/widgets/on_boarding.dart';
@@ -10,12 +8,11 @@ import 'package:todo_main_app/feature/todo/presentation/widgets/task_detail.dart
 void main() {
   testWidgets('TaskDetail widget displays title correctly', (tester) async {
     const String testTitle = 'Test Title'; // Define the test title
-    final TaskRepositoryImpl taskRepository = TaskRepositoryImpl();
     await tester.pumpWidget(
-      MaterialApp(
+      const MaterialApp(
         home: TaskDetail(
-            taskId: 0,
-            viewAllTasksUsecase: ViewAllTasksUsecase(taskRepository)),
+          taskId: 0,
+        ),
       ),
     );
 

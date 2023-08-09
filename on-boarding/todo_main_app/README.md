@@ -21,6 +21,61 @@ A2SV 2023 project phase Mobile Team,This repository serves as a central hub for 
 
 ## Updates
 
+### Aug 9, 2023 Task 2
+- Implementation of a contract defining repository methods:
+  ```dart
+  // lib/feature/data/repositories/todo_repository_impl.dart
+  class TodoRepositoryImpl implements TodoRepository {
+    @override
+    Future<Either<Failure, List<Todo>>> getAllTodos() async {
+      // TODO: Implement getAllTodos
+
+      return const Right([]);
+    }
+
+    Future<List<Todo>> fetchDataFromDataSource() async {
+      // TODO: Implement data retrieval logic here For example, fetch data from a database or an API
+
+      return []; // Replace with actual data
+    }
+  }
+
+- Interfaces or abstract classes for repository dependencies:
+  ```dart
+
+  abstract class TodoRepository {
+    Future<Either<Failure, List<Todo>>> getAllTodos();
+  } 
+
+- Basic structure of the repository:
+  ```dart
+  // lib/feature/data/datasource/todo_remote_data_source.dart
+  class TodoRemoteDataSource implements TodoDataSource {
+
+    @override
+    Future<List<Todo>> getAllTodos() async {
+      // TODO: Replace with actual API calls and data parsing
+      return [];
+    }
+  } 
+  
+- Integration of a 3rd party package for network connectivity:
+  ```dart
+  //  lib/core/platform/newtwork_info.dart
+  import 'package:internet_connection_checker/internet_connection_checker.dart';
+  abstract class NetworkInfo {
+    Future<bool> get isConnected;
+  }
+
+  class NetworkInfoImpl implements NetworkInfo {
+    final InternetConnectionChecker connectionChecker;
+
+    NetworkInfoImpl(this.connectionChecker);
+
+    @override
+    Future<bool> get isConnected => connectionChecker.hasConnection;
+  }
+
 ### Aug 9, 2023 Task 1
 - Organize the project structure according to Clean Architecture principles: </br>
   ✅ Project Structure is Organized
@@ -196,7 +251,7 @@ A2SV 2023 project phase Mobile Team,This repository serves as a central hub for 
         'Mark as Completed')
 
 - Clean Architecture and TDD:</br>
-  ✅ I has successfully organized my folder structure with Flutter Clean Architecture
+  ✅ I had successfully organized my folder structure with Flutter Clean Architecture
 
 - Error Handling and Either Type:
   ```dart
@@ -331,4 +386,47 @@ A2SV 2023 project phase Mobile Team,This repository serves as a central hub for 
             },
         );
     }
+
+### Folder Structure 
+- Flutter Clean Architect 
+  ```md
+  todo_main_app/</br>
+    ├── lib/</br>
+    │   ├── core/</br>
+    │   │   ├── entities/</br>
+    │   │   │   ├── todo.dart</br>
+    │   │   ├── error/
+    │   │   │   ├── failure.dart</br>
+    │   │   ├── repositories/
+    │   │   │   ├── todo_repository.dart</br>
+    │   │   ├── usecases/</br>
+    │   │   │   ├── usescases.dart</br>
+    │   ├── features/</br>
+    │   │   ├── todo/</br>
+    │   │   │   ├── data/</br>
+    │   │   │   │   ├── data_sources/</br>
+    │   │   │   │   │   ├── todo_data_source.dart</br>
+    │   │   │   │   │   ├── todo_remote_data_source.dart</br>
+    │   │   │   │   │   ├── todo_local_data_source.dart </br>
+    │   │   │   │   ├── models/</br>
+    │   │   │   │   │   ├── todo_model.dart</br>
+    │   │   │   ├── domain/</br>
+    │   │   │   │   ├── repositories/</br>
+    │   │   │   │   │   ├── todo_repository_contract.dart</br>
+    │   │   │   │   ├── usecases/</br>
+    │   │   │   │   │   ├── get_todos_usecase.dart</br>
+    ├── test/</br>
+    │   ├── core/</br>
+    │   │   ├── repositories/</br>
+    │   │   │   ├── todo_repository_test.dart</br>
+    │   │   ├── usecases/</br>
+    │   │   │   ├── get_todos_usecase_test.dart</br>
+    │   ├── features/</br>
+    │   │   ├── todo/</br>
+    │   │   │   ├── data/</br>
+    │   │   │   │   ├── data_sources/</br>
+    │   │   │   │   │   ├── todo_remote_data_source_test.dart</br>
+    │   │   │   │   │   ├── todo_local_data_source_test.dart </br>
+    │   │   │   │   ├── models/</br>
+    │   │   │   │   │   ├── todo_model_test.dart</br>
 

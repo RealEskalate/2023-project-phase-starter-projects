@@ -1,9 +1,6 @@
 import 'dart:developer';
-import 'package:flutter/material.dart'; // Make sure to import the correct Task class
-import 'package:todo_main_app/core/usecases/usescases.dart';
+import 'package:flutter/material.dart';
 import 'package:todo_main_app/feature/todo/domain/entities/task_list.dart';
-import 'package:todo_main_app/feature/todo/domain/repositories/task_repository_impl.dart';
-import 'package:todo_main_app/feature/todo/domain/usecases/view_all_tasks_usecase.dart';
 import 'package:todo_main_app/feature/todo/presentation/widgets/single_list_card.dart';
 
 class TaskListRoute extends StatefulWidget {
@@ -15,34 +12,46 @@ class TaskListRoute extends StatefulWidget {
 
 class TaskListRouteState extends State<TaskListRoute> {
   DateTime selectedDate = DateTime.now();
-  late ViewAllTasksUsecase viewAllTasksUsecase;
-
-  final TaskRepositoryImpl taskRepository =
-      TaskRepositoryImpl(); // Create an instance of TaskRepository
-  List<Task> sampleTasks = []; // Initialize with an empty list
+// Initialize with an empty list
 
   @override
   void initState() {
     super.initState();
-    viewAllTasksUsecase = ViewAllTasksUsecase(taskRepository);
-    loadTasks(); // Call a method to load tasks from the use case
   }
 
-  Future<void> loadTasks() async {
-    final tasksEither = await viewAllTasksUsecase(NoParams());
-
-    tasksEither.fold(
-      (failure) {
-        // Handle failure here (e.g., show an error message)
-        log("Error: ${failure.message}");
-      },
-      (tasks) {
-        setState(() {
-          sampleTasks = tasks.cast<Task>();
-        });
-      },
-    );
-  }
+  // Loading Data From Array For Testing
+  List<Task> sampleTasks = [
+    Task(
+      id: 0,
+      title: 'Todo App UI Design',
+      description:
+          'Design a UI/UX for mobile app. We can use figma or Adobe for designing the UI.',
+      dueDate: DateTime.now(),
+      isCompleted: false,
+    ),
+    Task(
+      id: 1,
+      title: 'Attending Study Session',
+      description: 'Attend the study session at 8:00 PM.',
+      dueDate: DateTime.now(),
+      isCompleted: false,
+    ),
+    Task(
+      id: 2,
+      title: 'View Candidates',
+      description:
+          'View the candidates for the job opening and then shortlist them.',
+      dueDate: DateTime.now(),
+      isCompleted: false,
+    ),
+    Task(
+      id: 3,
+      title: 'Football Match',
+      description: 'Watching the football match at 9:00 PM with friends.',
+      dueDate: DateTime.now(),
+      isCompleted: true,
+    ),
+  ];
 
   @override
   Widget build(BuildContext context) {
@@ -90,8 +99,6 @@ class TaskListRouteState extends State<TaskListRoute> {
                   description: sampleTasks[index].description,
                   selectedDate: sampleTasks[index].dueDate,
                   isCompleted: sampleTasks[index].isCompleted,
-                  // passing viewAllTasksUsecase
-                  viewAllTasksUsecase: viewAllTasksUsecase,
                   onDateSelected: (DateTime date) {
                     setState(() {
                       selectedDate = date;

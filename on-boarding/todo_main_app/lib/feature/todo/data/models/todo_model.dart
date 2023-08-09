@@ -1,5 +1,3 @@
-import 'package:todo_main_app/core/entities/todo.dart';
-
 class TodoModel {
   final int id;
   final String title;

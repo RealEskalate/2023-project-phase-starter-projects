@@ -2,7 +2,7 @@ import 'package:dartz/dartz.dart';
 import 'package:todo_main_app/core/usecases/usescases.dart';
 
 import '../entities/todo.dart';
-import '../failure.dart';
+import '../error/failure.dart';
 import '../repositories/todo_repository.dart';
 
 class GetTodosUseCase
@@ -14,11 +14,12 @@ class GetTodosUseCase
   @override
   Future<Either<Failure, List<Todo>>> call(NoParams params) async {
     // Implementing the logic to fetch todos from the repository or data source
-    try {
-      final todos = await repository.getAllTodos();
-      return Right(todos as List<Todo>);
-    } catch (e) {
-      return Left(Failure("Failed to fetch todos"));
-    }
+    // try {
+    //   final todos = await repository.getAllTodos();
+    //   return Right(todos as List<Todo>);
+    // } catch (e) {
+    //   return const Left(Failure("Failed to fetch todos"));
+    // }
+    return await repository.getAllTodos();
   }
 }

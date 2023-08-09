@@ -1,7 +1,5 @@
-import 'package:todo_main_app/feature/todo/domain/usecases/view_all_tasks_usecase.dart';
 import 'package:todo_main_app/feature/todo/presentation/widgets/add_task.dart';
 import 'package:todo_main_app/feature/todo/presentation/widgets/task_list.dart';
-import 'package:todo_main_app/feature/todo/presentation/widgets/task_detail.dart';
 import 'package:todo_main_app/feature/todo/presentation/widgets/on_boarding.dart';
 import 'package:flutter/material.dart';
 

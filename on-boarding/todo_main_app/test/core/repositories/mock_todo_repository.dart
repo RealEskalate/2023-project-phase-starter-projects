@@ -1,7 +1,7 @@
 import 'package:dartz/dartz.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:todo_main_app/core/entities/todo.dart';
-import 'package:todo_main_app/core/failure.dart';
+import 'package:todo_main_app/core/error/failure.dart';
 import 'package:todo_main_app/core/repositories/todo_repository.dart';
 import 'package:todo_main_app/core/usecases/get_todos_usecase.dart';
 import 'package:todo_main_app/core/usecases/usescases.dart';

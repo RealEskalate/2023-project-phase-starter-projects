@@ -6,11 +6,9 @@ import 'package:todo_main_app/feature/todo/domain/usecases/view_all_tasks_usecas
 import 'package:todo_main_app/feature/todo/domain/usecases/view_task.dart';
 
 class TaskDetail extends StatefulWidget {
-  final ViewAllTasksUsecase viewAllTasksUsecase;
   final int taskId;
 
-  const TaskDetail(
-      {super.key, required this.taskId, required this.viewAllTasksUsecase});
+  const TaskDetail({super.key, required this.taskId});
 
   @override
   State<TaskDetail> createState() => _TaskDetailState();

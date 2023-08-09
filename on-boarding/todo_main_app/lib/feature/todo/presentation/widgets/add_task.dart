@@ -2,9 +2,6 @@
 
 import 'package:intl/intl.dart';
 import 'package:flutter/material.dart';
-import 'package:todo_main_app/feature/todo/domain/entities/task_list.dart';
-import 'package:todo_main_app/feature/todo/domain/repositories/task_repository_impl.dart';
-import 'package:todo_main_app/feature/todo/domain/usecases/create_task.dart';
 import 'package:todo_main_app/feature/todo/presentation/widgets/task_list.dart';
 
 class AddTask extends StatefulWidget {
@@ -17,10 +14,6 @@ class AddTask extends StatefulWidget {
 class _AddTaskState extends State<AddTask> {
   TextEditingController taskNameController = TextEditingController();
   DateTime selectedDate = DateTime.now();
-  late CreateTaskUsecase
-      createTaskUsecase; // Declare the CreateTaskUsecase variable
-  final TaskRepositoryImpl taskRepository =
-      TaskRepositoryImpl(); // Create an instance of TaskRepository
 
   Future<void> _selectDate(BuildContext context) async {
     final DateTime? picked = await showDatePicker(
@@ -39,7 +32,6 @@ class _AddTaskState extends State<AddTask> {
   @override
   void initState() {
     super.initState();
-    createTaskUsecase = CreateTaskUsecase(taskRepository);
   }
 
   @override
@@ -224,19 +216,6 @@ class _AddTaskState extends State<AddTask> {
             child: ElevatedButton(
               key: const Key('add_task_button'),
               onPressed: () async {
-                // Get values from UI
-                final String taskName = taskNameController.text;
-                const String description = ''; // Get description from UI
-                final Task newTask = Task(
-                  id: 0,
-                  title: taskName,
-                  description: description,
-                  dueDate: selectedDate,
-                  isCompleted: false,
-                );
-
-                await createTaskUsecase(newTask);
-
                 Navigator.pushReplacement(
                   context,
                   MaterialPageRoute(

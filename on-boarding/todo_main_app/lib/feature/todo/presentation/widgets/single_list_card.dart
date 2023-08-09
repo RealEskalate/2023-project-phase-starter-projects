@@ -9,7 +9,6 @@ class SingleListCard extends StatelessWidget {
   final String description;
   final DateTime selectedDate;
   final bool isCompleted;
-  final ViewAllTasksUsecase viewAllTasksUsecase;
   final Function(DateTime) onDateSelected;
 
   const SingleListCard({
@@ -19,7 +18,6 @@ class SingleListCard extends StatelessWidget {
     required this.description,
     required this.selectedDate,
     required this.isCompleted,
-    required this.viewAllTasksUsecase,
     required this.onDateSelected,
   }) : super(key: key);
 
@@ -32,7 +30,6 @@ class SingleListCard extends StatelessWidget {
           MaterialPageRoute(
             builder: (context) => TaskDetail(
               taskId: id,
-              viewAllTasksUsecase: viewAllTasksUsecase,
             ),
           ),
         );
