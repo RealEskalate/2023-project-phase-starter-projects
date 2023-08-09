@@ -22,6 +22,9 @@ A2SV 2023 project phase Mobile Team,This repository serves as a central hub for 
 ## Updates
 
 ### Aug 9, 2023 Task 2
+<details>
+  <summary>Click To Expand </summary>
+
 - Implementation of a contract defining repository methods:
   ```dart
   // lib/feature/data/repositories/todo_repository_impl.dart
@@ -75,6 +78,8 @@ A2SV 2023 project phase Mobile Team,This repository serves as a central hub for 
     @override
     Future<bool> get isConnected => connectionChecker.hasConnection;
   }
+
+</details>
 
 ### Aug 9, 2023 Task 1
 - Organize the project structure according to Clean Architecture principles: </br>
@@ -390,43 +395,45 @@ A2SV 2023 project phase Mobile Team,This repository serves as a central hub for 
 ### Folder Structure 
 - Flutter Clean Architect 
   ```md
-  todo_main_app/</br>
-    ├── lib/</br>
-    │   ├── core/</br>
-    │   │   ├── entities/</br>
-    │   │   │   ├── todo.dart</br>
+  todo_main_app/
+    ├── lib/
+    │   ├── core/
+    │   │   ├── entities/
+    │   │   │   ├── todo.dart
     │   │   ├── error/
-    │   │   │   ├── failure.dart</br>
+    │   │   │   ├── failure.dart
     │   │   ├── repositories/
-    │   │   │   ├── todo_repository.dart</br>
-    │   │   ├── usecases/</br>
-    │   │   │   ├── usescases.dart</br>
-    │   ├── features/</br>
-    │   │   ├── todo/</br>
-    │   │   │   ├── data/</br>
-    │   │   │   │   ├── data_sources/</br>
-    │   │   │   │   │   ├── todo_data_source.dart</br>
-    │   │   │   │   │   ├── todo_remote_data_source.dart</br>
-    │   │   │   │   │   ├── todo_local_data_source.dart </br>
-    │   │   │   │   ├── models/</br>
-    │   │   │   │   │   ├── todo_model.dart</br>
-    │   │   │   ├── domain/</br>
-    │   │   │   │   ├── repositories/</br>
-    │   │   │   │   │   ├── todo_repository_contract.dart</br>
-    │   │   │   │   ├── usecases/</br>
-    │   │   │   │   │   ├── get_todos_usecase.dart</br>
-    ├── test/</br>
-    │   ├── core/</br>
-    │   │   ├── repositories/</br>
-    │   │   │   ├── todo_repository_test.dart</br>
-    │   │   ├── usecases/</br>
-    │   │   │   ├── get_todos_usecase_test.dart</br>
-    │   ├── features/</br>
-    │   │   ├── todo/</br>
-    │   │   │   ├── data/</br>
-    │   │   │   │   ├── data_sources/</br>
-    │   │   │   │   │   ├── todo_remote_data_source_test.dart</br>
-    │   │   │   │   │   ├── todo_local_data_source_test.dart </br>
-    │   │   │   │   ├── models/</br>
-    │   │   │   │   │   ├── todo_model_test.dart</br>
+    │   │   │   ├── todo_repository.dart
+    │   │   ├── usecases/
+    │   │   │   ├── usescases.dart
+    │   ├── features/
+    │   │   ├── todo/
+    │   │   │   ├── data/
+    │   │   │   │   ├── data_sources/
+    │   │   │   │   │   ├── todo_data_source.dart
+    │   │   │   │   │   ├── todo_remote_data_source.dart
+    │   │   │   │   │   ├── todo_local_data_source.dart 
+    │   │   │   │   ├── models/
+    │   │   │   │   │   ├── todo_model.dart
+    │   │   │   ├── domain/
+    │   │   │   │   ├── repositories/
+    │   │   │   │   │   ├── todo_repository_contract.dart
+    │   │   │   │   ├── usecases/
+    │   │   │   │   │   ├── get_todos_usecase.dart
+    ├── test/
+    │   ├── core/
+    │   │   ├── repositories/
+    │   │   │   ├── todo_repository_test.dart
+    │   │   ├── usecases/
+    │   │   │   ├── get_todos_usecase_test.dart
+    │   ├── features/
+    │   │   ├── todo/
+    │   │   │   ├── data/
+    │   │   │   │   ├── data_sources/
+    │   │   │   │   │   ├── todo_remote_data_source_test.dart
+    │   │   │   │   │   ├── todo_local_data_source_test.dart 
+    │   │   │   │   ├── models/
+    │   │   │   │   │   ├── todo_model_test.dart
 
+### Developer Info
+- Gemechis Elias (gemechis.elias@a2sv.org)
