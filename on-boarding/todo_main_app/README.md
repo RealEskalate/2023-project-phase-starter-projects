@@ -22,7 +22,7 @@ A2SV 2023 project phase Mobile Team,This repository serves as a central hub for 
 ## Updates
 
 ### Aug 9, 2023 Task 1
-- Organize the project structure according to Clean Architecture principles:
+- Organize the project structure according to Clean Architecture principles: </br>
   ✅ Project Structure is Organized
 
 -  Define Entities inside core:
@@ -45,7 +45,7 @@ A2SV 2023 project phase Mobile Team,This repository serves as a central hub for 
     //  
   }
 
--  Implement Use Cases inside core:
+- Implement Use Cases inside core:
   ```dart
   // lib/core/usecases/get_todos_usecase.dart
   class GetTodosUseCase
@@ -66,7 +66,7 @@ A2SV 2023 project phase Mobile Team,This repository serves as a central hub for 
     }
   }
 
--  Implement Models and include conversion logic to and from JSON:
+- Implement Models and include conversion logic to and from JSON:
   ```dart
   // lib/features/todo/data/models/todo.dart
   import 'package:todo_main_app/core/entities/todo.dart';
@@ -106,7 +106,7 @@ A2SV 2023 project phase Mobile Team,This repository serves as a central hub for 
     }
   }
 
--  Test coverage: Comprehensive unit tests, widget tests to ensure correctness, and error-free execution:
+- Test coverage: Comprehensive unit tests, widget tests to ensure correctness, and error-free execution:
   <img src="screenshot/test1.png.jpg" alt="Test Screenshot" width="300" />
 
 ### Aug 8, 2023 Task 2
