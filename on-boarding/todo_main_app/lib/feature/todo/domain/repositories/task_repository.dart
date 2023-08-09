@@ -1,4 +1,4 @@
-import 'package:todo_main_app/feature/task_list/domain/entities/task_list.dart';
+import 'package:todo_main_app/feature/todo/domain/entities/task_list.dart';
 
 abstract class TaskRepository {
   Future<List<Task>> getAllTasks();

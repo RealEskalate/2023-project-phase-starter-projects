@@ -1,4 +1,4 @@
-import 'package:todo_main_app/feature/task_list/presentation/widgets/task_list.dart';
+import 'package:todo_main_app/feature/todo/presentation/widgets/task_list.dart';
 import 'package:flutter/material.dart';
 
 class GetStartedRoute extends StatefulWidget {

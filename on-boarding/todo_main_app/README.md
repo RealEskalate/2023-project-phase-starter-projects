@@ -21,6 +21,94 @@ A2SV 2023 project phase Mobile Team,This repository serves as a central hub for 
 
 ## Updates
 
+### Aug 9, 2023 Task 1
+- Organize the project structure according to Clean Architecture principles:
+  ✅ Project Structure is Organized
+
+-  Define Entities inside core:
+  ```dart
+  // lib/core/entities/todo.dart
+  class Todo {
+    final int id;
+    final String title;
+    final String description;
+    final DateTime dueDate;
+    final bool isCompleted;
+
+    Todo({
+      required this.id,
+      required this.title,
+      required this.description,
+      required this.dueDate,
+      this.isCompleted = false,
+    }); 
+    //  
+  }
+
+-  Implement Use Cases inside core:
+  ```dart
+  // lib/core/usecases/get_todos_usecase.dart
+  class GetTodosUseCase
+      implements UseCase<Either<Failure, List<Todo>>, NoParams> {
+    late final TodoRepository repository;
+
+    GetTodosUseCase(this.repository); // Pass the repository through constructor
+
+    @override
+    Future<Either<Failure, List<Todo>>> call(NoParams params) async {
+      // Implementing the logic to fetch todos from the repository or data source
+      try {
+        final todos = await repository.getAllTodos();
+        return Right(todos as List<Todo>);
+      } catch (e) {
+        return Left(Failure("Failed to fetch todos"));
+      }
+    }
+  }
+
+-  Implement Models and include conversion logic to and from JSON:
+  ```dart
+  // lib/features/todo/data/models/todo.dart
+  import 'package:todo_main_app/core/entities/todo.dart';
+  class TodoModel {
+    final int id;
+    final String title;
+    final String description;
+    final DateTime dueDate;
+    final bool isCompleted;
+
+    TodoModel({
+      required this.id,
+      required this.title,
+      required this.description,
+      required this.dueDate,
+      required this.isCompleted,
+    });
+
+    factory TodoModel.fromJson(Map<String, dynamic> json) {
+      return TodoModel(
+        id: json['id'],
+        title: json['title'],
+        description: json['description'],
+        dueDate: DateTime.parse(json['dueDate']),
+        isCompleted: json['isCompleted'],
+      );
+    }
+
+    Map<String, dynamic> toJson() {
+      return {
+        'id': id,
+        'title': title,
+        'description': description,
+        'dueDate': dueDate.toIso8601String(),
+        'isCompleted': isCompleted,
+      };
+    }
+  }
+
+-  Test coverage: Comprehensive unit tests, widget tests to ensure correctness, and error-free execution:
+  <img src="screenshot/test1.png.jpg" alt="Test Screenshot" width="300" />
+
 ### Aug 8, 2023 Task 2
 - Create an entity class named Task:
   ```dart
@@ -108,7 +196,7 @@ A2SV 2023 project phase Mobile Team,This repository serves as a central hub for 
         'Mark as Completed')
 
 - Clean Architecture and TDD:</br>
-  ✅ I successfully organized my folder structure with Flutter Clean Architecture
+  ✅ I has successfully organized my folder structure with Flutter Clean Architecture
 
 - Error Handling and Either Type:
   ```dart

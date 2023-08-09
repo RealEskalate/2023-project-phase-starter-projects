@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:todo_main_app/core/usecases/usescases.dart';
-import 'package:todo_main_app/feature/task_list/domain/entities/task_list.dart';
-import 'package:todo_main_app/feature/task_list/domain/usecases/view_all_tasks_usecase.dart';
-import 'package:todo_main_app/feature/task_list/domain/usecases/view_task.dart';
+import 'package:todo_main_app/feature/todo/domain/entities/task_list.dart';
+import 'package:todo_main_app/feature/todo/domain/usecases/view_all_tasks_usecase.dart';
+import 'package:todo_main_app/feature/todo/domain/usecases/view_task.dart';
 
 class TaskDetail extends StatefulWidget {
   final ViewAllTasksUsecase viewAllTasksUsecase;
@@ -64,12 +64,6 @@ class _TaskDetailState extends State<TaskDetail> {
     super.initState();
     fetchTask();
   }
-
-  // Future<void> fetchTask() async {
-  //   final tasks = await widget.viewAllTasksUsecase.call(NoParams());
-  //   task = tasks.firstWhere((t) => t.id == widget.taskId);
-  //   setState(() {});
-  // }
 
   Future<void> _selectDate(BuildContext context) async {
     final DateTime? picked = await showDatePicker(

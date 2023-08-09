@@ -1,10 +1,10 @@
 import 'dart:developer';
 import 'package:flutter/material.dart'; // Make sure to import the correct Task class
 import 'package:todo_main_app/core/usecases/usescases.dart';
-import 'package:todo_main_app/feature/task_list/domain/entities/task_list.dart';
-import 'package:todo_main_app/feature/task_list/domain/repositories/task_repository_impl.dart';
-import 'package:todo_main_app/feature/task_list/domain/usecases/view_all_tasks_usecase.dart';
-import 'package:todo_main_app/feature/task_list/presentation/widgets/single_list_card.dart';
+import 'package:todo_main_app/feature/todo/domain/entities/task_list.dart';
+import 'package:todo_main_app/feature/todo/domain/repositories/task_repository_impl.dart';
+import 'package:todo_main_app/feature/todo/domain/usecases/view_all_tasks_usecase.dart';
+import 'package:todo_main_app/feature/todo/presentation/widgets/single_list_card.dart';
 
 class TaskListRoute extends StatefulWidget {
   const TaskListRoute({Key? key}) : super(key: key);
