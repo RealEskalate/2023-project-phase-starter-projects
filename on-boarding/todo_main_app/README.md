@@ -25,7 +25,7 @@ A2SV 2023 project phase Mobile Team,This repository serves as a central hub for 
 - Organize the project structure according to Clean Architecture principles: </br>
   ✅ Project Structure is Organized
 
--  Define Entities inside core:
+- Define Entities inside core:
   ```dart
   // lib/core/entities/todo.dart
   class Todo {
@@ -43,7 +43,7 @@ A2SV 2023 project phase Mobile Team,This repository serves as a central hub for 
       this.isCompleted = false,
     }); 
     //  
-  }
+    }
 
 - Implement Use Cases inside core:
   ```dart
