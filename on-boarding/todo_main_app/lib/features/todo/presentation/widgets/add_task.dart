@@ -2,7 +2,7 @@
 
 import 'package:intl/intl.dart';
 import 'package:flutter/material.dart';
-import 'package:todo_main_app/feature/todo/presentation/widgets/task_list.dart';
+import 'package:todo_main_app/features/todo/presentation/widgets/task_list.dart';
 
 class AddTask extends StatefulWidget {
   const AddTask({Key? key}) : super(key: key);

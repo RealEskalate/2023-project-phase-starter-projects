@@ -1,6 +1,6 @@
 import 'package:todo_main_app/core/usecases/usescases.dart';
-import 'package:todo_main_app/feature/todo/domain/entities/task_list.dart';
-import 'package:todo_main_app/feature/todo/domain/repositories/task_repository.dart';
+import 'package:todo_main_app/features/todo/domain/entities/task_list.dart';
+import 'package:todo_main_app/features/todo/domain/repositories/task_repository.dart';
 
 class ViewTaskUsecase implements UseCase<Task, int> {
   final TaskRepository repository;

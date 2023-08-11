@@ -3,7 +3,8 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:todo_main_app/core/entities/todo.dart';
 import 'package:todo_main_app/core/error/failure.dart';
 import 'package:todo_main_app/core/repositories/todo_repository.dart';
-import 'package:todo_main_app/feature/todo/data/repositories/todo_repository_impl.dart';
+import 'package:todo_main_app/features/todo/data/datasources/todo_local_data_source.dart';
+import 'package:todo_main_app/features/todo/data/repositories/todo_repository_impl.dart';
 
 class MockTodoRepository implements TodoRepository {
   @override
@@ -31,9 +32,10 @@ class MockTodoRepository implements TodoRepository {
 
 void main() {
   late TodoRepositoryImpl repository;
+  TodoLocalDataSource localDataSource = TodoLocalDataSource();
 
   setUp(() {
-    repository = TodoRepositoryImpl();
+    repository = TodoRepositoryImpl(localDataSource);
   });
 
   test('should get a list of todos from the repository', () async {

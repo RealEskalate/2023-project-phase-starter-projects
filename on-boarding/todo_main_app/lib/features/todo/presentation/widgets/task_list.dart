@@ -1,7 +1,7 @@
 import 'dart:developer';
 import 'package:flutter/material.dart';
-import 'package:todo_main_app/feature/todo/domain/entities/task_list.dart';
-import 'package:todo_main_app/feature/todo/presentation/widgets/single_list_card.dart';
+import 'package:todo_main_app/features/todo/domain/entities/task_list.dart';
+import 'package:todo_main_app/features/todo/presentation/widgets/single_list_card.dart';
 
 class TaskListRoute extends StatefulWidget {
   const TaskListRoute({Key? key}) : super(key: key);

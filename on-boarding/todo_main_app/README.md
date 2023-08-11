@@ -21,6 +21,73 @@ A2SV 2023 project phase Mobile Team,This repository serves as a central hub for 
 
 ## Updates
 
+### Aug 10, 2023 Task 2
+- Notwork Information Checker:
+  ```dart
+  //  lib/core/platform/newtwork_info.dart
+  import 'package:internet_connection_checker/internet_connection_checker.dart';
+  abstract class NetworkInfo {
+    Future<bool> get isConnected;
+  }
+
+  class NetworkInfoImpl implements NetworkInfo {
+    final InternetConnectionChecker connectionChecker;
+
+    NetworkInfoImpl(this.connectionChecker);
+
+    @override
+    Future<bool> get isConnected => connectionChecker.hasConnection;
+  }
+
+### Aug 10, 2023 Task 1
+- Contract and Repository::
+  ```dart
+  class TodoRepositoryImpl implements TodoRepository {
+    final TodoLocalDataSource localDataSource;
+
+    TodoRepositoryImpl(this.localDataSource);
+
+    @override
+    Future<Either<Failure, List<Todo>>> getAllTodos() async {
+      try {
+        final todos = await localDataSource.getAllTodos();
+        return Right(todos);
+      } catch (e) {
+        return const Left(ServerFailure("Failed to get all todos"));
+      }
+    }
+
+    @override
+    Future<Either<Failure, Todo>> createTodo(Todo todo) async {
+      try {
+        final createdTodo = await localDataSource.createTodo(todo);
+        return Right(createdTodo);
+      } catch (e) {
+        return const Left(ServerFailure("Failed to create todo"));
+      }
+    }
+
+    @override
+    Future<Either<Failure, Todo>> updateTodo(Todo todo) async {
+      try {
+        final updatedTodo = await localDataSource.updateTodo(todo);
+        return Right(updatedTodo);
+      } catch (e) {
+        return const Left(ServerFailure("Failed to update todo"));
+      }
+    }
+
+    @override
+    Future<Either<Failure, bool>> markTodoAsCompleted(int todoId) async {
+      try {
+        final success = await localDataSource.markTodoAsCompleted(todoId);
+        return Right(success);
+      } catch (e) {
+        return const Left(ServerFailure("Failed to mark todo as completed"));
+      }
+    }
+  }
+
 ### Aug 9, 2023 Task 2
 - Implementation of a contract defining repository methods:
   ```dart

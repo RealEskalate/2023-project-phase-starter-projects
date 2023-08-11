@@ -1,5 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:todo_main_app/feature/todo/data/models/todo_model.dart';
+import 'package:todo_main_app/features/todo/data/models/todo_model.dart';
 
 void main() {
   group('TodoModel', () {

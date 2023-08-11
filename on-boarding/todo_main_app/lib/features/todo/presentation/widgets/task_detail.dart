@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:todo_main_app/core/usecases/usescases.dart';
-import 'package:todo_main_app/feature/todo/domain/entities/task_list.dart';
-import 'package:todo_main_app/feature/todo/domain/usecases/view_all_tasks_usecase.dart';
-import 'package:todo_main_app/feature/todo/domain/usecases/view_task.dart';
+import 'package:todo_main_app/features/todo/domain/entities/task_list.dart';
+import 'package:todo_main_app/features/todo/domain/usecases/view_all_tasks_usecase.dart';
+import 'package:todo_main_app/features/todo/domain/usecases/view_task.dart';
 
 class TaskDetail extends StatefulWidget {
   final int taskId;
