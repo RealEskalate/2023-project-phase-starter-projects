@@ -21,6 +21,34 @@ A2SV 2023 project phase Mobile Team,This repository serves as a central hub for 
 
 ## Updates
 
+### Aug 11, 2023 Task 1
+- Local Data Source in Flutter Clean Architecture:
+Note: Caching data gotten from the remote API. We're going to implement it using shared_preferences.
+  ```dart
+  class TodoLocalDataSource implements TodoDataSource {
+  final SharedPreferences sharedPreferences;
+
+  TodoLocalDataSource(this.sharedPreferences);
+
+  @override
+  Future<List<Todo>> getAllTodos() async {
+    final jsonString = sharedPreferences.getString('todos');
+    if (jsonString != null) {
+      final List<dynamic> todoListJson = json.decode(jsonString);
+      final todos = todoListJson.map((json) => Todo.fromJson(json)).toList();
+      return todos;
+    } else {
+      return [];
+    }
+  }
+
+  @override
+  Future<Todo> createTodo(Todo todo) async {
+    final todos = await getAllTodos();
+    todos.add(todo);
+    await saveTodos(todos);
+    return todo;
+  }
 ### Aug 10, 2023 Task 2
 - Notwork Information Checker:
   ```dart

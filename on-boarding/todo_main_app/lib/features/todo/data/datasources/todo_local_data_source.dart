@@ -1,33 +1,60 @@
+import 'dart:convert';
+
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:todo_main_app/core/entities/todo.dart';
 import 'package:todo_main_app/features/todo/data/datasources/todo_data_source.dart';
 
 class TodoLocalDataSource implements TodoDataSource {
-  // Implement methods to interact with a local database or storage
+  final SharedPreferences sharedPreferences;
+
+  TodoLocalDataSource(this.sharedPreferences);
+
   @override
   Future<List<Todo>> getAllTodos() async {
-    // TODO: Replace with actual database queries
-    // For example, if you're using a package like sqflite, you would use something like:
-    // final db = await databaseProvider.database;
-    // final result = await db.query('todos');
-    // return result.map((map) => Todo.fromJson(map)).toList();
-    return [];
+    final jsonString = sharedPreferences.getString('todos');
+    if (jsonString != null) {
+      final List<dynamic> todoListJson = json.decode(jsonString);
+      final todos = todoListJson.map((json) => Todo.fromJson(json)).toList();
+      return todos;
+    } else {
+      return [];
+    }
   }
 
   @override
   Future<Todo> createTodo(Todo todo) async {
-    // TODO: Implement creating a new todo in the local database
+    final todos = await getAllTodos();
+    todos.add(todo);
+    await saveTodos(todos);
     return todo;
   }
 
   @override
   Future<Todo> updateTodo(Todo todo) async {
-    // TODO: Implement updating a todo in the local database
+    final todos = await getAllTodos();
+    final index = todos.indexWhere((t) => t.id == todo.id);
+    if (index != -1) {
+      todos[index] = todo;
+      await saveTodos(todos);
+    }
     return todo;
   }
 
   @override
   Future<bool> markTodoAsCompleted(int todoId) async {
-    // TODO: Implement marking a todo as completed in the local database
-    return true; // Return whether the operation was successful
+    final todos = await getAllTodos();
+    final index = todos.indexWhere((t) => t.id == todoId);
+    if (index != -1) {
+      todos[index] = todos[index].copyWith(isCompleted: true);
+      await saveTodos(todos);
+      return true;
+    }
+    return false;
+  }
+
+  Future<void> saveTodos(List<Todo> todos) async {
+    final todoListJson = todos.map((todo) => todo.toJson()).toList();
+    final jsonString = json.encode(todoListJson);
+    await sharedPreferences.setString('todos', jsonString);
   }
 }
