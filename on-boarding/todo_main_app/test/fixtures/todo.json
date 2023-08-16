@@ -1,0 +1,7 @@
+{
+"id": 1,
+"title": "Mock Task 1",
+"description": "Mock 1 description",
+"dueDate": "2021-09-30T18:30:00.000Z",
+"isCompleted": false
+}

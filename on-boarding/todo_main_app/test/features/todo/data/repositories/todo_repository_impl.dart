@@ -1,63 +1,70 @@
 import 'package:dartz/dartz.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:mockito/mockito.dart';
 import 'package:todo_main_app/core/entities/todo.dart';
-import 'package:todo_main_app/core/error/failure.dart';
-import 'package:todo_main_app/core/repositories/todo_repository.dart';
 import 'package:todo_main_app/features/todo/data/datasources/todo_local_data_source.dart';
 import 'package:todo_main_app/features/todo/data/repositories/todo_repository_impl.dart';
+import 'package:todo_main_app/core/error/failure.dart' as core;
 
-class MockTodoRepository implements TodoRepository {
-  @override
-  Future<Either<Failure, List<Todo>>> getAllTodos() async {
-    final todos = [
-      Todo(
-        id: 1,
-        title: 'Todo 1',
-        description: 'Description 1',
-        dueDate: DateTime.now(),
-        isCompleted: false,
-      ),
-      Todo(
-        id: 2,
-        title: 'Todo 2',
-        description: 'Description 2',
-        dueDate: DateTime.now(),
-        isCompleted: true,
-      ),
-    ];
-
-    return Right(todos);
-  }
-}
+class MockTodoLocalDataSource extends Mock implements TodoLocalDataSource {}
 
 void main() {
   late TodoRepositoryImpl repository;
-  TodoLocalDataSource localDataSource = TodoLocalDataSource();
+  late MockTodoLocalDataSource mockLocalDataSource;
 
   setUp(() {
-    repository = TodoRepositoryImpl(localDataSource);
+    mockLocalDataSource = MockTodoLocalDataSource();
+    repository = TodoRepositoryImpl(mockLocalDataSource);
   });
 
-  test('should get a list of todos from the repository', () async {
-    final result = await repository.getAllTodos();
+  group('getAllTodos', () {
+    test('should return a list of todos from local data source', () async {
+      // Arrange
+      final todos = [
+        Todo(
+            id: 1,
+            title: 'Todo 1',
+            description: 'Description 1',
+            dueDate: DateTime.now()),
+        Todo(
+            id: 2,
+            title: 'Todo 2',
+            description: 'Description 2',
+            dueDate: DateTime.now()),
+      ];
+      when(mockLocalDataSource.getAllTodos()).thenAnswer((_) async => todos);
 
-    // Verify that the result is a Right containing a list of todos
-    expect(result, isA<Right<Failure, List<Todo>>>());
+      // Act
+      final result = await repository.getAllTodos();
 
-    // Extract the todos from the Right
-    final todos = result.getOrElse(() => throw Exception());
+      // Assert
+      expect(result, Right(todos));
+      verify(mockLocalDataSource.getAllTodos());
+      verifyNoMoreInteractions(mockLocalDataSource);
+    });
+    test('should return a failure when local data source throws an exception',
+        () async {
+      // Arrange
+      when(mockLocalDataSource.getAllTodos()).thenThrow(Exception());
 
-    // Verify that the list of todos has the expected length
-    expect(todos.length, 2);
+      // Act
+      final result = await repository.getAllTodos();
 
-    // Verify the properties of the first todo
-    expect(todos[0].id, 1);
-    expect(todos[0].title, 'Todo 1');
-    expect(todos[0].isCompleted, false);
+      // Assert
+      expect(
+          result,
+          const Left(core.ServerFailure(
+              "Failed to get all todos"))); // Use the import prefix here
+      verify(mockLocalDataSource.getAllTodos());
+      verifyNoMoreInteractions(mockLocalDataSource);
+    });
+  });
 
-    // Verify the properties of the second todo
-    expect(todos[1].id, 2);
-    expect(todos[1].title, 'Todo 2');
-    expect(todos[1].isCompleted, true);
+  group('createTodo', () {
+    // Add test cases for the createTodo method
+  });
+
+  group('updateTodo', () {
+    // Add test cases for the updateTodo method
   });
 }

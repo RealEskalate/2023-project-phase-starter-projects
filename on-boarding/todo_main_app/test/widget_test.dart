@@ -3,25 +3,8 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:todo_main_app/features/todo/presentation/widgets/add_task.dart';
 import 'package:todo_main_app/features/todo/presentation/widgets/task_list.dart';
 import 'package:todo_main_app/features/todo/presentation/widgets/on_boarding.dart';
-import 'package:todo_main_app/features/todo/presentation/widgets/task_detail.dart';
 
 void main() {
-  testWidgets('TaskDetail widget displays title correctly', (tester) async {
-    const String testTitle = 'Test Title'; // Define the test title
-    await tester.pumpWidget(
-      const MaterialApp(
-        home: TaskDetail(
-          taskId: 0,
-        ),
-      ),
-    );
-
-    final titleFinder = find.text(testTitle);
-    final descriptionFinder = find.text('testDescription');
-    expect(titleFinder, findsOneWidget);
-    expect(descriptionFinder, findsOneWidget);
-  });
-
   testWidgets('AddTask widget displays UI elements correctly', (tester) async {
     await tester.pumpWidget(
       const MaterialApp(

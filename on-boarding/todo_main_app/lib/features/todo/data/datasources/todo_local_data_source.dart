@@ -7,7 +7,7 @@ import 'package:todo_main_app/features/todo/data/datasources/todo_data_source.da
 class TodoLocalDataSource implements TodoDataSource {
   final SharedPreferences sharedPreferences;
 
-  TodoLocalDataSource(this.sharedPreferences);
+  TodoLocalDataSource({required this.sharedPreferences});
 
   @override
   Future<List<Todo>> getAllTodos() async {

@@ -47,14 +47,4 @@ class TodoRepositoryImpl implements TodoRepository {
       return const Left(ServerFailure("Failed to update todo"));
     }
   }
-
-  @override
-  Future<Either<Failure, bool>> markTodoAsCompleted(int todoId) async {
-    try {
-      final success = await localDataSource.markTodoAsCompleted(todoId);
-      return Right(success);
-    } catch (e) {
-      return const Left(ServerFailure("Failed to mark todo as completed"));
-    }
-  }
 }
