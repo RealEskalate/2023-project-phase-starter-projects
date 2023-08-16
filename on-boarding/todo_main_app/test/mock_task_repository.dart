@@ -3,7 +3,7 @@ import 'package:mockito/mockito.dart';
 import 'package:todo_main_app/features/todo/domain/entities/task_list.dart';
 import 'package:todo_main_app/features/todo/domain/repositories/task_repository.dart';
 import 'package:todo_main_app/features/todo/domain/usecases/view_all_tasks_usecase.dart';
-import 'package:todo_main_app/core/usecases/usescases.dart';
+import 'package:todo_main_app/core/usecases/usescase.dart';
 
 class MockTaskRepository extends Mock implements TaskRepository {
   @override

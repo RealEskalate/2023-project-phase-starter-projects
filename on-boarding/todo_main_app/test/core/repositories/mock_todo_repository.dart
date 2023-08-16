@@ -3,8 +3,8 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:todo_main_app/core/entities/todo.dart';
 import 'package:todo_main_app/core/error/failure.dart';
 import 'package:todo_main_app/core/repositories/todo_repository.dart';
-import 'package:todo_main_app/core/usecases/get_todos_usecase.dart';
-import 'package:todo_main_app/core/usecases/usescases.dart';
+import 'package:todo_main_app/core/usecases/get_all_tasks.dart';
+import 'package:todo_main_app/core/usecases/usescase.dart';
 
 class MockTodoRepository implements TodoRepository {
   @override

@@ -1,7 +1,9 @@
-import 'dart:developer';
 import 'package:flutter/material.dart';
-import 'package:todo_main_app/features/todo/domain/entities/task_list.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:todo_main_app/features/todo/presentation/bloc/todo_bloc.dart';
 import 'package:todo_main_app/features/todo/presentation/widgets/single_list_card.dart';
+
+import '../../../../injection.dart';
 
 class TaskListRoute extends StatefulWidget {
   const TaskListRoute({Key? key}) : super(key: key);
@@ -11,48 +13,6 @@ class TaskListRoute extends StatefulWidget {
 }
 
 class TaskListRouteState extends State<TaskListRoute> {
-  DateTime selectedDate = DateTime.now();
-// Initialize with an empty list
-
-  @override
-  void initState() {
-    super.initState();
-  }
-
-  // Loading Data From Array For Testing
-  List<Task> sampleTasks = [
-    Task(
-      id: 0,
-      title: 'Todo App UI Design',
-      description:
-          'Design a UI/UX for mobile app. We can use figma or Adobe for designing the UI.',
-      dueDate: DateTime.now(),
-      isCompleted: false,
-    ),
-    Task(
-      id: 1,
-      title: 'Attending Study Session',
-      description: 'Attend the study session at 8:00 PM.',
-      dueDate: DateTime.now(),
-      isCompleted: false,
-    ),
-    Task(
-      id: 2,
-      title: 'View Candidates',
-      description:
-          'View the candidates for the job opening and then shortlist them.',
-      dueDate: DateTime.now(),
-      isCompleted: false,
-    ),
-    Task(
-      id: 3,
-      title: 'Football Match',
-      description: 'Watching the football match at 9:00 PM with friends.',
-      dueDate: DateTime.now(),
-      isCompleted: true,
-    ),
-  ];
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -70,7 +30,16 @@ class TaskListRouteState extends State<TaskListRoute> {
         ],
         centerTitle: true,
       ),
-      body: Column(
+      body: SingleChildScrollView(
+        child: buildBody(context),
+      ),
+    );
+  }
+
+  BlocProvider<TodoBloc> buildBody(BuildContext context) {
+    return BlocProvider<TodoBloc>(
+      create: (context) => sl<TodoBloc>(),
+      child: Column(
         children: <Widget>[
           Image.asset(
             'assets/images/task_img1.jpg',
@@ -90,21 +59,33 @@ class TaskListRouteState extends State<TaskListRoute> {
           ),
           const SizedBox(height: 10),
           Expanded(
-            child: ListView.builder(
-              itemCount: sampleTasks.length,
-              itemBuilder: (context, index) {
-                return SingleListCard(
-                  id: sampleTasks[index].id,
-                  title: sampleTasks[index].title,
-                  description: sampleTasks[index].description,
-                  selectedDate: sampleTasks[index].dueDate,
-                  isCompleted: sampleTasks[index].isCompleted,
-                  onDateSelected: (DateTime date) {
-                    setState(() {
-                      selectedDate = date;
-                    });
-                  },
-                );
+            child: BlocBuilder<TodoBloc, TodoState>(
+              builder: (context, state) {
+                if (state is LoadedAllTasksState) {
+                  final tasks = state.tasks; // Use tasks from the state
+
+                  return ListView.builder(
+                    itemCount: tasks.length,
+                    itemBuilder: (context, index) {
+                      final task =
+                          tasks[index]; // Get the task for the current index
+
+                      return SingleListCard(
+                        id: task.id,
+                        title: task.title,
+                        description: task.description,
+                        selectedDate: task.dueDate,
+                        isCompleted: task.isCompleted,
+                        onDateSelected: (DateTime date) {
+                          // Your date selection logic
+                        },
+                      );
+                    },
+                  );
+                } else {
+                  // Handle other states if needed
+                  return const SizedBox.shrink();
+                }
               },
             ),
           ),

@@ -3,6 +3,7 @@ import 'package:todo_main_app/core/entities/todo.dart';
 import 'package:todo_main_app/core/error/failure.dart';
 import 'package:todo_main_app/core/repositories/todo_repository.dart';
 import 'package:todo_main_app/features/todo/data/datasources/todo_local_data_source.dart';
+import 'package:todo_main_app/core/usecases/usescase.dart';
 
 class ServerFailure extends Failure {
   final String message;
@@ -29,22 +30,55 @@ class TodoRepositoryImpl implements TodoRepository {
   }
 
   @override
-  Future<Either<Failure, Todo>> createTodo(Todo todo) async {
+  Future<Either<Failure, Todo>> createTask(Todo todo) async {
     try {
       final createdTodo = await localDataSource.createTodo(todo);
       return Right(createdTodo);
     } catch (e) {
-      return const Left(ServerFailure("Failed to create todo"));
+      return const Left(ServerFailure("Failed to create task"));
     }
   }
 
   @override
-  Future<Either<Failure, Todo>> updateTodo(Todo todo) async {
+  Future<Either<Failure, bool>> deleteTask(int todoId) async {
+    try {
+      final isDeleted = await localDataSource.deleteTodo(todoId);
+      return Right(isDeleted);
+    } catch (e) {
+      return const Left(ServerFailure("Failed to delete task"));
+    }
+  }
+
+  @override
+  Future<Either<Failure, Todo>> getSingleTask(int todoId) async {
+    try {
+      final todo = await localDataSource.getTodoById(todoId);
+      return Right(todo);
+    } catch (e) {
+      return const Left(ServerFailure("Failed to get single task"));
+    }
+  }
+
+  @override
+  Future<Either<Failure, bool>> markTodoAsCompleted(int todoId) async {
+    try {
+      final isMarkedAsCompleted =
+          await localDataSource.markTodoAsCompleted(todoId);
+      return Right(isMarkedAsCompleted);
+    } catch (e) {
+      return const Left(ServerFailure("Failed to mark task as completed"));
+    }
+  }
+
+  @override
+  Future<Either<Failure, Todo>> updateTask(Todo todo) async {
     try {
       final updatedTodo = await localDataSource.updateTodo(todo);
       return Right(updatedTodo);
     } catch (e) {
-      return const Left(ServerFailure("Failed to update todo"));
+      return const Left(ServerFailure("Failed to update task"));
     }
   }
+
+  // Add other use case implementations here if needed
 }

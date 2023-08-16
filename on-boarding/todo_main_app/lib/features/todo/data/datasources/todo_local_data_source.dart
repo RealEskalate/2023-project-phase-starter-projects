@@ -52,6 +52,26 @@ class TodoLocalDataSource implements TodoDataSource {
     return false;
   }
 
+  @override
+  Future<Todo> getTodoById(int todoId) async {
+    final todos = await getAllTodos();
+    final todo =
+        todos.firstWhere((t) => t.id == todoId, orElse: () => Todo.empty());
+    return todo;
+  }
+
+  @override
+  Future<bool> deleteTodo(int todoId) async {
+    final todos = await getAllTodos();
+    final index = todos.indexWhere((t) => t.id == todoId);
+    if (index != -1) {
+      todos.removeAt(index);
+      await saveTodos(todos);
+      return true; // Deletion was successful
+    }
+    return false; // Todo with the specified ID was not found
+  }
+
   Future<void> saveTodos(List<Todo> todos) async {
     final todoListJson = todos.map((todo) => todo.toJson()).toList();
     final jsonString = json.encode(todoListJson);

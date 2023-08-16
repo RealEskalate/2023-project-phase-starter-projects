@@ -1,5 +1,5 @@
 import 'package:todo_main_app/core/error/failure.dart';
-import 'package:todo_main_app/core/usecases/usescases.dart';
+import 'package:todo_main_app/core/usecases/usescase.dart';
 import 'package:todo_main_app/features/todo/domain/repositories/task_repository.dart';
 
 import 'package:dartz/dartz.dart'; // Import the Either class

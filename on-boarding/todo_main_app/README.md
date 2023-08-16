@@ -21,6 +21,71 @@ A2SV 2023 project phase Mobile Team,This repository serves as a central hub for 
 
 ## Updates
 
+### Aug 16, 2023 Task 1
+- Create Event Classes, Create the necessary Event classes for your Todo app. 
+  ```dart
+  part of 'todo_bloc.dart';
+
+  sealed class TodoEvent extends Equatable {
+    const TodoEvent();
+
+    @override
+    List<Object> get props => [];
+  }
+
+  class LoadAllTasksEvent extends TodoEvent {}
+
+  class GetSingleTaskEvent extends TodoEvent {
+    final int taskId;
+
+    const GetSingleTaskEvent(this.taskId);
+
+    @override
+    List<Object> get props => [taskId];
+  }
+
+  class UpdateTaskEvent extends TodoEvent {
+    final int taskId;
+    final String updatedTitle;
+    final String updatedDescription;
+    final DateTime updatedDueDate;
+
+    const UpdateTaskEvent({
+      required this.taskId,
+      required this.updatedTitle,
+      required this.updatedDescription,
+      required this.updatedDueDate,
+    });
+
+    @override
+    List<Object> get props =>
+        [taskId, updatedTitle, updatedDescription, updatedDueDate];
+  }
+
+  class DeleteTaskEvent extends TodoEvent {
+    final int taskId;
+
+    const DeleteTaskEvent(this.taskId);
+
+    @override
+    List<Object> get props => [taskId];
+  }
+
+  class CreateTaskEvent extends TodoEvent {
+    final String title;
+    final String description;
+    final DateTime dueDate;
+
+    const CreateTaskEvent({
+      required this.title,
+      required this.description,
+      required this.dueDate,
+    });
+
+    @override
+    List<Object> get props => [title, description, dueDate];
+  }
+
 ### Aug 11, 2023 Task 1
 - Local Data Source in Flutter Clean Architecture:
 Note: Caching data gotten from the remote API. We're going to implement it using shared_preferences.

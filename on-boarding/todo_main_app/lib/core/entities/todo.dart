@@ -33,6 +33,16 @@ class Todo {
     };
   }
 
+  static Todo empty() {
+    return Todo(
+      id: -1, // Use a unique negative value or any other placeholder for ID
+      title: '',
+      description: '',
+      dueDate: DateTime.now(),
+      isCompleted: false,
+    );
+  }
+
   Todo copyWith({
     int? id,
     String? title,
