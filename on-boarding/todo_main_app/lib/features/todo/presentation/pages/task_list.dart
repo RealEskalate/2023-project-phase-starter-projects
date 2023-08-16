@@ -1,18 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:todo_main_app/features/todo/presentation/bloc/todo_bloc.dart';
+import 'package:todo_main_app/features/todo/domain/usecases/get_all_tasks.dart';
+import 'package:todo_main_app/features/todo/presentation/bloc/bloc.dart';
 import 'package:todo_main_app/features/todo/presentation/widgets/single_list_card.dart';
+import 'package:todo_main_app/injection.dart';
 
-import '../../../../injection.dart';
+class TaskListRoute extends StatelessWidget {
+  const TaskListRoute({super.key});
 
-class TaskListRoute extends StatefulWidget {
-  const TaskListRoute({Key? key}) : super(key: key);
-
-  @override
-  TaskListRouteState createState() => TaskListRouteState();
-}
-
-class TaskListRouteState extends State<TaskListRoute> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -37,8 +32,10 @@ class TaskListRouteState extends State<TaskListRoute> {
   }
 
   BlocProvider<TodoBloc> buildBody(BuildContext context) {
-    return BlocProvider<TodoBloc>(
-      create: (context) => sl<TodoBloc>(),
+    return BlocProvider(
+      create: (context) => TodoBloc(
+        getAllTasks: sl<GetAllTask>(),
+      )..add(const LoadAllTasksEvent()),
       child: Column(
         children: <Widget>[
           Image.asset(
@@ -58,36 +55,36 @@ class TaskListRouteState extends State<TaskListRoute> {
             ),
           ),
           const SizedBox(height: 10),
-          Expanded(
-            child: BlocBuilder<TodoBloc, TodoState>(
-              builder: (context, state) {
-                if (state is LoadedAllTasksState) {
-                  final tasks = state.tasks; // Use tasks from the state
+          BlocBuilder<TodoBloc, TodoState>(
+            builder: (context, state) {
+              if (state is LoadedAllTasksState) {
+                final tasks = state.tasks; // Use tasks from the state
 
-                  return ListView.builder(
-                    itemCount: tasks.length,
-                    itemBuilder: (context, index) {
-                      final task =
-                          tasks[index]; // Get the task for the current index
+                return ListView.builder(
+                  shrinkWrap: true, // Add this line to allow ListView to shrink
+                  physics: NeverScrollableScrollPhysics(), // Disable scrolling
+                  itemCount: tasks.length,
+                  itemBuilder: (context, index) {
+                    final task =
+                        tasks[index]; // Get the task for the current index
 
-                      return SingleListCard(
-                        id: task.id,
-                        title: task.title,
-                        description: task.description,
-                        selectedDate: task.dueDate,
-                        isCompleted: task.isCompleted,
-                        onDateSelected: (DateTime date) {
-                          // Your date selection logic
-                        },
-                      );
-                    },
-                  );
-                } else {
-                  // Handle other states if needed
-                  return const SizedBox.shrink();
-                }
-              },
-            ),
+                    return SingleListCard(
+                      id: task.id,
+                      title: task.title,
+                      description: task.description,
+                      selectedDate: task.dueDate,
+                      isCompleted: task.isCompleted,
+                      onDateSelected: (DateTime date) {
+                        // Your date selection logic
+                      },
+                    );
+                  },
+                );
+              } else {
+                // Handle other states if needed
+                return const SizedBox.shrink();
+              }
+            },
           ),
           Container(
             height: 10,

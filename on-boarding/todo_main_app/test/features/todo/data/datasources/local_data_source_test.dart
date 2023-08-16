@@ -1,50 +1,76 @@
-import 'dart:convert';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:todo_main_app/core/entities/todo.dart';
 import 'package:todo_main_app/features/todo/data/datasources/todo_local_data_source.dart';
-import 'package:matcher/matcher.dart';
-import '../../../../fixtures/fixture_reader.dart';
+import 'package:todo_main_app/features/todo/data/models/todo_model.dart';
 
 class MockSharedPreferences extends Mock implements SharedPreferences {}
 
 void main() {
-  late TodoLocalDataSource dataSource;
+  late TodoLocalDataSourceImp dataSource;
   late MockSharedPreferences mockSharedPreferences;
 
   setUp(() {
     mockSharedPreferences = MockSharedPreferences();
-    dataSource = TodoLocalDataSource(sharedPreferences: mockSharedPreferences);
+    dataSource =
+        TodoLocalDataSourceImp(sharedPreferences: mockSharedPreferences);
   });
 
   group('getAllTodos', () {
-    Todo.fromJson(json.decode(fixture('todo_cached.json')));
     test(
-      'should return a list of todos from shared preferences',
-      () async {
-        when(mockSharedPreferences.getString("$any"))
-            .thenReturn(fixture('todo_cached.json'));
-
-        final result = await dataSource.getAllTodos();
-
-        verify(mockSharedPreferences.getString("todo"));
-        expect(result, equals(Todo));
-      },
-    );
-
-    test('should return an empty list if no data is cached', () async {
+        'should return a list of TodoModel from SharedPreferences when data is available',
+        () async {
       // Arrange
-      when(mockSharedPreferences.getString("todo")).thenReturn(null);
+      const jsonString = '''
+        [
+          {"id": 1, "title": "Todo 1", "description": "Description 1", "dueDate": "2023-08-16T12:00:00.000Z", "isCompleted": false},
+          {"id": 2, "title": "Todo 2", "description": "Description 2", "dueDate": "2023-08-17T12:00:00.000Z", "isCompleted": true}
+        ]
+      ''';
+      when(mockSharedPreferences.getString("$any")).thenReturn(jsonString);
 
       // Act
       final result = await dataSource.getAllTodos();
 
       // Assert
-      expect(result, isA<List<Todo>>());
-      expect(result.isEmpty, true);
+      final expectedList = [
+        TodoModel(
+            id: 1,
+            title: 'Todo 1',
+            description: 'Description 1',
+            dueDate: DateTime.parse('2023-08-16T12:00:00.000Z'),
+            isCompleted: false),
+        TodoModel(
+            id: 2,
+            title: 'Todo 2',
+            description: 'Description 2',
+            dueDate: DateTime.parse('2023-08-17T12:00:00.000Z'),
+            isCompleted: true),
+      ];
+      expect(result, equals(expectedList));
+      verify(mockSharedPreferences.getString('CACHED_TODO'));
+    });
+
+    test('should return a default list of TodoModel when data is not available',
+        () async {
+      // Arrange
+      when(mockSharedPreferences.getString("$any")).thenReturn(null);
+
+      // Act
+      final result = await dataSource.getAllTodos();
+
+      // Assert
+      final expectedList = [
+        TodoModel(
+            id: 0,
+            title: 'Todo App UI Design',
+            description:
+                'Design a UI/UX for mobile app. We can use figma or Adobe for designing the UI.',
+            dueDate: DateTime.now(),
+            isCompleted: false),
+      ];
+      expect(result, equals(expectedList));
+      verify(mockSharedPreferences.getString('CACHED_TODO'));
     });
   });
-
-  // Add more test cases for other methods in TodoLocalDataSource
 }

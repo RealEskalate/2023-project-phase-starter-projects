@@ -1,4 +1,4 @@
-import 'package:todo_main_app/features/todo/presentation/widgets/task_list.dart';
+import 'package:todo_main_app/features/todo/presentation/pages/task_list.dart';
 import 'package:flutter/material.dart';
 
 class GetStartedRoute extends StatefulWidget {
@@ -29,7 +29,7 @@ class GetStartedRouteState extends State<GetStartedRoute> {
                   // Navigate to Home Screen with custom animation
                   Navigator.push(
                     context,
-                    CustomPageRoute(page: const TaskListRoute()),
+                    CustomPageRoute(page: TaskListRoute()),
                   );
                 },
                 style: ElevatedButton.styleFrom(

@@ -1,13 +1,17 @@
-import 'package:todo_main_app/features/todo/presentation/widgets/add_task.dart';
-import 'package:todo_main_app/features/todo/presentation/widgets/task_list.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:todo_main_app/core/bloc.dart';
+import 'package:todo_main_app/features/todo/presentation/bloc/todo_bloc.dart';
+import 'package:todo_main_app/features/todo/presentation/pages/task_list.dart';
+import 'package:todo_main_app/features/todo/presentation/pages/add_task.dart';
 import 'package:todo_main_app/features/todo/presentation/widgets/on_boarding.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'injection.dart' as di;
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
+
   await di.init();
+  Bloc.observer = const AppBlocObserver();
   runApp(const MyApp());
 }
 
@@ -25,7 +29,10 @@ class MyApp extends StatelessWidget {
       ),
       home: const GetStartedRoute(), // Remove const
       routes: {
-        '/addTask': (context) => const AddTask(),
+        '/addTask': (context) {
+          final todoBloc = BlocProvider.of<TodoBloc>(context);
+          return AddTask(todoBloc: todoBloc);
+        },
         '/home': (context) => const TaskListRoute(),
       },
     );

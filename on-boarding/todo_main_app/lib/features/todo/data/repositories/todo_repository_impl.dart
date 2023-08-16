@@ -1,18 +1,8 @@
 import 'package:dartz/dartz.dart';
-import 'package:todo_main_app/core/entities/todo.dart';
 import 'package:todo_main_app/core/error/failure.dart';
-import 'package:todo_main_app/core/repositories/todo_repository.dart';
-import 'package:todo_main_app/features/todo/data/datasources/todo_local_data_source.dart';
-import 'package:todo_main_app/core/usecases/usescase.dart';
-
-class ServerFailure extends Failure {
-  final String message;
-
-  const ServerFailure(this.message) : super('');
-
-  @override
-  List<Object> get props => [message];
-}
+import 'package:todo_main_app/features/todo/data/datasources/data_source.dart';
+import 'package:todo_main_app/features/todo/domain/repositories/todo_repository.dart';
+import '../../domain/entities/todo.dart';
 
 class TodoRepositoryImpl implements TodoRepository {
   final TodoLocalDataSource localDataSource;
@@ -30,26 +20,6 @@ class TodoRepositoryImpl implements TodoRepository {
   }
 
   @override
-  Future<Either<Failure, Todo>> createTask(Todo todo) async {
-    try {
-      final createdTodo = await localDataSource.createTodo(todo);
-      return Right(createdTodo);
-    } catch (e) {
-      return const Left(ServerFailure("Failed to create task"));
-    }
-  }
-
-  @override
-  Future<Either<Failure, bool>> deleteTask(int todoId) async {
-    try {
-      final isDeleted = await localDataSource.deleteTodo(todoId);
-      return Right(isDeleted);
-    } catch (e) {
-      return const Left(ServerFailure("Failed to delete task"));
-    }
-  }
-
-  @override
   Future<Either<Failure, Todo>> getSingleTask(int todoId) async {
     try {
       final todo = await localDataSource.getTodoById(todoId);
@@ -60,13 +30,12 @@ class TodoRepositoryImpl implements TodoRepository {
   }
 
   @override
-  Future<Either<Failure, bool>> markTodoAsCompleted(int todoId) async {
+  Future<Either<Failure, Todo>> createTask(Todo todo) async {
     try {
-      final isMarkedAsCompleted =
-          await localDataSource.markTodoAsCompleted(todoId);
-      return Right(isMarkedAsCompleted);
+      final createdTodo = await localDataSource.createTodo(todo);
+      return Right(createdTodo);
     } catch (e) {
-      return const Left(ServerFailure("Failed to mark task as completed"));
+      return const Left(ServerFailure("Failed to create task"));
     }
   }
 
@@ -80,5 +49,13 @@ class TodoRepositoryImpl implements TodoRepository {
     }
   }
 
-  // Add other use case implementations here if needed
+  @override
+  Future<Either<Failure, bool>> deleteTask(int todoId) async {
+    try {
+      final isDeleted = await localDataSource.deleteTodo(todoId);
+      return Right(isDeleted);
+    } catch (e) {
+      return const Left(ServerFailure("Failed to delete task"));
+    }
+  }
 }

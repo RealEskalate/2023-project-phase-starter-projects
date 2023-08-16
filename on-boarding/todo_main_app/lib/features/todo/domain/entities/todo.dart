@@ -42,20 +42,4 @@ class Todo {
       isCompleted: false,
     );
   }
-
-  Todo copyWith({
-    int? id,
-    String? title,
-    String? description,
-    DateTime? dueDate,
-    bool? isCompleted,
-  }) {
-    return Todo(
-      id: id ?? this.id,
-      title: title ?? this.title,
-      description: description ?? this.description,
-      dueDate: dueDate ?? this.dueDate,
-      isCompleted: isCompleted ?? this.isCompleted,
-    );
-  }
 }

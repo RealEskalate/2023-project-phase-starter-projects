@@ -1,4 +1,4 @@
-part of 'todo_bloc.dart';
+import 'package:equatable/equatable.dart';
 
 sealed class TodoEvent extends Equatable {
   const TodoEvent();
@@ -7,7 +7,9 @@ sealed class TodoEvent extends Equatable {
   List<Object> get props => [];
 }
 
-class LoadAllTasksEvent extends TodoEvent {}
+final class LoadAllTasksEvent extends TodoEvent {
+  const LoadAllTasksEvent();
+}
 
 class GetSingleTaskEvent extends TodoEvent {
   final int taskId;

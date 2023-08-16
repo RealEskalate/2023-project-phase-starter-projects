@@ -1,32 +1,62 @@
+import 'dart:async';
 import 'dart:convert';
 
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:todo_main_app/core/entities/todo.dart';
-import 'package:todo_main_app/features/todo/data/datasources/todo_data_source.dart';
+import 'package:todo_main_app/features/todo/data/datasources/data_source.dart';
+import 'package:todo_main_app/features/todo/data/models/todo_model.dart';
+import 'package:todo_main_app/features/todo/domain/entities/todo.dart';
 
-class TodoLocalDataSource implements TodoDataSource {
+const CACHED_TODO = 'CACHED_TODO';
+
+class TodoLocalDataSourceImp implements TodoLocalDataSource {
   final SharedPreferences sharedPreferences;
 
-  TodoLocalDataSource({required this.sharedPreferences});
+  TodoLocalDataSourceImp({required this.sharedPreferences});
 
   @override
   Future<List<Todo>> getAllTodos() async {
-    final jsonString = sharedPreferences.getString('todos');
+    final jsonString = sharedPreferences.getString(CACHED_TODO);
     if (jsonString != null) {
-      final List<dynamic> todoListJson = json.decode(jsonString);
-      final todos = todoListJson.map((json) => Todo.fromJson(json)).toList();
+      final List<dynamic> jsonList = json.decode(jsonString);
+      final todos =
+          jsonList.map((jsonObject) => TodoModel.fromJson(jsonObject)).toList();
       return todos;
     } else {
-      return [];
+      final defaultTodo = [
+        TodoModel(
+          id: 2,
+          title: "Todo App UI Design",
+          description:
+              "Design a UI/UX for a mobile app. We can use Figma or Adobe for designing the UI.",
+          dueDate: DateTime.now(),
+          isCompleted: false,
+        ),
+        TodoModel(
+          id: 3,
+          title: "Todo App UI Design",
+          description:
+              "Design a UI/UX for a mobile app. We can use Figma or Adobe for designing the UI.",
+          dueDate: DateTime.now(),
+          isCompleted: false,
+        ),
+      ];
+      return defaultTodo; // Return the default TodoModel directly
     }
   }
 
   @override
   Future<Todo> createTodo(Todo todo) async {
     final todos = await getAllTodos();
-    todos.add(todo);
+    final newTodo = TodoModel(
+      id: todos.length + 1, // Generate a new ID
+      title: todo.title,
+      description: todo.description,
+      dueDate: todo.dueDate,
+      isCompleted: false, // New todos are not completed by default
+    );
+    todos.add(newTodo);
     await saveTodos(todos);
-    return todo;
+    return newTodo;
   }
 
   @override
@@ -34,30 +64,19 @@ class TodoLocalDataSource implements TodoDataSource {
     final todos = await getAllTodos();
     final index = todos.indexWhere((t) => t.id == todo.id);
     if (index != -1) {
-      todos[index] = todo;
+      final updatedTodo = TodoModel(
+        id: todo.id,
+        title: todo.title,
+        description: todo.description,
+        dueDate: todo.dueDate,
+        isCompleted: todo.isCompleted,
+      );
+      todos[index] = updatedTodo;
       await saveTodos(todos);
+      return updatedTodo;
+    } else {
+      throw Exception('Todo with ID ${todo.id} not found.');
     }
-    return todo;
-  }
-
-  @override
-  Future<bool> markTodoAsCompleted(int todoId) async {
-    final todos = await getAllTodos();
-    final index = todos.indexWhere((t) => t.id == todoId);
-    if (index != -1) {
-      todos[index] = todos[index].copyWith(isCompleted: true);
-      await saveTodos(todos);
-      return true;
-    }
-    return false;
-  }
-
-  @override
-  Future<Todo> getTodoById(int todoId) async {
-    final todos = await getAllTodos();
-    final todo =
-        todos.firstWhere((t) => t.id == todoId, orElse: () => Todo.empty());
-    return todo;
   }
 
   @override
@@ -67,14 +86,23 @@ class TodoLocalDataSource implements TodoDataSource {
     if (index != -1) {
       todos.removeAt(index);
       await saveTodos(todos);
-      return true; // Deletion was successful
+      return true;
+    } else {
+      return false;
     }
-    return false; // Todo with the specified ID was not found
+  }
+
+  @override
+  Future<Todo> getTodoById(int todoId) async {
+    final todos = await getAllTodos();
+    final todo = todos.firstWhere((t) => t.id == todoId,
+        orElse: () => throw Exception('Todo with ID $todoId not found.'));
+    return todo;
   }
 
   Future<void> saveTodos(List<Todo> todos) async {
     final todoListJson = todos.map((todo) => todo.toJson()).toList();
     final jsonString = json.encode(todoListJson);
-    await sharedPreferences.setString('todos', jsonString);
+    await sharedPreferences.setString(CACHED_TODO, jsonString);
   }
 }

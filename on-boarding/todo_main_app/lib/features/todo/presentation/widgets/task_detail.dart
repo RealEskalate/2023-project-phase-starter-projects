@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:todo_main_app/features/todo/domain/entities/task_list.dart';
-import 'package:todo_main_app/features/todo/domain/usecases/view_task.dart';
+import 'package:todo_main_app/features/todo/domain/entities/todo.dart';
 
 class TaskDetail extends StatefulWidget {
   final int taskId;
@@ -14,12 +13,11 @@ class TaskDetail extends StatefulWidget {
 
 class _TaskDetailState extends State<TaskDetail> {
   DateTime selectedDate = DateTime.now();
-  late ViewTaskUsecase viewTaskUsecase;
-  late Task task;
+  late Todo task;
 
   // Loading Data From Array For Testing
-  List<Task> tasks = [
-    Task(
+  List<Todo> tasks = [
+    Todo(
       id: 0,
       title: 'Todo App UI Design',
       description:
@@ -27,14 +25,14 @@ class _TaskDetailState extends State<TaskDetail> {
       dueDate: DateTime.now(),
       isCompleted: false,
     ),
-    Task(
+    Todo(
       id: 1,
       title: 'Attending Study Session',
       description: 'Attend the study session at 8:00 PM.',
       dueDate: DateTime.now(),
       isCompleted: false,
     ),
-    Task(
+    Todo(
       id: 2,
       title: 'View Candidates',
       description:
@@ -42,7 +40,7 @@ class _TaskDetailState extends State<TaskDetail> {
       dueDate: DateTime.now(),
       isCompleted: false,
     ),
-    Task(
+    Todo(
       id: 3,
       title: 'Football Match',
       description: 'Watching the football match at 9:00 PM with friends.',
@@ -234,8 +232,7 @@ class _TaskDetailState extends State<TaskDetail> {
             margin: const EdgeInsets.only(left: 20, right: 20),
             child: ElevatedButton(
               onPressed: () async {
-                await viewTaskUsecase.updateTaskCompletionStatus(task.id, true);
-                Navigator.pop(context); // Navigate back to the previous screen
+                Navigator.pop(context);
               },
               style: ElevatedButton.styleFrom(
                 backgroundColor: const Color.fromRGBO(238, 111, 87, 1),

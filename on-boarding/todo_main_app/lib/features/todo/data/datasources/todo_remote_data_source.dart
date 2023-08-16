@@ -1,11 +1,5 @@
-import 'package:todo_main_app/core/entities/todo.dart';
-import 'package:todo_main_app/features/todo/data/datasources/todo_data_source.dart';
+abstract class TodoRemoteDataSource {}
 
-class TodoRemoteDataSource implements TodoDataSource {
+class TodoRemoteDataSourceImp implements TodoRemoteDataSource {
   // Implement methods to fetch data from a remote API or service
-  @override
-  Future<List<Todo>> getAllTodos() async {
-    // TODO: Replace with actual API calls and data parsing
-    return [];
-  }
 }

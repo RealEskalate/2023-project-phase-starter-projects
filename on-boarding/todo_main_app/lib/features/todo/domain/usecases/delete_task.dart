@@ -1,7 +1,8 @@
 import 'package:dartz/dartz.dart';
 import 'package:todo_main_app/core/error/failure.dart';
-import 'package:todo_main_app/core/repositories/todo_repository.dart';
 import 'package:todo_main_app/core/usecases/usescase.dart';
+
+import '../repositories/todo_repository.dart';
 
 class DeleteTask implements UseCase<void, int> {
   final TodoRepository repository;

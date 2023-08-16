@@ -1,17 +1,18 @@
-class TodoModel {
-  final int id;
-  final String title;
-  final String description;
-  final DateTime dueDate;
-  final bool isCompleted;
+import 'package:todo_main_app/features/todo/domain/entities/todo.dart';
 
+class TodoModel extends Todo {
   TodoModel({
-    required this.id,
-    required this.title,
-    required this.description,
-    required this.dueDate,
-    required this.isCompleted,
-  });
+    required int id,
+    required String title,
+    required String description,
+    required DateTime dueDate,
+    required bool isCompleted,
+  }) : super(
+            id: 0,
+            title: title,
+            description: description,
+            dueDate: dueDate,
+            isCompleted: isCompleted);
 
   factory TodoModel.fromJson(Map<String, dynamic> json) {
     return TodoModel(
@@ -23,6 +24,7 @@ class TodoModel {
     );
   }
 
+  @override
   Map<String, dynamic> toJson() {
     return {
       'id': id,
@@ -31,5 +33,15 @@ class TodoModel {
       'dueDate': dueDate.toIso8601String(),
       'isCompleted': isCompleted,
     };
+  }
+
+  static TodoModel empty() {
+    return TodoModel(
+      id: -1,
+      title: '',
+      description: '',
+      dueDate: DateTime.now(),
+      isCompleted: false,
+    );
   }
 }

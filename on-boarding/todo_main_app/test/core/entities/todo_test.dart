@@ -2,6 +2,7 @@
 
 import 'package:flutter_test/flutter_test.dart';
 import 'package:todo_main_app/core/entities/todo.dart';
+import 'package:todo_main_app/features/todo/domain/entities/todo.dart';
 
 void main() {
   group('Todo Entity', () {

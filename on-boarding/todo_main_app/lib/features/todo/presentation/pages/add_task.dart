@@ -1,11 +1,20 @@
 // ignore_for_file: use_build_context_synchronously
 
+import 'dart:math';
+import 'dart:developer' as developer;
 import 'package:intl/intl.dart';
 import 'package:flutter/material.dart';
-import 'package:todo_main_app/features/todo/presentation/widgets/task_list.dart';
+import 'package:todo_main_app/features/todo/domain/entities/todo.dart';
+import 'package:todo_main_app/features/todo/domain/repositories/todo_repository.dart';
+import 'package:todo_main_app/features/todo/domain/usecases/create_task.dart';
+import 'package:todo_main_app/features/todo/presentation/bloc/bloc.dart';
+import 'package:todo_main_app/features/todo/presentation/pages/task_list.dart';
+import 'package:todo_main_app/injection.dart';
 
 class AddTask extends StatefulWidget {
-  const AddTask({Key? key}) : super(key: key);
+  final TodoBloc todoBloc; // Pass the TodoBloc as a parameter
+
+  const AddTask({Key? key, required this.todoBloc}) : super(key: key);
 
   @override
   State<AddTask> createState() => _AddTaskState();
@@ -13,7 +22,22 @@ class AddTask extends StatefulWidget {
 
 class _AddTaskState extends State<AddTask> {
   TextEditingController taskNameController = TextEditingController();
+  TextEditingController descriptionController = TextEditingController();
   DateTime selectedDate = DateTime.now();
+  late final TodoBloc _todoBloc;
+  late final CreateTask _createTask;
+
+  @override
+  void initState() {
+    super.initState();
+    _todoBloc = widget.todoBloc; // Use the TodoBloc from the widget parameter
+    _createTask = CreateTask(sl<TodoRepository>());
+  }
+
+  int _generateRandomNumber() {
+    final random = Random();
+    return random.nextInt(9000) + 1000;
+  }
 
   Future<void> _selectDate(BuildContext context) async {
     final DateTime? picked = await showDatePicker(
@@ -27,11 +51,6 @@ class _AddTaskState extends State<AddTask> {
         selectedDate = picked;
       });
     }
-  }
-
-  @override
-  void initState() {
-    super.initState();
   }
 
   @override
@@ -188,6 +207,7 @@ class _AddTaskState extends State<AddTask> {
           Container(
             margin: const EdgeInsets.only(left: 20, right: 20),
             child: TextField(
+              controller: descriptionController,
               maxLines: 4,
               decoration: InputDecoration(
                 filled: true,
@@ -216,11 +236,30 @@ class _AddTaskState extends State<AddTask> {
             child: ElevatedButton(
               key: const Key('add_task_button'),
               onPressed: () async {
-                Navigator.pushReplacement(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => const TaskListRoute(),
-                  ),
+                final newTask = Todo(
+                  id: _generateRandomNumber(), // Generate a random id
+                  title: taskNameController.text,
+                  description: descriptionController.text,
+                  dueDate: selectedDate,
+                  isCompleted: false,
+                );
+
+                final createTaskResult =
+                    await _createTask(CreateTaskParams(task: newTask));
+
+                createTaskResult.fold(
+                  (failure) {
+                    // Handle failure
+                  },
+                  (task) {
+                    // Task created successfully
+                    developer.log('Task created: $task');
+                    _todoBloc.add(LoadAllTasksEvent()); // Reload tasks
+                    Navigator.pushReplacement(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => TaskListRoute()));
+                  },
                 );
               },
               style: ElevatedButton.styleFrom(
@@ -244,7 +283,9 @@ class _AddTaskState extends State<AddTask> {
 
   @override
   void dispose() {
+    _todoBloc.close(); // Close the TodoBloc
     taskNameController.dispose();
+    descriptionController.dispose();
     super.dispose();
   }
 }

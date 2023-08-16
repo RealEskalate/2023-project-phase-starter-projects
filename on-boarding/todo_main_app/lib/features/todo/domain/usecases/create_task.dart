@@ -1,14 +1,24 @@
+import 'package:dartz/dartz.dart';
+import 'package:meta/meta.dart';
+import 'package:todo_main_app/core/error/failure.dart';
 import 'package:todo_main_app/core/usecases/usescase.dart';
-import 'package:todo_main_app/features/todo/domain/entities/task_list.dart';
-import 'package:todo_main_app/features/todo/domain/repositories/task_repository.dart';
+import 'package:todo_main_app/features/todo/domain/entities/todo.dart';
 
-class CreateTaskUsecase implements UseCase<void, Task> {
-  final TaskRepository repository;
+import '../repositories/todo_repository.dart';
 
-  CreateTaskUsecase(this.repository);
+class CreateTask implements UseCase<Either<Failure, Todo>, CreateTaskParams> {
+  final TodoRepository repository;
+
+  CreateTask(this.repository);
 
   @override
-  Future<void> call(Task newTask) async {
-    await repository.createTask(newTask);
+  Future<Either<Failure, Todo>> call(CreateTaskParams params) async {
+    return await repository.createTask(params.task as Todo);
   }
+}
+
+class CreateTaskParams {
+  final Todo task;
+
+  CreateTaskParams({required this.task});
 }
