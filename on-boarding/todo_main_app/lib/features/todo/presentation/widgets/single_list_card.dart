@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:todo_main_app/features/todo/presentation/pages/task_detail.dart';
 
 class SingleListCard extends StatelessWidget {
   final int id;

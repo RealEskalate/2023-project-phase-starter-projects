@@ -8,7 +8,6 @@ import 'package:todo_main_app/features/todo/domain/entities/todo.dart';
 import 'package:todo_main_app/features/todo/domain/repositories/todo_repository.dart';
 import 'package:todo_main_app/features/todo/domain/usecases/create_task.dart';
 import 'package:todo_main_app/features/todo/presentation/bloc/bloc.dart';
-import 'package:todo_main_app/features/todo/presentation/pages/task_list.dart';
 import 'package:todo_main_app/injection.dart';
 
 class AddTask extends StatefulWidget {
@@ -255,10 +254,13 @@ class _AddTaskState extends State<AddTask> {
                     // Task created successfully
                     developer.log('Task created: $task');
                     _todoBloc.add(const LoadAllTasksEvent()); // Reload tasks
-                    Navigator.pushReplacement(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => TaskListRoute()));
+
+                    // snack bar "Task created successfully
+                    SnackBar snackBar = const SnackBar(
+                      content: Text('Task created successfully'),
+                      duration: Duration(seconds: 2),
+                    );
+                    ScaffoldMessenger.of(context).showSnackBar(snackBar);
                   },
                 );
               },

@@ -37,7 +37,7 @@ class MyApp extends StatelessWidget {
             AddTask(todoBloc: todoBloc), // Use the passed todoBloc
         '/home': (context) => const TaskListRoute(),
         '/taskDetail': (context) => TaskDetail(
-              taskId: 0,
+              taskId: 2,
               todoBloc: todoBloc,
             ),
       },

@@ -18,6 +18,7 @@ class TaskDetail extends StatefulWidget {
 class _TaskDetailState extends State<TaskDetail> {
   DateTime selectedDate = DateTime.now();
   late Todo task;
+
   late final TodoBloc _todoBloc; // Add this
 
   @override

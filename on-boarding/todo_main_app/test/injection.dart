@@ -1,73 +1,43 @@
-import 'package:bloc_test/bloc_test.dart';
-import 'package:dartz/dartz.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:mockito/mockito.dart';
-import 'package:todo_main_app/core/error/failure.dart';
-import 'package:todo_main_app/core/usecases/usescase.dart';
-import 'package:todo_main_app/features/todo/domain/entities/todo.dart';
+import 'package:get_it/get_it.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:todo_main_app/core/platform/network_info.dart';
+import 'package:todo_main_app/features/todo/data/datasources/data_source.dart';
+import 'package:todo_main_app/features/todo/data/datasources/todo_local_data_source.dart';
+import 'package:todo_main_app/features/todo/data/repositories/todo_repository_impl.dart';
+import 'package:todo_main_app/features/todo/domain/repositories/todo_repository.dart';
 import 'package:todo_main_app/features/todo/domain/usecases/get_all_tasks.dart';
-import 'package:todo_main_app/features/todo/presentation/bloc/bloc.dart';
+import 'package:todo_main_app/features/todo/domain/usecases/get_single_task.dart';
+import 'package:mockito/mockito.dart';
 
-class MockGetAllTask extends Mock implements GetAllTask {}
+class MockSharedPreferences extends Mock implements SharedPreferences {}
 
 void main() {
-  late MockGetAllTask mockGetAllTask;
-  late TodoBloc todoBloc;
+  late GetIt sl;
 
   setUp(() {
-    mockGetAllTask = MockGetAllTask();
-    todoBloc =
-        TodoBloc(getAllTasks: mockGetAllTask, getAllTask: mockGetAllTask);
+    sl = GetIt.instance;
   });
 
-  tearDown(() {
-    todoBloc.close();
+  test('should register and resolve dependencies correctly', () async {
+    // Arrange
+    final mockSharedPreferences = MockSharedPreferences();
+
+    // Register mock dependencies
+    sl.registerSingleton<SharedPreferences>(mockSharedPreferences);
+    sl.registerSingleton<TodoLocalDataSource>(
+        TodoLocalDataSourceImp(sharedPreferences: sl()));
+    sl.registerSingleton<TodoRepository>(TodoRepositoryImpl(sl()));
+    sl.registerLazySingleton(() => GetAllTask(sl()));
+    sl.registerLazySingleton(() => GetSingleTask(sl()));
+    sl.registerLazySingleton<NetworkInfo>(() => NetworkInfoImpl(sl()));
+
+    // Act and Assert
+    expect(sl.isRegistered<SharedPreferences>(), true);
+    expect(sl.isRegistered<TodoLocalDataSource>(), true);
+    expect(sl.isRegistered<TodoRepository>(), true);
+    expect(sl.isRegistered<GetAllTask>(), true);
+    expect(sl.isRegistered<GetSingleTask>(), true);
+    expect(sl.isRegistered<NetworkInfo>(), true);
   });
-
-  final tTodoList = [
-    Todo(
-        id: 1,
-        title: 'Task 1',
-        description: 'Description 1',
-        isCompleted: false,
-        dueDate: DateTime.now()),
-    Todo(
-        id: 2,
-        title: 'Task 2',
-        description: 'Description 2',
-        isCompleted: true,
-        dueDate: DateTime.now()),
-  ];
-
-  test('initial state should be InitialState', () {
-    expect(todoBloc.state, equals(InitialState()));
-  });
-
-  blocTest<TodoBloc, TodoState>(
-    'should emit [LoadingState, LoadedAllTasksState] when LoadAllTasksEvent is added',
-    build: () {
-      when(mockGetAllTask(NoParams()))
-          .thenAnswer((_) async => Right(tTodoList));
-      return todoBloc;
-    },
-    act: (bloc) => bloc.add(const LoadAllTasksEvent()),
-    expect: () => [
-      LoadingState(),
-      LoadedAllTasksState(tTodoList),
-    ],
-  );
-
-  blocTest<TodoBloc, TodoState>(
-    'should emit [LoadingState, ErrorState] when LoadAllTasksEvent fails',
-    build: () {
-      when(mockGetAllTask(NoParams())).thenAnswer(
-          (_) async => const Left(ServerFailure("An error occurred")));
-      return todoBloc;
-    },
-    act: (bloc) => bloc.add(const LoadAllTasksEvent()),
-    expect: () => [
-      LoadingState(),
-      const ErrorState('An error occurred'),
-    ],
-  );
 }
