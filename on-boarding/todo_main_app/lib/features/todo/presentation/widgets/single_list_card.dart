@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:todo_main_app/features/todo/presentation/widgets/task_detail.dart';
+import 'package:todo_main_app/features/todo/presentation/pages/task_detail.dart';
 
 class SingleListCard extends StatelessWidget {
   final int id;
@@ -24,14 +24,7 @@ class SingleListCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) => TaskDetail(
-              taskId: id,
-            ),
-          ),
-        );
+        Navigator.pushNamed(context, '/taskDetail');
       },
       child: Card(
         surfaceTintColor: Colors.white,

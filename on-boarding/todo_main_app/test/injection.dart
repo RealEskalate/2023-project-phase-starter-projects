@@ -16,7 +16,8 @@ void main() {
 
   setUp(() {
     mockGetAllTask = MockGetAllTask();
-    todoBloc = TodoBloc(getAllTasks: mockGetAllTask);
+    todoBloc =
+        TodoBloc(getAllTasks: mockGetAllTask, getAllTask: mockGetAllTask);
   });
 
   tearDown(() {

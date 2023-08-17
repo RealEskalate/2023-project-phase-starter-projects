@@ -13,7 +13,7 @@ class CreateTask implements UseCase<Either<Failure, Todo>, CreateTaskParams> {
 
   @override
   Future<Either<Failure, Todo>> call(CreateTaskParams params) async {
-    return await repository.createTask(params.task as Todo);
+    return await repository.createTask(params.task);
   }
 }
 

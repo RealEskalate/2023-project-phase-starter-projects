@@ -4,13 +4,16 @@ import 'package:todo_main_app/core/error/failure.dart';
 import 'package:todo_main_app/core/usecases/usescase.dart';
 import 'package:todo_main_app/features/todo/domain/entities/todo.dart';
 import 'package:todo_main_app/features/todo/domain/usecases/get_all_tasks.dart';
+import 'package:todo_main_app/features/todo/domain/usecases/get_single_task.dart';
 import './bloc.dart';
 
 class TodoBloc extends Bloc<TodoEvent, TodoState> {
   final GetAllTask getAllTasks;
+  final GetSingleTask getSingleTask;
 
   TodoBloc({
     required this.getAllTasks,
+    required this.getSingleTask,
   }) : super(InitialState()) {
     on<LoadAllTasksEvent>((event, emit) async {
       emit(LoadingState());
@@ -18,6 +21,15 @@ class TodoBloc extends Bloc<TodoEvent, TodoState> {
       emit(result.fold(
         (failure) => ErrorState(_mapFailureToMessage(failure)),
         (tasks) => LoadedAllTasksState(tasks),
+      ));
+    });
+
+    on<GetSingleTaskEvent>((event, emit) async {
+      emit(LoadingState());
+      final Either<Failure, Todo> result = await getSingleTask(event.taskId);
+      emit(result.fold(
+        (failure) => ErrorState(_mapFailureToMessage(failure)),
+        (task) => LoadedSingleTaskState(task),
       ));
     });
   }

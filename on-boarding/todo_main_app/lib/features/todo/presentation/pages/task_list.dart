@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:todo_main_app/features/todo/domain/usecases/get_all_tasks.dart';
+import 'package:todo_main_app/features/todo/domain/usecases/get_single_task.dart';
 import 'package:todo_main_app/features/todo/presentation/bloc/bloc.dart';
 import 'package:todo_main_app/features/todo/presentation/widgets/single_list_card.dart';
 import 'package:todo_main_app/injection.dart';
@@ -35,6 +36,7 @@ class TaskListRoute extends StatelessWidget {
     return BlocProvider(
       create: (context) => TodoBloc(
         getAllTasks: sl<GetAllTask>(),
+        getSingleTask: sl<GetSingleTask>(),
       )..add(const LoadAllTasksEvent()),
       child: Column(
         children: <Widget>[

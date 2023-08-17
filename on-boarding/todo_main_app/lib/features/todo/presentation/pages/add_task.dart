@@ -254,7 +254,7 @@ class _AddTaskState extends State<AddTask> {
                   (task) {
                     // Task created successfully
                     developer.log('Task created: $task');
-                    _todoBloc.add(LoadAllTasksEvent()); // Reload tasks
+                    _todoBloc.add(const LoadAllTasksEvent()); // Reload tasks
                     Navigator.pushReplacement(
                         context,
                         MaterialPageRoute(

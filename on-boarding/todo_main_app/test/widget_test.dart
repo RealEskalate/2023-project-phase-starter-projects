@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:todo_main_app/features/todo/presentation/pages/add_task.dart';
 import 'package:todo_main_app/features/todo/presentation/pages/task_list.dart';
-import 'package:todo_main_app/features/todo/presentation/widgets/on_boarding.dart';
+import 'package:todo_main_app/features/todo/presentation/pages/on_boarding.dart';
 
 void main() {
   testWidgets('AddTask widget displays UI elements correctly', (tester) async {
