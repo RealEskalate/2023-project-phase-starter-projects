@@ -1,0 +1,94 @@
+name: backend
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  # JOB to run change detection
+  changes:
+    runs-on: ubuntu-latest
+    # Set job outputs to values from filter step
+    outputs:
+      matrix: ${{ steps.filter.outputs.changes }}
+    steps:
+      - uses: actions/checkout@v3
+      - uses: dorny/paths-filter@v2
+        id: filter
+        with:
+          filters: |
+            aait_backend_g1a:
+              - 'aait/backend/group-1A/**'
+            aait_backend_g1b:
+              - 'aait/backend/group-1B/**'
+            aait_backend_g2a:
+              - 'aait/backend/group-2A/**'
+            aait_backend_g2b:
+              - 'aait/backend/group-2B/**'
+            aastu_backend_g1:
+              - 'aastu/backend/group-1/**'
+            aastu_backend_g2:
+              - 'aastu/backend/group-2/**'
+            aastu_backend_g3:
+              - 'aastu/backend/group-3/**'
+            aastu_backend_g4:
+              - 'aastu/backend/group-4/**'
+
+  run_workflow:
+    needs: changes
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        group: ${{fromJson(needs.changes.outputs.matrix)}}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - uses: kanga333/variable-mapper@master
+        id: path-mapper
+        with:
+          key: "${{ matrix.group }}"
+          map: |
+            {
+              "aait_backend_g1a": {
+                "path": "aait/backend/group-1A"
+              },
+              "aait_backend_g1b": {
+                "path": "aait/backend/group-1B"
+              },
+              "aait_backend_g2a": {
+                "path": "aait/backend/group-2A"
+              },
+              "aait_backend_g2b": {
+                "path": "aait/backend/group-2B"
+              },
+              "aastu_backend_g1": {
+                "path": "aastu/backend/group-1"
+              },
+              "aastu_backend_g2": {
+                "path": "aastu/backend/group-2"
+              },
+              "aastu_backend_g3": {
+                "path": "aastu/backend/group-3"
+              },
+              "aastu_backend_g4": {
+                "path": "aastu/backend/group-4"
+              }
+            }
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v3
+        with:
+          dotnet-version: 7.0.x
+
+      - name: Restore dependencies
+        working-directory: "./${{ env.path }}"
+        run: dotnet restore
+      - name: Build
+        working-directory: "./${{ env.path }}"
+        run: dotnet build --no-restore
+      - name: Test
+        working-directory: "./${{ env.path }}"
+        run: dotnet test --no-build --verbosity normal
