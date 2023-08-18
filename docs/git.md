@@ -108,6 +108,7 @@ This document serves as a comprehensive guide for using Git effectively within t
 
 When creating a pull request, please ensure that:
 
+- PR title follows the commit convention, eg: "fix(AAiT-backend-1A): Update Login Page"
 - Your branch is up to date with the main branch.
 - Changes are fully tested and pass all tests.
 - Commit messages are meaningful and follow the commit guidelines.
