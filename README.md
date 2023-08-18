@@ -1,5 +1,3 @@
-# 2023-project-phase-starter-projects
-
 # A2SV Project Phase Repository - AASTU and AAIT
 
 Welcome to the A2SV Project Phase Repository for AASTU and AAIT schools! This repository serves as a central hub for all the projects developed during the A2SV project phase at Addis Ababa Science and Technology University (AASTU) and Addis Ababa Institute of Technology (AAIT).
