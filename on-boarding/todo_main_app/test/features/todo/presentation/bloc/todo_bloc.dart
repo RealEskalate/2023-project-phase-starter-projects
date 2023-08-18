@@ -5,25 +5,38 @@ import 'package:mockito/mockito.dart';
 import 'package:todo_main_app/core/error/failure.dart';
 import 'package:todo_main_app/core/usecases/usescase.dart';
 import 'package:todo_main_app/features/todo/domain/entities/todo.dart';
+import 'package:todo_main_app/features/todo/domain/usecases/delete_task.dart';
 import 'package:todo_main_app/features/todo/domain/usecases/get_all_tasks.dart';
 import 'package:todo_main_app/features/todo/domain/usecases/get_single_task.dart';
+import 'package:todo_main_app/features/todo/domain/usecases/update_task.dart';
 import 'package:todo_main_app/features/todo/presentation/bloc/bloc.dart';
 
 class MockGetAllTask extends Mock implements GetAllTask {}
 
 class MockGetSingleTask extends Mock implements GetSingleTask {}
 
+class MockUpdateTask extends Mock implements UpdateTask {}
+
+class MockDeleteTask extends Mock implements DeleteTask {}
+
 void main() {
   late TodoBloc todoBloc;
   late MockGetAllTask mockGetAllTask;
   late MockGetSingleTask mockGetSingleTask;
+  late MockUpdateTask mockUpdateTask;
+  late MockDeleteTask mockDeleteTask;
 
   setUp(() {
     mockGetAllTask = MockGetAllTask();
     mockGetSingleTask = MockGetSingleTask();
+    mockUpdateTask = MockUpdateTask();
+    mockDeleteTask = MockDeleteTask();
+
     todoBloc = TodoBloc(
       getAllTasks: mockGetAllTask,
       getSingleTask: mockGetSingleTask,
+      updateTask: mockUpdateTask,
+      deleteTask: mockDeleteTask,
     );
   });
 

@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:convert';
-
+import 'dart:developer' as developer;
+import 'dart:math';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:todo_main_app/features/todo/data/datasources/data_source.dart';
 import 'package:todo_main_app/features/todo/data/models/todo_model.dart';
@@ -12,6 +13,7 @@ class TodoLocalDataSourceImp implements TodoLocalDataSource {
   final SharedPreferences sharedPreferences;
 
   TodoLocalDataSourceImp({required this.sharedPreferences});
+  var random = Random();
 
   @override
   Future<List<Todo>> getAllTodos() async {
@@ -24,36 +26,35 @@ class TodoLocalDataSourceImp implements TodoLocalDataSource {
     } else {
       final defaultTodo = [
         TodoModel(
-          id: 2,
-          title: "Todo App UI Design",
-          description:
-              "Design a UI/UX for a mobile app. We can use Figma or Adobe for designing the UI.",
-          dueDate: DateTime.now(),
-          isCompleted: false,
-        ),
-        TodoModel(
-          id: 3,
-          title: "Todo App UI Design",
-          description:
-              "Design a UI/UX for a mobile app. We can use Figma or Adobe for designing the UI.",
+          id: 0,
+          title: "Test",
+          description: "Test",
           dueDate: DateTime.now(),
           isCompleted: false,
         ),
       ];
-      return defaultTodo; // Return the default TodoModel directly
+      return defaultTodo;
     }
   }
 
   @override
   Future<Todo> createTodo(Todo todo) async {
     final todos = await getAllTodos();
+
+    var uniId = random.nextInt(9000) + 1000;
+
     final newTodo = TodoModel(
-      id: todos.length + 1, // Generate a new ID
+      id: uniId,
       title: todo.title,
       description: todo.description,
       dueDate: todo.dueDate,
       isCompleted: false, // New todos are not completed by default
     );
+    developer.log("newTodo $newTodo.toString()");
+    // log print title and id
+    developer.log("newTodo $newTodo.title");
+    developer.log("newTodo $newTodo.id");
+
     todos.add(newTodo);
     await saveTodos(todos);
     return newTodo;
@@ -95,9 +96,14 @@ class TodoLocalDataSourceImp implements TodoLocalDataSource {
   @override
   Future<Todo> getTodoById(int todoId) async {
     final todos = await getAllTodos();
-    final todo = todos.firstWhere((t) => t.id == todoId,
-        orElse: () => throw Exception('Todo with ID $todoId not found.'));
-    return todo;
+    final index = todos.indexWhere((task) => task.id == todoId);
+    if (index >= 0) {
+      final todo = todos[index];
+      return todo;
+    } else {
+      throw Exception(
+          'Todo with ID $todoId not found.'); // Add a throw statement
+    }
   }
 
   Future<void> saveTodos(List<Todo> todos) async {

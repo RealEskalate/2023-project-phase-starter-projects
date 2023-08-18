@@ -13,7 +13,11 @@ Future<void> main() async {
 
   await di.init();
   Bloc.observer = const AppBlocObserver();
-  final todoBloc = TodoBloc(getAllTasks: di.sl(), getSingleTask: di.sl());
+  final todoBloc = TodoBloc(
+      getAllTasks: di.sl(),
+      getSingleTask: di.sl(),
+      updateTask: di.sl(),
+      deleteTask: di.sl());
   runApp(MyApp(todoBloc: todoBloc));
 }
 
@@ -36,9 +40,8 @@ class MyApp extends StatelessWidget {
         '/addTask': (context) =>
             AddTask(todoBloc: todoBloc), // Use the passed todoBloc
         '/home': (context) => const TaskListRoute(),
-        '/taskDetail': (context) => TaskDetail(
-              taskId: 2,
-              todoBloc: todoBloc,
+        '/taskDetail': (context) => const TaskDetail(
+              taskId: 0,
             ),
       },
     );

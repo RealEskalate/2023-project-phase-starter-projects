@@ -8,7 +8,7 @@ class TodoModel extends Todo {
     required DateTime dueDate,
     required bool isCompleted,
   }) : super(
-            id: 0,
+            id: id,
             title: title,
             description: description,
             dueDate: dueDate,

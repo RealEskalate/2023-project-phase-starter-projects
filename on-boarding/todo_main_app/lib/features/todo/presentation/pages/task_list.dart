@@ -1,28 +1,35 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:todo_main_app/features/todo/domain/usecases/delete_task.dart';
 import 'package:todo_main_app/features/todo/domain/usecases/get_all_tasks.dart';
 import 'package:todo_main_app/features/todo/domain/usecases/get_single_task.dart';
+import 'package:todo_main_app/features/todo/domain/usecases/update_task.dart';
 import 'package:todo_main_app/features/todo/presentation/bloc/bloc.dart';
+import 'package:todo_main_app/features/todo/presentation/widgets/empty_task.dart';
 import 'package:todo_main_app/features/todo/presentation/widgets/single_list_card.dart';
 import 'package:todo_main_app/injection.dart';
 
-class TaskListRoute extends StatelessWidget {
+import '../widgets/menu.dart';
+
+class TaskListRoute extends StatefulWidget {
   const TaskListRoute({super.key});
 
+  @override
+  State<TaskListRoute> createState() => _TaskListRouteState();
+}
+
+class _TaskListRouteState extends State<TaskListRoute> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Todo List'),
         leading: IconButton(
-          icon: const Icon(Icons.arrow_back_ios),
+          icon: const Icon(Icons.menu),
           onPressed: () {},
         ),
         actions: [
-          IconButton(
-            icon: const Icon(Icons.more_vert),
-            onPressed: () {},
-          ),
+          popUpMenu(context),
         ],
         centerTitle: true,
       ),
@@ -37,6 +44,8 @@ class TaskListRoute extends StatelessWidget {
       create: (context) => TodoBloc(
         getAllTasks: sl<GetAllTask>(),
         getSingleTask: sl<GetSingleTask>(),
+        updateTask: sl<UpdateTask>(),
+        deleteTask: sl<DeleteTask>(),
       )..add(const LoadAllTasksEvent()),
       child: Column(
         children: <Widget>[
@@ -51,7 +60,7 @@ class TaskListRoute extends StatelessWidget {
             child: const Text(
               'Tasks List',
               style: TextStyle(
-                fontSize: 18,
+                fontSize: 20,
                 fontWeight: FontWeight.bold,
               ),
             ),
@@ -61,27 +70,30 @@ class TaskListRoute extends StatelessWidget {
             builder: (context, state) {
               if (state is LoadedAllTasksState) {
                 final tasks = state.tasks; // Use tasks from the state
+                if (tasks.length <= 1) {
+                  return emptyTask();
+                } else {
+                  return ListView.builder(
+                    shrinkWrap:
+                        true, // Add this line to allow ListView to shrink
+                    physics:
+                        const NeverScrollableScrollPhysics(), // Disable scrolling
+                    itemCount: tasks.length,
+                    itemBuilder: (context, index) {
+                      final task =
+                          tasks[index]; // Get the task for the current index
 
-                return ListView.builder(
-                  shrinkWrap: true, // Add this line to allow ListView to shrink
-                  physics: NeverScrollableScrollPhysics(), // Disable scrolling
-                  itemCount: tasks.length,
-                  itemBuilder: (context, index) {
-                    final task =
-                        tasks[index]; // Get the task for the current index
-
-                    return SingleListCard(
-                      id: task.id,
-                      title: task.title,
-                      description: task.description,
-                      selectedDate: task.dueDate,
-                      isCompleted: task.isCompleted,
-                      onDateSelected: (DateTime date) {
-                        // Your date selection logic
-                      },
-                    );
-                  },
-                );
+                      return SingleListCard(
+                        id: task.id,
+                        title: task.title,
+                        description: task.description,
+                        selectedDate: task.dueDate,
+                        isCompleted: task.isCompleted,
+                        onDateSelected: (DateTime date) {},
+                      );
+                    },
+                  );
+                }
               } else {
                 // Handle other states if needed
                 return const SizedBox.shrink();

@@ -1,6 +1,3 @@
-// ignore_for_file: use_build_context_synchronously
-
-import 'dart:math';
 import 'dart:developer' as developer;
 import 'package:intl/intl.dart';
 import 'package:flutter/material.dart';
@@ -12,7 +9,6 @@ import 'package:todo_main_app/injection.dart';
 
 class AddTask extends StatefulWidget {
   final TodoBloc todoBloc; // Pass the TodoBloc as a parameter
-
   const AddTask({Key? key, required this.todoBloc}) : super(key: key);
 
   @override
@@ -29,13 +25,8 @@ class _AddTaskState extends State<AddTask> {
   @override
   void initState() {
     super.initState();
-    _todoBloc = widget.todoBloc; // Use the TodoBloc from the widget parameter
+    _todoBloc = widget.todoBloc;
     _createTask = CreateTask(sl<TodoRepository>());
-  }
-
-  int _generateRandomNumber() {
-    final random = Random();
-    return random.nextInt(9000) + 1000;
   }
 
   Future<void> _selectDate(BuildContext context) async {
@@ -73,7 +64,6 @@ class _AddTaskState extends State<AddTask> {
       ),
       body: ListView(
         children: <Widget>[
-          // centered container
           Container(
             alignment: Alignment.center,
             child: const Text(
@@ -131,11 +121,9 @@ class _AddTaskState extends State<AddTask> {
               ),
             ),
           ),
-
           Container(
             height: 10,
           ),
-
           Container(
             margin: const EdgeInsets.only(left: 20),
             alignment: Alignment.centerLeft,
@@ -148,11 +136,9 @@ class _AddTaskState extends State<AddTask> {
               ),
             ),
           ),
-
           Container(
             height: 8,
           ),
-
           Card(
             surfaceTintColor: Colors.white,
             elevation: 4,
@@ -236,7 +222,7 @@ class _AddTaskState extends State<AddTask> {
               key: const Key('add_task_button'),
               onPressed: () async {
                 final newTask = Todo(
-                  id: _generateRandomNumber(), // Generate a random id
+                  id: 0,
                   title: taskNameController.text,
                   description: descriptionController.text,
                   dueDate: selectedDate,
@@ -249,18 +235,27 @@ class _AddTaskState extends State<AddTask> {
                 createTaskResult.fold(
                   (failure) {
                     // Handle failure
+                    // Show snack bar with red background
+                    SnackBar snackBar = SnackBar(
+                      content: Text(failure.toString()),
+                      duration: const Duration(seconds: 2),
+                      backgroundColor: const Color(0xffEE6F57),
+                    );
+                    ScaffoldMessenger.of(context).showSnackBar(snackBar);
                   },
                   (task) {
                     // Task created successfully
-                    developer.log('Task created: $task');
-                    _todoBloc.add(const LoadAllTasksEvent()); // Reload tasks
+                    developer.log('Task created: $task.id');
+                    _todoBloc.add(const LoadAllTasksEvent());
 
-                    // snack bar "Task created successfully
                     SnackBar snackBar = const SnackBar(
                       content: Text('Task created successfully'),
                       duration: Duration(seconds: 2),
+                      backgroundColor: Color(0xff4BB543),
                     );
                     ScaffoldMessenger.of(context).showSnackBar(snackBar);
+
+                    Navigator.pushReplacementNamed(context, '/home');
                   },
                 );
               },
