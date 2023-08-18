@@ -8,11 +8,9 @@ A2SV 2023 project phase Mobile Team,This repository serves as a central hub for 
   <img src="screenshot/image2.jpg" alt="Mobile App Screenshot" width="180" />
   <img src="screenshot/image3.jpg" alt="Mobile App Screenshot" width="180" />
   <img src="screenshot/image4.jpg" alt="Mobile App Screenshot" width="180" />
-  <img src="screenshot/image5.jpg" alt="Mobile App Screenshot" width="180" />
   <img src="screenshot/image6.jpg" alt="Mobile App Screenshot" width="180" />
   <img src="screenshot/image7.jpg" alt="Mobile App Screenshot" width="180" />
   <img src="screenshot/image8.jpg" alt="Mobile App Screenshot" width="180" />
-  <img src="screenshot/image9.jpg" alt="Mobile App Screenshot" width="180" />
 </div>
 
  
