@@ -1,0 +1,13 @@
+# This is a CODEOWNERS file
+# It specifies the code owners for different parts of the repository.
+
+# Backend code owners
+/aait/backend/group-1A/ @yonass08
+/aait/backend/group-1B/ @sossyh @birehan
+/aait/backend/group-2A/ @abrahamshimekt
+/aait/backend/group-2B/ @bahailu-abera
+
+/aastu/backend/group-1/ @ElsaiDeribu
+/aastu/backend/group-2/ @AbenezerAberaa
+/aastu/backend/group-3/ @YabTek
+/aastu/backend/group-4/ @suarfel @tedblackson
