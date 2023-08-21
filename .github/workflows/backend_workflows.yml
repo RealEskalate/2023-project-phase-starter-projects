@@ -39,6 +39,7 @@ jobs:
   run_workflow:
     needs: changes
     runs-on: ubuntu-latest
+    if: needs.changes.outputs.matrix != '' && needs.changes.outputs.matrix != null && ${{fromJson(needs.changes.outputs.matrix)}} != []
     strategy:
       matrix:
         group: ${{fromJson(needs.changes.outputs.matrix)}}
