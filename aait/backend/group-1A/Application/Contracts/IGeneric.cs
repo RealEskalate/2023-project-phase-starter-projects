@@ -6,17 +6,14 @@ using System.Threading.Tasks;
 
 namespace Application.Contracts
 {
-    public interface IGeneric<T>
+    public interface IGenericRepository<T>
     {
-        public Task<T> Get(int id);
-
         public Task<List<T>> GetAll();
 
         public Task<T> Add(T entity);
 
-        public Task<int> Delete(int id);
+        public Task<bool> Delete(int id);
 
-        public Task<T> Update(int id, T entity);   
 
         public Task<bool> Exists(int id);
 

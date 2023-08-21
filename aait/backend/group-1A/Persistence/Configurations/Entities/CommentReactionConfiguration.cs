@@ -4,10 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Domain.Entities
+namespace Persistence.Configurations.Entities
 {
-    public class Comment
+    internal class CommentReactionConfiguration
     {
-        public int Id { get; set; }
     }
 }

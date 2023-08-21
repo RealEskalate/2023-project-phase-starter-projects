@@ -6,10 +6,16 @@ using System.Threading.Tasks;
 
 namespace Application.DTO.PostDTO.DTO
 {
-    public class PostResponseDTO : IBasePostDTO
+    public class PostResponseDTO
     {
-
+        public int Id { get; set; }
         public string Title { get; set; }
         public string Content { get; set; }
+
+        //public List<CommentResponseDTO> Comments { get; set; }
+
+        public int Like { get; set; }
+
+        public int Dislike { get; set; }
     }
 }
