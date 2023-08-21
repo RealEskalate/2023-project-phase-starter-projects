@@ -35,7 +35,7 @@ jobs:
               - 'aastu/backend/group-3/**'
             aastu_backend_g4:
               - 'aastu/backend/group-4/**'
-  
+
   run_workflow:
     needs: changes
     runs-on: ubuntu-latest
