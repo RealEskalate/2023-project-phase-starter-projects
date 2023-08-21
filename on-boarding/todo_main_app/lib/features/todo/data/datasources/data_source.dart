@@ -6,4 +6,13 @@ abstract class TodoLocalDataSource {
   Future<Todo> updateTodo(Todo todo);
   Future<bool> deleteTodo(int todoId);
   Future<Todo> getTodoById(int todoId);
+  Future<void> cacheTodos(List<Todo> todos);
+}
+
+abstract class TodoRemoteDataSource {
+  Future<List<Todo>> getAllTodos();
+  Future<Todo> createTodo(Todo todo);
+  Future<Todo> updateTodo(Todo todo);
+  Future<bool> deleteTodo(int todoId);
+  Future<Todo> getTodoById(int todoId);
 }

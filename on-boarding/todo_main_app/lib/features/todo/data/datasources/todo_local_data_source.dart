@@ -111,4 +111,11 @@ class TodoLocalDataSourceImp implements TodoLocalDataSource {
     final jsonString = json.encode(todoListJson);
     await sharedPreferences.setString(CACHED_TODO, jsonString);
   }
+
+  @override
+  Future<void> cacheTodos(List<Todo> todos) async {
+    final todoListJson = todos.map((todo) => todo.toJson()).toList();
+    final jsonString = json.encode(todoListJson);
+    await sharedPreferences.setString(CACHED_TODO, jsonString);
+  }
 }

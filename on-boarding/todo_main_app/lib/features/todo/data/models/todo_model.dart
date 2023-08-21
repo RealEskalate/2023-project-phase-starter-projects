@@ -23,6 +23,15 @@ class TodoModel extends Todo {
       isCompleted: json['isCompleted'],
     );
   }
+  factory TodoModel.fromAPIJson(Map<String, dynamic> json) {
+    return TodoModel(
+      id: json['id'],
+      title: json['todo'],
+      description: json['category'],
+      dueDate: DateTime.parse(json['dueDate']),
+      isCompleted: true,
+    );
+  }
 
   @override
   Map<String, dynamic> toJson() {
