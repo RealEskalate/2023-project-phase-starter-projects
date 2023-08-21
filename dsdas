@@ -1,0 +1,97 @@
+[33mcommit 297788f01b45f105f7b61406a40184991aa931a4[m[33m ([m[1;36mHEAD -> [m[1;32mmain[m[33m)[m
+Author: Gemechis Elias <gemeelijah@gmail.com>
+Date:   Mon Aug 21 21:43:50 2023 +0300
+
+    Setup(aastu-mobile-g1): Project Structure setup
+
+[33mcommit 7c52bcc1c0ba41a4ad45e8f604545a830f0a31b2[m[33m ([m[1;31morigin/main[m[33m, [m[1;31morigin/HEAD[m[33m)[m
+Author: Tamirat Dereje <91497780+tamiratdereje@users.noreply.github.com>
+Date:   Mon Aug 21 17:22:51 2023 +0300
+
+    Update CODEOWNERS
+
+[33mcommit 8ccd4148c3b4fb2a6e51f37a3d566ad5b7b5868c[m
+Author: Tamirat Dereje <91497780+tamiratdereje@users.noreply.github.com>
+Date:   Mon Aug 21 17:10:55 2023 +0300
+
+    Update CODEOWNERS
+
+[33mcommit 9ece955a0d17d5ff12bf6ce7262ca0f90ab4e16d[m
+Author: yidnekachew-tebeje-a2sv <139858715+yidnekachew-tebeje-a2sv@users.noreply.github.com>
+Date:   Mon Aug 21 17:08:07 2023 +0300
+
+    finish setuping the project (#8)
+    
+    Co-authored-by: Yidnekachew Tebeje <yidnekachewtebeje@gmail.com>
+
+[33mcommit 61ec0f7891bf45a847f6bf94d4242af5741b472a[m
+Author: bruk-tedla-a2sv <138388822+bruk-tedla-a2sv@users.noreply.github.com>
+Date:   Mon Aug 21 16:46:16 2023 +0300
+
+    feat(devOps): Create CODEOWNERS
+
+[33mcommit c96be8b6b70982feac44740dd94d2df14d4115e9[m
+Author: Bruk Tedla <bruk.tedla@a2sv.org>
+Date:   Mon Aug 21 15:43:12 2023 +0300
+
+    fix(devOps): Remove global workflow for backend projects
+
+[33mcommit 8bb27e674985d1ba2c3e3309a27bfe08796182f4[m
+Author: aman-a2sv <142579482+aman-a2sv@users.noreply.github.com>
+Date:   Mon Aug 21 10:18:56 2023 +0300
+
+    fix(AASTU-web-g3): Delete aastu/web/group-3 directory (#1)
+
+[33mcommit f52e9656dd027be7422763e12fb12104fdf73d18[m
+Author: bruk-a2sv <138388822+bruk-a2sv@users.noreply.github.com>
+Date:   Fri Aug 18 15:42:09 2023 +0300
+
+    Update git.md
+
+[33mcommit f2ced1830e109ffdc69ee2b9c69068e4fdc6c725[m
+Author: bruk-a2sv <138388822+bruk-a2sv@users.noreply.github.com>
+Date:   Fri Aug 18 14:55:49 2023 +0300
+
+    Update README.md
+
+[33mcommit fc8cf8c85fa29111cd976efdfd8e11cdfcde0b8e[m
+Author: bruk-a2sv <138388822+bruk-a2sv@users.noreply.github.com>
+Date:   Fri Aug 18 14:54:58 2023 +0300
+
+    Update README.md
+
+[33mcommit acc6a2e57bbd589d5a1eabd285637fd412d5cb86[m
+Author: bruk-a2sv <138388822+bruk-a2sv@users.noreply.github.com>
+Date:   Fri Aug 18 14:54:36 2023 +0300
+
+    Create README.md
+
+[33mcommit fd5d4415a0bbb819727b70db32391a3e1b752078[m
+Author: bruk-a2sv <138388822+bruk-a2sv@users.noreply.github.com>
+Date:   Fri Aug 18 14:42:42 2023 +0300
+
+    Create git.md
+
+[33mcommit a4177aac422abd481532b69c704f1df91551e291[m
+Author: Bruk Tedla <bruk.tedla@a2sv.org>
+Date:   Fri Aug 18 14:11:56 2023 +0300
+
+    [devOps] Setup ci for backend projects
+
+[33mcommit 3eba86bc3b3bff6b64468d246bc96ee4e08bbaab[m
+Author: Bruk Tedla <bruk.tedla@a2sv.org>
+Date:   Fri Aug 18 10:21:28 2023 +0300
+
+    Setup backend projects
+
+[33mcommit 738dc5756246c1ff2d050f5dec07a3875a0f2236[m
+Author: Bruk Tedla <bruk.tedla@a2sv.org>
+Date:   Fri Aug 18 10:10:54 2023 +0300
+
+    Remove aait mobile group
+
+[33mcommit 601d4c1e34b50b12788550268d19ec955b52b220[m
+Author: Bruk Tedla <bruk.tedla@a2sv.org>
+Date:   Fri Aug 18 10:07:04 2023 +0300
+
+    Setup folders
