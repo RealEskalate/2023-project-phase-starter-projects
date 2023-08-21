@@ -35,11 +35,11 @@ jobs:
               - 'aastu/backend/group-3/**'
             aastu_backend_g4:
               - 'aastu/backend/group-4/**'
+      - run: echo "${{ steps.filter.outputs.matrix }}"
 
   run_workflow:
     needs: changes
     runs-on: ubuntu-latest
-    if: needs.changes.outputs.matrix != '' && needs.changes.outputs.matrix != null && ${{fromJson(needs.changes.outputs.matrix)}} != []
     strategy:
       matrix:
         group: ${{fromJson(needs.changes.outputs.matrix)}}
