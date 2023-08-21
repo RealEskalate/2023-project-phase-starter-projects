@@ -22,5 +22,7 @@
     <ItemGroup>
       <Folder Include="Features\Comment\" />
       <Folder Include="Features\Like\" />
+      <Folder Include="Features\UserFeatures\Handlers\Queries\" />
+      <Folder Include="Features\UserFeatures\Request\Queries\" />
     </ItemGroup>
 </Project>

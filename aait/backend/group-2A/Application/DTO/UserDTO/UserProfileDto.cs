@@ -1,6 +1,6 @@
 using Application.DTO.Common;
 
-namespace Application.DTO.User;
+namespace Application.DTO.UserDTO;
 
 public class UserProfileDto : BaseDto
 {

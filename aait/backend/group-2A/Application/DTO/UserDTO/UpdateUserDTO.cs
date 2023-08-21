@@ -4,9 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Application.DTO.User
+namespace Application.DTO.UserDTO
 {
-    internal class UpdateUserDTO
+    public class UpdateUserDTO
     {
+        
     }
 }

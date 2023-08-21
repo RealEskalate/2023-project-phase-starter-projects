@@ -1,12 +1,28 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Application.Features.User.Request.Commands;
+using MediatR;
+using Microsoft.AspNetCore.Mvc;
+using Application.DTO.UserDTO;
 
 namespace WebApi.Controllers
 {
-    public class UserController : Controller
+    [ApiController]
+    [Route("api/[controller]")]
+    public class UserController : ControllerBase
     {
-        public IActionResult Index()
+        private readonly IMediator _mediator;
+
+        public UserController(IMediator mediator)
         {
-            return View();
+            _mediator = mediator;
+        }
+
+        [HttpPost("register")]
+        public async Task<IActionResult> CreateUser(CreateUserDTO userDto)
+        {
+            var command = new CreateUserCommand { CreateUser = userDto };
+            var userId = await _mediator.Send(command);
+
+            return Ok(new { UserId = userId });
         }
     }
 }
