@@ -11,5 +11,6 @@ namespace Application.Features.PostFeature.Requests.Commands
     public class DeletePostCommand : IRequest<CommonResponseDTO>
     {
         public int Id { get; set; }
+        public int userId { get; set; }
     }
 }

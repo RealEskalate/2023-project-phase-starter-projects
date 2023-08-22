@@ -12,7 +12,7 @@ using Persistence;
 namespace Persistence.Migrations
 {
     [DbContext(typeof(SocialMediaDbContext))]
-    [Migration("20230821143845_InitialMigration")]
+    [Migration("20230822115754_InitialMigration")]
     partial class InitialMigration
     {
         /// <inheritdoc />
