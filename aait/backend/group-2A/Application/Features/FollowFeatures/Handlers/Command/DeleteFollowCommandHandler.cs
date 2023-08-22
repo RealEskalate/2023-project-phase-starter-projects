@@ -23,10 +23,8 @@ namespace Application.Features.FollowFeatures.Handlers.Command
         }
         public async Task<Unit> Handle(DeleteFollowCommand request, CancellationToken cancellationToken)
         {
-            var unfollow = _mapper.Map<Follow>(request.unfollow);
-
+            var unfollow = _mapper.Map<Follow>(request.follow);
             await _followRepository.Unfollow(unfollow);
-
             return Unit.Value;
         }
     }

@@ -1,5 +1,7 @@
-public class CreateLikeCommand : IRequest<uint>
+using Application.DTO.Like;
+using MediatR;
+
+public class CreateLikeCommand : IRequest<Unit>
 {
-    public int PostId { get; set; }
-    public int UserId { get; set; }
+ public required LikedDto like{ get; set; } 
 }

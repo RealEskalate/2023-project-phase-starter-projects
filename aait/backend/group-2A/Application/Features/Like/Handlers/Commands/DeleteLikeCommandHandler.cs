@@ -1,33 +1,25 @@
-using Application.Contracts.Persistence;
-using Application.Exceptions;
+
 using Application.Features.Like.Request.Commands;
 using MediatR;
-using System.Threading;
-using System.Threading.Tasks;
+using Application.Contracts.Persistance;
+using AutoMapper;
 
 namespace Application.Features.Like.Handlers.Commands
 {
     public class DeleteLikeCommandHandler : IRequestHandler<DeleteLikeCommand, Unit>
     {
         private readonly ILikeRepository _likeRepository;
+        private readonly Mapper _mapper;
 
         public DeleteLikeCommandHandler(ILikeRepository likeRepository)
         {
             _likeRepository = likeRepository;
         }
 
-        public async Task<uint> Handle(DeleteLikeCommand request, CancellationToken cancellationToken)
+        public async Task<Unit> Handle(DeleteLikeCommand request, CancellationToken cancellationToken)
         {
-            var like = await _likeRepository.GetById(request.Id);
-
-            if (like == null)
-            {
-                throw new NotFoundException("Like not found.");
-            }
-
-            await _likeRepository.Delete(like);
-
-            return like.Id;
+             await _likeRepository.UnlikePost(_mapper.Map<Domain.Entities.Like>(request.like));
+             return Unit.Value;
         }
     }
 }

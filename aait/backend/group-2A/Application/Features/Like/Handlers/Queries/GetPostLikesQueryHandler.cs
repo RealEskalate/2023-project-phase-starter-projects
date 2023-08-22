@@ -1,12 +1,10 @@
-using Application.Contracts.Persistence;
-using Application.Features.Like.Request.Queries;
 using MediatR;
-using System.Threading;
-using System.Threading.Tasks;
+using Application.Contracts.Persistance;
+using Application.DTO.UserDTO;
 
 namespace Application.Features.Like.Handlers.Query
 {
-    public class GetPostLikesQueryHandler : IRequestHandler<GetPostLikesQuery, List<Like>>
+    public class GetPostLikesQueryHandler : IRequestHandler<GetPostLikesQuery, List<UserDto>>
     {
         private readonly ILikeRepository _likeRepository;
 
@@ -15,9 +13,9 @@ namespace Application.Features.Like.Handlers.Query
             _likeRepository = likeRepository;
         }
 
-        public async Task<int> Handle(GetPostLikesQuery request, CancellationToken cancellationToken)
+        public async Task<List<UserDto>> Handle(GetPostLikesQuery request, CancellationToken cancellationToken)
         {
-            var likes = await _likeRepository.GetLikesByPostId(request.PostId);
+            var likes = await _likeRepository.Likers(request.Id);
             return likes;
         }
     }

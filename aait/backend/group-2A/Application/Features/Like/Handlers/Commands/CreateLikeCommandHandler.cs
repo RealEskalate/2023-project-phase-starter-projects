@@ -1,9 +1,9 @@
-using Application.Contracts.Persistence;
-using Application.Exceptions;
-using Application.Features.Like.Request.Commands;
+
 using MediatR;
-using System.Threading;
-using System.Threading.Tasks;
+using Application.Contracts.Persistance;
+using Application.DTO.Like.Validator;
+using Application.Exceptions;
+using AutoMapper;
 
 namespace Application.Features.Like.Handlers.Commands
 {
@@ -11,37 +11,25 @@ namespace Application.Features.Like.Handlers.Commands
     {
         private readonly IPostRepository _postRepository;
         private readonly IUserRepository _userRepository;
+        private readonly ILikeRepository _likeRepository;
+        private readonly Mapper _mapper;
 
-        public CreateLikeCommandHandler(IPostRepository postRepository, IUserRepository userRepository)
-        {
+        public CreateLikeCommandHandler(IPostRepository postRepository, IUserRepository userRepository, ILikeRepository likeRepository){
+            _likeRepository = likeRepository;
             _postRepository = postRepository;
             _userRepository = userRepository;
         }
 
-        public async Task<uint> Handle(CreateLikeCommand request, CancellationToken cancellationToken)
+        public async Task<Unit> Handle(CreateLikeCommand request, CancellationToken cancellationToken)
         {
-            var post = await _postRepository.GetById(request.PostId);
-            if (post == null)
+            var validator = new LikedDtoValidator(_userRepository, _postRepository);
+            var validationResult = await validator.ValidateAsync(request.like);
+            if (!validationResult.IsValid)
             {
-                throw new NotFoundException("Post not found.");
+                throw new ValidationException(validationResult);
             }
-
-            var user = await _userRepository.GetById(request.UserId);
-            if (user == null)
-            {
-                throw new NotFoundException("User not found.");
-            }
-
-            var like = new Like
-            {
-                PostId = request.PostId,
-                UserId = request.UserId
-            };
-
-            post.Likes.Add(like);
-            await _postRepository.Update(post);
-
-            return like.Id;
+            await _likeRepository.LikePost(_mapper.Map<Domain.Entities.Like>(request.like));
+            return Unit.Value;
         }
     }
 }
