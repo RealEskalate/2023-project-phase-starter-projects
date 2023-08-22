@@ -6,11 +6,15 @@ using System.Threading.Tasks;
 
 namespace Application.Contracts
 {
-    public interface IGenericReactionRepository<T>
+    public interface IGenericRepository<T>
     {
-        public Task<bool> Add(T entity);
+        public Task<List<T>> GetAll();
 
-        public Task<bool> Delete(int Id,T entity);
+        public Task<T> Add(T entity);
+
+        public Task<bool> Delete(int id);
+
+        public Task<bool> Exists(int id);
 
         public Task<List<T>> Likes(int Id);
 

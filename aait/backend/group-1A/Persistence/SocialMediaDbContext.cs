@@ -23,21 +23,6 @@ namespace Persistence
 
             modelBuilder.ApplyConfigurationsFromAssembly(typeof(SocialMediaDbContext).Assembly);
 
-            //modelBuilder.Entity<Comment>(entity =>
-            //{
-            //    entity.Property(e => e.Id)
-            //          .ValueGeneratedOnAdd();
-            //});
-
-            //modelBuilder.Entity<Post>(entity => {
-            //    entity.Property(e => e.Id)
-            //          .ValueGeneratedOnAdd();
-            //});
-            //modelBuilder.Entity<PostReaction>(entity => {
-            //    entity.Property(e => e.Id)
-            //          .ValueGeneratedOnAdd();
-            //});
-
         }
     }
 }

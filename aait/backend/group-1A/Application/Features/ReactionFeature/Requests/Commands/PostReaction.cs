@@ -10,7 +10,6 @@ namespace Application.Features.PostFeature.Requests.Commands
 {
     public class PostReactionCommand : IRequest<CommonResponseDTO>
     {
-        public int UserId { get; set; }
         public ReactionDTO ReactionData { get; set; }
     }
 }

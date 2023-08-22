@@ -14,10 +14,10 @@ namespace Application.Features.PostFeature.Handlers.Commands
 {
     public class PostReactionHandler : IRequestHandler<PostReactionCommand, CommonResponseDTO>
     {
-        private readonly IPostReaction _postReactionRespository;
+        private readonly IPostReactionRepository _postReactionRespository;
         private readonly IMapper _mapper;
 
-        public PostReactionHandler(IPostReaction postReactionRepository, IMapper mapper)
+        public PostReactionHandler(IPostReactionRepository postReactionRepository, IMapper mapper)
         {
             _postReactionRespository = postReactionRepository;
             _mapper = mapper;
@@ -35,7 +35,7 @@ namespace Application.Features.PostFeature.Handlers.Commands
             var postReaction = _mapper.Map<PostReaction>(request.ReactionData);
 
             var result = await _postReactionRespository.Add(postReaction);
-            if (result == true)
+            if (result != null)
             {
                 return new CommonResponseDTO()
                 {

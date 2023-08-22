@@ -16,12 +16,22 @@ namespace Persistence.Repositories
             throw new NotImplementedException();
         }
 
+        public Task<List<T>> DisLikes(int Id)
+        {
+            throw new NotImplementedException();
+        }
+
         public Task<bool> Exists(int id)
         {
             throw new NotImplementedException();
         }
 
         public Task<List<T>> GetAll()
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<List<T>> Likes(int Id)
         {
             throw new NotImplementedException();
         }

@@ -16,9 +16,8 @@ namespace Persistence
                  opt.UseNpgsql(configuration.GetConnectionString("SocialMediaApp")));
 
             services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
-            services.AddScoped(typeof(IGenericReactionRepository<>), typeof(GenericReactionRepository<>));
             services.AddScoped<IPostRepository, PostRepository>();
-            services.AddScoped<IPostReaction, PostReactionRepository>();
+            services.AddScoped<IPostReactionRepository, PostReactionRepository>();
 
             return services;
         }

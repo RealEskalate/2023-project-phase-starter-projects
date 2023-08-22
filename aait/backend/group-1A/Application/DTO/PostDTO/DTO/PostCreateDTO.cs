@@ -8,7 +8,7 @@ namespace Application.DTO.PostDTO.DTO
 {
     public class PostCreateDTO : IBasePostDTO
     {
-        public string Title { get; set; }
-        public string Content { get; set; }
+        public string Title { get; set; } = null!;
+        public string Content { get; set; } = null!;
     }
 }
