@@ -10,6 +10,6 @@ namespace Domain.Entities
         
         //Navigation Property
         public virtual User? Follower{ get; set; }
-        public virtual User? Following{ get; set; }
+        public virtual User? Followed{ get; set; }
     }
 }

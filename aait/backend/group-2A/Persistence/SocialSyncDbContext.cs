@@ -46,14 +46,14 @@ public class SocialSyncDbContext : DbContext
             entity => {
                 entity
                     .HasOne(e => e.Follower)
-                    .WithMany(u => u.Follower)
+                    .WithMany(u => u.Following)
                     .HasForeignKey(e => e.FollowerId)
                     .OnDelete(DeleteBehavior.Cascade)
                     .HasConstraintName("FK_Follower_User");
 
                 entity
-                    .HasOne(e => e.Following)
-                    .WithMany(u => u.Following)
+                    .HasOne(e => e.Followed)
+                    .WithMany(u => u.Follower)
                     .HasForeignKey(e => e.FollowedId)
                     .OnDelete(DeleteBehavior.Cascade)
                     .HasConstraintName("FK_Followed_User");
