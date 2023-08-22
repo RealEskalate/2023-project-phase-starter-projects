@@ -1,6 +1,6 @@
 /* Components */
 // import { Providers } from '@/lib/providers';
-import { Nav } from './components/Nav'
+import Header from './components/header'
 
 /* Instruments */
 import './styles/globals.css'
@@ -11,14 +11,8 @@ export default function RootLayout(props: React.PropsWithChildren) {
       <html lang="en">
         <body>
           <section>
-            <Nav />
-
-            <header>
-              <h1> Header </h1>
-            </header>
-
+            <Header/>
             <main>{props.children}</main>
-
             <footer >
               <h1>Footer</h1>
             </footer>
