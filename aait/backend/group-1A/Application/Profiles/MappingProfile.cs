@@ -19,6 +19,8 @@ namespace Application.Profiles
             CreateMap<ReactionResponseDTO, PostReaction>().ReverseMap();
             CreateMap<PostUpdateDTO, Post>().ReverseMap();
             
+            CreateMap<RegisterUserDto, User>();
+            CreateMap<LoginUserDto, User>();
         }
     }
 }
