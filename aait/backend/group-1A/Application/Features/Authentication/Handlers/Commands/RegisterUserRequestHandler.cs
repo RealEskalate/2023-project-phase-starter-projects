@@ -10,13 +10,13 @@ namespace SocialSync.Application.Features.Authentication.Handlers.Commands;
 public class RegisterUserRequestHandler : IRequestHandler<RegisterUserRequest, RegisterResponseDto>
 {
 
-    readonly IUserRepository _userRepository;
+    readonly IAuthRepository _authRepository;
     readonly IMapper _mapper;
     readonly IJwtGenerator _jwtGenerator;
 
-    public RegisterUserRequestHandler( IUserRepository userRepository, IMapper mapper, IJwtGenerator jwtGenerator)
+    public RegisterUserRequestHandler( IAuthRepository authRepository, IMapper mapper, IJwtGenerator jwtGenerator)
     {
-        _userRepository = userRepository;
+        _authRepository = authRepository;
         _mapper = mapper;
         _jwtGenerator = jwtGenerator;
 
@@ -24,7 +24,7 @@ public class RegisterUserRequestHandler : IRequestHandler<RegisterUserRequest, R
    public async Task<RegisterResponseDto> Handle(RegisterUserRequest request, CancellationToken cancellationToken)
     {
         // Check if user exists
-        if (await _userRepository.UserExistsAsync(request.Email))
+        if (await _authRepository.UserExists(request.Email))
         {
             throw new Exception("User already exists");
         }
@@ -33,7 +33,7 @@ public class RegisterUserRequestHandler : IRequestHandler<RegisterUserRequest, R
         var user = _mapper.Map<User>(request);
 
         // Register user
-        var registeredUser = await _userRepository.RegisterUserAsync(user, request.Password);
+        var registeredUser = await _authRepository.RegisterUser(user);
         
 
         // Generate token
