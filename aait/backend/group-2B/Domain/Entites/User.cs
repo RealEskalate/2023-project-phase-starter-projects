@@ -16,4 +16,7 @@ public class User : BaseAuditableEntity
     public virtual ICollection<User> Followings { get; set; } = null!;
     public virtual ICollection<Post> Posts { get; set; } = null!;
     public virtual ICollection<Interaction> Interactions { get; set; } = null!;
+    
+    public virtual ICollection<Notification> NotificationsReceived  { get; set; } = null!;
+    public virtual ICollection<Notification> NotificationsSent  { get; set; } = null!;
 }

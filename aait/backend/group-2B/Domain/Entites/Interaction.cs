@@ -14,4 +14,7 @@ public class Interaction : BaseAuditableEntity
     public int UserId { get; set; }
     public InteractionType Type { get; set; }
     public string? Body { get; set; }
+
+    public virtual Post Post { get; set; } = null!;
+    public virtual User User { get; set; } = null!;
 }

@@ -34,7 +34,8 @@ public class GenericRepository<T> : IGenericRepository<T>
 
     public async Task<T> GetAsync(int id)
     {
-        return await _dbContext.Set<T>().FindAsync(id);
+        var entity = await _dbContext.Set<T>().FindAsync(id);
+        return entity!;
     }
 
     public async Task UpdateAsync(T entity)
