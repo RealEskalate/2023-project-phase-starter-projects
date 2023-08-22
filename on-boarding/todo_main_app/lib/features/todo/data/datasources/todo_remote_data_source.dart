@@ -16,7 +16,7 @@ class TodoRemoteDataSourceImp implements TodoRemoteDataSource {
     final response = await http.get(url);
 
     if (response.statusCode == 200) {
-      log("Data Fetched From API${response.body}");
+      log("Data Fetched From API");
       final List<dynamic> jsonList = json.decode(response.body);
       final todos = jsonList
           .map((jsonObject) => TodoModel.fromAPIJson(jsonObject))

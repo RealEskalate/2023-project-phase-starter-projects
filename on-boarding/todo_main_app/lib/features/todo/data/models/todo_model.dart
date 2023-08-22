@@ -29,7 +29,7 @@ class TodoModel extends Todo {
       title: json['todo'],
       description: json['category'],
       dueDate: DateTime.parse(json['dueDate']),
-      isCompleted: true,
+      isCompleted: false,
     );
   }
 
