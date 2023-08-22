@@ -2,6 +2,8 @@ import 'package:blog_application/features/blog/presentation/pages/create_article
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
+import 'features/blog/presentation/pages/profile_screen.dart';
+
 void main() {
   runApp(const MyApp());
 }
@@ -36,7 +38,7 @@ class MyApp extends StatelessWidget {
         fontFamily: GoogleFonts.poppins().fontFamily,
         useMaterial3: true,
       ),
-      home: CreateTaskScreen(),
+      home: const ProfileScreen(),
     );
   }
 }
