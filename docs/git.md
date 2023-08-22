@@ -6,12 +6,12 @@ Welcome to the Git Usage Guideline for A2SV Projects. This comprehensive documen
 
 1. [Introduction](#introduction)
 2. [Git Workflow](#git-workflow)
-    - [Getting Started](#getting-started)
-    - [Creating and Managing Branches](#creating-and-managing-branches)
-    - [Making Changes](#making-changes)
-    - [Stage and Commit Changes](#stage-and-commit-changes)
-    - [Pushing Changes](#pushing-changes)
-    - [Creating Pull Requests](#creating-pull-requests)
+   - [Getting Started](#getting-started)
+   - [Creating and Managing Branches](#creating-and-managing-branches)
+   - [Making Changes](#making-changes)
+   - [Stage and Commit Changes](#stage-and-commit-changes)
+   - [Pushing Changes](#pushing-changes)
+   - [Creating Pull Requests](#creating-pull-requests)
 3. [Pull Request Guidelines](#pull-request-guidelines)
 4. [Git FAQs](#git-faqs)
 5. [Conclusion](#conclusion)
@@ -25,11 +25,13 @@ This document serves as a comprehensive guide for using Git effectively within t
 ### Getting Started
 
 1. Clone the repository to your local machine using:
+
    ```
    git clone [repository-url]
    ```
 
 2. Configure Git to rebase when pulling changes:
+
    ```
    git config pull.rebase true [--global]
    ```
@@ -42,9 +44,11 @@ This document serves as a comprehensive guide for using Git effectively within t
 ### Creating and Managing Branches
 
 - Create a new branch for each feature or bug fix:
+
   ```
   git checkout -b [branch-name]
   ```
+
   Example: `git checkout -b aait.bac.g1a.bruk-tedla.login`
 
 - Use `git stash` to organize changes when switching branches.
@@ -64,6 +68,7 @@ This document serves as a comprehensive guide for using Git effectively within t
 ### Stage and Commit Changes
 
 - Stage changes:
+
   ```
   git add [file-name]
   ```
@@ -83,6 +88,7 @@ This document serves as a comprehensive guide for using Git effectively within t
 ### Creating Pull Requests
 
 1. Ensure your branch is up to date with the main branch:
+
    ```
    git pull --rebase origin main
    ```
@@ -92,11 +98,13 @@ This document serves as a comprehensive guide for using Git effectively within t
 3. Address any reviewer comments and make necessary changes.
 
 4. Rebase your branch with changes from the main branch before merging:
+
    ```
    git pull --rebase origin main
    ```
 
 5. Merge the pull request:
+
    - Choose "Squash and Merge" to group smaller commits.
 
 6. After merging, rebase your branch again to stay up to date:
