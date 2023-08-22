@@ -1,7 +1,9 @@
 /* Components */
 
+import LandingSection from "./components/home/LandingSection"
+
 export default function IndexPage() {
-  return <h1>Hello</h1>
+  return <LandingSection />
 }
 
 export const metadata = {
