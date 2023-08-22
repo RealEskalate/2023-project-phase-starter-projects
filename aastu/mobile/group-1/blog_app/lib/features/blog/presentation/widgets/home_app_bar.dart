@@ -5,7 +5,7 @@ AppBar getHomeAppBar() {
     elevation: 0,
     backgroundColor: Colors.transparent,
     leading: IconButton(
-      icon: const Icon(Icons.menu),
+      icon: const Icon(Icons.sort),
       onPressed: () {
         // Handle menu icon tap
       },
