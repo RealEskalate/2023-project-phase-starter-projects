@@ -16,7 +16,7 @@ namespace Application.Features.UserFeatures.Handlers.Commands
             _userRepository = userRepository;
         }
 
-        public async Task<int> Handle(CreateUserCommand request, CancellationToken cancellationToken)
+        public async Task<int> Handle(CreateUserCommand request)
         {
             var user = new Domain.Entities.User
             {
