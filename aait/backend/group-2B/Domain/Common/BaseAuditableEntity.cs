@@ -1,6 +1,6 @@
 namespace SocialSync.Domain.Common;
 
-public class BaseEntity
+public class BaseAuditableEntity
 {
     public DateTime CreatedAt;
     public DateTime LastModified;
