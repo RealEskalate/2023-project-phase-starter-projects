@@ -16,7 +16,7 @@ namespace SocialSync.Domain.Entities
 
         public string Bio { get; set; } = string.Empty;
 
-        // public string Image { get; set; } = string.Empty; TODO: Add image support
+        
 
     }
 }
