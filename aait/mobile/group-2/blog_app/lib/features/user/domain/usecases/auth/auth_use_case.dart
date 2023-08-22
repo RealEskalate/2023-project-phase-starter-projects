@@ -1,9 +1,11 @@
 import 'package:dartz/dartz.dart';
 
 
+import '../../../../../core/error/failure.dart';
 import '../../entities/auth/login_entity.dart';
 import '../../entities/auth/sign_up_entity.dart';
 
+import '../../entities/user_data.dart';
 import '../../repositories/auth/auth_repo.dart';
 
 abstract class UseCase<Type, Params> {
