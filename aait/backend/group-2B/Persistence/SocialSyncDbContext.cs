@@ -6,18 +6,31 @@ namespace SocialSync.Persistence;
 
 public class SocialSyncDbContext : DbContext
 {
-    public DbSet<User> Users{get; set;}
-    public DbSet<Post> Posts{get; set;}
-    public DbSet<Notification> Notifications{get; set;}
-    public DbSet<Interaction> Interactions{get; set;}
+    public DbSet<User> Users { get; set; }
+    public DbSet<Post> Posts { get; set; }
+    public DbSet<Notification> Notifications { get; set; }
+    public DbSet<Interaction> Interactions { get; set; }
     public SocialSyncDbContext(DbContextOptions<SocialSyncDbContext> options)
         : base(options) { }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
-    {
-        base.OnModelCreating(modelBuilder);
+        {
+            base.OnModelCreating(modelBuilder);
 
-    }
+            modelBuilder.Entity<User>()
+                .HasMany(u => u.Followers)
+                .WithMany(u => u.Followings)
+                .UsingEntity<Dictionary<string, object>>(
+                    "UserFollow",
+                    j => j.HasOne<User>().WithMany(),
+                    j => j.HasOne<User>().WithMany(),
+                    j =>
+                    {
+                        j.HasKey("FollowerId", "FollowingId");
+                        j.ToTable("UserFollows");
+                    }
+                );
+        }
 
     public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
     {

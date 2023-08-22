@@ -11,4 +11,9 @@ public class User : BaseAuditableEntity
     public string Username { get; set; } = null!;
     public string Password { get; set; } = null!;
     public string Phone { get; set; } = null!;
+
+    public virtual ICollection<User> Followers { get; set; } = null!;
+    public virtual ICollection<User> Followings { get; set; } = null!;
+    public virtual ICollection<Post> Posts { get; set; } = null!;
+    public virtual ICollection<Interaction> Interactions { get; set; } = null!;
 }
