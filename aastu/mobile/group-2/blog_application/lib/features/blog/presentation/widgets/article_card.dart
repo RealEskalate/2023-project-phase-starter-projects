@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class ArticleCard extends StatelessWidget {
   final String title;
@@ -80,10 +81,10 @@ class ArticleCard extends StatelessWidget {
                     width: 150,
                     child: Text(
                       title,
-                      style: const TextStyle(
+                      style: TextStyle(
                         color: Color(0xFF4D4A49),
                         fontSize: 15,
-                        fontFamily: 'Urbanist',
+                        fontFamily: GoogleFonts.urbanist().fontFamily,
                         fontWeight: FontWeight.w600,
                         letterSpacing: 0.36,
                       ),
