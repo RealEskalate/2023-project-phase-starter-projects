@@ -1,3 +1,5 @@
+using SocialSync.Domain.Common;
+
 namespace SocialSync.Domain.Entities;
 
 public enum InteractionType
@@ -6,7 +8,7 @@ public enum InteractionType
     Comment
 }
 
-public class Interaction
+public class Interaction : BaseAuditableEntity
 {
     public int PostId { get; set; }
     public int UserId { get; set; }
