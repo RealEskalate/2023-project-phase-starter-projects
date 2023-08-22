@@ -1,4 +1,3 @@
-import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/dist/query/react";
 import baseApi from "./baseApi";
 import { Blog } from "@/types";
 
@@ -31,7 +30,7 @@ const blogApi = baseApi.injectEndpoints({
       }),
     }),
   }),
-  overrideExisting: true,
+  overrideExisting: false,
 });
 
 export default blogApi;
