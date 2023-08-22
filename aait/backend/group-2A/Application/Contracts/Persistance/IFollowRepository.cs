@@ -7,5 +7,6 @@ public interface IFollowRepository{
     Task<List<Follow>> GetFollowing(int id);
     Task<List<Follow>> GetFollower(int id);
     Task Follow(Follow follow);
+    Task Unfollow(Follow Unfollow);
 
 }
