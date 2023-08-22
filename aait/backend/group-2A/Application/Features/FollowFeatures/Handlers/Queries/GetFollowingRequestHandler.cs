@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 
 namespace Application.Features.FollowFeatures.Handlers.Queries
 {
-    public class GetFollowingRequestHandler : IRequestHandler<GetFollowingRequest, List<UserDto>
+    public class GetFollowingRequestHandler : IRequestHandler<GetFollowingRequest, List<UserDto>>
     {
         private readonly IFollowRepository _followRepository;
         private readonly IMapper _mapper;

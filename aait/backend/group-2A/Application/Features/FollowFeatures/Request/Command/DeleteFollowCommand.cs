@@ -10,6 +10,6 @@ namespace Application.Features.FollowFeatures.Request.Command
 {
     public class DeleteFollowCommand : IRequest<Unit>
     {
-        public FollowDto follow { get; set; }
+        public required FollowDto unfollow { get; set; }
     }
 }
