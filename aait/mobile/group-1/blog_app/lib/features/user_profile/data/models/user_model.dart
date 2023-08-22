@@ -18,11 +18,17 @@ class UserModel extends User implements Equatable {
             bio: bio,
             image: image);
 
+  @override
   final String id;
+  @override
   final String fullName;
+  @override
   final String email;
+  @override
   final String? expertise;
+  @override
   final String? bio;
+  @override
   final String? image;
 
   factory UserModel.fromJson(Map<String, dynamic> json) {

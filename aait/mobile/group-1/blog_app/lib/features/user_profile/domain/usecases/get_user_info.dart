@@ -6,12 +6,9 @@ import '../repositories/user_repository.dart';
 
 class GetUserInfo {
   final UserRepository repository;
-
   GetUserInfo(this.repository);
 
-  Future<Either<Failure, User>> call(NoParams params) async {
+  Future<Either<Failure, User>> call() async {
     return await repository.getUserInfo();
   }
 }
-
-class NoParams {}
