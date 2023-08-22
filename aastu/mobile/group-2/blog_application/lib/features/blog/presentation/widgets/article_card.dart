@@ -39,37 +39,39 @@ class ArticleCard extends StatelessWidget {
           Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Stack(
-                children: [
-                  const Image(
-                    image: AssetImage('assets/images/article.jpg'),
-                  ),
-                  Positioned(
-                    left: 20,
-                    top: 20,
-                    child: Container(
-                      width: 76,
-                      height: 26,
-                      decoration: ShapeDecoration(
-                        color: Colors.white,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(10),
+              Flexible(
+                child: Stack(
+                  children: [
+                    const Image(
+                      image: AssetImage('assets/images/article.jpg'),
+                    ),
+                    Positioned(
+                      left: 20,
+                      top: 20,
+                      child: Container(
+                        width: 76,
+                        height: 26,
+                        decoration: ShapeDecoration(
+                          color: Colors.white,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(10),
+                          ),
                         ),
-                      ),
-                      child: const Center(
-                        child: Text(
-                          '5 min read',
-                          style: TextStyle(
-                            color: Color(0xFF414141),
-                            fontSize: 10,
-                            fontWeight: FontWeight.w500,
-                            letterSpacing: 0.20,
+                        child: const Center(
+                          child: Text(
+                            '5 min read',
+                            style: TextStyle(
+                              color: Color(0xFF414141),
+                              fontSize: 10,
+                              fontWeight: FontWeight.w500,
+                              letterSpacing: 0.20,
+                            ),
                           ),
                         ),
                       ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -114,7 +116,6 @@ class ArticleCard extends StatelessWidget {
                     style: const TextStyle(
                       color: Color(0xFF414141),
                       fontSize: 14,
-                      fontFamily: 'Poppins',
                       fontWeight: FontWeight.w400,
                       letterSpacing: 0.28,
                     ),
@@ -128,7 +129,6 @@ class ArticleCard extends StatelessWidget {
             style: const TextStyle(
               color: Color(0xFF7D7D7D),
               fontSize: 12,
-              fontFamily: 'Poppins',
               fontWeight: FontWeight.w300,
               letterSpacing: 0.24,
             ),

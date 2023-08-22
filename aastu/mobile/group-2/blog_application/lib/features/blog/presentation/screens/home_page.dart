@@ -84,7 +84,7 @@ class HomePage extends StatelessWidget {
                       ListView.builder(
                         shrinkWrap: true,
                         physics: const NeverScrollableScrollPhysics(),
-                        itemCount: 3,
+                        itemCount:1,
                         itemBuilder: (context, index) {
                           return GestureDetector(
                             onTap: () {},
