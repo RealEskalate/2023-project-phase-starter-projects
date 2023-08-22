@@ -1,6 +1,6 @@
-import ReduxProvider from "@/lib/providers";
 import type { Metadata } from "next";
 import "./globals.css";
+import ReduxProvider from "@/lib/providers";
 
 export const metadata: Metadata = {
   title: "A2SV Blogs",
@@ -13,7 +13,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en">
+    <html>
       <body>
         <ReduxProvider>{children}</ReduxProvider>
       </body>

@@ -1,7 +1,8 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/dist/query/react";
 import { RootState } from "../store";
+import { HYDRATE } from "next-redux-wrapper";
 
-const teamApi = createApi({
+const baseApi = createApi({
   reducerPath: "teamApi",
   baseQuery: fetchBaseQuery({
     baseUrl: "https://a2sv-backend.onrender.com/api/",
@@ -13,12 +14,12 @@ const teamApi = createApi({
       return headers;
     },
   }),
-
-  endpoints: (builder) => ({
-    getTeams: builder.query({
-      query: () => "/teams",
-    }),
-  }),
+  extractRehydrationInfo(action, { reducerPath }) {
+    if (action.type === HYDRATE) {
+      return action.payload[reducerPath];
+    }
+  },
+  endpoints: (builder) => ({}),
 });
 
-export default teamApi;
+export default baseApi;
