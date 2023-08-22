@@ -34,5 +34,4 @@ namespace Domain.Entities
 
         public virtual IEnumerable<Notification> Notifications { get; set; }
     }
-    
 }
