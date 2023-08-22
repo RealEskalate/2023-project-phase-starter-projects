@@ -23,6 +23,9 @@ const config: Config = {
         blog_owner_name_text_color: "#5E5873",
         blog_pending_icon_text_color: "#FF9F43",
       },
+      fontFamily: {
+        Montserrat: ["Montserrat", "sans-serif"],
+      },
     },
   },
   plugins: [],
