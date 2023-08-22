@@ -15,6 +15,8 @@ namespace Domain.Entities
 
         public string LastName { get; set; }
 
+        public string NumFollowers { get; set; } 
+
         public byte[] PasswordHash { get; set; }
 
         public byte[] PasswordSalt { get; set; }
