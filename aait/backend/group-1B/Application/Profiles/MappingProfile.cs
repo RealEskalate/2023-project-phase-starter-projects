@@ -12,8 +12,10 @@ public class MappingProfile : Profile
     public MappingProfile()
     {
         CreateMap<Post, CreatePostDto>().ReverseMap();
+        CreateMap<Post, UpdatePostDto>().ReverseMap();
         CreateMap<Post, PostContentDto>().ReverseMap();
         CreateMap<Comment, CreateCommentDto>().ReverseMap();
+        CreateMap<Comment, UpdateCommentDto>().ReverseMap();
         CreateMap<Comment, CommentContentDto>().ReverseMap();
         CreateMap<PostLike, ChangeLikeDto>().ReverseMap();
         CreateMap<PostLike, PostLikeContentDto>().ReverseMap();
