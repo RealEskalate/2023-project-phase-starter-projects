@@ -6,10 +6,11 @@ namespace SocialSync.Persistence;
 
 public class SocialSyncDbContext : DbContext
 {
-    public DbSet<User> Users { get; set; }
-    public DbSet<Post> Posts { get; set; }
-    public DbSet<Notification> Notifications { get; set; }
-    public DbSet<Interaction> Interactions { get; set; }
+    public DbSet<User> Users { get; set; } = null!;
+    public DbSet<Post> Posts { get; set; } = null!;
+    public DbSet<Notification> Notifications { get; set; } = null!;
+    public DbSet<Interaction> Interactions { get; set; } = null!;
+
     public SocialSyncDbContext(DbContextOptions<SocialSyncDbContext> options)
         : base(options) { }
 
@@ -17,14 +18,11 @@ public class SocialSyncDbContext : DbContext
     {
         base.OnModelCreating(modelBuilder);
 
-        modelBuilder.Entity<User>(entity=>{
-            entity.HasKey(u=>u.Id);
-            entity.HasMany(u => u.Followers)
-            .WithMany(u => u.Followings);
-
+        modelBuilder.Entity<User>(entity =>
+        {
+            entity.HasKey(u => u.Id);
+            entity.HasMany(u => u.Followers).WithMany(u => u.Followings);
         });
-            
-
 
         modelBuilder.Entity<Post>(entity =>
         {
@@ -32,25 +30,24 @@ public class SocialSyncDbContext : DbContext
 
             entity.HasKey(e => e.Id);
 
-            entity.Property(e => e.Content)
-                .IsRequired();
+            entity.Property(e => e.Content).IsRequired();
 
-            entity.Property(e => e.UserId)
-                .IsRequired();
+            entity.Property(e => e.UserId).IsRequired();
 
-            entity.HasOne(e => e.User)
+            entity
+                .HasOne(e => e.User)
                 .WithMany(u => u.Posts)
                 .HasForeignKey(e => e.UserId)
                 .OnDelete(DeleteBehavior.Restrict);
 
-            entity.HasMany(e => e.Interactions)
+            entity
+                .HasMany(e => e.Interactions)
                 .WithOne(i => i.Post)
                 .HasForeignKey(i => i.PostId)
                 .OnDelete(DeleteBehavior.Cascade);
         });
 
-        modelBuilder.Entity<Interaction>()
-            .HasKey(i => i.Id);
+        modelBuilder.Entity<Interaction>().HasKey(i => i.Id);
 
         modelBuilder.Entity<Notification>(entity =>
         {
@@ -58,26 +55,25 @@ public class SocialSyncDbContext : DbContext
 
             entity.HasKey(e => e.Id);
 
-            entity.Property(e => e.NotificationType)
-                .IsRequired();
+            entity.Property(e => e.NotificationType).IsRequired();
 
+            entity
+                .HasOne(e => e.Recepient)
+                .WithMany(u => u.NotificationsReceived)
+                .HasForeignKey(e => e.RecepientId)
+                .OnDelete(DeleteBehavior.Restrict);
 
-            entity.HasOne(e => e.Recepient)
-            .WithMany(u => u.NotificationsReceived)
-            .HasForeignKey(e => e.RecepientId)
-            .OnDelete(DeleteBehavior.Restrict);
-
-            entity.HasOne(e => e.Sender)
+            entity
+                .HasOne(e => e.Sender)
                 .WithMany(u => u.NotificationsSent)
                 .HasForeignKey(e => e.SenderId)
                 .OnDelete(DeleteBehavior.Restrict);
         });
-
     }
 
     public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
     {
-        foreach (var entry in ChangeTracker.Entries<BaseAuditableEntity>())
+        foreach (var entry in ChangeTracker.Entries<BaseEntity>())
         {
             entry.Entity.LastModified = DateTime.Now.ToUniversalTime();
             if (entry.State == EntityState.Added)
@@ -89,16 +85,5 @@ public class SocialSyncDbContext : DbContext
         return base.SaveChangesAsync(cancellationToken);
     }
 
-    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-    {
-
-
-    }
-
+    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder) { }
 }
-
-
-
-
-
-
