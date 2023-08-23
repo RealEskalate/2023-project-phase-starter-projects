@@ -27,9 +27,12 @@ class MyApp extends StatelessWidget {
             seedColor: Colors.white, secondary: const Color(0xffEE6F57)),
         useMaterial3: true,
       ),
-      home: const Edit1Blog(), // TODO: Replace with the Onboarding
+      home: const HomeScreen(), // TODO: Replace with the Onboarding
       routes: {
-        '/home': (context) => const Edit1Blog(),
+        '/home': (context) => const HomeScreen(),
+        '/add-blog': (context) => const AddBlog(),
+        '/edit-blog': (context) => EditBlog(),
+        '/view-blog': (context) => ViewBlog(),
         // define routes here
       },
     );
