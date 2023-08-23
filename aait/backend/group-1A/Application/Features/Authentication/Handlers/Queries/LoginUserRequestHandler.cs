@@ -1,9 +1,11 @@
+using System.ComponentModel.DataAnnotations;
 using AutoMapper;
 using MediatR;
 using SocialSync.Application.Contracts;
 using SocialSync.Application.Dtos.Authentication;
 using SocialSync.Application.Features.Authentication.Requests;
 using SocialSync.Domain.Entities;
+using SocialSync.Application.Dto.Authentication.validator;
 
 namespace SocialSync.Application.Features.Authentication.Handlers.Queries;
 
@@ -20,6 +22,12 @@ public class LoginUserRequestHanlder : IRequestHandler<LoginUserRequest,LoginRes
         _jwtGenerator = jwtGenerator;
     }
     public async Task<LoginResponseDto> Handle(LoginUserRequest request, CancellationToken cancellationToken){
+        var validator = new LoginUserDtoValidator();
+        var validationResult = await validator.ValidateAsync(request.LoginUserDto, cancellationToken);
+        if (!validationResult.IsValid)
+        {
+            throw new ValidationException();
+        }
         // Check if user exists
         if (!await _authRepository.UserExists(request.LoginUserDto.Email))
         {
