@@ -2,7 +2,6 @@ using AutoMapper;
 using MediatR;
 using SocialSync.Application.Contracts.Persistence;
 using SocialSync.Application.DTOs.PostDtos;
-using SocialSync.Application.Features.Posts.Handlers;
 using SocialSync.Application.Features.Posts.Requests.Queries;
 
 namespace SocialSync.Application.Features.Posts.Handlers.Queries;
