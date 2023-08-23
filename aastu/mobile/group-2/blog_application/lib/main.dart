@@ -1,3 +1,4 @@
+import 'package:blog_application/features/blog/presentation/screens/profile_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -23,7 +24,7 @@ class MyApp extends StatelessWidget {
       ),
       debugShowCheckedModeBanner: false,
 
-      home: const HomePage(),
+      home: const ProfileScreen(),
     );
   }
 }
