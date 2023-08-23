@@ -285,5 +285,5 @@ Temporary Items
 .apdisk
 
 
-./Persistence/Migrations/
+./Persistence/Migrations/*
 
