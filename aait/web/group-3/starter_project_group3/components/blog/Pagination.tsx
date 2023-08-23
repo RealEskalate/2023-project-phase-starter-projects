@@ -12,9 +12,10 @@ const Pagination: React.FC<Props> = ({
   currentPage,
   totalPages,
   onPageChange,
-  className, // This will be used to apply additional class names
-  ...rest // The rest of the props (e.g., style, etc.)
+  className, 
+  ...rest 
 }) => {
+  
   return (
     <div className={`flex justify-center ${className}`} {...rest}>
       {Array.from({ length: totalPages }, (_, index) => (
