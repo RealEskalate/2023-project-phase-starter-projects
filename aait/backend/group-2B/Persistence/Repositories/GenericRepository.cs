@@ -6,7 +6,7 @@ namespace SocialSync.Persistence.Repositories;
 public class GenericRepository<T> : IGenericRepository<T>
     where T : class
 {
-    private SocialSyncDbContext _dbContext;
+    protected SocialSyncDbContext _dbContext;
 
     public GenericRepository(SocialSyncDbContext dbContext)
     {
