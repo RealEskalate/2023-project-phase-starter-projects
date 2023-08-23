@@ -23,12 +23,12 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
   void _onAuthLogin(AuthLogin event, Emitter<AuthState> emit) async {
     emit(AuthLoading());
     final result = await loginUseCase(event.email, event.password);
-    result.fold((l) => emit(AuthPass()), (r) => emit(AuthFailed(r.message)));
+    result.fold((l) => emit(AuthFailed(l.message)), (r) => emit(AuthPass()));
   }
 
   void _onAuthRegister(AuthRegister event, Emitter<AuthState> emit) async {
     emit(AuthLoading());
     final result = await registerUseCase(event.email, event.password);
-    result.fold((l) => emit(AuthPass()), (r) => emit(AuthFailed(r.message)));
+    result.fold((l) => emit(AuthFailed(l.message)), (r) => emit(AuthPass()));
   }
 }
