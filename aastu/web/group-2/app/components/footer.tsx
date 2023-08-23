@@ -11,7 +11,7 @@ import helpingPartner from '@/assets/images/helpingPartner.svg';
 const Footer = () => {
   return (
     <div className="grid mt-auto">
-      <div className="grid grid-cols-1 mx-auto h-full lg:grid-cols-[200px_350px_250px_350px_200px] lg:h-[250px] pl-[55px] py-[40px]  border-t-[#C7C7C7] border-t-[0.4px]">
+      <div className="grid grid-cols-1 mx-auto h-full lg:grid-cols-[4fr_7fr_5fr_7fr_4fr] lg:h-[250px] pl-[55px] py-[40px]  border-t-[#C7C7C7] border-t-[0.4px]">
         <div className='hidden lg:block w-[160px] h-[160px] pb-2'>
           <Image src={helpingPartner} width={200} height={200} alt="Helping a Partner" />
         </div>
