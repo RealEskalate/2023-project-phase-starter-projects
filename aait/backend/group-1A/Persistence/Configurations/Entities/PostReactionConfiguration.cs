@@ -13,8 +13,9 @@ namespace Persistence.Configurations.Entities
     {
         public void Configure(EntityTypeBuilder<PostReaction> builder)
         {
-            builder.Property(e => e.Id)
-                  .ValueGeneratedOnAdd();
         }
     }
 }
+            //builder.Property(e => e.Id)
+            //      .HasDefaultValueSql("nextval('Id')");
+                  //.ValueGeneratedOnAdd();
