@@ -1,3 +1,4 @@
+import { footerBLogLinks, footerLinks } from "@/types/footerNav/footerNav";
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
@@ -42,28 +43,31 @@ const Footer = () => {
           {/* Links */}
           <div className=" flex justify-center flex-col font-light gap-y-5">
             <p className="font-semibold ">Links</p>
-
-            <Link href={" #"}>Homes</Link>
-            <Link href={" #"}>Success Stories</Link>
-            <Link href={" #"}>About Us</Link>
-            <Link href={" #"}>Get Involved</Link>
+            {footerLinks.map((link) => (
+              <Link key={link.linkName} href={link.linkPath}>
+                {link.linkName}
+              </Link>
+            ))}
           </div>
+
           {/* Teams */}
           <div className=" flex justify-center flex-col font-light gap-y-5">
             <p className="font-semibold">Teams</p>
-
-            <Link href={"#"}>Broad Members</Link>
-            <Link href={"#"}>Advisor/Mentors</Link>
-            <Link href={"#"}>Executives</Link>
-            <Link href={"#"}>Staffs</Link>
+            {footerBLogLinks.map((link) => (
+              <Link key={link.linkName} href={link.linkPath}>
+                {link.linkName}
+              </Link>
+            ))}
           </div>
 
           {/* Blogs */}
           <div className=" flex justify-center flex-col font-light gap-y-5">
-            <p className=" font-semibold">Blogs</p>
-
-            <Link href={"#"}>Recent Blogs</Link>
-            <Link href={"#"}>New Blogs</Link>
+            <p className=" font-semibold">Blogs</p>            
+            {footerBLogLinks.map((link) => (
+              <Link key={link.linkName} href={link.linkPath}>
+                {link.linkName}
+              </Link>
+            ))}
           </div>
         </section>
       </div>
