@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 
 import '../widgets/inputForm.dart';
 
-class AddTask extends StatelessWidget {
-  const AddTask({super.key});
+class AddBlog extends StatelessWidget {
+  const AddBlog({super.key});
 
   @override
   Widget build(BuildContext context) {
