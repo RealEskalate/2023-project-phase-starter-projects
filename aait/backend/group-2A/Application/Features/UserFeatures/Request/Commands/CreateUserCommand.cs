@@ -10,10 +10,9 @@ using MediatR;
 
 namespace Application.Features.User.Request.Commands
 {
-  
-        public class CreateUserCommand : IRequest<int>
+    public class CreateUserCommand : IRequest<int>
         {
-            public CreateUserDTO CreateUser { get; set; }
+            public required CreateUserDTO CreateUser { get; set; }
 
         }
     
