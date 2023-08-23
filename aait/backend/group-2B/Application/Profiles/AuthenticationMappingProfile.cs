@@ -9,5 +9,6 @@ public class AuthenticationMappingProfile : Profile
     public AuthenticationMappingProfile()
     {
         CreateMap<RegisterUserDto, User>();
+        CreateMap<User, UserDto>();
     }
 }
