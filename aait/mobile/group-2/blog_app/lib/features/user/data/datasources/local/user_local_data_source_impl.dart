@@ -62,7 +62,8 @@ class UserLocalDataSourceImpl implements UserLocalDataSource {
   }
 
   @override
-  Future<void> clearToken() async {
+  Future<void> clearCache() async {
+    await sharedPreferences.remove(CACHED_BOOKMARKED_ARTICLES);
     await sharedPreferences.remove(_keyToken);
   }
 }

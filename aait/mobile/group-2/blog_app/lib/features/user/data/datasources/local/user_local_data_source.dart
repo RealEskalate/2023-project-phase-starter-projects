@@ -8,5 +8,5 @@ abstract class UserLocalDataSource {
 
   Future<void> cacheToken(String token);
   Future<String> getToken();
-  Future<void> clearToken();
+  Future<void> clearCache();
 }
