@@ -1,5 +1,10 @@
+'use client'
+
+import { Provider } from "react-redux";
 import "./globals.css";
 import type { Metadata } from "next";
+import store from "@/store";
+import Footer from "@/components/footer";
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -11,9 +16,12 @@ export default function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
-  return (
-    <html lang="en">
-      <body>{children}</body>
-    </html>
-  );
+	return (
+		<html lang="en">
+			<Provider store={store}>
+				<body>{children}</body>
+				<Footer/>
+			</Provider>
+		</html>
+	);
 }
