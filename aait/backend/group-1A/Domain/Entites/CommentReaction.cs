@@ -1,6 +1,8 @@
 
 
-namespace SocialSync.Domain
+using Domain.Common;
+
+namespace Domain.Entities
 {
     public class CommentReaction : BaseReactionEntity
     {

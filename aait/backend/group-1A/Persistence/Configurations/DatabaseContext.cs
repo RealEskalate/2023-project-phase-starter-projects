@@ -1,9 +1,9 @@
 
 
 using Microsoft.EntityFrameworkCore;
-using SocialSync.Domain;
+using Domain.Entities;
 
-namespace SocialSync.Persistence
+namespace Persistence.Configurations
 {
     public class DatabaseContext : DbContext
     {

@@ -18,11 +18,11 @@ namespace WebApi.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> CreateCommentReaction(CommentReactionCreateCommand command)
+        public Task<IActionResult>? CreateCommentReaction(CommentReactionCreateCommand command)
         {
-            // Implement similar to CommentController
+
+            return null;
         }
 
-        // Implement other actions similar to CommentController
     }
 }
