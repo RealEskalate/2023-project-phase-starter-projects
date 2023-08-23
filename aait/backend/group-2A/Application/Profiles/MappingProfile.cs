@@ -1,3 +1,4 @@
+using Application.DTO.CommentDTO;
 using Application.DTO.FollowDTO;
 using Application.DTO.Like;
 using Application.DTO.Post;
@@ -22,6 +23,13 @@ public class MappingProfile : AutoMapper.Profile
 
         CreateMap<Follow, FollowDto>();
         CreateMap<Like, LikedDto>();
+        CreateMap<CreateUserDTO, User>();
+        
+        // Comment
+        CreateMap<Comment, CommentDto>().ReverseMap();
+        CreateMap<CreateCommentDto, Comment>().ReverseMap();
+        CreateMap<UpdateCommentDto, Comment>().ReverseMap();
+        
     }
     
 }
