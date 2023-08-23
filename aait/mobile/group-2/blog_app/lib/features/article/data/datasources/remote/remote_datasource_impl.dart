@@ -32,7 +32,7 @@ class ArticleRemoteDataSourceImpl extends ArticleRemoteDataSource {
         throw const ServerException(message: 'Operation Failed');
       }
     } catch (e) {
-      throw const ServerException(message: 'Connection Failed');
+      throw const NetworkException();
     }
   }
 
@@ -56,7 +56,7 @@ class ArticleRemoteDataSourceImpl extends ArticleRemoteDataSource {
         throw const ServerException(message: 'Operation Failed');
       }
     } catch (e) {
-      throw const ServerException(message: 'Connection Failed');
+      throw const NetworkException();
     }
   }
 
@@ -82,7 +82,7 @@ class ArticleRemoteDataSourceImpl extends ArticleRemoteDataSource {
         throw const ServerException(message: 'Operation Failed');
       }
     } catch (e) {
-      throw const ServerException(message: 'Connection Failed');
+      throw const NetworkException();
     }
   }
 
@@ -106,7 +106,7 @@ class ArticleRemoteDataSourceImpl extends ArticleRemoteDataSource {
         throw const ServerException(message: 'Operation Failed');
       }
     } catch (e) {
-      throw const ServerException(message: 'Connection Failed');
+      throw const NetworkException();
     }
   }
 
@@ -122,7 +122,7 @@ class ArticleRemoteDataSourceImpl extends ArticleRemoteDataSource {
       }
       return article;
     } catch (e) {
-      throw const ServerException(message: 'Connection Failed');
+      throw const NetworkException();
     }
   }
 }
