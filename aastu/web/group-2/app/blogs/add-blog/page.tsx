@@ -88,23 +88,8 @@ const AddBlog: React.FC = () => {
       {/* Below the upper sect */}
       <div className="flex flex-col w-full space-y-32">
         {/* Text-editor */}
-        <div className="mt-24">
+        <div className="mt-24 w-2/3">
           <TextEditor />
-        </div>
-
-        <div className="w-2/3 mt-8">
-          {/* <div className="border-l-2 border-primaryColor">
-            <input
-              type="text"
-              className="text-left ml-8 w-[95%] h-32 outline-none border border-primaryColorLight"
-            />
-          </div> */}
-          <div className="flex items-center justify-end space-x-8 mt-8 w-[98%]">
-            <button className="text-primaryColor text-sm">Cancel</button>
-            <button className="px-6 py-3 bg-primaryColor text-white rounded-md text-center shadow text-sm">
-              Save Changes
-            </button>
-          </div>
         </div>
         {/* Footer */}
         <div className="w-full py-4 border-t border-b mb-24 border-primaryColorLight mt-5">
