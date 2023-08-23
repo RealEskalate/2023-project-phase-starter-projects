@@ -1,39 +1,55 @@
 ﻿
 
 using Application.Contracts;
+using Domain.Entities;
+using Microsoft.EntityFrameworkCore;
+using System.Linq.Expressions;
 
 namespace Persistence.Repositories
 {
     public class GenericRepository<T> : IGenericRepository<T> where T : class
     {
-        public Task<T> Add(T entity)
+        private readonly SocialMediaDbContext _dbContext;
+
+        public GenericRepository(SocialMediaDbContext dbContext)
         {
-            throw new NotImplementedException();
+            _dbContext = dbContext;
+        }
+        public async Task<T> Add(T entity)
+        {   
+            await _dbContext.Set<T>().AddAsync(entity);
+            await _dbContext.SaveChangesAsync();
+            return entity;
         }
 
-        public Task<bool> Delete(int id)
+        public async Task<bool> Delete(T entity)
         {
-            throw new NotImplementedException();
+            _dbContext.Set<T>().Remove(entity);
+            await _dbContext.SaveChangesAsync();
+            return true;
         }
 
-        public Task<List<T>> DisLikes(int Id)
+
+        public async Task<bool> Exists(int id)
         {
-            throw new NotImplementedException();
+            var result = await _dbContext.Set<T>().FindAsync(id);
+            return result != null;
         }
 
-        public Task<bool> Exists(int id)
+
+        public async Task<List<T>> GetAll(Expression<Func<T, bool>> predicate)
         {
-            throw new NotImplementedException();
+            var result = await _dbContext.Set<T>()
+                    .Where(predicate)
+                    .ToListAsync();
+            return result;
         }
 
-        public Task<List<T>> GetAll()
+        public async Task<T> Update(T entity)
         {
-            throw new NotImplementedException();
-        }
-
-        public Task<List<T>> Likes(int Id)
-        {
-            throw new NotImplementedException();
+            _dbContext.Entry(entity).State = EntityState.Modified;
+            await _dbContext.SaveChangesAsync();
+            return entity;
         }
     }
 }

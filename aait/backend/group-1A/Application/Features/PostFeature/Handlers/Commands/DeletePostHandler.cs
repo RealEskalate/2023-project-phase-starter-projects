@@ -21,20 +21,13 @@ namespace Application.Features.PostFeature.Handlers.Commands
         }
         public async Task<CommonResponseDTO> Handle(DeletePostCommand request, CancellationToken cancellationToken)
         {
-            if (request.Id <= 0) 
+            var post = await _postRepository.Get(request.Id, request.userId);
+            if (request.Id <= 0 || post == null) 
             {
                 throw new Exception();
             }
-            var result = await _postRepository.Delete(request.Id);
-
-            if (result == false)
-            {
-                return new CommonResponseDTO
-                {
-                    Status = "Failure",
-                    Message = "Post is not deleted successfully"
-                };
-            }
+            
+            var result = await _postRepository.Delete(post);
 
             return new CommonResponseDTO
             {
