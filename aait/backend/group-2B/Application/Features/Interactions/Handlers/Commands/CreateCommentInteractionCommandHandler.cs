@@ -13,20 +13,16 @@ public class CreateCommentInteractionCommandHandler
 {
     private readonly IInteractionRepository _interactionRepository;
     private readonly IMapper _mapper;
-    private readonly IPostRepository _PostRepository;
-    private readonly IUserRepository _UserRepository;
+
+    private readonly IUnitOfWork _unitOfWork;
 
     public CreateCommentInteractionCommandHandler(
-        IInteractionRepository interactionRepository,
         IMapper mapper,
-        IPostRepository PostRepository,
-        IUserRepository UserRepository
+        IUnitOfWork unitOfWork
     )
     {
-        _PostRepository = PostRepository;
-        _UserRepository = UserRepository;
-        _interactionRepository = interactionRepository;
         _mapper = mapper;
+        _unitOfWork = unitOfWork;
     }
 
     public async Task<BaseCommandResponse> Handle(
@@ -35,7 +31,7 @@ public class CreateCommentInteractionCommandHandler
     )
     {
         var response = new BaseCommandResponse();
-        var validator = new CommentDTOValidator(_PostRepository, _UserRepository);
+        var validator = new CommentDTOValidator(_unitOfWork.PostRepository, _unitOfWork.UserRepository);
 
         var validationResult = await validator.ValidateAsync(command.CreateCommentDto);
 
@@ -47,13 +43,14 @@ public class CreateCommentInteractionCommandHandler
         }
         else
         {
-            var createdInteraction = await _interactionRepository.AddAsync(
+            var createdInteraction = await _unitOfWork.InteractionRepository.AddAsync(
                 _mapper.Map<Interaction>(command)
             );
             response.Success = true;
             response.Message = "Comment Created Successfully";
             response.Id = createdInteraction.Id;
         }
+
         return response;
     }
 }

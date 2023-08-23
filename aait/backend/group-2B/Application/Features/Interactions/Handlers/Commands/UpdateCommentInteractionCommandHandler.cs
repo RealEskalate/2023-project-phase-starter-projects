@@ -1,26 +1,25 @@
 using AutoMapper;
-
 using MediatR;
 using SocialSync.Domain.Entities;
 using SocialSync.Application.Contracts.Persistence;
-
 using SocialSync.Application.Features.Comments.Requests.Commands;
 using SocialSync.Application.DTOs.InteractionDTOs.CommentDTOs.Validator;
 using SocialSync.Application.Exceptions;
 
 namespace SocialSync.Application.Features.Interactions.Handlers.Commands;
+
 public class UpdateCommentInteractionCommandHandler
     : IRequestHandler<UpdateCommentInteractionCommand, Unit>
 {
-    private readonly IInteractionRepository _interactionRepository;
+    private readonly IUnitOfWork _unitOfWork;
     private readonly IMapper _mapper;
 
     public UpdateCommentInteractionCommandHandler(
-        IInteractionRepository interactionRepository,
+        IUnitOfWork unitOfWork,
         IMapper mapper
     )
     {
-        _interactionRepository = interactionRepository;
+        _unitOfWork = unitOfWork;
         _mapper = mapper;
     }
 
@@ -39,10 +38,9 @@ public class UpdateCommentInteractionCommandHandler
         }
         else
         {
-            await _interactionRepository.UpdateAsync(_mapper.Map<Interaction>(command));
+            await _unitOfWork.InteractionRepository.UpdateAsync(_mapper.Map<Interaction>(command));
 
             return Unit.Value;
         }
     }
 }
-

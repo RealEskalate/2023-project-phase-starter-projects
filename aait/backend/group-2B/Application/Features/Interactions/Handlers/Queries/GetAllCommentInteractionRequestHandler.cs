@@ -9,17 +9,17 @@ namespace SocialSync.Application.Features.Comments.Handlers.Commands;
 public class GetAllCommentInteractionRequestHandler
     : IRequestHandler<GetAllCommentInteractionRequest, List<Interaction>>
 {
-    private IInteractionRepository _interactionRepository;
+    private IUnitOfWork _unitOfWork;
     private IMapper _mapper;
 
-    public GetAllCommentInteractionRequestHandler(IInteractionRepository interactionRepository, IMapper mapper)
+    public GetAllCommentInteractionRequestHandler(IUnitOfWork unitOfWork, IMapper mapper)
         {
-            _interactionRepository = interactionRepository;
+            _unitOfWork = unitOfWork;
             _mapper = mapper;
         }
     public async Task<List<Interaction>> Handle(GetAllCommentInteractionRequest request, CancellationToken cancellationToken)
     {
-        var foundInteraction = await _interactionRepository.GetAllCommentInteractions(request.PostId);
+        var foundInteraction = await _unitOfWork.InteractionRepository.GetAllCommentInteractions(request.PostId);
         return foundInteraction;
     }
 }

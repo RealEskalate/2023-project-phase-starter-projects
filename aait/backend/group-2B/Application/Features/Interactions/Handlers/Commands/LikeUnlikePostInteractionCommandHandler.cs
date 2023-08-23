@@ -11,21 +11,15 @@ namespace SocialSync.Application.Features.Interactions.Handlers.Commands;
 public class LikeUnlikePostInteractionCommandHandler
     : IRequestHandler<LikeUnlikePostInteractionCommand, BaseCommandResponse>
 {
-    private readonly IInteractionRepository _interactionRepository;
     private readonly IMapper _mapper;
-    private readonly IPostRepository _PostRepository;
-    private readonly IUserRepository _UserRepository;
+    private readonly IUnitOfWork _unitOfWork;
 
     public LikeUnlikePostInteractionCommandHandler(
-        IInteractionRepository interactionRepository,
         IMapper mapper,
-        IPostRepository PostRepository,
-        IUserRepository UserRepository
+        IUnitOfWork unitOfWork
     )
     {
-        _PostRepository = PostRepository;
-        _UserRepository = UserRepository;
-        _interactionRepository = interactionRepository;
+        _unitOfWork = unitOfWork;
         _mapper = mapper;
     }
 
@@ -35,7 +29,7 @@ public class LikeUnlikePostInteractionCommandHandler
     )
     {
         var response = new BaseCommandResponse();
-        var validator = new LikeDtoValidator(_PostRepository, _UserRepository);
+        var validator = new LikeDtoValidator(_unitOfWork.PostRepository, _unitOfWork.UserRepository);
 
         var validationResult = await validator.ValidateAsync(command.LikeDto);
 
@@ -47,7 +41,7 @@ public class LikeUnlikePostInteractionCommandHandler
         }
         else
         {
-            var createdInteraction = await _interactionRepository.likeUnlikeInteraction(
+            var createdInteraction = await _unitOfWork.InteractionRepository.likeUnlikeInteraction(
                 _mapper.Map<Interaction>(command)
             );
             response.Success = true;

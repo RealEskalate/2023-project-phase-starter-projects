@@ -12,14 +12,17 @@ public class DeleteCommentInteractionCommandHandler
 {
     private readonly IInteractionRepository _interactionRepository;
     private readonly IMapper _mapper;
+    private readonly IUnitOfWork _unitOfWork;
 
     public DeleteCommentInteractionCommandHandler(
         IInteractionRepository interactionRepository,
-        IMapper mapper
+        IMapper mapper,
+        IUnitOfWork unitOfWork
     )
     {
         _interactionRepository = interactionRepository;
         _mapper = mapper;
+        _unitOfWork = unitOfWork;
     }
 
     public async Task<Unit> Handle(
@@ -27,7 +30,7 @@ public class DeleteCommentInteractionCommandHandler
         CancellationToken cancellationToken
     )
     {
-        var validator = new DeleteCommentDtoValidator(_interactionRepository);
+        var validator = new DeleteCommentDtoValidator(_unitOfWork.InteractionRepository);
         var validationResult = await validator.ValidateAsync(command.deleteCommentInteractionDTO);
 
         if (!validationResult.IsValid)
@@ -37,7 +40,7 @@ public class DeleteCommentInteractionCommandHandler
         }
         else
         {
-            var foundComment = await _interactionRepository.GetAsync(command.deleteCommentInteractionDTO.Id);
+            var foundComment = await _unitOfWork.InteractionRepository.GetAsync(command.deleteCommentInteractionDTO.Id);
             await _interactionRepository.DeleteAsync(foundComment);
             return Unit.Value;
         }
