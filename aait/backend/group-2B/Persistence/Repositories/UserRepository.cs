@@ -12,4 +12,19 @@ public class UserRepository : GenericRepository<User>, IUserRepository
     {
         _dbContext = dbContext;
     }
+
+    public Task<bool> EmailExists(string email)
+    {
+        throw new NotImplementedException();
+    }
+
+    public Task<User> GetByUsername(string username)
+    {
+        throw new NotImplementedException();
+    }
+
+    public Task<bool> UsernameExists(string username)
+    {
+        throw new NotImplementedException();
+    }
 }
