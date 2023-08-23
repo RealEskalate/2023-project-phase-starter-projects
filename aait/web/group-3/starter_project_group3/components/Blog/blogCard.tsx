@@ -7,7 +7,7 @@ interface BlogCardProps {
 }
 const BlogCard = ({ blog }: BlogCardProps) => {
   return (
-    <div key={blog.header} className=" w-[23%] shadow-lg rounded-md ">
+    <div key={blog.header} className=" w-[23%] shadow-md rounded-md ">
       <div className=" flex justify-center items-center">
         <Image src={blog.image} alt="blog image" width={350} height={350} />
       </div>
