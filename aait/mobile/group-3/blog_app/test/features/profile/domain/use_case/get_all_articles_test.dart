@@ -28,6 +28,7 @@ void main() {
           .thenAnswer((_) async => Right(<Article>[]));
       await usecase(NoParams());
       verify(mockProfileRepository.getAllArticles());
+      verifyNoMoreInteractions(mockProfileRepository);
     });
 
     test('Should return a valid List<Articles> when a successful call was made',
@@ -35,7 +36,7 @@ void main() {
       when(mockProfileRepository.getAllArticles())
           .thenAnswer((_) async => Right(tEmptyArticle));
       final result = await usecase(NoParams());
-      expect(result, Right(tEmptyArticle));
+      expect(result, Right(tEmptyArticle)); 
     });
   });
 }

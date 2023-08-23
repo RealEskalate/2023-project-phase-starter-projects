@@ -16,7 +16,7 @@ class RowButton extends StatelessWidget {
         final inActiveColor = Color(0xFF386BED);
         final stateIsBookmark = state.isBookmark;
         return Container(
-          padding: EdgeInsets.only(left: 72, right: 72, top: 250),
+          padding: EdgeInsets.only(left: 72.w, right: 72.w, top: 250.h),
           child: Stack(
             children: [
               Center(
