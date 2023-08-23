@@ -3,13 +3,13 @@ import 'package:dartz/dartz.dart';
 
 import '../entities/article.dart';
 abstract class ArticleRepository {
-  Future<Either<Article, Failure>> getArticle(String id);
-  Future<Either<List<Article>, Failure>> getArticles({List<String>? tags, String? searchParams});
-  Future<Either<List<String>, Failure>> getTags();
-  Future<Either<Article, Failure>> createArticle({String title, String content, List<String> tags, String subTitle, String? estimatedReadTime, String? image});
-  Future<Either<Article, Failure>> updateArticle(Article article);
-  Future<Either<void, Failure>> deleteArticle(String id);
-  Future<Either<void, Failure>> bookmarkArticle(String id);
-  Future<Either<void, Failure>> unBookmarkArticle(String id);
+  Future<Either<Failure,Article>> getArticle(String id);
+  Future<Either<Failure,List<Article>>> getArticles({List<String>? tags, String? searchParams});
+  Future<Either<Failure,List<String>>> getTags();
+  Future<Either<Failure,Article>> createArticle({String title, String content, List<String> tags, String subTitle, String? estimatedReadTime, String? image});
+  Future<Either<Failure,Article>> updateArticle(Article article);
+  Future<Either<Failure,void>> deleteArticle(String id);
+  Future<Either<Failure,void>> bookmarkArticle(String id);
+  Future<Either<Failure,void>> unBookmarkArticle(String id);
   Future<bool> isArticleBookmarked(String id);
 }
