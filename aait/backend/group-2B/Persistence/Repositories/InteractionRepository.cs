@@ -5,6 +5,11 @@ namespace SocialSync.Persistence.Repositories;
 
 public class InteractionRepository : GenericRepository<Interaction>, IInteractionRepository
 {
+    private readonly SocialSyncDbContext _dbContext;
+
     public InteractionRepository(SocialSyncDbContext dbContext)
-        : base(dbContext) { }
+        : base(dbContext)
+    {
+        _dbContext = dbContext;
+    }
 }

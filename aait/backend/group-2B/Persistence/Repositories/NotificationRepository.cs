@@ -5,6 +5,11 @@ namespace SocialSync.Persistence.Repositories;
 
 public class NotificationRepository : GenericRepository<Notification>, INotificationRepository
 {
+    private readonly SocialSyncDbContext _dbContext;
+
     public NotificationRepository(SocialSyncDbContext dbContext)
-        : base(dbContext) { }
+        : base(dbContext)
+    {
+        _dbContext = dbContext;
+    }
 }

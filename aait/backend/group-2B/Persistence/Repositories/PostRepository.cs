@@ -5,6 +5,11 @@ namespace SocialSync.Persistence.Repositories;
 
 public class PostRepository : GenericRepository<Post>, IPostRepository
 {
+    private readonly SocialSyncDbContext _dbContext;
+
     public PostRepository(SocialSyncDbContext dbContext)
-        : base(dbContext) { }
+        : base(dbContext)
+    {
+        _dbContext = dbContext;
+    }
 }

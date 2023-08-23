@@ -5,6 +5,11 @@ namespace SocialSync.Persistence.Repositories;
 
 public class UserRepository : GenericRepository<User>, IUserRepository
 {
+    private readonly SocialSyncDbContext _dbContext;
+
     public UserRepository(SocialSyncDbContext dbContext)
-        : base(dbContext) { }
+        : base(dbContext)
+    {
+        _dbContext = dbContext;
+    }
 }
