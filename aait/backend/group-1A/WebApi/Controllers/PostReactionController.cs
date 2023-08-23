@@ -9,11 +9,11 @@ namespace WebApi.Controllers
 {
     [Route("post-reaction")]
     [ApiController]
-    public class PostReaction : ControllerBase
+    public class PostReactionController : ControllerBase
     {
         private readonly IMediator _mediator;
 
-        public PostReaction(IMediator mediator)
+        public PostReactionController(IMediator mediator)
         {
             _mediator = mediator;
         }
@@ -21,7 +21,7 @@ namespace WebApi.Controllers
         [HttpGet("likes/{id}")]
         public async Task<List<ReactionResponseDTO>>  GetLikes(int id)
         {
-            var result = await _mediator.Send(new GetPostLikesQuery() { PostId = id });
+            var result = await _mediator.Send(new GetPostLikesQuery{ PostId = id });
             return result;
         }
 
@@ -29,14 +29,15 @@ namespace WebApi.Controllers
         [HttpGet("dislikes/{id}")]
         public async Task<List<ReactionResponseDTO>> GetDislikes(int id)
         {
-            var result = await _mediator.Send(new GetPostDislikesQuery() { PostId = id });
+            var result = await _mediator.Send(new GetPostDislikesQuery { PostId = id });
             return result;
         }
         
         [HttpPost("react")]
         public async Task<ActionResult<CommonResponseDTO>> Post([FromBody] ReactionDTO reactionData)
         {
-            var result = await _mediator.Send(new PostReactionCommand() { ReactionData = reactionData });
+            // var user id from the context
+            var result = await _mediator.Send(new PostReactionCommand{ UserId = 3, ReactionData = reactionData });
             return result;
 
         }

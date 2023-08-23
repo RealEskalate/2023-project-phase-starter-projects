@@ -23,7 +23,7 @@ namespace Application.Features.PostFeature.Handlers.Queries
         }
         public async Task<List<PostResponseDTO>> Handle(GetAllPostsQuery request, CancellationToken cancellationToken)
         {
-            var result = await _postRepository.GetAll();
+            var result = await _postRepository.GetAll(entity => entity.UserId == request.userId);
 
             return _mapper.Map<List<PostResponseDTO>>(result);
         }
