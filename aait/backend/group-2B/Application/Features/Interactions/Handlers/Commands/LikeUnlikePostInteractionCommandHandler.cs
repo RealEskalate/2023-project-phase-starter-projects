@@ -41,7 +41,7 @@ public class LikeUnlikePostInteractionCommandHandler
         }
         else
         {
-            var createdInteraction = await _unitOfWork.InteractionRepository.likeUnlikeInteraction(
+            var createdInteraction = await _unitOfWork.InteractionRepository.LikeUnlikeInteractionAsync(
                 _mapper.Map<Interaction>(command)
             );
             response.Success = true;

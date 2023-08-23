@@ -15,7 +15,7 @@ public class InteractionRepository : GenericRepository<Interaction>, IInteractio
         _context = context;
     }
 
-    public async Task<List<Interaction>> GetAllCommentInteractions(int PostId)
+    public async Task<List<Interaction>> GetAllCommentInteractionsAsync(int PostId)
     {
         var allComments = await _context.Interactions
             .Where(x => x.PostId == PostId && x.Type == InteractionType.Comment)
@@ -23,7 +23,7 @@ public class InteractionRepository : GenericRepository<Interaction>, IInteractio
         return allComments;
     }
 
-    public async Task<Interaction> likeUnlikeInteraction(Interaction interaction)
+    public async Task<Interaction> LikeUnlikeInteractionAsync(Interaction interaction)
     {
         var existingInteraction = await _context.Interactions.FirstOrDefaultAsync(
             i =>

@@ -3,7 +3,7 @@ using SocialSync.Domain.Entities;
 namespace SocialSync.Application.Contracts.Persistence;
 
 public interface IInteractionRepository : IGenericRepository<Interaction> {  
-     Task<List<Interaction>> GetAllCommentInteractions(int PostId);
+     Task<List<Interaction>> GetAllCommentInteractionsAsync(int postId);
 
-    Task<Interaction> likeUnlikeInteraction(Interaction interaction);
+    Task<Interaction> LikeUnlikeInteractionAsync(Interaction interaction);
     }

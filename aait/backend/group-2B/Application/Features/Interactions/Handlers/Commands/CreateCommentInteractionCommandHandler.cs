@@ -11,7 +11,6 @@ namespace SocialSync.Application.Features.Interactions.Handlers.Commands;
 public class CreateCommentInteractionCommandHandler
     : IRequestHandler<CreateCommentInteractionCommand, BaseCommandResponse>
 {
-    private readonly IInteractionRepository _interactionRepository;
     private readonly IMapper _mapper;
 
     private readonly IUnitOfWork _unitOfWork;

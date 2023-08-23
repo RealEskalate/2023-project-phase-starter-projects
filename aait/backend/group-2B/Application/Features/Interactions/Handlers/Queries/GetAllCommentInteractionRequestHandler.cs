@@ -19,7 +19,7 @@ public class GetAllCommentInteractionRequestHandler
         }
     public async Task<List<Interaction>> Handle(GetAllCommentInteractionRequest request, CancellationToken cancellationToken)
     {
-        var foundInteraction = await _unitOfWork.InteractionRepository.GetAllCommentInteractions(request.PostId);
+        var foundInteraction = await _unitOfWork.InteractionRepository.GetAllCommentInteractionsAsync(request.PostId);
         return foundInteraction;
     }
 }
