@@ -6,7 +6,7 @@ import '../widgets/header.dart';
 class UserProfileScreen extends StatelessWidget {
   const UserProfileScreen({super.key});
 
-  // This widget is the root of Profile page.
+  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return Container(
