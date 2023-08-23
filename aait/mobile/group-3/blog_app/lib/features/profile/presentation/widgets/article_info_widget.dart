@@ -1,5 +1,6 @@
 
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../domain/entity/article.dart';
 import 'article_icon_button.dart';
@@ -21,11 +22,11 @@ class ArticleInfoWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     final initalSpace = this.needSpace
         ? SizedBox(
-            height: 20,
+            height:20.h,
           )
         : SizedBox();
     final paddingSize = this.needsPadding
-        ? EdgeInsets.symmetric(horizontal: 10)
+        ? EdgeInsets.symmetric(horizontal: 10.w)
         : EdgeInsets.zero;
     return Expanded(
       child: Container(
@@ -39,26 +40,26 @@ class ArticleInfoWidget extends StatelessWidget {
               style: TextStyle(
                   color: Color(0xFF376AED),
                   fontWeight: FontWeight.w100,
-                  fontSize: 14),
+                  fontSize:14),
             ),
             SizedBox(
-              height: 4,
+              height:4.h,
             ),
             Text(
               article.subTitle,
-              style: TextStyle(fontWeight: FontWeight.w500, fontSize: 14),
+              style: TextStyle(fontWeight: FontWeight.w500, fontSize:14.sp),
               maxLines: 2,
               overflow: TextOverflow.ellipsis,
             ),
             SizedBox(
-              height: heightBetweenIcons,
+              height:heightBetweenIcons.h
             ),
             Row(
               children: [
                 ArticleIconButton(
                     textValue: article.formatDate(), icon: Icons.access_time),
                 SizedBox(
-                  width: 4,
+                  width:4.w,
                 ),
                 IconButton(
                   onPressed: null,

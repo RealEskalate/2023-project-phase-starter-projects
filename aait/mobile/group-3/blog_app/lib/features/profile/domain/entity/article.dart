@@ -1,4 +1,6 @@
-class Article {
+import 'package:equatable/equatable.dart';
+
+class Article extends Equatable {
   final String title;
   final String subTitle;
   final DateTime createdAt;
@@ -19,8 +21,11 @@ class Article {
       return '${difference.inMinutes}mins ago';
     } else if (difference.inDays < 1) {
       return '${difference.inHours}hr ago';
-    } else{
+    } else {
       return '${difference.inDays}days ago';
     }
   }
+
+  @override
+  List<Object> get props => [title, subTitle, createdAt, image, id];
 }

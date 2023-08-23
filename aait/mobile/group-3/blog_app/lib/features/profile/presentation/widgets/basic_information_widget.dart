@@ -1,5 +1,6 @@
 
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class BasicInformationWidget extends StatelessWidget {
   final String username;
@@ -24,10 +25,10 @@ class BasicInformationWidget extends StatelessWidget {
         ),
         Text(
           this.fullName,
-          style: TextStyle(fontWeight: FontWeight.w100, fontSize: 18),
+          style: TextStyle(fontWeight: FontWeight.w100, fontSize: 18.sp),
         ),
         SizedBox(
-          height: 11,
+          height: 11.h,
         ),
         Text(
           this.occupation,

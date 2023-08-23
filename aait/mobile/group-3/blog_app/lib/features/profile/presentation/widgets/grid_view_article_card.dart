@@ -1,5 +1,6 @@
 
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../domain/entity/article.dart';
 import 'article_info_widget.dart';
@@ -11,24 +12,24 @@ class GridViewArticleCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.symmetric(horizontal: 10),
+      padding: EdgeInsets.symmetric(horizontal: 10.w),
       child: Card(
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20.r)),
         elevation: 3,
         child: Column(
           children: [
             ClipRRect(
               borderRadius: BorderRadius.only(
-                  topLeft: Radius.circular(20), topRight: Radius.circular(20)),
+                  topLeft: Radius.circular(20.r), topRight: Radius.circular(20.r)),
               child: Image.network(
                 article.image,
-                width: 190,
-                height: 75,
+                width: 190.w,
+                height: 75.h,
                 fit: BoxFit.cover,
               ),
             ),
             SizedBox(
-              height: 4,
+              height: 4.h,
             ),
             ArticleInfoWidget(
                 article: article, needSpace: false, heightBetweenIcons: 4, needsPadding: true,),
