@@ -15,12 +15,10 @@ public class DeleteCommentInteractionCommandHandler
     private readonly IUnitOfWork _unitOfWork;
 
     public DeleteCommentInteractionCommandHandler(
-        IInteractionRepository interactionRepository,
         IMapper mapper,
         IUnitOfWork unitOfWork
     )
     {
-        _interactionRepository = interactionRepository;
         _mapper = mapper;
         _unitOfWork = unitOfWork;
     }
