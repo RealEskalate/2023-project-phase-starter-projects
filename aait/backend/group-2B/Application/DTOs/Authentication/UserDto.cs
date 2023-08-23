@@ -1,6 +1,6 @@
 using SocialSync.Application.DTOs.Common;
 
-namespace SocialSync.Domain.Entities;
+namespace SocialSync.Application.DTOs.Authentication;
 
 public class UserDto : BaseDto
 {
