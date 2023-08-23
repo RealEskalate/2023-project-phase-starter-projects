@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 import 'my_post_card.dart';
 
@@ -31,29 +32,29 @@ class MyPostsContainer extends StatelessWidget {
         ),
         child: Column(
           children: [
-            const Row(
+             Row(
               children: [
                 Text(
                   'My Posts',
                   style: TextStyle(
-                    color: Color(0xFF0D253C),
+                    color:const Color(0xFF0D253C),
                     fontSize: 20,
-                    fontFamily: 'Urbanist',
+                    fontFamily: GoogleFonts.urbanist().fontFamily,
                     fontWeight: FontWeight.w500,
                   ),
                 ),
-                SizedBox(
+                const SizedBox(
                   width: 150,
                 ),
-                Icon(
+                const Icon(
                   Icons.grid_view,
                   size: 25,
                   color: Color(0xFF386BED),
                 ),
-                SizedBox(
+                const SizedBox(
                   width: 20,
                 ),
-                Icon(
+                const Icon(
                   Icons.format_list_bulleted,
                   color: Color.fromARGB(255, 106, 125, 173),
                   size: 25,

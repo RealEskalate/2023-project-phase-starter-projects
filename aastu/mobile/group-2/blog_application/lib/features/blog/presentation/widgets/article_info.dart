@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class ArticleInfo extends StatelessWidget {
   final String title;
@@ -13,23 +14,23 @@ class ArticleInfo extends StatelessWidget {
       children: [
         Text(
           title,
-          style: const TextStyle(
-            color: Color(0xFF376AED),
+          style: TextStyle(
+            color: const Color(0xFF376AED),
             fontSize: 14,
             fontStyle: FontStyle.italic,
-            fontFamily: 'Urbanist',
+            fontFamily: GoogleFonts.urbanist().fontFamily,
             fontWeight: FontWeight.w100,
             height: 1.43,
           ),
         ),
-        const SizedBox(
+         SizedBox(
           width: 163,
           child: Text(
             'Why Big Data Needs Thick Data?',
             style: TextStyle(
-              color: Color(0xFF0D253C),
+              color: const Color(0xFF0D253C),
               fontSize: 14,
-              fontFamily: 'Urbanist',
+              fontFamily: GoogleFonts.urbanist().fontFamily,
               fontWeight: FontWeight.w500,
               height: 1.43,
             ),
@@ -38,43 +39,43 @@ class ArticleInfo extends StatelessWidget {
         const SizedBox(
           height: 10,
         ),
-        const Row(
+         Row(
           children: [
-            Icon(
+            const Icon(
               Icons.thumb_up_alt_outlined,
               size: 15,
             ),
             Text(
               '2.1k',
               style: TextStyle(
-                color: Color(0xFF2D4379),
+                color:const Color(0xFF2D4379),
                 fontSize: 12,
-                fontFamily: 'Urbanist',
+                fontFamily: GoogleFonts.urbanist().fontFamily,
                 fontWeight: FontWeight.w500,
                 height: 1.33,
               ),
             ),
-            SizedBox(
+            const SizedBox(
               width: 20,
             ),
-            Icon(
+            const Icon(
               Icons.access_time,
               size: 15,
             ),
             Text(
               '1hr ago',
               style: TextStyle(
-                color: Color(0xFF2D4379),
+                color:const Color(0xFF2D4379),
                 fontSize: 12,
-                fontFamily: 'Urbanist',
+                fontFamily: GoogleFonts.urbanist().fontFamily,
                 fontWeight: FontWeight.w500,
                 height: 1.33,
               ),
             ),
-            SizedBox(
+            const SizedBox(
               width: 20,
             ),
-            Icon(
+            const Icon(
               Icons.bookmark,
               color: Color(0xFF2151CD),
               size: 20,
