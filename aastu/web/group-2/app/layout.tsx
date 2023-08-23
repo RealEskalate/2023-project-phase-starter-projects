@@ -4,6 +4,8 @@ import { Nav } from './components/Nav'
 
 /* Instruments */
 import './styles/globals.css'
+import 'react-quill/dist/quill.snow.css'
+
 
 export default function RootLayout(props: React.PropsWithChildren) {
   return (
@@ -11,17 +13,18 @@ export default function RootLayout(props: React.PropsWithChildren) {
       <html lang="en">
         <body>
           <section>
+            
             <Nav />
 
-            <header>
+            {/* <header>
               <h1> Header </h1>
-            </header>
+            </header> */}
 
             <main>{props.children}</main>
 
-            <footer >
+            {/* <footer >
               <h1>Footer</h1>
-            </footer>
+            </footer> */}
           </section>
         </body>
       </html>

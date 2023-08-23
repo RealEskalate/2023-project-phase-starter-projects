@@ -9,15 +9,16 @@ module.exports = {
     "./src/**/*.{js,ts,jsx,tsx,mdx}",
   ],
   theme: {
-    screens: {
-      sm: "480px",
-      md: "768px",
-      lg: "976px",
-      xl: "1440px",
-    },
+    // screens: {
+    //   sm: "480px",
+    //   md: "768px",
+    //   lg: "976px",
+    //   xl: "1440px",
+    // },
     extend: {
       colors: {
         primaryColor: '#264FAD',
+        primaryColorLight: '#F2F3F4',
         secondaryColor: '#160041',
         textColor: {
           50: '#878593',
