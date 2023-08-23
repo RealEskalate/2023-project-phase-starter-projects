@@ -18,6 +18,7 @@ namespace Persistence
             services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
             services.AddScoped<IPostRepository, PostRepository>();
             services.AddScoped<IPostReactionRepository, PostReactionRepository>();
+            // services.AddScoped<I
 
             return services;
         }
@@ -26,4 +27,3 @@ namespace Persistence
 
 
 
-//
