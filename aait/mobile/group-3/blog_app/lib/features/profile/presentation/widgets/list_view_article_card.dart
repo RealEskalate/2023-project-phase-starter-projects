@@ -1,5 +1,6 @@
 
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../domain/entity/article.dart';
 import 'article_info_widget.dart';
@@ -13,7 +14,7 @@ class ListViewArticleCard extends StatelessWidget {
     return Column(
       children: [
         Container(
-          width: 295,
+          width: 295.w,
           alignment: Alignment.center,
           child: Card(
             shape:
@@ -25,8 +26,8 @@ class ListViewArticleCard extends StatelessWidget {
                     borderRadius: BorderRadius.circular(20),
                     child: Image.network(
                       article.image,
-                      width: 92,
-                      height: 141,
+                      width: 92.w,
+                      height: 141.h,
                       fit: BoxFit.cover,
                     )),
                 SizedBox(
@@ -43,7 +44,7 @@ class ListViewArticleCard extends StatelessWidget {
           ),
         ),
         SizedBox(
-          height: 6,
+          height: 6.h,
         )
       ],
     );

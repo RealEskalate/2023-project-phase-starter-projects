@@ -1,5 +1,6 @@
 
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class FeedContent extends StatelessWidget {
   final Widget innerContent;
@@ -12,10 +13,10 @@ class FeedContent extends StatelessWidget {
       margin: EdgeInsets.zero,
       decoration: BoxDecoration(
           borderRadius: BorderRadius.only(
-              topLeft: Radius.circular(20), topRight: Radius.circular(20))),
+              topLeft: Radius.circular(20.r), topRight: Radius.circular(20.r))),
       child: Material(
         borderRadius: BorderRadius.only(
-            topLeft: Radius.circular(20), topRight: Radius.circular(20)),
+            topLeft: Radius.circular(20.r), topRight: Radius.circular(20.r)),
         elevation: 10,
         child: innerContent,
       ),

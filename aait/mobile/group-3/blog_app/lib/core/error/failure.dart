@@ -1,6 +1,5 @@
 import 'package:equatable/equatable.dart';
 
-<<<<<<< Updated upstream
 class Failure extends Equatable {
   const Failure({required this.message, required this.statusCode});
 
@@ -18,9 +17,3 @@ class ServerFailure extends Failure {
 class InvalidInputFailure extends Failure {
   InvalidInputFailure({required super.message, required super.statusCode});
 }
-=======
-abstract class Failure extends Equatable {
-  @override
-  List<Object> get props => [];
-}
->>>>>>> Stashed changes

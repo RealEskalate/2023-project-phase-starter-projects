@@ -12,19 +12,25 @@ part 'profile_state.dart';
 class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
   ProfileBloc() : super(ProfileInitial()) {
     on<GetData>(_fetchData);
-    on<ShowPosts>(_getPosts);
-    on<ShowBookMarks>(_getBookMarks);
     on<ToggleViewMode>(_toggleButton);
+    on<ToggleUserChoice>(_toggleChoice);
   }
   _fetchData(event, emit) async {
     emit(ProfileLoading());
     await Future.delayed(Duration(seconds: 1));
-    final Profile _profile = Profile(
-        username: "@joevidan",
-        fullName: "Jovi Daniel",
-        imageName:
-            "https://images.pexels.com/photos/2379004/pexels-photo-2379004.jpeg?cs=srgb&dl=pexels-italo-melo-2379004.jpg&fm=jpg",
-        expertise: "UX Designer");
+    emit(ProfileLoaded(
+        profile: _getDummyProfile(), isGridView: false, isBookmark: false));
+  }
+
+  _toggleButton(ToggleViewMode event, emit) {
+    final _state = state as ProfileLoaded;
+    emit(ProfileLoaded(
+        isBookmark: _state.isBookmark,
+        profile: _state.profile,
+        isGridView: event.isGridView));
+  }
+
+  _getDummyArticles() {
     final List<Article> _articles = [
       Article(
           title: "GAME",
@@ -48,51 +54,46 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
           image:
               "https://i.etsystatic.com/24434904/r/il/b2ba6a/4092042802/il_fullxfull.4092042802_q13p.jpg")
     ];
-    emit(ProfileLoaded(
-        articles: _articles, profile: _profile, isGridView: false));
+    return _articles;
   }
 
-  _getPosts(ShowPosts event, emit) {
-    if (!event.active) {
-      final _state = state as ProfileLoaded;
-      final newList = List.of(_state.articles);
+  _getDummyProfile() {
+    final Profile _profile = Profile(
+        username: "@joevidan",
+        fullName: "Jovi Daniel",
+        bio:
+            "Madison Blackstone is a director of user experience design, with experience managing global teams.",
+        imageName:
+            "https://images.pexels.com/photos/2379004/pexels-photo-2379004.jpeg?cs=srgb&dl=pexels-italo-melo-2379004.jpg&fm=jpg",
+        expertise: "UX Designer",
+        articles: _getDummyArticles());
+    return _profile;
+  }
+
+  _toggleChoice(ToggleUserChoice event, emit) {
+    final _state = state as ProfileLoaded;
+    final newList = _getDummyArticles();
+
+    if (!event.isBookmark) {
       newList.add(Article(
           title: "Travel",
           subTitle: "The northen lights sky is to be seen by everyone",
-          createdAt: DateTime(2023, 8, 10),
-          id: "htbgfvewwhyjeumjth",
+          createdAt: DateTime(2023, 8, 13),
+          id: "gadAGfvsdfgavd",
           image:
-              "https://visitgreenland.com/wp-content/uploads/northern-lights-by-mads-pihl-12.jpg"));
-      emit(ProfileLoaded(
-          articles: newList,
-          profile: _state.profile,
-          isGridView: _state.isGridView));
-    }
-  }
-
-  _getBookMarks(ShowBookMarks event, emit) {
-    if (!event.active) {
-      final _state = state as ProfileLoaded;
-      final newList = List.of(_state.articles);
+              "https://media.istockphoto.com/id/1176475543/vector/forest-scene-with-aurora.jpg?s=612x612&w=0&k=20&c=ao8xZMIZ-_dHl-ctw5YhJQgpAItFWbCcZWlS70n7_I8="));
+    } else {
       newList.add(Article(
           title: "Skyrim",
-          subTitle: "How to get dragon armor in skyrim",
-          createdAt: DateTime(2023, 1, 1),
-          id: "mhgdvbktu6y5erg",
+          subTitle: "How to get dragon armor in skyrim ",
+          createdAt: DateTime(2022, 11, 29),
+          id: "xbzvsasgbvsrewg",
           image:
               "https://standardof.net/wp-content/uploads/2020/09/Dragonscale-Armor-Set-The-Elder-Scrolls-V-Skyrim.png"));
-      emit(ProfileLoaded(
-          articles: newList,
-          profile: _state.profile,
-          isGridView: _state.isGridView));
     }
-  }
-
-  _toggleButton(ToggleViewMode event, emit) {
-    final _state = state as ProfileLoaded;
     emit(ProfileLoaded(
-        articles: _state.articles,
-        profile: _state.profile,
-        isGridView: event.isGridView));
+        profile: _state.profile.copyWith(articles: newList),
+        isGridView: _state.isGridView,
+        isBookmark: event.isBookmark));
   }
 }
