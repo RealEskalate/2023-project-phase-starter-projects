@@ -283,3 +283,9 @@ Icon
 Network Trash Folder
 Temporary Items
 .apdisk
+
+# Custom git ignores
+.vscode/*
+*/.vscode/
+WebApi/*.json
+Persistence/Migrations/*
