@@ -79,7 +79,7 @@ const Footer = () => {
             width={15}
             height={15}
             alt="copyright image"
-            src={"/assets/copyright.svg"}
+            src={"/assets/copy-right.svg"}
           />
           <p className="text-sm md:text-base">
             2020 Africa to Silicon Valley, Inc. All right reserved.

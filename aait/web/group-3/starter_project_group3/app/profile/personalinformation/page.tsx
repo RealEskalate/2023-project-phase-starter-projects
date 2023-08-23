@@ -9,7 +9,7 @@ const PersonalInformation = () => {
       <div className=" py-10 text-blog_list_sub_text_color flex justify-between items-center ">
         <p>
           <p className="text-xl  font-bold">Manage Personal Information</p>
-          <p className="text-sm">
+          <p className="text-sm font-medium">
             Add all the required information about yourself
           </p>
         </p>
@@ -78,7 +78,7 @@ const PersonalInformation = () => {
               <Image
                 width={50}
                 height={50}
-                src={"/assets/photoPlaceHolder.svg"}
+                src={"/assets/photo-placeholder.svg"}
                 alt="alternative image"
               />
             </div>
@@ -90,7 +90,7 @@ const PersonalInformation = () => {
                 <Image
                   width={30}
                   height={30}
-                  src={"/assets/photoUPloadedIcon.svg"}
+                  src={"/assets/photo-uploaded-icon.svg"}
                   alt="alternative image"
                 />
 

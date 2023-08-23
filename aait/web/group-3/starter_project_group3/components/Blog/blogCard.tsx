@@ -27,19 +27,19 @@ const BlogCard = ({ blog }: BlogCardProps) => {
         {blog.skills.map((skill) => (
           <span
             key={skill}
-            className="text-xs font-medium mx-3 text-[#8E8E8E]   bg-[#F5F5F5] py-1 px-3 rounded-lg"
+            className="text-xs font-medium mx-3 text-[#8E8E8E] bg-[#F5F5F5] py-1 px-3 rounded-lg"
           >
             {skill}
           </span>
         ))}
       </div>
 
-      <p className="text-[12px]  pb-5  text-[#8E8E8E]">{blog.content}</p>
+      <p className="text-[12px] pb-5 text-[#8E8E8E]">{blog.content}</p>
 
       <p className="flex justify-between items-center mx-1 mb-2">
         <span className="flex  gap-x-2">
           <Image
-            src={"assets/pendingClock.svg"}
+            src={"assets/pending-clock.svg"}
             alt="blog image"
             width={20}
             height={20}
