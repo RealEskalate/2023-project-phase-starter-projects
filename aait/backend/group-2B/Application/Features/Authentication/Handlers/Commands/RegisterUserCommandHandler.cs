@@ -1,5 +1,6 @@
 using AutoMapper;
 using MediatR;
+using Microsoft.AspNetCore.Identity;
 using SocialSync.Application.Contracts.Infrastructure;
 using SocialSync.Application.Contracts.Persistence;
 using SocialSync.Application.DTOs.Authentication;
@@ -14,12 +15,19 @@ public class RegisterUserCommandHandler : IRequestHandler<RegisterUserCommand, L
     private IUnitOfWork _unitOfWork;
     private IJwtGenerator _jwtGenerator;
     private IMapper _mapper;
+    private readonly IPasswordHasher<User> _passwordHasher;
 
-    public RegisterUserCommandHandler(IUnitOfWork unitOfWork, IJwtGenerator jwtGenerator, IMapper mapper)
+    public RegisterUserCommandHandler(
+        IUnitOfWork unitOfWork,
+        IJwtGenerator jwtGenerator,
+        IMapper mapper,
+        IPasswordHasher<User> passwordHasher
+    )
     {
         _unitOfWork = unitOfWork;
         _jwtGenerator = jwtGenerator;
         _mapper = mapper;
+        _passwordHasher = passwordHasher;
     }
 
     public async Task<LoggedInUserDto> Handle(
@@ -40,11 +48,13 @@ public class RegisterUserCommandHandler : IRequestHandler<RegisterUserCommand, L
             || await _unitOfWork.UserRepository.EmailExists(request.RegisterUserDto.Email);
 
         if (userExists == true)
-          throw new Exception();
+            throw new Exception();
 
         // Create and persiste the user
-        // TODO: Salting and Encryption
         var user = _mapper.Map<User>(request.RegisterUserDto);
+
+        // Hash the password
+        var hashedPassword = _passwordHasher.HashPassword(user, user.Password);
         user = await _unitOfWork.UserRepository.AddAsync(user);
 
         // Convert back to the dto
