@@ -6,7 +6,7 @@ namespace SocialSync.Persistence.Repositories;
 public class GenericRepository<T> : IGenericRepository<T>
     where T : class
 {
-    private SocialSyncDbContext _dbContext;
+    private readonly SocialSyncDbContext _dbContext;
 
     public GenericRepository(SocialSyncDbContext dbContext)
     {
@@ -16,14 +16,12 @@ public class GenericRepository<T> : IGenericRepository<T>
     public async Task<T> AddAsync(T entity)
     {
         await _dbContext.AddAsync(entity);
-        await _dbContext.SaveChangesAsync();
         return entity;
     }
 
     public async Task DeleteAsync(T entity)
     {
         _dbContext.Set<T>().Remove(entity);
-        await _dbContext.SaveChangesAsync();
     }
 
     public async Task<bool> Exists(int id)
@@ -41,7 +39,6 @@ public class GenericRepository<T> : IGenericRepository<T>
     public async Task UpdateAsync(T entity)
     {
         _dbContext.Entry(entity).State = EntityState.Modified;
-        await _dbContext.SaveChangesAsync();
     }
 
     public async Task<List<T>> GetAsync()
