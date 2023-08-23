@@ -1,11 +1,10 @@
-using AAiT.Backend.G2B.SocialSync.Application.Contracts.Persistence;
 using AAiT.Backend.G2B.SocialSync.Application.DTOs.Validators.PostDtoValidators;
-using AAiT.Backend.G2B.SocialSync.Application.Exceptions;
-using AAiT.Backend.G2B.SocialSync.Application.Features.PostsFeatures.Requests;
 using AutoMapper;
 using MediatR;
+using SocialSync.Application.Contracts.Persistence;
+using SocialSync.Application.Features.Posts.Requests.Commands;
 
-namespace AAiT.Backend.G2B.SocialSync.Application.Features.PostFeatures.Handlers;
+namespace SocialSync.Application.Features.Posts.Handlers.Commands;
 
 public class UpdatePostCommandHandler : PostsRequestHandler, IRequestHandler<UpdatePostCommand, Unit>
 {
@@ -17,18 +16,12 @@ public class UpdatePostCommandHandler : PostsRequestHandler, IRequestHandler<Upd
     {
         var UpdateValidator = new UpdatePostDtoValidator(_postRepository);
         var UpdateValidationResult = UpdateValidator.Validate(request.UpdatePostDto);
-        if(!UpdateValidationResult.IsValid){
-            throw new InvalidPostInputException(UpdateValidationResult.Errors.ToString());
-        }
+        // if(!UpdateValidationResult.IsValid){
+        // }
         
-        var post = await _postRepository.GetById(request.UpdatePostDto.Id);
-        if(post != null){
-            _mapper.Map(request.UpdatePostDto, post);
-            await _postRepository.Update(post);
-        }
-        else{
-            throw new InvalidPostInputException("Input id didnot match any post id.");
-        }
+        var post = await _postRepository.GetAsync(request.UpdatePostDto.Id);
+        _mapper.Map(request.UpdatePostDto, post);
+        await _postRepository.UpdateAsync(post);
 
         return Unit.Value;
         
