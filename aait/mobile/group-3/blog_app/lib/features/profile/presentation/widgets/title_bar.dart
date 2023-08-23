@@ -1,5 +1,6 @@
 
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class TitleBar extends StatelessWidget {
   TitleBar({
@@ -14,14 +15,14 @@ class TitleBar extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         Padding(
-          padding: EdgeInsets.only(left: 40, top: 68),
+          padding: EdgeInsets.only(left: 40.w, top: 68.h),
           child: Text(
             "Profile",
-            style: TextStyle(fontSize: 24, fontWeight: FontWeight.w500),
+            style: TextStyle(fontSize: 24.sp, fontWeight: FontWeight.w500),
           ),
         ),
         Padding(
-          padding: EdgeInsets.only(right: 40, top: 68),
+          padding: EdgeInsets.only(right: 40.w, top: 68.h),
           child: IconButton(
             onPressed: null,
             icon: Icon(

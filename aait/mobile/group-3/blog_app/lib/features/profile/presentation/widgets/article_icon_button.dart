@@ -1,5 +1,6 @@
 
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class ArticleIconButton extends StatelessWidget {
   final textValue;
@@ -21,7 +22,7 @@ class ArticleIconButton extends StatelessWidget {
           color: darkBlue,
         ),
         SizedBox(
-          width: 6,
+          width: 6.w,
         ),
         Text(
           textValue,

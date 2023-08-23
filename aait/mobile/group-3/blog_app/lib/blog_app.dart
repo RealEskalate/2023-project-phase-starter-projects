@@ -1,6 +1,7 @@
 import 'package:blog_app/features/profile/presentation/bloc/profile_bloc.dart';
 import 'package:blog_app/features/profile/presentation/screen/profile_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -19,16 +20,23 @@ class BlogApp extends StatelessWidget {
       GoRoute(path: '/profile', builder: (context, state) => ProfileScreen()),
     ]);
     //TODO: ADD BLOC
-    return MaterialApp(
-        home: MultiBlocProvider(
-      providers: [
-        BlocProvider(
-          create: (context) => ProfileBloc(),
-        ),
-      ],
-      child: MaterialApp.router(
-        routerConfig: _router,
-      ),
-    ));
+    return ScreenUtilInit(
+      designSize: const Size(375, 812),
+      minTextAdapt: true,
+      splitScreenMode: true,
+      builder: (_, child) {
+        return MaterialApp(
+            home: MultiBlocProvider(
+          providers: [
+            BlocProvider(
+              create: (context) => ProfileBloc(),
+            ),
+          ],
+          child: MaterialApp.router(
+            routerConfig: _router,
+          ),
+        ));
+      },
+    );
   }
 }

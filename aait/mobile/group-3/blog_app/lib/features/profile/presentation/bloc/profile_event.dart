@@ -8,24 +8,6 @@ sealed class ProfileEvent extends Equatable {
 
 final class GetData extends ProfileEvent {}
 
-final class ShowPosts extends ProfileEvent {
-  final bool active;
-
-  ShowPosts({required this.active});
-
-  @override
-  List<Object> get props => [active];
-}
-
-final class ShowBookMarks extends ProfileEvent {
-  final bool active;
-
-  ShowBookMarks({required this.active});
-
-  @override
-  List<Object> get props => [active];
-}
-
 final class ToggleViewMode extends ProfileEvent {
   final bool isGridView;
 
@@ -33,4 +15,13 @@ final class ToggleViewMode extends ProfileEvent {
 
   @override
   List<Object> get props => [isGridView];
+}
+
+final class ToggleUserChoice extends ProfileEvent {
+  final bool isBookmark;
+
+  ToggleUserChoice({required this.isBookmark});
+
+  @override
+  List<Object> get props => [isBookmark];
 }

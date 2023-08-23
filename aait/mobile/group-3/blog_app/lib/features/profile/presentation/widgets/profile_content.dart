@@ -1,16 +1,23 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
+import '../../domain/entity/profile.dart';
 import 'about_section.dart';
 import 'basic_information_widget.dart';
 import 'profile_image.dart';
 
 class ProfileContent extends StatelessWidget {
+  final Profile profile;
+
+  const ProfileContent({super.key, required this.profile});
+  
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.symmetric(horizontal: 40),
+      padding: EdgeInsets.symmetric(horizontal: 40.w),
       child: Card(
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+        shape:
+            RoundedRectangleBorder(borderRadius: BorderRadius.circular(20.r)),
         elevation: 3,
         child: Column(
           children: [
@@ -18,32 +25,32 @@ class ProfileContent extends StatelessWidget {
               children: [
                 Container(
                   alignment: Alignment.centerLeft,
-                  padding: EdgeInsets.symmetric(horizontal: 32, vertical: 32),
+                  padding:
+                      EdgeInsets.symmetric(horizontal: 32.w, vertical: 32.h),
                   child: ProfileImage(
-                    imageName:
-                        'https://images.pexels.com/photos/2379004/pexels-photo-2379004.jpeg?cs=srgb&dl=pexels-italo-melo-2379004.jpg&fm=jpg',
+                    imageName:profile.imageName,
                   ),
                 ),
                 SizedBox(
-                  width: 20,
+                  width: 20.w,
                 ),
                 Container(
                   child: BasicInformationWidget(
-                      username: "@joeviedan",
-                      fullName: "Jovi Daniel",
-                      occupation: "UX Designer"),
+                      username:profile.username,
+                      fullName: profile.fullName,
+                      occupation: profile.expertise),
                 ),
                 SizedBox(
-                  height: 24,
+                  height: 24.h,
                 ),
               ],
             ),
             Container(
-              padding: EdgeInsets.symmetric(horizontal: 32),
+              padding: EdgeInsets.symmetric(horizontal: 32.w),
               alignment: Alignment.centerLeft,
               child: AboutSection(
                   description:
-                      "Madison Blackstone is a director of user experience design, with experience managing global teams."),
+                     profile.bio),
             ),
           ],
         ),

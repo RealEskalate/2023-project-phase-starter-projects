@@ -11,16 +11,15 @@ final class ProfileInitial extends ProfileState {}
 final class ProfileLoading extends ProfileState {}
 
 final class ProfileLoaded extends ProfileState {
-  final List<Article> articles;
   final Profile profile;
   final bool isGridView;
-
+  final bool isBookmark;
   ProfileLoaded(
-      {required this.articles,
-      required this.profile,
-      required this.isGridView});
+      {required this.profile,
+      required this.isGridView,
+      required this.isBookmark});
   @override
-  List<Object> get props => [articles, profile, isGridView];
+  List<Object> get props => [isBookmark,profile, isGridView];
 }
 
 final class ProfileEmpty extends ProfileState {}
