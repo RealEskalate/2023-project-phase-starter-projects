@@ -41,7 +41,7 @@ export default function page() {
             <div className="mt-8">
               <div className="py-8 flex justify-center items-center">
                 <Image
-                  width={100}
+                  width={200}
                   height={50}
                   src="/images/a2sv-logo.svg"
                   alt="A2SV Logo"
