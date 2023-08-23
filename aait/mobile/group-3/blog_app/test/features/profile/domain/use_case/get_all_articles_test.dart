@@ -1,4 +1,4 @@
-import 'package:blog_app/core/use_case/use_case.dart';
+import 'package:blog_app/core/use_case/usecase.dart';
 import 'package:blog_app/features/profile/domain/entity/article.dart';
 import 'package:blog_app/features/profile/domain/repositories/profile_repository.dart';
 import 'package:blog_app/features/profile/domain/use_case/get_all_articles.dart';
