@@ -27,6 +27,7 @@ const AddBlog: React.FC = () => {
                     className="object-cover"
                     src={uploadsvg}
                     width={130}
+                    height={120}
                     alt="upload image"
                     priority={true}
                   />
