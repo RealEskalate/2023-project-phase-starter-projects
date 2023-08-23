@@ -33,7 +33,7 @@ public class UnitOfWork : IUnitOfWork
         get => _notificationRepository ??= new NotificationRepository(_dbContext);
     }
 
-    public async Task<int> Save()
+    public async Task<int> SaveAsync()
     {
       return await _dbContext.SaveChangesAsync();
     }
