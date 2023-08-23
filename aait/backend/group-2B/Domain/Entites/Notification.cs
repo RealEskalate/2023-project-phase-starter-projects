@@ -7,7 +7,7 @@ public enum NotificationType
     Like,
     Follow
 }
-public class Notification : BaseAuditableEntity
+public class Notification : BaseEntity
 {
     public int SenderId { get; set; }
     public int RecepientId { get; set; } 

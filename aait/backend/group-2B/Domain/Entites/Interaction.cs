@@ -8,7 +8,7 @@ public enum InteractionType
     Comment
 }
 
-public class Interaction : BaseAuditableEntity
+public class Interaction : BaseEntity
 {
     public int PostId { get; set; }
     public int UserId { get; set; }

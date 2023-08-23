@@ -5,5 +5,4 @@ public class BaseEntity
     public int Id;
     public DateTime CreatedAt;
     public DateTime LastModified;
-
 }
