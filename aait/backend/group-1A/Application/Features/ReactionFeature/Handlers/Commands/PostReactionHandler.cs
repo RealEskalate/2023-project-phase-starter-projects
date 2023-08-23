@@ -33,8 +33,23 @@ namespace Application.Features.PostFeature.Handlers.Commands
             }
 
             var postReaction = _mapper.Map<PostReaction>(request.ReactionData);
+            
 
-            var result = await _postReactionRespository.Add(postReaction);
+
+            if (request.ReactionData.ReactionType == "like")
+            {
+                postReaction.Like = true;
+            }
+            else
+            {
+                postReaction.Dislike = true;
+            }
+
+            postReaction.PostId = request.ReactionData.ReactedId;
+
+
+
+            var result = await _postReactionRespository.MakeReaction(request.UserId, postReaction);
             if (result != null)
             {
                 return new CommonResponseDTO()

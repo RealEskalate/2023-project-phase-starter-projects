@@ -21,14 +21,17 @@ namespace WebApi.Controllers
         [HttpGet]
         public async Task<ActionResult<List<PostResponseDTO>>> Get()
         {
-            var result = await _mediator.Send(new GetAllPostsQuery());
+            var userId = 3;
+            var result = await _mediator.Send(new GetAllPostsQuery { userId = userId});
             return result;
         }
 
         [HttpGet("{id}")]
         public async Task<ActionResult<PostResponseDTO>> Get(int id)
         {
-            var result = await _mediator.Send(new GetSinglePostQuery() { Id = id });
+            var userId = 3;
+            var result = await _mediator.Send(new GetSinglePostQuery { Id = id, userId = userId });
+
             return result;
         }
 
@@ -36,7 +39,8 @@ namespace WebApi.Controllers
         [HttpPost]
         public async Task<ActionResult<PostResponseDTO>> Post([FromBody] PostCreateDTO newPostData)
         {
-            var result = await _mediator.Send(new CreatePostCommand() { NewPostData = newPostData });
+            var userId = 3;
+            var result = await _mediator.Send(new CreatePostCommand{ NewPostData = newPostData, userId = userId });
             return Ok(result);
         }
 
@@ -44,7 +48,8 @@ namespace WebApi.Controllers
         [HttpPut("{id}")]
         public async Task<ActionResult<PostResponseDTO>> Put(int id, [FromBody] PostUpdateDTO UpdatePostData)
         {
-            var result = await _mediator.Send(new UpdatePostCommand() { Id = id, PostUpdateData = UpdatePostData });
+            var userId = 3;
+            var result = await _mediator.Send(new UpdatePostCommand { Id = id, PostUpdateData = UpdatePostData , userId = userId });
             return Ok(result);
         }
 
@@ -53,7 +58,8 @@ namespace WebApi.Controllers
         [HttpDelete("{id}")]
         public async Task<ActionResult<CommonResponseDTO>> Delete(int id)
         {
-            var result = await _mediator.Send(new DeletePostCommand() { Id = id });
+            var userId = 3;
+            var result = await _mediator.Send(new DeletePostCommand { userId = userId, Id = id });
             return Ok(result);
         }
     }
