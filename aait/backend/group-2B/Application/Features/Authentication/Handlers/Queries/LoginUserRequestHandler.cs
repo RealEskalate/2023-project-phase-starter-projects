@@ -9,13 +9,13 @@ namespace SocialSync.Application.Features.Authentication.Handlers.Queries;
 
 public class LoginUserRequestHandler : IRequestHandler<LoginUserRequest, LoggedInUserDto>
 {
-    private IUserRepository _userRepository;
+    private IUnitOfWork _unitOfWork;
     private IJwtGenerator _jwtGenerator;
     private IMapper _mapper;
 
-    public LoginUserRequestHandler(IUserRepository userRepository, IJwtGenerator jwtGenerator, IMapper mapper)
+    public LoginUserRequestHandler(IUnitOfWork unitOfWork, IJwtGenerator jwtGenerator, IMapper mapper)
     {
-        _userRepository = userRepository;
+        _unitOfWork = unitOfWork;
         _jwtGenerator = jwtGenerator;
         _mapper = mapper;
     }
@@ -25,13 +25,13 @@ public class LoginUserRequestHandler : IRequestHandler<LoginUserRequest, LoggedI
         CancellationToken cancellationToken
     ) {
       // Check is user exists
-      var userExists = await _userRepository.UsernameExists(request.LoginUserDto.Username);
+      var userExists = await _unitOfWork.UserRepository.UsernameExists(request.LoginUserDto.Username);
       if (!userExists)
         throw new Exception();
 
       // Check Password
       // TODO: Salting and Encryption
-      var user = await _userRepository.GetByUsername(request.LoginUserDto.Username);
+      var user = await _unitOfWork.UserRepository.GetByUsername(request.LoginUserDto.Username);
       if (user.Password != request.LoginUserDto.Password)
         throw new Exception();
 
