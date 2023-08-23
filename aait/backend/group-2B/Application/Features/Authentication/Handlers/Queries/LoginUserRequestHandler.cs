@@ -1,3 +1,4 @@
+using AutoMapper;
 using MediatR;
 using SocialSync.Application.Contracts.Infrastructure;
 using SocialSync.Application.Contracts.Persistence;
@@ -10,11 +11,13 @@ public class LoginUserRequestHandler : IRequestHandler<LoginUserRequest, LoggedI
 {
     private IUserRepository _userRepository;
     private IJwtGenerator _jwtGenerator;
+    private IMapper _mapper;
 
-    public LoginUserRequestHandler(IUserRepository userRepository, IJwtGenerator jwtGenerator)
+    public LoginUserRequestHandler(IUserRepository userRepository, IJwtGenerator jwtGenerator, IMapper mapper)
     {
         _userRepository = userRepository;
         _jwtGenerator = jwtGenerator;
+        _mapper = mapper;
     }
 
     public async Task<LoggedInUserDto> Handle(
@@ -32,10 +35,13 @@ public class LoginUserRequestHandler : IRequestHandler<LoginUserRequest, LoggedI
       if (user.Password != request.LoginUserDto.Password)
         throw new Exception();
 
+      // Convert to dto
+      var userDto = _mapper.Map<UserDto>(user);
+
       // Generate JWT
       var token = _jwtGenerator.Generate(user);
 
       // Build the return DTO
-      return new LoggedInUserDto { User = user, Token = token };
+      return new LoggedInUserDto { UserDto = userDto, Token = token };
      }
 }

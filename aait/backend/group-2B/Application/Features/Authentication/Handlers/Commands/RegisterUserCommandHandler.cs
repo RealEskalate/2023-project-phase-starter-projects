@@ -47,10 +47,12 @@ public class RegisterUserCommandHandler : IRequestHandler<RegisterUserCommand, L
         var user = _mapper.Map<User>(request.RegisterUserDto);
         user = await _userRepository.AddAsync(user);
 
+        // Convert back to the dto
+        var userDto = _mapper.Map<UserDto>(user);
+
         // Generate a jwt token
         var token = _jwtGenerator.Generate(user);
 
-        // Prepare the return dto
-        return new LoggedInUserDto { User = user, Token = token };
+        return new LoggedInUserDto { UserDto = userDto, Token = token };
     }
 }
