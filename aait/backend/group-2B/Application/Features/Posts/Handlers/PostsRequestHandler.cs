@@ -7,9 +7,9 @@ public class PostsRequestHandler{
     protected IPostRepository _postRepository;
     protected IMapper _mapper;
 
-    public PostsRequestHandler(IPostRepository postRepository, IMapper mapper)
+    public PostsRequestHandler(IUnitOfWork unitOfWork, IMapper mapper)
     {
-        _postRepository = postRepository;
+        _postRepository = unitOfWork.PostRepository;
         _mapper = mapper;
     }
 }

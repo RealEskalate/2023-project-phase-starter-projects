@@ -9,7 +9,7 @@ namespace SocialSync.Application.Features.Posts.Handlers.Queries;
 
 public class GetAllPostsRequestHandler : PostsRequestHandler, IRequestHandler<GetAllPostsRequest, List<GeneralPostDto>>
 {
-    public GetAllPostsRequestHandler(IPostRepository postRepository, IMapper mapper) : base(postRepository, mapper)
+    public GetAllPostsRequestHandler(IUnitOfWork unitOfWork, IMapper mapper) : base(unitOfWork, mapper)
     {
     }
 

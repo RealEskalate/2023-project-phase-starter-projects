@@ -1,3 +1,4 @@
+using Microsoft.EntityFrameworkCore;
 using SocialSync.Application.Contracts.Persistence;
 using SocialSync.Domain.Entities;
 
@@ -11,5 +12,6 @@ public class UserRepository : GenericRepository<User>, IUserRepository
         : base(dbContext)
     {
         _dbContext = dbContext;
+        
     }
 }

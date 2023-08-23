@@ -9,7 +9,7 @@ namespace SocialSync.Application.Features.Posts.Handlers.Commands;
 
 public class UpdatePostCommandHandler : PostsRequestHandler, IRequestHandler<UpdatePostCommand, BaseCommandResponse>
 {
-    public UpdatePostCommandHandler(IPostRepository postRepository, IMapper mapper) : base(postRepository, mapper)
+    public UpdatePostCommandHandler(IUnitOfWork unitOfWork, IMapper mapper) : base(unitOfWork, mapper)
     {
     }
 

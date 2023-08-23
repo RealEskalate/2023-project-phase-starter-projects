@@ -8,7 +8,7 @@ namespace SocialSync.Application.Features.Posts.Handlers.Commands;
 
 public class RemovePostCommandHandler : PostsRequestHandler, IRequestHandler<RemovePostCommand, BaseCommandResponse>
 {
-    public RemovePostCommandHandler(IPostRepository postRepository, IMapper mapper) : base(postRepository, mapper)
+    public RemovePostCommandHandler(IUnitOfWork unitOfWork, IMapper mapper) : base(unitOfWork, mapper)
     {
     }
 

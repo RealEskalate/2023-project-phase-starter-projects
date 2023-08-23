@@ -1,3 +1,4 @@
+using Microsoft.EntityFrameworkCore;
 using SocialSync.Application.Contracts.Persistence;
 using SocialSync.Domain.Entities;
 
@@ -11,5 +12,23 @@ public class PostRepository : GenericRepository<Post>, IPostRepository
         : base(dbContext)
     {
         _dbContext = dbContext;
+    }
+
+    public async Task<IReadOnlyList<Post>> GetPostsByTags(List<string> tags)
+    {
+        List<Post> postsByTags = await _dbContext.Posts
+                                .Where(post => tags.Any(tag => post.Content.Contains(tag)))
+                                .ToListAsync();
+
+        return postsByTags.AsReadOnly();
+    }
+
+    public async Task<IReadOnlyList<Post>> GetPostsByUserId(int userId)
+    {
+        var postsByUser = await _dbContext.Posts
+            .Where(post => post.UserId == userId)
+            .ToListAsync();
+
+        return postsByUser.AsReadOnly();
     }
 }

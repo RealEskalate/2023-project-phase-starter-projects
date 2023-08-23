@@ -8,7 +8,7 @@ namespace SocialSync.Application.Features.Posts.Handlers.Queries;
 
 public class GetPostsByTagsRequestHandler : PostsRequestHandler, IRequestHandler<GetPostsByTagsRequest, IReadOnlyCollection<GeneralPostDto>>
 {
-    public GetPostsByTagsRequestHandler(IPostRepository postRepository, IMapper mapper) : base(postRepository, mapper)
+    public GetPostsByTagsRequestHandler(IUnitOfWork unitOfWork, IMapper mapper) : base(unitOfWork, mapper)
     {
     }
 

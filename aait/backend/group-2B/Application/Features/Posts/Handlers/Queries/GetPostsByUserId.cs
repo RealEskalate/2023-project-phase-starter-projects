@@ -9,7 +9,7 @@ namespace SocialSync.Application.Features.Posts.Handlers.Queries;
 
 public class GetPostsByUserIdRequestHandler : PostsRequestHandler, IRequestHandler<GetPostsByUserIdRequest, IReadOnlyCollection<GeneralPostDto>>
 {
-    public GetPostsByUserIdRequestHandler(IPostRepository postRepository, IMapper mapper) : base(postRepository, mapper)
+    public GetPostsByUserIdRequestHandler(IUnitOfWork unitOfWork, IMapper mapper) : base(unitOfWork, mapper)
     {
     }
 
@@ -17,7 +17,5 @@ public class GetPostsByUserIdRequestHandler : PostsRequestHandler, IRequestHandl
     {
         IReadOnlyList<Post> postsByUserId = await _postRepository.GetPostsByUserId(request.UserId);
         return _mapper.Map<IReadOnlyList<GeneralPostDto>>(postsByUserId);
-
-
     }
 }

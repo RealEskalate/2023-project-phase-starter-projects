@@ -11,7 +11,7 @@ namespace SocialSync.Application.Features.Posts.Handlers.Commands;
 
 public class CreatePostCommandHandler : PostsRequestHandler, IRequestHandler<CreatePostCommand, BaseCommandResponse>
 {
-    public CreatePostCommandHandler(IPostRepository postRepository, IMapper mapper) : base(postRepository, mapper)
+    public CreatePostCommandHandler(IUnitOfWork unitOfWork, IMapper mapper) : base(unitOfWork, mapper)
     {
     }
 
