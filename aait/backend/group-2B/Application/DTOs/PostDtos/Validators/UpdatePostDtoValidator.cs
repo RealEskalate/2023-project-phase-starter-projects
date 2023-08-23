@@ -7,11 +7,11 @@ namespace AAiT.Backend.G2B.SocialSync.Application.DTOs.Validators.PostDtoValidat
 // this class is to be fully implmented after the IUserRepository 
 public class UpdatePostDtoValidator : AbstractValidator<UpdatePostDto>
 {
-    // private IUserRepository _userRepository;
+    private IUserRepository _userRepository;
     private IPostRepository _postRepository;
-    public UpdatePostDtoValidator(/*IUserRepository userRepository, */ IPostRepository postRepository)
+    public UpdatePostDtoValidator(IUserRepository userRepository, IPostRepository postRepository)
     {
-        // _userRepository = userRepository;
+        _userRepository = userRepository;
 
         _postRepository = postRepository;
         RuleFor(p => p.Id)
@@ -28,11 +28,11 @@ public class UpdatePostDtoValidator : AbstractValidator<UpdatePostDto>
 
         RuleFor(p => p.UserId)
         .NotNull().WithMessage("Post author id cannot be null.")
-        // .MustAsync(async (id, token)=>{
-        //     var userExists =  await _usersRepository.Exists(id);
-        //     return userExists
-        // }).WithMessage("Post author id doesnot match with any user id.");
-        ;
+        .MustAsync(async (id, token)=>{
+            var user =  await _userRepository.GetAsync(id);
+            return user != null;
+        }).WithMessage("Post author id doesnot match with any user id.");
+        
 
 
 

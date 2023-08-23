@@ -18,7 +18,7 @@ public class CreatePostCommandHandler : PostsRequestHandler, IRequestHandler<Cre
     public async Task<BaseCommandResponse> Handle(CreatePostCommand request, CancellationToken cancellationToken)
     {
 
-        var CreateValidator = new CreatePostDtoValidator(_postRepository);
+        var CreateValidator = new CreatePostDtoValidator(_userRepository);
         var ValidationResult = CreateValidator.Validate(request.CreatePostDto);
         var response =  new BaseCommandResponse();
     
