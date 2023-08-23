@@ -31,13 +31,12 @@ public class LoginUserRequestHanlder : IRequestHandler<LoginUserRequest,LoginRes
         // Check if user exists
         if (!await _authRepository.UserExists(request.LoginUserDto.Email))
         {
-            throw new Exception("User does not exist");
+            throw new Exception("User does not exist!");
         }
         
         // Login user
         var user = await _authRepository.LoginUser(_mapper.Map<User>(request.LoginUserDto));
         
-
         // Generate token
         var token = await _jwtGenerator.CreateTokenAsync(user);
 
