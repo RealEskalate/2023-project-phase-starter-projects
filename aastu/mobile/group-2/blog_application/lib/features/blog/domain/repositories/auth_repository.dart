@@ -3,9 +3,9 @@ import 'package:dartz/dartz.dart';
 
 import '../entities/user.dart';
 abstract class AuthRepository {
-  Future<Either<void, Failure>> login(String email, String password);
+  Future<Either<Failure,void>> login(String email, String password);
   Future<void> logout();
-  Future<Either<void, Failure>> register(String email, String password, [String? bio, String? fullName, String? expertise]);
+  Future<Either<Failure,void>> register(String email, String password, [String? bio, String? fullName, String? expertise]);
   Future<bool> isLoggedIn();
   Future<User> getCurrentUser();
 }
