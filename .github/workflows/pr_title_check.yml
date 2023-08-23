@@ -10,6 +10,7 @@ on:
 
 jobs:
   publish:
+    name: PR Title Check
     runs-on: ubuntu-18.04
     steps:
       - uses: actions/checkout@v1
