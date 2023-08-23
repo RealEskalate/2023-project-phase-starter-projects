@@ -7,5 +7,5 @@ public interface IUnitOfWork : IDisposable
     IPostRepository PostRepository { get; }
     INotificationRepository NotificationRepository { get; }
 
-    Task<int> Save();
+    Task<int> SaveAsync();
 }
