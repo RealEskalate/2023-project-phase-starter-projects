@@ -1,6 +1,5 @@
 import 'package:dartz/dartz.dart';
 
-
 import '../../../../../core/error/failure.dart';
 import '../../entities/auth/login_entity.dart';
 import '../../entities/auth/sign_up_entity.dart';
@@ -16,20 +15,18 @@ class LoginUseCase extends UseCase<UserData, LoginRequestEntity> {
   final AuthRepository authRepository;
   LoginUseCase({required this.authRepository});
   @override
-  Future<Either<Failure, UserData>> call(LoginRequestEntity params) {
-    // TODO: implement call
-    throw UnimplementedError();
+  Future<Either<Failure, UserData>> call(LoginRequestEntity params) async {
+    return await authRepository.login(params);
   }
 }
 
 class SignUpUseCase extends UseCase<UserData, SignUpEntity> {
-  final AuthRepository repository;
+  final AuthRepository authRepository;
 
-  SignUpUseCase({required this.repository});
+  SignUpUseCase({required this.authRepository});
 
   @override
-  Future<Either<Failure, UserData>> call(SignUpEntity params) {
-    // TODO: implement call
-    throw UnimplementedError();
+  Future<Either<Failure, UserData>> call(SignUpEntity params) async {
+    return await authRepository.signIn(params);
   }
 }
