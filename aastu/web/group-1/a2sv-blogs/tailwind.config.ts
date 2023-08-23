@@ -13,6 +13,7 @@ const config: Config = {
         montserrat: ['Montserrat', 'sans-serif'],
         nunito: ['Nunito', 'sans-serif'],
         french: ['IM Fell French Canon', 'serif'],
+        DmSans:['DM Sans']
       },
       colors: {
         primary: '#264FAD',
