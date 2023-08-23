@@ -1,5 +1,6 @@
 namespace Infrastructure.Persistance.Repository;
 
-public class CommentRepository{
+public class CommentRepository
+{
     
 }
