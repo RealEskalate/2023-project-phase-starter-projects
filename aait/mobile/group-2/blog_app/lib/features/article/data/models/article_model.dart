@@ -1,3 +1,4 @@
+import '../../../user/data/models/user_data_model.dart';
 import '../../domain/entities/article.dart';
 import 'tag_model.dart';
 
@@ -18,6 +19,8 @@ class ArticleModel extends Article {
         .map<TagModel>((name) => TagModel(name: name))
         .toList();
 
+    final author = UserDataModel.fromJson(json['user']);
+
     return ArticleModel(
       id: json['id'],
       title: json['title'],
@@ -26,7 +29,7 @@ class ArticleModel extends Article {
       estimatedReadTime: json['estimatedReadTime'],
       date: json['createdAt'],
       photoUrl: json['image'],
-      author: json['user'],
+      author: author,
       tags: tags,
     );
   }
@@ -40,7 +43,7 @@ class ArticleModel extends Article {
       'estimatedReadTime': estimatedReadTime,
       'createdAt': date.toIso8601String(),
       'image': photoUrl,
-      'user': author,
+      'user': (author as UserDataModel).toJson(),
       'tags': tags.map((tag) => tag.name).toList(),
     };
   }
