@@ -1,5 +1,6 @@
 /* Components */
 // import { Providers } from '@/lib/providers';
+import Footer from './components/footer'
 import Header from './components/header'
 
 /* Instruments */
@@ -13,9 +14,7 @@ export default function RootLayout(props: React.PropsWithChildren) {
           <section>
             <Header/>
             <main>{props.children}</main>
-            <footer >
-              <h1>Footer</h1>
-            </footer>
+            <Footer/>
           </section>
         </body>
       </html>

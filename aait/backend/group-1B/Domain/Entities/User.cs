@@ -15,8 +15,6 @@ namespace Domain.Entities
 
         public string LastName { get; set; }
 
-        public string NumFollowers { get; set; } 
-
         public byte[] PasswordHash { get; set; }
 
         public byte[] PasswordSalt { get; set; }
@@ -26,6 +24,12 @@ namespace Domain.Entities
         public virtual IEnumerable<Follow> Followers { get; set; }
 
         public virtual IEnumerable<Follow> Followees { get; set; }
-
+        
+        public virtual IEnumerable<Post> Posts { get; set; }
+        
+        public virtual IEnumerable<Comment> Comments { get; set; }
+        
+        public virtual IEnumerable<PostLike> PostLikes { get; set; }
     }
+    
 }
