@@ -1,3 +1,5 @@
+"use client"
+
 /* Components */
 
 import LandingSection from "./components/home/LandingSection"
