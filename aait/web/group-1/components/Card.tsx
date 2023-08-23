@@ -16,9 +16,9 @@ const Card: React.FC<Profile> = ({_id, name, bio, department, socialMedia}) => {
           {bio}
         </div>
         <div className='w-full mt-10 p-4 border-t border-t-gray-200 flex justify-between'>
-            <Image src={'./images/facebook.svg'} alt={'facebook-logo'} width={30} height={30}/>
-            <Image src={'./images/linkedin.svg'} alt={'linkedin-logo'} width={30} height={30}/>
-            <Image src={'./images/instagram.svg'} alt={'instagram-logo'} width={30} height={30}/>
+            <Image src={'./images/facebook.svg'} alt={'facebook-logo'} width={30} height={30} className='hover:cursor-pointer'/>
+            <Image src={'./images/linkedin.svg'} alt={'linkedin-logo'} width={30} height={30} className='hover:cursor-pointer'/>
+            <Image src={'./images/instagram.svg'} alt={'instagram-logo'} width={30} height={30} className='hover:cursor-pointer'/>
         </div>
       </div>
     </div>

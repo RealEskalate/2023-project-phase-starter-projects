@@ -104,7 +104,7 @@ const page = () => {
       <div className='px-20 py-5'>
         <div className='grid grid-cols-3 gap-x-6 gap-y-8'>
           {/* mapping each member to card component */}
-          {(members?.map((member: Profile) => <Card _id={member._id} name={member.name} bio={member.bio} department={member.department} socialMedia={member.socialMedia}/>))}
+          {(members?.map((member: Profile) => <Card key={member._id} _id={member._id} name={member.name} bio={member.bio} department={member.department} socialMedia={member.socialMedia}/>))}
         </div>
       </div>
 
