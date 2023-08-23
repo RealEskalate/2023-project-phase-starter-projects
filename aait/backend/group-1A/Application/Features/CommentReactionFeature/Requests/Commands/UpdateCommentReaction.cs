@@ -2,12 +2,11 @@ using MediatR;
 
 namespace Application.Features.CommentReactionFeatures.Requests.Commands
 {
-    public class CommentReactionUpdateCommand : IRequest
+    public class CommentReactionUpdateCommand : IRequest<Unit>
     {
-        // Properties for updating a comment reaction
         public int Id { get; set; }
-        public int UserId { get; set; }
         public bool Like { get; set; }
+        public int userId { get; set; }
         public bool Dislike { get; set; }
     }
 }

@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace WebApi.Controllers
 {
     [ApiController]
-    [Route("api/[controller]")]
+    [Route("/[controller]")]
     public class CommentController : ControllerBase
     {
         private readonly IMediator _mediator;
@@ -17,14 +17,14 @@ namespace WebApi.Controllers
             _mediator = mediator;
         }
 
-        [HttpPost]
+        [HttpPost("create")]
         public async Task<IActionResult> CreateComment(CommentCreateCommand command)
         {
             int commentId = await _mediator.Send(command);
             return Ok(commentId);
         }
 
-        [HttpPut("{id}")]
+        [HttpPut("update/{id}")]
         public async Task<IActionResult> UpdateComment(int id, CommentUpdateCommand command)
         {
             if (id != command.Id)
@@ -36,21 +36,21 @@ namespace WebApi.Controllers
             return NoContent();
         }
 
-        [HttpDelete("{id}")]
+        [HttpDelete("delete/{id}")]
         public async Task<IActionResult> DeleteComment(int id)
         {
             await _mediator.Send(new CommentDeleteCommand { Id = id });
             return NoContent();
         }
 
-        [HttpGet]
+        [HttpGet("/all")]
         public async Task<IActionResult> GetAllComments()
         {
             var comments = await _mediator.Send(new GetAllComments());
             return Ok(comments);
         }
 
-        [HttpGet("{id}")]
+        [HttpGet("getOne/{id}")]
         public async Task<IActionResult> GetCommentById(int id)
         {
             var comment = await _mediator.Send(new GetCommentQuery { CommentId = id });
@@ -61,7 +61,7 @@ namespace WebApi.Controllers
             return Ok(comment);
         }
 
-        // You can add more actions as needed
+
     }
 
     internal class GetAllComments : IRequest<object>

@@ -6,6 +6,10 @@ namespace Application.DTO.CommentDTOS.DTO
         public string Message { get; set; }
         public int UserId { get; set; }
         public int PostId { get; set; }
-        // Add other properties as needed
+
+        public static implicit operator int(CommentDTO v)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

@@ -1,6 +1,9 @@
 using Application.Contracts;
+using Application.DTO.CommentReactionDTOS.DTO;
+using AutoMapper;
 using Domain.Entities;
 using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
@@ -11,10 +14,12 @@ namespace Persistence.Repositories.ReactionRepositories
     public class CommentReactionRepository : ICommentReactionRepository
     {
         private readonly SocialMediaDbContext _dbContext;
+        private readonly IMapper _mapper;
 
-        public CommentReactionRepository(SocialMediaDbContext dbContext)
+        public CommentReactionRepository(SocialMediaDbContext dbContext, IMapper mapper)
         {
             _dbContext = dbContext;
+            _mapper = mapper;
         }
 
         public async Task<List<CommentReaction>> GetReactionsForCommentAsync(int commentId)
@@ -31,31 +36,71 @@ namespace Persistence.Repositories.ReactionRepositories
                 .ToListAsync();
         }
 
-        public Task<List<CommentReaction>> GetAll(Expression<Func<CommentReaction, bool>> predicate)
+        public async Task<List<CommentReaction>> GetAll(Expression<Func<CommentReaction, bool>> predicate)
         {
-            throw new NotImplementedException();
+            return await _dbContext.CommentReaction
+                .Where(predicate)
+                .ToListAsync();
         }
 
-        public Task<CommentReaction> Add(CommentReaction entity)
+        public async Task<CommentReaction> Add(CommentReaction entity)
         {
-            throw new NotImplementedException();
+            await _dbContext.CommentReaction.AddAsync(entity);
+            await _dbContext.SaveChangesAsync();
+            return entity;
         }
 
-        public Task<bool> Delete(CommentReaction entity)
+        public async Task<bool> Delete(CommentReaction entity)
         {
-            throw new NotImplementedException();
+            _dbContext.CommentReaction.Remove(entity);
+            int rowsAffected = await _dbContext.SaveChangesAsync();
+            return rowsAffected > 0;
         }
 
-        public Task<bool> Exists(int id)
+        public async Task<bool> Exists(int id)
         {
-            throw new NotImplementedException();
+            return await _dbContext.CommentReaction.AnyAsync(reaction => reaction.Id == id);
         }
 
-        public Task<CommentReaction> Update(CommentReaction entity)
+        public async Task<CommentReaction> Update(CommentReaction entity)
         {
-            throw new NotImplementedException();
+            _dbContext.CommentReaction.Update(entity);
+            await _dbContext.SaveChangesAsync();
+            return entity;
         }
 
-        // Implement other methods defined in ICommentReactionRepository
+        public async Task<CommentReaction> GetCommentReactionByIdAsync(int id)
+        {
+            return await _dbContext.CommentReaction.FindAsync(id);
+        }
+
+        public async Task AddCommentReactionAsync(CommentReaction commentReaction)
+        {
+            await _dbContext.CommentReaction.AddAsync(commentReaction);
+            await _dbContext.SaveChangesAsync();
+        }
+
+        public async Task UpdateCommentReactionAsync(CommentReaction commentReaction)
+        {
+            _dbContext.CommentReaction.Update(commentReaction);
+            await _dbContext.SaveChangesAsync();
+        }
+
+        public async Task DeleteCommentReactionAsync(int id)
+        {
+            var commentReaction = await _dbContext.CommentReaction.FindAsync(id);
+            if (commentReaction != null)
+            {
+                _dbContext.CommentReaction.Remove(commentReaction);
+                await _dbContext.SaveChangesAsync();
+            }
+        }
+
+        public async Task<List<CommentReactionDTO>> GetAllCommentReactionsAsync()
+        {
+            var commentReactions = await _dbContext.CommentReaction.ToListAsync();
+            var commentReactionDTOs = _mapper.Map<List<CommentReactionDTO>>(commentReactions);
+            return commentReactionDTOs;
+        }
     }
 }

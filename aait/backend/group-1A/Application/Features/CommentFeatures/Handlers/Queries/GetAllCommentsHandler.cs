@@ -1,3 +1,4 @@
+using Application.Contracts;
 using Application.DTO.CommentDTOS.DTO;
 using Application.Features.CommentFeatures.Requests.Queries;
 using MediatR;
@@ -9,12 +10,17 @@ namespace Application.Features.CommentFeatures.Handlers.Queries
 {
     public class GetAllCommentsQueryHandler : IRequestHandler<GetAllCommentsQuery, List<CommentDTO>>
     {
-        public Task<List<CommentDTO>> Handle(GetAllCommentsQuery request, CancellationToken cancellationToken)
+        private readonly ICommentRepository _commentRepository; // Inject the repository here
+
+        public GetAllCommentsQueryHandler(ICommentRepository commentRepository)
         {
-            // Implement  logic to retrieve all comments
-            // var comments = await commentRepository.GetAllCommentsAsync();
-            // return comments;
-            return Task.FromResult(new List<CommentDTO>());
+            _commentRepository = commentRepository;
+        }
+
+        public async Task<List<CommentDTO>> Handle(GetAllCommentsQuery request, CancellationToken cancellationToken)
+        {
+            var comments = await _commentRepository.GetAllCommentsAsync(); // Replace with actual repository method
+            return comments;
         }
     }
 }

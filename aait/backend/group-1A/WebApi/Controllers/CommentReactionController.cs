@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace WebApi.Controllers
 {
     [ApiController]
-    [Route("api/[controller]")]
+    [Route("/[controller]")]
     public class CommentReactionController : ControllerBase
     {
         private readonly IMediator _mediator;
@@ -17,12 +17,35 @@ namespace WebApi.Controllers
             _mediator = mediator;
         }
 
-        [HttpPost]
-        public Task<IActionResult>? CreateCommentReaction(CommentReactionCreateCommand command)
+        [HttpPost("/create")]
+        public async Task<IActionResult> CreateCommentReaction(CommentReactionCreateCommand command)
         {
-
-            return null;
+            var result = await _mediator.Send(command);
+            return Ok(result);
         }
 
+        [HttpPut("update/{id}")]
+        public async Task<IActionResult> UpdateCommentReaction(int id, CommentReactionUpdateCommand command)
+        {
+            command.Id = id;
+            var result = await _mediator.Send(command);
+            return Ok(result);
+        }
+
+        [HttpDelete("delete/{id}")]
+        public async Task<IActionResult> DeleteCommentReaction(int id)
+        {
+            var command = new CommentReactionDeleteCommand { Id = id };
+            var result = await _mediator.Send(command);
+            return Ok(result);
+        }
+
+        [HttpGet("get/{id}")]
+        public async Task<IActionResult> GetCommentReaction(int id)
+        {
+            var query = new GetCommentReactionQuery { Id = id };
+            var result = await _mediator.Send(query);
+            return Ok(result);
+        }
     }
 }

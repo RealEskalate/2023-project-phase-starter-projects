@@ -1,3 +1,4 @@
+using Application.Contracts;
 using Application.DTO.CommentDTOS.DTO;
 using Application.Features.CommentFeatures.Requests.Queries;
 using MediatR;
@@ -8,12 +9,17 @@ namespace Application.Features.CommentFeatures.Handlers.Queries
 {
     public class GetCommentQueryHandler : IRequestHandler<GetCommentQuery, CommentDTO>
     {
+        private readonly ICommentRepository _commentRepository; // Inject the repository here
+
+        public GetCommentQueryHandler(ICommentRepository commentRepository)
+        {
+            _commentRepository = commentRepository;
+        }
+
         public async Task<CommentDTO> Handle(GetCommentQuery request, CancellationToken cancellationToken)
         {
-            // Implement  logic to retrieve a single comment by ID
-            // var comment = await commentRepository.GetCommentByIdAsync(request.CommentId);
-            // return comment;
-            return null;
+            var comment = await _commentRepository.GetCommentByIdAsync(request.CommentId); // Replace with actual repository method
+            return comment;
         }
     }
 }
