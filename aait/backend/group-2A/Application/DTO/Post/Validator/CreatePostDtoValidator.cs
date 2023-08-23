@@ -7,7 +7,6 @@ public class CreatePostDtoValidator : AbstractValidator<CreatePostDto>
 {
     public CreatePostDtoValidator(IPostRepository postRepository, IUserRepository userRepository){
         Include(new IPostDtoValidator(postRepository, userRepository));
-        
     }
     
     

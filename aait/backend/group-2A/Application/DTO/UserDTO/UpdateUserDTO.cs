@@ -6,8 +6,11 @@ using System.Threading.Tasks;
 
 namespace Application.DTO.UserDTO
 {
-    public class UpdateUserDTO
+    public class UpdateUserDTO : IUserDTO
     {
-        
+        public required int Id{get; set;}
+        public required string FullName { get; set; }
+        public required string UserName { get; set; }
+        public required string Email { get; set; }
     }
 }

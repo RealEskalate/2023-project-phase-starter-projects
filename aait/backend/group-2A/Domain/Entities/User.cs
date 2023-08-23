@@ -10,11 +10,11 @@ namespace Domain.Entities
         public required string Email { get; set; }
         public required string Password { get; set; }
         public string Bio { get; set; } = "";
-        public int FollowerCount { get; set; }
-        public int FollowingCount { get; set; }
-        public int PostCount { get; set; }
+        public int FollowerCount{ get; set; } = 0;
+        public int FollowingCount{ get; set; } = 0;
+        public int PostCount{ get; set; } = 0;
         public DateTime CreatedAt { get; set; }
-        public DateTime UpdatedAt { get; set; }
+        public DateTime? UpdatedAt { get; set; }
         
         // Navigation Property
         public ICollection<Post> Posts{ get; set; } = new HashSet<Post>();
@@ -22,6 +22,7 @@ namespace Domain.Entities
         public ICollection<Like> Likes{ get; set; } = new HashSet<Like>();
         public ICollection<Follow> Following{ get; set; } = new HashSet<Follow>();
         public ICollection<Follow> Follower{ get; set; } = new HashSet<Follow>();
+        public ICollection<Notification> Notifications{ get; set; } = new HashSet<Notification>();
 
     }
 }

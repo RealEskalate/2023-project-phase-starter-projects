@@ -15,7 +15,8 @@ public class IPostDtoValidator : AbstractValidator<IPostDto>{
             {
                 var exist = await userRepository.Exists(id);
                 return  exist;
-            }).WithMessage("User not found");
+            })
+            .WithMessage("User not found");
         
     }
     

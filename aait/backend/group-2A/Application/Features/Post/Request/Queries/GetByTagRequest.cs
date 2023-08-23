@@ -5,5 +5,5 @@ namespace Application.Features.Post.Request.Queries;
 
 public class GetByTagRequest : IRequest<List<PostDto>>
 {
-    public string Tag{ set; get;}
+    public required string Tag{ set; get;}
 }
