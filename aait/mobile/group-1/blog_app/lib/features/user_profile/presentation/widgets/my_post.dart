@@ -1,5 +1,6 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
+import "package:blog_app/core/utils/colors.dart";
 import "package:flutter/material.dart";
 
 class MyPost extends StatefulWidget {
@@ -66,7 +67,7 @@ class _MyPostState extends State<MyPost> {
               Text(
                 widget.title,
                 style: TextStyle(
-                  color: Color(0xFF376AED),
+                  color: kLightBlue,
                   fontSize: 18,
                   fontStyle: FontStyle.italic,
                   fontFamily: 'Urbanist',

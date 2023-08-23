@@ -1,5 +1,4 @@
 import 'package:blog_app/features/user_profile/presentation/bloc/profile_bloc.dart';
-import 'package:blog_app/injection_container.dart';
 import 'package:device_preview/device_preview.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
