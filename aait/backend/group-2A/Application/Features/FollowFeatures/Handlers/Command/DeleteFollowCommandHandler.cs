@@ -4,9 +4,9 @@ using Application.Features.FollowFeatures.Request.Command;
 using AutoMapper;
 using Domain.Entities;
 using MediatR;
+using Application.Exceptions;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -31,7 +31,7 @@ namespace Application.Features.FollowFeatures.Handlers.Command
             var validationResult = await validator.ValidateAsync(request.unfollow);
             if (!validationResult.IsValid)
             {
-                throw new ValidationException();
+                throw new ValidationException(validationResult);
             }
 
             var unfollow = _mapper.Map<Follow>(request.unfollow);
