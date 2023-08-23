@@ -1,11 +1,10 @@
 import 'package:dartz/dartz.dart';
 
-import '../../../../../core/error/failure.dart';
-import '../../entities/auth/login_entity.dart';
-import '../../entities/auth/sign_up_entity.dart';
-
-import '../../entities/user_data.dart';
-import '../../repositories/auth/auth_repo.dart';
+import '../../../../core/error/failure.dart';
+import '../../../user/domain/entities/user_data.dart';
+import '../entities/login_entity.dart';
+import '../entities/sign_up_entity.dart';
+import '../repositories/auth_repo.dart';
 
 abstract class UseCase<Type, Params> {
   Future<Either<Failure, Type>> call(Params params);
