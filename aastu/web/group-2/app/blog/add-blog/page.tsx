@@ -8,7 +8,6 @@ const AddBlog: React.FC = () => {
   // const {quill, quillRef} = useQuill()
   return (
     <div className=" px-20 w-full font-primaryFont py-8">
-
       {/* main sect + sidebar */}
       <div className="grid grid-cols-12 gap-4">
         {/* main sect */}
@@ -87,19 +86,9 @@ const AddBlog: React.FC = () => {
       {/* Below the upper sect */}
       <div className="flex flex-col w-full space-y-32">
         {/* Text-editor */}
-        <div className="mt-24">
+        <div className="mt-24 w-2/3">
           <TextEditor />
         </div>
-
-        <div className="w-2/3 mt-8">
-          <div className="flex items-center justify-end space-x-8 mt-8 w-[98%]">
-            <button className="text-primaryColor text-sm">Cancel</button>
-            <button className="px-6 py-3 bg-primaryColor text-white rounded-md text-center shadow text-sm">
-              Save Changes
-            </button>
-          </div>
-        </div>
-    
       </div>
     </div>
   );

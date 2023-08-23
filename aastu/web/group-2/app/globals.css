@@ -19,3 +19,10 @@ a {
 * {
   box-sizing: border-box;
 }
+
+div.ql-toolbar.ql-snow {
+  display: flex ;
+  justify-content: space-around;
+  align-items: center;
+  background: #000;
+}
