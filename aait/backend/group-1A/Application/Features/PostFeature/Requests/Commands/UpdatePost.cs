@@ -13,6 +13,7 @@ namespace Application.Features.PostFeature.Requests.Commands
    public class UpdatePostCommand : IRequest<PostResponseDTO>
     {
         public int Id { get; set; }
+        public int userId { get; set; }
         public PostUpdateDTO PostUpdateData { get; set; }
     }
 }

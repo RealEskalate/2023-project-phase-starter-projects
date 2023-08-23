@@ -10,5 +10,6 @@ namespace Application.Features.PostFeature.Requests.Queries
 {
     public class GetAllPostsQuery : IRequest<List<PostResponseDTO>>
     {
+        public int userId { get; set; }
     }
 }
