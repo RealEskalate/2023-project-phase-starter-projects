@@ -33,11 +33,11 @@ export const NavBar = () => {
     ]
 
   return (
-    <div className="w-full py-8 p-4 bg-white">
+    <div className="w-full py-8 px-6 bg-white">
       <div className="flex justify-between items-center font-montserrat">
         {/* logo section */}
         <div>
-          <Image src={A2SVLogo} alt="A2SV logo" width={100} height={50}/>
+          <Image src={A2SVLogo} alt="A2SV logo" width={120} height={50}/>
         </div>
 
         {/* Navigation section */}
