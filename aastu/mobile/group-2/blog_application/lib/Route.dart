@@ -8,11 +8,6 @@ import "./core/routes/blog_app_routes.dart";
 import "./features/blog/presentation/pages/auth.dart";
 import "./features/blog/presentation/pages/articles_reading_screen.dart";
 
-// const String onBoarding = "onboarding";
-// const String auth = "auth";
-// const String home = "home";
-// const String profile = "profile";
-// const String createTask = "createTask";
 
 Route<dynamic> controller(RouteSettings settings) {
   switch (settings.name) {
