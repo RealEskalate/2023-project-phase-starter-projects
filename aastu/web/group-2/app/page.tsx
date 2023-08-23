@@ -1,9 +1,15 @@
 /* Components */
 
 import LandingSection from "./components/home/LandingSection"
+import BuildBetterSection from "./components/home/BuildBetterSection"
 
 export default function IndexPage() {
-  return <LandingSection />
+  return (
+  <>
+    <LandingSection />
+    <BuildBetterSection />
+  </>
+  )
 }
 
 export const metadata = {
