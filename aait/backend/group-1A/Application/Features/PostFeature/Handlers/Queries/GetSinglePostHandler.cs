@@ -23,11 +23,11 @@ namespace Application.Features.PostFeature.Handlers.Queries
             {
                 throw new ArgumentNullException(nameof(request));
             }
-            var result = await _postRepository.Get(request.Id);
+            var result = await _postRepository.Get(request.Id, request.userId);
 
             if (result == null)
             {
-                throw new Exception();
+                throw new Exception("Post not found");
             }
 
             var post = _mapper.Map<PostResponseDTO>(result);
