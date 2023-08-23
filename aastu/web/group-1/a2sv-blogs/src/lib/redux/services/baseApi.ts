@@ -3,7 +3,7 @@ import { RootState } from "../store";
 import { HYDRATE } from "next-redux-wrapper";
 
 const baseApi = createApi({
-  reducerPath: "teamApi",
+  reducerPath: "baseApi",
   baseQuery: fetchBaseQuery({
     baseUrl: "https://a2sv-backend.onrender.com/api/",
     prepareHeaders: (headers, { getState }) => {

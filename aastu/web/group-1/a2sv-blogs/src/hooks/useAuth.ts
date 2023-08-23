@@ -1,4 +1,6 @@
+import { useLoginMutation, useSignupMutation } from "@/lib/redux/features/user";
 import { selectAuth } from "@/lib/redux/slices/authSlice";
+import { Credentials } from "@/types";
 import { useSelector } from "react-redux";
 
 export const useAuth = () => {
@@ -6,8 +8,22 @@ export const useAuth = () => {
 
   return {
     auth,
-    loginHandler: () => {},
+    loginHandler: async (credentials: Credentials) => {
+      const [login] = useLoginMutation();
+      try {
+        await login(credentials);
+      } catch (err) {
+        return null;
+      }
+    },
     logoutHandler: () => {},
-    signupHandler: () => {},
+    signupHandler: async (credentials: Credentials) => {
+      const [signup] = useSignupMutation();
+      try {
+        await signup(credentials);
+      } catch (error) {
+        return null;
+      }
+    },
   };
 };
