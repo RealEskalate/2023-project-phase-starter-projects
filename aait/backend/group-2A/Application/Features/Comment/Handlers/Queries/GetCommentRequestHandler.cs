@@ -20,6 +20,11 @@ public class GetCommentRequestHandler : IRequestHandler<GetCommentRequest, Comme
     public async Task<CommentDto> Handle(GetCommentRequest request, CancellationToken cancellationToken)
     {
         var comment = await _commentRepository.Get(request.commentId);
+        if (comment == null)
+        {
+            throw new Exception("Could not find comment");
+        }
+
         return _mapper.Map<CommentDto>(comment);
     }
 }

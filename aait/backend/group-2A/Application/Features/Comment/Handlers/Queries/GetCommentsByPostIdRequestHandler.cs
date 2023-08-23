@@ -20,6 +20,12 @@ public class GetCommentsByPostIdRequestHandler : IRequestHandler<GetCommentsByPo
     public async Task<List<CommentDto>> Handle(GetCommentsByPostIdRequest request, CancellationToken cancellationToken)
     {
         var comments = await _commentRepository.GetCommentByPost(request.PostId);
+
+        if (comments == null)
+        {
+            throw new Exception("No comments");
+        }
+        
         return _mapper.Map<List<CommentDto>>(comments);
     }
 }
