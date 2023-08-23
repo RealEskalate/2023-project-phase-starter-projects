@@ -1,9 +1,11 @@
+using System.ComponentModel.DataAnnotations;
 using System.Net;
 using Application.Dtos.Authentication;
 using Application.Features.Authentication.Requests;
 using AutoMapper;
 using MediatR;
 using SocialSync.Application.Contracts;
+using SocialSync.Application.Dto.Authentication.validator;
 using SocialSync.Domain.Entities;
 
 namespace SocialSync.Application.Features.Authentication.Handlers.Commands;
@@ -23,14 +25,18 @@ public class RegisterUserRequestHandler : IRequestHandler<RegisterUserRequest, R
     }
    public async Task<RegisterResponseDto> Handle(RegisterUserRequest request, CancellationToken cancellationToken)
     {
+
+        
+        var validator = new RegisterUserDtoValidator();
+        var validationResult = await validator.ValidateAsync(request.RegisterUserDto, cancellationToken);
         // Check if user exists
-        if (await _authRepository.UserExists(request.Email))
+        if (await _authRepository.UserExists(request.RegisterUserDto.Email))
         {
             throw new Exception("User already exists");
         }
 
         // Map request to user
-        var user = _mapper.Map<User>(request);
+        var user = _mapper.Map<User>(request.RegisterUserDto);
 
         // Register user
         var registeredUser = await _authRepository.RegisterUser(user);
