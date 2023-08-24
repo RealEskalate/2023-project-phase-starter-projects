@@ -1,3 +1,4 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'dart:convert';
 
 import 'package:http/http.dart' as http;
@@ -10,9 +11,14 @@ import '../models/sign_up_model.dart';
 import 'remote_data_source.dart';
 
 class AuthRemoteDataSourceImpl extends AuthRemoteDataSource {
+  final http.Client client;
+  AuthRemoteDataSourceImpl({
+    required this.client,
+  });
+
   @override
   Future<AuthenticationModel> login(LoginRequestModel loginRequestModel) async {
-    final http.Response response = await http.post(
+    final http.Response response = await client.post(
         Uri.parse('http://localhost:3000/login'),
         body: jsonEncode(loginRequestModel.toJson()),
         headers: {'Content-Type': 'application/json'});
@@ -29,7 +35,7 @@ class AuthRemoteDataSourceImpl extends AuthRemoteDataSource {
   @override
   Future<AuthenticatedUserInfoModel> signUp(
       SignUpRequestModel signUpRequestModel) async {
-    final http.Response response = await http.post(
+    final http.Response response = await client.post(
         Uri.parse('http://localhost:3000/signup'),
         body: jsonEncode(signUpRequestModel.toJson()),
         headers: {'Content-Type': 'application/json'});
@@ -44,7 +50,7 @@ class AuthRemoteDataSourceImpl extends AuthRemoteDataSource {
 
   @override
   Future<void> logout(String token) async {
-    final http.Response response = await http.post(
+    final http.Response response = await client.post(
         Uri.parse('http://localhost:3000/logout'),
         body: jsonEncode({'token': token}),
         headers: {'Content-Type': 'application/json'});
