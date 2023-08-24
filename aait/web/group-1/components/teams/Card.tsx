@@ -1,9 +1,10 @@
 import { Profile } from '@/types/Profile'
 import Image from 'next/image'
+import Link from 'next/link'
 import React from 'react'
 
 
-const Card: React.FC<Profile> = ({_id, name, bio, department, socialMedia}) => {
+const Card: React.FC<Profile> = ({ name, bio, department, socialMedia}) => {
   return (
     <div className='w-full shadow-md rounded-lg px-10'>
       <div className='flex flex-col items-center'>
@@ -15,11 +16,11 @@ const Card: React.FC<Profile> = ({_id, name, bio, department, socialMedia}) => {
         <div className='mt-5 text-gray-400 text-center'>
           {bio}
         </div>
-        <div className='w-full mt-10 p-4 border-t border-t-gray-200 flex justify-between'>
-            <Image src={'./images/facebook.svg'} alt={'facebook-logo'} width={30} height={30} className='hover:cursor-pointer'/>
-            <Image src={'./images/linkedin.svg'} alt={'linkedin-logo'} width={30} height={30} className='hover:cursor-pointer'/>
-            <Image src={'./images/instagram.svg'} alt={'instagram-logo'} width={30} height={30} className='hover:cursor-pointer'/>
-        </div>
+        {socialMedia && <div className='w-full mt-10 p-4 border-t border-t-gray-200 flex justify-between'>
+            <Link href={`https://${socialMedia.facebook}`}><Image src={'./images/facebook.svg'} alt={'facebook-logo'} width={30} height={30} className='hover:cursor-pointer'/></Link>
+            <Link href={`https://${socialMedia.linkedin}`}><Image src={'./images/linkedin.svg'} alt={'linkedin-logo'} width={30} height={30} className='hover:cursor-pointer'/></Link>
+            <Link href={`https://${socialMedia.instagram}`}><Image src={'./images/instagram.svg'} alt={'instagram-logo'} width={30} height={30} className='hover:cursor-pointer'/></Link>
+        </div>}
       </div>
     </div>
   )
