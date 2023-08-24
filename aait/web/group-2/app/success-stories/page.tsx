@@ -12,7 +12,8 @@ const SuccessStories = () => {
     error,
     isError,
   } = useGetSuccessStoriesQuery();
-  return ( <main className="">
+  return (
+    <main className="">
       <section className="flex flex-col items-center mt-10 md:mt-20">
         <h1 className="text-5xl font-poppins text-gray-800 font-bold text-center">
           Impact Stories
@@ -87,7 +88,8 @@ const SuccessStories = () => {
           />
         </section>
       </article>
-    </main>);
+    </main>
+  );
 };
 
 export default SuccessStories;
