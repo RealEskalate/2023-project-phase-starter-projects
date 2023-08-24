@@ -1,4 +1,4 @@
-import { Profile } from '@/models/Profile'
+import { Profile } from '@/types/Profile'
 import Image from 'next/image'
 import React from 'react'
 

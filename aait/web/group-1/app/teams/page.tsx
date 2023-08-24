@@ -1,7 +1,7 @@
 import Image from 'next/image'
 import React from 'react'
 import TeamImage from '../../public/images/team-work.svg'
-import { Profile } from '@/models/Profile'
+import { Profile } from '@/types/Profile'
 import Card from '@/components/Card'
 
 const page = () => {
