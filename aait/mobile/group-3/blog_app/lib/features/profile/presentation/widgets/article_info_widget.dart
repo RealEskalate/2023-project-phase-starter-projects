@@ -1,3 +1,4 @@
+import 'package:blog_app/core/color/colors.dart';
 import 'package:blog_app/core/util/value_converter.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -39,7 +40,7 @@ class ArticleInfoWidget extends StatelessWidget {
             Text(
               article.title,
               style: TextStyle(
-                  color: Color(0xFF376AED),
+                  color: blue,
                   fontWeight: FontWeight.w100,
                   fontSize: 14),
             ),
