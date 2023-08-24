@@ -9,12 +9,12 @@ namespace SocialSync.Application.Features.Notifications.Handlers.Commands;
 
 public class CreateNotificationCommandHandler : IRequestHandler<CreateNotificationCommand, int>
 {
-        private readonly INotificationRepository _notificationRepository;
+        private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
 
-        public CreateNotificationCommandHandler(INotificationRepository notificationRepository, IMapper mapper)
+        public CreateNotificationCommandHandler(IUnitOfWork unitOfWork, IMapper mapper)
         {
-            _notificationRepository = notificationRepository;
+            _unitOfWork = unitOfWork;
             _mapper = mapper;
         }
 
@@ -23,7 +23,7 @@ public class CreateNotificationCommandHandler : IRequestHandler<CreateNotificati
             // add any necessary validation here before creating the notification
 
             var notification = _mapper.Map<Notification>(request.NotificationCreateDto);
-            notification = await _notificationRepository.AddAsync(notification);
+            notification = await _unitOfWork.NotificationRepository.AddAsync(notification);
 
             return notification.Id;
         }

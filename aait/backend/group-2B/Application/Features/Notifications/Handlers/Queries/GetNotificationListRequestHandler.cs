@@ -9,12 +9,12 @@ namespace SocialSync.Application.Features.Notifications.Handlers.Queries;
 
 public class GetNotificationListRequestHandler : IRequestHandler<GetNotificationListRequest, List<NotificationListDto>>
 {
-    private readonly INotificationRepository _notificationRepository;
+    private readonly IUnitOfWork _unitOfWork;
     private readonly IMapper _mapper;
 
-    public GetNotificationListRequestHandler(INotificationRepository notificationRepository, IMapper mapper)
+    public GetNotificationListRequestHandler(IUnitOfWork unitOfWork, IMapper mapper)
     {
-        _notificationRepository = notificationRepository;
+        _unitOfWork = unitOfWork;
         _mapper = mapper;
     }
 
@@ -23,7 +23,7 @@ public class GetNotificationListRequestHandler : IRequestHandler<GetNotification
         CancellationToken cancellationToken
     )
     {
-        var notifications = await _notificationRepository.GetAll(request.UserId);
+        var notifications = await _unitOfWork.NotificationRepository.GetAll(request.UserId);
         return _mapper.Map<List<NotificationListDto>>(notifications);
     }
 }
