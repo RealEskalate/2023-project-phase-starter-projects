@@ -118,7 +118,8 @@ export default function Home() {
             <p className="text-2xl	font-semibold	">Founded</p>
             <br />
             <p className="text-xl	font-normal	">5% average</p>
-          </div><div className="w-48	h-48	bg-white p-4 rounded-xl ml-4">
+          </div>
+          <div className="w-48	h-48	bg-white p-4 rounded-xl ml-4">
             <p className="text-xl	font-semibold	">2019</p>
             <br />
             <br />
