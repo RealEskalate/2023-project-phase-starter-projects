@@ -6,7 +6,6 @@
 import 'dart:async' as _i4;
 
 import 'package:blog_app/core/error/failure.dart' as _i5;
-import 'package:blog_app/features/profile/domain/entity/article.dart' as _i7;
 import 'package:blog_app/features/profile/domain/entity/profile.dart' as _i6;
 import 'package:blog_app/features/profile/domain/repositories/profile_repository.dart'
     as _i3;
@@ -89,30 +88,4 @@ class MockProfileRepository extends _i1.Mock implements _i3.ProfileRepository {
           ),
         )),
       ) as _i4.Future<_i2.Either<_i5.Failure, _i6.Profile>>);
-  @override
-  _i4.Future<_i2.Either<_i5.Failure, List<_i7.Article>>> getAllArticles() =>
-      (super.noSuchMethod(
-        Invocation.method(
-          #getAllArticles,
-          [],
-        ),
-        returnValue:
-            _i4.Future<_i2.Either<_i5.Failure, List<_i7.Article>>>.value(
-                _FakeEither_0<_i5.Failure, List<_i7.Article>>(
-          this,
-          Invocation.method(
-            #getAllArticles,
-            [],
-          ),
-        )),
-        returnValueForMissingStub:
-            _i4.Future<_i2.Either<_i5.Failure, List<_i7.Article>>>.value(
-                _FakeEither_0<_i5.Failure, List<_i7.Article>>(
-          this,
-          Invocation.method(
-            #getAllArticles,
-            [],
-          ),
-        )),
-      ) as _i4.Future<_i2.Either<_i5.Failure, List<_i7.Article>>>);
 }
