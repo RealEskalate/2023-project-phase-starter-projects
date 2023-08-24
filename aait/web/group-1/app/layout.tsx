@@ -1,10 +1,10 @@
 "use client";
 
 import { Provider } from "react-redux";
-import { NavBar } from "@/components/NavBar";
 import "./globals.css";
 import type { Metadata } from "next";
 import { Poppins } from "next/font/google";
+import { NavBar } from "@/components/layout/NavBar";
 
 const inter = Poppins({
   weight: "400",
