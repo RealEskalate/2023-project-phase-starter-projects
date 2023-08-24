@@ -2,7 +2,6 @@
 using Domain.Entites;
 using Domain.Entities;
 using Microsoft.EntityFrameworkCore;
-
 using SocialSync.Domain.Entities;
 using System;
 using System.Collections.Generic;
@@ -22,6 +21,8 @@ namespace Persistence
         public virtual DbSet<User> Users {get; set;}
 
         public virtual DbSet<CommentReaction> CommentReaction { get; set; }
+
+        public virtual DbSet<Tag> Tags { get; set; }
 
         public virtual DbSet<Notification> Notifications {get ; set ;}
 

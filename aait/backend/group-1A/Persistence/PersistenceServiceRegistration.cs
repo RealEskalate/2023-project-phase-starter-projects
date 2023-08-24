@@ -10,6 +10,7 @@ using SocialSync.Application.Contracts;
 using SocialSync.Persistence.Repositories.Auth;
 using System.Reflection;
 using Persistence.Repositories.ReactionRespositories;
+using SocialSync.Persistnece.Repositories;
 
 namespace Persistence
 {
@@ -32,6 +33,8 @@ namespace Persistence
             services.AddScoped<IJwtGenerator, JwtGenerator>();
             services.AddScoped<ICommentReactionRepository, CommentReactionRepository>();
             services.AddScoped<ICommentRepository, CommentRepository>();
+
+            services.AddScoped<ITagRepository,TagReposiotry>();
 
             return services;
         }
