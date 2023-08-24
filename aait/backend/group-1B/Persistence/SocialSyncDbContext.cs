@@ -24,6 +24,8 @@ namespace Persistence
             
             modelBuilder.Entity<PostTag>()
                 .HasKey(e => new { e.PostId, e.TagId });
+            
+         
         }
 
         public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
@@ -49,5 +51,7 @@ namespace Persistence
         public DbSet<Comment> Comments { get; set; }
         public DbSet<Tag> Tags { get; set; }
         public DbSet<PostTag> PostTags { get; set; }
+        
+        public DbSet<Notification> Notifications { get; set; }
     }
 }
