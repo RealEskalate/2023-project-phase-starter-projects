@@ -1,3 +1,4 @@
+import 'package:blog_app/features/blog/presentation/screen/home_screen.dart';
 import 'package:flutter/material.dart';
 
 class LoginWidget extends StatefulWidget {
@@ -72,7 +73,12 @@ class _LoginWidgetState extends State<LoginWidget> {
                 height: 60,
                 width: 295,
                 child: ElevatedButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => Home()),
+                    );
+                  },
                   style: ElevatedButton.styleFrom(
                       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
                       backgroundColor: Color(0xFF376AED)
