@@ -1,3 +1,4 @@
+import 'package:blog_app/core/color/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -14,8 +15,8 @@ class PostContent extends StatelessWidget {
 
     switch (state) {
       case ProfileLoaded():
-        final activeColor = Color(0xFF376AED);
-        final inActiveColor = Color(0xFF7B8BB2);
+        final activeColor = blue;
+        final inActiveColor = darkGrey;
         final stateIsGridView = state.isGridView;
         final stateIsBookmark = state.isBookmark;
         return Column(
