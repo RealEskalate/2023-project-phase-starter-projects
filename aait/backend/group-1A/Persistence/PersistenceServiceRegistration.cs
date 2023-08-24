@@ -4,7 +4,6 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Persistence;
 using Persistence.Repositories;
-using Persistence.Repositories.ReactionRepositories;
 using System.Reflection;
 
 namespace Persistence
@@ -19,8 +18,6 @@ namespace Persistence
             services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
             services.AddScoped<IPostRepository, PostRepository>();
             services.AddScoped<IPostReactionRepository, PostReactionRepository>();
-            services.AddScoped<ICommentRepository, CommentRepository>(); // Add this line
-            services.AddScoped<ICommentReactionRepository, CommentReactionRepository>(); // Add this line
 
             return services;
         }

@@ -2,7 +2,8 @@
 using Application.DTO.PostDTO.DTO;
 using AutoMapper;
 using Domain.Entities;
-
+using SocialSync.Application.Dtos.Authentication;
+using SocialSync.Domain.Entities;
 
 namespace Application.Profiles
 {
@@ -16,6 +17,8 @@ namespace Application.Profiles
             CreateMap<ReactionResponseDTO, PostReaction>().ReverseMap();
             CreateMap<PostUpdateDTO, Post>().ReverseMap();
             
+            CreateMap<RegisterUserDto, User>();
+            CreateMap<LoginUserDto, User>();
         }
     }
 }
