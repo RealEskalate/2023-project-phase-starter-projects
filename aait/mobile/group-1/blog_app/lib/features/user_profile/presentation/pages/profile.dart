@@ -6,6 +6,7 @@ import 'package:blog_app/features/user_profile/presentation/widgets/my_post.dart
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../../../core/utils/colors.dart';
 import '../bloc/profile_bloc.dart';
@@ -94,113 +95,154 @@ class _ProfilePageState extends State<ProfilePage> {
                                       Container(
                                         margin: EdgeInsets.only(
                                             top: 10, bottom: 30),
-                                        child: Stack(
-                                          alignment: Alignment.center,
-                                          children: [
-                                            Container(
-                                                width: 80,
-                                                height: 80,
-                                                child: profileImage),
-                                            Stack(
-                                              alignment: Alignment.bottomCenter,
-                                              children: [
-                                                Container(
-                                                  width: 92,
-                                                  height: 92,
-                                                  decoration: ShapeDecoration(
-                                                    shape:
-                                                        RoundedRectangleBorder(
-                                                      side: BorderSide(
-                                                          width: 1,
-                                                          color: kLightBlue),
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              28),
+                                        child: TextButton(
+                                          onPressed: () async {
+                                            await showDialog(
+                                                context: context,
+                                                builder:
+                                                    (BuildContext context) {
+                                                  return Column(
+                                                      mainAxisAlignment:
+                                                          MainAxisAlignment
+                                                              .center,
+                                                      children: [
+                                                        Container(
+                                                          margin:
+                                                              EdgeInsets.only(
+                                                                  bottom: 8),
+                                                          child: TextButton(
+                                                            style: ButtonStyle(
+                                                                padding: MaterialStatePropertyAll(
+                                                                    EdgeInsets.symmetric(
+                                                                        vertical:
+                                                                            15,
+                                                                        horizontal:
+                                                                            25)),
+                                                                backgroundColor:
+                                                                    MaterialStatePropertyAll(
+                                                                        Colors.grey[
+                                                                            200])),
+                                                            onPressed:
+                                                                () async {
+                                                              final XFile?
+                                                                  image =
+                                                                  await picker
+                                                                      .pickImage(
+                                                                          source:
+                                                                              ImageSource.gallery);
+
+                                                              setState(() {
+                                                                profileImage =
+                                                                    Image.file(
+                                                                        File(image!
+                                                                            .path));
+                                                                Navigator.pop(
+                                                                    context);
+                                                                BlocProvider.of<
+                                                                            ProfileBloc>(
+                                                                        context)
+                                                                    .add(ProfileUpdated(state
+                                                                        .user
+                                                                        .copyWith(
+                                                                  image: image
+                                                                      .path,
+                                                                )));
+                                                              });
+                                                            },
+                                                            child: Text(
+                                                              "Gallery",
+                                                              style: TextStyle(
+                                                                fontSize: 22,
+                                                                color: Colors
+                                                                    .grey[800],
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .w500,
+                                                              ),
+                                                            ),
+                                                          ),
+                                                        ),
+                                                        TextButton(
+                                                          style: ButtonStyle(
+                                                              padding: MaterialStatePropertyAll(
+                                                                  EdgeInsets.symmetric(
+                                                                      vertical:
+                                                                          15,
+                                                                      horizontal:
+                                                                          25)),
+                                                              backgroundColor:
+                                                                  MaterialStatePropertyAll(
+                                                                      Colors.grey[
+                                                                          200])),
+                                                          onPressed: () async {
+                                                            final XFile? photo =
+                                                                await picker.pickImage(
+                                                                    source: ImageSource
+                                                                        .camera);
+
+                                                            setState(() {
+                                                              profileImage =
+                                                                  Image.file(
+                                                                      File(photo!
+                                                                          .path));
+                                                              Navigator.pop(
+                                                                  context);
+                                                              BlocProvider.of<
+                                                                          ProfileBloc>(
+                                                                      context)
+                                                                  .add(ProfileUpdated(
+                                                                      state.user
+                                                                          .copyWith(
+                                                                image:
+                                                                    photo.path,
+                                                              )));
+                                                            });
+                                                          },
+                                                          child: Text(
+                                                            "Camera",
+                                                            style: TextStyle(
+                                                              fontSize: 22,
+                                                              color: Colors
+                                                                  .grey[800],
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .w500,
+                                                            ),
+                                                          ),
+                                                        ),
+                                                      ]);
+                                                });
+                                          },
+                                          child: Stack(
+                                            alignment: Alignment.center,
+                                            children: [
+                                              Container(
+                                                  width: 80,
+                                                  height: 80,
+                                                  child: profileImage),
+                                              Stack(
+                                                alignment:
+                                                    Alignment.bottomCenter,
+                                                children: [
+                                                  Container(
+                                                    width: 92,
+                                                    height: 92,
+                                                    decoration: ShapeDecoration(
+                                                      shape:
+                                                          RoundedRectangleBorder(
+                                                        side: BorderSide(
+                                                            width: 1,
+                                                            color: kLightBlue),
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(28),
+                                                      ),
                                                     ),
                                                   ),
-                                                ),
-                                                IconButton(
-                                                    onPressed: () async {
-                                                      final result =
-                                                          await showDialog(
-                                                              context: context,
-                                                              builder:
-                                                                  (BuildContext
-                                                                      context) {
-                                                                return Column(
-                                                                    mainAxisAlignment:
-                                                                        MainAxisAlignment
-                                                                            .center,
-                                                                    children: [
-                                                                      Container(
-                                                                        margin: EdgeInsets.only(
-                                                                            bottom:
-                                                                                8),
-                                                                        child:
-                                                                            TextButton(
-                                                                          style: ButtonStyle(
-                                                                              padding: MaterialStatePropertyAll(EdgeInsets.symmetric(vertical: 15, horizontal: 25)),
-                                                                              backgroundColor: MaterialStatePropertyAll(Colors.grey[200])),
-                                                                          onPressed:
-                                                                              () async {
-                                                                            final XFile?
-                                                                                image =
-                                                                                await picker.pickImage(source: ImageSource.gallery);
-
-                                                                            setState(() {
-                                                                              profileImage = Image.file(File(image!.path));
-                                                                            });
-                                                                          },
-                                                                          child:
-                                                                              Text(
-                                                                            "Gallery",
-                                                                            style:
-                                                                                TextStyle(
-                                                                              fontSize: 22,
-                                                                              color: Colors.grey[800],
-                                                                              fontWeight: FontWeight.w500,
-                                                                            ),
-                                                                          ),
-                                                                        ),
-                                                                      ),
-                                                                      TextButton(
-                                                                        style: ButtonStyle(
-                                                                            padding:
-                                                                                MaterialStatePropertyAll(EdgeInsets.symmetric(vertical: 15, horizontal: 25)),
-                                                                            backgroundColor: MaterialStatePropertyAll(Colors.grey[200])),
-                                                                        onPressed:
-                                                                            () async {
-                                                                          final XFile?
-                                                                              photo =
-                                                                              await picker.pickImage(source: ImageSource.camera);
-
-                                                                          setState(
-                                                                              () {
-                                                                            profileImage =
-                                                                                Image.file(File(photo!.path));
-                                                                          });
-                                                                        },
-                                                                        child:
-                                                                            Text(
-                                                                          "Camera",
-                                                                          style:
-                                                                              TextStyle(
-                                                                            fontSize:
-                                                                                22,
-                                                                            color:
-                                                                                Colors.grey[800],
-                                                                            fontWeight:
-                                                                                FontWeight.w500,
-                                                                          ),
-                                                                        ),
-                                                                      ),
-                                                                    ]);
-                                                              });
-                                                    },
-                                                    icon: Icon(Icons.add))
-                                              ],
-                                            ),
-                                          ],
+                                                ],
+                                              ),
+                                            ],
+                                          ),
                                         ),
                                       ),
                                       Container(
@@ -299,7 +341,8 @@ class _ProfilePageState extends State<ProfilePage> {
                                                 MainAxisAlignment.center,
                                             children: [
                                               Text(
-                                                '52',
+                                                state.user.articles.length
+                                                    .toString(),
                                                 textAlign: TextAlign.center,
                                                 style: TextStyle(
                                                   color: Colors.white,
@@ -318,7 +361,7 @@ class _ProfilePageState extends State<ProfilePage> {
                                                     color: Colors.white
                                                         .withOpacity(
                                                             0.8700000047683716),
-                                                    fontSize: 12,
+                                                    fontSize: 16,
                                                     fontFamily: 'Mulish',
                                                     fontWeight: FontWeight.w400,
                                                     height: 1.50,
@@ -327,70 +370,101 @@ class _ProfilePageState extends State<ProfilePage> {
                                               )
                                             ]),
                                       ),
-                                      Column(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.center,
-                                          children: [
-                                            Text(
-                                              '250',
-                                              textAlign: TextAlign.center,
-                                              style: TextStyle(
-                                                color: Colors.white,
-                                                fontSize: 20,
-                                                fontFamily: 'Urbanist',
-                                                fontWeight: FontWeight.w400,
-                                                height: 1.10,
-                                              ),
-                                            ),
-                                            SizedBox(
-                                              width: 63,
-                                              child: Text(
-                                                'Following',
+                                      TextButton(
+                                        style: ButtonStyle(
+                                            padding: MaterialStatePropertyAll(
+                                                EdgeInsets.all(0))),
+                                        onPressed: () {},
+                                        child: Column(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.center,
+                                            children: [
+                                              Text(
+                                                'Saved',
                                                 textAlign: TextAlign.center,
                                                 style: TextStyle(
-                                                  color: Colors.white
-                                                      .withOpacity(
-                                                          0.8700000047683716),
-                                                  fontSize: 12,
-                                                  fontFamily: 'Mulish',
+                                                  color: Colors.white,
+                                                  fontSize: 20,
+                                                  fontFamily: 'Urbanist',
                                                   fontWeight: FontWeight.w400,
-                                                  height: 1.50,
+                                                  height: 1.10,
                                                 ),
                                               ),
-                                            )
-                                          ]),
-                                      Column(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.center,
-                                          children: [
-                                            Text(
-                                              '4.5k',
-                                              textAlign: TextAlign.center,
-                                              style: TextStyle(
-                                                color: Colors.white,
-                                                fontSize: 20,
-                                                fontFamily: 'Urbanist',
-                                                fontWeight: FontWeight.w400,
-                                                height: 1.10,
-                                              ),
-                                            ),
-                                            SizedBox(
-                                              width: 63,
-                                              child: Text(
-                                                'Followers',
-                                                textAlign: TextAlign.center,
-                                                style: TextStyle(
-                                                  color: Colors.white
-                                                      .withOpacity(
-                                                          0.8700000047683716),
-                                                  fontSize: 12,
-                                                  fontFamily: 'Mulish',
-                                                  fontWeight: FontWeight.w400,
-                                                  height: 1.50,
+                                              SizedBox(
+                                                width: 63,
+                                                child: Text(
+                                                  'blogs',
+                                                  textAlign: TextAlign.center,
+                                                  style: TextStyle(
+                                                    color: Colors.white
+                                                        .withOpacity(
+                                                            0.8700000047683716),
+                                                    fontSize: 16,
+                                                    fontFamily: 'Mulish',
+                                                    fontWeight: FontWeight.w400,
+                                                    height: 1.50,
+                                                  ),
                                                 ),
-                                              ),
-                                            )
-                                          ]),
+                                              )
+                                            ]),
+                                      ),
+                                      Container(
+                                        decoration: ShapeDecoration(
+                                          color: kRed,
+                                          shape: RoundedRectangleBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(12),
+                                          ),
+                                        ),
+                                        child: TextButton(
+                                          onPressed: () async {
+                                            SharedPreferences prefs =
+                                                await SharedPreferences
+                                                    .getInstance();
+                                            prefs.remove('token');
+                                            Navigator.pushNamed(
+                                                context, "/auth");
+                                          },
+                                          child: Column(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.center,
+                                              children: [
+                                                Container(
+                                                  padding: EdgeInsets.symmetric(
+                                                      horizontal: 10),
+                                                  child: Text(
+                                                    'Log',
+                                                    textAlign: TextAlign.center,
+                                                    style: TextStyle(
+                                                      color: Colors.white,
+                                                      fontSize: 20,
+                                                      fontFamily: 'Urbanist',
+                                                      fontWeight:
+                                                          FontWeight.w400,
+                                                      height: 1.10,
+                                                    ),
+                                                  ),
+                                                ),
+                                                SizedBox(
+                                                  width: 63,
+                                                  child: Text(
+                                                    'Out',
+                                                    textAlign: TextAlign.center,
+                                                    style: TextStyle(
+                                                      color: Colors.white
+                                                          .withOpacity(
+                                                              0.8700000047683716),
+                                                      fontSize: 16,
+                                                      fontFamily: 'Mulish',
+                                                      fontWeight:
+                                                          FontWeight.w400,
+                                                      height: 1.50,
+                                                    ),
+                                                  ),
+                                                )
+                                              ]),
+                                        ),
+                                      ),
                                     ],
                                   ),
                                 )
@@ -439,27 +513,6 @@ class _ProfilePageState extends State<ProfilePage> {
                                           fontWeight: FontWeight.w500,
                                         ),
                                       ),
-                                      Row(
-                                        children: [
-                                          Container(
-                                            margin: EdgeInsets.only(right: 20),
-                                            child: Stack(children: [
-                                              Icon(
-                                                Icons.grid_view,
-                                                color: Colors.blue[600],
-                                                size: 30,
-                                              )
-                                            ]),
-                                          ),
-                                          Stack(children: [
-                                            Icon(
-                                              Icons.menu,
-                                              color: Colors.blue[600],
-                                              size: 30,
-                                            )
-                                          ])
-                                        ],
-                                      )
                                     ],
                                   ),
                                 ),
