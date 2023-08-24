@@ -30,7 +30,6 @@ public class GenericRepository<T> : IGenericRepository<T> where T : class
     public async Task<T> Add(T item)
     {
         await _context.Set<T>().AddAsync(item);
-        await _context.SaveChangesAsync();
         return item;
     }
 
