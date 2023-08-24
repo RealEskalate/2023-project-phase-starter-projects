@@ -8,6 +8,7 @@ const baseApi = createApi({
     baseUrl: "https://a2sv-backend.onrender.com/api/",
     prepareHeaders: (headers, { getState }) => {
       const token = (getState() as RootState).auth.token;
+
       if (token) {
         headers.set("authorization", `Bearer ${token}`);
       }
