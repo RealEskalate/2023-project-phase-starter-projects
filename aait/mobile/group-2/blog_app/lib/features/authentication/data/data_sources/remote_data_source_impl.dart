@@ -26,8 +26,9 @@ class AuthRemoteDataSourceImpl extends AuthRemoteDataSource {
     if (response.statusCode == 200) {
       final responseBody = jsonDecode(response.body);
       return AuthenticationModel.fromJson(responseBody);
+    } else if (response.statusCode == 400) {
+      throw const LoginException(message: 'Invalid Credentials');
     } else {
-      // throw LoginException();
       throw const ServerException(message: 'Server Error');
     }
   }
@@ -39,11 +40,12 @@ class AuthRemoteDataSourceImpl extends AuthRemoteDataSource {
         Uri.parse('http://localhost:3000/signup'),
         body: jsonEncode(signUpRequestModel.toJson()),
         headers: {'Content-Type': 'application/json'});
-    if (response.statusCode == 200) {
+    if (response.statusCode == 201) {
       final responseBody = jsonDecode(response.body);
       return AuthenticatedUserInfoModel.fromJson(responseBody['data']);
+    } else if (response.statusCode == 409 || response.statusCode == 400) {
+      throw const ServerException(message: 'Invalid information');
     } else {
-      // throw SignUpException();
       throw const ServerException(message: 'Server Error');
     }
   }
@@ -57,8 +59,11 @@ class AuthRemoteDataSourceImpl extends AuthRemoteDataSource {
 
     if (response.statusCode == 200) {
       return;
+    } else if (response.statusCode == 401) {
+      throw const LogoutException(
+        message: 'Unauthorized',
+      );
     } else {
-      // throw LogoutException();
       throw const ServerException(message: 'Server Error');
     }
   }
