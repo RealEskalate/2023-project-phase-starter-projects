@@ -50,23 +50,28 @@ const A2svSession = () => {
 
       <section className="grid lg:grid-cols-3 sm:grid-cols-2 gridcols-1 gap-3 mt-7">
         {cardData.map((data, index) => (
-          <>
-            <div
-              className="flex flex-col w-fit shadow-xl px-6 py-2 transition-all hover:-translate-y-2 duration-300"
-              style={{
-                boxShadow:
-                  "4px 4px 8px 0px rgba(0, 0, 0, 0.04), -2px -2px 8px 0px rgba(0, 0, 0, 0.05)",
-              }}
-            >
-              <Image src={data.logo} width={65} height={30} className="my-3" alt="" />
-              <div>
-                <h3 className="font-bold my-2">{data.title} </h3>
-              </div>
-              <div className="my-5">
-                <p>{data.description}</p>
-              </div>
+          <div
+            className="flex flex-col w-fit shadow-xl px-6 py-2 transition-all hover:-translate-y-2 duration-300"
+            style={{
+              boxShadow:
+                "4px 4px 8px 0px rgba(0, 0, 0, 0.04), -2px -2px 8px 0px rgba(0, 0, 0, 0.05)",
+            }}
+            key={index}
+          >
+            <Image
+              src={data.logo}
+              width={65}
+              height={30}
+              className="my-3"
+              alt=""
+            />
+            <div>
+              <h3 className="font-bold my-2">{data.title} </h3>
             </div>
-          </>
+            <div className="my-5">
+              <p>{data.description}</p>
+            </div>
+          </div>
         ))}
       </section>
     </div>
