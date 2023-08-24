@@ -9,7 +9,7 @@ const DynamicTextEditor = dynamic(() => import('@/app/components/add-blog/TextEd
   ssr: false,
 });
 const AddBlog: React.FC = () => {
-  const dispatch = useDispatch();
+  // const dispatch = useDispatch();
   const handleSaveChanges = () => {};
   return (
     <div className=" md:px-20 px-2 w-full font-primaryFont py-8">
@@ -42,7 +42,7 @@ const AddBlog: React.FC = () => {
                     <p className="border rounded-lg bg-white py-3 px-2 mx-2 hover:cursor-pointer shadow">
                       Upload File
                     </p>
-                    <p className="font-extralight text-[#16]">or choose file from</p>
+                    <p className="sm:font-extralight sm:text-[#16]">or choose file from</p>
                     <p className="border rounded-lg bg-white py-3 px-2 mx-2 hover:cursor-pointer shadow">
                       My Files
                     </p>

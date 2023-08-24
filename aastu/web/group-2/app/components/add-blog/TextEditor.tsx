@@ -2,34 +2,22 @@
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 
-// const modules = {
-//   toolbar: [
-//     [{ size: [] }],
-//     ['bold', 'italic', 'underline', 'strike', 'blockquote'],
-//     [{ list: 'bullet' }, { align: ['center'] }],
-//     ['link', 'image', 'video'],
-//   ],
-//   clipboard: {
-//     matchVisual: false,
-//   },
-// };
-
 const CustomToolbar = () => (
   <div id="toolbar" className="flex justify-evenly !border-t !border-b !border-[#CFD6DE] py-3">
     <div className="flex items-center w-full">
       <div className="border-r pr-4 border-[#CFD6DE] ">
         <div className="bg-[#63A2D8] rounded w-6 h-6" />
       </div>
-      <div className="format-group border-r border-[#CFD6DE] flex sm:w-1/4 px-4">
+      <div className="format-group border-r border-[#CFD6DE] flex justify-center sm:w-1/4 px-2">
         <button className="ql-bold font-bold" />
         <button className="ql-italic" />
         <button className="ql-underline" />
       </div>
-      <div className="border-r border-[#CFD6DE] flex sm:w-1/4 px-4">
+      <div className="border-r border-[#CFD6DE] flex sm:w-1/4 px-1">
         <button className="ql-list" value="bullet" />
         <select className="ql-align"></select>
       </div>
-      <div className="border-r border-[#CFD6DE]">
+      <div className="border-r border-[#CFD6DE] flex justify-center sm:w-1/4">
         <button className="ql-link" />
       </div>
     </div>
