@@ -10,8 +10,6 @@ export default function page() {
       <BlogHeader />
       <div className="w-[72%] flex flex-col gap-10 items-center mx-auto">
         <BlogCard />
-        <BlogCard />
-        <BlogCard />
       </div>
       <PaginationLinks />
     </div>
