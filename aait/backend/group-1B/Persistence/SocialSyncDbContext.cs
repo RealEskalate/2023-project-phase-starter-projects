@@ -18,6 +18,7 @@ namespace Persistence
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.ApplyConfigurationsFromAssembly(typeof(SocialSyncDbContext).Assembly);
+<<<<<<< HEAD
             
             modelBuilder.Entity<PostLike>()
                 .HasKey(e => new { e.UserId, e.PostId });
@@ -26,6 +27,11 @@ namespace Persistence
                 .HasKey(e => new { e.PostId, e.TagId });
             
          
+=======
+            modelBuilder.Entity<PostLike>().HasKey(pl => new { pl.UserId, pl.PostId });
+
+           
+>>>>>>> 34d78df (add(AAiT-backend-1A) : add follow and unfollow with the unit tests)
         }
 
         public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)

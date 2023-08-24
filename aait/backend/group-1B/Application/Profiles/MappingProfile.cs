@@ -38,6 +38,10 @@ public class MappingProfile : Profile
         CreateMap<User, UserListDto>().ReverseMap();
 
         CreateMap<Follow, FollowDto>().ReverseMap();
+<<<<<<< HEAD
+=======
+
+>>>>>>> 34d78df (add(AAiT-backend-1A) : add follow and unfollow with the unit tests)
     }
 }
 
