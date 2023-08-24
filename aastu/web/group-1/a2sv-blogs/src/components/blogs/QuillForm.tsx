@@ -51,7 +51,7 @@ const CreateForm: React.FC<Props> = ({ description, setDescription }) => {
       onChange={(value: string) => setDescription(value)}
       modules={modules}
       formats={formats}
-      className="border-l-4 border-primary"
+      className="border-l-2 border-primary w-full md:w-3/4"
     />
   );
 };
