@@ -11,7 +11,7 @@ const page = () => {
   const { data: members, isLoading, error } = useGetTeamMembersQuery();
 
   return (
-    <div>
+    <div className="py-20">
       {isLoading && <h1 className="text-center">Loading...</h1>}
       {!isLoading && !error && <div>
         {/* upper hero section */}
