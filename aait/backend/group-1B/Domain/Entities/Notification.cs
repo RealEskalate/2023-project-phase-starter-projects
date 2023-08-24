@@ -1,25 +1,20 @@
 using Domain.Common;
 
 namespace Domain.Entities;
-
-public abstract class Notification : BaseEntity
+public enum NotificationType
 {
-    protected Notification(User user)
-    {
-        User = user;
-    }
+    Like,
+    Comment,
+    Follow
+}
 
+public class Notification : BaseEntity
+{
     public string Message { get; set; } = "";
 
     public bool Seen { get; set; } = false;
 
-    public enum NotificationType
-    {
-        Like,
-        Comment,
-        Follow
-    }
-
+    public NotificationType NotificationType { get; set; }
     public int UserId { get; set; }
 
     // Navigation property to the User entity
