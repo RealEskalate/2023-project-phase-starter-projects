@@ -1,4 +1,4 @@
-'use client';
+"use client";
 import Image from "next/image";
 import { useGetBlogByIdQuery } from "@/lib/redux/features/blog";
 
@@ -30,17 +30,26 @@ const Blog = ({ params }: { params: { id: string } }) => {
           )}
         </p>
       </div>
-      <Image src={blogData.image} alt="blog image" width={1000} height={450} />
-      <div className="flex flex-col items-center gap-2">
+      {blogData.image && (
         <Image
-          src={blogData.author.image}
-          alt="author image"
-          width={50}
-          height={50}
-          className="rounded-full"
+          src={blogData.image}
+          alt="blog image"
+          width={1000}
+          height={450}
         />
+      )}{" "}
+      <div className="flex flex-col items-center gap-2">
+        {blogData.author && (
+          <Image
+            src={blogData.author.image}
+            alt="author image"
+            width={50}
+            height={50}
+            className="rounded-full"
+          />
+        )}
         <p className="font-montserrat uppercase text-xs">
-          {blogData.author.name}
+          {blogData.author && blogData.author.name}
         </p>
       </div>
       <div className="md:px-32 flex flex-col gap-8 text-justify py-4">
@@ -61,12 +70,14 @@ const Blog = ({ params }: { params: { id: string } }) => {
           {blogData.relatedBlogs.length > 0 &&
             blogData.relatedBlogs.map((blog: any, index: any) => (
               <div key={index} className="flex flex-col items-center gap-4">
-                <Image
-                  src={blog.image}
-                  alt="blog image"
-                  width={300}
-                  height={200}
-                />
+                {blog.image && (
+                  <Image
+                    src={blog.image}
+                    alt="blog image"
+                    width={300}
+                    height={200}
+                  />
+                )}
                 <p className="font-montserrat text-sm">{blog.title}</p>
               </div>
             ))}
