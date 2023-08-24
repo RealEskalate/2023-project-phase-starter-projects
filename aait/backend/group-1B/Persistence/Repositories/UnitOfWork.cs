@@ -10,6 +10,7 @@ public class UnitOfWork : IUnitOfWork
     private ICommentRepository _commentRepository;
     private IPostTagRepository _postTagRepository;
     private IPostLikesRepository _postLikesRepository;
+    private INotificationRepository _notificationRepository;
 
     public UnitOfWork(SocialSyncDbContext context)
     {
@@ -22,6 +23,8 @@ public class UnitOfWork : IUnitOfWork
     public IPostTagRepository PostTagRepository => _postTagRepository ??= new PostTagRepository(_context);
     public IPostLikesRepository PostLikesRepository => _postLikesRepository ??= new PostLikesRepository(_context);
 
+    public INotificationRepository NotificationRepository =>
+        _notificationRepository ??= new NotificationRepository(_context);
     public void Dispose()
     {
         _context.Dispose();
