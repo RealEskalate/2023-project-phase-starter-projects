@@ -1,5 +1,6 @@
 ﻿using Application.Contracts.Persistance;
 using Application.DTO.CommentDTO;
+using Application.Exceptions;
 using Application.Features.Comment.Requests.Queries;
 using AutoMapper;
 using MediatR;
@@ -23,7 +24,7 @@ public class GetCommentsByPostIdRequestHandler : IRequestHandler<GetCommentsByPo
 
         if (comments == null)
         {
-            throw new Exception("No comments");
+            throw new NotFoundException(nameof(Domain.Entities.Comment), request.PostId);
         }
         
         return _mapper.Map<List<CommentDto>>(comments);
