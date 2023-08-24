@@ -21,6 +21,9 @@ public class PostLikesRepository : IPostLikesRepository
     public async Task<bool> Exists(int userId, int postId)
     {
         var like = await Get(userId, postId);
+        if (like != null)
+            _context.Entry(like).State = EntityState.Detached;
+        
         return like != null;
     }
 
@@ -33,6 +36,7 @@ public class PostLikesRepository : IPostLikesRepository
     public async Task<PostLike> Add(PostLike like)
     {
         await _context.PostLikes.AddAsync(like);
+        await _context.SaveChangesAsync();
         return like;
     }
 
@@ -40,9 +44,15 @@ public class PostLikesRepository : IPostLikesRepository
     {
         var exists = await Exists(like.UserId, like.PostId);
         if (exists)
+        {
+            Console.WriteLine($"Deleted Like {like.UserId} {like.PostId}");
             await Delete(like);
+        }
         else
+        {
+            Console.WriteLine($"Created Like {like.UserId} {like.PostId}");
             await Add(like);
+        }
     }
 
     public async Task<List<PostLike>> GetLikesByPostId(int postId)
