@@ -9,20 +9,18 @@ namespace Application.Features.Comment.Handlers.Commands;
 
 public class UpdateCommentCommandHandler : IRequestHandler<UpdateCommentCommand, Unit>
 {
-
+    private readonly IUnitOfWork _unitOfWork;
     private readonly IMapper _mapper;
-    private readonly ICommentRepository _commentRepository;
 
-    public UpdateCommentCommandHandler(ICommentRepository commentRepository, IMapper mapper)
+    public UpdateCommentCommandHandler(IUnitOfWork unitOfWork, IMapper mapper)
     {
-
         _mapper = mapper;
-        _commentRepository = commentRepository;
+        _unitOfWork = unitOfWork;
     }
 
     public async Task<Unit> Handle(UpdateCommentCommand request, CancellationToken cancellationToken)
     {
-        var validator = new UpdateCommentDtoValidator(_commentRepository);
+        var validator = new UpdateCommentDtoValidator(_unitOfWork.commentRepository);
         var validationResult = await validator.ValidateAsync(request.UpdateCommentDto);
 
         if (!validationResult.IsValid)
@@ -30,13 +28,14 @@ public class UpdateCommentCommandHandler : IRequestHandler<UpdateCommentCommand,
             throw new ValidationException(validationResult.Errors);
         }
 
-        var comment = await _commentRepository.Get(request.UpdateCommentDto.Id);
+        var comment = await _unitOfWork.commentRepository.Get(request.UpdateCommentDto.Id);
         if ( comment is null)
         {
             throw new FileNotFoundException();
         }
         _mapper.Map(request.UpdateCommentDto, comment);
-        await _commentRepository.Update(comment);
+        await _unitOfWork.commentRepository.Update(comment);
+        await _unitOfWork.Save();
         return Unit.Value;
 
     }

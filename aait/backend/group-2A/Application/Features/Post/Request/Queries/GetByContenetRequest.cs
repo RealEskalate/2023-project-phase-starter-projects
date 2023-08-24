@@ -5,5 +5,5 @@ namespace Application.Features.Post.Request.Queries;
 
 public class GetByContenetRequest : IRequest<List<PostDto>>
 {
-    public string Contenet{ get; set; }
+    public required string Contenet{ get; set; }
 }
