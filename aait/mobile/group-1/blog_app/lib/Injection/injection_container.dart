@@ -4,13 +4,14 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import '../core/network/network_info.dart';
 import '../features/user_profile/data/datasources/profile_local_data_source.dart';
-import '../features/user_profile/data/datasources/proile_remote_data_source.dart';
+import '../features/user_profile/data/datasources/profile_remote_data_source.dart';
 import '../features/user_profile/data/repository/user_repository_implementaion.dart';
 import '../features/user_profile/domain/entities/user_entity.dart';
 import '../features/user_profile/domain/repositories/user_repository.dart';
 import '../features/user_profile/domain/usecases/get_user_info.dart';
 import '../features/user_profile/domain/usecases/update_user_info.dart';
 import '../features/user_profile/presentation/bloc/profile_bloc.dart';
+
 final sl = GetIt.instance;
 
 Future<void> init() async {

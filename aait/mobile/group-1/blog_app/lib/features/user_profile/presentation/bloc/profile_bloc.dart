@@ -2,7 +2,7 @@ import 'package:bloc/bloc.dart';
 import 'package:blog_app/Injection/injection.dart';
 import 'package:blog_app/core/network/network_info.dart';
 import 'package:blog_app/features/user_profile/data/datasources/profile_local_data_source.dart';
-import 'package:blog_app/features/user_profile/data/datasources/proile_remote_data_source.dart';
+import 'package:blog_app/features/user_profile/data/datasources/profile_remote_data_source.dart';
 import 'package:blog_app/features/user_profile/data/repository/user_repository_implementaion.dart';
 import 'package:blog_app/features/user_profile/domain/repositories/user_repository.dart';
 import 'package:blog_app/features/user_profile/domain/usecases/get_user_info.dart';
@@ -45,14 +45,3 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
     });
   }
 }
-
-
-//! add article to the user entity -- done
-//! add a new article entity -- done
-//! add a new article model -- done
-//! get the aricle with the user entity -- done
-//! make article getting and listing work -- done
-//! make updating profile photo work with image picker 
-  //! updating the photo
-  //! closing the showDialog
-  //! adder button
