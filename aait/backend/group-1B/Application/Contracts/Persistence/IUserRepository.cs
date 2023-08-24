@@ -2,7 +2,9 @@ using Domain.Entities;
 
 namespace Application.Contracts.Persistence;
 
-public interface IUserRepository
+    
+
+    public interface IUserRepository
 {
     Task<bool> FollowUser(int followerId, int followeeId);
 
@@ -20,4 +22,4 @@ public interface IUserRepository
     Task<bool> Exists(int userId); 
 >>>>>>> 34d78df (add(AAiT-backend-1A) : add follow and unfollow with the unit tests)
 
-}
+   }
