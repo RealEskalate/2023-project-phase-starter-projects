@@ -16,16 +16,16 @@ const Footer = () => {
           <Image src={helpingPartner} width={200} height={200} alt="Helping a Partner" />
         </div>
         <div className='text-center mr-8 lg:ml-4' >
-            <p className='font-secondaryFont font-semibold mt-8'>Get involved in improving tech education in Africa!</p>
-            <button className='bg-[#264FAD] text-white font-secondaryFont font-bold rounded-lg px-8 py-2 mt-4'>Support Us</button>
+            <p className='font-secondaryFont font-semibold mt-8 mb-4 '>Get involved in improving tech education in Africa!</p>
+            <Link className='bg-[#264FAD] text-white font-secondaryFont font-bold rounded-lg px-8 py-2 mt-4' href='/donate'>Support Us</Link>
         </div>
         <div>
             <nav className='hidden lg:block ml-22 list-none font-secondaryFont text-sm'>
                 <p className='font-semibold'>Links</p>
-                <li className='font-light mt-4'><Link href=''>Home</Link></li>
-                <li className='font-light mt-4'><Link href=''>Success Stories</Link></li>
-                <li className='font-light mt-4'><Link href=''>About Us</Link></li>
-                <li className='font-light mt-4'><Link href=''>Get Involved</Link></li>
+                <li className='font-light mt-4'><Link href='/'>Home</Link></li>
+                <li className='font-light mt-4'><Link href='/stories'>Success Stories</Link></li>
+                <li className='font-light mt-4'><Link href='/about'>About Us</Link></li>
+                <li className='font-light mt-4'><Link href='/donate'>Get Involved</Link></li>
             </nav>
         </div>
         <div>
@@ -40,8 +40,8 @@ const Footer = () => {
         <div>
         <nav className='hidden lg:block ml-22 list-none font-secondaryFont text-sm'>
                 <p className='font-semibold'>Blogs</p>
-                <li className='font-light mt-4'><Link href=''>Recent Blogs</Link></li>
-                <li className='font-light mt-4'><Link href=''>New Blog</Link></li>
+                <li className='font-light mt-4'><Link href='/blog'>Recent Blogs</Link></li>
+                <li className='font-light mt-4'><Link href='/blog'>New Blog</Link></li>
             </nav>
         </div>
       </div>
