@@ -106,6 +106,12 @@ const Section4 = ()=>{
                     <h1 className='font-primaryFont text-[20px]  text-primaryColor'>Solcial Project</h1>
                     <h1 className='font-primaryFont text-[40px]  text-primaryColor'>Hakim Hub</h1>
                     <p className='font-primaryFont leading-8 text-l mt-4 text-gray-500'>HakimHub is a platform that provides information about healthcare facilities and healthcare professionals in Ethiopia. Hakimhub makes information about hospitals, medical laboratories, and doctors conveniently accessible to its users.</p>
+                    <div className='flex justify-end w-full mt-10'>
+                        <div className='flex gap-3'>
+                            <Image src={gitHubIcon} alt="github icon" className='cursor-pointer'/>
+                            <Image src={linkIcon} alt="open icon" className='cursor-pointer'/>
+                        </div>
+                    </div>
                 </div>
             </div>
             <div className='flex flex-wrap ml-10 xl:ml-28 mt-40 gap-6'>
@@ -113,6 +119,12 @@ const Section4 = ()=>{
                     <h1 className='font-primaryFont text-[20px]  text-primaryColor'>Solcial Project</h1>
                     <h1 className='font-primaryFont text-[40px]  text-primaryColor'>Track Sym</h1>
                     <p className='font-primaryFont leading-8 text-l mt-4 text-gray-500'>TrackSym is a non-commercial app that uses crowd-sourcing to collect and visualize the density of the relevant Covid-19 symptoms. Symptom data, aggregated by places, can help people avoid visiting areas that are heavily populated by symptomatic people.</p>
+                    <div className='flex justify-start w-full mt-10'>
+                        <div className='flex gap-3'>
+                            <Image src={gitHubIcon} alt="github icon" className='cursor-pointer'/>
+                            <Image src={linkIcon} alt="open icon" className='cursor-pointer'/>
+                        </div>
+                    </div>
                 </div>
                 <div className='flex flex-col justify-center items-start w-11/12 xl:w-[750px]'>
                     <Image src={trackSym} alt="Puzle solve icon" height={500}/>
@@ -155,7 +167,7 @@ const Section5 = ()=>{
 }
 const AboutPage = ()=>{
     return(
-        <div>
+        <div className='mb-20'>
             <Section1 />
             <Section2 />
             <Section3 />
