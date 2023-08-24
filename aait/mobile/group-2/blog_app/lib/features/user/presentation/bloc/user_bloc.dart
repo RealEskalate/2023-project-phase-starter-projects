@@ -29,8 +29,8 @@ class UserBloc extends Bloc<UserEvent, UserState> {
       required this.getBookmarkedArticles})
       : super(UserInitial()) {
     on<GetUserEvent>(_onGetUserData);
-    on<UpdateUserPhotoEvent>(_onUpdateUserPhoto);
     on<GetBookmarkedArticlesEvent>(_onGetBookmarkedArticles);
+    on<UpdateUserPhotoEvent>(_onUpdateUserPhoto);
   }
 
   String _mapFailureToMessage(Failure failure) {
@@ -63,6 +63,23 @@ class UserBloc extends Bloc<UserEvent, UserState> {
     );
   }
 
+  FutureOr<void> _onGetBookmarkedArticles(
+      GetBookmarkedArticlesEvent event, Emitter<UserState> emit) async {
+    emit(LoadingState());
+    final bookmarkedArticlesOrError = await getBookmarkedArticles(NoParams());
+
+    bookmarkedArticlesOrError.fold(
+      (failure) => emit(
+        ErrorState(
+          message: _mapFailureToMessage(failure),
+        ),
+      ),
+      (articles) => emit(
+        LoadedBookmarkedArticlesState(articles: articles),
+      ),
+    );
+  }
+
   FutureOr<void> _onUpdateUserPhoto(
       UpdateUserPhotoEvent event, Emitter<UserState> emit) async {
     emit(LoadingState());
@@ -78,23 +95,6 @@ class UserBloc extends Bloc<UserEvent, UserState> {
       ),
       (user) => emit(
         LoadedUserState(userData: user),
-      ),
-    );
-  }
-
-  FutureOr<void> _onGetBookmarkedArticles(
-      GetBookmarkedArticlesEvent event, Emitter<UserState> emit) async {
-    emit(LoadingState());
-    final bookmarkedArticlesOrError = await getBookmarkedArticles(NoParams());
-
-    bookmarkedArticlesOrError.fold(
-      (failure) => emit(
-        ErrorState(
-          message: _mapFailureToMessage(failure),
-        ),
-      ),
-      (articles) => emit(
-        LoadedBookmarkedArticlesState(articles: articles),
       ),
     );
   }
