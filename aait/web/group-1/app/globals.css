@@ -1,3 +1,19 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap');
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.font-poppins {
+  font-family: 'Poppins';
+}
+
+.font-montserrat {
+  font-family: 'Montserrat';
+}
+
+.btn-blue {
+  @apply bg-blue-first rounded-lg border text-white
+}
+.btn-blue-outline {
+  @apply bg-transparent rounded-lg border border-primary-color text-primary-color
+}
