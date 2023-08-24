@@ -6,10 +6,12 @@ import 'package:google_fonts/google_fonts.dart';
 import '../../../../core/color/colors.dart';
 
 class CustomElevatedLikeButton extends StatelessWidget {
+  final String likeCount;
   const CustomElevatedLikeButton({
     super.key,
+    required this.likeCount,
   });
-
+  
   @override
   Widget build(BuildContext context) {
     return ElevatedButton(
@@ -29,7 +31,7 @@ class CustomElevatedLikeButton extends StatelessWidget {
         children: [
           const Icon(Icons.thumb_up_outlined),
           SizedBox(width: 8.w),
-          const Text("2.1k"),
+          Text(likeCount),
         ],
       ),
     );

@@ -25,7 +25,7 @@ class CustomAppBarArticleReading extends StatelessWidget {
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => WriteArticlePage(),
+                  builder: (context) => const WriteArticlePage(),
                 ),
               );
             },
@@ -67,9 +67,19 @@ class CustomAppBarNewArticle extends StatelessWidget {
         leading: IconButton(
           onPressed: () {
             Navigator.push(
-                context,
-                MaterialPageRoute(
-                    builder: (context) => const ArticleReadingPage()));
+              context,
+              MaterialPageRoute(
+                builder: (context) => const ArticleReadingPage(
+                  headTitle: "headTitle",
+                  authorName: "authorName",
+                  postedAt: "postedAt",
+                  authorImageUrl: "authorImageUrl",
+                  postText: "postText",
+                  postImageUrl: "postImageUrl",
+                  likeCount: "likeCount",
+                ),
+              ),
+            );
           },
           padding: EdgeInsets.all(6.w),
           icon: const Icon(

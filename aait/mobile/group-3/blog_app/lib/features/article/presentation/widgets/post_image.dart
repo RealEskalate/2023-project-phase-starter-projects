@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
+
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class PostImage extends StatelessWidget {
+  final String postImageUrl;
   const PostImage({
+    required this.postImageUrl,
     super.key,
   });
 
@@ -12,7 +15,7 @@ class PostImage extends StatelessWidget {
       borderRadius: BorderRadius.only(
           topLeft: Radius.circular(28.r), topRight: Radius.circular(28.r)),
       child: Image.asset(
-        "assets/images/postPic.jpg",
+        postImageUrl,
         width: double.infinity,
       ),
     );

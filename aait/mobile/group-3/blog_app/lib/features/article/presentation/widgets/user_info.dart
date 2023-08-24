@@ -6,7 +6,13 @@ import 'package:google_fonts/google_fonts.dart';
 import '../../../../core/color/colors.dart';
 
 class UserInfo extends StatelessWidget {
+  final String authorImageUrl;
+  final String postedAt;
+  final String authorName;
   const UserInfo({
+    required this.authorImageUrl,
+    required this.postedAt,
+    required this.authorName,
     super.key,
   });
 
@@ -25,9 +31,9 @@ class UserInfo extends StatelessWidget {
                 width: 38.w,
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(12.r),
-                  image: const DecorationImage(
+                  image: DecorationImage(
                     image: AssetImage(
-                      'assets/images/profpic.jpg',
+                      authorImageUrl,
                     ),
                     fit: BoxFit.cover,
                   ),
@@ -45,7 +51,7 @@ class UserInfo extends StatelessWidget {
                       tapTargetSize: MaterialTapTargetSize.shrinkWrap,
                     ),
                     child: Text(
-                      "Richard Gervain",
+                      authorName,
                       style: GoogleFonts.urbanist(
                         fontSize: 14.sp,
                         fontWeight: FontWeight.w500,
@@ -55,7 +61,7 @@ class UserInfo extends StatelessWidget {
                   ),
                   // SizedBox(height: 6.h),
                   Text(
-                    "2m ago",
+                    postedAt,
                     style: GoogleFonts.poppins(
                       fontSize: 12.sp,
                       fontWeight: FontWeight.w900,

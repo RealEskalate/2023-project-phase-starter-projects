@@ -1,11 +1,28 @@
 import 'package:flutter/material.dart';
+
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../widgets/widgets.dart';
 
-
 class ArticleReadingPage extends StatelessWidget {
-  const ArticleReadingPage({super.key});
+  final String headTitle;
+  final String authorImageUrl;
+  final String postedAt;
+  final String authorName;
+  final String postText;
+  final String postImageUrl;
+  final String likeCount;
+  
+  const ArticleReadingPage({
+    super.key,
+    required this.headTitle,
+    required this.authorName,
+    required this.postedAt,
+    required this.authorImageUrl,
+    required this.postText,
+    required this.postImageUrl,
+    required this.likeCount,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -25,13 +42,17 @@ class ArticleReadingPage extends StatelessWidget {
                   child: Column(
                     children: [
                       SizedBox(height: 24.h),
-                      const HeadTitle(),
+                      HeadTitle(headTitle: headTitle),
                       SizedBox(height: 24.h),
-                      const UserInfo(),
+                      UserInfo(
+                        authorName: authorName,
+                        postedAt: postedAt,
+                        authorImageUrl: authorImageUrl,
+                      ),
                       SizedBox(height: 22.h),
-                      const PostImage(),
+                      PostImage(postImageUrl: postImageUrl),
                       SizedBox(height: 36.h),
-                      const PostText(),
+                      PostText(postText: postText,),
                       SizedBox(height: 80.h),
                     ],
                   ),
@@ -46,7 +67,7 @@ class ArticleReadingPage extends StatelessWidget {
               Positioned(
                 bottom: 44.h,
                 right: 40.w,
-                child: const CustomElevatedLikeButton(),
+                child: CustomElevatedLikeButton(likeCount: likeCount),
               )
             ],
           ),
@@ -55,17 +76,3 @@ class ArticleReadingPage extends StatelessWidget {
     );
   }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
