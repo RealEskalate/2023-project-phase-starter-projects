@@ -8,9 +8,7 @@ export default function page() {
   return (
     <div className="mt-32 flex flex-col gap-16">
       <BlogHeader />
-      <div className="w-[72%] flex flex-col gap-10 items-center mx-auto">
-        <BlogCard />
-        <BlogCard />
+      <div className="w-[72%] flex flex-col gap-7 items-center mx-auto">
         <BlogCard />
       </div>
       <PaginationLinks />
