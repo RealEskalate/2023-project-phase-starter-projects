@@ -8,6 +8,7 @@
 
 
     <ItemGroup>
+        <PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="11.1.0" />
         <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="7.0.5"/>
         <PackageReference Include="Microsoft.Extensions.Identity.Core" Version="7.0.5"/>
     </ItemGroup>
