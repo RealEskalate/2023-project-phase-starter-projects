@@ -1,7 +1,15 @@
 namespace SocialSync.Application.DTOs.Notifications;
 
+public enum NotificationType
+{
+    Like,
+    Follow
+}
 public interface INotificationDto
 {
-    public int FollowerUserId { get; set; }
-    public int FollowedUserId { get; set; }
+    public int SenderId { get; set; }
+
+    public NotificationType NotificationType{get; set;}
+
+    public int RecepientId { get; set; }
 }

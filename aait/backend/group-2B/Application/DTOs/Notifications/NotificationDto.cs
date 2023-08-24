@@ -5,8 +5,11 @@ namespace SocialSync.Application.DTOs.Notifications;
 
 public class NotificationDto : BaseDto, INotificationDto
 {
-    public int FollowerUserId { get; set; }
-    public int FollowedUserId { get; set; }
+    public int SenderId { get; set; }
+    public int RecepientId { get; set; }
+
+    public NotificationType NotificationType{get; set;}
+
 
     public DateTime CreatedAt;
     public DateTime LastModified;
