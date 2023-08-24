@@ -8,18 +8,17 @@ namespace Application.Features.Comment.Handlers.Commands;
 
 public class DeleteCommentCommandHandler :  IRequestHandler<DeleteCommentCommand, Unit>
 {
-    private readonly ICommentRepository _commentRepository;
+    private readonly IUnitOfWork _unitOfWork;
     private readonly IMapper _mapper;
-
-    public DeleteCommentCommandHandler(ICommentRepository commentRepository, IMapper mapper)
+    public DeleteCommentCommandHandler(IUnitOfWork unitOfWork, IMapper mapper)
     {
-        _commentRepository = commentRepository;
         _mapper = mapper;
+        _unitOfWork = unitOfWork;
     }
     
     public async Task<Unit> Handle(DeleteCommentCommand request, CancellationToken cancellationToken)
     {
-        var comment = await _commentRepository.Get(request.Id);
+        var comment = await _unitOfWork.commentRepository.Get(request.Id);
         
         if (comment == null)
         {
@@ -27,7 +26,8 @@ public class DeleteCommentCommandHandler :  IRequestHandler<DeleteCommentCommand
         }
         
         
-        await _commentRepository.Delete(comment);
+        await _unitOfWork.commentRepository.Delete(comment);
+        await _unitOfWork.Save();
         return Unit.Value;
     }
 }

@@ -8,18 +8,18 @@ namespace Application.Features.Comment.Handlers.Queries;
 
 public class GetCommentsByPostIdRequestHandler : IRequestHandler<GetCommentsByPostIdRequest, List<CommentDto>>
 {
-    private readonly ICommentRepository _commentRepository;
     private readonly IMapper _mapper;
+    private readonly IUnitOfWork _unitOfWork;
     
-    public GetCommentsByPostIdRequestHandler(ICommentRepository commentRepository, IMapper mapper)
+    public GetCommentsByPostIdRequestHandler(IUnitOfWork unitOfWork, IMapper mapper)
     {
-        _commentRepository = commentRepository;
         _mapper = mapper;
+        _unitOfWork = unitOfWork;
     }
     
     public async Task<List<CommentDto>> Handle(GetCommentsByPostIdRequest request, CancellationToken cancellationToken)
     {
-        var comments = await _commentRepository.GetCommentByPost(request.PostId);
+        var comments = await _unitOfWork.commentRepository.GetCommentByPost(request.PostId);
 
         if (comments == null)
         {
