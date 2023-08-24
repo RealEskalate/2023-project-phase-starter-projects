@@ -24,4 +24,3 @@ namespace Domain.Entites
 
     }
 }
-        //[ForeignKey("User")]

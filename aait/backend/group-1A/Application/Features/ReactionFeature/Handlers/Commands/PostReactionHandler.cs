@@ -3,7 +3,9 @@ using Application.DTO.Common;
 using Application.DTO.NotificationDTO;
 using Application.Exceptions;
 using Application.Features.NotificationFeaure.Requests.Commands;
+using Application.Exceptions;
 using Application.Features.PostFeature.Requests.Commands;
+using Application.Response;
 using Application.Response;
 using AutoMapper;
 using Domain.Entities;
@@ -16,6 +18,7 @@ using System.Threading.Tasks;
 
 namespace Application.Features.PostFeature.Handlers.Commands
 {
+    public class PostReactionHandler : IRequestHandler<PostReactionCommand, BaseResponse<string>>
     public class PostReactionHandler : IRequestHandler<PostReactionCommand, BaseResponse<string>>
     {
         private readonly IPostReactionRepository _postReactionRespository;
@@ -31,6 +34,7 @@ namespace Application.Features.PostFeature.Handlers.Commands
             _postRepository = postRepository;
         }
         public async Task<BaseResponse<string>> Handle(PostReactionCommand request, CancellationToken cancellationToken)
+        public async Task<BaseResponse<string>> Handle(PostReactionCommand request, CancellationToken cancellationToken)
         {
             var validator = new ReactionValidator();
             var validationResult = await validator.ValidateAsync(request.ReactionData);
@@ -43,7 +47,7 @@ namespace Application.Features.PostFeature.Handlers.Commands
             var exists = await _postRepository.Exists(request.ReactionData.ReactedId);
             if (exists == false)
             {
-                throw new NotFoundException("Post is not found to make the Reactions");
+                throw new NotFoundValidationException(validationResult"Post is not found to make the Reactions");
             }
 
 
@@ -66,7 +70,10 @@ namespace Application.Features.PostFeature.Handlers.Commands
 
             var result = await _postReactionRespository.MakeReaction(request.UserId, postReaction);
             if (result == null)
+            if (result == null)
             {
+                throw new BadRequestException("Post is not found"
+                );
                 throw new BadRequestException("Post is not found"
                 );
             }
@@ -84,6 +91,9 @@ namespace Application.Features.PostFeature.Handlers.Commands
 
 
 
+            return new BaseResponse<string>()
+            {
+            
             return new BaseResponse<string>()
             {
                 Success = true,
