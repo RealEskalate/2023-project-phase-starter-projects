@@ -16,7 +16,7 @@ public class UpdatePostCommandHandler : PostsRequestHandler, IRequestHandler<Upd
     public async Task<BaseCommandResponse> Handle(UpdatePostCommand request, CancellationToken cancellationToken)
     {
         var UpdateValidator = new UpdatePostDtoValidator(_userRepository, _postRepository);
-        var UpdateValidationResult = UpdateValidator.Validate(request.UpdatePostDto);
+        var UpdateValidationResult = await UpdateValidator.ValidateAsync(request.UpdatePostDto);
         var response = new BaseCommandResponse();
         if (!UpdateValidationResult.IsValid)
         {

@@ -16,7 +16,7 @@ public class CreatePostDtoValidator : AbstractValidator<CreatePostDto>
         RuleFor(p => p.Content)
         .NotNull().WithMessage("Post content cannot be null.")
         .NotEmpty().WithMessage("Post content cannot be empty.")
-        .MaximumLength(500).WithMessage("Post content cannot have more than {ComparisionValue} characters.");
+        .MaximumLength(500).WithMessage("Post content cannot have more than 500 characters.");
 
         RuleFor(p => p.UserId)
         .NotNull().WithMessage("Post author id cannot be null.")
