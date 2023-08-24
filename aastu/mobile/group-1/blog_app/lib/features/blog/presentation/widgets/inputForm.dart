@@ -18,7 +18,7 @@ class _InputFormState extends State<InputForm> {
   @override
   Widget build(BuildContext build) {
     return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
+      crossAxisAlignment: CrossAxisAlignment.center,
       // mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: [
         InputField(
