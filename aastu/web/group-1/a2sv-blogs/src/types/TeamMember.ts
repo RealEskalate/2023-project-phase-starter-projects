@@ -5,6 +5,7 @@ export interface SocialMedia {
   }
   
 export interface TeamMember {
+    id : string;
     name: string;
     imageUrl: string;
     department: string;

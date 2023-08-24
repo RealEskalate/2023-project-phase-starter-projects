@@ -4,10 +4,11 @@ import Image from 'next/image';
 import { TeamMember } from '@/types/TeamMember';
 
 interface props {
-    member : TeamMember;
+  member : TeamMember;
 }
 
 const TeamMemberCard: React.FC<props> = ({member}) => {
+  console.log(member)
 
   return (
     <div className="w-[400px] h-[600px] rounded-[12px] bg-white shadow-lg ml-2"> 
