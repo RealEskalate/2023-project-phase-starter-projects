@@ -5,7 +5,7 @@ import uploadsvg from '@/assets/images/upload.svg';
 import dynamic from 'next/dynamic';
 import { useDispatch } from 'react-redux';
 import { useEffect, useState } from 'react';
-import { useSelector } from '@/lib/redux';
+// import { useSelector } from '@/lib/redux';
 
 const DynamicTextEditor = dynamic(() => import('@/app/components/add-blog/TextEditor'), {
   ssr: false,
@@ -201,7 +201,7 @@ const AddBlog: React.FC = () => {
                   selectedTags.includes('Programming')
                     ? '!text-primaryColor !border !border-primaryColor'
                     : ''
-                } rounded-full px-3 py-2 bg-gray-200 border border-gray-200 text-sm text-center text-[#414141] hover:cursor-pointer`}
+                } rounded-full px-3 py-2 bg-gray-200 border border-gray-200  text-sm text-center text-[#414141] hover:cursor-pointer`}
                 onClick={() => addTags('Programming')}
               >
                 Programming
