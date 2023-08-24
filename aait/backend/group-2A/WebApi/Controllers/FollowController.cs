@@ -21,7 +21,7 @@ namespace WebApi.Controllers
             _mediator = mediator;
         }
 
-        [HttpGet]
+        [HttpGet("followers")]
         public async Task<ActionResult<List<UserDto>>> GetFollower()
         {
             // token getter to be implemented
@@ -31,7 +31,7 @@ namespace WebApi.Controllers
             return Ok(follower);
         }        
         
-        [HttpGet]
+        [HttpGet("followees")]
         public async Task<ActionResult<List<UserDto>>> GetFollowee()
         {
             // token getter to be implemented
