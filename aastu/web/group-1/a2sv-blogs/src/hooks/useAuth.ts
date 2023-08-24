@@ -5,11 +5,12 @@ import { useSelector } from "react-redux";
 
 export const useAuth = () => {
   const auth = useSelector(selectAuth);
+  const [login] = useLoginMutation();
+  const [signup] = useSignupMutation();
 
   return {
     auth,
     loginHandler: async (credentials: Credentials) => {
-      const [login] = useLoginMutation();
       try {
         await login(credentials);
       } catch (err) {
@@ -18,7 +19,6 @@ export const useAuth = () => {
     },
     logoutHandler: () => {},
     signupHandler: async (credentials: Credentials) => {
-      const [signup] = useSignupMutation();
       try {
         await signup(credentials);
       } catch (error) {
