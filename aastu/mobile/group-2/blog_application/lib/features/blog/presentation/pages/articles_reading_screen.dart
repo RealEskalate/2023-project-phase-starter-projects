@@ -34,10 +34,11 @@ class _ArticleReadingState extends State<ArticleReading> {
       appBar: AppBar(
         elevation: 0.0,
         backgroundColor: Colors.white,
-        leading: const Padding(
+        leading: Padding(
           padding: EdgeInsets.only(left: 25),
-          child: const Icon(
-            Icons.chevron_left,
+          child: IconButton(
+            onPressed: () => Navigator.pop(context),
+            icon: const Icon(Icons.chevron_left),
             color: Colors.black,
           ),
         ),
