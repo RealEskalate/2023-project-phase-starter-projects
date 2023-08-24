@@ -2,7 +2,7 @@
 import { Blog, User } from '@/lib/types';
 import React, { useEffect, useState } from 'react';
 import SingleBlogCard from '../components/SingleBlogCard';
-import Error from 'next/error';
+import { useGetBlogsQuery } from '@/lib/redux/slices/blogsApi';
 
 const startingId = 10;
 
@@ -84,11 +84,11 @@ const blogs: Blog[] = [
 
 // The 'blogs' array now contains all the sample blog entries grouped together.
 
-const vari = true;
 const Page: React.FC = () => {
-  if (vari) {
-    throw new Error('auth is required');
-  }
+  const { data: blogs, error, isLoading, isSuccess } = useGetBlogsQuery();
+  console.log('====================================');
+  console.log(blogs);
+  console.log('====================================');
 
   return (
     <div className="w-full font-secondaryFont mt-20 flex flex-col justify-center items-center">
@@ -106,19 +106,15 @@ const Page: React.FC = () => {
             + New Blog
           </button>
         </div>
-        <div className="">
-          <button className="bg-primaryColor text-white px-6 py-4 rounded-3xl text-xs lg:text-sm font-semibold">
-            Throw Error
-          </button>
-        </div>
+        <div className=""></div>
       </div>
 
       {/* blog list */}
       <div className="flex flex-col gap-4 lg:px-52 md:px-40 px-8 mt-5">
-        {blogs.map((blog) => (
+        {blogs?.map((blog: Blog, index: number) => (
           <>
             <hr className="mt-4 mb-6 bg-textColor-100 w-3/4" />
-            <SingleBlogCard key={React.useId()} {...blog} />
+            <SingleBlogCard key={index} {...blog} />
           </>
         ))}
       </div>
