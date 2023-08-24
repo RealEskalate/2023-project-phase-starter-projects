@@ -23,8 +23,8 @@
     <ItemGroup>
       <Folder Include="Features\Comment\" />
       <Folder Include="Features\Like\" />
-      <Folder Include="Features\FollowFeatures\" />
-      <Folder Include="Features\UserFeatures\Handlers\Queries\" />
-      <Folder Include="Features\UserFeatures\Request\Queries\" />
+      <Folder Include="Features\Follow\" />
+      <Folder Include="Features\User\Handlers\Queries\" />
+      <Folder Include="Features\User\Request\Queries\" />
     </ItemGroup>
 </Project>

@@ -18,7 +18,7 @@ namespace Application.Features.Like.Handlers.Query
 
         public async Task<List<UserDto>> Handle(GetPostLikesQuery request, CancellationToken cancellationToken)
         {
-            var likes = await _unitOfWork.likeRepository.Likers(request.Id);
+            var likes = await _unitOfWork.likeRepository.GetLikers(request.Id);
             return _mapper.Map<List<UserDto>>(likes);
         }
     }

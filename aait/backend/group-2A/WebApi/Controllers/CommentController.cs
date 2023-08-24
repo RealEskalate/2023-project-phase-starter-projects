@@ -23,7 +23,12 @@ public class CommentController : ControllerBase
     {
         var command = new CreateCommentCommand{ CommentDto = commentDto };
         var commentId = await _mediator.Send(command);
-        return Ok(commentId);
+        var response = new
+        {
+            Message = "Comment created successfully.",
+            CommentId = commentId
+        };
+        return Ok(response);
     }
     
     // PUT / Comment/{commentId}
