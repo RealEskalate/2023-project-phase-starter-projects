@@ -10,7 +10,7 @@ namespace SocialSync.Application.Features.Interactions.Handlers.Commands;
 public class DeleteCommentInteractionCommandHandler
     : IRequestHandler<DeleteCommentInteractionCommand, Unit>
 {
-    private readonly IInteractionRepository _interactionRepository;
+   
     private readonly IMapper _mapper;
     private readonly IUnitOfWork _unitOfWork;
 
@@ -29,7 +29,7 @@ public class DeleteCommentInteractionCommandHandler
     )
     {
         var validator = new DeleteCommentDtoValidator(_unitOfWork.InteractionRepository);
-        var validationResult = await validator.ValidateAsync(command.deleteCommentInteractionDTO);
+        var validationResult = await validator.ValidateAsync(command.DeleteCommentInteractionDto);
 
         if (!validationResult.IsValid)
         {
@@ -38,8 +38,8 @@ public class DeleteCommentInteractionCommandHandler
         }
         else
         {
-            var foundComment = await _unitOfWork.InteractionRepository.GetAsync(command.deleteCommentInteractionDTO.Id);
-            await _interactionRepository.DeleteAsync(foundComment);
+            var foundComment = await _unitOfWork.InteractionRepository.GetAsync(command.DeleteCommentInteractionDto.Id);
+            await _unitOfWork.InteractionRepository.DeleteAsync(foundComment);
             return Unit.Value;
         }
     }

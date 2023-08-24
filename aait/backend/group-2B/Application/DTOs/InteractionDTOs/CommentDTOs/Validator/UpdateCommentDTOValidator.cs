@@ -5,7 +5,7 @@ public class UpdateCommentDtoValidator : AbstractValidator<UpdateCommentInteract
 {
     public UpdateCommentDtoValidator()
     {
-        RuleFor(Comment => Comment.Body)
+        RuleFor(comment => comment.Body)
             .NotEmpty()
             .WithMessage("{ProprtyName} can not be empty")
             .NotNull()

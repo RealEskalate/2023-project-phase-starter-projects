@@ -9,7 +9,7 @@ namespace SocialSync.Application.Features.Comments.Handlers.Commands;
 public class GetInteractionRequestHandler
     : IRequestHandler<GetInteractionRequest, Interaction>
 {
-    private IUnitOfWork _unitOfWork;
+    private readonly IUnitOfWork _unitOfWork;
     private IMapper _mapper;
 
     public GetInteractionRequestHandler(IUnitOfWork unitOfWork, IMapper mapper)
@@ -20,7 +20,7 @@ public class GetInteractionRequestHandler
 
     public async Task<Interaction> Handle(GetInteractionRequest request, CancellationToken cancellationToken)
     {
-        var foundInteraction = await _unitOfWork.InteractionRepository.GetAsync(request.id);
+        var foundInteraction = await _unitOfWork.InteractionRepository.GetAsync(request.Id);
         return foundInteraction;
     }
 }

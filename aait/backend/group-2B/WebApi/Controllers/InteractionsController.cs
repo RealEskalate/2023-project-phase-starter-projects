@@ -24,7 +24,7 @@ public class InteractionController : ControllerBase
     [HttpPost("like")]
     public async Task<IActionResult> LikeUnlikePost([FromBody] InteractionDTO likeDto)
     {
-        likeDto.type = InteractionType.Like;
+        likeDto.Type = InteractionType.Like;
         likeDto.Body = null;
         var command = new LikeUnlikePostInteractionCommand { LikeDto = likeDto };
         var response = await _mediator.Send(command);
@@ -41,7 +41,7 @@ public class InteractionController : ControllerBase
     [HttpPost("AddComment")]
     public async Task<IActionResult> CommentOnPost([FromBody] InteractionDTO interactionDto)
     {
-        interactionDto.type = InteractionType.Comment;
+        interactionDto.Type = InteractionType.Comment;
         var command = new CreateCommentInteractionCommand { CreateCommentDto = interactionDto };
         var response = await _mediator.Send(command);
 
@@ -76,7 +76,7 @@ public class InteractionController : ControllerBase
         [FromBody] DeleteCommentInteractionDTO interactionId
     )
     {
-        var command = new DeleteCommentInteractionCommand { deleteCommentInteractionDTO = interactionId };
+        var command = new DeleteCommentInteractionCommand { DeleteCommentInteractionDto = interactionId };
         var response = await _mediator.Send(command);
 
         if (response != null)
@@ -104,7 +104,7 @@ public class InteractionController : ControllerBase
     [HttpGet("GetAComment/{id}")]
     public async Task<IActionResult> GetCommentOfAPost(int id)
     {
-        var command = new GetInteractionRequest { id = id };
+        var command = new GetInteractionRequest { Id = id };
         var response = await _mediator.Send(command);
 
         if (response != null)

@@ -7,6 +7,6 @@ public class InteractionDTO : BaseDto
 {
     public int PostId { get; set; }
     public int UserId { get; set; }
-    public InteractionType type { get; set; }
+    public InteractionType Type { get; set; }
     public string? Body { get; set; }
 }

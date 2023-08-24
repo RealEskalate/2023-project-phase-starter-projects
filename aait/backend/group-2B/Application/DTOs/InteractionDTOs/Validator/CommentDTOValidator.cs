@@ -15,7 +15,7 @@ public class CommentDTOValidator : AbstractValidator<InteractionDTO>
     {
         _IPostRepository = IPostRepository;
 
-        RuleFor(Interaction => Interaction.Body)
+        RuleFor(interaction => interaction.Body)
             .NotEmpty()
             .WithMessage("{ProprtyName} can not be empty")
             .NotNull()
@@ -24,7 +24,7 @@ public class CommentDTOValidator : AbstractValidator<InteractionDTO>
             .MaximumLength(200)
             .WithMessage("{proprtyName} can not exceed 200 characters");
 
-        RuleFor(Interaction => Interaction.PostId)
+        RuleFor(interaction => interaction.PostId)
             .GreaterThan(0)
             .MustAsync(
                 async (id, token) =>
@@ -42,7 +42,7 @@ public class CommentDTOValidator : AbstractValidator<InteractionDTO>
             )
             .WithMessage("{PropertyName} doesn't exist");
 
-        RuleFor(Interaction => Interaction.UserId)
+        RuleFor(interaction => interaction.UserId)
             .GreaterThan(0)
             .MustAsync(
                 async (id, token) =>

@@ -8,10 +8,10 @@ public class DeleteCommentDtoValidator : AbstractValidator<DeleteCommentInteract
 {
     private IInteractionRepository _IInteractionRepository;
 
-    public DeleteCommentDtoValidator(IInteractionRepository IInteractionRepository)
+    public DeleteCommentDtoValidator(IInteractionRepository iInteractionRepository)
     {
-        _IInteractionRepository = IInteractionRepository;
-        RuleFor(Interaction => Interaction.Id)
+        _IInteractionRepository = iInteractionRepository;
+        RuleFor(interaction => interaction.Id)
             .GreaterThan(0)
             .MustAsync(
                 async (id, token) =>

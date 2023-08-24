@@ -17,7 +17,7 @@ namespace SocialSync.Application.DTOs.InteractionDTOs.Validator
         {
             _IPostRepository = IPostRepository;
 
-            RuleFor(Interaction => Interaction.PostId)
+            RuleFor(interaction => interaction.PostId)
                 .GreaterThan(0)
                 .MustAsync(
                     async (id, token) =>
@@ -35,7 +35,7 @@ namespace SocialSync.Application.DTOs.InteractionDTOs.Validator
                 )
                 .WithMessage("{PropertyName} doesn't exist");
 
-            RuleFor(Interaction => Interaction.UserId)
+            RuleFor(interaction => interaction.UserId)
                 .GreaterThan(0)
                 .MustAsync(
                     async (id, token) =>

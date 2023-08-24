@@ -5,5 +5,5 @@ namespace SocialSync.Application.Features.Comments.Requests.Queries;
 
 public class GetInteractionRequest : IRequest<Interaction>
 {
-    public int id { get; set; }
+    public int Id { get; set; }
 }
