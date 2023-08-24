@@ -32,7 +32,7 @@ namespace WebApi.Controllers
         }        
         
         [HttpGet]
-        public async Task<IActionResult> GetFollowee()
+        public async Task<ActionResult<List<UserDto>>> GetFollowee()
         {
             // token getter to be implemented
             var command = new GetFollowingRequest { Id = 1 };

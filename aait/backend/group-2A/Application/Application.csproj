@@ -21,7 +21,6 @@
     </ItemGroup>
 
     <ItemGroup>
-      <Folder Include="Features\Comment\" />
       <Folder Include="Features\Like\" />
       <Folder Include="Features\Follow\" />
       <Folder Include="Features\User\Handlers\Queries\" />

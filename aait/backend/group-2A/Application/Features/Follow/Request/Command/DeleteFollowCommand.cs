@@ -1,4 +1,5 @@
 ﻿using Application.DTO.FollowDTO;
+using Application.Responses;
 using MediatR;
 using System;
 using System.Collections.Generic;
@@ -8,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Application.Features.FollowFeatures.Request.Command
 {
-    public class DeleteFollowCommand : IRequest<Unit>
+    public class DeleteFollowCommand : IRequest<BaseCommandResponse>
     {
         public FollowDto follow { get; set; }
     }
