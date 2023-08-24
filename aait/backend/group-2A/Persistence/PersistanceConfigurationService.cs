@@ -13,6 +13,7 @@ public static class PersistanceConfigurationService{
             options.UseNpgsql(configuration.GetConnectionString("SocialSync"));
         });
 
+        services.AddScoped<IUnitOfWork, UnitOfWork>();
         services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
         services.AddScoped<IUserRepository, UserRepository>();
         services.AddScoped<IPostRepository, PostRepository>();

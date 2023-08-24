@@ -8,16 +8,16 @@ namespace Application.Features.Post.Handlers.Queries;
 
 public class GetByTagRequestHandler : IRequestHandler<GetByTagRequest, List<PostDto>>{
     
-    private readonly IPostRepository _postRepository;
-    private readonly Mapper _mapper;
+    private readonly IUnitOfWork _unitOfWork;
+    private readonly IMapper _mapper;
 
-    public GetByTagRequestHandler(IPostRepository postRepository, Mapper mapper){
-        _postRepository = postRepository;
+    public GetByTagRequestHandler(IUnitOfWork unitOfWork, IMapper mapper){
         _mapper = mapper;
+        _unitOfWork = unitOfWork;
     }
 
     public async Task<List<PostDto>> Handle(GetByTagRequest request, CancellationToken cancellationToken){
-        var posts = await _postRepository.GetBytag(request.Tag);
+        var posts = await _unitOfWork.postRepository.GetBytag(request.Tag);
         return _mapper.Map<List<PostDto>>(posts);
     }
 }

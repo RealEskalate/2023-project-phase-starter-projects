@@ -13,18 +13,19 @@ namespace Application.Features.FollowFeatures.Handlers.Command
 {
     public class DeleteFollowCommandHandler : IRequestHandler<DeleteFollowCommand, Unit>
     {
-        private readonly IFollowRepository _followRepository;
+        private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
 
-        public DeleteFollowCommandHandler(IFollowRepository followRepository, IMapper mapper)
+        public DeleteFollowCommandHandler(IUnitOfWork unitOfWork, IMapper mapper)
         {
-            _followRepository = followRepository;
             _mapper = mapper;
+            _unitOfWork = unitOfWork;
         }
         public async Task<Unit> Handle(DeleteFollowCommand request, CancellationToken cancellationToken)
         {
             var unfollow = _mapper.Map<Follow>(request.follow);
-            await _followRepository.Unfollow(unfollow);
+            await _unitOfWork.followRepository.Unfollow(unfollow);
+            await _unitOfWork.Save();
             return Unit.Value;
         }
     }

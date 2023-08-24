@@ -12,27 +12,28 @@ namespace Application.Features.UserFeatures.Handlers.Commands
 {
     public class UpdateUserCommandHandler : IRequestHandler<UpdateUserCommand, Unit>
     {
-        private readonly IUserRepository _userRepository;
-        private readonly Mapper _mapper;
+        private readonly IUnitOfWork _unitOfWork;
+        private readonly IMapper _mapper;
 
-        public UpdateUserCommandHandler(IUserRepository userRepository, Mapper mapper)
+        public UpdateUserCommandHandler(IUnitOfWork unitOfWork, IMapper mapper)
         {
-            _userRepository = userRepository;
             _mapper = mapper;
+            _unitOfWork = unitOfWork;
         }
 
         public async Task<Unit> Handle(UpdateUserCommand request, CancellationToken cancellationToken){
-            var validator = new UpdateUserDTOValidator(_userRepository);
+            var validator = new UpdateUserDTOValidator(_unitOfWork.userRepository);
             var validationResult = await validator.ValidateAsync(request.updateUser);
             if (!validationResult.IsValid)
             {
                 throw new ValidationException(validationResult);
             }
             
-            var user = await _userRepository.Get(request.updateUser.Id);
+            var user = await _unitOfWork.userRepository.Get(request.updateUser.Id);
             _mapper.Map(request.updateUser, user);
             // var user = _mapper.Map<Domain.Entities.User>(request.updateUser);
-            await _userRepository.Update(user);
+            await _unitOfWork.userRepository.Update(user);
+            await _unitOfWork.Save();
             return Unit.Value;
         }
     }

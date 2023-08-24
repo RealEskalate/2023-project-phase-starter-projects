@@ -6,15 +6,16 @@ using MediatR;
 namespace Application.Features.Like.Handlers.Query;
 
 public class GetIsLikedQueryHander : IRequestHandler<GetIsLikedQuery, bool>{
-    private ILikeRepository _likeRepository;
-    private Mapper _mapper;
+    private readonly IUnitOfWork _unitOfWork;
+    private readonly IMapper _mapper;
 
-    public GetIsLikedQueryHander(ILikeRepository likeRepository){
-        _likeRepository = likeRepository;
+    public GetIsLikedQueryHander(IUnitOfWork unitOfWork, IMapper mapper){
+        _mapper = mapper;
+        _unitOfWork = unitOfWork;
     }
 
     public Task<bool> Handle(GetIsLikedQuery request, CancellationToken cancellationToken){
-        var exist = _likeRepository.isLiked(_mapper.Map<Domain.Entities.Like>(request.LikedDto));
+        var exist = _unitOfWork.likeRepository.isLiked(_mapper.Map<Domain.Entities.Like>(request.LikedDto));
         return exist;
     }
 }
