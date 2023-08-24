@@ -6,11 +6,11 @@ import { useGetBlogsQuery } from "@/lib/redux/features/blog";
 export default function BlogCard() {
   const { data, isLoading, error } = useGetBlogsQuery();
   const options = { year: "numeric", month: "short", day: "2-digit" };
-
+  console.log(data);
   return (
     <>
-      {data?.map((item) => (
-        <div className="w-full h-80  border-t border-[#D7D7D7]">
+      {data?.map((item, index) => (
+        <div key={index} className="w-full h-80  border-t border-[#D7D7D7]">
           <div className="h-[25%] flex items-center gap-3 px-4">
             <Image
               className="w-14 h-14 rounded-full object-cover"
@@ -69,8 +69,11 @@ export default function BlogCard() {
             />
           </div>
           <div className="flex items-center">
-            {item?.tags?.map((tag) => (
-              <ul className="h-[15%] flex items-center gap-10 px-3 justify-start">
+            {item?.tags?.map((tag, index) => (
+              <ul
+                className="h-[15%] flex items-center gap-10 px-3 justify-start"
+                key={index}
+              >
                 <li className=" px-5 py-1.5 font-montserrat font-semibold text-sm text-[#8E8E8E] bg-[#ededf0] rounded-full flex">
                   {tag}
                 </li>
