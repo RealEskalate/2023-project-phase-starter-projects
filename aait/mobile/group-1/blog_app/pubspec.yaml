@@ -46,6 +46,7 @@ dependencies:
   shared_preferences: ^2.2.0
   stylish_bottom_bar: ^1.0.0
   uuid: ^3.0.7
+  image_picker: ^1.0.2
 
 dev_dependencies:
   build_runner: ^2.4.4

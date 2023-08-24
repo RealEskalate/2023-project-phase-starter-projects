@@ -1,3 +1,4 @@
+import 'package:blog_app/features/user_profile/domain/entities/article.dart';
 import 'package:equatable/equatable.dart';
 
 import '../../domain/entities/user_entity.dart';
@@ -9,9 +10,8 @@ class UserModel extends User implements Equatable {
       required this.email,
       this.expertise,
       this.bio,
-      this.image
-      
-      })
+      this.image,
+      this.articles = const []})
       : super(
             id: id,
             fullName: fullName,
@@ -32,6 +32,8 @@ class UserModel extends User implements Equatable {
   final String? bio;
   @override
   final String? image;
+  @override
+  final List<Article> articles;
 
   factory UserModel.fromJson(Map<String, dynamic> json) {
     return UserModel(
@@ -40,17 +42,19 @@ class UserModel extends User implements Equatable {
         email: json['email'],
         expertise: json['expertise'],
         bio: json['bio'],
-        image: json['image']);
+        image: json['image'],
+        articles: json['articles']);
   }
 
   Map<String?, dynamic> toJson(UserModel userModel) {
     return {
-      id: userModel.id,
-      fullName: userModel.fullName,
-      email: userModel.email,
-      expertise: userModel.expertise,
-      bio: userModel.bio,
-      image: userModel.image
+      "id": userModel.id,
+      "fullName": userModel.fullName,
+      "email": userModel.email,
+      "expertise": userModel.expertise,
+      "bio": userModel.bio,
+      "image": userModel.image,
+      "articles": userModel.articles
     };
   }
 

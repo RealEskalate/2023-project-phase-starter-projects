@@ -20,7 +20,7 @@ Future<void> init() async {
 
   // Use cases
   sl.registerLazySingleton(() => GetUserInfo(sl()));
-  sl.registerLazySingleton(() => UpdateUserInfo(sl()));
+  sl.registerLazySingleton(() => UpdateUserImage(sl()));
 
   // Repository
   sl.registerLazySingleton<UserRepository>(() => UserRepositoryImpl(

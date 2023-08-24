@@ -4,13 +4,13 @@ import '../../../../core/errors/failures/failure.dart';
 import '../entities/user_entity.dart';
 import '../repositories/user_repository.dart';
 
-class UpdateUserInfo {
+class UpdateUserImage {
   final UserRepository repository;
 
-  UpdateUserInfo(this.repository);
+  UpdateUserImage(this.repository);
 
-  Future<Either<Failure, User>> call(NoParams params) async {
-    return await repository.updateUserInfo();
+  Future<Either<Failure, User>> call(User user) async {
+    return await repository.updateUserImage(user);
   }
 }
 
