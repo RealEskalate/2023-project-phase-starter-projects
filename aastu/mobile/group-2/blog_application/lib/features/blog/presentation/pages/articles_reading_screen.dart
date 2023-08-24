@@ -1,7 +1,7 @@
-import 'package:blog_application/features/blog/presentation/widget/author_bar.dart';
+import 'package:blog_application/features/blog/presentation/widgets/author_bar.dart';
 import 'package:flutter/material.dart';
-import 'package:blog_application/features/blog/presentation/widget/article_reading_title.dart';
-import 'package:blog_application/features/blog/presentation/widget/article_body.dart';
+import 'package:blog_application/features/blog/presentation/widgets/article_reading_title.dart';
+import 'package:blog_application/features/blog/presentation/widgets/article_body.dart';
 
 class ArticleReading extends StatefulWidget {
   final int likes;
