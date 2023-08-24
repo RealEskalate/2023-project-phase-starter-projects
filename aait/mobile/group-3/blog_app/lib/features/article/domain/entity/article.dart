@@ -8,7 +8,7 @@ class Article extends Equatable {
   final String estimatedReadTime;
   final Map<String, dynamic> user;
   final String image;
-  final String imageCludinaryPublicId;
+  final String imageCloudinaryPublicId;
   final DateTime createdAt;
   final String id;
 
@@ -20,7 +20,7 @@ class Article extends Equatable {
     required this.estimatedReadTime,
     required this.user,
     required this.image,
-    required this.imageCludinaryPublicId,
+    required this.imageCloudinaryPublicId,
     required this.createdAt,
     required this.id,
   });
@@ -46,7 +46,7 @@ class Article extends Equatable {
             "id": "64e25674bfc65d390e781205"
           },
           image: '_empty.image',
-          imageCludinaryPublicId: '_empty.imageCludinaryPublicId',
+          imageCloudinaryPublicId: '_empty.imageCludinaryPublicId',
           createdAt: DateTime.parse('1969-07-20 20:18:04Z'),
           id: '1',
         );
