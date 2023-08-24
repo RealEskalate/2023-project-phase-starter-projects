@@ -1,6 +1,5 @@
 namespace SocialSync.Application.DTOs.Notifications;
 
-
 public interface INotificationDto
 {
     public int SenderId { get; set; }
