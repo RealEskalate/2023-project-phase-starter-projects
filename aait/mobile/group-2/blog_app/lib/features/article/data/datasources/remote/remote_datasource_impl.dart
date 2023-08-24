@@ -1,23 +1,19 @@
 import 'dart:convert';
 
-import 'package:http/http.dart' as http;
-
-import '../../../../../core/constants/constants.dart';
 import '../../../../../core/error/exception.dart';
+import '../../../../../core/network/custom_client.dart';
 import '../../models/article_model.dart';
 import 'remote_datasource.dart';
 
 class ArticleRemoteDataSourceImpl extends ArticleRemoteDataSource {
-  final http.Client client;
+  final CustomClient client;
 
   ArticleRemoteDataSourceImpl({required this.client});
 
   @override
   Future<ArticleModel> createArticle(ArticleModel article) async {
     try {
-      final response = await client.post(Uri.parse(apiBaseUrl),
-          headers: {'Content-Type': 'application/json'},
-          body: jsonEncode(article.toJson()));
+      final response = await client.post('/', body: article.toJson());
 
       if (response.statusCode == 201) {
         try {
@@ -39,8 +35,7 @@ class ArticleRemoteDataSourceImpl extends ArticleRemoteDataSource {
   @override
   Future<ArticleModel> deleteArticle(String id) async {
     try {
-      final response = await client.delete(Uri.parse('$apiBaseUrl$id'),
-          headers: {'Content-Type': 'application/json'});
+      final response = await client.delete('/$id');
 
       if (response.statusCode == 200) {
         try {
@@ -63,8 +58,7 @@ class ArticleRemoteDataSourceImpl extends ArticleRemoteDataSource {
   @override
   Future<List<ArticleModel>> getAllArticles() async {
     try {
-      final response = await client.get(Uri.parse(apiBaseUrl),
-          headers: {'Content-Type': 'application/json'});
+      final response = await client.get('/');
 
       if (response.statusCode == 200) {
         try {
@@ -87,10 +81,11 @@ class ArticleRemoteDataSourceImpl extends ArticleRemoteDataSource {
   }
 
   @override
-  Future<ArticleModel> getArticle(String id) async {
+  Future<ArticleModel> getArticle(
+    String id,
+  ) async {
     try {
-      final response = await client.get(Uri.parse(apiBaseUrl),
-          headers: {'Content-Type': 'application/json'});
+      final response = await client.get('/$id');
 
       if (response.statusCode == 200) {
         try {
@@ -113,9 +108,8 @@ class ArticleRemoteDataSourceImpl extends ArticleRemoteDataSource {
   @override
   Future<ArticleModel> updateArticle(ArticleModel article) async {
     try {
-      final response = await client.put(Uri.parse('$apiBaseUrl${article.id}'),
-          headers: {'Content-Type': 'application/json'},
-          body: jsonEncode(article.toJson()));
+      final response =
+          await client.put('/${article.id}', body: article.toJson());
 
       if (response.statusCode != 201) {
         throw const ServerException(message: 'Operation Failed');

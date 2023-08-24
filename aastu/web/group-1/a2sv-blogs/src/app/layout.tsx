@@ -1,6 +1,8 @@
 import ReduxProvider from "@/lib/providers";
 import type { Metadata } from "next";
 import "./globals.css";
+import NavBar from "@/components/common/NavBar";
+import Footer from "@/components/common/Footer";
 
 export const metadata: Metadata = {
   title: "A2SV Blogs",
@@ -15,7 +17,11 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body>
-        <ReduxProvider>{children}</ReduxProvider>
+        <ReduxProvider>
+          <NavBar />
+          {children}
+          <Footer/>
+          </ReduxProvider>
       </body>
     </html>
   );

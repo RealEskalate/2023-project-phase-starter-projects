@@ -1,5 +1,6 @@
 ﻿using Application.DTO.FollowDTO;
 using Application.DTO.Post;
+using Application.DTO.UserDTO;
 using Application.Features.FollowFeatures.Request.Command;
 using Application.Features.FollowFeatures.Request.Queries;
 using Application.Features.Post.Request.Commands;
@@ -21,7 +22,7 @@ namespace WebApi.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetFollower()
+        public async Task<ActionResult<List<UserDto>>> GetFollower()
         {
             // token getter to be implemented
             var command = new GetFollowerRequest { Id = 1 };

@@ -1,13 +1,7 @@
 ﻿using Application.Contracts.Persistance;
 using Application.DTO.UserDTO;
 using Domain.Entities;
-using Infrastructure;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Infrastructure.Persistance.Repository;
 

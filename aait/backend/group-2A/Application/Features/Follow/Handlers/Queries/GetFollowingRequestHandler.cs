@@ -14,19 +14,15 @@ namespace Application.Features.FollowFeatures.Handlers.Queries
 {
     public class GetFollowingRequestHandler : IRequestHandler<GetFollowingRequest, List<UserDto>>
     {
-        private readonly IFollowRepository _followRepository;
+        private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
-
-        public GetFollowingRequestHandler(IFollowRepository followRepository, IMapper mapper)
-        {
-            _followRepository = followRepository;
+        public GetFollowingRequestHandler(IUnitOfWork unitOfWork, IMapper mapper){
             _mapper = mapper;
+            _unitOfWork = unitOfWork;
         }
-
-        public async Task<List<UserDto>> Handle(GetFollowingRequest request, CancellationToken cancellationToken)
-        {
-            var following = await _followRepository.GetFollowing(request.Id);
-
+    
+        public async Task<List<UserDto>> Handle(GetFollowingRequest request, CancellationToken cancellationToken){
+            var following = await _unitOfWork.followRepository.GetFollowing(request.Id);
             return _mapper.Map<List<UserDto>>(following);
         }
     }

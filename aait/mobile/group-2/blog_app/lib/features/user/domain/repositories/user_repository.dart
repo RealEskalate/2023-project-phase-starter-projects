@@ -1,9 +1,12 @@
 import 'package:dartz/dartz.dart';
 
 import '../../../../core/error/failure.dart';
+import '../../../article/domain/entities/article.dart';
 import '../entities/user_data.dart';
 
 abstract class UserRepository {
-  Future<Either<Failure, UserData>> getUserData(String userId);
-  Future<Either<Failure, UserData>> updateUserPhoto(String userId, String imageUrl);
+  Future<Either<Failure, UserData>> getUserData(String token);
+  Future<Either<Failure, UserData>> updateUserPhoto(
+      String token, String imagePath);
+  Future<Either<Failure, List<Article>>> getBookmarkedArticles();
 }

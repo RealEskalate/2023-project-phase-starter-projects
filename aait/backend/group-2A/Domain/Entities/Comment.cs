@@ -5,7 +5,6 @@ namespace Domain.Entities
     {
         public int Id { get; set; } 
         public required string Content { get; set; }
-
         //The User That Commented
         public required int UserId { get; set; }
         public required int PostId { get; set; }
