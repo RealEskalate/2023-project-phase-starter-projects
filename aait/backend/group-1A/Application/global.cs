@@ -1,0 +1,12 @@
+//global using Application.Contracts;
+//global using Application.DTO.NotificationDTO;
+//global using Application.DTO.PostDTO.DTO;
+//global using Application.DTO.PostDTO.validations;
+//global using Application.Features.NotificationFeaure.Requests.Commands;
+//global using Application.Features.PostFeature.Requests.Commands;
+//global using Application.Response;
+//global using AutoMapper;
+//global using Domain.Entities;
+//global using MediatR;
+//global using Application.DTO.Common;
+//global using Application.Exceptions;

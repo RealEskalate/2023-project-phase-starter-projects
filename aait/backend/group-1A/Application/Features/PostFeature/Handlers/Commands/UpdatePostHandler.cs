@@ -1,20 +1,18 @@
-﻿using Application.Contracts;
-using Application.DTO.Common;
+﻿
+
+using Application.Contracts;
 using Application.DTO.PostDTO.DTO;
 using Application.DTO.PostDTO.validations;
+using Application.Exceptions;
 using Application.Features.PostFeature.Requests.Commands;
+using Application.Response;
 using AutoMapper;
 using Domain.Entities;
 using MediatR;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Application.Features.PostFeature.Handlers.Commands
 {
-    public class UpdatePostHandler : IRequestHandler<UpdatePostCommand, PostResponseDTO>
+    public class UpdatePostHandler : IRequestHandler<UpdatePostCommand, BaseResponse<PostResponseDTO>>
     {
         private readonly IPostRepository _postRepository;
         private readonly IMapper _mapper;
@@ -25,25 +23,34 @@ namespace Application.Features.PostFeature.Handlers.Commands
             _mapper = mapper;
         }
 
-        public async Task<PostResponseDTO> Handle(UpdatePostCommand request, CancellationToken cancellationToken)
+        public async Task<BaseResponse<PostResponseDTO>> Handle(UpdatePostCommand request, CancellationToken cancellationToken)
         {
             var validator = new PostUpdateValidation();
             var validationResult = await validator.ValidateAsync(request.PostUpdateData);
 
             if (!validationResult.IsValid)
             {
-                throw new Exception();
+                throw new ValidationException(validationResult);
             }
-            if (request.Id <= 0)
+            var exists = await _postRepository.Exists(request.Id);
+
+            if (!exists) 
             {
-                throw new Exception();
+                throw new NotFoundException("Post is not found"
+                );
             }
+
             var newPost = _mapper.Map<Post>(request.PostUpdateData);
             newPost.Id = request.Id;
             newPost.UserId = request.userId;
             var updationResult = await _postRepository.Update(newPost);
+            var result = _mapper.Map<PostResponseDTO>(updationResult);
 
-            return _mapper.Map<PostResponseDTO>(updationResult);
+            return new BaseResponse<PostResponseDTO> {
+                Success = true,
+                Message = "Posts are retrieved successfully",
+                Value = result
+            };
         }
     }
 }

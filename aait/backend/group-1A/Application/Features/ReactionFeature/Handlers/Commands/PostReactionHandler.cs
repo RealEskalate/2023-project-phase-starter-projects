@@ -1,6 +1,8 @@
 ﻿using Application.Contracts;
 using Application.DTO.Common;
+using Application.Exceptions;
 using Application.Features.PostFeature.Requests.Commands;
+using Application.Response;
 using AutoMapper;
 using Domain.Entities;
 using MediatR;
@@ -12,7 +14,7 @@ using System.Threading.Tasks;
 
 namespace Application.Features.PostFeature.Handlers.Commands
 {
-    public class PostReactionHandler : IRequestHandler<PostReactionCommand, CommonResponseDTO>
+    public class PostReactionHandler : IRequestHandler<PostReactionCommand, BaseResponse<string>>
     {
         private readonly IPostReactionRepository _postReactionRespository;
         private readonly IMapper _mapper;
@@ -22,14 +24,14 @@ namespace Application.Features.PostFeature.Handlers.Commands
             _postReactionRespository = postReactionRepository;
             _mapper = mapper;
         }
-        public async Task<CommonResponseDTO> Handle(PostReactionCommand request, CancellationToken cancellationToken)
+        public async Task<BaseResponse<string>> Handle(PostReactionCommand request, CancellationToken cancellationToken)
         {
             var validator = new ReactionValidator();
             var validationResult = await validator.ValidateAsync(request.ReactionData);
 
             if (!validationResult.IsValid)
             {
-                throw new Exception();
+                throw new ValidationException(validationResult);
             }
 
             var postReaction = _mapper.Map<PostReaction>(request.ReactionData);
@@ -50,22 +52,17 @@ namespace Application.Features.PostFeature.Handlers.Commands
 
 
             var result = await _postReactionRespository.MakeReaction(request.UserId, postReaction);
-            if (result != null)
+            if (result == null)
             {
-                return new CommonResponseDTO()
-                {
-                    Status = "Success",
-                    Message = "Post is reacted successfully"
-                };
+                throw new BadRequestException("Post is not found"
+                );
             }
-            else
+            
+            return new BaseResponse<string>()
             {
-                return new CommonResponseDTO()
-                {
-                    Status = "Failure",
-                    Message = "Post is not reacted successfully"
-                };
-            }
+                Success = true,
+                Message = "Reaction is made successfully"
+            };
         }
     }
 }

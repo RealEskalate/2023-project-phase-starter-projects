@@ -1,17 +1,15 @@
-﻿using Application.Contracts;
-using Application.DTO.Common;
+﻿
+
+using Application.Contracts;
+using Application.DTO.PostDTO.DTO;
+using Application.Exceptions;
 using Application.Features.PostFeature.Requests.Commands;
-using AutoMapper;
+using Application.Response;
 using MediatR;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Application.Features.PostFeature.Handlers.Commands
 {
-    public class DeletePostHandler : IRequestHandler<DeletePostCommand, CommonResponseDTO>
+    public class DeletePostHandler : IRequestHandler<DeletePostCommand, BaseResponse<PostResponseDTO>>
     {
         private readonly IPostRepository _postRepository;
 
@@ -19,20 +17,21 @@ namespace Application.Features.PostFeature.Handlers.Commands
         {
             _postRepository = postRepository;
         }
-        public async Task<CommonResponseDTO> Handle(DeletePostCommand request, CancellationToken cancellationToken)
+        public async Task<BaseResponse<PostResponseDTO>> Handle(DeletePostCommand request, CancellationToken cancellationToken)
         {
             var post = await _postRepository.Get(request.Id, request.userId);
-            if (request.Id <= 0 || post == null) 
+            if (post == null) 
             {
-                throw new Exception();
+                throw new NotFoundException("Post is not found"
+                );
+                
             }
             
             var result = await _postRepository.Delete(post);
 
-            return new CommonResponseDTO
-            {
-                Status = "Success",
-                Message = "Post is  deleted successfully"
+            return  new BaseResponse<PostResponseDTO> {
+                Success = true,
+                Message = "The post is deleted successfully"
             };
         }
     }

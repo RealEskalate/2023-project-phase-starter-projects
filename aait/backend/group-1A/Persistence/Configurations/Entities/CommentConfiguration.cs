@@ -17,7 +17,3 @@ namespace Persistence.Configurations.Entities
     }
 
 }
-            //builder.Property(e => e.Id)
-            //    .HasDefaultValueSql("nextval('Id')");
-
-                  //.ValueGeneratedOnAdd();

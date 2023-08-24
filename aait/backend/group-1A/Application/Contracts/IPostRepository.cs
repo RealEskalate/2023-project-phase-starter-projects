@@ -12,5 +12,7 @@ namespace Application.Contracts
     public interface IPostRepository : IGenericRepository<Post>
     {
         Task<Post> Get(int id, int userId);
+
+        Task<List<PostResponseDTO>> GetAllPostsWithReaction(Expression<Func<Post, bool>> predicate, int userId);
     }
 }

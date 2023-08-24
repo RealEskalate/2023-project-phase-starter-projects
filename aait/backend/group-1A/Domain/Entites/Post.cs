@@ -1,4 +1,5 @@
 ﻿using Domain.Common;
+using Domain.Entites;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,5 +14,8 @@ namespace Domain.Entities
         public virtual ICollection<Comment> Comments { get; set; } = new HashSet<Comment>();
 
         public virtual ICollection<PostReaction> PostReactions { get; set; } = new HashSet<PostReaction>();
+
+
     }
 }
+

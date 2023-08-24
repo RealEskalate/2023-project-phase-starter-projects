@@ -1,16 +1,16 @@
 ﻿using Domain.Common;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations.Schema;
+
 
 namespace Domain.Entities
 {
     public class PostReaction : BaseReactionEntity
     {
 
+         [ForeignKey("Post")]
         public int PostId { get; set; }
+
+        public virtual Post post {get ; set;}
         
     }
 }

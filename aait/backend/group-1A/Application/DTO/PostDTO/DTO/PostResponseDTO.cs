@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Application.DTO.CommentDTO.DTO;
 
 namespace Application.DTO.PostDTO.DTO
 {
@@ -12,7 +13,7 @@ namespace Application.DTO.PostDTO.DTO
         public string Title { get; set; }
         public string Content { get; set; }
 
-        //public List<CommentResponseDTO> Comments { get; set; }
+        public List<CommentResponseDTO> Comments { get; set; } = new List<CommentResponseDTO> ();
 
         public int Like { get; set; }
 

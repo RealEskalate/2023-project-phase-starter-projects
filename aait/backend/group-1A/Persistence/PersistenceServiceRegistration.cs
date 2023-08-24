@@ -4,6 +4,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Persistence;
 using Persistence.Repositories;
+using Persistence.Repositories.NotificationRepository;
 using System.Reflection;
 
 namespace Persistence
@@ -18,8 +19,9 @@ namespace Persistence
             services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
             services.AddScoped<IPostRepository, PostRepository>();
             services.AddScoped<IPostReactionRepository, PostReactionRepository>();
-
+            services.AddScoped<INotificationRepository, NotificationRepository>();
             return services;
         }
     }
 }
+
