@@ -84,7 +84,7 @@ class _ProfilePageState extends State<ProfilePage> {
                             ),
                             child: Container(
                               margin: const EdgeInsets.symmetric(
-                                  vertical: 10, horizontal: 30),
+                                  vertical: 10, horizontal: 10),
                               child: Column(children: [
                                 Row(
                                     crossAxisAlignment:
@@ -93,8 +93,8 @@ class _ProfilePageState extends State<ProfilePage> {
                                         MainAxisAlignment.spaceAround,
                                     children: [
                                       Container(
-                                        margin: EdgeInsets.only(
-                                            top: 10, bottom: 30),
+                                        margin:
+                                            EdgeInsets.only(top: 5, bottom: 10),
                                         child: TextButton(
                                           onPressed: () async {
                                             await showDialog(
@@ -247,29 +247,27 @@ class _ProfilePageState extends State<ProfilePage> {
                                       ),
                                       Container(
                                         height: 88,
-                                        margin: EdgeInsets.only(bottom: 10),
                                         child: Column(
                                           mainAxisAlignment:
                                               MainAxisAlignment.spaceBetween,
                                           children: [
                                             Text(
-                                              '@${state.user.fullName}',
+                                              state.user.fullName,
+                                              style: TextStyle(
+                                                color: kTextColorPrimary,
+                                                fontSize: 20,
+                                                fontFamily: 'Urbanist',
+                                                fontWeight: FontWeight.w500,
+                                              ),
+                                            ),
+                                            Text(
+                                              '${state.user.email}',
                                               style: TextStyle(
                                                 color: kBlueBlack,
                                                 fontSize: 18,
                                                 fontFamily: 'Poppins',
-                                                fontWeight: FontWeight.w900,
+                                                fontWeight: FontWeight.w400,
                                                 letterSpacing: -0.24,
-                                              ),
-                                            ),
-                                            Text(
-                                              state.user.fullName,
-                                              style: TextStyle(
-                                                color: kTextColorPrimary,
-                                                fontSize: 18,
-                                                fontStyle: FontStyle.italic,
-                                                fontFamily: 'Urbanist',
-                                                fontWeight: FontWeight.w100,
                                               ),
                                             ),
                                             Text(
@@ -277,9 +275,8 @@ class _ProfilePageState extends State<ProfilePage> {
                                               style: TextStyle(
                                                 color: Color(0xFF376AED),
                                                 fontSize: 16,
-                                                fontStyle: FontStyle.italic,
                                                 fontFamily: 'Urbanist',
-                                                fontWeight: FontWeight.w100,
+                                                fontWeight: FontWeight.w300,
                                                 height: 1.25,
                                               ),
                                             ),
@@ -292,8 +289,8 @@ class _ProfilePageState extends State<ProfilePage> {
                                   child: Column(
                                     children: [
                                       Container(
-                                        margin:
-                                            const EdgeInsets.only(bottom: 15),
+                                        margin: const EdgeInsets.only(
+                                            top: 10, bottom: 10),
                                         child: Text(
                                           "About me",
                                           style: TextStyle(
@@ -301,19 +298,32 @@ class _ProfilePageState extends State<ProfilePage> {
                                               fontWeight: FontWeight.w500),
                                         ),
                                       ),
-                                      SingleChildScrollView(
-                                        child: Text(
-                                          state.user.bio ?? "",
-                                          style: TextStyle(
-                                              fontSize: 16,
-                                              color: Colors.grey[700]),
+                                      Container(
+                                        padding: EdgeInsets.symmetric(
+                                            vertical: 4, horizontal: 15),
+                                        margin: EdgeInsets.only(bottom: 10),
+                                        decoration: BoxDecoration(
+                                            color: Colors.white,
+                                            borderRadius:
+                                                BorderRadius.circular(2),
+                                            border: Border.all(
+                                                color: Color.fromARGB(
+                                                    255, 232, 232, 232))),
+                                        height: 100,
+                                        child: SingleChildScrollView(
+                                          child: Text(
+                                            state.user.bio ?? "",
+                                            style: TextStyle(
+                                                fontSize: 16,
+                                                color: Colors.grey[700]),
+                                          ),
                                         ),
                                       )
                                     ],
                                   ),
                                 ),
                                 Container(
-                                  margin: EdgeInsets.only(top: 40),
+                                  margin: EdgeInsets.only(top: 10),
                                   width: 231,
                                   height: 68,
                                   decoration: ShapeDecoration(
