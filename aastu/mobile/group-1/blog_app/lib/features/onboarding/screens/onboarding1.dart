@@ -1,6 +1,5 @@
 import 'package:blog_app/features/user/presentation/pages/login.dart';
 import 'package:flutter/material.dart';
-
 import '../widgets/login_widget.dart';
 
 class OnBoardingScreen extends StatefulWidget {

@@ -1,3 +1,5 @@
+import 'package:blog_app/features/blog/presentation/screen/addBlog.dart';
+import 'package:blog_app/features/user/presentation/widgets/post_list.dart';
 import 'package:flutter/material.dart';
 import 'package:blog_app/features/blog/presentation/widgets/all.dart';
 import 'package:blog_app/features/blog/presentation/widgets/politics.dart';
@@ -95,7 +97,13 @@ class _HomeState extends State<Home> {
                             child: IconButton(
                               icon: const Icon(Icons.search),
                               color: Colors.white,
-                              onPressed: () {},
+                              onPressed: () {
+                                // navigate to AddBlog() without named
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => const AddBlog()));
+                              },
                             ),
                           )),
                     ),
@@ -113,7 +121,7 @@ class _HomeState extends State<Home> {
                     return Container(
                       // color: _currentPage == index?Color.fromRGBO(55, 106, 237, 1): null,
                       margin: const EdgeInsets.symmetric(
-                          horizontal: 20, vertical: 20),
+                          horizontal: 5, vertical: 17),
                       decoration: BoxDecoration(
                           color: _currentPage == index
                               ? const Color.fromRGBO(55, 106, 237, 1)
@@ -142,7 +150,15 @@ class _HomeState extends State<Home> {
             ),
             Container(
               child: _room[_currentPage],
-            )
+            ),
+            Expanded(
+              child: ListView.builder(
+                itemCount: blogs.length,
+                itemBuilder: (context, index) {
+                  return BlogCards(index: index, object: blogs[index]);
+                },
+              ),
+            ),
           ],
         ),
       ),
