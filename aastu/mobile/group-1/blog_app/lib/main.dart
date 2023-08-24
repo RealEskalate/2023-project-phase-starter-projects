@@ -27,7 +27,7 @@ class MyApp extends StatelessWidget {
       ),
       home: const Splash(), // TODO: Replace with the Onboarding
       routes: {
-        '/home': (context) => const HomeScreen(),
+        // '/home': (context) => const HomeScreen(),
         // define routes here
       },
     );
