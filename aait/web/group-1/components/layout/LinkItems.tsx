@@ -20,7 +20,7 @@ export const LinkItems: React.FC<Props> = ({ name, link }) => {
       >
         {name}
       </Link>
-      <div className={`h-1 mt-1 mx-0.5 rounded-full bg-blue-800 opacity-0 ${isCurrentRoute ? 'opacity-100' : 'group-hover:opacity-100'} transition-opacity`}></div>
+      <div className={`h-1 mt-1 mx-0.5 rounded-full bg-blue-800 opacity-0 ${isCurrentRoute ? 'md:opacity-100' : 'group-hover:md:opacity-100'} transition-opacity`}></div>
     </div>
   );
 };
