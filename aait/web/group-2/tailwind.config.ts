@@ -20,8 +20,9 @@ const config: Config = {
       },
       fontFamily: {
         'poppins': ['Poppins'],
+        'lato':['Lato'],
         'nunito':['Nunito'],
-      }
+      },
     },
   },
   plugins: [],
