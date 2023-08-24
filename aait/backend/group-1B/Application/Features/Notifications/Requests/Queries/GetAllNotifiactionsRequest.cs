@@ -4,7 +4,7 @@ using MediatR;
 
 namespace Application.Features.Notifications.Requests.Queries;
 
-public class GetAllNotifiactionsRequest : IRequest<List<GetNotificationDto>>
+public class GetAllNotificationsRequest : IRequest<List<GetNotificationDto>>
 {
-    
+    public int UserId { get; set; }
 }
