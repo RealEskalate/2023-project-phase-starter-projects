@@ -1,41 +1,44 @@
 'use client';
-import Image from 'next/image';
-import dynamic from 'next/dynamic';
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 
-const modules = {
-  toolbar: [
-    [{ size: [] }],
-    ['bold', 'italic', 'underline', 'strike', 'blockquote'],
-    [{ list: 'ordered' }, { list: 'bullet' }],
-    ['link', 'image', 'video'],
-  ],
-  clipboard: {
-    matchVisual: false,
-  },
-};
+// const modules = {
+//   toolbar: [
+//     [{ size: [] }],
+//     ['bold', 'italic', 'underline', 'strike', 'blockquote'],
+//     [{ list: 'bullet' }, { align: ['center'] }],
+//     ['link', 'image', 'video'],
+//   ],
+//   clipboard: {
+//     matchVisual: false,
+//   },
+// };
 
 const CustomToolbar = () => (
-  <div id="toolbar" className="flex justify-between items-center">
-    <div className="flex items-center space-x-4">
-      <div className="bg-[#63A2D8] rounded w-6 h-6" />
-      <div className="format-group border-l border-[#CFD6DE]">
+  <div id="toolbar" className="flex justify-evenly !border-t !border-b !border-[#CFD6DE] py-3">
+    <div className="flex items-center w-full">
+      <div className="border-r pr-4 border-[#CFD6DE] ">
+        <div className="bg-[#63A2D8] rounded w-6 h-6" />
+      </div>
+      <div className="format-group border-r border-[#CFD6DE] flex sm:w-1/4 px-4">
         <button className="ql-bold font-bold" />
         <button className="ql-italic" />
         <button className="ql-underline" />
       </div>
-      <div className="border-l border-[#CFD6DE]">
-        <button className="ql-list-bullet" />
-        <button className="ql-list" />
+      <div className="border-r border-[#CFD6DE] flex sm:w-1/4 px-4">
+        <button className="ql-list" value="bullet" />
+        <select className="ql-align"></select>
       </div>
-      <div className="border-l border-[#CFD6DE]">
+      <div className="border-r border-[#CFD6DE]">
         <button className="ql-link" />
       </div>
     </div>
-    <div className='border-l border-[#CFD6DE]'>
-      <button className="ql-video" />
-      <button className="ql-image" />
+    <div className="col-span-3 flex w-full justify-end">
+      <div>
+        <button className="ql-video" />
+        <button className="ql-image" />
+        <button>#</button>
+      </div>
     </div>
   </div>
 );
@@ -66,48 +69,25 @@ TextEditor.formats = [
   'color',
 ];
 
-TextEditor.formats = [
-  'header',
-  'font',
-  'size',
-  'bold',
-  'italic',
-  'underline',
-  'strike',
-  'blockquote',
-  'list',
-  'bullet',
-  'indent',
-  'link',
-  'image',
-  'video',
-];
-
 export default function TextEditor() {
   return (
     <div>
-      <div className="container mx-auto mb-24">
+      <div className="container mx-auto md:mb-24">
         <div className="w-[95%] ">
           <div className="">
-            <div className="m-4">
+            <div className="mb-12">
               <CustomToolbar />
             </div>
-            <div className='border-l border-primaryColor'>
+            <div className="border-l border-primaryColor">
               <ReactQuill
                 modules={TextEditor.modules}
                 formats={TextEditor.formats}
                 theme="snow"
                 className="ml-4 border-0"
               >
-                <div className="my-editing-area !h-48 !border-0 " />
+                <div className="my-editing-area !h-40 !border-0" />
               </ReactQuill>
             </div>
-          </div>
-          <div className="flex items-center justify-end space-x-8 mt-8 w-[98%]">
-            <button className="text-primaryColor text-sm">Cancel</button>
-            <button className="px-6 py-3 bg-primaryColor text-white rounded-md text-center shadow text-sm">
-              Save Changes
-            </button>
           </div>
         </div>
       </div>

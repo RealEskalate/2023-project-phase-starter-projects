@@ -19,3 +19,16 @@ a {
 * {
   box-sizing: border-box;
 }
+.tag {
+  @apply my-1 ml-1 bg-[#F2F3F4] rounded-full px-3 py-2 text-[10px] text-center text-[#414141] hover:cursor-pointer;
+}
+
+.ql-toolbar.ql-snow {
+  border: 0 !important;
+  /* @apply border-t border-b  */
+}
+
+.ql-toolbar.ql-snow {
+  border-top: 1px solid #E1E7EC !important;
+  border-bottom: 1px solid #E1E7EC !important;
+}

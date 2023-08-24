@@ -26,3 +26,7 @@ div.ql-toolbar.ql-snow {
   align-items: center;
   background: #000;
 }
+
+/* .tag {
+  @apply my-1 bg-[#F2F3F4] rounded-full px-3 py-2 text-[10px] text-center text-[#414141] hover:cursor-pointer;
+} */
