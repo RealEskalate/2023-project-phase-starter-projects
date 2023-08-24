@@ -3,6 +3,7 @@ import 'package:blog_app/features/blog/presentation/screen/addBlog.dart';
 import 'package:blog_app/features/blog/presentation/screen/editBlog.dart';
 import 'package:blog_app/features/blog/presentation/screen/home_screen.dart';
 import 'package:blog_app/features/blog/presentation/screen/viewBlog.dart';
+import 'package:blog_app/features/onboarding/screens/splash.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter/material.dart';
 import 'injection.dart' as di;
@@ -27,9 +28,9 @@ class MyApp extends StatelessWidget {
             seedColor: Colors.white, secondary: const Color(0xffEE6F57)),
         useMaterial3: true,
       ),
-      home: const HomeScreen(), // TODO: Replace with the Onboarding
+      home: const Splash(), // TODO: Replace with the Onboarding
       routes: {
-        '/home': (context) => const HomeScreen(),
+        '/home': (context) => const Splash(),
         '/add-blog': (context) => const AddBlog(),
         '/edit-blog': (context) => EditBlog(),
         '/view-blog': (context) => ViewBlog(),
