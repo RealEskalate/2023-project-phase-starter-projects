@@ -5,7 +5,7 @@ export default function ProfileLayout(props: React.PropsWithChildren) {
     const currentRoute = usePathname();
     return (
         <div 
-            className='font-primaryFont mt-12 space-y-6 mx-4 md:mx-12'>
+            className='font-primaryFont my-12 space-y-6 mx-4 md:mx-12 md:my-12'>
             <h1
                 className="font-semibold text-3xl">Profile</h1>
             <ul
