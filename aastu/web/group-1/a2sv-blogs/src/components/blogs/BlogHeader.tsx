@@ -1,3 +1,4 @@
+import Link from "next/link";
 import React from "react";
 
 export default function BlogHeader() {
@@ -14,9 +15,12 @@ export default function BlogHeader() {
           name=""
           id=""
         />
-        <button className="h-10 text-white font-montserrat text-sm font-semibold w-32 bg-blue-800 px-5 rounded-full">
+        <Link
+          href="/blogs/create"
+          className="h-10 text-white font-montserrat text-sm font-semibold w-32 bg-blue-800 px-5 rounded-full flex items-center"
+        >
           + New Blog
-        </button>
+        </Link>
       </div>
     </div>
   );
