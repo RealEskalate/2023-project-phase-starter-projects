@@ -1,4 +1,4 @@
-
+import 'package:blog_app/core/util/value_converter.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -6,7 +6,7 @@ import '../../domain/entity/article.dart';
 import 'article_icon_button.dart';
 
 class ArticleInfoWidget extends StatelessWidget {
-  const ArticleInfoWidget(
+  ArticleInfoWidget(
       {super.key,
       required this.article,
       required this.needSpace,
@@ -17,12 +17,13 @@ class ArticleInfoWidget extends StatelessWidget {
   final bool needSpace;
   final double heightBetweenIcons;
   final bool needsPadding;
+  final ValueConverter valueConverter = ValueConverter();
 
   @override
   Widget build(BuildContext context) {
     final initalSpace = this.needSpace
         ? SizedBox(
-            height:20.h,
+            height: 20.h,
           )
         : SizedBox();
     final paddingSize = this.needsPadding
@@ -40,26 +41,25 @@ class ArticleInfoWidget extends StatelessWidget {
               style: TextStyle(
                   color: Color(0xFF376AED),
                   fontWeight: FontWeight.w100,
-                  fontSize:14),
+                  fontSize: 14),
             ),
             SizedBox(
-              height:4.h,
+              height: 4.h,
             ),
             Text(
               article.subTitle,
-              style: TextStyle(fontWeight: FontWeight.w500, fontSize:14.sp),
+              style: TextStyle(fontWeight: FontWeight.w500, fontSize: 14.sp),
               maxLines: 2,
               overflow: TextOverflow.ellipsis,
             ),
-            SizedBox(
-              height:heightBetweenIcons.h
-            ),
+            SizedBox(height: heightBetweenIcons.h),
             Row(
               children: [
                 ArticleIconButton(
-                    textValue: article.formatDate(), icon: Icons.access_time),
+                    textValue: valueConverter.formatDate(article.createdAt),
+                    icon: Icons.access_time),
                 SizedBox(
-                  width:4.w,
+                  width: 4.w,
                 ),
                 IconButton(
                   onPressed: null,
