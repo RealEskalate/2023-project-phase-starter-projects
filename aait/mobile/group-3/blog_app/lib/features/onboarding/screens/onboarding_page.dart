@@ -1,6 +1,9 @@
+import 'package:blog_app/features/onboarding/widgets/onboarding_images_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+
+import '../widgets/scrollable_widget.dart';
 
 class OnboardingScreen extends StatefulWidget {
   const OnboardingScreen({Key? key});
@@ -13,15 +16,15 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
   final PageController _pageController = PageController();
   int _currentPage = 0;
   final List<Widget> _pages = [
-    _buildContent(
+    buildContent(
       "Read the article you want instantly",
       "You can read thousands of articles on Blog Club, save them in the application and share them with your loved ones.",
     ),
-    _buildContent(
+    buildContent(
       "Read the article you want instantly",
       "You can read thousands of articles on Blog Club, save them in the application and share them with your loved ones.",
     ),
-    _buildContent(
+    buildContent(
       "Read the article you want instantly",
       "You can read thousands of articles on Blog Club, save them in the application and share them with your loved ones.",
     ),
@@ -74,88 +77,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
           SizedBox(
             height: ScreenUtil().setHeight(100),
           ),
-          Container(
-            padding: EdgeInsets.symmetric(
-              horizontal: ScreenUtil().setWidth((40)),
-            ),
-            height: ScreenUtil().setHeight(332),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Row(
-                  children: [
-                    Container(
-                      height: ScreenUtil().setHeight(157),
-                      width: ScreenUtil().setWidth(92),
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(24),
-                      ),
-                      child: ClipRRect(
-                        borderRadius: BorderRadius.circular(24),
-                        child: Image.asset(
-                          "assets/images/onboarding1.png",
-                          fit: BoxFit.cover,
-                        ),
-                      ),
-                    ),
-                    SizedBox(
-                      width: ScreenUtil().setWidth(10),
-                    ),
-                    Container(
-                      height: ScreenUtil().setHeight(157),
-                      width: ScreenUtil().setWidth(180),
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(24.r),
-                      ),
-                      child: ClipRRect(
-                        borderRadius: BorderRadius.circular(24.r),
-                        child: Image.asset(
-                          "assets/images/onboarding2.png",
-                          fit: BoxFit.cover,
-                        ),
-                      ),
-                    )
-                  ],
-                ),
-                SizedBox(height: 10.h),
-                Row(
-                  children: [
-                    Container(
-                      height: ScreenUtil().setHeight(157),
-                      width: ScreenUtil().setWidth(180),
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(24),
-                      ),
-                      child: ClipRRect(
-                        borderRadius: BorderRadius.circular(24),
-                        child: Image.asset(
-                          "assets/images/onboarding3.png",
-                          fit: BoxFit.cover,
-                        ),
-                      ),
-                    ),
-                    SizedBox(
-                      width: ScreenUtil().setWidth(10),
-                    ),
-                    Container(
-                      height: ScreenUtil().setHeight(157),
-                      width: ScreenUtil().setWidth(92),
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(24),
-                      ),
-                      child: ClipRRect(
-                        borderRadius: BorderRadius.circular(24),
-                        child: Image.asset(
-                          "assets/images/onboarding4.png",
-                          fit: BoxFit.cover,
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ],
-            ),
-          ),
+          OnboardingImagesWidget(),
           SizedBox(
             height: ScreenUtil().setHeight(60),
           ),
@@ -210,7 +132,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                       );
                     } else {
                       Navigator.of(context).pushReplacement(
-                        MaterialPageRoute(builder: (context) => LoginScreen()),
+                        MaterialPageRoute(builder: (context) => Container()),
                       );
                     }
                   },
