@@ -5,9 +5,11 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../../../../core/error/exception.dart';
 import '../../../../article/data/models/article_model.dart';
+import '../../models/user_data_model.dart';
 
 const CACHED_BOOKMARKED_ARTICLES = 'CACHED_BOOKMARKED_ARTICLES';
 const _keyToken = 'token';
+const CACHED_USER_DATA = 'CACHED_USER_DATA';
 
 class UserLocalDataSourceImpl implements UserLocalDataSource {
   final SharedPreferences sharedPreferences;
@@ -65,5 +67,23 @@ class UserLocalDataSourceImpl implements UserLocalDataSource {
   Future<void> clearCache() async {
     await sharedPreferences.remove(CACHED_BOOKMARKED_ARTICLES);
     await sharedPreferences.remove(_keyToken);
+  }
+
+  @override
+  Future<void> cacheUserData(UserDataModel user) {
+    final userDataJson = jsonEncode(user.toJson());
+    return sharedPreferences.setString(CACHED_USER_DATA, userDataJson);
+  }
+
+  @override
+  Future<UserDataModel> getUserData() async {
+    final userDataJson = sharedPreferences.getString(CACHED_USER_DATA);
+
+    if (userDataJson != null) {
+      final userDataMap = jsonDecode(userDataJson);
+      return UserDataModel.fromJson(userDataMap);
+    } else {
+      throw const CacheException(message: 'No cached user data found');
+    }
   }
 }
