@@ -13,15 +13,15 @@ class GetUserData implements UseCase<UserData, GetUserDataParams> {
 
   @override
   Future<Either<Failure, UserData>> call(GetUserDataParams params) async {
-    return await userRepository.getUserData(params.userId);
+    return await userRepository.getUserData(params.token);
   }
 }
 
 class GetUserDataParams extends Equatable {
-  final String userId;
+  final String token;
 
-  const GetUserDataParams({required this.userId});
+  const GetUserDataParams({required this.token});
 
   @override
-  List<Object?> get props => [userId];
+  List<Object?> get props => [token];
 }
