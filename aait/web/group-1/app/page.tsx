@@ -116,7 +116,7 @@ export default function Home() {
             <p className="text-deep-gray px-10 lg:px-0 lg:text-left lg:mb-6">{impactStory[2]}</p>
             <button className="self-start btn-blue px-8 py-3 my-6 text-xs">See more</button>
           </div>
-          <img className="lg:w-3/4 lg:text-right lg:visible hidden" src="/images/impact-story-gallery.png" alt="people portrait collage" />
+          <img className="hidden lg:w-3/4 lg:text-right lg:block" src="/images/impact-story-gallery.png" alt="people portrait collage" />
         </div>
       </section>
     </main>
