@@ -1,67 +1,54 @@
 import 'package:blog_app/features/blog/presentation/widgets/AddButtonCustom.dart';
+import 'package:blog_app/features/blog/presentation/widgets/CustomSnackbar.dart';
+import 'package:blog_app/features/blog/presentation/widgets/DynamicWrapper.dart';
 import 'package:blog_app/features/blog/presentation/widgets/inputField.dart';
 import 'package:flutter/material.dart';
 
-class InputForm extends StatelessWidget {
-  const InputForm({super.key});
+class InputForm extends StatefulWidget {
+  @override
+  State<InputForm> createState() => _InputFormState();
+}
+
+class _InputFormState extends State<InputForm> {
+  final titleController = TextEditingController();
+  final subTitleController = TextEditingController();
+  final articleContentController = TextEditingController();
+  var dynamicWrapper = DynamicWrapper();
 
   @override
   Widget build(BuildContext build) {
     return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
+      crossAxisAlignment: CrossAxisAlignment.center,
       // mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: [
-        InputField(label: "Add title"),
-        InputField(label: "Add subtitle"),
-        Row(
-          mainAxisSize: MainAxisSize.max,
-          children: [
-            Expanded(child: InputField(label: "Add tags")),
-            AddButtonCustom()
-          ],
+        InputField(
+          label: "Add title",
+          controller: titleController,
         ),
-        Text(
-          "Add as many tags as you want",
-          style: TextStyle(fontSize: 16),
+        InputField(
+          label: "Add subtitle",
+          controller: subTitleController,
         ),
-        Container(
-          padding: EdgeInsets.fromLTRB(0, 15, 0, 0),
-          child: Wrap(
-            spacing: 5,
-            // add vertical spacing here
-            runSpacing: 5,
-            children: [
-              generateChip("Art"),
-              generateChip("Design"),
-              generateChip("Technology"),
-              generateChip("Art"),
-              generateChip("Design"),
-              generateChip("Technology"),
-            ],
-          ),
-        ),
-        MultiLineInputField(label: "Article content"),
-      ],
-    );
-  }
+        dynamicWrapper,
+        MultiLineInputField(
+            label: "Article content", controller: articleContentController),
+        ElevatedButton(
+            onPressed: () {
+              print(titleController.text.toString());
+              // check if fields are empty
+              // if not empty then publish
 
-  Container generateChip(String labelText) {
-    return Container(
-      padding: EdgeInsets.fromLTRB(10, 0, 0, 0),
-      child: Chip(
-        deleteIconColor: Colors.blue,
-        label: Text(
-          labelText,
-          style: TextStyle(color: Colors.blue, fontSize: 14),
-        ),
-        backgroundColor: Colors.white,
-        shape: StadiumBorder(
-          side: BorderSide(color: Colors.blue, width: 1),
-        ),
-        onDeleted: () {
-          // Handle delete action
-        },
-      ),
+              if (titleController.text.toString().isEmpty ||
+                  subTitleController.text.toString().isEmpty ||
+                  articleContentController.text.toString().isEmpty) {
+                print("fields are empty");
+                ScaffoldMessenger.of(context)
+                    .showSnackBar(customSnackBar("Fields shouldn't be empty"));
+              }
+            },
+            child: Text("Publish"),
+            style: ElevatedButton.styleFrom(shape: StadiumBorder())),
+      ],
     );
   }
 }
