@@ -13,16 +13,16 @@ class UpdateUserPhoto implements UseCase<UserData, UpdateUserPhotoParams> {
 
   @override
   Future<Either<Failure, UserData>> call(params) async {
-    return await userRepository.updateUserPhoto(params.userId, params.imageUrl);
+    return await userRepository.updateUserPhoto(params.token, params.imagePath);
   }
 }
 
 class UpdateUserPhotoParams extends Equatable {
-  final String userId;
-  final String imageUrl;
+  final String token;
+  final String imagePath;
 
-  const UpdateUserPhotoParams({required this.userId, required this.imageUrl});
+  const UpdateUserPhotoParams({required this.token, required this.imagePath});
 
   @override
-  List<Object?> get props => [userId, imageUrl];
+  List<Object?> get props => [token, imagePath];
 }
