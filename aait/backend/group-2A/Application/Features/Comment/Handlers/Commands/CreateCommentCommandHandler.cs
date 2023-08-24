@@ -7,24 +7,19 @@ using MediatR;
 
 namespace Application.Features.Comment.Handlers.Commands;
 
-public class CreateCommentCommandHandler : IRequestHandler<CreateCommentCommand, int>
-{
-    private readonly ICommentRepository _commentRepository;
+public class CreateCommentCommandHandler : IRequestHandler<CreateCommentCommand, int>{
+    private readonly IUnitOfWork _unitOfWork;
     private readonly IMapper _mapper;
-    private readonly IPostRepository _postRepository;
-    private readonly IUserRepository _userRepository;
 
-    public CreateCommentCommandHandler(ICommentRepository commentRepository, IMapper mapper, IUserRepository userRepository, IPostRepository postRepository)
+    public CreateCommentCommandHandler(IUnitOfWork unitOfWork, IMapper mapper)
     {
-        _commentRepository = commentRepository;
         _mapper = mapper;
-        _postRepository = postRepository;
-        _userRepository = userRepository;
+        _unitOfWork = unitOfWork;
     }
 
     public async Task<int> Handle(CreateCommentCommand request, CancellationToken cancellationToken)
     {
-        var validator = new CreateCommentDtoValidator(_postRepository, _userRepository);
+        var validator = new CreateCommentDtoValidator(_unitOfWork.postRepository, _unitOfWork.userRepository);
         var validationResult = await validator.ValidateAsync(request.CommentDto);
 
         if (!validationResult.IsValid)
@@ -33,9 +28,8 @@ public class CreateCommentCommandHandler : IRequestHandler<CreateCommentCommand,
         }
         
         var comment = _mapper.Map<Domain.Entities.Comment>(request.CommentDto);
-
-        await _commentRepository.Add(comment);
-
+        await _unitOfWork.commentRepository.Add(comment);
+        await _unitOfWork.Save();
         return comment.Id;
     }
 }

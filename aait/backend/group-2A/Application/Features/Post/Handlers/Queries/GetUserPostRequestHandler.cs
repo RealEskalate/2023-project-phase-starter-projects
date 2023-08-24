@@ -7,16 +7,16 @@ using MediatR;
 namespace Application.Features.Post.Handlers.Queries;
 
 public class GetUserPostRequestHandler : IRequestHandler<GetUserPostRequest, List<PostDto>>{
-    private readonly IPostRepository _postRepository;
-    private readonly Mapper _mapper;
+    private readonly IUnitOfWork _unitOfWork;
+    private readonly IMapper _mapper;
 
-    public GetUserPostRequestHandler(IPostRepository postRepository, Mapper mapper){
-        _postRepository = postRepository;
+    public GetUserPostRequestHandler(IUnitOfWork unitOfWork, IMapper mapper){
         _mapper = mapper;
+        _unitOfWork = unitOfWork;
     }
 
     public async Task<List<PostDto>> Handle(GetUserPostRequest request, CancellationToken cancellationToken){
-        var posts = await _postRepository.GetUserPost(request.Id);
+        var posts = await _unitOfWork.postRepository.GetUserPost(request.Id);
         return _mapper.Map<List<PostDto>>(posts);
     }
 }
