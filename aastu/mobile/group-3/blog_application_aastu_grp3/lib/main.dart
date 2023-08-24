@@ -1,4 +1,5 @@
 import 'package:animated_splash_screen/animated_splash_screen.dart';
+import 'package:blog_application_aastu_grp3/core/theme.dart';
 import 'package:flutter/material.dart';
 
 import 'features/onboarding/onboarding.dart';
@@ -15,10 +16,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Flutter Demo',
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-        useMaterial3: true,
-      ),
+      theme: customTheme,
       home: const MyHomePage(title: 'Flutter Demo Home Page'),
     );
   }
