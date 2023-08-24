@@ -1,6 +1,7 @@
 ﻿using Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 
+using SocialSync.Domain.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
