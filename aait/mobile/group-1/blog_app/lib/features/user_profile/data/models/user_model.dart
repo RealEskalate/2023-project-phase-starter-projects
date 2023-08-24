@@ -9,7 +9,9 @@ class UserModel extends User implements Equatable {
       required this.email,
       this.expertise,
       this.bio,
-      this.image})
+      this.image
+      
+      })
       : super(
             id: id,
             fullName: fullName,
