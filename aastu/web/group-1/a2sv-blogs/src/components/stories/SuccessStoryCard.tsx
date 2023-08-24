@@ -5,8 +5,6 @@ import useStories from "@/hooks/useStories";
 
 export default function SuccessStoryCard() {
   const { stories, isLoading, error } = useStories();
-  console.log(stories);
-
   return (
     <>
       {stories?.map((item, index) => (
@@ -17,7 +15,7 @@ export default function SuccessStoryCard() {
         >
           <div className="relative w-[45%] h-[650px] rounded-xl ">
             <Image
-              src="/im.png"
+              src="/images/yishak.png"
               alt=""
               width={500}
               height={600}
