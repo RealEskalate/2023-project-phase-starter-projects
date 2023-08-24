@@ -1,4 +1,4 @@
-
+import 'package:blog_app/core/color/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -7,7 +7,7 @@ class TitleBar extends StatelessWidget {
     super.key,
   });
 
-  final Color blackColor = Color(0xFF0D253C);
+  final Color blackColor = darkBlue;
 
   @override
   Widget build(BuildContext context) {
