@@ -11,6 +11,26 @@ sealed class ArticleState extends Equatable {
 
 final class ArticleInitialState extends ArticleState {}
 
+final class ArticleLoadingState extends ArticleState {}
+
+final class SingleArticleLoadedState extends ArticleState {
+  final Article article;
+
+  const SingleArticleLoadedState(this.article);
+
+  @override
+  List<Object> get props => [article];
+}
+
+final class AllArticlesLoadedState extends ArticleState {
+  final List<Article> articles;
+
+  const AllArticlesLoadedState(this.articles);
+
+  @override
+  List<Object> get props => [articles];
+}
+
 final class ArticleCreatedState extends ArticleState {
   final Article article;
 
@@ -24,6 +44,15 @@ final class ArticleUpdatedState extends ArticleState {
   final Article article;
 
   const ArticleUpdatedState(this.article);
+
+  @override
+  List<Object> get props => [article];
+}
+
+final class ArticleDeletedState extends ArticleState {
+  final Article article;
+
+  const ArticleDeletedState(this.article);
 
   @override
   List<Object> get props => [article];
