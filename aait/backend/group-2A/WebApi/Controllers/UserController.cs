@@ -2,11 +2,14 @@
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Application.DTO.UserDTO;
+using Microsoft.AspNetCore.Authorization;
 
 namespace WebApi.Controllers
 {
     [ApiController]
+    [AuthorizeSSSSSSSSSSSSSSSSSSSSSSSSSZ]
     [Route("api/[controller]")]
+    
     public class UserController : ControllerBase
     {
         private readonly IMediator _mediator;
@@ -16,7 +19,7 @@ namespace WebApi.Controllers
             _mediator = mediator;
         }
 
-        [HttpPost("register")]
+        [HttpPost("Register")]
         public async Task<IActionResult> CreateUser(CreateUserDTO userDto)
         {
             var command = new CreateUserCommand { CreateUser = userDto };
