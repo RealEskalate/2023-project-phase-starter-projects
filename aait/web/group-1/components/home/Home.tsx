@@ -34,7 +34,7 @@ export default function Home() {
             </button>
           </div>
         </div>
-        <img className="lg:w-5/6 lg:h-5/6 lg:mr-20 w-4/5 h-4/5" src="/images/image-collection.png" alt="group of people" />
+        <img className="lg:w-5/6 lg:h-5/6 lg:mr-20 w-4/5 h-4/5" src="/images/home/image-collection.png" alt="group of people" />
       </section>
 
       {/* Build better section */}
@@ -45,10 +45,10 @@ export default function Home() {
           {a2svDescription}
         </p>
         <button className="bg-blue-first border rounded-md text-white px-6 py-3">
-          <img className="inline w-[20px] h-[20px] mr-2" src="images/message.svg"/>
+          <img className="inline w-[20px] h-[20px] mr-2" src="images/home/message.svg"/>
           Connect to our team
         </button>
-        <img className="lg:px-40 md:px-20 sm:15 xs:10 mt-20 mb-32 border" src="/images/laughing-people.svg" alt="Laughing people" />
+        <img className="lg:px-40 md:px-20 sm:15 xs:10 mt-20 mb-32 border" src="/images/home/laughing-people.svg" alt="Laughing people" />
         <h2 className="text-black-text-color lg:text-3xl md:text-2xl sm:text-xl font-semibold">Google SWE Interviews Acceptance </h2>
         <h2 className="text-black-text-color lg:text-3xl md:text-2xl sm:text-xlfont-semibold mt-2">Rate Comparison</h2>
       </section>
@@ -99,7 +99,7 @@ export default function Home() {
 
       {/* Support us banner */}
       <div className="relative h-60 bg-gradient-to-r from-blue-first to-[#019CFA] flex justify-center items-center">
-        <img className="w-60 h-60 m-auto opacity-5 bg-transparent" src="/images/africa.png" alt="" /> 
+        <img className="w-60 h-60 m-auto opacity-5 bg-transparent" src="/images/home/africa.png" alt="" /> 
         <div className="absolute flex flex-col gap-6 font-montserrat font-semibold text-white">
           <p>Help us sustain our mission!</p>
           <button className="bg-white text-blue-600 px-6 py-2 text-xs border rounded-lg mx-10">
@@ -118,7 +118,7 @@ export default function Home() {
             <p className="text-deep-gray px-10 lg:px-0 lg:text-left lg:mb-6">{impactStory[2]}</p>
             <button className="self-start btn-blue px-8 py-3 my-6 text-xs">See more</button>
           </div>
-          <img className="hidden lg:w-3/4 lg:text-right lg:block" src="/images/impact-story-gallery.png" alt="people portrait collage" />
+          <img className="hidden lg:w-3/4 lg:text-right lg:block" src="/images/home/impact-story-gallery.png" alt="people portrait collage" />
         </div>
       </section>
     </main>
