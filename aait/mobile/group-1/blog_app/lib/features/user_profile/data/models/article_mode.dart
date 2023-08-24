@@ -20,12 +20,19 @@ class ArticleModel extends Article implements Equatable {
           tags: tags,
         );
 
+  @override
   final String id;
+  @override
   final String title;
+  @override
   final String subTitle;
+  @override
   final String content;
+  @override
   final String authorId;
+  @override
   final String? image;
+  @override
   final List<String> tags;
 
   factory ArticleModel.fromJson(Map<String, dynamic> json) {

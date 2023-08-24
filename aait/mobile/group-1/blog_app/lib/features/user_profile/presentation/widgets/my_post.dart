@@ -5,7 +5,7 @@ import "package:blog_app/features/user_profile/domain/entities/article.dart";
 import "package:flutter/material.dart";
 
 class MyPost extends StatefulWidget {
-  MyPost({
+  const MyPost({
     super.key,
     required this.article,
   });
