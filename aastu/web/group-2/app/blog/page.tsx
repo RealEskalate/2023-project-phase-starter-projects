@@ -1,6 +1,8 @@
+'use client';
 import { Blog, User } from '@/lib/types';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import SingleBlogCard from '../components/SingleBlogCard';
+import Error from 'next/error';
 
 const startingId = 10;
 
@@ -82,7 +84,12 @@ const blogs: Blog[] = [
 
 // The 'blogs' array now contains all the sample blog entries grouped together.
 
-const page: React.FC = () => {
+const vari = true;
+const Page: React.FC = () => {
+  if (vari) {
+    throw new Error('auth is required');
+  }
+
   return (
     <div className="w-full font-secondaryFont mt-20 flex flex-col justify-center items-center">
       {/* search section */}
@@ -99,7 +106,11 @@ const page: React.FC = () => {
             + New Blog
           </button>
         </div>
-        <div className=""></div>
+        <div className="">
+          <button className="bg-primaryColor text-white px-6 py-4 rounded-3xl text-xs lg:text-sm font-semibold">
+            Throw Error
+          </button>
+        </div>
       </div>
 
       {/* blog list */}
@@ -115,4 +126,4 @@ const page: React.FC = () => {
   );
 };
 
-export default page;
+export default Page;
