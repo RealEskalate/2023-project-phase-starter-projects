@@ -1,7 +1,7 @@
 "use client";
 import React from "react";
 import { blogsList } from "@/data/myBlogs";
-import SmallBlogCard from "@/components/smallBlogCard/SmallBlogCard";
+import SmallBlogCard from "@/components/blog/SmallBlogCard";
 
 const MyBlogs = () => {
   return (
