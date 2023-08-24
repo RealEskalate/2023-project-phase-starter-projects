@@ -3,10 +3,10 @@ export default function page() {
     <section className="mt-4">
       <div className="flex justify-between items-center">
         <div className="space-y-2">
-          <h1 className="text-lg font-bold text-neutral-600">
+          <h1 className="sm:text-lg font-bold text-neutral-600">
             Manage Your Account
           </h1>
-          <p className="text-sm text-neutral-500">
+          <p className="text-sm max-w-[20ch] text-neutral-500">
             You can change your password here
           </p>
         </div>
