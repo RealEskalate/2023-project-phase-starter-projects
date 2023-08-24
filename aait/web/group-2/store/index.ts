@@ -1,5 +1,5 @@
 import { configureStore } from "@reduxjs/toolkit";
-import { singleSuccessApi } from "./features/successStories";
+import { singleSuccessApi } from "./features/success-stories";
 import { setupListeners } from "@reduxjs/toolkit/dist/query";
 
 const store = configureStore({

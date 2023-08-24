@@ -4,7 +4,7 @@ const Footer = () => {
     return ( <footer className="font-poppins gap px-10 py-8 md:py-14 md:px-28">
         <div className="text-gray-400 flex justify-around flex-col md:flex-row text-center md:text-left w-full items-center md:items-start">
             <div className="flex flex-col items-center md:items-start md:mt-3">
-                <img className="mb-4 md:mb-20 w-40" src="./images/a2sv logo.png" alt="a2sv logo" />
+                <img className="mb-4 md:mb-20 w-40" src="./images/footer/a2sv-logo.png" alt="a2sv logo" />
                 <p >© Copyright 2023 A2SV Foundation</p>
                 <p ><Link href={"#"}>Terms of service</Link> | <Link href={"#"}>Privacy Policy</Link></p>
             </div>
@@ -30,10 +30,10 @@ const Footer = () => {
                 <p className="mb-2">Questions or feedback?</p>
                 <p className="mb-4 md:mb-20">we would like to hear from you</p>
                 <section className="flex justify-between md:justify-start md:gap-6">
-                    <Link href={'#'}><img src="./images/facebook icon.png" alt="facebook" /></Link>
-                    <Link href={'#'}><img src="./images/linked in icon.png" alt="linked in" /></Link>
-                    <Link href={'#'}><img src="./images/telegram icon.png" alt="telegram" /></Link>
-                    <Link href={'#'}><img src="./images/twitter icon.png" alt="twitter" /></Link>
+                    <Link href={'#'}><img src="./images/footer/facebook-logo.png" alt="facebook" /></Link>
+                    <Link href={'#'}><img src="./images/footer/linkedin-logo.png" alt="linkedin" /></Link>
+                    <Link href={'#'}><img src="./images/footer/telegram-logo.png" alt="telegram" /></Link>
+                    <Link href={'#'}><img src="./images/footer/twitter-logo.png" alt="twitter" /></Link>
                 </section>
             </div>
         </div>
