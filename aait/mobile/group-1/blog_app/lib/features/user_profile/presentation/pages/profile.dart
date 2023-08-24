@@ -1,8 +1,11 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
+import 'dart:io';
+
 import 'package:blog_app/features/user_profile/presentation/widgets/my_post.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:image_picker/image_picker.dart';
 
 import '../../../../core/utils/colors.dart';
 import '../bloc/profile_bloc.dart';
@@ -22,12 +25,20 @@ class _ProfilePageState extends State<ProfilePage> {
     super.initState();
   }
 
+  final ImagePicker picker = ImagePicker();
+  Widget profileImage = Icon(Icons.person);
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: BlocBuilder<ProfileBloc, ProfileState>(
         builder: (context, state) {
-          if ((state is! Loaded)) {
+          if (state is Loaded) {
+            if (state.user.image != null) {
+              setState(() {
+                profileImage = Image(image: NetworkImage(state.user.image!));
+              });
+            }
             return SafeArea(
               child: Container(
                 height: MediaQuery.of(context).size.height,
@@ -51,10 +62,6 @@ class _ProfilePageState extends State<ProfilePage> {
                                   fontWeight: FontWeight.w500,
                                 ),
                               ),
-                              Icon(
-                                Icons.more_vert,
-                                size: 30,
-                              )
                             ],
                           ),
                         ),
@@ -90,23 +97,108 @@ class _ProfilePageState extends State<ProfilePage> {
                                         child: Stack(
                                           alignment: Alignment.center,
                                           children: [
-                                            Image(
-                                              image: AssetImage(
-                                                  "assets/images/profile.png"),
-                                              width: 80,
-                                            ),
                                             Container(
-                                              width: 92,
-                                              height: 92,
-                                              decoration: ShapeDecoration(
-                                                shape: RoundedRectangleBorder(
-                                                  side: BorderSide(
-                                                      width: 1,
-                                                      color: kLightBlue),
-                                                  borderRadius:
-                                                      BorderRadius.circular(28),
+                                                width: 80,
+                                                height: 80,
+                                                child: profileImage),
+                                            Stack(
+                                              alignment: Alignment.bottomCenter,
+                                              children: [
+                                                Container(
+                                                  width: 92,
+                                                  height: 92,
+                                                  decoration: ShapeDecoration(
+                                                    shape:
+                                                        RoundedRectangleBorder(
+                                                      side: BorderSide(
+                                                          width: 1,
+                                                          color: kLightBlue),
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              28),
+                                                    ),
+                                                  ),
                                                 ),
-                                              ),
+                                                IconButton(
+                                                    onPressed: () async {
+                                                      final result =
+                                                          await showDialog(
+                                                              context: context,
+                                                              builder:
+                                                                  (BuildContext
+                                                                      context) {
+                                                                return Column(
+                                                                    mainAxisAlignment:
+                                                                        MainAxisAlignment
+                                                                            .center,
+                                                                    children: [
+                                                                      Container(
+                                                                        margin: EdgeInsets.only(
+                                                                            bottom:
+                                                                                8),
+                                                                        child:
+                                                                            TextButton(
+                                                                          style: ButtonStyle(
+                                                                              padding: MaterialStatePropertyAll(EdgeInsets.symmetric(vertical: 15, horizontal: 25)),
+                                                                              backgroundColor: MaterialStatePropertyAll(Colors.grey[200])),
+                                                                          onPressed:
+                                                                              () async {
+                                                                            final XFile?
+                                                                                image =
+                                                                                await picker.pickImage(source: ImageSource.gallery);
+
+                                                                            setState(() {
+                                                                              profileImage = Image.file(File(image!.path));
+                                                                            });
+                                                                          },
+                                                                          child:
+                                                                              Text(
+                                                                            "Gallery",
+                                                                            style:
+                                                                                TextStyle(
+                                                                              fontSize: 22,
+                                                                              color: Colors.grey[800],
+                                                                              fontWeight: FontWeight.w500,
+                                                                            ),
+                                                                          ),
+                                                                        ),
+                                                                      ),
+                                                                      TextButton(
+                                                                        style: ButtonStyle(
+                                                                            padding:
+                                                                                MaterialStatePropertyAll(EdgeInsets.symmetric(vertical: 15, horizontal: 25)),
+                                                                            backgroundColor: MaterialStatePropertyAll(Colors.grey[200])),
+                                                                        onPressed:
+                                                                            () async {
+                                                                          final XFile?
+                                                                              photo =
+                                                                              await picker.pickImage(source: ImageSource.camera);
+
+                                                                          setState(
+                                                                              () {
+                                                                            profileImage =
+                                                                                Image.file(File(photo!.path));
+                                                                          });
+                                                                        },
+                                                                        child:
+                                                                            Text(
+                                                                          "Camera",
+                                                                          style:
+                                                                              TextStyle(
+                                                                            fontSize:
+                                                                                22,
+                                                                            color:
+                                                                                Colors.grey[800],
+                                                                            fontWeight:
+                                                                                FontWeight.w500,
+                                                                          ),
+                                                                        ),
+                                                                      ),
+                                                                    ]);
+                                                              });
+                                                    },
+                                                    icon: Icon(Icons.add))
+                                              ],
                                             ),
                                           ],
                                         ),
@@ -119,7 +211,7 @@ class _ProfilePageState extends State<ProfilePage> {
                                               MainAxisAlignment.spaceBetween,
                                           children: [
                                             Text(
-                                              '@joviedan',
+                                              '@${state.user.fullName}',
                                               style: TextStyle(
                                                 color: kBlueBlack,
                                                 fontSize: 18,
@@ -129,7 +221,7 @@ class _ProfilePageState extends State<ProfilePage> {
                                               ),
                                             ),
                                             Text(
-                                              'Jovi Daniel',
+                                              state.user.fullName,
                                               style: TextStyle(
                                                 color: kTextColorPrimary,
                                                 fontSize: 18,
@@ -139,7 +231,7 @@ class _ProfilePageState extends State<ProfilePage> {
                                               ),
                                             ),
                                             Text(
-                                              'UX Designer',
+                                              state.user.expertise ?? "",
                                               style: TextStyle(
                                                 color: Color(0xFF376AED),
                                                 fontSize: 16,
@@ -153,27 +245,30 @@ class _ProfilePageState extends State<ProfilePage> {
                                         ),
                                       )
                                     ]),
-                                Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Container(
-                                      margin: const EdgeInsets.only(bottom: 15),
-                                      child: Text(
-                                        "About me",
-                                        style: TextStyle(
-                                            fontSize: 20,
-                                            fontWeight: FontWeight.w500),
+                                Container(
+                                  width: double.infinity,
+                                  child: Column(
+                                    children: [
+                                      Container(
+                                        margin:
+                                            const EdgeInsets.only(bottom: 15),
+                                        child: Text(
+                                          "About me",
+                                          style: TextStyle(
+                                              fontSize: 20,
+                                              fontWeight: FontWeight.w500),
+                                        ),
                                       ),
-                                    ),
-                                    SingleChildScrollView(
-                                      child: Text(
-                                        "Madison Blackstone is a director of user experience design, with experience managing global teams.",
-                                        style: TextStyle(
-                                            fontSize: 16,
-                                            color: Colors.grey[700]),
-                                      ),
-                                    )
-                                  ],
+                                      SingleChildScrollView(
+                                        child: Text(
+                                          state.user.bio ?? "",
+                                          style: TextStyle(
+                                              fontSize: 16,
+                                              color: Colors.grey[700]),
+                                        ),
+                                      )
+                                    ],
+                                  ),
                                 ),
                                 Container(
                                   margin: EdgeInsets.only(top: 40),
@@ -369,17 +464,10 @@ class _ProfilePageState extends State<ProfilePage> {
                                   ),
                                 ),
                                 MyPostsList(
-                                  myPosts: [
-                                    MyPost(
-                                        title: "Big Data",
-                                        subtitle:
-                                            "Big Data is the brother of thick data.",
-                                        likes: 4,
-                                        isLiked: true,
-                                        isSaved: false,
-                                        postImageSrc:
-                                            "assets/images/post_1.png"),
-                                  ],
+                                  myPosts: state.user.articles
+                                      .map(
+                                          (article) => MyPost(article: article))
+                                      .toList(),
                                 )
                               ]),
                             ),

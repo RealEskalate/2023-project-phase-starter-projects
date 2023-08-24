@@ -5,9 +5,11 @@ import 'package:blog_app/features/user_profile/data/models/user_model.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../../domain/entities/user_entity.dart';
+
 abstract class ProfileRemoteDataSource {
   Future<UserModel> getUserInfo();
-  Future<UserModel> updateUserInfo();
+  Future<UserModel> updateUserImage(User user);
 }
 
 class ProfileRemoteDataSourceImpl extends ProfileRemoteDataSource {
@@ -17,7 +19,6 @@ class ProfileRemoteDataSourceImpl extends ProfileRemoteDataSource {
     final response = await http
         .get(Uri.parse('$baseApi/users'), headers: {"token": token ?? ""});
 
-    print(response.body);
     final data = jsonDecode(response.body);
     final user = UserModel.fromJson(data);
 
@@ -25,9 +26,16 @@ class ProfileRemoteDataSourceImpl extends ProfileRemoteDataSource {
   }
 
   @override
-  Future<UserModel> updateUserInfo() {
-    // TODO: implement updateUserInfo
-    throw UnimplementedError();
+  Future<UserModel> updateUserImage(User user) async {
+    final String? token = await getToken();
+    final response = await http
+        .get(Uri.parse('$baseApi/users'), headers: {"token": token ?? ""});
+
+    print(response.body);
+    final data = jsonDecode(response.body);
+    final user = UserModel.fromJson(data);
+
+    return user;
   }
 
   Future<String?> getToken() async {
