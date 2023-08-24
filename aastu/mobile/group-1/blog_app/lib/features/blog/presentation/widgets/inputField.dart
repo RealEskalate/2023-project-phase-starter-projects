@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 
 class InputField extends StatelessWidget {
-  const InputField({this.label = "", super.key});
+  const InputField({this.label = "", super.key, required this.controller});
   final String label;
+  final TextEditingController controller;
 
   @override
   Widget build(BuildContext build) {
@@ -13,6 +14,7 @@ class InputField extends StatelessWidget {
         // margin: EdgeInsets.all(10),zyyyy
         height: 45,
         child: TextField(
+          controller: controller,
           decoration: InputDecoration(
             hintText: label,
             hintStyle: TextStyle(
@@ -25,7 +27,9 @@ class InputField extends StatelessWidget {
 }
 
 class MultiLineInputField extends StatelessWidget {
-  const MultiLineInputField({this.label = "", super.key});
+  const MultiLineInputField(
+      {this.label = "", super.key, required this.controller});
+  final TextEditingController controller;
   final String label;
 
   @override
@@ -36,6 +40,7 @@ class MultiLineInputField extends StatelessWidget {
         // padding: EdgeInsets.fromLTRB(0, 10, 0, 0),
         // margin: EdgeInsets.all(10),zyyyy
         child: TextField(
+          controller: controller,
           maxLines: 10,
           keyboardType: TextInputType.multiline,
           decoration: InputDecoration(
