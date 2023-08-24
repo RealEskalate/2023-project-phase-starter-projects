@@ -4,13 +4,25 @@ import Image from 'next/image';
 import uploadsvg from '@/assets/images/upload.svg';
 import dynamic from 'next/dynamic';
 import { useDispatch } from 'react-redux';
+import { useState } from 'react';
 
 const DynamicTextEditor = dynamic(() => import('@/app/components/add-blog/TextEditor'), {
   ssr: false,
 });
 const AddBlog: React.FC = () => {
   // const dispatch = useDispatch();
+  const [isInputVisible, setIsInputVisible] = useState(false);
   const handleSaveChanges = () => {};
+
+  const handleFileInputChange = (e: any) => {
+    const selectedFile = e.target.files[0];
+    // Process the selected file, e.g., upload it and get its URL
+    if (selectedFile) {
+      const imageUrl = URL.createObjectURL(selectedFile);
+      // Do something with the image URL, such as inserting it into the editor
+    }
+    setIsInputVisible(false); // Hide the input after selecting the file
+  };
   return (
     <div className=" md:px-20 px-2 w-full font-primaryFont py-8">
       {/* main sect + sidebar */}
@@ -42,6 +54,13 @@ const AddBlog: React.FC = () => {
                     <p className="border rounded-lg bg-white py-3 px-2 mx-2 hover:cursor-pointer shadow">
                       Upload File
                     </p>
+                    {isInputVisible && (
+                      <input
+                        type="file"
+                        style={{ display: 'none' }}
+                        onChange={handleFileInputChange}
+                      />
+                    )}
                     <p className="sm:font-extralight sm:text-[#16]">or choose file from</p>
                     <p className="border rounded-lg bg-white py-3 px-2 mx-2 hover:cursor-pointer shadow">
                       My Files
