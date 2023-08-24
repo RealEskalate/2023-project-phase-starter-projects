@@ -26,25 +26,26 @@ public class UpdatePostRequestHandler : IRequestHandler<UpdatePostRequest, Post>
         if (validationResult.IsValid == false)
             throw new ValidationException(validationResult);
 
-        var oldContent = (await _unitOfWork.PostRepository.Get(request.Post.Id)).Content;
-        var postToUpdate = _mapper.Map<Post>(request.Post);
-        var post = await _unitOfWork.PostRepository.Update(postToUpdate);
-        
+        var oldPost = await _unitOfWork.PostRepository.Get(request.Post.Id);
+        var oldContent = oldPost.Content;
+        oldPost.Content = request.Post.Content;
+        oldPost.Title = request.Post.Title;
+
         var oldTags = PostTagHelpers.GetTags(oldContent);
-        var newTags = PostTagHelpers.GetTags(postToUpdate.Content);
+        var newTags = PostTagHelpers.GetTags(request.Post.Content);
         var differences = PostTagHelpers.GetTagDifferences(oldTags, newTags);
 
         foreach (var addedTag in differences.Item1)
         {
-            await _unitOfWork.PostTagRepository.AddTagToPost(post.Id, addedTag);
+            await _unitOfWork.PostTagRepository.AddTagToPost(oldPost.Id, addedTag);
         }
 
         foreach (var removedTag in differences.Item2)
         {
-            await _unitOfWork.PostTagRepository.DeletePostTag(post.Id, removedTag);
+            await _unitOfWork.PostTagRepository.DeletePostTag(oldPost.Id, removedTag);
         }
         
         await _unitOfWork.Save();
-        return post;
+        return oldPost;
     }
 }
