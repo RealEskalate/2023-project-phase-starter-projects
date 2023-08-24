@@ -30,7 +30,7 @@ class UserBloc extends Bloc<UserEvent, UserState> {
       : super(UserInitial()) {
     on<GetUserEvent>(_onGetUserData);
     on<UpdateUserPhotoEvent>(_onUpdateUserPhoto);
-    on<GetBookmarkedArticlesEvent>(_GetBookmarkedArticles);
+    on<GetBookmarkedArticlesEvent>(_onGetBookmarkedArticles);
   }
 
   String _mapFailureToMessage(Failure failure) {
@@ -82,7 +82,7 @@ class UserBloc extends Bloc<UserEvent, UserState> {
     );
   }
 
-  FutureOr<void> _GetBookmarkedArticles(
+  FutureOr<void> _onGetBookmarkedArticles(
       GetBookmarkedArticlesEvent event, Emitter<UserState> emit) async {
     emit(LoadingState());
     final bookmarkedArticlesOrError = await getBookmarkedArticles(NoParams());
