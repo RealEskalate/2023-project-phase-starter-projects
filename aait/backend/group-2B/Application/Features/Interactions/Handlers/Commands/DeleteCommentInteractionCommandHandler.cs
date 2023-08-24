@@ -28,7 +28,7 @@ public class DeleteCommentInteractionCommandHandler
         CancellationToken cancellationToken
     )
     {
-        var validator = new DeleteCommentDtoValidator(_unitOfWork.InteractionRepository);
+        var validator = new DeleteCommentDtoValidator(_unitOfWork);
         var validationResult = await validator.ValidateAsync(command.DeleteCommentInteractionDto);
 
         if (!validationResult.IsValid)

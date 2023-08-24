@@ -5,15 +5,12 @@ namespace SocialSync.Application.DTOs.InteractionDTOs.Validator;
 
 public class CommentDTOValidator : AbstractValidator<InteractionDTO>
 {
-    private IPostRepository _IPostRepository;
-    private IUserRepository _IUserRepository;
-
+    private IUnitOfWork _unitOfWork;
     public CommentDTOValidator(
-        IPostRepository IPostRepository,
-        IUserRepository IUserRepository
+        IUnitOfWork unitOfWork
     )
     {
-        _IPostRepository = IPostRepository;
+        _unitOfWork = unitOfWork;
 
         RuleFor(interaction => interaction.Body)
             .NotEmpty()
@@ -29,7 +26,7 @@ public class CommentDTOValidator : AbstractValidator<InteractionDTO>
             .MustAsync(
                 async (id, token) =>
                 {
-                    var postExists = await _IPostRepository.GetAsync(id);
+                    var postExists = await _unitOfWork.PostRepository.GetAsync(id);
                     if (postExists != null)
                     {
                         return false;
@@ -47,7 +44,7 @@ public class CommentDTOValidator : AbstractValidator<InteractionDTO>
             .MustAsync(
                 async (id, token) =>
                 {
-                    var postExists = await _IUserRepository.GetAsync(id);
+                    var postExists = await _unitOfWork.UserRepository.GetAsync(id);
                     if (postExists != null)
                     {
                         return false;

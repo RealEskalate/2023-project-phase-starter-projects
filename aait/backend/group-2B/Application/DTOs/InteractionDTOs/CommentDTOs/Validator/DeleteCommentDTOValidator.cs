@@ -6,17 +6,17 @@ namespace SocialSync.Application.DTOs.InteractionDTOs.CommentDTOs.Validator;
 
 public class DeleteCommentDtoValidator : AbstractValidator<DeleteCommentInteractionDTO>
 {
-    private IInteractionRepository _IInteractionRepository;
+    private IUnitOfWork _unitOfWork;
 
-    public DeleteCommentDtoValidator(IInteractionRepository iInteractionRepository)
+    public DeleteCommentDtoValidator(IUnitOfWork unitOfWork)
     {
-        _IInteractionRepository = iInteractionRepository;
+        _unitOfWork = unitOfWork;
         RuleFor(interaction => interaction.Id)
             .GreaterThan(0)
             .MustAsync(
                 async (id, token) =>
                 {
-                    var postExists = await _IInteractionRepository.GetAsync(id);
+                    var postExists = await _unitOfWork.InteractionRepository.GetAsync(id);
                     if (postExists != null)
                     {
                         return false;

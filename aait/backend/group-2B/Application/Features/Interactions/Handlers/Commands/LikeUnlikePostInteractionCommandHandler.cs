@@ -29,7 +29,7 @@ public class LikeUnlikePostInteractionCommandHandler
     )
     {
         var response = new BaseCommandResponse();
-        var validator = new LikeDtoValidator(_unitOfWork.PostRepository, _unitOfWork.UserRepository);
+        var validator = new LikeDtoValidator(_unitOfWork);
 
         var validationResult = await validator.ValidateAsync(command.LikeDto);
 

@@ -7,22 +7,20 @@ namespace SocialSync.Application.DTOs.InteractionDTOs.Validator
 {
     public class LikeDtoValidator : AbstractValidator<InteractionDTO>
     {
-        private IPostRepository _IPostRepository;
-        private IUserRepository _IUserRepository;
+        private IUnitOfWork _unitOfWork;
 
         public LikeDtoValidator(
-            IPostRepository IPostRepository,
-            IUserRepository IUserRepository
+           IUnitOfWork unitOfWork
         )
         {
-            _IPostRepository = IPostRepository;
+            _unitOfWork = unitOfWork;
 
             RuleFor(interaction => interaction.PostId)
                 .GreaterThan(0)
                 .MustAsync(
                     async (id, token) =>
                     {
-                        var postExists = await _IPostRepository.GetAsync(id);
+                        var postExists = await _unitOfWork.PostRepository.GetAsync(id);
                         if (postExists != null)
                         {
                             return false;
@@ -40,7 +38,7 @@ namespace SocialSync.Application.DTOs.InteractionDTOs.Validator
                 .MustAsync(
                     async (id, token) =>
                     {
-                        var postExists = await _IUserRepository.GetAsync(id);
+                        var postExists = await _unitOfWork.UserRepository.GetAsync(id);
                         if (postExists != null)
                         {
                             return false;
