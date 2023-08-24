@@ -3,7 +3,7 @@ using MediatR;
 
 namespace Application.Features.Notifications.Requests.Commands;
 
-public class DeleteNotificationRequest : IRequest<Unit>
+public class MarkNotificationAsSeenRequest : IRequest<Unit>
 {
-    public UpdateNotificationDto DeleteDto { get; set; }
+    public UpdateNotificationDto UpdateDto { get; set; }
 }
