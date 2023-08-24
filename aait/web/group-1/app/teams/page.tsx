@@ -1,78 +1,15 @@
+"use client"
+
 import Image from 'next/image'
 import React from 'react'
 import TeamImage from '../../public/images/team-work.svg'
 import { Profile } from '@/types/Profile'
 import Card from '@/components/Card'
+import { useGetTeamMembersQuery } from '@/store/features/team-members'
 
 const page = () => {
-  const members: Profile[] = [
-    {
-      socialMedia: {
-        linkedin: "linkedin.com/tadele",
-        facebook: "facebook.com/tadele",
-        instagram: "instagram.com/tadele"
-      },
-      _id: "64e0636413118e7f1f0a59c1",
-      name: "Tadele Girma",
-      bio: "He is a motivated software engineer looking to pursue a successful career in software development where he can help deliver software solutions to social problems. His skills include Web Development, Data Structures, Machine Learning, and DevOps. Natnael’s hobbies include coding, playing soccer, and watching movies.",
-      department: "Software Engineer"
-    },
-    {
-      socialMedia: {
-        linkedin: "linkedin.com/tadele",
-        facebook: "facebook.com/tadele",
-        instagram: "instagram.com/tadele"
-      },
-      _id: "64e0636413118e7f1f0a59c1",
-      name: "Tadele Girma",
-      bio: "He is a motivated software engineer looking to pursue a successful career in software development where he can help deliver software solutions to social problems. His skills include Web Development, Data Structures, Machine Learning, and DevOps. Natnael’s hobbies include coding, playing soccer, and watching movies.",
-      department: "Engineering"
-    },
-    {
-      socialMedia: {
-        linkedin: "linkedin.com/tadele",
-        facebook: "facebook.com/tadele",
-        instagram: "instagram.com/tadele"
-      },
-      _id: "64e0636413118e7f1f0a59c1",
-      name: "Tadele Girma",
-      bio: "He is a motivated software engineer looking to pursue a successful career in software development where he can help deliver software solutions to social problems. His skills include Web Development, Data Structures, Machine Learning, and DevOps. Natnael’s hobbies include coding, playing soccer, and watching movies.",
-      department: "Engineering"
-    },
-    {
-      socialMedia: {
-        linkedin: "linkedin.com/tadele",
-        facebook: "facebook.com/tadele",
-        instagram: "instagram.com/tadele"
-      },
-      _id: "64e0636413118e7f1f0a59c1",
-      name: "Tadele Girma",
-      bio: "He is a motivated software engineer looking to pursue a successful career in software development where he can help deliver software solutions to social problems. His skills include Web Development, Data Structures, Machine Learning, and DevOps. Natnael’s hobbies include coding, playing soccer, and watching movies.",
-      department: "Engineering"
-    },
-    {
-      socialMedia: {
-        linkedin: "linkedin.com/tadele",
-        facebook: "facebook.com/tadele",
-        instagram: "instagram.com/tadele"
-      },
-      _id: "64e0636413118e7f1f0a59c1",
-      name: "Tadele Girma",
-      bio: "He is a motivated software engineer looking to pursue a successful career in software development where he can help deliver software solutions to social problems. His skills include Web Development, Data Structures, Machine Learning, and DevOps. Natnael’s hobbies include coding, playing soccer, and watching movies.",
-      department: "Engineering"
-    },
-    {
-      socialMedia: {
-        linkedin: "linkedin.com/tadele",
-        facebook: "facebook.com/tadele",
-        instagram: "instagram.com/tadele"
-      },
-      _id: "64e0636413118e7f1f0a59c1",
-      name: "Tadele Girma",
-      bio: "He is a motivated software engineer looking to pursue a successful career in software development where he can help deliver software solutions to social problems. His skills include Web Development, Data Structures, Machine Learning, and DevOps. Natnael’s hobbies include coding, playing soccer, and watching movies.",
-      department: "Engineering"
-    },
-  ]
+  const {data: members, isLoading, error} = useGetTeamMembersQuery()
+
   return (
     <div>
       {/* upper hero section */}

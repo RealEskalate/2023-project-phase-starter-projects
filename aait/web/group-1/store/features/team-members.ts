@@ -8,7 +8,7 @@ export const teamMembersApi = createApi({
   }),
   endpoints: (build) => ({
     getTeamMembers: build.query<Profile[], void>({
-      query: () => "/success-stories",
+      query: () => "/members",
     }),
   }),
 });
