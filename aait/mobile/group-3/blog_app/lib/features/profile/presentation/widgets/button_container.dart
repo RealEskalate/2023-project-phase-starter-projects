@@ -1,3 +1,4 @@
+import 'package:blog_app/core/color/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -13,7 +14,6 @@ class ButtonContainer extends StatelessWidget {
       required this.numberValue,
       required this.onPressed,
       required this.category});
-  final whiteColor = Color(0xFFFFFFff);
   @override
   Widget build(BuildContext context) {
     return InkWell(

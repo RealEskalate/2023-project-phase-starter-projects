@@ -1,11 +1,10 @@
-
+import 'package:blog_app/core/color/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class ArticleIconButton extends StatelessWidget {
   final textValue;
   final IconData icon;
-  final Color darkBlue = Color(0xFF2D4379);
   ArticleIconButton({
     super.key,
     required this.textValue,
@@ -27,7 +26,7 @@ class ArticleIconButton extends StatelessWidget {
         Text(
           textValue,
           style: TextStyle(
-              fontWeight: FontWeight.w500, fontSize: 12, color: darkBlue),
+              fontWeight: FontWeight.w500, fontSize: 12, color: darkBlueText),
         )
       ],
     );

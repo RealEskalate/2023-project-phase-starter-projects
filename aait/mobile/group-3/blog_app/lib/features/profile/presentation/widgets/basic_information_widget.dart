@@ -1,4 +1,5 @@
 
+import 'package:blog_app/core/color/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -21,7 +22,7 @@ class BasicInformationWidget extends StatelessWidget {
           style: TextStyle(
               fontWeight: FontWeight.w900,
               fontSize: 14,
-              color: Color(0xFF2D4379)),
+              color: darkBlueText),
         ),
         Text(
           this.fullName,
@@ -35,7 +36,7 @@ class BasicInformationWidget extends StatelessWidget {
           style: TextStyle(
               fontWeight: FontWeight.w100,
               fontSize: 16,
-              color: Color(0xFF376AED)),
+              color: blue),
         )
       ],
     );
