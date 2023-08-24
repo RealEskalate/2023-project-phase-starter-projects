@@ -1,3 +1,4 @@
+
 using Domain.Entities;
 
 namespace Application.Contracts.Persistence;
@@ -5,7 +6,7 @@ namespace Application.Contracts.Persistence;
     
 
     public interface IUserRepository
-{
+    {
     Task<bool> FollowUser(int followerId, int followeeId);
 
     Task<bool> UnFollowUser(int followerId, int followeeId);
