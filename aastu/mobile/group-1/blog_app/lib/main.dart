@@ -1,5 +1,6 @@
 import 'package:blog_app/core/bloc.dart';
 import 'package:blog_app/features/blog/presentation/screen/home_screen.dart';
+import 'package:blog_app/features/user/presentation/pages/user_profile_screen.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:blog_app/features/onboarding/screens/splash.dart';
 import 'package:flutter/material.dart';
@@ -27,7 +28,8 @@ class MyApp extends StatelessWidget {
       ),
       home: const Splash(), // TODO: Replace with the Onboarding
       routes: {
-        // '/home': (context) => const HomeScreen(),
+        '/home': (context) => const Home(),
+        '/profile': (context) => const UserProfileScreen(),
         // define routes here
       },
     );
