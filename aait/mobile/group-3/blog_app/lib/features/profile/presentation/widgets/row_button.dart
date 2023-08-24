@@ -1,3 +1,4 @@
+import 'package:blog_app/core/color/colors.dart';
 import 'package:blog_app/features/profile/presentation/bloc/profile_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -13,7 +14,7 @@ class RowButton extends StatelessWidget {
 
     switch (state) {
       case ProfileLoaded():
-        final inActiveColor = Color(0xFF386BED);
+        final inActiveColor = blue;
         final stateIsBookmark = state.isBookmark;
         return Container(
           padding: EdgeInsets.only(left: 72.w, right: 72.w, top: 250.h),
