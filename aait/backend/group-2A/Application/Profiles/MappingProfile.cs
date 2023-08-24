@@ -30,6 +30,8 @@ public class MappingProfile : AutoMapper.Profile
         CreateMap<CreateCommentDto, Comment>().ReverseMap();
         CreateMap<UpdateCommentDto, Comment>().ReverseMap();
         
+        
+        
     }
     
 }
