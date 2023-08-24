@@ -3,7 +3,7 @@ import { useAuth } from "@/hooks/useAuth";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 export default function page() {
   const [email, setEmail] = useState<string>("");
@@ -17,12 +17,16 @@ export default function page() {
 
   const router = useRouter();
 
-  const handleSubmit = (ev: any) => {
-    ev.preventDefault();
-    signupHandler({ email, name, password });
+  // re-route to home page if authentication
+  useEffect(() => {
     if (isAuthenticated) {
       router.replace("/");
     }
+  }, [isAuthenticated]);
+
+  const handleSubmit = (ev: any) => {
+    ev.preventDefault();
+    signupHandler({ email, name, password });
   };
   return (
     <div className="h-screen">

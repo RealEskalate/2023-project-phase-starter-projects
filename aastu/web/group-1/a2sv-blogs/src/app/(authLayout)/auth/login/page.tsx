@@ -4,7 +4,7 @@ import { resetAuth } from "@/lib/redux/slices/authSlice";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 export default function page() {
   const [email, setEmail] = useState<string>("");
@@ -18,16 +18,17 @@ export default function page() {
   const router = useRouter();
   const dispatch = useDispatch();
 
-  const handleSubmit = (ev: any) => {
-    ev.preventDefault();
-    loginHandler({ email, password });
+  // re-route to home page if authenticated
+  useEffect(() => {
     if (isAuthenticated) {
       router.replace("/");
     }
-    if (error) {
-      console.log(error);
-    }
+  }, [isAuthenticated]);
+  const handleSubmit = (ev: any) => {
+    ev.preventDefault();
+    loginHandler({ email, password });
   };
+
   return (
     <div className="h-screen">
       <div className="grid lg:grid-cols-2 grid-cols-1 h-full">
