@@ -10,12 +10,12 @@ namespace Application.Features.Posts.Handlers.Commands;
 
 public class CreatePostRequestHandler : IRequestHandler<CreatePostRequest, Post>
 {
-    private readonly IPostRepository _postRepository;
+    private readonly IUnitOfWork _unitOfWork;
     private readonly IMapper _mapper;
 
-    public CreatePostRequestHandler(IPostRepository postRepository, IMapper mapper)
+    public CreatePostRequestHandler(IUnitOfWork unitOfWork, IMapper mapper)
     {
-        _postRepository = postRepository;
+        _unitOfWork = unitOfWork;
         _mapper = mapper;
     }
 
@@ -27,8 +27,17 @@ public class CreatePostRequestHandler : IRequestHandler<CreatePostRequest, Post>
         if (validationResult.IsValid == false)
             throw new ValidationException(validationResult);
         
-        var post =  await _postRepository.Add(_mapper.Map<Post>(request.Post));
+        // Add the post
+        var post =  await _unitOfWork.PostRepository.Add(_mapper.Map<Post>(request.Post));
+        await _unitOfWork.Save();
+        // Add the hashtags
+        var tags = PostTagHelpers.GetTags(request.Post.Content);
+        foreach (var tag in tags)
+        {
+            await _unitOfWork.PostTagRepository.AddTagToPost(post.Id, tag);
+        }
 
+        await _unitOfWork.Save();
         return post;
     }
 }

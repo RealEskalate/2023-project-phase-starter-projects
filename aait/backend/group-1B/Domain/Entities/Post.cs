@@ -1,3 +1,4 @@
+using System.Collections;
 using Domain.Common;
 
 namespace Domain.Entities;
@@ -13,4 +14,5 @@ public class Post : BaseEntity
     public virtual  User User { get; set; }
     public virtual IEnumerable<Comment> Comments { get; set; }
     public virtual IEnumerable<PostLike> Likes { get; set; }
+    public virtual IEnumerable<PostTag> PostTags { get; set; }
 }

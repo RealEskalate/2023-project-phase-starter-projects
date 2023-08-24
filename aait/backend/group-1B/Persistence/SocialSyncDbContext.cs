@@ -18,8 +18,14 @@ namespace Persistence
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.ApplyConfigurationsFromAssembly(typeof(SocialSyncDbContext).Assembly);
-
-           
+            
+            modelBuilder.Entity<PostLike>()
+                .HasKey(e => new { e.UserId, e.PostId });
+            
+            modelBuilder.Entity<PostTag>()
+                .HasKey(e => new { e.PostId, e.TagId });
+            
+         
         }
 
         public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
@@ -32,9 +38,6 @@ namespace Persistence
                 {
                     entry.Entity.DateCreated = DateTime.UtcNow;
                 }
-
-
-
             }
 
             return base.SaveChangesAsync(cancellationToken);
@@ -43,5 +46,12 @@ namespace Persistence
         public DbSet<User> Users { get; set; }
 
         public DbSet<Follow> Follows { get; set; }
+        public DbSet<Post> Posts { get; set; }
+        public DbSet<PostLike> PostLikes { get; set; }
+        public DbSet<Comment> Comments { get; set; }
+        public DbSet<Tag> Tags { get; set; }
+        public DbSet<PostTag> PostTags { get; set; }
+        
+        public DbSet<Notification> Notifications { get; set; }
     }
 }
