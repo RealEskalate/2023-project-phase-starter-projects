@@ -14,7 +14,7 @@ public class MappingProfile : AutoMapper.Profile
         
         CreateMap<Post, PostDto>().ReverseMap();
         CreateMap<Post, UpdatePostDto>().ReverseMap();
-        CreateMap<Post, DTO.UserDTO.CreateUserDTO>().ReverseMap();
+        CreateMap<Post, CreatePostDto>().ReverseMap();
         
         CreateMap<User, UserDto>().ReverseMap();
         CreateMap<User, DTO.UserDTO.CreateUserDTO>().ReverseMap();

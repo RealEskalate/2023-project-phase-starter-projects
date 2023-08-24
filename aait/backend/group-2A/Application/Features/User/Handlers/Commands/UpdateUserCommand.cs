@@ -1,5 +1,6 @@
 using System.Threading;
 using System.Threading.Tasks;
+using Application.Contracts.Identity;
 using Application.Contracts.Persistance;
 using Application.DTO.UserDTO.Validator;
 using Application.Exceptions;
@@ -14,11 +15,13 @@ namespace Application.Features.UserFeatures.Handlers.Commands
     {
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
+        private readonly IAuthService _authService;
 
-        public UpdateUserCommandHandler(IUnitOfWork unitOfWork, IMapper mapper)
+        public UpdateUserCommandHandler(IUnitOfWork unitOfWork, IMapper mapper, IAuthService authService)
         {
             _mapper = mapper;
             _unitOfWork = unitOfWork;
+            _authService = authService;
         }
 
         public async Task<Unit> Handle(UpdateUserCommand request, CancellationToken cancellationToken){
@@ -28,10 +31,13 @@ namespace Application.Features.UserFeatures.Handlers.Commands
             {
                 throw new ValidationException(validationResult);
             }
-            
             var user = await _unitOfWork.userRepository.Get(request.updateUser.Id);
             _mapper.Map(request.updateUser, user);
-            // var user = _mapper.Map<Domain.Entities.User>(request.updateUser);
+            if (await _authService.Update(request.updateUser, user.Email)){
+                throw new Exception("Can't be Comleted");
+
+            }
+            user = _mapper.Map<Domain.Entities.User>(request.updateUser);
             await _unitOfWork.userRepository.Update(user);
             await _unitOfWork.Save();
             return Unit.Value;
