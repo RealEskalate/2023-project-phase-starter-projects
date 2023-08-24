@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:blog_app/features/blog/presentation/widgets/CustomSnackbar.dart';
 
 import '../widgets/inputForm.dart';
 
@@ -47,10 +48,7 @@ class AddBlog extends StatelessWidget {
               Container(
                   padding: EdgeInsets.fromLTRB(0, 50, 0, 0),
                   child: InputForm()),
-              ElevatedButton(
-                  onPressed: () {},
-                  child: Text("Publish"),
-                  style: ElevatedButton.styleFrom(shape: StadiumBorder()))
+              
             ],
           ),
         ),
