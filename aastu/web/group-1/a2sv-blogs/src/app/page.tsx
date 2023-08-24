@@ -1,9 +1,11 @@
 import Image from "next/image";
 export default function Home() {
+  
   return (
-    <main className="m-12 p-10 pt-20 font-sans-serif	">
-      <header className="grid grid-cols-2 gap-4 ">
-        <div>
+    
+    <main className=" p-10 pt-20 font-sans-serif	">
+      <header className="grid grid-cols-2 sm:grid-cols-1 md:grid-cols-1 lg:grid-cols-2 gap-4 ">
+        <div className="">
           <div className="text-7xl	font-extrabold ">
             <span className="text-[#160041] leading-10">Africa to </span>
             <span className="text-primary leading-10">
@@ -12,7 +14,7 @@ export default function Home() {
               Valley
             </span>
           </div>
-          <p className="text-2xl font-normal text-text-header-2 leading-10 w-4/6 mt-4">
+          <p className="text-2xl font-normal text-text-header-2 leading-10 mt-4">
             A2SV up-skills high-potential university students, connects them
             with opportunities at top tech companies
           </p>
@@ -29,7 +31,7 @@ export default function Home() {
                 fill="none"
                 xmlns=""
               >
-                <g clip-path="url(#clip0_3602_2395)">
+                <g clip-path="url(#clip0_3602_2395) ">
                   <path
                     d="M5.75195 13.7996H21.8514"
                     stroke="white"
@@ -65,9 +67,12 @@ export default function Home() {
               </svg>
             </button>
           </div>
+          
+          
         </div>
+        
 
-        <div>
+        <div className="hidden lg:block">
           <Image src="/images/teams.png" alt="" width={500} height={500} />
         </div>
       </header>
@@ -92,7 +97,10 @@ export default function Home() {
           Connect to our team
         </button>
       </section>
-      <section className="mt-12 text-center">
+      <section className="hidden md:block">
+        <Image src='/images/team.jpg' width={1400} height={645} alt="team" className="p-4"/>
+      </section>
+      <section className="text-center ">
         <br />
         <br />
         <p className="text-5xl">
@@ -101,7 +109,7 @@ export default function Home() {
           Rate Comparison
         </p>
         <br />
-        <div className="bg-slate-100 h-100  p-4 rounded-xl grid grid-cols-5 gap-4">
+        <div className="bg-slate-100 h-100  p-4 rounded-xl grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5  gap-4 ">
           <div className="p-2 text-center mt-4 text-text-content text-base font-normal">
             <span>A2SV students are</span>
             <span className="text-[#160041] font-semibold text-xl"> 35</span>
@@ -118,34 +126,36 @@ export default function Home() {
             <p className="text-2xl	font-semibold	">Founded</p>
             <br />
             <p className="text-xl	font-normal	">5% average</p>
-          </div><div className="w-48	h-48	bg-white p-4 rounded-xl ml-4">
-            <p className="text-xl	font-semibold	">2019</p>
-            <br />
-            <br />
-            <p className="text-2xl	font-semibold	">Founded</p>
-            <br />
-            <p className="text-xl	font-normal	">5% average</p>
           </div>
           <div className="w-48	h-48	bg-white p-4 rounded-xl ml-4">
-            <p className="text-xl	font-semibold	">2019</p>
+            <p className="text-xl	font-semibold	">2020</p>
             <br />
             <br />
-            <p className="text-2xl	font-semibold	">Founded</p>
+            <p className="text-2xl	font-semibold	">27%</p>
             <br />
-            <p className="text-xl	font-normal	">5% average</p>
+            <p className="text-xl	font-normal	">5.2% average</p>
           </div>
           <div className="w-48	h-48	bg-white p-4 rounded-xl ml-4">
-            <p className="text-xl	font-semibold	">2019</p>
+            <p className="text-xl	font-semibold	">2021</p>
             <br />
             <br />
-            <p className="text-2xl	font-semibold	">Founded</p>
+            <p className="text-2xl	font-semibold	">59%</p>
             <br />
-            <p className="text-xl	font-normal	">5% average</p>
+            <p className="text-xl	font-normal	">3.2% average</p>
           </div>
+          <div className="w-48	h-48	bg-white p-4 rounded-xl ml-4">
+            <p className="text-xl	font-semibold	">2022</p>
+            <br />
+            <br />
+            <p className="text-2xl	font-semibold	">70%</p>
+            <br />
+            <p className="text-xl	font-normal	">2.5% average</p>
+          </div>
+          
         </div>
       </section>
-      <section className="grid grid-cols-2 gap-4 my-16">
-        <div className="">
+      <section className="my-16 grid grid-cols-1 sm:grid-cols-1 md:grid-cols-1 lg:grid-cols-2">
+        <div className="hidden md:block">
           <Image src="/images/cir.png" alt="" width={300} height={300} />
         </div>
 
@@ -161,35 +171,31 @@ export default function Home() {
         </div>
         <div className="">
           <p className="text-4xl font-semibold	text-text-header-2 p-4">
-            Internships
+            360° Trainings
           </p>
           <p className="text-2xl	font-normal	text-text-content max-w-max	p-4">
-            Students who passed their interviews get 3-month internships to gain
-            experience in building scalable products that are widely used around
-            the world.
+          A2SV upskills students with a 360° software engineering program that focuses on problem-solving, effective speaking, and personal development.
           </p>
         </div>
-        <div className="ml-56	">
+        <div className="ml-56	hidden md:block">
           <Image src="/images/cir.png" alt="" width={300} height={300} />
         </div>
-        <div className="	">
+        <div className="	hidden md:block">
           <Image src="/images/cir.png" alt="" width={300} height={300} />
         </div>
 
-        <div className="text-right mt-12	">
+        <div className="text-right mt-18	">
           <p className="text-4xl font-semibold text-text-header-2 p-4">
-            Internships
+            Social Projects
           </p>
           <p className="text-2xl	font-normal	text-text-content max-w-max	p-4		">
-            Students who passed their interviews get 3-month internships to gain
-            experience in building scalable products that are widely used around
-            the world.
+          Students work on social projects with industry experts to address the most pressing problems in their community.
           </p>
         </div>
       </section>
 
       <section>
-        <div className="bg-gradient-to-r 0% from-primary from-10% to-[#019CFA] to-90% flex flex-col justify-center items-center py-16 rounded-xl relative">
+        <div className=" bg-gradient-to-r 0% from-primary from-10% to-[#019CFA] to-90% flex flex-col justify-center items-center py-16 rounded-xl relative ">
           <Image
             src="/images/africa-bg.svg"
             width={200}
@@ -209,7 +215,7 @@ export default function Home() {
         <br />
         <br />
         <p className="text-5xl">Impact Stories</p>
-        <div className="grid grid-cols-2 p-4">
+        <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-1 lg:grid-cols-2">
           <div className="text-left">
             <p className="text-base	font-semibold	text-text-header-2">
               Abel Tsegaye
@@ -235,7 +241,7 @@ export default function Home() {
               See More
             </button>
           </div>
-          <div>
+          <div className="hidden md:block">
             <Image
               src="/images/impact.png"
               alt=""

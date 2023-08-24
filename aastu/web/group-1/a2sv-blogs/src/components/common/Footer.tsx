@@ -3,7 +3,7 @@ export default function Footer() {
   return (
     <footer className="">
       <div className="grid lg:grid-cols-5 gap-2 border-2 border-white p-10 md:grid-cols-2 sm:md:grid-cols-1">
-        <div className="">
+        <div className="hidden md:block">
           <Image
             src="/images/upskill.png"
             width={240}
