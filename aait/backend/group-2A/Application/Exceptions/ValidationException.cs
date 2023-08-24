@@ -10,6 +10,7 @@ public class ValidationException : ApplicationException
     {
         foreach (var error in validationResult.Errors)
         {
+            Console.WriteLine(error.ErrorMessage);
             Errors.Add(error.ErrorMessage);
         }
 
