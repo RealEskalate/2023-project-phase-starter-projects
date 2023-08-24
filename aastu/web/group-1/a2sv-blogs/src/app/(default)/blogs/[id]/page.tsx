@@ -1,4 +1,4 @@
-"use client";
+'use client';
 import Image from "next/image";
 import { useGetBlogByIdQuery } from "@/lib/redux/features/blog";
 
@@ -30,35 +30,29 @@ const Blog = ({ params }: { params: { id: string } }) => {
           )}
         </p>
       </div>
-      {blogData.image && (
-        <Image
-          src={blogData.image}
-          alt="blog image"
-          width={1000}
-          height={450}
-        />
-      )}{" "}
+      <Image src={blogData.image} alt="blog image" width={1000} height={450} />
       <div className="flex flex-col items-center gap-2">
-        {blogData.author && (
-          <Image
-            src={blogData.author.image}
-            alt="author image"
-            width={50}
-            height={50}
-            className="rounded-full w-20 h-20 object-cover"
-          />
-        )}
+        <Image
+          src={blogData.author.image}
+          alt="author image"
+          width={50}
+          height={50}
+          className="rounded-full"
+        />
         <p className="font-montserrat uppercase text-xs">
-          {blogData.author && blogData.author.name}
+          {blogData.author.name}
         </p>
       </div>
       <div className="md:px-32 flex flex-col gap-8 text-justify py-4">
+        <div>
+          <p className="font-montserrat text-lg font-bold">
+            {blogData.description}
+          </p>
+        </div>
         {blogData.description.split("\n").map((paragraph: any, index: any) => (
-          <p
-            key={index}
-            className="font-montserrat text-sm"
-            dangerouslySetInnerHTML={{ __html: paragraph }}
-          ></p>
+          <p key={index} className="font-montserrat text-sm">
+            {paragraph}
+          </p>
         ))}
       </div>
       <div className="text-left w-full flex flex-col gap-12">
