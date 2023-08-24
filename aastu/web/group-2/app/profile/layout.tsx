@@ -1,8 +1,19 @@
 "use client";
+import { useAppSelector } from '@/lib/redux/hooks';
+import { checkLogin } from '@/lib/redux/slices/loginSlice';
 import Link from 'next/link'
-import { usePathname } from 'next/navigation'
+import { usePathname, useRouter } from 'next/navigation'
 export default function ProfileLayout(props: React.PropsWithChildren) {
     const currentRoute = usePathname();
+    // const router = useRouter()
+
+    // const login = useAppSelector(checkLogin)
+
+    // if (login.length === 0){
+    //     router.replace('/')
+    //     return <></>
+    // }
+
     return (
         <div 
             className='font-primaryFont my-12 space-y-6 mx-4 md:mx-12 md:my-12'>

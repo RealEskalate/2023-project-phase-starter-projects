@@ -1,5 +1,7 @@
 import { TokenAndUser } from "@/lib/types";
 import { createSlice } from "@reduxjs/toolkit";
+import { useAppSelector } from "../hooks";
+import { RootState } from "../store";
 
 const initialState: TokenAndUser = {
   token: "",
@@ -11,7 +13,6 @@ export const loginSlice = createSlice({
   initialState,
   reducers: {
     setUser: (state: TokenAndUser, action) => {     
-      console.log("I'm here",action) 
       localStorage.setItem("login", JSON.stringify(action.payload))
       state = action.payload
     },
@@ -24,5 +25,7 @@ export const loginSlice = createSlice({
     }
   }
 })
+
+export const checkLogin = (state: RootState) => state.login.token
 
 export const { setUser, unsetUser } = loginSlice.actions
