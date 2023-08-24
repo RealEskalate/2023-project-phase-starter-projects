@@ -6,5 +6,4 @@ import 'package:dartz/dartz.dart';
 abstract class ProfileRepository {
   Future<Either<Failure, Profile>> getProfile();
   Future<Either<Failure, Profile>> updateProfilePicture(String image);
-  Future<Either<Failure, List<Article>>> getAllArticles();
 }
