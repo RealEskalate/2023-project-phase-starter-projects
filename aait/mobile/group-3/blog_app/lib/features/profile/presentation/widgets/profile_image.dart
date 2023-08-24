@@ -1,16 +1,17 @@
 
+import 'package:blog_app/core/color/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class ProfileImage extends StatelessWidget {
   final String imageName;
   final kInnerDecoration = BoxDecoration(
-      color: Colors.white,
-      border: Border.all(color: Colors.white),
+      color: whiteColor,
+      border: Border.all(color: whiteColor),
       borderRadius: BorderRadius.circular(24));
   final kOuterDecoration = BoxDecoration(
       gradient: LinearGradient(
-          colors: [Color(0xFF376AED), Color(0xFF49B0E2), Color(0xFF9CECFB)]),
+          colors: [blue, lightBlue,aqua]),
       borderRadius: BorderRadius.circular(24));
 
   ProfileImage({super.key, required this.imageName});
