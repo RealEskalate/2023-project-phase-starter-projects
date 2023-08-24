@@ -20,7 +20,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Blog App',
+      title: 'BLOG APP',
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(
             seedColor: Colors.white, secondary: const Color(0xffEE6F57)),
@@ -30,6 +30,7 @@ class MyApp extends StatelessWidget {
       routes: {
         '/home': (context) => const Home(),
         '/profile': (context) => const UserProfileScreen(),
+
         // define routes here
       },
     );
