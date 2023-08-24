@@ -13,15 +13,10 @@ public class LikeRepository : ILikeRepository{
         _dbContext = context;
         _dbLikes = context.Set<Like>();
     }
-    public async Task<List<UserDto>> Likers(int id){
+    public async Task<List<User>> Likers(int id){
         var likers = await _dbLikes
             .Where(like => like.PostId == id)
-            .Select(like => new UserDto
-            {
-                Id = like.User.Id,
-                FullName = like.User.FullName,
-                UserName = like.User.UserName
-            })
+            .Select(like => like.User)
             .ToListAsync();
         return likers;
     }
@@ -32,11 +27,9 @@ public class LikeRepository : ILikeRepository{
 
     public async Task LikePost(Like like){
         await _dbLikes.AddAsync(like);
-        await _dbContext.SaveChangesAsync();
     }
 
     public async Task UnlikePost(Like like){
         _dbLikes.Remove(like);
-        await _dbContext.SaveChangesAsync();
     }
 }

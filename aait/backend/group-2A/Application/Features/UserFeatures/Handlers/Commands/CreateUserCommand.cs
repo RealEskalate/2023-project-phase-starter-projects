@@ -13,23 +13,25 @@ namespace Application.Features.UserFeatures.Handlers.Commands
 {
     public class CreateUserCommandHandler : IRequestHandler<CreateUserCommand, int>
     {
-        private readonly IUserRepository _userRepository;
-        private readonly Mapper _mapper;
+        private readonly IUnitOfWork _unitOfWork;
+        private readonly IMapper _mapper;
 
-        public CreateUserCommandHandler(IUserRepository userRepository)
+        public CreateUserCommandHandler(IUnitOfWork unitOfWork, IMapper mapper)
         {
-            _userRepository = userRepository;
+            _mapper = mapper;
+            _unitOfWork = unitOfWork;
         }
 
         public async Task<int> Handle(CreateUserCommand request, CancellationToken cancellationToken){
-            var validator = new CreateUserDTOValidator(_userRepository);
+            var validator = new CreateUserDTOValidator(_unitOfWork.userRepository);
             var validationResult = await validator.ValidateAsync(request.CreateUser);
             if (!validationResult.IsValid)
             {
                 throw new ValidationException(validationResult);
             }
             var user = _mapper.Map<Domain.Entities.User>(request.CreateUser);
-            await _userRepository.Add(user);
+            await _unitOfWork.userRepository.Add(user);
+            await _unitOfWork.Save();
             return user.Id;
         }
     }

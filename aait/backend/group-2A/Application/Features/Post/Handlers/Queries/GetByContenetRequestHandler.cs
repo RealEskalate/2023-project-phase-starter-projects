@@ -8,16 +8,16 @@ namespace Application.Features.Post.Handlers.Queries;
 
 public class GetByContentRequestHandler : IRequestHandler<GetByContenetRequest, List<PostDto>>{
     
-    private readonly IPostRepository _postRepository;
-    private readonly Mapper _mapper;
+    private readonly IUnitOfWork _unitOfWork;
+    private readonly IMapper _mapper;
 
-    public GetByContentRequestHandler(IPostRepository postRepository, Mapper mapper){
-        _postRepository = postRepository;
+    public GetByContentRequestHandler(IUnitOfWork unitOfWork, IMapper mapper){
         _mapper = mapper;
+        _unitOfWork = unitOfWork;
     }
 
     public async Task<List<PostDto>> Handle(GetByContenetRequest request, CancellationToken cancellationToken){
-        var posts = await _postRepository.GetByContent(request.Contenet);
+        var posts = await _unitOfWork.postRepository.GetByContent(request.Contenet);
         return _mapper.Map<List<PostDto>>(posts);
     }
 }
