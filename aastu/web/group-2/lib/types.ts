@@ -1,3 +1,4 @@
+import { StaticImageData } from "next/image";
 export interface User {
   _id?: string;
   name: string;
@@ -28,4 +29,19 @@ export interface TokenAndUser {
     email:string,
     name:string
   } | null
+}
+
+export interface Story {
+  heading: string;
+  paragraph: string;
+}
+
+export interface Stories {
+  alternate?: boolean;
+  profileImage?: StaticImageData;
+  personName: string;
+  imgURL: string;
+  role: string;
+  location: string;
+  story: Story[];
 }
