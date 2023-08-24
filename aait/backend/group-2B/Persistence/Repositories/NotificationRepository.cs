@@ -16,7 +16,7 @@ namespace SocialSync.Persistence.Repositories
         public async Task<List<Notification>> GetAll(int userId)
         {
             return await _dbContext.Set<Notification>()
-                .Where(n => n.FollowedUserId == userId)
+                .Where(n => n.SenderId == userId)
                 .ToListAsync();
         }
     }
