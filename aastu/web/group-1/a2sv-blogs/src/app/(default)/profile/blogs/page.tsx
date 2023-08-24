@@ -1,6 +1,9 @@
-import ProfileBlogCard from "@/components/blogs/ProfileCard";
-
+"use client";
+import MyBlogsList from "@/components/profile/MyBlogsList";
+import { useAuth } from "@/hooks/useAuth";
 export default function page() {
+  const { auth } = useAuth();
+  console.log(auth);
   return (
     <section>
       <div className="text-gray-500 space-y-1 mt-5">
@@ -10,11 +13,7 @@ export default function page() {
         </p>
       </div>
       <hr className="my-5" />
-      <div className="grid grid-cols-4 gap-6 mt-3">
-        {Array.from({ length: 8 }, (_, i) => i + 1).map(() => (
-          <ProfileBlogCard />
-        ))}
-      </div>
+      <div>{auth.token && <MyBlogsList />}</div>
     </section>
   );
 }
