@@ -3,6 +3,7 @@ import 'package:http/http.dart' as http;
 import 'package:internet_connection_checker/internet_connection_checker.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import 'core/network/custom_client.dart';
 import 'core/network/network_info.dart';
 import 'features/article/data/datasources/local/local.dart';
 import 'features/article/data/datasources/remote/remote.dart';
@@ -46,6 +47,8 @@ Future<void> init() async {
   // Core
   serviceLocator.registerLazySingleton<NetworkInfo>(
       () => NetworkInfoImpl(serviceLocator()));
+  serviceLocator.registerLazySingleton<CustomClient>(
+      () => CustomClient(serviceLocator()));
 
   // Repository
   serviceLocator.registerLazySingleton<ArticleRepository>(
