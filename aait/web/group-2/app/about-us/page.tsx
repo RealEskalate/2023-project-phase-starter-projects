@@ -37,25 +37,25 @@ const content = {
             title: 'Q&As',
             body: 'In Q&As, we get to know engineers, founders, and entrepreneurs from top tech companies. We see that they are normal people like us and we learn the best practices.'
         },
-       {
-        id: '3',
-        icon: '/images/Ellipse-3.png',
-        title: 'Problem Solving Sessions',
-        body:'We solve technical problems on a whiteboard while explaining to the class. It helps to get a feel of an interview environment.'
-       },
-       {
-        id: '4',
-        icon: '/images/Ellipse-4.png',
-        title: 'Learning How To Approach',
-        body:'Students observe how an experienced problem solver approaches a problem from understanding it to implementing a working solution.'
-         },
-            {
-                id: '5',
-                icon: '/images/Ellipse-5.png',
-                title: 'Bi-weekly 1:1s',
-                body: 'In 1:1s, we can talk about anything that matters; clearly no boundaries. The more we speak our minds without a filter, the better for the team.'
-            },
-        
+        {
+            id: '3',
+            icon: '/images/Ellipse-3.png',
+            title: 'Problem Solving Sessions',
+            body: 'We solve technical problems on a whiteboard while explaining to the class. It helps to get a feel of an interview environment.'
+        },
+        {
+            id: '4',
+            icon: '/images/Ellipse-4.png',
+            title: 'Learning How To Approach',
+            body: 'Students observe how an experienced problem solver approaches a problem from understanding it to implementing a working solution.'
+        },
+        {
+            id: '5',
+            icon: '/images/Ellipse-5.png',
+            title: 'Bi-weekly 1:1s',
+            body: 'In 1:1s, we can talk about anything that matters; clearly no boundaries. The more we speak our minds without a filter, the better for the team.'
+        },
+
 
     ]
 };
@@ -199,9 +199,9 @@ export default function AboutUs() {
 
             <div className="mt-20">
                 <h1 className='text-center text-[52px] text-[#2B2A35] font-poppins font-semibold mb-20'>Social <span className='text-primary'>Projects</span></h1>
-                <div className='flex flex-col'>
-                    <div className='flex mb-25'>
-                        <div className='relative flex-1 w-full h-64'>
+                <div className='grid grid-row-2 gap-10'>
+                    <div className='grid grid-cols-2'>
+                        <div className='relative cols-span-1 w-full h-64'>
                             <Image
                                 src='/images/hakim.png'
                                 alt='hakim hub'
@@ -210,28 +210,42 @@ export default function AboutUs() {
                                 className="rounded-xl"
                             />
                         </div>
-                        <div className='flex-1 text-right'>
+                        <div className='cols-span-1 text-right'>
 
                             <h4 className='text-[#1E3A8A] text-2xl'>Social project</h4>
                             <h2 className='mt-6 text-5xl text-primary capitalize font-semibold leading-8'>hakim hub</h2>
-                            <p className='text-xl font-nunito font-light mt-6'>HakimHub is a platform that provides information about healthcare facilities and healthcare professionals in Ethiopia. Hakimhub makes information about hospitals, medical laboratories, and doctors conveniently accessible to its users.</p>
+                            <p className='text-[22px] font-poppins font-light mt-6 mb-16'>HakimHub is a platform that provides information about healthcare facilities and healthcare professionals in Ethiopia. Hakimhub makes information about hospitals, medical laboratories, and doctors conveniently accessible to its users.</p>
 
 
-                            <div> <Link href='#'>Github</Link> <Link href='#'>Website</Link></div>
+                            <div className='flex justify-end w-full gap-4'>
+                                <Link href='#' className='relative w-8 h-8'>
+                                    <Image src='/images/github.png' alt='github link' layout="fill" objectFit="contain" />
+                                </Link>
+                                <Link href='#' className='relative w-8 h-8'>
+                                    <Image src='/images/link.png' alt='website link' layout="fill" objectFit="contain" />
+                                </Link>
+                            </div>
                         </div>
                     </div>
-                    <div className='flex mb-25'>
+                    <div className='grid grid-cols-2 '>
 
-                        <div className='flex-1 text-left'>
+                        <div className='cols-span-1 text-left'>
 
                             <h4 className='text-[#1E3A8A] text-2xl'>Social project</h4>
                             <h2 className='mt-6 text-5xl text-primary capitalize font-semibold leading-8'>track sym</h2>
-                            <p className='text-xl font-nunito font-light mt-6'>TrackSym is a non-commercial app that uses crowd-sourcing to collect and visualize the density of the relevant Covid-19 symptoms. Symptom data, aggregated by places, can help people avoid visiting areas that are heavily populated by symptomatic people.</p>
+                            <p className='text-[22px] font-poppins font-light mt-8 mb-16'>TrackSym is a non-commercial app that uses crowd-sourcing to collect and visualize the density of the relevant Covid-19 symptoms. Symptom data, aggregated by places, can help people avoid visiting areas that are heavily populated by symptomatic people.</p>
 
 
-                            <div> <Link href='#'>Github</Link> <Link href='#'>Website</Link></div>
+                            <div className='flex justify-start w-full gap-4'>
+                                <Link href='#' className='relative w-8 h-8'>
+                                    <Image src='/images/github.png' alt='github link' layout="fill" objectFit="contain" />
+                                </Link>
+                                <Link href='#' className='relative w-8 h-8'>
+                                    <Image src='/images/link.png' alt='website link' layout="fill" objectFit="contain" />
+                                </Link>
+                            </div>
                         </div>
-                        <div className='relative flex-1 w-full h-64'>
+                        <div className='relative cols-span-1 w-full h-64'>
                             <Image
                                 src='/images/trackSym.png'
                                 alt='hakim hub'
@@ -248,24 +262,24 @@ export default function AboutUs() {
             <div className='mt-20'>
                 <h2 className='font-poppins font-semibold text-[52px] text-center'>A2SV <span className='text-primary'>Session</span></h2>
                 <div className='grid grid-cols-3 gap-4 `grid-rows-2  font-poppins my-4'>
-                        {
-                            content.sessions.map(session => {
-                                return (
-                                    <div className=' p-8 col-span-1 shadow-lg rounded-lg'> 
+                    {
+                        content.sessions.map(session => {
+                            return (
+                                <div className=' p-8 col-span-1 shadow-lg rounded-lg'>
                                     <div className='relative w-[100px] h-[100px]'>
-                                    <Image  
-                                    src={session.icon}
-                                    alt='icon'
-                                    objectFit="contain"
-                                    layout='fill'
-                                    />
+                                        <Image
+                                            src={session.icon}
+                                            alt='icon'
+                                            objectFit="contain"
+                                            layout='fill'
+                                        />
                                     </div>
                                     <h3 className='my-9 text-3xl font-semibold text-[#363636] leading-9'>{session.title}</h3>
-                                    <p className='text-2xl text-[#495167] leading-8'>{session.body}</p>
-                                    </div>
-                                )
-                            })
-                        }
+                                    <p className='text-2xl text-[#495167] font-nunito leading-8'>{session.body}</p>
+                                </div>
+                            )
+                        })
+                    }
                 </div>
 
             </div>
