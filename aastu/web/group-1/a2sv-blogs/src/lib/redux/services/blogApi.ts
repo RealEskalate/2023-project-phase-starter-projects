@@ -29,6 +29,9 @@ const blogApi = baseApi.injectEndpoints({
         method: "DELETE",
       }),
     }),
+    getMyBlogs: builder.query<Blog[], void>({
+      query: () => "/blogs/my-blogs",
+    }),
   }),
   overrideExisting: false,
 });

@@ -10,6 +10,8 @@ export interface AuthState {
   userId?: string;
   userName?: string;
   userRole?: string;
+  userProfile?: string;
+  userEmail?: string;
   error: any | null;
 }
 
@@ -20,6 +22,7 @@ const initialState: AuthState = {
   userId: "",
   userName: "",
   userRole: "",
+  userProfile: "",
   error: null,
 };
 
@@ -35,14 +38,18 @@ const authSlice = createSlice({
       state.userId = "";
       state.userName = "";
       state.userRole = "";
+      state.userProfile = "";
+      state.userEmail = "";
     },
     setAuth: (state, { payload }) => {
-      state.token = payload.token;
-      state.userId = payload.user;
-      state.userName = payload.userName;
-      state.userRole = payload.userRole;
+      state.error = payload.error;
       state.isAuthenticated = payload.isAuthenticated;
       state.isLoading = payload.isLoading;
+      state.token = payload.token;
+      state.userEmail = payload.userEmail;
+      state.userId = payload.userId;
+      state.userProfile = payload.userProfile;
+      state.userRole = payload.userRole;
     },
   },
   extraReducers(builder) {
@@ -65,6 +72,8 @@ const authSlice = createSlice({
         state.userId = payload.user;
         state.userName = payload.userName;
         state.userRole = payload.userRole;
+        state.userProfile = payload.userProfile;
+        state.userEmail = payload.userEmail;
         state.isAuthenticated = true;
         state.isLoading = false;
         localStorage.setItem("auth", JSON.stringify(state));
