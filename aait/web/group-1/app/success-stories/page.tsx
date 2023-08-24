@@ -1,7 +1,7 @@
 import React from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
-import Story from "@/components/Story";
+import Story from "@/components/success-stories/Story";
 import { SuccessStory } from "@/types/story";
 
 const Page: React.FC = () => {
@@ -90,9 +90,9 @@ const Page: React.FC = () => {
   ].map(icon => `/images/success-social-icons/${ icon }.png`);
 
   return (
-    <div className='flex flex-col px-[10a0px] space-y-10 px-32'>
+    <div className='flex flex-col px-[100px] space-y-32'>
       <div className='text-center font-poppins mt-[70px] mb-[120px]'>
-        <h2 className='text-[46px] font-semibold'>Impact Stories</h2>
+        <h2 className='text-[46px] font-semibold mb-[25px]'>Impact Stories</h2>
         <p className='text-[36px] px-[270px]'>Behind every success is a story. Learn about the stories of A2SVians</p>
         <span></span>
       </div>
@@ -102,7 +102,7 @@ const Page: React.FC = () => {
         }
       </div>
       <div className=''>
-        <h1 className='text-center text-5xl font-dmSans mb-10 font-bold'>Current Interview Partners</h1>
+        <h1 className='text-center text-5xl font-dmSans mb-20'>Current Interview Partners</h1>
         <div className='flex justify-center items-center mt-5'>
           {
             partners.slice(0, 4).map(partner => {
@@ -137,12 +137,13 @@ const Page: React.FC = () => {
 
         <div className='col-span-1 mt-20'>
           <Image
+            className='pt-3'
             src='/images/logo.png'
             width={ 150 }
             height={ 40 }
             alt='A2SV Main Logo'
           />
-          <div>
+          <div className='text-gray-500 mt-[100px]'>
             <p>© Copyright 2023 A2SV Foundation.</p>
             <p>Terms of service | Privacy Policy</p>
           </div>
@@ -181,14 +182,14 @@ const Page: React.FC = () => {
         </div>
         <div className='col-span-1 mt-20'>
           <div>
-            <h3 className='mb-5 text-[24px] font-bold'>Get in touch</h3>
-            <div>
+            <h3 className='mb-5 text-[24px] font-semibold'>Get in touch</h3>
+            <div className='text-gray-500'>
               <p>Questions or feedback?</p>
               <p>we would like to hear from you</p>
             </div>
           </div>
-          <div>
-            <ul className='flex justify-start space-x-5'>
+          <div className='mt-5'>
+            <ul className='flex flex-row justify-start space-x-5'>
               {
                 socialIcons.map(icon => {
                   return (
