@@ -13,7 +13,7 @@ const DynamicTextEditor = dynamic(() => import('@/app/components/add-blog/TextEd
 const AddBlog: React.FC = () => {
   const [file, setFile] = useState<File>();
   const [blogTitle, setBlogTitle] = useState<string>();
-  const [selectedTags, setSelectedTags] = useState<string[]>([]);
+  const [selectedTags, setSelectedTags] = useState<string[]>(['development']);
   const [blogContent, setBlogContent] = useState<string>('');
 
   const dispatch = useDispatch();
@@ -125,29 +125,85 @@ const AddBlog: React.FC = () => {
         <div className="col-span-4 md:w-[90%] md:border-l md:h-[55%]">
           <div className="ml-4 md:ml-12 ">
             <h2 className="font-semibold p-4 text-lg">Select Tag</h2>
-            <div className="flex flex-wrap items-center  font-secondaryFont font-medium">
-              <div className="tag text-primaryColor border-[1px] border-primaryColor hover:cursor-pointer">
+            <div className="flex flex-wrap items-center  font-secondaryFont font-medium gap-2">
+              <div
+                className={` ${
+                  selectedTags.includes('development')
+                    ? '!text-primaryColor !border !border-primaryColor'
+                    : ''
+                } rounded-full px-3 py-2 bg-gray-200 border border-gray-200 text-sm text-center text-[#414141] hover:cursor-pointer`}
+                onClick={() => addTags('development')}
+              >
                 Development
               </div>
-              <div className="tag" onClick={() => addTags('sports')}>
+              <div
+                className={` ${
+                  selectedTags.includes('sports')
+                    ? '!text-primaryColor !border !border-primaryColor'
+                    : ''
+                } rounded-full px-3 py-2 bg-gray-200 border border-gray-200 text-sm text-center text-[#414141] hover:cursor-pointer`}
+                onClick={() => addTags('sports')}
+              >
                 Sports
               </div>
-              <div className="tag" onClick={() => addTags('Writing')}>
+              <div
+                className={` ${
+                  selectedTags.includes('Writing')
+                    ? '!text-primaryColor !border !border-primaryColor'
+                    : ''
+                } rounded-full px-3 py-2 bg-gray-200 border border-gray-200 text-sm text-center text-[#414141] hover:cursor-pointer`}
+                onClick={() => addTags('Writing')}
+              >
                 Writing
               </div>
-              <div className="tag" onClick={() => addTags('Self Improvement')}>
+              <div
+                className={` ${
+                  selectedTags.includes('Self Improvement')
+                    ? '!text-primaryColor !border !border-primaryColor'
+                    : ''
+                } rounded-full px-3 py-2 bg-gray-200 border border-gray-200 text-sm text-center text-[#414141] hover:cursor-pointer`}
+                onClick={() => addTags('Self Improvement')}
+              >
                 Self Improvement
               </div>
-              <div className="tag" onClick={() => addTags('Technology')}>
+              <div
+                className={` ${
+                  selectedTags.includes('Technology')
+                    ? '!text-primaryColor !border !border-primaryColor'
+                    : ''
+                } rounded-full px-3 py-2 bg-gray-200 border border-gray-200 text-sm text-center text-[#414141] hover:cursor-pointer`}
+                onClick={() => addTags('Technology')}
+              >
                 Technology
               </div>
-              <div className="tag" onClick={() => addTags('Social')}>
+              <div
+                className={` ${
+                  selectedTags.includes('Social')
+                    ? '!text-primaryColor !border !border-primaryColor'
+                    : ''
+                } rounded-full px-3 py-2 bg-gray-200 border border-gray-200 text-sm text-center text-[#414141] hover:cursor-pointer`}
+                onClick={() => addTags('Social')}
+              >
                 Social
               </div>
-              <div className="tag" onClick={() => addTags('Data Science')}>
+              <div
+                className={` ${
+                  selectedTags.includes('Data Science')
+                    ? '!text-primaryColor !border !border-primaryColor'
+                    : ''
+                } rounded-full px-3 py-2 bg-gray-200 border border-gray-200 text-sm text-center text-[#414141] hover:cursor-pointer`}
+                onClick={() => addTags('Data Science')}
+              >
                 Data Science
               </div>
-              <div className="tag" onClick={() => addTags('Programming')}>
+              <div
+                className={` ${
+                  selectedTags.includes('Programming')
+                    ? '!text-primaryColor !border !border-primaryColor'
+                    : ''
+                } rounded-full px-3 py-2 bg-gray-200 border border-gray-200 text-sm text-center text-[#414141] hover:cursor-pointer`}
+                onClick={() => addTags('Programming')}
+              >
                 Programming
               </div>
             </div>
