@@ -3,6 +3,7 @@
 
 using Application.DTO.UserDTO;
 using Domain.Entities;
+
 namespace Application.Contracts.Persistance;
 
 public interface ILikeRepository

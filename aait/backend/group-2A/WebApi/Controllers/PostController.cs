@@ -4,6 +4,7 @@ using Application.DTO.Post;
 using Application.Features.Post.Request.Commands;
 using Application.Features.Post.Request.Queries;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace WebApi.Controllers;
@@ -20,6 +21,7 @@ public class PostController : ControllerBase
     }
 
     [HttpGet]
+
     public async Task<IActionResult> GetNewsFeed( )
     {
         // token getter to be implemented
