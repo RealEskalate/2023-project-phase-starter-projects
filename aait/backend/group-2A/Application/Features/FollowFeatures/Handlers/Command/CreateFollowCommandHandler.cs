@@ -15,24 +15,23 @@ namespace Application.Features.FollowFeatures.Handlers.Command
 {
     public class CreateFollowCommandHandler : IRequestHandler<CreateFollowCommand, Unit>
     {
-        private readonly IFollowRepository _followRepository;
-        private readonly IUserRepository _userRepository;
+        private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
-
-        public CreateFollowCommandHandler(IFollowRepository followRepository, IMapper mapper)
+        public CreateFollowCommandHandler(IUnitOfWork unitOfWork, IMapper mapper)
         {
-            _followRepository = followRepository;
             _mapper = mapper;
+            _unitOfWork = unitOfWork;
         }
         public async Task<Unit> Handle(CreateFollowCommand request, CancellationToken cancellationToken){
-            var validation = new FollowDtoValidator(_userRepository);
+            var validation = new FollowDtoValidator(_unitOfWork.userRepository);
             var validationResult = await validation.ValidateAsync(request.follow);
             if (!validationResult.IsValid)
             {
                 throw new ValidationException(validationResult);
             }
             var follow = _mapper.Map<Follow>(request.follow);
-            await _followRepository.Follow(follow);
+            await _unitOfWork.followRepository.Follow(follow);
+            await _unitOfWork.Save();
             return Unit.Value;
         }
     }

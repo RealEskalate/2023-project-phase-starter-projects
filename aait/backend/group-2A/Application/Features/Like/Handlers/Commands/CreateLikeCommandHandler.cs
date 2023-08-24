@@ -9,26 +9,24 @@ namespace Application.Features.Like.Handlers.Commands
 {
     public class CreateLikeCommandHandler : IRequestHandler<CreateLikeCommand, Unit>
     {
-        private readonly IPostRepository _postRepository;
-        private readonly IUserRepository _userRepository;
-        private readonly ILikeRepository _likeRepository;
-        private readonly Mapper _mapper;
+        private readonly IUnitOfWork _unitOfWork;
+        private readonly IMapper _mapper;
 
-        public CreateLikeCommandHandler(IPostRepository postRepository, IUserRepository userRepository, ILikeRepository likeRepository){
-            _likeRepository = likeRepository;
-            _postRepository = postRepository;
-            _userRepository = userRepository;
+        public CreateLikeCommandHandler(IUnitOfWork unitOfWork, IMapper mapper){
+            _mapper = mapper;
+            _unitOfWork = unitOfWork;
         }
 
         public async Task<Unit> Handle(CreateLikeCommand request, CancellationToken cancellationToken)
         {
-            var validator = new LikedDtoValidator(_userRepository, _postRepository);
+            var validator = new LikedDtoValidator(_unitOfWork.userRepository, _unitOfWork.postRepository);
             var validationResult = await validator.ValidateAsync(request.like);
             if (!validationResult.IsValid)
             {
                 throw new ValidationException(validationResult);
             }
-            await _likeRepository.LikePost(_mapper.Map<Domain.Entities.Like>(request.like));
+            await _unitOfWork.likeRepository.LikePost(_mapper.Map<Domain.Entities.Like>(request.like));
+            await _unitOfWork.Save();
             return Unit.Value;
         }
     }

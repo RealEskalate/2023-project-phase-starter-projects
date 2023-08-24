@@ -6,20 +6,20 @@ using MediatR;
 
 namespace Application.Features.Comment.Handlers.Queries;
 
-public class GetCommentRequestHandler : IRequestHandler<GetCommentRequest, CommentDto>
-{
-    private readonly ICommentRepository _commentRepository;
+public class GetCommentRequestHandler : IRequestHandler<GetCommentRequest, CommentDto>{
+    
+    private readonly IUnitOfWork _unitOfWork;
     private readonly IMapper _mapper;
 
-    public GetCommentRequestHandler (ICommentRepository commentRepository, IMapper mapper)
+    public GetCommentRequestHandler(IUnitOfWork unitOfWork, IMapper mapper)
     {
-        _commentRepository = commentRepository;
         _mapper = mapper;
+        _unitOfWork = unitOfWork;
     }
     
     public async Task<CommentDto> Handle(GetCommentRequest request, CancellationToken cancellationToken)
     {
-        var comment = await _commentRepository.Get(request.commentId);
+        var comment = await _unitOfWork.commentRepository.Get(request.commentId);
         if (comment == null)
         {
             throw new Exception("Could not find comment");

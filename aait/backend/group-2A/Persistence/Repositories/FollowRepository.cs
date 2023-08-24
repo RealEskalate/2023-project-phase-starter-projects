@@ -1,6 +1,7 @@
 using Application.Contracts.Persistance;
 using Application.DTO.UserDTO;
 using Domain.Entities;
+using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.Persistance.Repository;
 
@@ -12,19 +13,28 @@ public class FollowRepository : IFollowRepository
         _dbContext = context;
     }
 
-    public Task Follow(Follow follow){
-        throw new NotImplementedException();
+    public async Task Follow(Follow follow){
+        await _dbContext.Follows.AddAsync(follow);
     }
 
-    public Task Unfollow(Follow Unfollow){
-        throw new NotImplementedException();
+    public async Task Unfollow(Follow Unfollow){
+        _dbContext.Follows.Remove(Unfollow);
     }
 
-    public Task<List<UserDto>> GetFollower(int id){
-        throw new NotImplementedException();
+    public async Task<List<User>> GetFollower(int id){
+        var followers = await _dbContext.Follows
+            .Where(f => f.FollowedId == id)
+            .Select(f => f.Follower)
+            .ToListAsync();
+
+        return followers;
     }
 
-    public Task<List<UserDto>> GetFollowing(int id){
-        throw new NotImplementedException();
+    public async Task<List<User>> GetFollowing(int id){
+        var following = await _dbContext.Follows
+            .Where(f => f.FollowerId == id)
+            .Select(f => f.Followed)
+            .ToListAsync();
+        return following;
     }
 }

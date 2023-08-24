@@ -5,8 +5,8 @@ namespace Application.Contracts.Persistance;
 
 public interface IFollowRepository{
 
-    Task<List<UserDto>> GetFollowing(int id);
-    Task<List<UserDto>> GetFollower(int id);
+    Task<List<User>> GetFollowing(int id);
+    Task<List<User>> GetFollower(int id);
     Task Follow(Follow follow);
     Task Unfollow(Follow Unfollow);
 

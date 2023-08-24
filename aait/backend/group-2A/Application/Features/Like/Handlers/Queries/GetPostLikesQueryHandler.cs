@@ -1,22 +1,25 @@
 using MediatR;
 using Application.Contracts.Persistance;
 using Application.DTO.UserDTO;
+using AutoMapper;
 
 namespace Application.Features.Like.Handlers.Query
 {
     public class GetPostLikesQueryHandler : IRequestHandler<GetPostLikesQuery, List<UserDto>>
     {
-        private readonly ILikeRepository _likeRepository;
+        private readonly IUnitOfWork _unitOfWork;
+        private readonly IMapper _mapper;
 
-        public GetPostLikesQueryHandler(ILikeRepository likeRepository)
+        public GetPostLikesQueryHandler(IUnitOfWork unitOfWork, IMapper mapper)
         {
-            _likeRepository = likeRepository;
+            _mapper = mapper;
+            _unitOfWork = unitOfWork;
         }
 
         public async Task<List<UserDto>> Handle(GetPostLikesQuery request, CancellationToken cancellationToken)
         {
-            var likes = await _likeRepository.Likers(request.Id);
-            return likes;
+            var likes = await _unitOfWork.likeRepository.Likers(request.Id);
+            return _mapper.Map<List<UserDto>>(likes);
         }
     }
 }
