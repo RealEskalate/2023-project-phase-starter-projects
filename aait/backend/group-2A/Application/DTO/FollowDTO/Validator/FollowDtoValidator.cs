@@ -15,6 +15,7 @@ namespace Application.DTO.FollowDTO.Validator
     {
         public FollowDtoValidator(IUserRepository userRepository)
         {
+            
             RuleFor(p => p.FollowerId)
                 .NotEmpty().WithMessage("{PropertyName} is Invalid.")
                 .NotNull()
@@ -23,13 +24,20 @@ namespace Application.DTO.FollowDTO.Validator
                     return exist;
                 }).WithMessage("User not found");
 
-            RuleFor(p => p.FollowedId)
+            RuleFor(p => p.FolloweeId)
                 .NotEmpty().WithMessage("{PropertyName} is Invalid.")
                 .NotNull()
                 .MustAsync(async (id, cancellation) => {
                     var exist = await userRepository.Exists(id);
                     return exist;
                 }).WithMessage("User not found");
+            
+            RuleFor(p => p)
+                .Must((follow, cancellation) =>
+                {
+                    return follow.FollowerId != follow.FolloweeId;
+                })
+                .WithMessage("You can't follow yourself");
 
         }
     }

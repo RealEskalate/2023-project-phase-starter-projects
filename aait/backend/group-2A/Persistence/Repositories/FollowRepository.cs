@@ -1,4 +1,5 @@
 ﻿using Application.Contracts.Persistance;
+using Application.DTO.UserDTO;
 using Domain.Entities;
 using Infrastructure;
 using Microsoft.EntityFrameworkCore;
@@ -8,41 +9,38 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Persistence.Repositories
+namespace Infrastructure.Persistance.Repository;
+
+public class FollowRepository : IFollowRepository
 {
-    public class FollowRepository : IFollowRepository
-    {
-        private readonly SocialSyncDbContext _dbContext;
+    private readonly SocialSyncDbContext _dbContext;
+    
+    public FollowRepository(SocialSyncDbContext context){
+        _dbContext = context;
+    }
 
-        public FollowRepository(SocialSyncDbContext dbContext)
-        {
-            _dbContext = dbContext;
-        }
+    public async Task Follow(Follow follow){
+        await _dbContext.Follows.AddAsync(follow);
+    }
 
-        public async Task<List<Follow>> GetFollowing(int id)
-        {
-            return await _dbContext.Follows
-                .Where(f => f.FollowerId == id)
-                .ToListAsync();
-        }
+    public async Task Unfollow(Follow Unfollow){
+        _dbContext.Follows.Remove(Unfollow);
+    }
 
-        public async Task<List<Follow>> GetFollower(int id)
-        {
-            return await _dbContext.Follows
-                .Where(f => f.FollowedId == id)
-                .ToListAsync();
-        }
+    public async Task<List<User>> GetFollower(int id){
+        var followers = await _dbContext.Follows
+            .Where(f => f.FollowedId == id)
+            .Select(f => f.Follower)
+            .ToListAsync();
 
-        public async Task Follow(Follow follow)
-        {
-            await _dbContext.Follows.AddAsync(follow);
-            await _dbContext.SaveChangesAsync();
-        }
+        return followers;
+    }
 
-        public async Task Unfollow(Follow follow)
-        {
-            _dbContext.Follows.Remove(follow);
-            await _dbContext.SaveChangesAsync();
-        }
+    public async Task<List<User>> GetFollowing(int id){
+        var following = await _dbContext.Follows
+            .Where(f => f.FollowerId == id)
+            .Select(f => f.Followed)
+            .ToListAsync();
+        return following;
     }
 }

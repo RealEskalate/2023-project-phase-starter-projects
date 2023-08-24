@@ -7,11 +7,10 @@ namespace Domain.Entities
         public required string Content { get; set; }
 
         //The User That Commented
-        public int UserId { get; set; }
-        public int PostId { get; set; }
-        
-        public int CreatedAt{ get; set; }
-        public int UpdatedAt{ get; set; }
+        public required int UserId { get; set; }
+        public required int PostId { get; set; }
+        public required int CreatedAt{ get; set; }
+        public required int UpdatedAt{ get; set; }
         
         //Navigation Property
         public virtual User? User{ get; set; }

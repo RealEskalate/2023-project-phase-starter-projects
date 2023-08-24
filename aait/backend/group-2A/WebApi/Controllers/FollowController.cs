@@ -53,7 +53,7 @@ namespace WebApi.Controllers
         public async Task<IActionResult> Unfollow(FollowDto followeeID)
         {
             // token getter to be implemented
-            var command = new DeleteFollowCommand { unfollow = followeeID };
+            var command = new DeleteFollowCommand { follow = followeeID };
             await _mediator.Send(command);
             return NoContent();
         }

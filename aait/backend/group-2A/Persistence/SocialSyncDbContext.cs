@@ -10,7 +10,8 @@ public class SocialSyncDbContext : DbContext
     public virtual DbSet<User> Users { get; set; }
     public virtual DbSet<Like> Likes { get; set; }
     public virtual DbSet<Follow> Follows { get; set; }
-        
+    public virtual DbSet<Notification> Notifications{ get; set; }
+
     public SocialSyncDbContext(DbContextOptions<SocialSyncDbContext> options) : base(options) { }
     
     protected override void OnModelCreating(ModelBuilder modelBuilder){
@@ -30,23 +31,38 @@ public class SocialSyncDbContext : DbContext
                     .HasMany(e => e.Posts)
                     .WithOne(e => e.User);
                 
-                // entity
-                //     .HasMany(e => e.Likes)
-                //     .WithMany(e => e.User)
-                //     .
+                entity
+                    .HasMany(e => e.Likes)
+                    .WithOne(e => e.User);
                 
                 entity
                     .HasMany(e => e.Comments)
                     .WithOne(e => e.User);
                 
+                entity.Property(e => e.FullName)
+                    .IsRequired();
+                
+                entity.Property(e => e.UserName)
+                    .IsRequired()
+                    .HasMaxLength(255);
+
+                entity.Property(e => e.Email)
+                    .IsRequired()
+                    .HasMaxLength(255);
+
+                entity.HasIndex(e => e.UserName).IsUnique();
+                entity.HasIndex(e => e.Email).IsUnique();
+                
             }
         );
-        // Not Sure
+   
         modelBuilder.Entity<Follow>(
             entity => {
                 entity
+                    .HasKey(e => new{ e.FollowedId, e.FollowerId });
+                entity
                     .HasOne(e => e.Follower)
-                    .WithMany(u => u.Following)
+                    .WithMany(u => u.Followee)
                     .HasForeignKey(e => e.FollowerId)
                     .OnDelete(DeleteBehavior.Cascade)
                     .HasConstraintName("FK_Follower_User");
@@ -79,6 +95,12 @@ public class SocialSyncDbContext : DbContext
                 entity
                     .HasMany(e => e.Comments)
                     .WithOne(e => e.Post);
+                entity
+                    .Property(e => e.Content)
+                    .IsRequired();
+                entity
+                    .Property(e => e.UserId)
+                    .IsRequired();
             }
         );
         modelBuilder.Entity<Comment>(
@@ -105,11 +127,22 @@ public class SocialSyncDbContext : DbContext
                     .HasForeignKey(e => e.UserId)
                     .OnDelete(DeleteBehavior.Cascade)
                     .HasConstraintName("FK_Comment_Post");
+                entity
+                    .Property(e => e.Content)
+                    .IsRequired();
+                entity
+                    .Property(e => e.UserId)
+                    .IsRequired();
+                entity
+                    .Property(e => e.PostId)
+                    .IsRequired();
             }
         );
 
         modelBuilder.Entity<Like>(
             entity => {
+                entity
+                    .HasKey(e => new{ e.PostId, e.UserId });
                 entity
                     .HasOne(e => e.User)
                     .WithMany(e => e.Likes)
@@ -124,7 +157,28 @@ public class SocialSyncDbContext : DbContext
                     .HasConstraintName("FK_Like_Post");
             }
         );
-
+        
+        modelBuilder.Entity<Notification>(
+            entity => {
+                entity
+                    .Property(e => e.Id)
+                    .UseIdentityColumn();
+                entity
+                    .Property(e => e.CreatedAt)
+                    .HasDefaultValueSql("CURRENT_TIMESTAMP AT TIME ZONE 'UTC'");
+                entity
+                    .HasOne(e => e.User)
+                    .WithMany(e => e.Notifications);
+                entity
+                    .Property(e => e.Message)
+                    .IsRequired();
+                entity
+                    .Property(e => e.UserId)
+                    .IsRequired();
+            }
+        );
+        
+        
 
     }
     
