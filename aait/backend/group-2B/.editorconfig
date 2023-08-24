@@ -1,0 +1,214 @@
+root = true
+
+# top-most EditorConfig file
+root = true
+
+##########################################
+# All files:
+# Warning: Don't use tabs for indentation
+##########################################
+[*]
+indent_style = space
+trim_trailing_whitespace = true
+guidelines = 100
+max_line_length = 100
+
+# The file must end with new line
+end_of_line = lf
+
+# Specifies the number of spaces to use per indentation level
+indent_size = 4
+
+[*.cs]
+# Modifier preferences
+csharp_preferred_modifier_order = public, private, protected, internal, const, static, extern, new, virtual, abstract, sealed, override, readonly, unsafe, volatile, async:suggestion
+
+# Implicit and explicit types
+# Specifies that the 'var' keyword should not be used for built-in types
+csharp_style_var_for_built_in_types=false:error
+
+# Specifies that the 'var' keyword should be used when the type is apparent
+csharp_style_var_when_type_is_apparent=true:error
+
+# Specifies that the 'var' keyword should be used elsewhere
+csharp_style_var_elsewhere=true:suggestion
+
+
+# Specifies that a new line should be added before an opening brace
+csharp_new_line_before_open_brace = all
+
+# Specifies that a new line should be added before an 'else' keyword
+csharp_new_line_before_else = true:error
+
+# Specifies that a new line should be added before a 'catch' keyword
+csharp_new_line_before_catch = true
+
+# Specifies that a new line should be added before a 'finally' keyword
+csharp_new_line_before_finally = true
+
+# Specifies that a new line should be added before members in object initializers
+csharp_new_line_before_members_in_object_initializers = true
+
+# Specifies that a new line should be added before members in anonymous types
+csharp_new_line_before_members_in_anonymous_types = true
+
+# Specifies that a new line should be added between clauses in a query expression
+csharp_new_line_between_query_expression_clauses = true
+
+csharp_new_lines_between_methods = true:error
+
+# Specifies that the contents of a 'case' statement should be indented
+csharp_indent_case_contents = true
+
+# Specifies that switch labels should be indented
+csharp_indent_switch_labels = true
+
+# Specifies that the contents of a block should be indented
+csharp_indent_block_contents = true
+
+# Code block preferences
+csharp_prefer_braces = true:error
+
+[*.{cs,vb}]
+# Organize usings
+dotnet_sort_system_directives_first = true:error
+dotnet_separate_import_directive_groups = true:error
+
+# Spacing options
+csharp_space_after_cast = false
+csharp_space_after_keywords_in_control_flow_statements = true
+csharp_space_between_method_declaration_parameter_list_parentheses = false
+csharp_space_between_method_call_parameter_list_parentheses = false
+csharp_space_between_parentheses = false
+csharp_space_before_colon_in_inheritance_clause = true
+csharp_space_after_colon_in_inheritance_clause = true
+csharp_space_around_binary_operators = before_and_after
+csharp_space_between_method_declaration_empty_parameter_list_parentheses = false
+csharp_space_between_method_call_name_and_opening_parenthesis = false
+csharp_space_between_method_call_empty_parameter_list_parentheses = false
+csharp_space_after_comma = true
+csharp_space_after_dot = false
+csharp_space_after_semicolon_in_for_statement = true
+
+# Naming styles
+dotnet_naming_style.pascal_case_style.capitalization = pascal_case
+dotnet_naming_style.camel_case_style.capitalization = camel_case
+
+# PascalCase with I prefix
+dotnet_naming_style.interface_style.capitalization = pascal_case
+dotnet_naming_style.interface_style.required_prefix = I
+
+# PascalCase with T prefix
+dotnet_naming_style.type_parameter_style.capitalization = pascal_case
+dotnet_naming_style.type_parameter_style.required_prefix = T
+
+# camelCase with _ prefix for private fields
+dotnet_naming_style.private_field_style.capitalization = camel_case
+dotnet_naming_style.private_field_style.required_prefix = _
+
+# camelCase without prefix for parameters
+dotnet_naming_style.parameter_style.capitalization = camel_case
+dotnet_naming_style.parameter_style.required_prefix =
+
+# camelCase without prefix for local variables
+dotnet_naming_style.local_variable_style.capitalization = camel_case
+dotnet_naming_style.local_variable_style.required_prefix =
+
+# Interfaces
+dotnet_naming_symbols.interface_symbol.applicable_kinds = interface
+dotnet_naming_symbols.interface_symbol.applicable_accessibilities = *
+dotnet_naming_rule.interface_naming.symbols = interface_symbol
+dotnet_naming_rule.interface_naming.style = interface_style
+dotnet_naming_rule.interface_naming.severity = error
+
+# Classes, Structs, Enums, Properties, Methods, Local Functions, Events, Namespaces
+dotnet_naming_symbols.class_symbol.applicable_kinds = class, struct, enum, property, method, local_function, event, namespace, delegate
+dotnet_naming_symbols.class_symbol.applicable_accessibilities = *
+dotnet_naming_rule.class_naming.symbols = class_symbol
+dotnet_naming_rule.class_naming.style = pascal_case_style
+dotnet_naming_rule.class_naming.severity = error
+
+# Type Parameters
+dotnet_naming_symbols.type_parameter_symbol.applicable_kinds = type_parameter
+dotnet_naming_symbols.type_parameter_symbol.applicable_accessibilities = *
+dotnet_naming_rule.type_parameter_naming.symbols = type_parameter_symbol
+dotnet_naming_rule.type_parameter_naming.style = type_parameter_style
+dotnet_naming_rule.type_parameter_naming.severity = warning
+
+# Public Fields
+dotnet_naming_symbols.public_field_symbol.applicable_kinds = field
+dotnet_naming_symbols.public_field_symbol.applicable_accessibilities = public, internal, protected, protected_internal
+dotnet_naming_rule.public_field_naming.symbols = public_field_symbol
+dotnet_naming_rule.public_field_naming.style = pascal_case_style
+dotnet_naming_rule.public_field_naming.severity = suggestion
+
+# Private Fields
+dotnet_naming_symbols.private_field_symbol.applicable_kinds = field
+dotnet_naming_symbols.private_field_symbol.applicable_accessibilities = private
+dotnet_naming_rule.private_field_naming.symbols = private_field_symbol
+dotnet_naming_rule.private_field_naming.style = private_field_style
+dotnet_naming_rule.private_field_naming.severity = error
+
+# Parameters
+dotnet_naming_symbols.parameter_symbol.applicable_kinds = parameter
+dotnet_naming_symbols.parameter_symbol.applicable_accessibilities = *
+dotnet_naming_rule.parameter_naming.symbols = parameter_symbol
+dotnet_naming_rule.parameter_naming.style = parameter_style
+dotnet_naming_rule.parameter_naming.severity = error
+
+# Local Variables
+dotnet_naming_symbols.local_variable_symbol.applicable_kinds = local
+dotnet_naming_symbols.local_variable_symbol.applicable_accessibilities = *
+dotnet_naming_rule.local_variable_naming.symbols = local_variable_symbol
+dotnet_naming_rule.local_variable_naming.style = local_variable_style
+dotnet_naming_rule.local_variable_naming.severity = error
+
+# # use blog scoped namespace declarations
+# csharp_style_namespace_declarations = block_scoped:error
+
+# Async methods naming rules
+dotnet_naming_rule.async_methods_end_with_async = true:error
+dotnet_naming_rule.async_methods_end_with_async.severity = error
+dotnet_naming_rule.async_methods_end_with_async.severity = error
+dotnet_naming_rule.async_methods_end_with_async.symbols = async_methods
+dotnet_naming_rule.async_methods_end_with_async.style = end_in_async_style
+
+dotnet_naming_symbols.async_methods.applicable_kinds = method
+dotnet_naming_symbols.async_methods.applicable_accessibilities = public, internal, private
+dotnet_naming_symbols.async_methods.required_modifiers = async
+dotnet_naming_symbols.async_methods.required_modifiers_exception = true
+
+dotnet_naming_style.end_in_async_style.required_suffix = Async
+dotnet_naming_style.end_in_async_style.required_suffix_error = An async method name should end with 'Async'.
+
+# Maximum of two blank lines between code statements
+[*.{cs,vb}]
+max_consecutive_blank_lines = 2:error
+
+# use braces when even they are optional
+csharp_prefer_braces_for_single_line_control_statements = true
+csharp_prefer_braces_for_single_line_properties = true
+csharp_prefer_braces_for_single_line_methods = true
+csharp_prefer_braces_for_single_line_events = true
+
+# Use braces for single-line control statements, properties, methods, events, and lambdas
+dotnet_style_prefer_braces = always
+csharp_prefer_braces = true:error
+
+# Declare using statements at the top of the file
+csharp_using_directive_placement = outside_namespace
+dotnet_diagnostic.IDE0065.severity = error
+dotnet_diagnostic.IDE0005.severity = error
+dotnet_sort_system_directives_first = true:error
+dotnet_separate_import_directive_groups = true:error
+dotnet_separate_import_directive_groups.severity = error
+dotnet_separate_import_directive_groups.severity = error
+
+
+dotnet_naming_rule.camel_case_fields.severity = error
+dotnet_naming_rule.camel_case_fields.symbols = private_fields
+dotnet_naming_rule.camel_case_fields.style = camel_case_style
+dotnet_naming_symbols.private_fields.applicable_kinds = field
+dotnet_naming_symbols.private_fields.applicable_accessibilities = private
+dotnet_naming_style.camel_case_style.required_prefix = _
+dotnet_naming_style.camel_case_style.capitalization = camel_case
