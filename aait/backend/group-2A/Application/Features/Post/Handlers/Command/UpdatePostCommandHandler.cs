@@ -9,28 +9,26 @@ namespace Application.Features.Post.Handlers.Command;
 
 public class UpdatePostCommandHandler : IRequestHandler<UpdatePostCommand, Unit>
 {
-    private readonly IPostRepository _postRepository;
-    private readonly IUserRepository _userRepository;
+    private readonly IUnitOfWork _unitOfWork;
+    private readonly IMapper _mapper;
 
-    private readonly Mapper _mapper;
-
-    public UpdatePostCommandHandler(IPostRepository postRepository, IUserRepository userRepository ,Mapper mapper){
-        _postRepository = postRepository;
-        _userRepository = userRepository;
+    public UpdatePostCommandHandler(IUnitOfWork unitOfWork, IMapper mapper){
         _mapper = mapper;
+        _unitOfWork = unitOfWork;
 
     }
 
     public async Task<Unit> Handle(UpdatePostCommand request, CancellationToken cancellationToken){
-        var validator = new UpdatePostDtoValidator(_postRepository, _userRepository);
+        var validator = new UpdatePostDtoValidator(_unitOfWork.postRepository, _unitOfWork.userRepository);
         var validationResult = await validator.ValidateAsync(request.UpdatedPost);
         if (!validationResult.IsValid)
         {
             throw new ValidationException(validationResult);
         }
-        var post = await _postRepository.Get(request.UpdatedPost.Id);
+        var post = await _unitOfWork.postRepository.Get(request.UpdatedPost.Id);
         _mapper.Map(request.UpdatedPost, post);
-        await _postRepository.Update(post);
+        await _unitOfWork.postRepository.Update(post);
+        await _unitOfWork.Save();
         return Unit.Value;
     }
     
