@@ -1,7 +1,7 @@
 "use client";
 import React from "react";
 import { blogsList } from "@/data/myBlogs";
-import BlogCard from "@/components/Blog/blogCard";
+import SmallBlogCard from "@/components/smallBlogCard/SmallBlogCard";
 
 const MyBlogs = () => {
   return (
@@ -15,7 +15,7 @@ const MyBlogs = () => {
       <hr className="py-1" />
       <div className="  py-4 flex justify-between items-center flex-wrap gap-y-8">
         {blogsList.map((blog) => (
-          <BlogCard key={blog.image} blog={blog} />
+          <SmallBlogCard key={blog.image} blog={blog} />
         ))}
       </div>
     </div>

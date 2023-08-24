@@ -5,7 +5,7 @@ import { BlogModel } from "@/types/Blog/blogTypes";
 interface BlogCardProps {
   blog: BlogModel;
 }
-const BlogCard = ({ blog }: BlogCardProps) => {
+const SmallBlogCard = ({ blog }: BlogCardProps) => {
   return (
     <div key={blog.header} className=" w-[23%] shadow-md rounded-md ">
       <div className=" flex justify-center items-center">
@@ -55,4 +55,4 @@ const BlogCard = ({ blog }: BlogCardProps) => {
   );
 };
 
-export default BlogCard;
+export default SmallBlogCard;
