@@ -1,7 +1,6 @@
 using MediatR;
 using SocialSync.Application.Contracts.Persistence;
 using SocialSync.Application.Features.Notifications.Requests.Commands;
-using SocialSync.Domain.Entities;
 
 namespace SocialSync.Application.Features.Notifications.Handlers.Commands;
 
@@ -17,7 +16,7 @@ public class DeleteNotificationCommandHandler : IRequestHandler<DeleteNotificati
         public async Task<Unit> Handle(DeleteNotificationCommand request, CancellationToken cancellationToken)
         {
             // add any necessary validation here before deleting the notification
-            Notification notification = await _unitOfWork.NotificationRepository.GetAsync(request.NotificationId);
+            var notification = await _unitOfWork.NotificationRepository.GetAsync(request.NotificationId);
             await _unitOfWork.NotificationRepository.DeleteAsync(notification);
 
             return Unit.Value;

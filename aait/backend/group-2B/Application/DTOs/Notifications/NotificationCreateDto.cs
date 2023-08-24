@@ -4,7 +4,7 @@ public class NotificationCreateDto:INotificationDto
 {
     public int SenderId { get; set; }
 
-    public NotificationType NotificationType{get; set;}
+    public string NotificationType{get; set;} = null!;
 
     public int RecepientId { get; set; }
 }
