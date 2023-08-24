@@ -3,7 +3,7 @@ using AutoMapper;
 using MediatR;
 using SocialSync.Application.Contracts.Persistence;
 using SocialSync.Application.Features.Posts.Requests.Commands;
-using SocialSync.Application.Responses;
+using SocialSync.Application.Common.Responses;
 
 namespace SocialSync.Application.Features.Posts.Handlers.Commands;
 

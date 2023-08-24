@@ -7,6 +7,6 @@ public class GetPostsByUserIdRequest: IRequest<List<GeneralPostDto>>{
     public int UserId;
     public GetPostsByUserIdRequest(int userId)
     {
-        UserId = userId;   
+        UserId = userId;
     }
 }

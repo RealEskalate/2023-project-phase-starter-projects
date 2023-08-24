@@ -1,12 +1,13 @@
 using MediatR;
-using SocialSync.Application.Responses;
+using SocialSync.Application.Common.Responses;
 
 namespace SocialSync.Application.Features.Posts.Requests.Commands;
 
-public class RemovePostCommand: IRequest<BaseCommandResponse>{
-  public int Id;
-  public RemovePostCommand(int id)
-  {
-    Id = id;
-  }
+public class RemovePostCommand : IRequest<BaseCommandResponse>
+{
+    public int Id;
+    public RemovePostCommand(int id)
+    {
+        Id = id;
+    }
 }

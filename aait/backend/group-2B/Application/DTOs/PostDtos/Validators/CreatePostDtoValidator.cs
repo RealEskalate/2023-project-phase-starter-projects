@@ -4,7 +4,6 @@ using SocialSync.Application.Contracts.Persistence;
 namespace SocialSync.Application.DTOs.PostDtos.Validators;
 
 
-// this class is to be fully implmented after the IUserRepository 
 public class CreatePostDtoValidator : AbstractValidator<CreatePostDto>
 {
     private IUserRepository _userRepository;
@@ -24,7 +23,7 @@ public class CreatePostDtoValidator : AbstractValidator<CreatePostDto>
             var user =  await _userRepository.GetAsync(id);
             return user != null;
         }).WithMessage("Post author id doesnot match with any user id.");
-        
+
 
 
     }

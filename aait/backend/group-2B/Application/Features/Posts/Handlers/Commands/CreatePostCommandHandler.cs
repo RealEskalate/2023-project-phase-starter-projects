@@ -4,7 +4,7 @@ using SocialSync.Application.Contracts.Persistence;
 using SocialSync.Application.DTOs.PostDtos;
 using SocialSync.Application.DTOs.PostDtos.Validators;
 using SocialSync.Application.Features.Posts.Requests.Commands;
-using SocialSync.Application.Responses;
+using SocialSync.Application.Common.Responses;
 using SocialSync.Domain.Entities;
 
 namespace SocialSync.Application.Features.Posts.Handlers.Commands;

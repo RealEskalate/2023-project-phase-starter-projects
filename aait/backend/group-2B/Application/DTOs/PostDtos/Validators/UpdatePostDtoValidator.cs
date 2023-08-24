@@ -3,8 +3,6 @@ using SocialSync.Application.Contracts.Persistence;
 using SocialSync.Application.DTOs.PostDtos;
 
 namespace AAiT.Backend.G2B.SocialSync.Application.DTOs.Validators.PostDtoValidators;
-
-// this class is to be fully implmented after the IUserRepository 
 public class UpdatePostDtoValidator : AbstractValidator<UpdatePostDto>
 {
     private IUserRepository _userRepository;
@@ -17,7 +15,7 @@ public class UpdatePostDtoValidator : AbstractValidator<UpdatePostDto>
         RuleFor(p => p.Id)
         .MustAsync(async (id, token) =>
         {
-            var postExists = await _postRepository.Exists(id);
+            var postExists = await _postRepository.ExistsAsync(id);
             return postExists;
         }).WithMessage("Given id did not match any post id.");
 
@@ -28,11 +26,12 @@ public class UpdatePostDtoValidator : AbstractValidator<UpdatePostDto>
 
         RuleFor(p => p.UserId)
         .NotNull().WithMessage("Post author id cannot be null.")
-        .MustAsync(async (id, token)=>{
-            var user =  await _userRepository.GetAsync(id);
+        .MustAsync(async (id, token) =>
+        {
+            var user = await _userRepository.GetAsync(id);
             return user != null;
         }).WithMessage("Post author id doesnot match with any user id.");
-        
+
 
 
 

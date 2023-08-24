@@ -14,7 +14,7 @@ public class PostRepository : GenericRepository<Post>, IPostRepository
         _dbContext = dbContext;
     }
 
-    public async Task<IReadOnlyList<Post>> GetPostsByTags(List<string> tags)
+    public async Task<IReadOnlyList<Post>> GetPostsByTagsAsync(List<string> tags)
     {
         List<Post> postsByTags = await _dbContext.Posts
                                 .Where(post => tags.Any(tag => post.Content.Contains(tag)))
@@ -23,7 +23,7 @@ public class PostRepository : GenericRepository<Post>, IPostRepository
         return postsByTags.AsReadOnly();
     }
 
-    public async Task<IReadOnlyList<Post>> GetPostsByUserId(int userId)
+    public async Task<IReadOnlyList<Post>> GetPostsByUserIdAsync(int userId)
     {
         var postsByUser = await _dbContext.Posts
             .Where(post => post.UserId == userId)
@@ -31,4 +31,15 @@ public class PostRepository : GenericRepository<Post>, IPostRepository
 
         return postsByUser.AsReadOnly();
     }
+
+    public async Task<bool> ExistsAsync(int id)
+    {
+        var post = await _dbContext.Posts
+                        .FindAsync(id);
+
+        return post != null;
+
+
+    }
+
 }

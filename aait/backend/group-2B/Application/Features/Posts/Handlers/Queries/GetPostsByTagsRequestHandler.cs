@@ -14,7 +14,7 @@ public class GetPostsByTagsRequestHandler : PostsRequestHandler, IRequestHandler
 
     public async Task<IReadOnlyCollection<GeneralPostDto>> Handle(GetPostsByTagsRequest request, CancellationToken cancellationToken)
     {
-        var postsByTags = await _postRepository.GetPostsByTags(request.Tags);
+        var postsByTags = await _postRepository.GetPostsByTagsAsync(request.Tags);
         return _mapper.Map<IReadOnlyList<GeneralPostDto>>(postsByTags);
     }
 }

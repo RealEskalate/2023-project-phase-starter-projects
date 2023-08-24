@@ -1,6 +1,6 @@
 using MediatR;
 using SocialSync.Application.DTOs.PostDtos;
-using SocialSync.Application.Responses;
+using SocialSync.Application.Common.Responses;
 
 namespace SocialSync.Application.Features.Posts.Requests.Commands;
 
