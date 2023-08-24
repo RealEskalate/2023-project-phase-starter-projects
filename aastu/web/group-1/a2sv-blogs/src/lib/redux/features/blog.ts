@@ -6,4 +6,5 @@ export const {
   useCreateBlogMutation,
   useUpdateBlogMutation,
   useDeleteBlogMutation,
+  useGetMyBlogsQuery,
 } = blogApi;

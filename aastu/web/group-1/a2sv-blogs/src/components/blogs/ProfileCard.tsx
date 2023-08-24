@@ -1,7 +1,18 @@
-export default function ProfileBlogCard() {
+import { Blog } from "@/types";
+import Image from "next/image";
+
+export default function ProfileBlogCard({ blog }: { blog: Blog }) {
   return (
     <div className="shadow rounded">
-      <div>{/* <img src="/Image.svg" alt="" /> */}</div>
+      <div>
+        <Image
+          src={blog.image}
+          alt={blog.title}
+          width={300}
+          height={200}
+          className="w-full"
+        />
+      </div>
       <div className="p-3">
         <h2 className="text-neutral-700">
           Design Liberalized Exchange Rate Management
