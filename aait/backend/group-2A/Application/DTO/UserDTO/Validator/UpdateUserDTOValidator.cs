@@ -16,7 +16,7 @@ public class UpdateUserDTOValidator : AbstractValidator<UpdateUserDTO>{
             .WithMessage("User Does not exist")
             .MustAsync(async (us, cancellation) => {
                 var existingUser = await userRepository.GetUserByEmail(us.Email);
-                return existingUser == null && existingUser?.Id == us.Id;
+                return existingUser == null || existingUser?.Id == us.Id;
             })
             .WithMessage("Email already exists")
             .MustAsync(async (us, cancellation) => {
