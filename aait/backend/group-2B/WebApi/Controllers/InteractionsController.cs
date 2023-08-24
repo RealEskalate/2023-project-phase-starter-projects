@@ -62,12 +62,7 @@ public class InteractionController : ControllerBase
         var command = new UpdateCommentInteractionCommand { UpdateCommentDto = interactionDto };
         var response = await _mediator.Send(command);
 
-        if (response != null)
-        {
-            return Ok(response);
-        }
-
-        return BadRequest(response);
+        return NoContent();
     }
 
 
@@ -79,12 +74,7 @@ public class InteractionController : ControllerBase
         var command = new DeleteCommentInteractionCommand { DeleteCommentInteractionDto = interactionId };
         var response = await _mediator.Send(command);
 
-        if (response != null)
-        {
-            return Ok(response);
-        }
-
-        return BadRequest(response);
+        return NoContent();
     }
 
     [HttpGet("GetAllCommentsOfAPost/{postId}")]
@@ -93,12 +83,7 @@ public class InteractionController : ControllerBase
         var command = new GetAllCommentInteractionRequest { PostId = postId };
         var response = await _mediator.Send(command);
 
-        if (response != null)
-        {
-            return Ok(response);
-        }
-
-        return BadRequest(response);
+        return Ok(response);
     }
 
     [HttpGet("GetAComment/{id}")]
@@ -107,11 +92,7 @@ public class InteractionController : ControllerBase
         var command = new GetInteractionRequest { Id = id };
         var response = await _mediator.Send(command);
 
-        if (response != null)
-        {
-            return Ok(response);
-        }
 
-        return BadRequest(response);
+        return Ok(response);
     }
 }
