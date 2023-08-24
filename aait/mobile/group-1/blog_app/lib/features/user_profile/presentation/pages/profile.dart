@@ -41,7 +41,7 @@ class _ProfilePageState extends State<ProfilePage> {
               });
             }
             return SafeArea(
-              child: Container(
+              child: SizedBox(
                 height: MediaQuery.of(context).size.height,
                 child: ListView(
                     // mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -216,7 +216,7 @@ class _ProfilePageState extends State<ProfilePage> {
                                           child: Stack(
                                             alignment: Alignment.center,
                                             children: [
-                                              Container(
+                                              SizedBox(
                                                   width: 80,
                                                   height: 80,
                                                   child: profileImage),
@@ -287,7 +287,7 @@ class _ProfilePageState extends State<ProfilePage> {
                                         ),
                                       )
                                     ]),
-                                Container(
+                                SizedBox(
                                   width: double.infinity,
                                   child: Column(
                                     children: [
