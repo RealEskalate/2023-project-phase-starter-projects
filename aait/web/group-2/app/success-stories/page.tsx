@@ -1,3 +1,5 @@
+"use client"
+
 import SingleSuccessStory from "@/components/SingleSuccessStory";
 import { useGetSuccessStoriesQuery } from "@/store/features/successStories";
 import { SuccessStory } from "@/types/successStories";
