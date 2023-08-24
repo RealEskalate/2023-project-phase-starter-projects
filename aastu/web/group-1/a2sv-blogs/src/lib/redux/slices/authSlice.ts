@@ -1,6 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 import userApi from "../services/userApi";
 import { LoginResponse } from "@/types";
+import { getExpirationDate } from "@/lib/date";
 
 export interface AuthState {
   token: string;
@@ -35,6 +36,14 @@ const authSlice = createSlice({
       state.userName = "";
       state.userRole = "";
     },
+    setAuth: (state, { payload }) => {
+      state.token = payload.token;
+      state.userId = payload.user;
+      state.userName = payload.userName;
+      state.userRole = payload.userRole;
+      state.isAuthenticated = payload.isAuthenticated;
+      state.isLoading = payload.isLoading;
+    },
   },
   extraReducers(builder) {
     builder.addMatcher(
@@ -58,7 +67,10 @@ const authSlice = createSlice({
         state.userRole = payload.userRole;
         state.isAuthenticated = true;
         state.isLoading = false;
-        document.cookie = `token=${payload.token}`;
+        localStorage.setItem("auth", JSON.stringify(state));
+        document.cookie = `token=${
+          payload.token
+        }; path=/; expires=${getExpirationDate()}`;
       }
     );
     builder.addMatcher(
@@ -68,7 +80,10 @@ const authSlice = createSlice({
         state.userId = payload.userId;
         state.isAuthenticated = true;
         state.isLoading = false;
-        document.cookie = `token=${payload.token}`;
+        localStorage.setItem("auth", JSON.stringify(state));
+        document.cookie = `token=${
+          payload.token
+        }; path=/; expires=${getExpirationDate()}`;
       }
     );
     builder.addMatcher(
@@ -90,7 +105,7 @@ const authSlice = createSlice({
   },
 });
 
-export const { resetAuth } = authSlice.actions;
+export const { resetAuth, setAuth } = authSlice.actions;
 
 export default authSlice.reducer;
 
