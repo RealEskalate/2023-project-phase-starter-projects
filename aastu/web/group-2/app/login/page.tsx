@@ -6,19 +6,19 @@ import A2SVLogo from '@/assets/images/Group 39.svg';
 import { useForm, SubmitHandler } from "react-hook-form";
 import { useRouter } from "next/navigation";
 import { useLoginMutation } from "@/lib/redux/slices/usersApi";
-
+import { useState } from "react";
+import {CgDanger} from 'react-icons/cg'
 type Inputs = {
     email: string,
     password: string,
 };
 const Login = () => {
-
+    const [loginError,setLoginError] = useState(false)
     const router = useRouter()
     if (localStorage.getItem("login")) {
         router.push('/')
         return <></>
     } else {
-        console.log("Not");
 
     }
 
@@ -32,7 +32,7 @@ const Login = () => {
                 localStorage.setItem("login", JSON.stringify({...loginData}))
             }
         } catch (e) {
-            alert("Incorrect username or password!")
+            setLoginError(true)
         }
 
 
@@ -50,6 +50,10 @@ const Login = () => {
                                 <Image src={A2SVLogo} alt="A2SV Logo" />
                             </div>
                         </div>
+                        { loginError && <div className='text-base font-semibold text-white bg-red-600 rounded-md p-2'>
+                           <CgDanger className='text-xl m-2 inline-block' /> 
+                            <span>Incorrect username or password</span> 
+                        </div>}
                         <div className="w-full">
                             <div className="text-xs text-red-900">
                                 {errors.email && <span>This field is required</span>}

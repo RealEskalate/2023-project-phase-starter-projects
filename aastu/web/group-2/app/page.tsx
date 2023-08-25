@@ -1,4 +1,4 @@
-"use client"
+//"use client"
 
 /* Components */
 
@@ -10,7 +10,7 @@ import SuccsessRateSection from "./components/home/SuccsessRateSection"
 
 export default function IndexPage() {
 
-  console.log(localStorage.getItem('login'));
+  //console.log(localStorage.getItem('login'));
   
 
   return (
@@ -25,5 +25,5 @@ export default function IndexPage() {
 }
 
 export const metadata = {
-  title: 'Redux Toolkit',
+  title: 'A2SV Blog',
 }
