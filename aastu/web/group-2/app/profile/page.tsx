@@ -60,9 +60,9 @@ export default function Section() {
         }
         try {
             const res = await editUser(form).unwrap()
-            console.log("worked", res)
+            // console.log("worked", res)
             const userData = JSON.parse(localStorage.getItem('login') || "");
-            console.log("upated11", userData)
+            // console.log("upated11", userData)
             const obj = { ...userData }
             obj.userEmail = res.body.email
             obj.userProfile = res.body.image
