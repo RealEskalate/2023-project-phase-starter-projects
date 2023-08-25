@@ -8,7 +8,7 @@ import { useGetSingleBlogQuery } from "@/store/features/blog-detail/blog-detail"
 import Loading from "@/components/commons/Loading";
 import Error from "@/components/commons/Error";
 
-const BlogDetailPage = () => {
+const BlogDetailPage :React.FC = () => {
   const params = useParams()
   const blogId = params.id;
   const {data:blog, error, isLoading} = useGetSingleBlogQuery(blogId as string)
@@ -24,7 +24,7 @@ const BlogDetailPage = () => {
   if (blog) {
     return (
       <div className="flex flex-col items-center mt-16 md:p-0">
-        <div className="bg-white  rounded-lg shadow-md max-w-screen-lg w-full">
+        <div className="bg-white rounded-lg shadow-md max-w-screen-lg w-full">
           <h1 className="text-2xl text-center font-bold mb-2">{blog.title}</h1>
   
           <div className="flex items-center justify-center text-gray-600 text-sm mb-8">
