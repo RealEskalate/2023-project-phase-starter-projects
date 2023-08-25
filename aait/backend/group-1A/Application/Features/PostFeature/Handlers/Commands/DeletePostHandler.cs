@@ -28,10 +28,21 @@ namespace Application.Features.PostFeature.Handlers.Commands
                 throw new NotFoundNotFoundException("Post is not found"
                 "Post is not found");
                 
+                throw new NotFoundException("Post is not found");
                 
             }
             
             var result = await _postRepository.Delete(post);
+
+            // notification
+            var notificationData = new NotificationCreateDTO
+            {
+                Content = $"The post with id : {post.Id} is deleted",
+                NotificationType = "post",
+                UserId = request.userId,
+            };
+
+            await _mediator.Send(new CreateNotification {  NotificationData = notificationData });
 
             return  new BaseResponse<PostResponseDTO> {
                 Success = true,

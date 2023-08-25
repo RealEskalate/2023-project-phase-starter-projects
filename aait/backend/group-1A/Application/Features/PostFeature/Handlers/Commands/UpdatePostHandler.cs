@@ -45,10 +45,11 @@ namespace Application.Features.PostFeature.Handlers.Commands
 
             if (!exists) 
             {
+<<<<<<< HEAD
                 throw new NotFoundNotFoundException("Post is not found"
                 "Post is not found");
-            }
-
+                throw new NotFoundException("Post is not found");
+>>>>>>> 144f3669 (feat(AAiT-backend-1A): updated comment feature)
 
             var newPost = _mapper.Map<Post>(request.PostUpdateData);
             newPost.Id = request.Id;
@@ -68,9 +69,20 @@ namespace Application.Features.PostFeature.Handlers.Commands
 
             await _mediator.Send(new CreateNotification { NotificationData = notificationData });
 
+            // notification
+            var notificationData = new NotificationCreateDTO
+            {
+                Content = $"The Post with id {request.userId} is updated",
+                NotificationContentId = result.Id,
+                NotificationType = "post",
+                UserId = request.userId,
+            };
+
+            await _mediator.Send(new CreateNotification { NotificationData = notificationData });
+
             return new BaseResponse<PostResponseDTO> {
                 Success = true,
-                Message = "Posts are retrieved successfully",
+                Message = "The Post is updated successfully",
                 Value = result
             };
         }

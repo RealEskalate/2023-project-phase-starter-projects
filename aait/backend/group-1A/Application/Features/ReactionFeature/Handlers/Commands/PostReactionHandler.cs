@@ -1,9 +1,13 @@
 ﻿using Application.Contracts;
 using Application.DTO.Common;
 using Application.DTO.NotificationDTO;
+<<<<<<< HEAD
 using Application.Exceptions;
 using Application.Features.NotificationFeaure.Requests.Commands;
+=======
+>>>>>>> 144f3669 (feat(AAiT-backend-1A): updated comment feature)
 using Application.Exceptions;
+using Application.Features.NotificationFeaure.Requests.Commands;
 using Application.Features.PostFeature.Requests.Commands;
 using Application.Response;
 using Application.Response;
@@ -47,7 +51,11 @@ namespace Application.Features.PostFeature.Handlers.Commands
             var exists = await _postRepository.Exists(request.ReactionData.ReactedId);
             if (exists == false)
             {
+<<<<<<< HEAD
                 throw new NotFoundValidationException(validationResult"Post is not found to make the Reactions");
+=======
+                throw new NotFoundException("Post is not found to make the Reactions");
+>>>>>>> 144f3669 (feat(AAiT-backend-1A): updated comment feature)
             }
 
 

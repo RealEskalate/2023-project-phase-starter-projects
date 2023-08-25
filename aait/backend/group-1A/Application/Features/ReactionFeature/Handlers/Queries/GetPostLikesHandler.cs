@@ -35,6 +35,9 @@ namespace Application.Features.PostFeature.Handlers.Queries
             {
                 throw new NotFoundNotFoundException( "Post is not found to get the Reactions" "Post is not found to get the Reactions"
                 );
+            if (exists == false)
+            {
+                throw new NotFoundException( "Post is not found to get the Reactions");
             }
 
             var result = await _postReaction.Likes(request.PostId);

@@ -39,7 +39,6 @@ namespace Persistence.Repositories
             foreach (var post in allPosts)
             {
                 var postResponse = _mapper.Map<PostResponseDTO>(post);
-                // var postWithReaction = await Get(post.Id, userId);
                 postResponse.Like = post.PostReactions.Where(x => x.Like == true).Count();
                 postResponse.Dislike = post.PostReactions.Where(x => x.Dislike == true).Count();
                 result.Add(postResponse);
