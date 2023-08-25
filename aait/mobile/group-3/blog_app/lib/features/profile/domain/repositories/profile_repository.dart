@@ -1,5 +1,4 @@
 import 'package:blog_app/core/error/failure.dart';
-import 'package:blog_app/features/profile/domain/entity/article.dart';
 import 'package:blog_app/features/profile/domain/entity/profile.dart';
 import 'package:dartz/dartz.dart';
 
