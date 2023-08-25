@@ -18,8 +18,9 @@ public class DeletePostCommandHandler : IRequestHandler<DeletePostCommand, Unit>
 
     public async Task<Unit> Handle(DeletePostCommand request, CancellationToken cancellationToken){
         var post = await _unitOfWork.postRepository.Get(request.Id);
-        if (post == null){
-            // throw Exception("Post Not Found");
+        
+        if (post == null || post.UserId != request.UserId){
+            throw new Exception("You Don't Have Access");
         }
         await _unitOfWork.postRepository.Delete(post);
         await _unitOfWork.Save();

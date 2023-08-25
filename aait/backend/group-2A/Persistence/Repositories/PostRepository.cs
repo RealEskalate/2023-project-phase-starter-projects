@@ -18,6 +18,7 @@ public class PostRepository: GenericRepository<Post>, IPostRepository
     }
 
     public async Task<List<Post>> GetBytag(string tag){
+        Console.WriteLine("");
         return  await _dbPostSet.Where(post => post.Tags.Contains(tag)).ToListAsync();
     }
 

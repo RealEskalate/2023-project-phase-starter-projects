@@ -20,9 +20,9 @@ public class DeleteCommentCommandHandler :  IRequestHandler<DeleteCommentCommand
     {
         var comment = await _unitOfWork.commentRepository.Get(request.Id);
         
-        if (comment == null)
+        if (comment == null || comment.UserId != request.UserId)
         {
-            throw new Exception();
+            throw new Exception("You Dont Have Access");
         }
         
         

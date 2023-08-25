@@ -12,5 +12,6 @@ public interface ILikeRepository
     Task<List<User>> GetLikers(int id);
     Task LikePost(Like like);
     Task UnlikePost(Like like);
+    Task<List<Post>> GetLikedPost(int Id);
 
 }

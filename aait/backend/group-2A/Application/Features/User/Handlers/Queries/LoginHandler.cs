@@ -21,10 +21,11 @@ public class LoginHandler : IRequestHandler<Login, AuthResponse>{
     }
 
     public async Task<AuthResponse> Handle(Login request, CancellationToken cancellationToken){
+        Console.WriteLine("------------Started");
         var token = await _authService.Login(new AuthRequest(){
             Email = request.LogInDto.Email,
             Password = request.LogInDto.Password
-        });
+        }, _unitOfWork.userRepository);
         var user = await _unitOfWork.userRepository.GetUserByEmail(request.LogInDto.Email);
         return new AuthResponse(){ Id = user.Id, Email = user.Email, Username = user.UserName, Token = token};
     }
