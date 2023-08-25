@@ -22,7 +22,7 @@ class BlogApp extends StatelessWidget {
       // GoRoute(path: '/home', builder: null), //=> TODO: IMPLEMENT HOME SCREEN,
       // GoRoute(
       //     path: '/article', builder: null), //=> TODO: IMPLEMENT ARTICLE SCREEN
-      GoRoute(path: '/', builder: (context, state) => ProfileScreen()),
+      GoRoute(path: '/profile', builder: (context, state) => ProfileScreen()),
     ]);
     //TODO: ADD BLOC
     return ScreenUtilInit(
