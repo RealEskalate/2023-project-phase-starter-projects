@@ -17,3 +17,15 @@ class ServerFailure extends Failure {
 class InvalidInputFailure extends Failure {
   InvalidInputFailure({required super.message, required super.statusCode});
 }
+
+class CacheFailure extends Failure {
+  const CacheFailure({required super.message, super.statusCode});
+}
+
+class NetworkConnectionFailure extends Failure {
+  const NetworkConnectionFailure({required super.message, super.statusCode});
+}
+
+class EmailAndPasswordNotMatchFailure extends Failure {
+  const EmailAndPasswordNotMatchFailure({required super.message, super.statusCode});
+}
