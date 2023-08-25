@@ -1,5 +1,5 @@
 import Image from 'next/image'
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import landingImage from '@/assets/images/LandingPageGridImage.png'
 import { BsArrowRightShort } from 'react-icons/bs'
 
