@@ -1,9 +1,10 @@
-import 'package:blog_app/features/article/domain/entity/article.dart';
-import 'package:blog_app/features/article/domain/repository/article_repository.dart';
-import 'package:blog_app/features/article/domain/use_case/update_article.dart';
 import 'package:dartz/dartz.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
+
+import 'package:blog_app/features/article/domain/entity/article.dart';
+import 'package:blog_app/features/article/domain/repository/article_repository.dart';
+import 'package:blog_app/features/article/domain/use_case/update_article.dart';
 
 import 'article_repository.mock.dart';
 
@@ -21,6 +22,7 @@ void main() {
     final article = Article.empty();
     final params = UpdateArticleParams.empty();
     when(() => repository.updateArticle(
+          id: any(named: 'id'),
           tags: any(named: 'tags'),
           content: any(named: 'content'),
           title: any(named: 'title'),
@@ -33,7 +35,9 @@ void main() {
     // Assert
 
     expect(result, Right<dynamic, Article>(article));
-    verify(() => repository.updateArticle(tags: any(named: 'tags'),
+    verify(() => repository.updateArticle(
+          id: any(named: 'id'),
+          tags: any(named: 'tags'),
           content: any(named: 'content'),
           title: any(named: 'title'),
           subTitle: any(named: 'subTitle'),

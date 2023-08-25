@@ -1,9 +1,10 @@
-import 'package:blog_app/core/use_case/usecase.dart';
-import 'package:blog_app/features/article/domain/repository/article_repository.dart';
-import 'package:blog_app/features/article/domain/use_case/get_tags.dart';
 import 'package:dartz/dartz.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
+
+import 'package:blog_app/core/use_case/usecase.dart';
+import 'package:blog_app/features/article/domain/repository/article_repository.dart';
+import 'package:blog_app/features/article/domain/use_case/get_tags.dart';
 
 import 'article_repository.mock.dart';
 
