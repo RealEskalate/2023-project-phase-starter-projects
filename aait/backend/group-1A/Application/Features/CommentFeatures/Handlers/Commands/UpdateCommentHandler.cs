@@ -1,26 +1,80 @@
 using Application.Contracts;
+using Application.DTO.CommentDTO.DTO;
+using Application.DTO.CommentDTO.Validations;
+using Application.DTO.NotificationDTO;
+using Application.Exceptions;
 using Application.Features.CommentFeatures.Requests.Commands;
+using Application.Features.NotificationFeaure.Requests.Commands;
+using Application.Response;
+using AutoMapper;
+using Domain.Entities;
 using MediatR;
-using System.Threading;
-using System.Threading.Tasks;
+
 
 namespace Application.Features.CommentFeatures.Handlers.Commands
 {
-    public class CommentUpdateCommandHandler : IRequestHandler<CommentUpdateCommand, Unit>
+    public class UpdateCommentHandler : IRequestHandler<UpdateCommentCommand, BaseResponse<CommentResponseDTO>>
     {
         private readonly ICommentRepository _commentRepository;
+        private readonly IMapper _mapper;
+        private readonly IMediator _mediator;
 
-        public CommentUpdateCommandHandler(ICommentRepository commentRepository)
+        public UpdateCommentHandler(ICommentRepository commentRepository, IMapper mapper, IMediator mediator)
         {
             _commentRepository = commentRepository;
+            _mapper = mapper;
+            _mediator = mediator;
         }
-
-        public async Task<Unit> Handle(CommentUpdateCommand request, CancellationToken cancellationToken)
+        public async Task<BaseResponse<CommentResponseDTO>> Handle(UpdateCommentCommand request, CancellationToken cancellationToken)
         {
-            // Implement your logic to update a comment
-            await _commentRepository.UpdateCommentAsync(request);
+            
+            var validator = new CommentUpdateValidation();
+            var validationResult = await validator.ValidateAsync(request.CommentData);
 
-            return Unit.Value;
+            if (!validationResult.IsValid)
+            {
+                throw new ValidationException(validationResult);
+            }
+            var exists = await _commentRepository.Exists(request.Id);
+
+            if (!exists) 
+            {
+                throw new NotFoundException("Comment is not found");
+            }
+
+
+            var newComment = _mapper.Map<Comment>(request.CommentData);
+            newComment.Id = request.Id;
+            newComment.UserId = request.userId;
+            var updationResult = await _commentRepository.Update(newComment);
+            var result = _mapper.Map<CommentResponseDTO>(updationResult);
+
+
+
+            // notification
+            var notificationData = new NotificationCreateDTO
+            {
+                Content = $"The Comment with id : {result.Id} is updated",
+                NotificationType = "comment",
+                UserId = request.userId
+            };
+            await _mediator.Send(new CreateNotification { NotificationData = notificationData });
+
+
+
+
+
+            return new BaseResponse<CommentResponseDTO> {
+                Success = true,
+                Message = "The Comment is updated successfully",
+                Value = result
+            };
+
+
+
+
+
+
         }
     }
 }

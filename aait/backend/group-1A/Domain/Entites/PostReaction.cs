@@ -7,7 +7,7 @@ namespace Domain.Entities
     public class PostReaction : BaseReactionEntity
     {
 
-         [ForeignKey("Post")]
+
         public int PostId { get; set; }
 
         public virtual Post post {get ; set;}

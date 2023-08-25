@@ -41,16 +41,17 @@ namespace Application.Features.PostFeature.Handlers.Commands
             // notification
             var notificationData = new NotificationCreateDTO
             {
-                Content = "New Post",
+                Content = $"New Post is created by user with id {request.userId}",
                 NotificationContentId = result.Id,
-                NotificationType = "post"
+                NotificationType = "post",
+                UserId = request.userId,
             };
             
-            await _mediator.Send(new CreateNotification { UserId = request.userId, NotificationData = notificationData });
+            await _mediator.Send(new CreateNotification {NotificationData = notificationData });
 
             return new BaseResponse<PostResponseDTO> {
                 Success = true,
-                Message = "Posts are retrieved successfully",
+                Message = "Post Is cereated successfully",
                 Value =  _mapper.Map<PostResponseDTO>(result)
             };
         }

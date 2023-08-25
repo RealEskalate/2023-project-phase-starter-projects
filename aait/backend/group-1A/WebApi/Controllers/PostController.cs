@@ -60,7 +60,7 @@ namespace WebApi.Controllers
 
 
         [HttpDelete("{id}")]
-        public async Task<ActionResult<BaseResponse<CommonResponseDTO>>> Delete(int id)
+        public async Task<ActionResult<BaseResponse<string>>> Delete(int id)
         {
             var userId = 3;
             var result = await _mediator.Send(new DeletePostCommand { userId = userId, Id = id });            

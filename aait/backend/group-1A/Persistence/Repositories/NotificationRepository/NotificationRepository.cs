@@ -41,5 +41,12 @@ namespace Persistence.Repositories.NotificationRepository
             await _dbContext.SaveChangesAsync();
             return true;
         }
+
+
+        public async Task<bool> Exists(int id)
+        {
+            var result = await _dbContext.Notifications.FindAsync(id);
+            return result != null;
+        }
     }
 }

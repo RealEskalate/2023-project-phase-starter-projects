@@ -1,11 +1,7 @@
 ﻿using Application.DTO.PostDTO.DTO;
 using Domain.Entities;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Linq.Expressions;
-using System.Text;
-using System.Threading.Tasks;
+
 
 namespace Application.Contracts
 {
@@ -14,5 +10,7 @@ namespace Application.Contracts
         Task<Post> Get(int id, int userId);
 
         Task<List<PostResponseDTO>> GetAllPostsWithReaction(Expression<Func<Post, bool>> predicate, int userId);
+
+        Task<bool> Exists(int id);
     }
 }

@@ -24,8 +24,7 @@ namespace Application.Features.PostFeature.Handlers.Queries
             var result = await _postRepository.Get(request.Id, request.userId);
             if (result == null)
             {
-                throw new BadRequestException("Post is not found"
-                );
+                throw new NotFoundException("Post is not found");
             }
 
             var post = _mapper.Map<PostResponseDTO>(result);

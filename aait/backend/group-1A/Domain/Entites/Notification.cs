@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
 using Domain.Common;
@@ -19,5 +20,8 @@ namespace Domain.Entites
 
         public int NotificationContentId { get; set; }
 
+        public int UserId { get; set; }
+
     }
 }
+        //[ForeignKey("User")]

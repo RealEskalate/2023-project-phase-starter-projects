@@ -12,5 +12,7 @@ namespace Application.DTO.NotificationDTO
         public int NotificationContentId { get; set; }
 
         public string NotificationType { get; set; }
+
+        public int UserId { get; set; }
     }
 }

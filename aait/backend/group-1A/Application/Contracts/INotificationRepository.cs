@@ -14,5 +14,7 @@ namespace Application.Contracts
         Task<bool> MarkAsRead(int id, int userId);
 
         Task<bool> MarkAllAsRead(Expression<Func<Notification, bool>> predicate);
+
+        Task<bool> Exists(int id);
     }
 }

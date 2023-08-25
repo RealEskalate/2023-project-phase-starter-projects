@@ -1,14 +1,12 @@
 using MediatR;
-using Application.DTO.CommentDTOS.DTO;
 using Application.DTO.CommentDTO.DTO;
+using Application.Response;
 
 namespace Application.Features.CommentFeatures.Requests.Commands
 {
-    public class CommentCreateCommand : IRequest<CommentDTO>
+    public class CommentCreateCommand : IRequest<BaseResponse<CommentResponseDTO>>
     {
-        public string Message { get; set; }
-        public int UserId { get; set; }
-        public int PostId { get; set; }
-        public CommentCreateDTO CommentDTO { get; internal set; }
+        public int userId { get; set; }
+        public CommentCreateDTO NewCommentData { get; set; }
     }
 }

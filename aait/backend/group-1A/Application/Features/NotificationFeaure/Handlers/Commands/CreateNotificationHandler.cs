@@ -41,7 +41,6 @@ namespace Application.Features.NotificationFeaure.Handlers.Commands
                     return false;
             }
         
-            newNotification.UserId = request.UserId;
             var result =  await _notificationRepository.Add(newNotification);
             
             return result != null;

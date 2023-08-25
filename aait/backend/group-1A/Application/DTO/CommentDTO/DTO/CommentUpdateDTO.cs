@@ -7,6 +7,6 @@ namespace Application.DTO.CommentDTO.DTO
 {
     public class CommentUpdateDTO : IBaseCommentDTO
     {
-        public string Content { get ; set ; }
+        public string Content { get ; set; }
     }
 }

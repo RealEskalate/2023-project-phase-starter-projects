@@ -1,4 +1,5 @@
-﻿using Application.DTO.Common;
+﻿using Application.DTO.CommentDTO.DTO;
+using Application.DTO.Common;
 using Application.DTO.NotificationDTO;
 using Application.DTO.PostDTO.DTO;
 using AutoMapper;
@@ -13,15 +14,32 @@ namespace Application.Profiles
     {
         public MappingProfile()
         {   
+
+            
             CreateMap<PostResponseDTO, Post>().ReverseMap();
             CreateMap<PostCreateDTO, Post>().ReverseMap();
+            CreateMap<PostUpdateDTO, Post>().ReverseMap();
+            
+
+            
             CreateMap<ReactionDTO, PostReaction>().ReverseMap();
             CreateMap<ReactionResponseDTO, PostReaction>().ReverseMap();
-            CreateMap<PostUpdateDTO, Post>().ReverseMap();
+            CreateMap<ReactionDTO, CommentReaction>().ReverseMap();
+            CreateMap<ReactionResponseDTO, CommentReaction>().ReverseMap();
+
+
             CreateMap<NotificationCreateDTO, Notification>().ReverseMap();
             CreateMap<NotificationResponseDTO, Notification>().ReverseMap();
             CreateMap<RegisterUserDto, User>();
             CreateMap<LoginUserDto, User>();
+            
+
+            
+            CreateMap<CommentResponseDTO, Comment>().ReverseMap();
+            CreateMap<CommentCreateDTO, Comment>().ReverseMap();
+            CreateMap<CommentUpdateDTO, Comment>().ReverseMap();
+            
+        
         }
     }
 }

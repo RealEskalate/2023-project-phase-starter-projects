@@ -1,9 +1,11 @@
 ﻿
 
 using Application.Contracts;
+using Application.DTO.NotificationDTO;
 using Application.DTO.PostDTO.DTO;
 using Application.DTO.PostDTO.validations;
 using Application.Exceptions;
+using Application.Features.NotificationFeaure.Requests.Commands;
 using Application.Features.PostFeature.Requests.Commands;
 using Application.Response;
 using AutoMapper;
@@ -16,11 +18,12 @@ namespace Application.Features.PostFeature.Handlers.Commands
     {
         private readonly IPostRepository _postRepository;
         private readonly IMapper _mapper;
-
-        public UpdatePostHandler(IPostRepository postRepository, IMapper mapper)
+        private readonly IMediator _mediator;
+        public UpdatePostHandler(IPostRepository postRepository, IMapper mapper, IMediator mediator)
         {
             _postRepository = postRepository;
             _mapper = mapper;
+            _mediator = mediator;
         }
 
         public async Task<BaseResponse<PostResponseDTO>> Handle(UpdatePostCommand request, CancellationToken cancellationToken)
@@ -36,8 +39,7 @@ namespace Application.Features.PostFeature.Handlers.Commands
 
             if (!exists) 
             {
-                throw new NotFoundException("Post is not found"
-                );
+                throw new NotFoundException("Post is not found");
             }
 
             var newPost = _mapper.Map<Post>(request.PostUpdateData);
@@ -46,9 +48,20 @@ namespace Application.Features.PostFeature.Handlers.Commands
             var updationResult = await _postRepository.Update(newPost);
             var result = _mapper.Map<PostResponseDTO>(updationResult);
 
+            // notification
+            var notificationData = new NotificationCreateDTO
+            {
+                Content = $"The Post with id {request.userId} is updated",
+                NotificationContentId = result.Id,
+                NotificationType = "post",
+                UserId = request.userId,
+            };
+
+            await _mediator.Send(new CreateNotification { NotificationData = notificationData });
+
             return new BaseResponse<PostResponseDTO> {
                 Success = true,
-                Message = "Posts are retrieved successfully",
+                Message = "The Post is updated successfully",
                 Value = result
             };
         }
