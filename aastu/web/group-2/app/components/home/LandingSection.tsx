@@ -1,23 +1,40 @@
 import Image from 'next/image'
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import landingImage from '@/assets/images/LandingPageGridImage.png'
 import { BsArrowRightShort } from 'react-icons/bs'
+import Link from 'next/link'
 
 const LandingSection = () => {
+
+  const [loggedIn, setLoggedIn] = useState(false)
+
+  useEffect(() => {
+    if (localStorage.getItem("login")) {
+      setLoggedIn(true)
+    }
+  }, [])
+
   return (
-    <section className='m-10'>
+    <section className='m-5 md:m-10'>
       <div className="grid grid-cols-1 md:grid-cols-2 md:grid-rows-1 md:gap-4 gap-y-12">
         <div className='flex flex-col justify-start items-center'>
-          <h1 className='text-3xl md:text-5xl font-extrabold mb-2 md:mb-2.5 w-3/4 text-center md:text-left'>
+          <h1 className='text-2xl md:text-3xl font-extrabold mb-1 md:mb-2 md:w-3/4 text-center md:text-left'>
             <span className='text-secondaryColor'>African to</span> <span className='text-primaryColor'>Silicon
               Valley</span>
           </h1>
-          <p className='text-center md:text-left text-3xl text-gray-800 w-9/12 mt-2.5'>
+          <p className='text-center md:text-left text-xl md:text-3xl text-gray-800 md:w-9/12 mt-2 md:mt-2.5'>
             A2SV up-skills high-potential university students, connects them with opportunities at top tech companies
           </p>
           <div className='flex justify-start gap-4 mt-8'>
-            <button className='border-solid border-primaryColor hover:bg-secondaryColor hover:border-none hover:text-white border-2 rounded-md px-6 py-1.5 text-primaryColor font-medium'>Get started</button>
-            <button className="flex items-center uppercase text-white bg-primaryColor hover:bg-secondaryColor rounded-md py-1.5 font-medium px-6">
+            {
+              loggedIn? (
+                <Link href="/profile" className='border-solid text-sm md:text-base border-primaryColor border-2 rounded-md px-2 md:px-6 py-1 md:py-1.5 text-primaryColor font-medium'>My profile</Link>
+              ):(
+                <Link href="/login" className='border-solid text-sm md:text-base border-primaryColor border-2 rounded-md px-2 md:px-6 py-1 md:py-1.5 text-primaryColor font-medium'>Get started</Link>
+              )
+            }
+
+            <button className="flex items-center text-sm md:text-base uppercase text-white bg-primaryColor rounded-md py-1.5 font-medium px-6">
               Support us <BsArrowRightShort className="ml-1" />
             </button>
           </div>
