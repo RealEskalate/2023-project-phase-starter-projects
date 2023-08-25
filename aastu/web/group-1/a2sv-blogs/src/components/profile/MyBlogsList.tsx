@@ -4,7 +4,12 @@ import { useGetMyBlogsQuery } from "@/lib/redux/features/blog";
 
 export default function MyBlogsList() {
   const { data: blogs, isLoading, error } = useGetMyBlogsQuery();
-  if (isLoading) return <div>Loading...</div>;
+  if (isLoading)
+    return (
+      <div className="w-full flex flex-col items-center justify-center space-y-3 border-b py-10">
+        <h2 className="text-text-header-2 text-xl">Loading blogs...</h2>
+      </div>
+    );
   if (error || blogs?.length === 0)
     return (
       <div className="w-full flex flex-col items-center justify-center space-y-3 border-b py-10">
