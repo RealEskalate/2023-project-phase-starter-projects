@@ -59,7 +59,7 @@ const AddBlog: React.FC = () => {
   // }, [selectedTags]);
 
   return (
-    <div className=" md:px-20 px-2 w-full font-primaryFont py-8">
+    <div className=" md:px-20 px-2 w-full font-primaryFont py-8 bg-white">
       {/* main sect + sidebar */}
       <div className="grid md:grid-cols-12 md:gap-4">
         {/* main sect */}
@@ -75,7 +75,7 @@ const AddBlog: React.FC = () => {
             </div>
             <div className="w-full px-3 md:px-0 md:w-[95%] min-h-[318px] bg-[#F2F3F4]">
               <div className="flex flex-col items-center justify-center space-y-12">
-                <div className="mt-24">
+                <div className="mt-20">
                   <Image
                     className="object-cover"
                     src={uploadsvg}
@@ -128,7 +128,7 @@ const AddBlog: React.FC = () => {
                   selectedTags.includes('development')
                     ? '!text-primaryColor !border !border-primaryColor'
                     : ''
-                } rounded-full px-3 py-2 bg-gray-200 border border-gray-200 text-sm text-center text-[#414141] hover:cursor-pointer`}
+                } rounded-full px-3 py-2 bg-[#F2F3F4] border border-[#F2F3F4] text-sm text-center text-[#414141] hover:cursor-pointer`}
                 onClick={() => addTags('development')}
               >
                 Development
@@ -138,7 +138,7 @@ const AddBlog: React.FC = () => {
                   selectedTags.includes('sports')
                     ? '!text-primaryColor !border !border-primaryColor'
                     : ''
-                } rounded-full px-3 py-2 bg-gray-200 border border-gray-200 text-sm text-center text-[#414141] hover:cursor-pointer`}
+                } rounded-full px-3 py-2 bg-[#F2F3F4] border border-[#F2F3F4] text-sm text-center text-[#414141] hover:cursor-pointer`}
                 onClick={() => addTags('sports')}
               >
                 Sports
@@ -148,7 +148,7 @@ const AddBlog: React.FC = () => {
                   selectedTags.includes('Writing')
                     ? '!text-primaryColor !border !border-primaryColor'
                     : ''
-                } rounded-full px-3 py-2 bg-gray-200 border border-gray-200 text-sm text-center text-[#414141] hover:cursor-pointer`}
+                } rounded-full px-3 py-2 bg-[#F2F3F4] border border-[#F2F3F4] text-sm text-center text-[#414141] hover:cursor-pointer`}
                 onClick={() => addTags('Writing')}
               >
                 Writing
@@ -158,7 +158,7 @@ const AddBlog: React.FC = () => {
                   selectedTags.includes('Self Improvement')
                     ? '!text-primaryColor !border !border-primaryColor'
                     : ''
-                } rounded-full px-3 py-2 bg-gray-200 border border-gray-200 text-sm text-center text-[#414141] hover:cursor-pointer`}
+                } rounded-full px-3 py-2 bg-[#F2F3F4] border border-[#F2F3F4] text-sm text-center text-[#414141] hover:cursor-pointer`}
                 onClick={() => addTags('Self Improvement')}
               >
                 Self Improvement
@@ -168,7 +168,7 @@ const AddBlog: React.FC = () => {
                   selectedTags.includes('Technology')
                     ? '!text-primaryColor !border !border-primaryColor'
                     : ''
-                } rounded-full px-3 py-2 bg-gray-200 border border-gray-200 text-sm text-center text-[#414141] hover:cursor-pointer`}
+                } rounded-full px-3 py-2 bg-[#F2F3F4] border border-[#F2F3F4] text-sm text-center text-[#414141] hover:cursor-pointer`}
                 onClick={() => addTags('Technology')}
               >
                 Technology
@@ -178,7 +178,7 @@ const AddBlog: React.FC = () => {
                   selectedTags.includes('Social')
                     ? '!text-primaryColor !border !border-primaryColor'
                     : ''
-                } rounded-full px-3 py-2 bg-gray-200 border border-gray-200 text-sm text-center text-[#414141] hover:cursor-pointer`}
+                } rounded-full px-3 py-2 bg-[#F2F3F4] border border-[#F2F3F4] text-sm text-center text-[#414141] hover:cursor-pointer`}
                 onClick={() => addTags('Social')}
               >
                 Social
@@ -188,7 +188,7 @@ const AddBlog: React.FC = () => {
                   selectedTags.includes('Data Science')
                     ? '!text-primaryColor !border !border-primaryColor'
                     : ''
-                } rounded-full px-3 py-2 bg-gray-200 border border-gray-200 text-sm text-center text-[#414141] hover:cursor-pointer`}
+                } rounded-full px-3 py-2 bg-[#F2F3F4] border border-[#F2F3F4] text-sm text-center text-[#414141] hover:cursor-pointer`}
                 onClick={() => addTags('Data Science')}
               >
                 Data Science
@@ -198,7 +198,7 @@ const AddBlog: React.FC = () => {
                   selectedTags.includes('Programming')
                     ? '!text-primaryColor !border !border-primaryColor'
                     : ''
-                } rounded-full px-3 py-2 bg-gray-200 border border-gray-200  text-sm text-center text-[#414141] hover:cursor-pointer`}
+                } rounded-full px-3 py-2 bg-[#F2F3F4] border border-[#F2F3F4]  text-sm text-center text-[#414141] hover:cursor-pointer`}
                 onClick={() => addTags('Programming')}
               >
                 Programming
