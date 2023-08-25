@@ -3,7 +3,6 @@ using Application.DTOs.Comments;
 using Application.Features.Comments.Requests.Commands;
 using Application.Features.Comments.Requests.Queries;
 using MediatR;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
 namespace WebApi.Controllers;
@@ -62,7 +61,7 @@ public class CommentsController : ControllerBase
         return Ok(comment);
     }
 
-    [HttpDelete("{id:int}")]
+    [HttpDelete]
     public async Task<IActionResult> Delete(int id)
     {
         var request = new DeleteCommentRequest() { Id = id };
