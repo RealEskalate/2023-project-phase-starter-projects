@@ -6,7 +6,7 @@ const ImpactStoriesSection = () => {
       <h2 className="font-{montserrat} font-bold text-4xl md:text-5xl text-charcoal">
         Impact Stories
       </h2>
-      <div className="grid grid-cols-2 place-items-center gap-12 lg-1:gap-0 lg-1:grid-cols-2">
+      <div className="grid grid-flow-row auto-rows-max place-items-center gap-12 lg-1:gap-0 lg-1:grid-cols-2">
         {/* left section */}
         <div className="flex flex-col gap-12">
           <div className="flex flex-col gap-4 items-start">
