@@ -6,6 +6,6 @@ public class LoginUserDtoValidator : AbstractValidator<LoginUserDto>
 {
     public LoginUserDtoValidator()
     {
-        Include(new IUserDtoValidator());
+        Include(new UserDtoValidator());
     }
 }

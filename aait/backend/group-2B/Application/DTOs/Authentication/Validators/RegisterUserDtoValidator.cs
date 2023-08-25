@@ -6,7 +6,7 @@ public class RegisterUserDtoValidator : AbstractValidator<RegisterUserDto>
 {
     public RegisterUserDtoValidator()
     {
-        Include(new IUserDtoValidator());
+        Include(new UserDtoValidator());
 
         RuleFor(u => u.FirstName)
             .NotEmpty()
