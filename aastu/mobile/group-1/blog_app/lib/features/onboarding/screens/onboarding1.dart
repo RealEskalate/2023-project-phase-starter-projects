@@ -1,5 +1,5 @@
-import 'package:blog_app/features/user/presentation/pages/login.dart';
 import 'package:flutter/material.dart';
+
 import '../widgets/login_widget.dart';
 
 class OnBoardingScreen extends StatefulWidget {
@@ -66,26 +66,21 @@ class onBoardingNavigation extends StatelessWidget {
   Widget build(BuildContext context) {
     return _pageIndex == demo_data.length - 1
         ? Container(
-            padding: EdgeInsets.only(bottom: 10),
+            padding: const EdgeInsets.only(bottom: 10),
             color: Colors.white,
             width: MediaQuery.of(context).size.width,
             child: Container(
-              padding: EdgeInsets.only(left: 50, right: 50),
+              padding: const EdgeInsets.only(left: 50, right: 50),
               height: 60,
               width: 150,
               child: ElevatedButton(
                 onPressed: () {
-                  Navigator.pushReplacement(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) =>
-                            Login()), // Replace MainPage with your desired page
-                  );
+                  Navigator.pushReplacementNamed(context, '/login');
                 },
                 style: ElevatedButton.styleFrom(
                     shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(10)),
-                    backgroundColor: Color(0xFF376AED)),
+                    backgroundColor: const Color(0xFF376AED)),
                 child: const Text(
                   'Get Started',
                   style: TextStyle(color: Colors.white),
@@ -94,7 +89,7 @@ class onBoardingNavigation extends StatelessWidget {
             ),
           )
         : Container(
-            padding: EdgeInsets.only(bottom: 10),
+            padding: const EdgeInsets.only(bottom: 10),
             color: Colors.white,
             child: Row(
               children: [
@@ -104,7 +99,7 @@ class onBoardingNavigation extends StatelessWidget {
                 ...List.generate(
                     demo_data.length,
                     (index) => Padding(
-                          padding: EdgeInsets.only(right: 8),
+                          padding: const EdgeInsets.only(right: 8),
                           child: DotIndicator(
                             isActive: index == _pageIndex,
                           ),
@@ -116,14 +111,14 @@ class onBoardingNavigation extends StatelessWidget {
                   child: ElevatedButton(
                     onPressed: () {
                       _pageController.nextPage(
-                          duration: Duration(milliseconds: 1000),
+                          duration: const Duration(milliseconds: 1000),
                           curve: Curves.ease);
                     },
                     style: ElevatedButton.styleFrom(
                         shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(10)),
-                        backgroundColor: Color(0xFF376AED)),
-                    child: Icon(
+                        backgroundColor: const Color(0xFF376AED)),
+                    child: const Icon(
                       Icons.arrow_forward,
                       color: Colors.white,
                     ),
@@ -149,11 +144,11 @@ class DotIndicator extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AnimatedContainer(
-      duration: Duration(milliseconds: 300),
+      duration: const Duration(milliseconds: 300),
       height: 8,
       width: isActive ? 18 : 12,
       decoration: BoxDecoration(
-          color: isActive ? Color(0xFF376AED) : Colors.grey,
+          color: isActive ? const Color(0xFF376AED) : Colors.grey,
           borderRadius: const BorderRadius.all(Radius.circular(12))),
     );
   }
@@ -180,7 +175,7 @@ class onboardingContent extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        Spacer(),
+        const Spacer(),
         Image.asset(image),
         Container(
           // alignment: Alignment(0, 0),
@@ -193,15 +188,15 @@ class onboardingContent extends StatelessWidget {
               topRight: Radius.circular(20),
             ),
           ),
-          child: Column(children: [
-            const SizedBox(height: 10),
-            const Text(
+          child: const Column(children: [
+            SizedBox(height: 10),
+            Text(
               'Read the article you want \n'
               'instantly',
               style: TextStyle(fontFamily: 'Urbanist-Italic', fontSize: 24),
             ),
             SizedBox(height: 10),
-            const Text(
+            Text(
               'You can read thousands of articles on \n'
               'Blog Club, save them in the application \n'
               'and share them with your loved ones',

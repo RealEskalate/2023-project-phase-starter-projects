@@ -1,7 +1,10 @@
+import 'package:blog_app/core/error/failure.dart';
+import 'package:dartz/dartz.dart';
+
 import '../entities/user.dart';
 
 abstract class UserRepository {
-  Future<void> registerUser({
+  Future<Either<Failure, User>> registerUser({
     required String fullName,
     required String email,
     required String password,
@@ -9,13 +12,13 @@ abstract class UserRepository {
     required String bio,
   });
 
-  Future<User> loginUser({
+  Future<Either<Failure, User>> loginUser({
     required String email,
     required String password,
   });
 
-  Future<User> getUser(String userId);
+  Future<Either<Failure, User>> getUser(String userId);
 
-  Future<void> updateProfilePhoto(
+  Future<Either<Failure, void>> updateProfilePhoto(
       String userId, String imageUrl, String imagePublicId);
 }

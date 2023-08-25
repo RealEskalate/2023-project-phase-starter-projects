@@ -1,18 +1,67 @@
 import 'dart:convert';
+import 'dart:developer';
 
+import 'package:blog_app/features/blog/data/datasources/data_source_api.dart';
+import 'package:blog_app/features/blog/domain/entities/article.dart';
 import 'package:http/http.dart' as http;
 
-class RemoteDataSource {
+class RemoteDataSource implements BlogRemoteDataSource {
   final String baseUrl;
 
-  RemoteDataSource(this.baseUrl);
+  RemoteDataSource({required this.baseUrl});
 
-  Future<Map<String, dynamic>> fetchData(String endpoint) async {
-    final response = await http.get(Uri.parse('$baseUrl/$endpoint'));
-    if (response.statusCode == 200) {
-      return json.decode(response.body);
-    } else {
-      throw Exception('Failed to load data');
+  Future<dynamic> _fetchData(String endpoint) async {
+    log("fetching: $baseUrl/$endpoint");
+    try {
+      final response = await http.get(
+        Uri.parse('$baseUrl/$endpoint'),
+        headers: {'Content-Type': 'application/json'},
+      );
+
+      final responseData = json.decode(response.body);
+
+      if (response.statusCode == 200 && responseData['success'] == true) {
+        log("fetched: $responseData");
+        return responseData['data'];
+      } else {
+        log("error: $responseData");
+        final errorMessage =
+            responseData['message'] as String? ?? 'Unknown error';
+        throw Exception(errorMessage);
+      }
+    } catch (e) {
+      log("error:: $e");
+      throw Exception('An error occurred: $e');
     }
+  }
+
+  @override
+  Future<List<Article>> getAllBlog() async {
+    final responseData = await _fetchData('article');
+
+    List<Article> articles = [];
+    try {
+      for (var blogData in responseData) {
+        log(blogData.toString());
+        articles.add(Article.fromJson(blogData));
+        log("Check 2");
+      }
+      return articles;
+    } catch (e) {
+      log("Error fetching articles: $e");
+      throw Exception('An error occurred: $e');
+    }
+  }
+
+  @override
+  Future<void> postBlog(Map<String, dynamic> blogData) {
+    // TODO: implement postBlog
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<void> deleteBlog(String articleId) {
+    // TODO: implement deleteBlog
+    throw UnimplementedError();
   }
 }

@@ -5,7 +5,7 @@ class DeleteArticleUseCase {
 
   DeleteArticleUseCase(this.repository);
 
-  Future<void> call(String articleId) async {
+  call(String articleId) async {
     return await repository.deleteArticle(articleId);
   }
 }
