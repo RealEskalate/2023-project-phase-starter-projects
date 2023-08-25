@@ -7,16 +7,16 @@ class AuthenticatedUserInfo extends Equatable {
   final String expertise;
   final String bio;
 
-  final String image;
-  final String imageCloudinaryPublicId;
+  final String? image;
+  final String? imageCloudinaryPublicId;
 
   const AuthenticatedUserInfo({
     required this.fullName,
     required this.email,
     required this.expertise,
     required this.bio,
-    required this.image,
-    required this.imageCloudinaryPublicId,
+    this.image,
+    this.imageCloudinaryPublicId,
   });
 
   @override
