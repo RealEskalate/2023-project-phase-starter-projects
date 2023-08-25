@@ -1,4 +1,3 @@
-import '../../../user/data/models/user_data_model.dart';
 import '../../domain/entities/authenticated_user_info.dart';
 import '../../domain/entities/authentication_entity.dart';
 import '../models/login_model.dart';
