@@ -7,8 +7,9 @@ import 'article_info_widget.dart';
 
 class ListViewArticleCard extends StatelessWidget {
   final Article article;
+  final bool isBookmarked;
 
-  const ListViewArticleCard({super.key, required this.article});
+  const ListViewArticleCard({super.key, required this.article, required this.isBookmarked});
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -34,6 +35,7 @@ class ListViewArticleCard extends StatelessWidget {
                   width: 20,
                 ),
                 ArticleInfoWidget(
+                  isBookmarked:isBookmarked,
                   article: article,
                   needSpace: true,
                   heightBetweenIcons: 21,
