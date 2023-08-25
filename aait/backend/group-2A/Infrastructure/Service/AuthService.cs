@@ -1,7 +1,9 @@
 using System.IdentityModel.Tokens.Jwt;
+using System.Runtime.InteropServices.JavaScript;
 using System.Security.Claims;
 using System.Text;
 using Application.Contracts.Identity;
+using Application.Contracts.Persistance;
 using Application.DTO.UserDTO;
 using Application.Model;
 using Domain.Entities;
@@ -26,27 +28,35 @@ public class AuthService : IAuthService {
           
      } 
      
-     public async Task<string?> Login(AuthRequest request) 
+     public async Task<string?> Login(AuthRequest request, IUserRepository userRepository) 
      {
          var user = await _userManager.FindByEmailAsync(request.Email);
          if (user is null){
+             Console.WriteLine("-------------------User Not Found ");
              return null;
              // throw new NotFoundException("Account",req.Email); 
          }
     
          var isCorrect = await _signInManager.PasswordSignInAsync(userName: user.UserName, request.Password,isPersistent:true, lockoutOnFailure:false);
          if (!isCorrect.Succeeded){
+             Console.WriteLine("-------------------Creditial Not Found ");
              return null;
              // throw new Exception($"invalid credentials for user: {request.Email}"); 
          }
-     
-         JwtSecurityToken token = await GenerateToken(user);
+         
+         Console.WriteLine("-------------UseR Repository started");
+
+         var customeUser = await userRepository.GetUserByEmail(user.Email);
+
+         Console.WriteLine("---------------OKKKKKKKKKKKKK  JWT");
+         JwtSecurityToken token = await GenerateToken(user, customeUser.Id.ToString());
          var Token = new JwtSecurityTokenHandler().WriteToken(token);
+         Console.WriteLine("---------------OKKKKKKKKKKKKK  JWT");
          return Token; 
      
      } 
      
-     public async Task<string?> Register(User req) 
+     public async Task<bool?> Register(CreateUserDTO req, IUserRepository userRepository) 
      {
          var alreadyExist = await _userManager.FindByEmailAsync(req.Email); 
          if (alreadyExist is not null){
@@ -69,13 +79,15 @@ public class AuthService : IAuthService {
          } 
          Console.WriteLine("User Registered");
          AuthRequest request = new AuthRequest {Email = req.Email, Password = req.Password };
-         return await this.Login(request);
+         return true;
+         // return await this.Login(request, userRepository);
      }
-     private async Task<JwtSecurityToken> GenerateToken(ApplicaionUser user){
+     private async Task<JwtSecurityToken> GenerateToken(ApplicaionUser user, string Id){
          var claims = new[]{
              new Claim(JwtRegisteredClaimNames.Sub, user.Email),
              new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
              new Claim(JwtRegisteredClaimNames.Email, user.Email),
+             new Claim("reader", Id)
     
          };
          var ssk = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_jwtSettings.Key)); 

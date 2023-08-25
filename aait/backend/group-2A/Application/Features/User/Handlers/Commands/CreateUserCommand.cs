@@ -38,7 +38,7 @@ namespace Application.Features.UserFeatures.Handlers.Commands
             var user = _mapper.Map<Domain.Entities.User>(request.CreateUser);
             await _unitOfWork.userRepository.Add(user);
             Console.WriteLine("reached Here");
-            var token = await _authService.Register(user);
+            var token = await _authService.Register(request.CreateUser, _unitOfWork.userRepository);
             Console.WriteLine("---------------AuthServise");
             if (token is null){
                 throw new Exception();
@@ -46,7 +46,7 @@ namespace Application.Features.UserFeatures.Handlers.Commands
             
             await _unitOfWork.Save();
 
-            return new AuthResponse(){ Id = user.Id, Email = user.Email, Username = user.UserName, Token = token};
+            return new AuthResponse(){ Id = user.Id, Email = user.Email, Username = user.UserName};
         }
     }
 }

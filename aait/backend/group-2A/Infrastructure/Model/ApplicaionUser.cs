@@ -4,4 +4,5 @@ namespace Infrastructure.Model;
 
 public class ApplicaionUser : IdentityUser{
     
+    
 }

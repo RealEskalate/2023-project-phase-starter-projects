@@ -21,11 +21,13 @@ public class UpdateCommentCommandHandler : IRequestHandler<UpdateCommentCommand,
     public async Task<Unit> Handle(UpdateCommentCommand request, CancellationToken cancellationToken)
     {
         var validator = new UpdateCommentDtoValidator(_unitOfWork.commentRepository);
+        Console.WriteLine("reached handler");
         var validationResult = await validator.ValidateAsync(request.UpdateCommentDto);
-
+        Console.WriteLine(request.UpdateCommentDto);
         if (!validationResult.IsValid)
-        {
-            throw new ValidationException(validationResult.Errors);
+        {    
+            Console.WriteLine("validation");
+            throw new Exception();
         }
 
         var comment = await _unitOfWork.commentRepository.Get(request.UpdateCommentDto.Id);
