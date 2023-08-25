@@ -14,7 +14,7 @@ const LandingSection = () => {
   }, []);
 
   return (
-    <section className="m-5 md:m-10">
+    <section className="m-10">
       <div className="grid grid-cols-1 md:grid-cols-2 md:grid-rows-1 md:gap-4 gap-y-12">
         <div className="flex flex-col justify-start items-center">
           <h1 className="text-2xl md:text-3xl font-extrabold mb-1 md:mb-2 md:w-3/4 text-center md:text-left">

@@ -1,3 +1,4 @@
+'use client';
 import Image from 'next/image';
 import teamsIcon from '@/assets/images/teamLanding.png';
 import profilePic from '@/assets/images/profile.png';
@@ -5,7 +6,6 @@ import faceBookIcon from '@/assets/images/facebook.svg';
 import linkedInIcon from '@/assets/images/linkedin.svg';
 import instagramIcon from '@/assets/images/instagram.svg';
 import { useState } from 'react';
-
 const Section1 = () => {
   return (
     <div className="flex flex-wrap ml-10 xl:ml-28 mt-40">
@@ -27,9 +27,14 @@ const Section1 = () => {
   );
 };
 
-const ProfileCard = () => {
+type profile = {
+  name: string;
+  occupation: string;
+  description: string;
+};
+const ProfileCard = ({ name, occupation, description }: profile) => {
   return (
-    <div className="w-[400px] h-auto pb-10 shadow-xl px-14">
+    <div className="w-full h-auto pb-10 shadow-xl px-4 md:px-14 mt-20">
       <div className="flex justify-center w-full">
         <div className="rounded-full bg-gray-200 p-2 overflow-hidden flex justify-center items-center">
           <Image src={profilePic} alt="proflie picture" height={150} />
@@ -37,15 +42,17 @@ const ProfileCard = () => {
       </div>
       <div>
         <h1 className="flex justify-center mt-4 font-primaryFont text-3xl tracking-widest font-bold">
-          Nathaniel Awel
+          {name}
         </h1>
-        <h2>Software Engineer</h2>
-        <p>
-          He is a motivated software engineer looking to pursue a successful career in software
-          development where he can help deliver software solutions to social problems. His skills
-          include Web Development, Data Structures, Machine Learning, and DevOps. Natnael’s hobbies
-          include coding, playing soccer, and watching movies.
-        </p>
+        <h2 className="flex w-full justify-center text-xl font-secondaryFont font-bold mt-2">
+          {occupation}r
+        </h2>
+        <p className="mt-4  font-secondaryFont text-center text-base">{description}</p>
+      </div>
+      <div className="flex justify-between mt-10 border-t-2 border-gray-300 pt-4">
+        <Image src={faceBookIcon} alt="facebook icon" className="h-8 w-8 md:h-10 md:w-10" />
+        <Image src={linkedInIcon} alt="facebook icon" className="h-8 w-8 md:h-10 md:w-10" />
+        <Image src={instagramIcon} alt="facebook icon" className="h-8 w-8 md:h-10 md:w-10" />
       </div>
     </div>
   );
