@@ -17,6 +17,20 @@ const userApi = baseApi.injectEndpoints({
         body: credentials,
       }),
     }),
+    editProfile: builder.mutation<any, FormData>({
+      query: (data: FormData) => ({
+        url: "auth/edit-profile",
+        method: "PATCH",
+        body: data,
+      }),
+    }),
+    changePassword: builder.mutation<any, any>({
+      query: (passwords) => ({
+        url: "auth/change-password",
+        method: "PATCH",
+        body: passwords,
+      }),
+    }),
   }),
 });
 
