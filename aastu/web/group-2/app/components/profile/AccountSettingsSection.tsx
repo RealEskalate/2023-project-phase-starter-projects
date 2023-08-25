@@ -1,18 +1,39 @@
+"use client"
+
+import { useEditPasswordMutation } from '@/lib/redux/slices/usersApi'
 import React, { useState } from 'react'
+import {CgDanger} from 'react-icons/cg'
 
 const AccountSettingsSection = () => {
-
+  const [passwordMatch, setPasswordMatch] = useState(true)
   const [currentPassword, setCurrentPassword] = useState("")
   const [newPassword, setNewPassword] = useState("")
   const [confirmPassword, setConfirmPassword] = useState("")
+  
+  const [editPassword] = useEditPasswordMutation()
 
-  const handleSaveChange = (e: any) => {
+  const handleSaveChange = async (e: any) => {
     e.preventDefault()
 
     if (!currentPassword.length || !newPassword.length || !confirmPassword.length) {
       alert("All fields must be filled!")
+    } else if (newPassword !== confirmPassword) {
+      setPasswordMatch(false)
     } else {
-
+      const passwords = {
+        oldPassword: currentPassword,
+        newPassword
+      }
+      
+      try {
+        const res = await editPassword(passwords).unwrap()
+        console.log("hi", res);
+        
+      } catch (error) {
+        console.log(error);
+        
+      }
+      
     }
   }
 
@@ -29,6 +50,10 @@ const AccountSettingsSection = () => {
       </div>
       <div>
         <form className='flex flex-col items-center gap-y-6 mt-16 md:mb-96 mb-20'>
+        { passwordMatch && <div className='text-base font-semibold text-white bg-red-600 rounded-md p-2'>
+                           <CgDanger className='text-xl m-2 inline-block' /> 
+                            <span>Incorrect username or password</span> 
+                        </div>}
           <div className='flex flex-col items-start md:flex-row md:justify-between md:items-center md:gap-x-7 gap-y-3'>
             <label htmlFor="currentPassword" className='font-semibold text-lg text-textColor-200'>Current Password</label>
             <input
@@ -38,7 +63,7 @@ const AccountSettingsSection = () => {
               placeholder='Enter your current password'
               value={currentPassword}
               onChange={(e) => setCurrentPassword(e.target.value)}
-              className='w-96 md:w-80 px-4 py-3 rounded-md md:ml-1'
+              className='w-96 md:w-80 px-4 py-3 rounded-md md:ml-1 bg-gray-100'
             />
           </div>
           <div className='flex flex-col items-start md:flex-row md:justify-between md:items-center md:gap-x-7 gap-y-3'>
@@ -50,7 +75,7 @@ const AccountSettingsSection = () => {
               placeholder='Enter new password'
               value={newPassword}
               onChange={(e) => setNewPassword(e.target.value)}
-              className='w-96 md:w-80 px-4 py-3 rounded-md md:ml-2'
+              className='w-96 md:w-80 px-4 py-3 rounded-md md:ml-2 bg-gray-100'
             />
           </div>
           <div className='flex flex-col items-start md:flex-row md:justify-between md:items-center md:gap-x-7 gap-y-3'>
@@ -62,7 +87,7 @@ const AccountSettingsSection = () => {
               placeholder='Confirm new password'
               value={confirmPassword}
               onChange={(e) => setConfirmPassword(e.target.value)}
-              className='w-96 md:w-80 px-4 py-3 rounded-md '
+              className='w-96 md:w-80 px-4 py-3 rounded-md bg-gray-100'
             />
           </div>
         </form>

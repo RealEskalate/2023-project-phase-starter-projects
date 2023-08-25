@@ -22,6 +22,7 @@ const config: Config = {
         blog_readMore_text_color: "#7367F0",
         blog_owner_name_text_color: "#5E5873",
         blog_pending_icon_text_color: "#FF9F43",
+        bg_blog_upload:'#F2F3F4'
       },
       fontFamily: {
         Montserrat: ["Montserrat", "sans-serif"],
