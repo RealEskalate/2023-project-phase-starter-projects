@@ -1,25 +1,66 @@
+import 'package:blog_app/features/blog/domain/usecases/get_all_articles.dart';
+import 'package:blog_app/features/blog/domain/usecases/get_single_article.dart';
+import 'package:blog_app/features/blog/presentation/blocs/bloc.dart';
+import 'package:blog_app/features/blog/presentation/blocs/bloc_event.dart';
+import 'package:blog_app/features/blog/presentation/blocs/bloc_state.dart';
+import 'package:blog_app/features/blog/presentation/widgets/home_card.dart';
+import 'package:blog_app/features/onboarding/widgets/loading_widget.dart';
+import 'package:blog_app/features/user/domain/usecases/get_user.dart';
+import 'package:blog_app/features/user/domain/usecases/login_user.dart';
+import 'package:blog_app/features/user/domain/usecases/register_user.dart';
+import 'package:blog_app/features/user/domain/usecases/update_user.dart';
+import 'package:blog_app/features/user/presentation/blocs/bloc.dart';
+import 'package:blog_app/features/user/presentation/blocs/bloc_state.dart';
+import 'package:blog_app/injection.dart';
 import 'package:flutter/material.dart';
-import 'package:blog_app/features/blog/presentation/widgets/all.dart';
-import 'package:blog_app/features/blog/presentation/widgets/politics.dart';
-import 'package:blog_app/features/blog/presentation/widgets/sport.dart';
-import 'package:blog_app/features/blog/presentation/widgets/tech.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class Home extends StatefulWidget {
-  const Home({super.key});
+  final String userId;
+  const Home({Key? key, required this.userId}) : super(key: key);
 
   @override
   State<Home> createState() => _HomeState();
 }
 
 class _HomeState extends State<Home> {
-  List<Widget> _room = <Widget>[All(), Sport(),  Tech(),Politics(),];
   var cats = ['All', 'Sports', 'Tech', 'Politics'];
   var scroll = ['1', '2', '3'];
   int _currentPage = 0;
+
   @override
   Widget build(BuildContext context) {
+    return BlocProvider(
+      create: (context) => BlogBloc(
+        getAllArticle: sl<GetArticleUseCase>(),
+        getSingleArticle: sl<GetSingleArticleUseCase>(),
+      ),
+      child: BlocConsumer<BlogBloc, BlogState>(
+        listener: (context, state) {
+          if (state is LoadedGetBlogState) {
+          }
+          // loading state
+          else if (state is BlogLoading) {
+          } else if (state is BlogError) {
+            // Handle error if login fails
+          }
+        },
+        builder: (context, state) {
+          return buildBody(context);
+        },
+      ),
+    );
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    context.read<BlogBloc>().add(const GetAllArticlesEvent());
+  }
+
+  Widget buildBody(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color.fromRGBO(248, 250, 255, 1),
+      backgroundColor: const Color.fromRGBO(248, 250, 255, 1),
       appBar: AppBar(
         leading: IconButton(
           icon: const Icon(
@@ -34,102 +75,158 @@ class _HomeState extends State<Home> {
           child: Text(
             "Welcome Back!",
             style: TextStyle(
+              fontFamily: 'Poppins-SemiBold',
               fontWeight: FontWeight.bold,
               color: Colors.black,
             ),
           ),
         ),
         toolbarHeight: 80,
-        actions: const [
-          Padding(
-              padding:
-                  EdgeInsets.only(left: 10, right: 10, top: 10, bottom: 30),
-              child: CircleAvatar(
-                radius: 35,
-                backgroundImage: AssetImage("images/doctor.jpg"),
+        actions: [
+          Container(
+              width: 42,
+              margin:
+                  const EdgeInsets.only(left: 0, right: 20, top: 0, bottom: 0),
+              child: GestureDetector(
+                onTap: () {
+                  Navigator.pushNamed(context, 'profile');
+                },
+                child: const CircleAvatar(
+                  radius: 40,
+                  backgroundImage: AssetImage("assets/images/doctor.jpg"),
+                ),
               )),
         ],
       ),
-      body: Container(
-        padding: const EdgeInsets.only(
-          left: 6,
-          right: 6,
-          bottom: 55,
-        ),
-        child: Column(
-          children: [
-            Container(
-              padding:
-                  const EdgeInsets.only(top: 0, right: 0, left: 10, bottom: 0),
-              height: 50,
-              decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.circular(12),
-              ),
-              child: Row(
-                children: [
-                  Expanded(
-                    child: TextField(
-                      decoration: InputDecoration(
-                          hintText: "Search and article...",
-                          hintStyle: const TextStyle(
-                              color: Color.fromRGBO(154, 148, 148, 1)),
-                          border: InputBorder.none,
-                          suffixIcon: Container(
-                            width: 60,
-                            height: 100,
-                            decoration: BoxDecoration(
-                              color: const Color.fromRGBO(102, 154, 255, 1),
-                              borderRadius: BorderRadius.circular(12),
-                            ),
-                            child: IconButton(
-                              icon: const Icon(Icons.search),
-                              color: Colors.white,
-                              onPressed: () {},
-                            ),
-                          )),
-                    ),
-                  ),
-                  const Padding(padding: EdgeInsets.only(bottom: 10))
-                ],
-              ),
+      body: Column(
+        children: [
+          Container(
+            margin:
+                const EdgeInsets.only(top: 0, right: 20, left: 20, bottom: 0),
+            height: 50,
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(12),
             ),
-            
-            Container(
-              height: 70,
-              child: ListView.builder(
-                  scrollDirection: Axis.horizontal,
-                  itemCount: 4,
-                  itemBuilder: (ctx, index) {
-                    return Container(
-                      // color: _currentPage == index?Color.fromRGBO(55, 106, 237, 1): null,
-                      margin: const EdgeInsets.symmetric(
-                          horizontal: 20, vertical: 20),
-                      decoration: BoxDecoration(
-                        color: _currentPage == index?Color.fromRGBO(55, 106, 237, 1): null,
-                        borderRadius: BorderRadius.circular(12),
-                        border: Border.all(color: Color.fromRGBO(55, 106, 237, 1),width: 2)
-                      ),
-                      child: TextButton(
-                        onPressed: () {
-                          setState(() {
-                            _currentPage = index;
-                            print(_currentPage);
-                          });
-                        },
-                        child: Text(cats[index],
-                          style: TextStyle(color: _currentPage == index? Colors.white: Color.fromRGBO(55, 106, 237, 1)),
+            child: Row(
+              children: [
+                Expanded(
+                  child: TextField(
+                    decoration: InputDecoration(
+                        hintText: "  Search and article...",
+                        hintStyle: TextStyle(
+                          fontFamily: 'Poppins-ExtraLight',
+                          color: Colors.grey.shade400,
+                          fontSize: 15,
+                        ),
+                        border: InputBorder.none,
+                        suffixIcon: Container(
+                          width: 60,
+                          height: 100,
+                          decoration: BoxDecoration(
+                            color: const Color.fromRGBO(102, 154, 255, 1),
+                            borderRadius: BorderRadius.circular(12),
+                          ),
+                          child: IconButton(
+                            icon: const Icon(
+                              Icons.search,
+                              size: 32,
+                            ),
+                            color: Colors.white,
+                            onPressed: () {},
+                          ),
+                        )),
+                  ),
+                ),
+                const Padding(padding: EdgeInsets.only(bottom: 10))
+              ],
+            ),
+          ),
+          Container(
+            height: 75,
+            margin: const EdgeInsets.symmetric(horizontal: 20),
+            child: ListView.builder(
+                scrollDirection: Axis.horizontal,
+                itemCount: 4,
+                itemBuilder: (ctx, index) {
+                  return Container(
+                    width: 80,
+                    // color: _currentPage == index?Color.fromRGBO(55, 106, 237, 1): null,
+                    margin:
+                        const EdgeInsets.symmetric(horizontal: 5, vertical: 17),
+                    decoration: BoxDecoration(
+                      color: _currentPage == index
+                          ? const Color.fromRGBO(55, 106, 237, 1)
+                          : null,
+                      borderRadius: BorderRadius.circular(20),
+                      border: _currentPage == index
+                          ? null
+                          : Border.all(
+                              color: const Color.fromRGBO(55, 106, 237, 1),
+                              width: 2),
+                    ),
+                    child: TextButton(
+                      onPressed: () {
+                        setState(() {
+                          _currentPage = index;
+                        });
+                      },
+                      child: Text(
+                        cats[index],
+                        style: TextStyle(
+                          color: _currentPage == index
+                              ? Colors.white
+                              : const Color.fromRGBO(55, 106, 237, 1),
+                          fontSize: 12,
+                          fontFamily: 'Poppins-Regular',
                         ),
                       ),
-                    );
+                    ),
+                  );
+                }),
+          ),
+          // Container(
+          //   child: _room[_currentPage],
+          // )
 
-                  }),
+          // create a list builder
+          Expanded(
+            child: BlocBuilder<BlogBloc, BlogState>(
+              builder: (context, state) {
+                if (state is BlogLoading) {
+                  return loadingDialog(context);
+                } else if (state is BlogError) {
+                  return const Center(
+                    child: Text('Error loading articles'),
+                  );
+                } else if (state is LoadedGetBlogState) {
+                  return ListView.builder(
+                    itemCount: state.articles.length,
+                    itemBuilder: (context, index) {
+                      return CustomizedCard(
+                        article: state.articles[index],
+                      );
+                    },
+                  );
+                } else {
+                  return const Center(
+                    child: Text('No articles'),
+                  );
+                }
+              },
             ),
-            Container(
-              child: _room[_currentPage],
-            )
-
-          ],
+          ),
+        ],
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          // AddBlog
+          Navigator.pushNamed(context, '/addBlog');
+        },
+        backgroundColor: const Color.fromRGBO(102, 154, 255, 1),
+        child: const Icon(
+          Icons.add,
+          color: Colors.white,
         ),
       ),
     );

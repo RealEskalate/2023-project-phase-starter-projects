@@ -1,3 +1,4 @@
+import 'package:blog_app/features/blog/presentation/screen/viewBlog.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import '../widgets/like_button.dart';
@@ -23,14 +24,15 @@ class Blog {
 List<Blog> blogs = [
   Blog(
       image: 'assets/images/bigdata.png',
-      title: 'Blog Title 1',
+      title: 'Big Data Analytics for Beginners - Level 1',
       subtitle: 'Subtitle 1',
       date: '2023-08-01',
       category: 'Big Data',
       likes: 200),
   Blog(
       image: 'assets/images/bif.jpg',
-      title: 'Blog Title 2',
+      title:
+          'Ethiopia: The Battle for Benshangul-Gumuz is a Battle for Ethiopia',
       subtitle: 'Subtitle 2',
       date: '2023-08-02',
       category: 'Scocial',
@@ -58,7 +60,13 @@ class BlogCards extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
-        // Add your onTap logic here
+        //navigate to ViewBlog() without named
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => ViewBlog(),
+          ),
+        );
       },
       child: Container(
         height: 180,
@@ -91,7 +99,7 @@ class BlogCards extends StatelessWidget {
                       children: <Widget>[
                         Container(height: 25),
                         Text(
-                          object.category,
+                          object.title,
                           maxLines: 3,
                           style: const TextStyle(
                             color: Color.fromARGB(255, 70, 66, 66),
@@ -138,7 +146,7 @@ class BlogCards extends StatelessWidget {
                               ),
                             ),
                             const Spacer(),
-                            const FaIcon(FontAwesomeIcons.solidBookmark)
+                            //    const FaIcon(FontAwesomeIcons.solidBookmark)
                           ],
                         ),
                       ],
