@@ -5,6 +5,8 @@ import uploadsvg from '@/assets/images/upload.svg';
 import dynamic from 'next/dynamic';
 import { useDispatch } from 'react-redux';
 import { useEffect, useState } from 'react';
+import { useAddBlogsMutation } from '@/lib/redux/slices/blogsApi';
+import { useRouter } from 'next/router';
 // import { useSelector } from '@/lib/redux';
 
 const DynamicTextEditor = dynamic(() => import('@/app/components/add-blog/TextEditor'), {
@@ -27,7 +29,8 @@ const AddBlog: React.FC = () => {
       image: formData,
       selectedTags,
     };
-    console.log(blogData);
+    // console.log(blogData);
+    const [addBlogs] = useAddBlogsMutation();
   };
 
   const handleCancel = () => {
@@ -57,6 +60,13 @@ const AddBlog: React.FC = () => {
   // useEffect(() => {
   //   console.log();
   // }, [selectedTags]);
+
+  const router = useRouter();
+
+  if (!localStorage.getItem('login')) {
+    router.replace('/login');
+    return <></>;
+  }
 
   return (
     <div className=" md:px-20 px-2 w-full font-primaryFont py-8 bg-white">

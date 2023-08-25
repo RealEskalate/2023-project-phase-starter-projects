@@ -1,8 +1,7 @@
-import Image from 'next/image';
-import React, { useEffect, useState } from 'react';
-import landingImage from '@/assets/images/LandingPageGridImage.png';
-import { BsArrowRightShort } from 'react-icons/bs';
-import Link from 'next/link';
+import Image from 'next/image'
+import React from 'react'
+import landingImage from '@/assets/images/LandingPageGridImage.png'
+import { BsArrowRightShort } from 'react-icons/bs'
 
 const LandingSection = () => {
   const [loggedIn, setLoggedIn] = useState(false);
@@ -25,24 +24,9 @@ const LandingSection = () => {
             A2SV up-skills high-potential university students, connects them with opportunities at
             top tech companies
           </p>
-          <div className="flex justify-start gap-4 mt-8">
-            {loggedIn ? (
-              <Link
-                href="/profile"
-                className="border-solid text-sm md:text-base border-primaryColor border-2 rounded-md px-2 md:px-6 py-1 md:py-1.5 text-primaryColor font-medium"
-              >
-                My profile
-              </Link>
-            ) : (
-              <Link
-                href="/login"
-                className="border-solid text-sm md:text-base border-primaryColor border-2 rounded-md px-2 md:px-6 py-1 md:py-1.5 text-primaryColor font-medium"
-              >
-                Get started
-              </Link>
-            )}
-
-            <Link href="/donate" className="flex items-center text-sm md:text-base uppercase text-white bg-primaryColor rounded-md py-1.5 font-medium px-6">
+          <div className='flex justify-start gap-4 mt-8'>
+            <button className='border-solid border-primaryColor hover:bg-secondaryColor hover:border-none hover:text-white border-2 rounded-md px-6 py-1.5 text-primaryColor font-medium'>Get started</button>
+            <button className="flex items-center uppercase text-white bg-primaryColor hover:bg-secondaryColor rounded-md py-1.5 font-medium px-6">
               Support us <BsArrowRightShort className="ml-1" />
             </Link>
           </div>
