@@ -23,7 +23,7 @@ class ProfileModel extends Profile {
 
   factory ProfileModel.fromJson(Map<String, dynamic> jsonMap) {
     final Map<String, dynamic> dataJson = jsonMap["data"];
-    String fullName = dataJson["fullName"]; // Retrieve fullName from JSON
+    String fullName = dataJson["fullName"];
     List<String> nameParts = fullName.split(' ');
     String modifiedUsername =
         '@' + nameParts.map((e) => e.toLowerCase()).join('');
@@ -35,7 +35,8 @@ class ProfileModel extends Profile {
         username: modifiedUsername,
         articles: articleList,
         fullName: dataJson["fullName"],
-        imageName: dataJson["image"],
+        imageName: dataJson["image"] ??
+            "https://wallpapers.com/images/hd/naruto-pictures-59j4py5kpauv4mgu.jpg",
         expertise: dataJson["expertise"],
         bio: dataJson["bio"],
         bookmarks: []);
