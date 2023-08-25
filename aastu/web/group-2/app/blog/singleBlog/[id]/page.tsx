@@ -74,9 +74,10 @@ const First = () => {
           </div>
         </div>
       )}
-      <div className="text-xl lg:text-2xl font-primaryFont flex items-center justify-center mx-4 lg:mx-64 mb-4 lg:mb-8 mt-8 pl-2">
-        {blogInfo?.description}
-      </div>
+      <div
+        dangerouslySetInnerHTML={{ __html: blogInfo?.description }}
+        className="text-xl lg:text-2xl font-primaryFont flex items-center justify-center mx-4 lg:mx-64 mb-4 lg:mb-8 mt-8 pl-2"
+      ></div>
       <div className="text-base lg:text-lg font-primaryFont flex flex-col items-center text-gray-600 justify-center mx-4 lg:mx-64 pl-2">
         <p className="mb-4">
           Lorem ipsum dolor sit amet consectetur adipisicing elit. Minus nemo aspernatur, est
