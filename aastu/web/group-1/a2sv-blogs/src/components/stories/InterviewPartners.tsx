@@ -74,7 +74,7 @@ export default function InterviewPartners() {
             </div>
             <div className="w-48 h-24 p-5">
               <Image
-                src="/instadeep.png"
+                src="/images/instadeep.png"
                 alt=""
                 width={250}
                 height={250}
@@ -143,7 +143,7 @@ export default function InterviewPartners() {
           <div className="flex justify-around">
             <div className="w-48 h-28 ">
               <Image
-                src="/databricks.png"
+                src="/images/databricks.png"
                 alt=""
                 width={200}
                 height={200}
@@ -152,7 +152,7 @@ export default function InterviewPartners() {
             </div>
             <div className="w-48 h-28 ">
               <Image
-                src="/linkedin.png"
+                src="/images/linkedin.png"
                 alt=""
                 width={200}
                 height={200}
