@@ -6,31 +6,39 @@ import dynamic from 'next/dynamic';
 import { useDispatch } from 'react-redux';
 import { useEffect, useState } from 'react';
 import { useAddBlogsMutation } from '@/lib/redux/slices/blogsApi';
-import { useRouter } from 'next/router';
+import { useRouter } from 'next/navigation';
 // import { useSelector } from '@/lib/redux';
 
 const DynamicTextEditor = dynamic(() => import('@/app/components/add-blog/TextEditor'), {
   ssr: false,
 });
 const AddBlog: React.FC = () => {
+  const router = useRouter();
   const [file, setFile] = useState<File>();
-  const [blogTitle, setBlogTitle] = useState<string>();
+  const [previewImage, setPreviewImage] = useState<string>('');
+  const [blogTitle, setBlogTitle] = useState<string>('');
   const [selectedTags, setSelectedTags] = useState<string[]>(['development']);
   const [blogContent, setBlogContent] = useState<string>('');
 
-  const dispatch = useDispatch();
-
+  const [addBlogs] = useAddBlogsMutation();
   const handleSaveChanges = () => {
+    console.log(file, previewImage, blogTitle, selectedTags, blogContent);
     const formData = new FormData();
     formData.append('image', file!);
-    const blogData = {
-      blogTitle,
-      blogContent,
-      image: formData,
-      selectedTags,
-    };
+    selectedTags.forEach((tag) => {
+      formData.append('tags', tag);
+    });
+    formData.append('description', blogContent);
+    formData.append('title', blogTitle);
+    selectedTags.forEach((tag) => {
+      formData.append('skills', tag);
+    });
+    console.log(formData);
+    if (blogTitle && blogContent) {
+      addBlogs(formData).then((res) => console.log(res));
+    }
+    // router.replace('/blog');
     // console.log(blogData);
-    const [addBlogs] = useAddBlogsMutation();
   };
 
   const handleCancel = () => {
@@ -41,6 +49,11 @@ const AddBlog: React.FC = () => {
     const selectedFile = e.target.files[0];
     if (selectedFile) {
       setFile(selectedFile);
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setPreviewImage(reader.result as string);
+      };
+      reader.readAsDataURL(selectedFile);
     }
   };
   const handleUploadEvent = (e: any) => {
@@ -57,16 +70,12 @@ const AddBlog: React.FC = () => {
     }
   };
 
-  // useEffect(() => {
-  //   console.log();
-  // }, [selectedTags]);
-
-  const router = useRouter();
-
-  if (!localStorage.getItem('login')) {
-    router.replace('/login');
-    return <></>;
-  }
+  useEffect(() => {
+    if (!localStorage.getItem('login')) {
+      router.replace('/login');
+      // return <></>;
+    }
+  }, []);
 
   return (
     <div className=" md:px-20 px-2 w-full font-primaryFont py-8 bg-white">
@@ -81,18 +90,31 @@ const AddBlog: React.FC = () => {
                 className="p-2 font-primaryFont w-[95%]"
                 placeholder="Enter the title of the blog"
                 onChange={(e) => setBlogTitle(e.target.value)}
+                required
               />
             </div>
             <div className="w-full px-3 md:px-0 md:w-[95%] min-h-[318px] bg-[#F2F3F4]">
               <div className="flex flex-col items-center justify-center space-y-12">
                 <div className="mt-20">
-                  <Image
-                    className="object-cover"
-                    src={uploadsvg}
-                    width={130}
-                    alt="upload image"
-                    priority={true}
-                  />
+                  {previewImage ? (
+                    <Image
+                      className="object-cover"
+                      src={previewImage}
+                      width={130}
+                      height={130}
+                      alt="upload image"
+                      priority={true}
+                    />
+                  ) : (
+                    <Image
+                      className="object-cover"
+                      src={uploadsvg}
+                      width={130}
+                      height={130}
+                      alt="upload image"
+                      priority={true}
+                    />
+                  )}
                 </div>
                 <div>
                   <div className="md:text-[14px] text-[13px] flex flex-wrap items-center">

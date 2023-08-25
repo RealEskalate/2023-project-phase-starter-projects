@@ -78,22 +78,22 @@ const First = () => {
         {blogInfo?.description}
       </div>
       <div className="text-base lg:text-lg font-primaryFont flex flex-col items-center text-gray-600 justify-center mx-4 lg:mx-64 pl-2">
-        <p className="mb-4">
+        <p className="mb-4" dangerouslySetInnerHTML={{ __html: blogInfo.description }}>
           Lorem ipsum dolor sit amet consectetur adipisicing elit. Minus nemo aspernatur, est
           tempore facilis assumenda? Soluta itaque deserunt veniam ut nemo, culpa fugiat odit!
           Fugiat consequatur sed minima totam perspiciatis.
         </p>
-        <p className="mb-4">
+        <p className="mb-4" dangerouslySetInnerHTML={{ __html: blogInfo.description }}>
           Lorem ipsum dolor sit amet consectetur adipisicing elit. Minus nemo aspernatur, est
           tempore facilis assumenda? Soluta itaque deserunt veniam ut nemo, culpa fugiat odit!
           Fugiat consequatur sed minima totam perspiciatis.
         </p>
-        <p className="mb-4">
+        <p className="mb-4" dangerouslySetInnerHTML={{ __html: blogInfo.description }}>
           Lorem ipsum dolor sit amet consectetur adipisicing elit. Minus nemo aspernatur, est
           tempore facilis assumenda? Soluta itaque deserunt veniam ut nemo, culpa fugiat odit!
           Fugiat consequatur sed minima totam perspiciatis.
         </p>
-        <p className="mb-4">
+        <p className="mb-4 dangerouslySetInnerHTML={{ __html: blogInfo.description }}">
           Lorem ipsum dolor sit amet consectetur adipisicing elit. Minus nemo aspernatur, est
           tempore facilis assumenda? Soluta itaque deserunt veniam ut nemo, culpa fugiat odit!
           Fugiat consequatur sed minima totam perspiciatis.
