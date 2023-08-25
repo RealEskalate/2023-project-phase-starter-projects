@@ -30,12 +30,14 @@ public class InteractionController : ControllerBase
 
         var response = await _mediator.Send(command);
 
-        if (response.Success)
+        if (response.IsSuccess)
         {
             return Ok(response);
         }
-
-        return BadRequest(response);
+        else
+        {
+            return BadRequest(response.Message);
+        }
     }
 
 
@@ -46,16 +48,17 @@ public class InteractionController : ControllerBase
         var command = new CreateCommentInteractionCommand { CreateCommentDto = interactionDto };
         var response = await _mediator.Send(command);
 
-        if (response.Success)
+        if (response.IsSuccess)
         {
             return Ok(response);
         }
-
-        return BadRequest(response.Errors);
+        else
+        {
+            return BadRequest(response.Message);
+        }
     }
 
 
-    
     [HttpPut("comment")]
     public async Task<IActionResult> UpdateCommentOfAPostAsync(
         [FromBody] UpdateCommentInteractionDto interactionDto
@@ -63,14 +66,13 @@ public class InteractionController : ControllerBase
     {
         var command = new UpdateCommentInteractionCommand { UpdateCommentDto = interactionDto };
         var response = await _mediator.Send(command);
-
-        if (response.Success)
+        if (response.IsSuccess)
         {
             return Ok(response);
         }
         else
         {
-            return BadRequest(response.Errors);
+            return BadRequest(response.Message);
         }
     }
 
@@ -83,13 +85,13 @@ public class InteractionController : ControllerBase
         var command =
             new DeleteCommentInteractionCommand { DeleteCommentInteractionDto = interactionId };
         var response = await _mediator.Send(command);
-        if (response.Success)
+        if (response.IsSuccess)
         {
             return Ok(response);
         }
         else
         {
-            return BadRequest(response.Errors);
+            return BadRequest(response.Message);
         }
     }
 
@@ -98,13 +100,13 @@ public class InteractionController : ControllerBase
     {
         var command = new GetAllCommentInteractionRequest { PostId = postId };
         var response = await _mediator.Send(command);
-        if (response != null)
+        if (response.IsSuccess)
         {
             return Ok(response);
         }
         else
         {
-            return BadRequest();
+            return BadRequest(response.Message);
         }
     }
 
@@ -114,7 +116,13 @@ public class InteractionController : ControllerBase
     {
         var command = new GetInteractionRequest { Id = id };
         var response = await _mediator.Send(command);
-
-        return Ok(response);
+        if (response.IsSuccess)
+        {
+            return Ok(response);
+        }
+        else
+        {
+            return BadRequest(response.Message);
+        }
     }
 }
