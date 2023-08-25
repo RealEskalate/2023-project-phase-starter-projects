@@ -3,13 +3,14 @@ import background from '@/assets/images/build-better-tommorow.jpg'
 import MessageSvg from '@/assets/images/messages.svg'
 export default function BuildBetterSection() {
     return (
-        <section className='text-sm text-center flex flex-col items-center space-y-4 md:space-y-8 md:text-lg'>
+        <section className='text-center flex flex-col items-center space-y-4 md:space-y-8 md:text-lg'>
         <h2 
-        className='font-semibold font-primaryFont text-2xl w-72 md:text-3xl'>
-            Lets build a better tomorrow
+        className='font-semibold font-primaryFont text-3xl md:text-4xl'>
+            Lets build a better
+            <br /> tomorrow
         </h2>
         <p 
-            className='font-primaryFont w-11/12 text-[#7D7D7D] md:w-10/12'
+            className='font-primaryFont text-left md:text-center w-11/12 text-[#7D7D7D] md:w-10/12'
             >
             A2SV upskills high-potential university students, 
             connects them with opportunities at top tech companies 
@@ -22,7 +23,7 @@ export default function BuildBetterSection() {
             className=' text-white font-primaryFont rounded-md bg-primaryColor py-1 px-2 md:px-4 md:py-2'
             >
             <Image 
-                className='inline-block m-1 md:m-2' 
+                className='inline-block my-1 mx-2 md:m-2' 
                 src={MessageSvg} alt='message' 
                 width={21.25} 
                 height={21.25}/>
