@@ -64,7 +64,7 @@ const BlogDetailPage :React.FC = () => {
           </div>
           <div className=" px-4 mt-8">
               <h1 className="text-2xl pl-8 font-semibold">Related Blogs</h1>
-              <div>
+              <div className="flex gap-4 px-5 my-4">
                   {blog.relatedBlogs.map((relatedBlog => (
                       <BlogCard key={blog._id} {...blog} />
                   )))}
