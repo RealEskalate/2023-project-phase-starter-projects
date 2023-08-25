@@ -7,7 +7,7 @@ namespace SocialSync.Application.DTOs.InteractionDTOs.Validator
 {
     public class LikeDtoValidator : AbstractValidator<InteractionDto>
     {
-        private IUnitOfWork _unitOfWork;
+        private readonly IUnitOfWork _unitOfWork;
 
         public LikeDtoValidator(
            IUnitOfWork unitOfWork
@@ -21,14 +21,8 @@ namespace SocialSync.Application.DTOs.InteractionDTOs.Validator
                     async (id, token) =>
                     {
                         var postExists = await _unitOfWork.PostRepository.GetAsync(id);
-                        if (postExists != null)
-                        {
-                            return false;
-                        }
-                        else
-                        {
-                            return true;
-                        }
+                        return postExists != null;
+                        
                     }
                 )
                 .WithMessage("{PropertyName} doesn't exist");
@@ -38,15 +32,9 @@ namespace SocialSync.Application.DTOs.InteractionDTOs.Validator
                 .MustAsync(
                     async (id, token) =>
                     {
-                        var postExists = await _unitOfWork.UserRepository.GetAsync(id);
-                        if (postExists != null)
-                        {
-                            return false;
-                        }
-                        else
-                        {
-                            return true;
-                        }
+                        var userExists = await _unitOfWork.UserRepository.GetAsync(id);
+                        return userExists != null;
+                        
                     }
                 )
                 .WithMessage("{PropertyName} doesn't exist");

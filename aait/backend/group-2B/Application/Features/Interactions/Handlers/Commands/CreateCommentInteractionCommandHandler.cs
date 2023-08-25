@@ -43,11 +43,21 @@ public class CreateCommentInteractionCommandHandler
         else
         {
             var createdInteraction = await _unitOfWork.InteractionRepository.AddAsync(
-                _mapper.Map<Interaction>(command)
+                _mapper.Map<Interaction>(command.CreateCommentDto)
             );
-            response.Success = true;
-            response.Message = "Comment Created Successfully";
-            response.Id = createdInteraction.Id;
+            if (await _unitOfWork.SaveAsync() > 0)
+            {
+                response.Success = true;
+                response.Message = "Comment Created Successfully";
+                response.Id = createdInteraction.Id;
+            }
+            else
+            {
+                response.Message = "Failed to create Comment";
+                response.Success = false;
+                response.Errors = new List<string>() { "Internal server error" };
+            }
+            
         }
 
         return response;

@@ -6,7 +6,7 @@ namespace SocialSync.Application.DTOs.InteractionDTOs.CommentDTOs.Validator;
 
 public class DeleteCommentDtoValidator : AbstractValidator<DeleteCommentInteractionDto>
 {
-    private IUnitOfWork _unitOfWork;
+    private readonly IUnitOfWork _unitOfWork;
 
     public DeleteCommentDtoValidator(IUnitOfWork unitOfWork)
     {
@@ -16,15 +16,28 @@ public class DeleteCommentDtoValidator : AbstractValidator<DeleteCommentInteract
             .MustAsync(
                 async (id, token) =>
                 {
-                    var postExists = await _unitOfWork.InteractionRepository.GetAsync(id);
-                    if (postExists != null)
-                    {
-                        return false;
-                    }
-                    else
-                    {
-                        return true;
-                    }
+                    var commentExists = await _unitOfWork.InteractionRepository.GetAsync(id);
+                    return commentExists != null;
+                }
+            )
+            .WithMessage("{PropertyName} doesn't exist");
+        RuleFor(interaction => interaction.PostId)
+            .GreaterThan(0)
+            .MustAsync(
+                async (id, token) =>
+                {
+                    var postExists = await _unitOfWork.PostRepository.GetAsync(id);
+                    return postExists != null;
+                }
+            )
+            .WithMessage("{PropertyName} doesn't exist");
+        RuleFor(interaction => interaction.UserId)
+            .GreaterThan(0)
+            .MustAsync(
+                async (id, token) =>
+                {
+                    var userExists = await _unitOfWork.UserRepository.GetAsync(id);
+                    return userExists != null;
                 }
             )
             .WithMessage("{PropertyName} doesn't exist");

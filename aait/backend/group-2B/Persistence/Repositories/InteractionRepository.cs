@@ -41,7 +41,6 @@ public class InteractionRepository : GenericRepository<Interaction>, IInteractio
             _context.Interactions.Add(interaction);
         }
 
-        await _context.SaveChangesAsync();
         return interaction;
     }
 }

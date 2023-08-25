@@ -5,7 +5,7 @@ namespace SocialSync.Application.DTOs.InteractionDTOs.Validator;
 
 public class CommentDtoValidator : AbstractValidator<InteractionDto>
 {
-    private IUnitOfWork _unitOfWork;
+    private readonly IUnitOfWork _unitOfWork;
     public CommentDtoValidator(
         IUnitOfWork unitOfWork
     )
@@ -27,14 +27,7 @@ public class CommentDtoValidator : AbstractValidator<InteractionDto>
                 async (id, token) =>
                 {
                     var postExists = await _unitOfWork.PostRepository.GetAsync(id);
-                    if (postExists != null)
-                    {
-                        return false;
-                    }
-                    else
-                    {
-                        return true;
-                    }
+                    return postExists != null;
                 }
             )
             .WithMessage("{PropertyName} doesn't exist");
@@ -44,15 +37,9 @@ public class CommentDtoValidator : AbstractValidator<InteractionDto>
             .MustAsync(
                 async (id, token) =>
                 {
-                    var postExists = await _unitOfWork.UserRepository.GetAsync(id);
-                    if (postExists != null)
-                    {
-                        return false;
-                    }
-                    else
-                    {
-                        return true;
-                    }
+                    var userExists = await _unitOfWork.UserRepository.GetAsync(id);
+                    return userExists != null;
+
                 }
             )
             .WithMessage("{PropertyName} doesn't exist");

@@ -42,11 +42,21 @@ public class LikeUnlikePostInteractionCommandHandler
         else
         {
             var createdInteraction = await _unitOfWork.InteractionRepository.LikeUnlikeInteractionAsync(
-                _mapper.Map<Interaction>(command)
+                _mapper.Map<Interaction>(command.LikeDto)
             );
-            response.Success = true;
-            response.Message = "Comment Created Successfully";
-            response.Id = createdInteraction.Id;
+            if (await _unitOfWork.SaveAsync() > 0)
+            {
+                response.Success = true;
+                response.Message = "Comment liked/unliked Successfully";
+                response.Id = createdInteraction.Id;
+            }
+            else
+            {
+                response.Message = "Failed to interact with like and unlike Comment";
+                response.Success = false;
+                response.Errors = new List<string>() { "Internal server error" };
+            }
+            
         }
 
         return response;

@@ -1,9 +1,9 @@
 using MediatR;
-using SocialSync.Application.DTOs.Common;
+using SocialSync.Application.Common.Responses;
 using SocialSync.Application.DTOs.InteractionDTOs.CommentDTOs;
 
 namespace SocialSync.Application.Features.Interactions.Requests.Commands;
-public class DeleteCommentInteractionCommand : IRequest<Unit>
+public class DeleteCommentInteractionCommand : IRequest<BaseCommandResponse>
 {
     public required DeleteCommentInteractionDto DeleteCommentInteractionDto { get; set; }
 }
