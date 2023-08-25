@@ -31,8 +31,8 @@ export function StoriesCard ({alternate, profileImage ,personName, imgURL, role,
                 </div>
             </div>
 
-            <div className='w-5/6 md:w-3/5 py-12 md:py-8'>
-            <div className='py-10 md:py-8 flex flex-col justify-around'>
+            <div className='w-5/6 md:w-3/5'>
+            <div className='flex flex-col justify-around'>
                 {story?.map((item, index) => [
                     <div className='mb-4'>
                         <p className='font-secondaryFont font-medium text-2xl mb-8'>{item.heading}</p>
@@ -124,7 +124,7 @@ export default function StoriesPage() {
         </p>
       </div>
       <div className="h-[6px] w-[88px] mt-4 bg-[#264FAD]"></div>
-      <div className="mt-24 mb-12">
+      <div className="mt-8 mb-8">
             {data?.map((item,index) =>[
                 <StoriesCard key={index} profileImage={profilePictures[index]} {...item} alternate={index % 2 == 0} />
             ])}
@@ -132,7 +132,7 @@ export default function StoriesPage() {
 
       <div className="text-center w-full">
         <p className="font-primaryFont font-normal text-4xl mb-20 text-[#363636]">Current Interview Partners</p>
-        <ul className="flex flex-row item-center justify-center gap-24 flex-wrap">
+        <ul className="flex flex-row item-center justify-center gap-12 flex-wrap">
           <li className="w-[200px] h-[50px]">
             <Image src={google} width={200} height={200} alt="" />
           </li>
