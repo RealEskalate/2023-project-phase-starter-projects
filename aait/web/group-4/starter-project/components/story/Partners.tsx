@@ -1,24 +1,30 @@
 import Image from 'next/image'
+import { urls } from './PartnersLogo';
+import { secondUrls } from './PartnersLogo';
 
-
-const Partners = () => {
+export const Partners = () => {
   return (
-    <div className="flex flex-col text-center text-40 lg:mt-20 lg:mx-0 md:mt-40">
-      <h2 className="font-DM Sans mr-40 lg:mr-20 md:mr-10 text-3xl">Current Interview Partners</h2>
-      <div className="flex flex-col lg:flex-row mx-4 md:mx-5 lg:mx-20 mt-10 lg:mt-20 justify-center gap-5 text-2xl">
+    <div className="flex flex-col text-center text-40 items-center lg:mt-20 lg:mx-0 md:mt-40">
+      <h2 className="font-DM Sans lg:mr-20 md:mr-10 text-3xl">Current Interview Partners</h2>
+      <div className="flex flex-col mx-4 md:mx-5 lg:mx-20 mt-10 lg:mt-20 justify-center gap-2 lg:gap-5 text-2xl">
         <div className="flex flex-wrap justify-center lg:justify-start gap-5">
-          <Image width={150} height={150} src="/story/partners/Google.svg" alt="Google logo" priority />
-          <Image width={150} height={150} src="/story/partners/Palantir.svg" alt="Palantir logo" priority />
-          <Image width={150} height={150} src="/story/partners/InstDeep.svg" alt="InstDeep logo" priority />
-          <Image width={150} height={150} src="/story/partners/meta.svg" alt="Meta logo" priority />
+          {
+            urls.map((url)=>{
+              return <Image width={150} height={150} src={url} alt="Google logo" priority />
+            })
+          }
+
         </div>
-        <div className="flex flex-row justify-center lg:justify-end gap-5 mt-5 lg:mt-0">
-          <Image width={150} height={150} src="/story/partners/databricks.svg" alt="Databricks logo" priority />
-          <Image width={150} height={150} src="/story/partners/linkedin.svg" alt="LinkedIn logo" priority />
+        <div className="flex flex-row justify-between px-4 lg:px-12 gap-5 lg:mt-0">
+          {
+            secondUrls.map((url)=>{
+              return <Image width={150} height={150} src={url} alt="Databricks logo" priority />
+            })
+          }
         </div>
       </div>
     </div>
   );
 };
 
-export default Partners;
+

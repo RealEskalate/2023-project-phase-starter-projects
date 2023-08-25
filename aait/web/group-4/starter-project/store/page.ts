@@ -1,5 +1,5 @@
 import { configureStore } from "@reduxjs/toolkit";
-import { storiesApi } from "./StoryApi";
+import { storiesApi } from "./story/story-api";
 
 
 export const store = configureStore({

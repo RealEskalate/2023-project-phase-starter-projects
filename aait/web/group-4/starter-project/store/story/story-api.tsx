@@ -1,5 +1,5 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
-import { Story } from '@/types/Story/StoryType';
+import { Story } from '@/types/Story/story-type';
 
 export const storiesApi = createApi({
   reducerPath: 'storiesApi',

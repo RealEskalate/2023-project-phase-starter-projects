@@ -16,9 +16,6 @@ const config: Config = {
       fontFamily: {
         poppins: ['Poppins', 'sans-serif'],
       },
-      colors: {
-        customBorderColor: '#264FAD',
-      }
     },
   },
   plugins: [],
