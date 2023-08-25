@@ -32,7 +32,6 @@ export default function TeamHome() {
 
       <hr className="my-10" />
 
-    </div>
-  );
-
-}
+      </div>
+    ); 
+  }
