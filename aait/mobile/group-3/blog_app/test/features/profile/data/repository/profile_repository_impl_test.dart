@@ -36,6 +36,7 @@ void main() {
 
   group('getProfile', () {
     final tProfileModel = ProfileModel(
+      bookmarks: [],
         username: "@tamiratdereje",
         articles: [
           ArticleModel(

@@ -9,6 +9,7 @@ import 'article_icon_button.dart';
 class ArticleInfoWidget extends StatelessWidget {
   ArticleInfoWidget(
       {super.key,
+      required this.isBookmarked,
       required this.article,
       required this.needSpace,
       required this.heightBetweenIcons,
@@ -18,6 +19,7 @@ class ArticleInfoWidget extends StatelessWidget {
   final bool needSpace;
   final double heightBetweenIcons;
   final bool needsPadding;
+  final bool isBookmarked;
   final ValueConverter valueConverter = ValueConverter();
 
   @override
@@ -40,9 +42,7 @@ class ArticleInfoWidget extends StatelessWidget {
             Text(
               article.title,
               style: TextStyle(
-                  color: blue,
-                  fontWeight: FontWeight.w100,
-                  fontSize: 14),
+                  color: blue, fontWeight: FontWeight.w100, fontSize: 14),
             ),
             SizedBox(
               height: 4.h,
@@ -62,11 +62,17 @@ class ArticleInfoWidget extends StatelessWidget {
                 SizedBox(
                   width: 4.w,
                 ),
-                IconButton(
-                  onPressed: null,
-                  icon: Icon(Icons.bookmark_outline),
-                  iconSize: 16,
-                )
+                isBookmarked
+                    ? Icon(
+                        Icons.bookmark,
+                        color: blue,
+                        size: 16,
+                      )
+                    : Icon(
+                        Icons.bookmark_outline,
+                        color: darkGrey,
+                        size: 16
+                      ),
               ],
             ),
           ],

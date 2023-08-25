@@ -3,16 +3,18 @@ import 'package:blog_app/features/profile/domain/entity/article.dart';
 import 'package:blog_app/features/profile/domain/entity/profile.dart';
 
 class ProfileModel extends Profile {
-  ProfileModel({
-    required String username,
-    required List<Article> articles,
-    required String fullName,
-    required String imageName,
-    required String expertise,
-    required String bio,
-  }) : super(
+  ProfileModel(
+      {required String username,
+      required List<Article> articles,
+      required String fullName,
+      required String imageName,
+      required String expertise,
+      required String bio,
+      required List<Article> bookmarks})
+      : super(
           username: username,
           articles: articles,
+          bookmarks: bookmarks,
           fullName: fullName,
           imageName: imageName,
           expertise: expertise,
@@ -30,12 +32,12 @@ class ProfileModel extends Profile {
         .toList();
 
     return ProfileModel(
-      username: modifiedUsername,
-      articles: articleList,
-      fullName: dataJson["fullName"],
-      imageName: dataJson["image"],
-      expertise: dataJson["expertise"],
-      bio: dataJson["bio"],
-    );
+        username: modifiedUsername,
+        articles: articleList,
+        fullName: dataJson["fullName"],
+        imageName: dataJson["image"],
+        expertise: dataJson["expertise"],
+        bio: dataJson["bio"],
+        bookmarks: []);
   }
 }
