@@ -52,7 +52,7 @@ export default function ProfileBlogCard({ blog }: { blog: Blog }) {
         </p>
         <hr className="my-3" />
         <div>
-          <div className="flex justify-between items-center font-semibold h-5">
+          <div className="flex justify-between items-end font-semibold h-5">
             {blog.isPending && <span className="text-orange-500">Pending</span>}
             <Link href={`/blogs/${blog._id}`} className="text-primary">
               Read More
