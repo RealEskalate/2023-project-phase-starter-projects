@@ -1,13 +1,15 @@
 using AutoMapper;
 using MediatR;
+using SocialSync.Application.Common.Responses;
 using SocialSync.Application.Contracts.Persistence;
+using SocialSync.Application.DTOs.Notifications.Validators;
 using SocialSync.Domain.Entities;
 using SocialSyncApplication.Features.Notifications.Requests.Commands;
 
 
 namespace SocialSync.Application.Features.Notifications.Handlers.Commands;
 
-public class CreateNotificationCommandHandler : IRequestHandler<CreateNotificationCommand, int>
+public class CreateNotificationCommandHandler : IRequestHandler<CreateNotificationCommand, CommonResponse<int>>
 {
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
@@ -18,13 +20,26 @@ public class CreateNotificationCommandHandler : IRequestHandler<CreateNotificati
             _mapper = mapper;
         }
 
-        public async Task<int> Handle(CreateNotificationCommand request, CancellationToken cancellationToken)
+        public async Task<CommonResponse<int>> Handle(CreateNotificationCommand request, CancellationToken cancellationToken)
         {
             // add any necessary validation here before creating the notification
+            var validator = new NotificationCreateDtoValidator();
+            var validationResult = await validator.ValidateAsync(request.NotificationCreateDto);
+
+            if(!validationResult.IsValid){
+                return CommonResponse<int>.FailureWithError("Validation errror", validationResult.Errors);
+            }
 
             var notification = _mapper.Map<Notification>(request.NotificationCreateDto);
             notification = await _unitOfWork.NotificationRepository.AddAsync(notification);
 
-            return notification.Id;
+            if( await _unitOfWork.SaveAsync() == 0)
+            {
+                return CommonResponse<int>.Failure("Error While Saving Changes!");
+            
+            }
+
+            return CommonResponse<int>.Success(notification.Id);
+
         }
 }
