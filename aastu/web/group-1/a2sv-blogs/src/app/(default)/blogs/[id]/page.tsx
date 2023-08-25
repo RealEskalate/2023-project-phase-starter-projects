@@ -21,7 +21,7 @@ const Blog = ({ params }: { params: { id: string } }) => {
   }
 
   return (
-    <div className="p-20 flex flex-col items-center gap-10">
+    <div className="md:p-20 p-5 flex flex-col items-center gap-10">
       <div className="flex flex-col items-center gap-4">
         <h1 className="text-3xl font-french">{blogData.title}</h1>
         <p className="font-montserrat uppercase text-xs text-center">
@@ -45,7 +45,7 @@ const Blog = ({ params }: { params: { id: string } }) => {
             alt="author image"
             width={50}
             height={50}
-            className="rounded-full"
+            className="rounded-full w-20 h-20 object-cover"
           />
         )}
         <p className="font-montserrat uppercase text-xs">
@@ -53,15 +53,12 @@ const Blog = ({ params }: { params: { id: string } }) => {
         </p>
       </div>
       <div className="md:px-32 flex flex-col gap-8 text-justify py-4">
-        <div>
-          <p className="font-montserrat text-lg font-bold">
-            {blogData.description}
-          </p>
-        </div>
         {blogData.description.split("\n").map((paragraph: any, index: any) => (
-          <p key={index} className="font-montserrat text-sm">
-            {paragraph}
-          </p>
+          <p
+            key={index}
+            className="font-montserrat text-sm"
+            dangerouslySetInnerHTML={{ __html: paragraph }}
+          ></p>
         ))}
       </div>
       <div className="text-left w-full flex flex-col gap-12">
