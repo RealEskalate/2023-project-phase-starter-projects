@@ -9,13 +9,6 @@ export default function Nav() {
   const handleToggle = () => {
     setOpenMenu(!openMenu);
   };
-
-export default function Nav() {
-  const [openMenu, setOpenMenu] = useState<boolean>(false);
-
-  const handleToggle = () => {
-    setOpenMenu(!openMenu);
-  };
   return (
     <nav className="bg-white fixed w-full z-50 top-0 left-0">
       <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
@@ -181,7 +174,7 @@ export default function Nav() {
         <div
           className={`${
             openMenu ? "" : "hidden"
-          } items-center justify-between w-full lg:flex lg:w-auto lg:order-1`}
+          } items-center justify-between w-full lg:flex lg:w-auto lg:order-1 lg:ml-10`}
           id="navbar-sticky"
         >
           <ul className="flex flex-col p-4 lg:p-0 mt-4 font-medium border  border-gray-100 rounded-lg  lg:flex-row lg:space-x-8 lg:mt-0 lg:border-0 lg:bg-white ">
@@ -212,7 +205,7 @@ export default function Nav() {
             </li>
             <li>
               <Link
-                href="#"
+                href="/about"
                 className="block py-2 pl-3 pr-4  rounded lg:bg-transparent   lg:hover:bg-white  lg:p-0  text-[#3C3C3C] text-base hover:bg-gray-100   font-semibold font-montserrat"
               >
                 About
@@ -253,7 +246,6 @@ export default function Nav() {
           </ul>
         </div>
       </div>
-    </nav>
     </nav>
   );
 }
