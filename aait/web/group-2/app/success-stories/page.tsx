@@ -28,15 +28,13 @@ const SuccessStories = () => {
           loading...
         </div>
       )}
-      {isSuccess && !isError && (
+      {isSuccess && (
         <div className="mt-6">
-          {successStories.map((story: SuccessStory, index: number) => {
-            return (
-              <div key={story._id}>
-                <SingleSuccessStory successStory={story} index={index} />
-              </div>
-            );
-          })}
+          {successStories.map((story: SuccessStory, index: number) => (
+            <div key={story._id}>
+              <SingleSuccessStory successStory={story} index={index} />
+            </div>
+          ))}
         </div>
       )}
       {isError && <p className="text-red-900">Failed to load data</p>}
