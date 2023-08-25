@@ -158,7 +158,7 @@ export default function AboutUs() {
                     <div className="relative flex flex-col space-around h-4/5 w-4/5 mx-auto">
                         <Image
                             src="/images/amicosolve.png"
-                            alt="Picture of the author"
+                            alt="the problmes we solve"
                             layout="fill"
                             objectFit="contain"
                             className="absolute rounded-xl"
@@ -173,7 +173,7 @@ export default function AboutUs() {
                     <div className="relative flex flex-col space-around h-96 w-96 ml-8">
                         <Image
                             src="/images/amicopuzzle.png"
-                            alt="Picture of the author"
+                            alt="solving puzzles picture"
                             layout="fill"
                             objectFit="contain"
                             className="absolute rounded-xl"
