@@ -36,7 +36,7 @@ public class UpdateCommentInteractionCommandHandler
 
         if (!validationResult.IsValid)
         {
-            response.Message = "Failed to create Comment";
+            response.Message = "Failed to update Comment";
             response.Success = false;
             response.Errors = validationResult.Errors.Select(q => q.ErrorMessage).ToList();
         }
@@ -52,19 +52,19 @@ public class UpdateCommentInteractionCommandHandler
                 if (await _unitOfWork.SaveAsync() > 0)
                 {
                     response.Success = true;
-                    response.Message = "Comment Created Successfully";
+                    response.Message = "Comment updated Successfully";
                     response.Id = foundComment.Id;
                 }
                 else
                 {
-                    response.Message = "Failed to create Comment";
+                    response.Message = "Failed to update Comment";
                     response.Success = false;
                     response.Errors = new List<string>() { "Internal server error" };
                 }
             }
             else
             {
-                response.Message = "Failed to create Comment";
+                response.Message = "Failed to update Comment";
                 response.Success = false;
                 response.Errors = new List<string>() { "Comment not found" };
             }

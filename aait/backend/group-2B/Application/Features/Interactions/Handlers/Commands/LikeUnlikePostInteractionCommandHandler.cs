@@ -35,7 +35,7 @@ public class LikeUnlikePostInteractionCommandHandler
 
         if (!validationResult.IsValid)
         {
-            response.Message = "Failed to create Comment";
+            response.Message = "Failed to Like/unlike Comment";
             response.Success = false;
             response.Errors = validationResult.Errors.Select(q => q.ErrorMessage).ToList();
         }
