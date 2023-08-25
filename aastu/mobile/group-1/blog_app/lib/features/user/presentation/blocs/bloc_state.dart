@@ -21,7 +21,7 @@ class UserLoading extends UserState {}
 class UserError extends UserState {
   final String errorMessage;
 
-  UserError(this.errorMessage);
+  const UserError(this.errorMessage);
   @override
   List<Object> get props => [errorMessage];
 }

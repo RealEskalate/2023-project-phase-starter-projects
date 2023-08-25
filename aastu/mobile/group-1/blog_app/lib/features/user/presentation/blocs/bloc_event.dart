@@ -12,7 +12,7 @@ class UpdateProfilePhotoEvent extends UserEvent {
   final String imageUrl;
   final String imagePublicId;
 
-  UpdateProfilePhotoEvent({
+  const UpdateProfilePhotoEvent({
     required this.userId,
     required this.imageUrl,
     required this.imagePublicId,

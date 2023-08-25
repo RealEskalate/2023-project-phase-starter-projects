@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:blog_app/features/blog/domain/usecases/get_all_articles.dart';
 import 'package:blog_app/features/blog/domain/usecases/get_single_article.dart';
 import 'package:blog_app/features/blog/presentation/blocs/bloc.dart';
@@ -5,12 +7,6 @@ import 'package:blog_app/features/blog/presentation/blocs/bloc_event.dart';
 import 'package:blog_app/features/blog/presentation/blocs/bloc_state.dart';
 import 'package:blog_app/features/blog/presentation/widgets/home_card.dart';
 import 'package:blog_app/features/onboarding/widgets/loading_widget.dart';
-import 'package:blog_app/features/user/domain/usecases/get_user.dart';
-import 'package:blog_app/features/user/domain/usecases/login_user.dart';
-import 'package:blog_app/features/user/domain/usecases/register_user.dart';
-import 'package:blog_app/features/user/domain/usecases/update_user.dart';
-import 'package:blog_app/features/user/presentation/blocs/bloc.dart';
-import 'package:blog_app/features/user/presentation/blocs/bloc_state.dart';
 import 'package:blog_app/injection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -41,6 +37,7 @@ class _HomeState extends State<Home> {
           }
           // loading state
           else if (state is BlogLoading) {
+            loadingDialog(context);
           } else if (state is BlogError) {
             // Handle error if login fails
           }
@@ -143,7 +140,7 @@ class _HomeState extends State<Home> {
             ),
           ),
           Container(
-            height: 75,
+            height: 70,
             margin: const EdgeInsets.symmetric(horizontal: 20),
             child: ListView.builder(
                 scrollDirection: Axis.horizontal,
@@ -199,6 +196,9 @@ class _HomeState extends State<Home> {
                   return const Center(
                     child: Text('Error loading articles'),
                   );
+                } else if (state is BlogInitial) {
+                  context.read<BlogBloc>().add(const GetAllArticlesEvent());
+                  return loadingDialog(context);
                 } else if (state is LoadedGetBlogState) {
                   return ListView.builder(
                     itemCount: state.articles.length,

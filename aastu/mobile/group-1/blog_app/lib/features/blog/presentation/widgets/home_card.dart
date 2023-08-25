@@ -12,102 +12,86 @@ class CustomizedCard extends StatefulWidget {
 class _CustomizedCardState extends State<CustomizedCard> {
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: 388,
-      height: 240,
-      padding: const EdgeInsets.symmetric(horizontal: 5),
-      decoration: BoxDecoration(
-          color: Colors.white, borderRadius: BorderRadius.circular(12)),
-      child: Row(
-        children: [
-          Stack(
-            children: [
-              Container(
-                margin: const EdgeInsets.only(bottom: 50),
-                width: 160,
-                height: 200,
-                child: Image.asset('assets/images/doctor.jpg'),
-              ),
-              Positioned(
-                top: 35,
-                left: 25,
-                child: Container(
-                  width: 76,
-                  height: 26,
-                  decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(20)),
-                  child: const Center(
-                    child: Text(
-                      '5 min read',
-                      style: TextStyle(
-                          fontSize: 10, fontFamily: 'Poppins-Regular'),
+    return InkWell(
+      onTap: () {},
+      child: Container(
+        height: 140,
+        width: double.infinity,
+        padding: const EdgeInsets.fromLTRB(15, 5, 15, 5),
+        child: Column(
+          children: <Widget>[
+            Expanded(
+              child: Row(
+                children: <Widget>[
+                  Card(
+                    margin: const EdgeInsets.all(0),
+                    elevation: 0,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(8),
                     ),
+                    clipBehavior: Clip.antiAliasWithSaveLayer,
+                    child: widget.article.image != null
+                        ? Image.network(
+                            widget.article.image!,
+                            height: 100,
+                            width: 100,
+                            fit: BoxFit.cover,
+                          )
+                        : Image.asset(
+                            "assets/images/doctor.jpg",
+                            height: 100,
+                            width: 100,
+                            fit: BoxFit.cover,
+                          ),
                   ),
-                ),
-              ),
-            ],
-          ),
-          const SizedBox(
-            width: 15,
-          ),
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              const SizedBox(
-                height: 16,
-              ),
-              SizedBox(
-                width: 175,
-                child: Text(
-                  widget.article.title ?? 'Loading ..', // Card Title Goes here
-                  style: const TextStyle(
-                      fontSize: 17, fontFamily: 'Urbanist-Regular'),
-                ),
-              ),
-              const SizedBox(
-                height: 10,
-              ),
-              Container(
-                width: 71,
-                height: 24,
-                decoration: BoxDecoration(
-                    color: const Color(0xFF5E5F6F),
-                    borderRadius: BorderRadius.circular(6)),
-                child: Center(
-                  child: Text(
-                    widget.article.tags?[0] ?? "", //  Tag Goes here
-                    style: const TextStyle(fontSize: 10, color: Colors.white),
-                  ),
-                ),
-              ),
-              const SizedBox(
-                height: 10,
-              ),
-              Container(
-                child: Text(
-                  'by ${widget.article.user}', // Author Name Goes here
-                  style: const TextStyle(
-                      fontSize: 14, fontFamily: 'Poppins-Regular'),
-                ),
-              ),
-              const SizedBox(
-                height: 5,
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: [
-                  const SizedBox(width: 90),
-                  Text(
-                    widget.article.createdAt.toString(),
-                    style: const TextStyle(
-                        fontSize: 14, fontFamily: 'Poppins-ExtraLight'),
-                  ),
+                  Container(width: 10),
+                  Expanded(
+                    child: Column(
+                      children: <Widget>[
+                        Text(
+                          widget.article.title ?? "",
+                          maxLines: 3,
+                          style: const TextStyle(fontSize: 20),
+                        ),
+                        Container(height: 5),
+                        ElevatedButton(
+                          onPressed: () {
+                            // Add your onPressed callback here
+                          },
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: const Color(
+                                0xFF333333), // Background color (#333)
+                            minimumSize: const Size(50, 26), // Small size
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(
+                                  8), // Rectangular shape with rounded corners
+                            ),
+                          ),
+                          child: const Text(
+                            "Education",
+                            style: TextStyle(
+                              color: Colors.white, // Text color
+                              fontSize: 14,
+                            ),
+                          ),
+                        ),
+                        Row(
+                          children: <Widget>[
+                            Text(
+                              "By ${widget.article.user?.fullName}",
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
+                  )
                 ],
               ),
-            ],
-          )
-        ],
+            ),
+            Container(height: 10),
+            const Divider(height: 0)
+          ],
+        ),
       ),
     );
   }

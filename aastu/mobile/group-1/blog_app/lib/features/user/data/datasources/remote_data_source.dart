@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:developer';
 import 'package:blog_app/features/user/data/datasources/data_source_api.dart';
 import 'package:http/http.dart' as http;
+import 'package:shared_preferences/shared_preferences.dart'; // Import SharedPreferences package
 
 class UserApiDataSource implements UserRemoteDataSource {
   final String baseUrl;
@@ -23,6 +24,17 @@ class UserApiDataSource implements UserRemoteDataSource {
 
       if (response.statusCode == 200 && responseData['success'] == true) {
         log("fetched: $responseData");
+
+        // Check if the response has a 'token' key
+        if (responseData.containsKey('token')) {
+          final token = responseData['token'] as String;
+
+          // Store token in SharedPreferences
+          final prefs = await SharedPreferences.getInstance();
+          prefs.setString('auth_token', token);
+          log("token is saved: $token");
+        }
+
         return responseData['data'];
       } else {
         log("error: $responseData");
