@@ -4,6 +4,7 @@ import React, { useEffect, useState } from 'react';
 import SingleBlogCard from '../components/blog/SingleBlogCard';
 import { useGetBlogsQuery } from '@/lib/redux/slices/blogsApi';
 import Loading from '../components/loading';
+import Link from 'next/link';
 
 const Page: React.FC = () => {
   const [search, setSearch] = useState('');
@@ -27,9 +28,9 @@ const Page: React.FC = () => {
             placeholder="Search..."
             className="border px-4 lg:px-10 py-2 rounded-3xl text-sm"
           />
-          <button className="bg-primaryColor text-white px-6 py-4 rounded-3xl text-xs lg:text-sm font-semibold">
+          <Link href="/blog/add-blog" className="bg-primaryColor text-white px-6 py-4 rounded-3xl text-xs lg:text-sm font-semibold">
             + New Blog
-          </button>
+          </Link>
         </div>
         <div className=""></div>
       </div>
