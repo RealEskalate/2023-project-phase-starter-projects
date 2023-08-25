@@ -9,6 +9,7 @@ namespace Application.Features.Posts.Handlers.Commands;
 
 public class UpdatePostRequestHandler : IRequestHandler<UpdatePostRequest, Post>
 {
+   
     private readonly IMapper _mapper;
     private readonly IUnitOfWork _unitOfWork;
 

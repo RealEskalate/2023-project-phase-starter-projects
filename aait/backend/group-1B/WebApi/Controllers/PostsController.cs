@@ -47,7 +47,7 @@ public class PostsController : ControllerBase
         return Ok(posts);
     }
 
-    [HttpGet("tag/{tagName}")]
+    [HttpGet("search/{tagName}")]
     public async Task<IActionResult> GetByTag(string tagName)
     {
         var request = new GetPostsByTagRequest() { Tag = tagName };
@@ -65,7 +65,7 @@ public class PostsController : ControllerBase
         return Ok(posts);
     }
 
-    [HttpGet("like/{postId:int}")]
+    [HttpGet("{postId:int}/likes")]
     public async Task<IActionResult> GetLikes(int postId)
     {
         var request = new GetLikesByPostIdRequest() { PostId = postId };
