@@ -14,11 +14,11 @@ const BlogDetailPage = () => {
   const {data:blog, error, isLoading} = useGetSingleBlogQuery(blogId as string)
   
   if (isLoading){
-      <Loading />
+      return <Loading />
   }
 
   if (error){
-      <Error />    
+      return <Error />    
   }
 
   if (blog) {
