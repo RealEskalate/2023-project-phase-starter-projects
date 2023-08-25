@@ -1,7 +1,7 @@
 import { configureStore, getDefaultMiddleware } from '@reduxjs/toolkit'
 import { authApi } from './auth/authApi'
 import { blogsApi } from './features/blogs/blogs'
-import { teamMembersApi } from "./features/team-members";
+import { teamMembersApi } from "./features/team-members/team-members";
 
 
 export const store = configureStore({

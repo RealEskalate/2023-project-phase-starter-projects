@@ -37,6 +37,10 @@
   @apply py-2 px-6 rounded-full text-xs transition-all hover:scale-105 duration-500
 }
 
+.blog-tag {
+  @apply  text-sm px-6 py-2 rounded-full
+}
+
 .page {
   @apply w-8 h-8 flex justify-center items-center hover:cursor-pointer rounded-lg
 }

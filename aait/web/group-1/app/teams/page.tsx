@@ -5,7 +5,7 @@ import React from "react";
 import TeamImage from "../../public/images/team-work.svg";
 import { Profile } from "@/types/Profile";
 import Card from "@/components/teams/Card";
-import { useGetTeamMembersQuery } from "@/store/features/team-members";
+import { useGetTeamMembersQuery } from "@/store/features/team-members/team-members";
 
 const page = () => {
   const { data: members, isLoading, error } = useGetTeamMembersQuery();
