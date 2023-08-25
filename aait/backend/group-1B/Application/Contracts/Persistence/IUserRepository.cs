@@ -17,10 +17,7 @@ namespace Application.Contracts.Persistence;
 
     Task<User?> GetUserDetail(int userId);
 
-<<<<<<< HEAD
-    Task<bool> Exists(int UserId);
-=======
+
     Task<bool> Exists(int userId); 
->>>>>>> 34d78df (add(AAiT-backend-1A) : add follow and unfollow with the unit tests)
 
    }
