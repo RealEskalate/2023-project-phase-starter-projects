@@ -7,7 +7,7 @@ export default function BlogHeader() {
       <h1 className="text-xl font-montserrat lg:visible invisible font-extrabold text-black leading-5">
         Blogs
       </h1>
-      <div className="flex lg:gap-5 justify-between">
+      <div className="flex lg:gap-5 justify-center gap-5">
         <input
           className="h-10 border border-black px-5 md:w-60 sm:w-48 w-36 rounded-3xl placeholder:text-sm placeholder:font-montserrat placeholder:font-medium placeholder:pl-4"
           placeholder="Search . . ."
