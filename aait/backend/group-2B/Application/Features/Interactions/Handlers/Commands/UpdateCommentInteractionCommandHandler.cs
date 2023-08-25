@@ -10,7 +10,7 @@ using SocialSync.Application.Common.Responses;
 namespace SocialSync.Application.Features.Interactions.Handlers.Commands;
 
 public class UpdateCommentInteractionCommandHandler
-    : IRequestHandler<UpdateCommentInteractionCommand, BaseCommandResponse>
+    : IRequestHandler<UpdateCommentInteractionCommand, CommonResponse<int>>
 {
     private readonly IUnitOfWork _unitOfWork;
     private readonly IMapper _mapper;
@@ -24,7 +24,7 @@ public class UpdateCommentInteractionCommandHandler
         _mapper = mapper;
     }
 
-    public async Task<BaseCommandResponse> Handle(
+    public async Task<CommonResponse<int>> Handle(
         UpdateCommentInteractionCommand command,
         CancellationToken cancellationToken
     )
@@ -36,9 +36,7 @@ public class UpdateCommentInteractionCommandHandler
 
         if (!validationResult.IsValid)
         {
-            response.Message = "Failed to update Comment";
-            response.Success = false;
-            response.Errors = validationResult.Errors.Select(q => q.ErrorMessage).ToList();
+            return CommonResponse<int>.Failure("validation error");
         }
         else
         {
@@ -51,25 +49,15 @@ public class UpdateCommentInteractionCommandHandler
                     foundComment);
                 if (await _unitOfWork.SaveAsync() > 0)
                 {
-                    response.Success = true;
-                    response.Message = "Comment updated Successfully";
-                    response.Id = foundComment.Id;
+                    CommonResponse<int>.Success(foundComment.Id);
                 }
                 else
                 {
-                    response.Message = "Failed to update Comment";
-                    response.Success = false;
-                    response.Errors = new List<string>() { "Internal server error" };
+                    return CommonResponse<int>.Failure("Internal server error");
                 }
             }
-            else
-            {
-                response.Message = "Failed to update Comment";
-                response.Success = false;
-                response.Errors = new List<string>() { "Comment not found" };
-            }
-        }
 
-        return response;
+            return CommonResponse<int>.Failure("Could not find the comment");
+        }
     }
 }

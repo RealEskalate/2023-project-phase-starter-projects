@@ -5,7 +5,7 @@ using SocialSync.Domain.Entities;
 
 namespace SocialSync.Application.Features.Interactions.Requests.Commands;
 
-public class LikeUnlikePostInteractionCommand : IRequest<BaseCommandResponse>
+public class LikeUnlikePostInteractionCommand : IRequest<CommonResponse<int>>
 {
     public required InteractionDto LikeDto { get; set; }
 }

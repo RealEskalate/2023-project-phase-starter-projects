@@ -4,7 +4,7 @@ using SocialSync.Application.DTOs.InteractionDTOs;
 
 
 namespace SocialSync.Application.Features.Interactions.Requests.Commands;
-public class CreateCommentInteractionCommand : IRequest<BaseCommandResponse>
+public class CreateCommentInteractionCommand : IRequest<CommonResponse<int>>
 {
     public required InteractionDto CreateCommentDto { get; set; }
 }

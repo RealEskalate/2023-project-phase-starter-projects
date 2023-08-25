@@ -3,11 +3,12 @@ using MediatR;
 using SocialSync.Application.Features.Comments.Requests.Queries;
 using SocialSync.Application.Contracts.Persistence;
 using AutoMapper;
+using SocialSync.Application.Common.Responses;
 
 namespace SocialSync.Application.Features.Comments.Handlers.Commands;
 
 public class GetAllCommentInteractionRequestHandler
-    : IRequestHandler<GetAllCommentInteractionRequest, List<Interaction>>
+    : IRequestHandler<GetAllCommentInteractionRequest, CommonResponse<List<Interaction>>>
 {
     private IUnitOfWork _unitOfWork;
     private IMapper _mapper;
@@ -18,10 +19,10 @@ public class GetAllCommentInteractionRequestHandler
         _mapper = mapper;
     }
 
-    public async Task<List<Interaction>> Handle(GetAllCommentInteractionRequest request,
+    public async Task<CommonResponse<List<Interaction>>> Handle(GetAllCommentInteractionRequest request,
         CancellationToken cancellationToken)
     {
         var foundInteraction = await _unitOfWork.InteractionRepository.GetAllCommentInteractionsAsync(request.PostId);
-        return foundInteraction;
+        return CommonResponse<List<Interaction>>.Success(foundInteraction);
     }
 }

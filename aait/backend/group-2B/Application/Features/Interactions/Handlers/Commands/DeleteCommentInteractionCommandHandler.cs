@@ -9,7 +9,7 @@ using SocialSync.Application.DTOs.InteractionDTOs.CommentDTOs.Validator;
 namespace SocialSync.Application.Features.Interactions.Handlers.Commands;
 
 public class DeleteCommentInteractionCommandHandler
-    : IRequestHandler<DeleteCommentInteractionCommand, BaseCommandResponse>
+    : IRequestHandler<DeleteCommentInteractionCommand, CommonResponse<int>>
 {
     private readonly IMapper _mapper;
     private readonly IUnitOfWork _unitOfWork;
@@ -23,7 +23,7 @@ public class DeleteCommentInteractionCommandHandler
         _unitOfWork = unitOfWork;
     }
 
-    public async Task<BaseCommandResponse> Handle(
+    public async Task<CommonResponse<int>> Handle(
         DeleteCommentInteractionCommand command,
         CancellationToken cancellationToken
     )
@@ -34,9 +34,8 @@ public class DeleteCommentInteractionCommandHandler
 
         if (!validationResult.IsValid)
         {
-            response.Message = "Failed to Delete Comment";
-            response.Success = false;
-            response.Errors = validationResult.Errors.Select(q => q.ErrorMessage).ToList();
+            return CommonResponse<int>.Failure("Validation error");
+            
         }
         else
         {
@@ -50,25 +49,19 @@ public class DeleteCommentInteractionCommandHandler
                 await _unitOfWork.InteractionRepository.DeleteAsync(foundComment);
                 if (await _unitOfWork.SaveAsync() > 0)
                 {
-                    response.Success = true;
-                    response.Message = "Comment Deleted Successfully";
-                    response.Id = foundComment.Id;
+                    return CommonResponse<int>.Success(foundComment.Id);
                 }
                 else
                 {
-                    response.Message = "Failed to Delete Comment";
-                    response.Success = false;
-                    response.Errors = new List<string>() { "Internal server error" };
+                    return CommonResponse<int>.Failure("Failed to delete comment");
                 }
             }
             else
             {
-                response.Message = "Failed to Delete Comment";
-                response.Success = false;
-                response.Errors = new List<string>() { "Comment not found" };
+                return CommonResponse<int>.Failure("Failed to delete comment");
             }
         }
 
-        return response;
+      
     }
 }

@@ -9,7 +9,7 @@ using SocialSync.Application.DTOs.InteractionDTOs.Validator;
 namespace SocialSync.Application.Features.Interactions.Handlers.Commands;
 
 public class LikeUnlikePostInteractionCommandHandler
-    : IRequestHandler<LikeUnlikePostInteractionCommand, BaseCommandResponse>
+    : IRequestHandler<LikeUnlikePostInteractionCommand, CommonResponse<int>>
 {
     private readonly IMapper _mapper;
     private readonly IUnitOfWork _unitOfWork;
@@ -23,7 +23,7 @@ public class LikeUnlikePostInteractionCommandHandler
         _mapper = mapper;
     }
 
-    public async Task<BaseCommandResponse> Handle(
+    public async Task<CommonResponse<int>> Handle(
         LikeUnlikePostInteractionCommand command,
         CancellationToken cancellationToken
     )
@@ -35,30 +35,22 @@ public class LikeUnlikePostInteractionCommandHandler
 
         if (!validationResult.IsValid)
         {
-            response.Message = "Failed to Like/unlike Comment";
-            response.Success = false;
-            response.Errors = validationResult.Errors.Select(q => q.ErrorMessage).ToList();
+            return CommonResponse<int>.Failure("validation error");
         }
         else
         {
-            var createdInteraction = await _unitOfWork.InteractionRepository.LikeUnlikeInteractionAsync(
-                _mapper.Map<Interaction>(command.LikeDto)
-            );
+            var createdInteraction =
+                await _unitOfWork.InteractionRepository.LikeUnlikeInteractionAsync(
+                    _mapper.Map<Interaction>(command.LikeDto)
+                );
             if (await _unitOfWork.SaveAsync() > 0)
             {
-                response.Success = true;
-                response.Message = "Comment liked/unliked Successfully";
-                response.Id = createdInteraction.Id;
+                return CommonResponse<int>.Success(createdInteraction.Id);
             }
             else
             {
-                response.Message = "Failed to interact with like and unlike Comment";
-                response.Success = false;
-                response.Errors = new List<string>() { "Internal server error" };
+                return CommonResponse<int>.Failure("Failed to like/unlike post");
             }
-            
         }
-
-        return response;
     }
 }

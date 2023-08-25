@@ -9,7 +9,7 @@ using SocialSync.Application.DTOs.InteractionDTOs.Validator;
 namespace SocialSync.Application.Features.Interactions.Handlers.Commands;
 
 public class CreateCommentInteractionCommandHandler
-    : IRequestHandler<CreateCommentInteractionCommand, BaseCommandResponse>
+    : IRequestHandler<CreateCommentInteractionCommand, CommonResponse<int>>
 {
     private readonly IMapper _mapper;
 
@@ -24,7 +24,7 @@ public class CreateCommentInteractionCommandHandler
         _unitOfWork = unitOfWork;
     }
 
-    public async Task<BaseCommandResponse> Handle(
+    public async Task<CommonResponse<int>> Handle(
         CreateCommentInteractionCommand command,
         CancellationToken cancellationToken
     )
@@ -36,9 +36,7 @@ public class CreateCommentInteractionCommandHandler
 
         if (!validationResult.IsValid)
         {
-            response.Message = "Failed to create Comment";
-            response.Success = false;
-            response.Errors = validationResult.Errors.Select(q => q.ErrorMessage).ToList();
+            return CommonResponse<int>.Failure("Validation error");
         }
         else
         {
@@ -47,19 +45,12 @@ public class CreateCommentInteractionCommandHandler
             );
             if (await _unitOfWork.SaveAsync() > 0)
             {
-                response.Success = true;
-                response.Message = "Comment Created Successfully";
-                response.Id = createdInteraction.Id;
+                return CommonResponse<int>.Success(createdInteraction.Id);
             }
             else
             {
-                response.Message = "Failed to create Comment";
-                response.Success = false;
-                response.Errors = new List<string>() { "Internal server error" };
+                return CommonResponse<int>.Failure("Validation error");
             }
-            
         }
-
-        return response;
     }
 }

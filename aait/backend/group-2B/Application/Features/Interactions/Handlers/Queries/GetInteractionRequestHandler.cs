@@ -2,12 +2,13 @@ using AutoMapper;
 using SocialSync.Application.Contracts.Persistence;
 using SocialSync.Domain.Entities;
 using MediatR;
+using SocialSync.Application.Common.Responses;
 using SocialSync.Application.Features.Comments.Requests.Queries;
 
 namespace SocialSync.Application.Features.Comments.Handlers.Commands;
 
 public class GetInteractionRequestHandler
-    : IRequestHandler<GetInteractionRequest, Interaction>
+    : IRequestHandler<GetInteractionRequest, CommonResponse<Interaction>>
 {
     private readonly IUnitOfWork _unitOfWork;
     private IMapper _mapper;
@@ -18,9 +19,9 @@ public class GetInteractionRequestHandler
         _mapper = mapper;
     }
 
-    public async Task<Interaction> Handle(GetInteractionRequest request, CancellationToken cancellationToken)
+    public async Task<CommonResponse<Interaction>> Handle(GetInteractionRequest request, CancellationToken cancellationToken)
     {
         var foundInteraction = await _unitOfWork.InteractionRepository.GetAsync(request.Id);
-        return foundInteraction;
+        return CommonResponse<Interaction>.Success(foundInteraction);
     }
 }
