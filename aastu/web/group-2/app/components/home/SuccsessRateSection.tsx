@@ -25,9 +25,9 @@ export default function SuccsessRateSection(){
     ]
     return (
         <section
-        className='text-sm font-primaryFont my-10 text-center flex w-full flex-col items-center space-y-4 md:space-y-8 lg:text-base'>
+        className='font-primaryFont my-10 text-center flex w-full flex-col items-center space-y-4 md:space-y-8 lg:text-base'>
             <h2
-            className='font-semibold font-primaryFont text-2xl md:text-3xl'>
+            className='font-semibold font-primaryFont text-3xl md:text-4xl'>
             Google SWE Interviews Acceptance
             <br/>Rate Comparison
             </h2>
