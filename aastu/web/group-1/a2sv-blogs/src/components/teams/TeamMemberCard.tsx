@@ -11,13 +11,13 @@ const TeamMemberCard: React.FC<props> = ({member}) => {
   console.log(member)
 
   return (
-    <div className="w-[400px] h-[600px] rounded-[12px] bg-white shadow-lg ml-2"> 
+    <div className="w-[400px] h-[600px] rounded-[12px] bg-white shadow-lg ml-2 mt-5"> 
     <div className=' pl-[120px] pt-5'>
     <Image 
         className="w-[150px] h-[150px] rounded-full absolute bg-gray-300"
         width={500}
         height={600}
-        src={member.imageUrl}
+        src="/images/profile_.png"
         alt={member.name}  
       />
 
@@ -28,7 +28,7 @@ const TeamMemberCard: React.FC<props> = ({member}) => {
         {member.name}
       </div>
 
-      <div className="pl-[110px] pt-8 text-base absolute text-gray-800 font-poppins font-normal leading-tight tracking-widest text-center">
+      <div className="pl-[130px] pt-8 text-base absolute text-gray-800 font-poppins font-normal leading-tight tracking-widest text-center">
         {member.department}
       </div>
 
