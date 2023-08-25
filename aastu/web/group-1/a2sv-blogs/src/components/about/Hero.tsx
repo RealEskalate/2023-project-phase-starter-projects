@@ -6,20 +6,20 @@ const Hero = () => {
     <div>
       <section>
         <div>
-          <div className="grid lg:grid-cols-2 grid-cols-1">
-            <div className=" flex flex-col mt-6">
-              <h3 className="text-3xl font-bold mb-5">
-                <span className="text-blue-800">Africa</span> to Silicon Valley
+          <div className="grid lg:grid-cols-2 grid-cols-1 justify-center">
+            <div className="flex flex-col w-full mt-6 items-center md:items-start">
+              <h3 className="text-5xl font-bold mb-5">
+                <span className="text-primary">Africa</span> to Silicon Valley
               </h3>
-              <p className="text-neutral-500 text-sm mt-6 max-w-[60ch] leading-relaxed">
+              <p className="text-neutral-500 text-base mt-6 max-w-[50ch] leading-relaxed">
                 A2SV is a social enterprise that enables high-potential
                 university students to create digital solutions to Africa’s most
                 pressing problems.
               </p>
-              <button className="bg-blue-800 rounded-md px-9 py-4 text-white my-10 w-max">
+              <button className="bg-primary rounded-md px-9 py-4 text-white my-10 w-max">
                 Meet our team
               </button>
-              <p className=" text-neutral-500 text-sm max-w-[60ch] italic leading-relaxed">
+              <p className=" text-neutral-500 text-base max-w-[50ch] italic leading-relaxed">
                 A2SV is a social enterprise that enables high-potential
                 university students to create digital solutions to Africa’s most
                 pressing problems.
@@ -27,7 +27,7 @@ const Hero = () => {
             </div>
             <div className="hidden lg:block">
               <h6>Group activity</h6>
-              <div className="grid grid-cols-2 gap-5 mt-6">
+              <div className="grid grid-cols-2 gap-5 mt-6 w-full">
                 <Image
                   width={200}
                   height={200}
@@ -60,11 +60,11 @@ const Hero = () => {
       </section>
       <section>
         <div>
-          <div className="grid lg:grid-cols-2 grid-cols-1 mt-32">
+          <div className="grid lg:grid-cols-2 grid-cols-1 mt-10">
             <div className="py-10 justify-center">
               <h3 className="text-3xl font-bold">
-                The Problem <span className="text-blue-800">We Are</span> <br />
-                <span className="text-blue-800"> Solving</span>
+                The Problem <span className="text-primary">We Are</span> <br />
+                <span className="text-primary"> Solving</span>
               </h3>
               <div>
                 <div className="mt-6">
@@ -75,7 +75,7 @@ const Hero = () => {
                     alt="image"
                   />
                 </div>
-                <p className="text-neutral-500 text-sm mt-6 leading-relaxed">
+                <p className="text-neutral-500 text-sm md:text-md mt-6 leading-relaxed">
                   Africa’s future depends on innovation. Transformative
                   technologies can drive rapid economic growth and lift millions
                   of people out of poverty. However, university computer science
@@ -92,7 +92,7 @@ const Hero = () => {
                   alt="img"
                 />
               </div>
-              <p className="text-neutral-500 text-sm mt-6 leading-relaxed">
+              <p className="text-neutral-500 text-sm md:text-md mt-6 leading-relaxed">
                 With few global tech companies on the continent, aspiring
                 engineers don’t have access to experienced mentors, or the
                 opportunity to work on products that operate at scale. Smart and
@@ -122,7 +122,7 @@ const Hero = () => {
             </div>
             <div className="">
               <h1 className="text-3xl font-bold">
-                How we are <span className="text-blue-800">solving it</span>
+                How we are <span className="text-primary">solving it</span>
               </h1>
               <div className="mt-5 ">
                 <Image
@@ -132,7 +132,7 @@ const Hero = () => {
                   alt="img"
                 />
               </div>
-              <p className="text-neutral-500 text-sm mt-5 leading-relaxed">
+              <p className="text-neutral-500 text-sm md:text-md mt-5 leading-relaxed">
                 Offering students an ecosystem to actualize their ideas means
                 that up-and-coming developers use their skills to benefit
                 Africa, rather than taking their talent elsewhere.
