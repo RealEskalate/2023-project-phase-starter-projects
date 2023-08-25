@@ -77,7 +77,7 @@ export default function BlogCard() {
                       className="w-5 h-5 shrink-0"
                       viewBox="0 0 25 25"
                       fill="none"
-                      xmlns="http://www.w3.org/2000/svg"
+                      xmlns=""
                     >
                       <circle
                         cx="12.5"
@@ -106,9 +106,10 @@ export default function BlogCard() {
                 <h1 className="font-montserrat text-xl font-black leading-9 text-black line-clamp-4">
                   {item.title}
                 </h1>
-                <p className="font-montserrat text-base font-normal leading-7 text-[#737373] line-clamp-4">
-                  {item.description}
-                </p>
+                <p
+                  className="font-montserrat text-base font-normal leading-7 text-[#737373] line-clamp-4"
+                  dangerouslySetInnerHTML={{ __html: item.description }}
+                ></p>
               </div>
               <Image
                 src={item.image}
