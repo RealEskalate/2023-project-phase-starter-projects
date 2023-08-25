@@ -60,9 +60,9 @@ export default function Section() {
         }
         try {
             const res = await editUser(form).unwrap()
-            console.log("worked", res)
+            // console.log("worked", res)
             const userData = JSON.parse(localStorage.getItem('login') || "");
-            console.log("upated11", userData)
+            // console.log("upated11", userData)
             const obj = { ...userData }
             obj.userEmail = res.body.email
             obj.userProfile = res.body.image
@@ -159,7 +159,7 @@ export default function Section() {
                                 isDragActive ?
                                     (<p>Drop the files here ...</p>) :
                                     (<p className='text-center'>Clcik to upload <span className='text-textColor-100'>or drag and drop <br />
-                                    SVG, PNG, JPG or GIF(max 800x400px)</span></p>)
+                                        SVG, PNG, JPG or GIF(max 800x400px)</span></p>)
                             }
                         </div>
                     </div>
