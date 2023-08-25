@@ -41,17 +41,20 @@ const SingleBlogCard: React.FC<Blog> = ({
           </div>
         </div>
         {/* blog title , excerpt and image  */}
-        <div className="lg:flex lg:flex-row lg:gap-10 flex flex-col-reverse gap-5 flex-shrink">
+        <div className="lg:flex lg:flex-row lg:gap-10 flex flex-col-reverse justify-between gap-5 flex-shrink">
           <div>
             <h2 className="text-lg font-bold mb-4 cursor-pointer md:text-2xl">{title}</h2>
-            <p className="text-base text-textColor-100">{description}</p>
+            <div
+              className="text-base text-textColor-100"
+              dangerouslySetInnerHTML={{ __html: description?.slice(0, 200) }}
+            ></div>
           </div>
           <Image
             src={image || 'https://picsum.photos/id/10/300/200'}
             width={300}
             height={200}
             alt="Blog cover image"
-            className="w-full lg:w-80 h-fit lg:h-48 object-cover rounded-lg flex-grow cursor-pointer"
+            className="h-fit lg:h-48 object-cover rounded-lg  cursor-pointer"
           />
         </div>
 
