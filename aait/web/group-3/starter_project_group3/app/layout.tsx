@@ -1,6 +1,5 @@
-import Header from '@/components/header/Header'
 import './globals.css'
-import type { Metadata } from 'next'
+import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
   title: 'A2SV',
@@ -14,10 +13,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className="font-Montserrat bg-background">
-        <Header/>
-        {children}
-        </body>
+      <body className='font-Montserrat'>{children}</body>
     </html>
   )
 }

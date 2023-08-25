@@ -1,31 +1,22 @@
 /* Core */
-import { configureStore, type ThunkAction, type Action } from '@reduxjs/toolkit'
-import {
-  useSelector as useReduxSelector,
-  useDispatch as useReduxDispatch,
-  type TypedUseSelectorHook,
-} from 'react-redux'
+import { configureStore } from '@reduxjs/toolkit'
 
 /* Instruments */
-import { reducer } from './rootReducer'
-import { middleware } from './middleware'
+import { blogsApi } from './slices/blogsApi'
+import { usersApi } from './slices/usersApi'
 
-export const reduxStore = configureStore({
-  reducer,
+export const store = configureStore({
+  reducer: {
+    [blogsApi.reducerPath]: blogsApi.reducer,
+    [usersApi.reducerPath]: usersApi.reducer,
+  },
   middleware: (getDefaultMiddleware) => {
-    return getDefaultMiddleware().concat(middleware)
+    return getDefaultMiddleware().concat(blogsApi.middleware).concat(usersApi.middleware)
   },
 })
-export const useDispatch = () => useReduxDispatch<ReduxDispatch>()
-export const useSelector: TypedUseSelectorHook<ReduxState> = useReduxSelector
 
 /* Types */
-export type ReduxStore = typeof reduxStore
-export type ReduxState = ReturnType<typeof reduxStore.getState>
-export type ReduxDispatch = typeof reduxStore.dispatch
-export type ReduxThunkAction<ReturnType = void> = ThunkAction<
-  ReturnType,
-  ReduxState,
-  unknown,
-  Action
->
+// Infer the `RootState` and `AppDispatch` types from the store itself
+export type RootState = ReturnType<typeof store.getState>
+// Inferred type: {posts: PostsState, comments: CommentsState, users: UsersState}
+export type AppDispatch = typeof store.dispatch

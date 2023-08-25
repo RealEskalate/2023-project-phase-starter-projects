@@ -1,0 +1,32 @@
+{
+    "success": true,
+    "data": [
+      {
+        "_id": "64e26b23fe68a176cdbc52c4",
+        "tags": [
+          "_empty.tags"
+        ],
+        "content": "_empty.content",
+        "title": "_empty.title",
+        "subTitle": "_empty.subTitle",
+        "estimatedReadTime": "_empty.estimatedReadTime",
+        "user": {
+          "_id": "64e25674bfc65d390e781205",
+          "fullName": "Tamirat Dereje",
+          "email": "tamiratdereje@gmail.com",
+          "expertise": "designer",
+          "bio": "I am passionate designer who see beauty in everything",
+          "createdAt": "2023-08-20T18:07:48.829Z",
+          "__v": 0,
+          "image": "https://res.cloudinary.com/dzpmgwb8t/image/upload/v1692557684/guf4tul1ftar9hdpnaev.jpg",
+          "imageCloudinaryPublicId": "guf4tul1ftar9hdpnaev",
+          "id": "64e25674bfc65d390e781205"
+        },
+        "image": "_empty.image",
+        "imageCloudinaryPublicId": "_empty.imageCludinaryPublicId",
+        "createdAt": "2023-08-20T19:36:03.414Z",
+        "__v": 0,
+        "id": "1"
+      }
+    ]
+  }

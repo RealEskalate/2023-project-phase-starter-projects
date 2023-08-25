@@ -1,18 +1,25 @@
 ﻿using Application.Contracts;
 using Domain.Entities;
+using Microsoft.EntityFrameworkCore;
 
 namespace Persistence.Repositories
 {
     public class PostRepository : GenericRepository<Post>, IPostRepository
     {
-        public Task<Post> Get(int id)
-        {
-            throw new NotImplementedException();
-        }
+        private readonly SocialMediaDbContext _dbContext;
 
-        public Task<Post> Update(int id, Post entity)
+        public PostRepository(SocialMediaDbContext dbContext) : base(dbContext)
         {
-            throw new NotImplementedException();
+            _dbContext = dbContext;
+        }
+        public async Task<Post> Get(int id, int userId)
+        {
+            var result = await _dbContext.Posts
+                    .Include(x => x.Comments)
+                    .Include(x => x.PostReactions)
+                    .Where(x => x.Id == id && x.UserId == userId)
+                    .SingleOrDefaultAsync();
+            return result;
         }
     }
 }
