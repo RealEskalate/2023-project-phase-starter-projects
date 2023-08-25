@@ -11,6 +11,7 @@ class UpdateArticleUsecase implements UseCase<Article, UpdateArticleParams> {
   @override
   ResultFuture<Article> call(UpdateArticleParams params) async {
     return _repository.updateArticle(
+      id: params.id,
       tags: params.tags,
       content: params.content,
       title: params.title,
@@ -22,6 +23,7 @@ class UpdateArticleUsecase implements UseCase<Article, UpdateArticleParams> {
 }
 
 class UpdateArticleParams extends Equatable {
+  final String id;
   final List<String> tags;
   final String content;
   final String title;
@@ -30,6 +32,7 @@ class UpdateArticleParams extends Equatable {
   final String image;
 
   const UpdateArticleParams({
+    required this.id,
     required this.tags,
     required this.content,
     required this.title,
@@ -40,6 +43,7 @@ class UpdateArticleParams extends Equatable {
 
   UpdateArticleParams.empty()
       : this(
+        id: "1",
           tags: ['_empty.tags'],
           content: '_empty.content',
           title: '_empty.title',
