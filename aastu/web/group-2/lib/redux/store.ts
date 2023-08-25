@@ -4,11 +4,9 @@ import { configureStore } from '@reduxjs/toolkit'
 /* Instruments */
 import { blogsApi } from './slices/blogsApi'
 import { usersApi } from './slices/usersApi'
-import { loginSlice } from './slices/loginSlice'
 
 export const store = configureStore({
   reducer: {
-    login: loginSlice.reducer,
     [blogsApi.reducerPath]: blogsApi.reducer,
     [usersApi.reducerPath]: usersApi.reducer,
   },

@@ -24,18 +24,43 @@ export const usersApi = createApi({
       invalidatesTags: ['Users']
     }),
     editUser: builder.mutation({
-      query: (user: User) => ({
-        url: "/auth/edit-profile",
-        method: "PATCH",
-        body: user
-      }),
+      query: (user) => {
+        const loginData = JSON.parse(localStorage.getItem('login') || "");
+        const token = loginData.token;
+
+        return {
+          url: "/auth/edit-profile",
+          method: "PATCH",
+          body: user,
+          headers: {
+            Authorization: `Bearer ${token}`
+          }
+        }
+      },
       invalidatesTags: ['Users']
     }),
+    editPassword: builder.mutation({
+      query: (passwords: { oldPassword: string, newPassword: string }) => {
+        const loginData = JSON.parse(localStorage.getItem('login') || "");
+        const token = loginData.token;
+
+        return {
+          url: "/auth/change-password",
+          method: "PATCH",
+          body: passwords,
+          headers: {
+            Authorization: `Bearer ${token}`
+          }
+        };
+      },
+      invalidatesTags: ['Users']
+    })
   }),
 })
 
 export const {
   useAddUserMutation,
   useEditUserMutation,
-  useLoginMutation
+  useLoginMutation,
+  useEditPasswordMutation,
 } = usersApi
