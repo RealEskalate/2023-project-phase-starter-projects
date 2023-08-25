@@ -58,7 +58,7 @@ public class DeleteCommentInteractionCommandHandler
             }
             else
             {
-                return CommonResponse<int>.Failure("Failed to delete comment");
+                return CommonResponse<int>.Failure("Comment not found");
             }
         }
 

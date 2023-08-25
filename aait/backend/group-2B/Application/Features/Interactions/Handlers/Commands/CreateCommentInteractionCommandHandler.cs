@@ -49,7 +49,7 @@ public class CreateCommentInteractionCommandHandler
             }
             else
             {
-                return CommonResponse<int>.Failure("Validation error");
+                return CommonResponse<int>.Failure("Failed to create comment ");
             }
         }
     }
