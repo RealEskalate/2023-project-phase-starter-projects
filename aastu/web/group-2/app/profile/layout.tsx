@@ -6,7 +6,7 @@ export default function ProfileLayout(props: React.PropsWithChildren) {
     const currentRoute = usePathname();
     const router = useRouter()
 
-    if(!localStorage.getItem('login')){
+    if (!localStorage.getItem('login')) {
         router.replace("/login")
         return <></>
     }
