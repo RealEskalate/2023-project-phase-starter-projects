@@ -20,12 +20,12 @@ namespace Application.Features.Like.Handlers.Commands
         public async Task<Unit> Handle(CreateLikeCommand request, CancellationToken cancellationToken)
         {
             var validator = new LikedDtoValidator(_unitOfWork.userRepository, _unitOfWork.postRepository);
-            var validationResult = await validator.ValidateAsync(request.like);
+            var validationResult = await validator.ValidateAsync(request.Like);
             if (!validationResult.IsValid)
             {
                 throw new ValidationException(validationResult);
             }
-            await _unitOfWork.likeRepository.LikePost(_mapper.Map<Domain.Entities.Like>(request.like));
+            await _unitOfWork.likeRepository.LikePost(_mapper.Map<Domain.Entities.Like>(request.Like));
             await _unitOfWork.Save();
             return Unit.Value;
         }

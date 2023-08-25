@@ -19,7 +19,7 @@ namespace Application.Features.Like.Handlers.Commands
 
         public async Task<Unit> Handle(DeleteLikeCommand request, CancellationToken cancellationToken)
         {
-             await _unitOfWork.likeRepository.UnlikePost(_mapper.Map<Domain.Entities.Like>(request.like));
+             await _unitOfWork.likeRepository.UnlikePost(_mapper.Map<Domain.Entities.Like>(request.Id));
              await _unitOfWork.Save();
              return Unit.Value;
         }

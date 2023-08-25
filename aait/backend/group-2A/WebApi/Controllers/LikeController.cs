@@ -2,7 +2,7 @@ using Application.Features.Like.Request.Commands;
 using Application.Features.Like.Request.Queries;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
-using Application.DTO.UserDTO;
+using Application.DTO.Like;
 
 namespace WebApi.Controllers
 {
@@ -18,32 +18,36 @@ namespace WebApi.Controllers
         }
 
         [HttpPost("LikePost")]
-        public async Task<IActionResult> LikePost(CreateLikeCommand command)
+        public async Task<IActionResult> LikePost(LikedDto likeDto)
         {
+            var command = new CreateLikeCommand { Like = likeDto };
             await _mediator.Send(command);
             return NoContent();
         }
 
-        [HttpPost("UnlikePost")]
-        public async Task<IActionResult> UnlikePost(DeleteLikeCommand command)
+        [HttpDelete("UnlikePost")]
+        public async Task<IActionResult> UnlikePost(int id)
         {
+            var command = new DeleteLikeCommand { Id = id };
             await _mediator.Send(command);
             return NoContent();
         }
 
         [HttpGet("IsLiked")]
-        public async Task<IActionResult> GetIsLiked([FromBody] GetIsLikedQuery query)
+        public async Task<IActionResult> GetIsLiked([FromQuery] GetIsLikedDto getIsLikedDto)
         {
+            var query = new GetIsLikedQuery { GetIsLikedDto = getIsLikedDto };
             bool isLiked = await _mediator.Send(query);
             return Ok(isLiked);
         }
 
+
         [HttpGet("PostLikes/{id}")]
         public async Task<IActionResult> GetPostLikes(int id)
         {
-            GetPostLikesQuery query = new GetPostLikesQuery { Id = id };
-            List<UserDto> likedUsers = await _mediator.Send(query);
-            return Ok(likedUsers);
+            var query = new GetPostLikesQuery { Id = id };
+            List<LikedDto> likes = await _mediator.Send(query);
+            return Ok(likes);
         }
     }
 }

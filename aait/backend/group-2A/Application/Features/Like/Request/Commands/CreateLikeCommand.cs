@@ -3,5 +3,5 @@ using MediatR;
 
 public class CreateLikeCommand : IRequest<Unit>
 {
- public required LikedDto like{ get; set; } 
+ public required LikedDto Like{ get; set; } 
 }
