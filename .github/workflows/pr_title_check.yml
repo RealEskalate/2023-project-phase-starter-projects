@@ -11,7 +11,7 @@ on:
 jobs:
   publish:
     name: PR Title Check
-    runs-on: ubuntu-18.04
+    runs-on: ubuntu-22.04
     steps:
       - uses: actions/checkout@v1
       - uses: dylanvann/check-pull-request-title@v1
