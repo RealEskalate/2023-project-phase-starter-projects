@@ -5,6 +5,9 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import 'features/onboarding/screens/onboarding_page.dart';
+import 'features/onboarding/screens/splash_screen.dart';
+
 class BlogApp extends StatelessWidget {
   const BlogApp({super.key});
 
@@ -12,7 +15,8 @@ class BlogApp extends StatelessWidget {
   Widget build(BuildContext context) {
     final GoRouter _router =
         GoRouter(navigatorKey: GlobalKey<NavigatorState>(), routes: [
-      // GoRoute(path: '/', builder: null), // => TODO: IMPLEMENT LANDING SCREEN
+      GoRoute(path: '/', builder: (context,state)=>SplashScreen()), 
+      GoRoute(path: '/onboarding', builder: (context,state)=>OnboardingScreen()), 
       // GoRoute(path: '/login', builder: null), //TODO: IMPLEMENT LOGIN SCREEN
       // GoRoute(path: '/home', builder: null), //=> TODO: IMPLEMENT HOME SCREEN,
       // GoRoute(
