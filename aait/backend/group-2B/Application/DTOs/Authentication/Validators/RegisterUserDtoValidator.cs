@@ -6,10 +6,8 @@ public class RegisterUserDtoValidator : AbstractValidator<RegisterUserDto>
 {
     public RegisterUserDtoValidator()
     {
-        // Username and Password Validation
         Include(new IUserDtoValidator());
 
-        // Validations for the other members
         RuleFor(u => u.FirstName)
             .NotEmpty()
             .WithMessage("{PropertyName} is required.")

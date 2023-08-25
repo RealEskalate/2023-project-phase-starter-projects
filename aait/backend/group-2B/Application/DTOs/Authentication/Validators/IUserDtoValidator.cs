@@ -2,9 +2,9 @@ using FluentValidation;
 
 namespace SocialSync.Application.DTOs.Authentication.Validators;
 
-public class IUserDtoValidator : AbstractValidator<IUserDto>
+public class UserDtoValidator : AbstractValidator<IUserDto>
 {
-    public IUserDtoValidator()
+    public UserDtoValidator()
     {
         RuleFor(u => u.Username)
             .NotEmpty()
