@@ -39,8 +39,9 @@ namespace Application.Features.PostFeature.Handlers.Commands
                 throw new Exception();
             }
             var newPost = _mapper.Map<Post>(request.PostUpdateData);
-
-            var updationResult = await _postRepository.Update(request.Id, newPost);
+            newPost.Id = request.Id;
+            newPost.UserId = request.userId;
+            var updationResult = await _postRepository.Update(newPost);
 
             return _mapper.Map<PostResponseDTO>(updationResult);
         }

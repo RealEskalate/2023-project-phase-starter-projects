@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Application.DTO.UserDTO
 {
-    public class CreateUserDTO
+    public class CreateUserDTO : IUserDTO
     {
         public required string FullName { get; set; }
         public required string UserName { get; set; }

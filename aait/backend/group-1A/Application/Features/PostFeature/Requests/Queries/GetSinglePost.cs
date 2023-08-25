@@ -11,5 +11,10 @@ namespace Application.Features.PostFeature.Requests.Queries
     public class GetSinglePostQuery : IRequest<PostResponseDTO>
     {
         public int Id { get; set; }
+        public int userId { get; set; }
+            
+
     }
 }
+
+
