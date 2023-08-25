@@ -54,9 +54,9 @@ const AddBlog: React.FC = () => {
     }
   };
 
-  useEffect(() => {
-    console.log();
-  }, [selectedTags]);
+  // useEffect(() => {
+  //   console.log();
+  // }, [selectedTags]);
 
   return (
     <div className=" md:px-20 px-2 w-full font-primaryFont py-8">
@@ -207,7 +207,7 @@ const AddBlog: React.FC = () => {
           </div>
         </div>
       </div>
-      <div className="grid-cols-12 grid w-[94%]">
+      <div className="grid-cols-12 grid w-[94%] md:mb-48">
         <div className="flex col-span-8 items-center justify-end space-x-8 mt-4 ">
           <button className="text-primaryColor text-sm" onClick={handleCancel}>
             Cancel
