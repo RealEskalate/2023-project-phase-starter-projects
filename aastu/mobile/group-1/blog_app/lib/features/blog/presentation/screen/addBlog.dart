@@ -48,7 +48,6 @@ class AddBlog extends StatelessWidget {
               Container(
                   padding: EdgeInsets.fromLTRB(0, 50, 0, 0),
                   child: InputForm()),
-              
             ],
           ),
         ),
