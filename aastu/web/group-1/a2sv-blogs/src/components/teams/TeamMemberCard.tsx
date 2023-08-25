@@ -28,7 +28,7 @@ const TeamMemberCard: React.FC<props> = ({member}) => {
         {member.name}
       </div>
 
-      <div className="pl-[110px] pt-8 text-base absolute text-gray-800 font-poppins font-normal leading-tight tracking-widest text-center">
+      <div className="pl-[130px] pt-8 text-base absolute text-gray-800 font-poppins font-normal leading-tight tracking-widest text-center">
         {member.department}
       </div>
 
