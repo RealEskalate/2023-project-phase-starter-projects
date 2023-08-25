@@ -5,6 +5,7 @@ using SocialSync.Application.Contracts.Persistence;
 using SocialSync.Persistence.Repositories;
 
 namespace SocialSync.Persistence;
+
 public static class PersistenceServicesRegistration
 {
     public static IServiceCollection AddPersistence(
@@ -14,11 +15,11 @@ public static class PersistenceServicesRegistration
     {
         services.AddDbContext<SocialSyncDbContext>(options =>
         {
-            options.UseNpgsql(
-                configuration.GetConnectionString("DefaultConn")
-            );
+            options.UseNpgsql(configuration.GetConnectionString("DefaultConn"));
         });
         services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
+        services.AddScoped<IUnitOfWork, UnitOfWork>();
+        services.AddScoped<IUserRepository, UserRepository>();
         return services;
     }
 }
