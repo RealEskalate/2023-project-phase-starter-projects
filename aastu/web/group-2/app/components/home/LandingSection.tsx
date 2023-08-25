@@ -1,3 +1,4 @@
+'use client';
 import Image from 'next/image';
 import React, { useEffect, useState } from 'react';
 import landingImage from '@/assets/images/LandingPageGridImage.png';
@@ -42,7 +43,10 @@ const LandingSection = () => {
               </Link>
             )}
 
-            <Link href="/donate" className="flex items-center text-sm md:text-base uppercase text-white bg-primaryColor rounded-md py-1.5 font-medium px-6">
+            <Link
+              href="/donate"
+              className="flex items-center text-sm md:text-base uppercase text-white bg-primaryColor rounded-md py-1.5 font-medium px-6"
+            >
               Support us <BsArrowRightShort className="ml-1" />
             </Link>
           </div>

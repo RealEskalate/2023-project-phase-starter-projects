@@ -1,6 +1,6 @@
-import { Blog } from '@/lib/types'
-import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
-import { RootState } from '..'
+import { Blog } from '@/lib/types';
+import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
+import { RootState } from '..';
 
 export const blogsApi = createApi({
   reducerPath: 'blogsApi',
@@ -23,23 +23,19 @@ export const blogsApi = createApi({
     }),
     myBlogs: builder.query<Blog[], void>({
       query: () => {
-        const loginData = JSON.parse(localStorage.getItem('login') || "");
+        const loginData = JSON.parse(localStorage.getItem('login') || '');
         const token = loginData.token;
 
         return {
-          url: "/blogs/my-blogs",
+          url: '/blogs/my-blogs',
           headers: {
-            Authorization: `Bearer ${token}`
-          }
-        }
-      }
-    })
+            Authorization: `Bearer ${token}`,
+          },
+        };
+      },
+    }),
   }),
 });
 
-export const {
-  useGetBlogByIdQuery,
-  useGetBlogsQuery,
-  useAddBlogsMutation,
-  useMyBlogsQuery
-} = blogsApi
+export const { useGetBlogByIdQuery, useGetBlogsQuery, useAddBlogsMutation, useMyBlogsQuery } =
+  blogsApi;
