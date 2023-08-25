@@ -42,9 +42,9 @@ const LandingSection = () => {
               </Link>
             )}
 
-            <button className="flex items-center text-sm md:text-base uppercase text-white bg-primaryColor rounded-md py-1.5 font-medium px-6">
+            <Link href="/donate" className="flex items-center text-sm md:text-base uppercase text-white bg-primaryColor rounded-md py-1.5 font-medium px-6">
               Support us <BsArrowRightShort className="ml-1" />
-            </button>
+            </Link>
           </div>
         </div>
         <div className="flex justify-center items-start px-10">
