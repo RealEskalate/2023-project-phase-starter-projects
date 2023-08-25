@@ -10,17 +10,14 @@ import SuccsessRateSection from "./components/home/SuccsessRateSection"
 
 export default function IndexPage() {
 
-  //console.log(localStorage.getItem('login'));
-  
-
   return (
-  <>
-    <LandingSection />
-    <BuildBetterSection />
-    <SuccsessRateSection />
-    <HelpUs />
-    <ImpactStoriesSection />
-  </>
+    <>
+      <LandingSection />
+      <BuildBetterSection />
+      <SuccsessRateSection />
+      <HelpUs />
+      <ImpactStoriesSection />
+    </>
   )
 }
 
