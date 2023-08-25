@@ -51,7 +51,7 @@ public class InteractionController : ControllerBase
             return Ok(response);
         }
 
-        return BadRequest(response);
+        return BadRequest(response.Errors);
     }
 
 
