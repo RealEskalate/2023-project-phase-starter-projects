@@ -14,6 +14,7 @@ void main() {
   late MockProfileRepository mockProfileRepository;
   late UpdateProfilePicture usecase;
   final tProfile = Profile(
+    bookmarks: [],
       username: "",
       articles: [],
       fullName: "",

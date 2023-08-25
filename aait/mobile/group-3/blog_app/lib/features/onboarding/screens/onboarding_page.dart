@@ -1,9 +1,9 @@
-import 'package:blog_app/features/onboarding/widgets/onboarding_images_widget.dart';
+import 'package:blog_app/features/onboarding/widgets/on-boarding_images.dart';
+import 'package:blog_app/features/onboarding/widgets/scrollable_content.dart';
 import 'package:flutter/material.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-import '../widgets/scrollable_widget.dart';
 
 class OnboardingScreen extends StatefulWidget {
   const OnboardingScreen({Key? key});

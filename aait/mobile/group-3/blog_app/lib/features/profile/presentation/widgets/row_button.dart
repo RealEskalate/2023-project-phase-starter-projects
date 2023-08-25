@@ -37,15 +37,15 @@ class RowButton extends StatelessWidget {
                 children: [
                   ButtonContainer(
                     color: stateIsBookmark ? inActiveColor : null,
-                    numberValue: 52,
+                    numberValue: state.profile.articles.length,
                     category: "Posts",
                     onPressed: () =>
                         bloc.add(ToggleUserChoice(isBookmark: false)),
                   ),
                   ButtonContainer(
                     color: stateIsBookmark ? null : inActiveColor,
-                    numberValue: 12,
-                    category: "Bookmark",
+                    numberValue: state.profile.bookmarks.length,
+                    category: "Bookmarks",
                     onPressed: () {
                       bloc.add(ToggleUserChoice(isBookmark: true));
                     },

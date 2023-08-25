@@ -8,9 +8,11 @@ class Profile extends Equatable {
   final String expertise;
   final String bio;
   final List<Article> articles;
+  final List<Article> bookmarks;
 
-  Profile(
+  Profile( 
       {required this.username,
+      required this.bookmarks,
       required this.articles,
       required this.fullName,
       required this.imageName,
@@ -23,6 +25,7 @@ class Profile extends Equatable {
       String? imageName,
       String? expertise,
       String? bio,
+      List<Article>? bookmarks,
       List<Article>? articles}) {
     return Profile(
         username: username ?? this.username,
@@ -30,6 +33,7 @@ class Profile extends Equatable {
         fullName: fullName ?? this.fullName,
         imageName: imageName ?? this.imageName,
         bio: bio ?? this.bio,
+        bookmarks: bookmarks?? this.bookmarks,
         expertise: expertise ?? this.expertise);
   }
 

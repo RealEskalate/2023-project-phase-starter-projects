@@ -1,5 +1,6 @@
 import 'package:blog_app/features/profile/presentation/bloc/profile_bloc.dart';
 import 'package:blog_app/features/profile/presentation/screen/profile_screen.dart';
+import 'package:blog_app/injection_container.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
@@ -21,7 +22,7 @@ class BlogApp extends StatelessWidget {
       // GoRoute(path: '/home', builder: null), //=> TODO: IMPLEMENT HOME SCREEN,
       // GoRoute(
       //     path: '/article', builder: null), //=> TODO: IMPLEMENT ARTICLE SCREEN
-      GoRoute(path: '/', builder: (context, state) => ProfileScreen()),
+      GoRoute(path: '/profile', builder: (context, state) => ProfileScreen()),
     ]);
     //TODO: ADD BLOC
     return ScreenUtilInit(
@@ -33,7 +34,7 @@ class BlogApp extends StatelessWidget {
             home: MultiBlocProvider(
           providers: [
             BlocProvider(
-              create: (context) => ProfileBloc(),
+              create: (context) => serviceLocator<ProfileBloc>(),
             ),
           ],
           child: MaterialApp.router(
