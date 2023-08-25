@@ -32,7 +32,7 @@ public class InteractionController : ControllerBase
 
         if (response.IsSuccess)
         {
-            return Ok(response);
+            return Ok(response.Value);
         }
         else
         {
@@ -50,7 +50,7 @@ public class InteractionController : ControllerBase
 
         if (response.IsSuccess)
         {
-            return Ok(response);
+            return Ok(response.Value);
         }
         else
         {
@@ -68,7 +68,7 @@ public class InteractionController : ControllerBase
         var response = await _mediator.Send(command);
         if (response.IsSuccess)
         {
-            return Ok(response);
+            return Ok(response.Value);
         }
         else
         {
@@ -87,7 +87,7 @@ public class InteractionController : ControllerBase
         var response = await _mediator.Send(command);
         if (response.IsSuccess)
         {
-            return Ok(response);
+            return Ok(response.Value);
         }
         else
         {
@@ -102,7 +102,7 @@ public class InteractionController : ControllerBase
         var response = await _mediator.Send(command);
         if (response.IsSuccess)
         {
-            return Ok(response);
+            return Ok(response.Value);
         }
         else
         {
@@ -118,7 +118,7 @@ public class InteractionController : ControllerBase
         var response = await _mediator.Send(command);
         if (response.IsSuccess)
         {
-            return Ok(response);
+            return Ok(response.Value);
         }
         else
         {
