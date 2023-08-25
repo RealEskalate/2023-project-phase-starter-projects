@@ -3,7 +3,7 @@
 import TeamMemberCard from "./TeamMemberCard"; 
 import { useState, useEffect } from "react";
 import { TeamMember } from "@/types/TeamMember";
-import PaginationButtons from "./PaginationButton";
+import PaginationButtons from "./PaginationButtons";
 
 export async function fetchMembers(){
   const res = await fetch("https://a2sv-backend.onrender.com/api/members");
@@ -15,6 +15,10 @@ export default function TeamMemberList() {
   const [currentPage, setCurrentPage] = useState(1);
   const pageSize = 6;
 
+  const handlePageChange = (page: number) => {
+    setCurrentPage(page);
+  }
+
   useEffect(() => {
     const fetchData = async() => {
       const data = await fetchMembers();
@@ -23,28 +27,25 @@ export default function TeamMemberList() {
     fetchData();
   }, [])
   
-  const startIndex = (currentPage-1) * pageSize;
+  const startIndex = (currentPage - 1) * pageSize;
   const endIndex = startIndex + pageSize;
   const currentMembers = members.slice(startIndex, endIndex);
 
-
-
   return (
     <div>
-    <div className="grid grid-cols-3 gap-10">
-      {
-        currentMembers.map((member) => (
-          <TeamMemberCard key= {member.id} member={member} />
-        ))
-      }
-    </div>
-    <PaginationButtons 
-        currentPage = {currentPage}
-        totalPages = {Math.ceil(members.length / pageSize)}
-        setCurrentPage = {setCurrentPage}
-      />
-    </div>
+    <div className="flex flex-wrap justify-center">
+      {currentMembers.map(member => (
+        <TeamMemberCard key={member.id} member={member} />  
+      ))}
 
-
+     
+    </div>
+     <PaginationButtons
+     currentPage={currentPage}
+     totalPages={Math.ceil(members.length / pageSize)}
+     setCurrentPage={handlePageChange}  
+   />
+    </div>
   );
+
 }
