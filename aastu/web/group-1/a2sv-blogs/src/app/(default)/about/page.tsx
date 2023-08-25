@@ -5,7 +5,7 @@ import A2svSession from "@/components/about/A2svSession";
 
 const Home: React.FC = () => {
   return (
-    <div className="bg-white min-h-screen px-16 pt-28">
+    <div className="bg-white min-h-screen lg:px-36 md:px-20 px-10 pt-28">
       <Hero />
       <SocialProjects />
       <A2svSession />
