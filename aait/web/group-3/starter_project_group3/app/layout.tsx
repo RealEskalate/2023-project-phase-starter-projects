@@ -1,5 +1,6 @@
 import './globals.css'
 import type { Metadata } from 'next';
+import ReduxProvider from '@/components/blog/ReduxProvider';
 
 export const metadata: Metadata = {
   title: 'A2SV',
@@ -13,7 +14,12 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className='font-Montserrat'>{children}</body>
+      <body className='font-Montserrat'>
+        <ReduxProvider>
+          {children}
+        </ReduxProvider>
+      </body>
+      
     </html>
   )
 }
