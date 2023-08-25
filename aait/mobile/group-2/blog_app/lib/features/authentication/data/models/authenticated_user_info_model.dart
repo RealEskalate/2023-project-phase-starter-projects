@@ -6,8 +6,8 @@ class AuthenticatedUserInfoModel extends AuthenticatedUserInfo {
       required super.email,
       required super.expertise,
       required super.bio,
-      required super.image,
-      required super.imageCloudinaryPublicId});
+      super.image,
+      super.imageCloudinaryPublicId});
 
   factory AuthenticatedUserInfoModel.fromJson(Map<String, dynamic> json) {
     return AuthenticatedUserInfoModel(
