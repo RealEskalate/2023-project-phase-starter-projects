@@ -28,7 +28,10 @@ const Page: React.FC = () => {
             placeholder="Search..."
             className="border px-4 lg:px-10 py-2 rounded-3xl text-sm"
           />
-          <Link href="/blog/add-blog" className="bg-primaryColor text-white px-6 py-4 rounded-3xl text-xs lg:text-sm font-semibold">
+          <Link
+            href="/blog/add-blog"
+            className="bg-primaryColor text-white px-6 py-4 rounded-3xl text-xs lg:text-sm font-semibold"
+          >
             + New Blog
           </Link>
         </div>
@@ -38,6 +41,7 @@ const Page: React.FC = () => {
       {/* blog list */}
       <div className="flex flex-col gap-4 lg:px-52 md:px-40 px-8 mt-5">
         {blogs
+          ?.toSorted((a: Blog, b: Blog) => b?.createdAt?.localeCompare(a?.createdAt))
           ?.filter((blog: Blog) => {
             return (
               blog.title.toLowerCase().includes(search.toLowerCase()) ||

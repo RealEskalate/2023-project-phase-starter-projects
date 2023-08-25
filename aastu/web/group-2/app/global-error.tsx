@@ -2,7 +2,7 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import _500 from '../assets/images/500.svg';
-function Error({ error, reset }: { error: Error; reset: () => void }) {
+function GlobalError({ error, reset }: { error: Error; reset: () => void }) {
   return (
     <html lang="en">
       <body className="overflow-hidden">
@@ -23,4 +23,4 @@ function Error({ error, reset }: { error: Error; reset: () => void }) {
   );
 }
 
-export default Error;
+export default GlobalError;

@@ -1,7 +1,7 @@
-"use client"
+'use client';
 
-import { User } from '@/lib/types'
-import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
+import { User } from '@/lib/types';
+import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 
 export const usersApi = createApi({
   reducerPath: 'usersApi',
@@ -10,57 +10,58 @@ export const usersApi = createApi({
   endpoints: (builder) => ({
     login: builder.mutation({
       query: (info) => ({
-        url: "/auth/login",
-        method: "POST",
-        body: info
-      })
+        url: '/auth/login',
+        method: 'POST',
+        body: info,
+      }),
     }),
+
     addUser: builder.mutation({
       query: (user: any) => ({
-        url: "/auth/register",
-        method: "POST",
-        body: user
+        url: '/auth/register',
+        method: 'POST',
+        body: user,
       }),
-      invalidatesTags: ['Users']
+      invalidatesTags: ['Users'],
     }),
     editUser: builder.mutation({
       query: (user) => {
-        const loginData = JSON.parse(localStorage.getItem('login') || "");
+        const loginData = JSON.parse(localStorage.getItem('login') || '');
         const token = loginData.token;
 
         return {
-          url: "/auth/edit-profile",
-          method: "PATCH",
+          url: '/auth/edit-profile',
+          method: 'PATCH',
           body: user,
           headers: {
-            Authorization: `Bearer ${token}`
-          }
-        }
+            Authorization: `Bearer ${token}`,
+          },
+        };
       },
-      invalidatesTags: ['Users']
+      invalidatesTags: ['Users'],
     }),
     editPassword: builder.mutation({
-      query: (passwords: { oldPassword: string, newPassword: string }) => {
-        const loginData = JSON.parse(localStorage.getItem('login') || "");
+      query: (passwords: { oldPassword: string; newPassword: string }) => {
+        const loginData = JSON.parse(localStorage.getItem('login') || '');
         const token = loginData.token;
 
         return {
-          url: "/auth/change-password",
-          method: "PATCH",
+          url: '/auth/change-password',
+          method: 'PATCH',
           body: passwords,
           headers: {
-            Authorization: `Bearer ${token}`
-          }
+            Authorization: `Bearer ${token}`,
+          },
         };
       },
-      invalidatesTags: ['Users']
-    })
+      invalidatesTags: ['Users'],
+    }),
   }),
-})
+});
 
 export const {
   useAddUserMutation,
   useEditUserMutation,
   useLoginMutation,
   useEditPasswordMutation,
-} = usersApi
+} = usersApi;
