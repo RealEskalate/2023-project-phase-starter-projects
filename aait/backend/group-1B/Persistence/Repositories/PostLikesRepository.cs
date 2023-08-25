@@ -40,18 +40,19 @@ public class PostLikesRepository : IPostLikesRepository
         return like;
     }
 
-    public async Task ChangeLike(PostLike like)
+    // Returns 1 if it likes and 0 if it dislikes
+    public async Task<int> ChangeLike(PostLike like)
     {
         var exists = await Exists(like.UserId, like.PostId);
         if (exists)
         {
-            Console.WriteLine($"Deleted Like {like.UserId} {like.PostId}");
             await Delete(like);
+            return 0;
         }
         else
         {
-            Console.WriteLine($"Created Like {like.UserId} {like.PostId}");
             await Add(like);
+            return 1;
         }
     }
 

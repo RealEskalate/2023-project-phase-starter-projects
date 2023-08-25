@@ -11,27 +11,46 @@ namespace Application.Features.Comments.Handlers.Commands;
 
 public class CreateCommentRequestHandler : IRequestHandler<CreateCommentRequest, CommentContentDto>
 {
-    private readonly ICommentRepository _commentRepository;
-    private readonly IPostRepository _postRepository;
+    private readonly IUnitOfWork _unitOfWork;
     private readonly IMapper _mapper;
 
-    public CreateCommentRequestHandler(ICommentRepository commentRepository, IPostRepository postRepository, IMapper mapper)
+    public CreateCommentRequestHandler(IUnitOfWork unitOfWork, IMapper mapper)
     {
-        _commentRepository = commentRepository;
-        _postRepository = postRepository;
+        _unitOfWork = unitOfWork;
         _mapper = mapper;
     }
 
     public async Task<CommentContentDto> Handle(CreateCommentRequest request, CancellationToken token)
     {
-        var validator = new CreateCommentDtoValidator(_postRepository);
+        var validator = new CreateCommentDtoValidator(_unitOfWork.PostRepository);
         var validationResult = await validator.ValidateAsync(request.Comment, token);
-
-        if (validationResult.IsValid == false)
-            throw new ValidationException(validationResult);
         
-        var comment = await _commentRepository.Add(_mapper.Map<Comment>(request.Comment));
+        Console.WriteLine("Trying to create comment");
+        if (validationResult.IsValid == false)
+        {
+            foreach (var error in validationResult.Errors)
+            {
+                Console.WriteLine(error.ErrorMessage);
+            }
 
+            throw new ValidationException(validationResult);
+        }
+        
+        Console.WriteLine("Here");
+        var comment = await _unitOfWork.CommentRepository.Add(_mapper.Map<Comment>(request.Comment));
+
+        var recievingPost = await _unitOfWork.PostRepository.Get(request.Comment.PostId);
+        
+        var notif = new Notification()
+        {
+            UserId = recievingPost.UserId,
+            NotificationType = NotificationType.Comment,
+            Message = $"User {request.Comment.UserId} has commented on your post with Id {request.Comment.PostId}."
+        };
+        
+        await _unitOfWork.NotificationRepository.Add(notif);
+
+        await _unitOfWork.Save();
         return _mapper.Map<CommentContentDto>(comment);
     }
 }
