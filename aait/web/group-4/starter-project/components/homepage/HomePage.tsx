@@ -6,22 +6,20 @@ import ImpactStoriesSection from "./ImpactStoriesSection";
 
 const HomePage = () => (
   <div className="p-10 flex flex-col md:p-20 space-y-24">
-    
     {/* Landing Section */}
-    <LandingSection/>
+    <LandingSection />
 
     {/* Build a better tomorrow section */}
-    <BuildBetterSection/>
+    <BuildBetterSection />
 
     {/* Success Rate section */}
-    <SuccessRateSection/>
+    <SuccessRateSection />
 
     {/* Help us section */}
-    <HelpUsSection/>
+    <HelpUsSection />
 
     {/* Impact stories section */}
-    <ImpactStoriesSection/>
-    
+    <ImpactStoriesSection />
   </div>
 );
 

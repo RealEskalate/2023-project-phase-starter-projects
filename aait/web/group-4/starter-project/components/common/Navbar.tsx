@@ -1,6 +1,5 @@
 "use client";
 
-import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
 import Image from "next/image";
@@ -10,6 +9,16 @@ export default function Navbar() {
   const [nav, setNav] = useState(false);
 
   const pathname = usePathname();
+
+  const loginDonateBtn = (
+    <div className={`flex text-[16px] font-bold gap-8  justify-center `}>
+      <button className="rounded-lg border-none bg-none">Login</button>
+      <button className="px-5 py-3 rounded-lg border-none bg-blue-800 text-white">
+        Donate
+      </button>
+    </div>
+  );
+
   return (
     <>
       <div className="px-6 py-4 w-full h-[100] flex justify-between items-center font-{montserrat} ">
@@ -24,7 +33,7 @@ export default function Navbar() {
         </div>
         <div className="flex relative justify-between text-gunmetal-gray md:w-fit">
           <nav className="lg-1:flex hidden flex-col lg-1:flex-row gap-10 font-semibold text-xl">
-            <NavMenu />
+            <NavMenu/>
           </nav>
           <Image
             onClick={() => setNav(!nav)}
@@ -49,7 +58,8 @@ export default function Navbar() {
           nav ? "flex-col" : "hidden"
         } gap-4 items-center text-gunmetal-gray text-xl lg-1:hidden`}
       >
-        <NavMenu />
+        <NavMenu/>
+        {loginDonateBtn}
       </nav>
     </>
   );

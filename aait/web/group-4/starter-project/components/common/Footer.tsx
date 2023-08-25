@@ -17,9 +17,9 @@ const Footer: React.FC = () => {
           <Image
             src="/images/common/rafiki.png"
             objectFit="cover"
-          width={400}
-          height={400}
-          alt="A2SV"
+            width={400}
+            height={400}
+            alt="A2SV"
           />
         </div>
         <div className="flex text-left items-center flex-col gap-8">
@@ -79,7 +79,9 @@ const Footer: React.FC = () => {
         </div>
       </div>
       <div className="flex justify-between md:px-20 pt-10">
-        <p className="font-light ">&copy; 2020 Africa to Silicon Valley, Inc. All right reserved.</p>
+        <p className="font-light ">
+          &copy; 2020 Africa to Silicon Valley, Inc. All right reserved.
+        </p>
         <div className="flex flex-col gap-2 justify-start items-end w-full md:flex-row md:gap-4 md:w-72 md:px-10">
           {socialMedia.map((link: string) => {
             return (

@@ -32,12 +32,14 @@ const ImpactStoriesSection = () => {
             office for 2022. “
           </p>
 
-          <button className="bg-primary-color text-white w-fit rounded-md px-10 py-3">See more</button>
+          <button className="bg-primary-color text-white w-fit rounded-md px-10 py-3">
+            See more
+          </button>
         </div>
         {/* right section */}
         <div className="flex justify-end ">
           <Image
-          objectFit="cover"
+            objectFit="cover"
             src="/images/homepage/impact-story-gallery.png"
             alt="Impact Story Gallery"
             width={580}

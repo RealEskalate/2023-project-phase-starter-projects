@@ -1,4 +1,4 @@
-import A2SVPrograms from "./A2SVPrograms"
+import A2SVPrograms from "./A2SVPrograms";
 
 const SuccessRateSection = () => {
   return (
@@ -8,18 +8,17 @@ const SuccessRateSection = () => {
       </h2>
 
       <div className="grid grid-flow-row auto-rows-max place-items-center gap-10 xl:grid-flow-col xl:auto-cols-fr py-10 px-10 bg-lavender-gray mt-24 rounded-xl">
-       
         {/* success rate content */}
         <div className="max-w-xs xl:w-full ">
-        <p className="text-grayish-blue text-2xl text-left">
-          A2SV students are{" "}
-          <span className="text-2xl font-bold text-blue-purple">35</span> times
-          more likely to pass{" "}
-          <span className="text-2xl font-bold text-blue-purple">
-            Google SWE interviews
-          </span>{" "}
-          than average candidates.
-        </p>
+          <p className="text-grayish-blue text-2xl text-left">
+            A2SV students are{" "}
+            <span className="text-2xl font-bold text-blue-purple">35</span>{" "}
+            times more likely to pass{" "}
+            <span className="text-2xl font-bold text-blue-purple">
+              Google SWE interviews
+            </span>{" "}
+            than average candidates.
+          </p>
         </div>
         {/* success rate card */}
         <div className="flex flex-col justify-center items-center gap-16 py-6 px-12 drop-shadow-md shadow-black rounded-xl bg-white">
@@ -56,11 +55,9 @@ const SuccessRateSection = () => {
         </div>
       </div>
 
-      <A2SVPrograms/>
-
-
+      <A2SVPrograms />
     </section>
-  )
-}
+  );
+};
 
-export default SuccessRateSection
+export default SuccessRateSection;

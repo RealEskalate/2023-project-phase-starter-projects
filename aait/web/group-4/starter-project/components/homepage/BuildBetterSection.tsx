@@ -26,12 +26,12 @@ const BuildBetterSection = () => {
         <span>Connect to our team</span>
       </button>
 
-        <Image
-          src="/images/homepage/build-better-section-image.png"
-          alt="Connect to our team"
-          height={1400}
-          width={1400}
-        />
+      <Image
+        src="/images/homepage/build-better-section-image.png"
+        alt="Connect to our team"
+        height={1400}
+        width={1400}
+      />
     </section>
   );
 };
