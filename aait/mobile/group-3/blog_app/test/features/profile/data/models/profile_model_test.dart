@@ -9,6 +9,7 @@ import '../../../../fixtures/fixture.dart';
 
 void main() {
   final tProfileModel = ProfileModel(
+    bookmarks: [],
       username: "@tamiratdereje",
       articles: [
         ArticleModel(
