@@ -50,6 +50,7 @@ const authSlice = createSlice({
       state.userId = payload.userId;
       state.userProfile = payload.userProfile;
       state.userRole = payload.userRole;
+      state.userName = payload.userName;
     },
   },
   extraReducers(builder) {
