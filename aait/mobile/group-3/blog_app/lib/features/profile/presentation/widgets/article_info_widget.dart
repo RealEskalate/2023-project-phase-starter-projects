@@ -1,8 +1,8 @@
 import 'package:blog_app/core/color/colors.dart';
-import 'package:blog_app/core/util/value_converter.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
+import '../../../../core/util/value_converter.dart';
 import '../../domain/entity/article.dart';
 import 'article_icon_button.dart';
 
