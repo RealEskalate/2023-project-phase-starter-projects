@@ -2,7 +2,7 @@ import Image from "next/image";
 
 export default function TeamHome() {
     return (
-        <div className=" mb-20">
+        <div className="mt-24 flex flex-col md:flex-row md:items-center mb-20">
       <div className="grid grid-cols-2 gap-5 pb-10 ">
         {/* Left Section */}
         <div className="pr-0">
