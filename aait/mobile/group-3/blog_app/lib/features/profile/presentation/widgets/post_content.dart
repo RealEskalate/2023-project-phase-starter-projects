@@ -19,6 +19,8 @@ class PostContent extends StatelessWidget {
         final inActiveColor = darkGrey;
         final stateIsGridView = state.isGridView;
         final stateIsBookmark = state.isBookmark;
+        final article =
+            stateIsBookmark ? state.profile.bookmarks : state.profile.articles;
         return Column(
           children: [
             Container(
@@ -28,7 +30,7 @@ class PostContent extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    stateIsBookmark?"Bookmarks": "My Posts",
+                    stateIsBookmark ? "Bookmarks" : "My Posts",
                     style:
                         TextStyle(fontWeight: FontWeight.w500, fontSize: 20.sp),
                   ),
@@ -57,10 +59,12 @@ class PostContent extends StatelessWidget {
                 ? ListView.builder(
                     shrinkWrap: true,
                     physics: NeverScrollableScrollPhysics(),
-                    itemCount: state.profile.articles.length,
+                    itemCount: article.length,
                     itemBuilder: (context, index) {
                       return ListViewArticleCard(
-                          article: state.profile.articles[index]);
+                        article: article[index],
+                        isBookmarked: stateIsBookmark,
+                      );
                     },
                   )
                 : GridView.count(
@@ -68,8 +72,11 @@ class PostContent extends StatelessWidget {
                     crossAxisCount: 2,
                     primary: false,
                     mainAxisSpacing: 20.h,
-                    children: state.profile.articles
-                        .map((e) => GridViewArticleCard(article: e))
+                    children: article
+                        .map((e) => GridViewArticleCard(
+                              article: e,
+                              isBookmarked: stateIsBookmark,
+                            ))
                         .toList(),
                   )
           ],

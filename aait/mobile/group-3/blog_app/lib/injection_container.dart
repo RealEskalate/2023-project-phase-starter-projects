@@ -18,7 +18,7 @@ Future<void> init() async {
   //! Features - Article
   // Bloc
   serviceLocator.registerFactory(
-    () => ProfileBloc(),
+    () => ProfileBloc(getProfile: serviceLocator()),
   );
 
   // Use cases
