@@ -2,23 +2,25 @@ import Image from "next/image";
 export default function Footer() {
   return (
     <footer className="">
-      <div className="grid lg:grid-cols-5 gap-2 border-2 border-white p-10 md:grid-cols-2 sm:md:grid-cols-1">
-        <div className="">
-          <Image
-            src="/images/upskill.png"
-            width={240}
-            height={180}
-            alt="upskill image"
-          />
-        </div>
-        <div>
-          <p className="text-xl font-medium	pt-4 pb-4">
-            Get involved in improving tech education in Africa
-          </p>
-          <button className="border-2 rounded-xl px-5 w-36 h-10 bg-primary text-white text-base font-bold">
-            {" "}
-            Support Us{" "}
-          </button>
+      <div className="grid lg:grid-cols-5 gap-2 border-2 border-white p-10 md:grid-cols-2 grid-cols-2">
+        <div className="col-span-2 flex justify-evenly">
+          <div className="h-full">
+            <Image
+              src="/images/upskill.png"
+              width={240}
+              height={180}
+              alt="upskill image h-full"
+            />
+          </div>
+          <div className="flex flex-col items-center justify-center">
+            <p className="md:text-xl text-base font-medium	pt-4 pb-4 text-center">
+              Get involved in improving tech education in Africa
+            </p>
+            <button className="border-2 rounded-xl md:px-5 px-3 py-2 bg-primary text-white text-base font-bold">
+              Support Us
+            </button>
+          </div>
+          <hr />
         </div>
         <div>
           <p className="text-lg	font-medium p-2">Links</p>
