@@ -78,11 +78,11 @@ const Footer: React.FC = () => {
           </ul>
         </div>
       </div>
-      <div className="flex justify-between md:px-20 pt-10">
-        <p className="font-light ">
+      <div className="flex flex-col justify-between items-center gap-8 md:flex-row pt-10">
+        <p className="font-light order-last md:order-first">
           &copy; 2020 Africa to Silicon Valley, Inc. All right reserved.
         </p>
-        <div className="flex flex-col gap-2 justify-start items-end w-full md:flex-row md:gap-4 md:w-72 md:px-10">
+        <div className="flex gap-5 justify-center items-end md:justify-end ">
           {socialMedia.map((link: string) => {
             return (
               <a href="http://www.fb.com">
