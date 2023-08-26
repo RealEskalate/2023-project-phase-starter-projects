@@ -3,7 +3,7 @@ using SocialSync.Application.DTOs.PostDtos;
 
 namespace SocialSync.Application.Features.Posts.Requests.Queries;
 
-public class GetPostsByTagsRequest : IRequest<IReadOnlyCollection<GeneralPostDto>>
+public class GetPostsByTagsRequest : IRequest<List<GeneralPostDto>>
 {
 
     public List<string> Tags;

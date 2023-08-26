@@ -1,41 +1,40 @@
-using AAiT.Backend.G2B.SocialSync.Application.DTOs.Validators.PostDtoValidators;
 using AutoMapper;
 using MediatR;
 using SocialSync.Application.Contracts.Persistence;
 using SocialSync.Application.Features.Posts.Requests.Commands;
 using SocialSync.Application.Common.Responses;
+using SocialSync.Application.DTOs.PostDtos.Validators;
 
 namespace SocialSync.Application.Features.Posts.Handlers.Commands;
 
-public class UpdatePostCommandHandler : PostsRequestHandler, IRequestHandler<UpdatePostCommand, BaseCommandResponse>
+public class UpdatePostCommandHandler : PostsRequestHandler, IRequestHandler<UpdatePostCommand, CommonResponse<Unit>>
 {
     public UpdatePostCommandHandler(IUnitOfWork unitOfWork, IMapper mapper) : base(unitOfWork, mapper)
     {
     }
 
-    public async Task<BaseCommandResponse> Handle(UpdatePostCommand request, CancellationToken cancellationToken)
+    public async Task<CommonResponse<Unit>> Handle(UpdatePostCommand request, CancellationToken cancellationToken)
     {
-        var UpdateValidator = new UpdatePostDtoValidator(_userRepository, _postRepository);
-        var UpdateValidationResult = await UpdateValidator.ValidateAsync(request.UpdatePostDto);
-        var response = new BaseCommandResponse();
-        if (!UpdateValidationResult.IsValid)
-        {
+        var updateValidator = new UpdatePostDtoValidator(_userRepository, _postRepository);
+        var updateValidationResult = await updateValidator.ValidateAsync(request.UpdatePostDto);
+        CommonResponse<Unit> response;
 
-            response.Success = false;
-            response.Message = "Update was not successful.";
-            response.Errors = UpdateValidationResult.Errors.Select(q => q.ErrorMessage).ToList();
+        if (!updateValidationResult.IsValid)
+        {
+            response = CommonResponse<Unit>.FailureWithError("Post update failed", updateValidationResult.Errors.Select(q => q.ErrorMessage));
         }
 
-        var post = await _postRepository.GetAsync(request.UpdatePostDto.Id);
-        _mapper.Map(request.UpdatePostDto, post);
-        await _postRepository.UpdateAsync(post);
+        else
+        {
+            var post = await _postRepository.GetAsync(request.UpdatePostDto.Id);
+            _mapper.Map(request.UpdatePostDto, post);
 
-        response.Success = true;
-        response.Message = "Update was successful.";
-        response.Id = post.Id;
+            await _postRepository.UpdateAsync(post);
+            await _unitOfWork.SaveAsync();
 
+            response = CommonResponse<Unit>.Success(Unit.Value);
+        }
         return response;
-
 
 
     }

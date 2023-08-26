@@ -3,11 +3,11 @@ using SocialSync.Application.Contracts.Persistence;
 using SocialSync.Application.DTOs.PostDtos;
 
 namespace SocialSync.Application.DTOs.PostDtos.Validators;
-public class UpdatePostDtoValidator : AbstractValidator<UpdatePostDto>
+public class RemovePostDtoValidator : AbstractValidator<RemovePostDto>
 {
     private IUserRepository _userRepository;
     private IPostRepository _postRepository;
-    public UpdatePostDtoValidator(IUserRepository userRepository, IPostRepository postRepository)
+    public RemovePostDtoValidator(IUserRepository userRepository, IPostRepository postRepository)
     {
         _userRepository = userRepository;
         _postRepository = postRepository;
@@ -20,14 +20,7 @@ public class UpdatePostDtoValidator : AbstractValidator<UpdatePostDto>
         }).WithMessage("Given id did not match any post id.");
 
 
-
-        RuleFor(p => p.Content)
-        .NotNull().WithMessage("Post content cannot be null.")
-        .NotEmpty().WithMessage("Post content cannot be empty.")
-        .MaximumLength(500).WithMessage("Post content cannot have more than 500 characters.");
-
-
-        RuleFor(p => new {p.Id,  p.UserId})
+        RuleFor(p => new {p.Id, p.UserId})
         .NotNull().WithMessage("Post author id cannot be null.")
         .MustAsync(async (dto, token) =>
         {
@@ -37,9 +30,9 @@ public class UpdatePostDtoValidator : AbstractValidator<UpdatePostDto>
                 return false;
             }
 
-            var user = await _userRepository.GetAsync(post.UserId);
+            var user = await _userRepository.GetAsync(dto.UserId);
             return user != null && user.Id == dto.UserId;
-        }).WithMessage("Post author id does not match with the author of the post being updated.");
+        }).WithMessage("Post author id does not match with the author of the post to be removed.");
 
 
 

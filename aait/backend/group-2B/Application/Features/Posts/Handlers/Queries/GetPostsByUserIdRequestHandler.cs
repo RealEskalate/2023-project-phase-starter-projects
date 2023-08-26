@@ -7,15 +7,15 @@ using SocialSync.Domain.Entities;
 
 namespace SocialSync.Application.Features.Posts.Handlers.Queries;
 
-public class GetPostsByUserIdRequestHandler : PostsRequestHandler, IRequestHandler<GetPostsByUserIdRequest, IReadOnlyCollection<GeneralPostDto>>
+public class GetPostsByUserIdRequestHandler : PostsRequestHandler, IRequestHandler<GetPostsByUserIdRequest, List<GeneralPostDto>>
 {
     public GetPostsByUserIdRequestHandler(IUnitOfWork unitOfWork, IMapper mapper) : base(unitOfWork, mapper)
     {
     }
 
-    public async Task<IReadOnlyCollection<GeneralPostDto>> Handle(GetPostsByUserIdRequest request, CancellationToken cancellationToken)
+    public async Task<List<GeneralPostDto>> Handle(GetPostsByUserIdRequest request, CancellationToken cancellationToken)
     {
         IReadOnlyList<Post> postsByUserId = await _postRepository.GetPostsByUserIdAsync(request.UserId);
-        return _mapper.Map<IReadOnlyList<GeneralPostDto>>(postsByUserId);
+        return _mapper.Map<List<GeneralPostDto>>(postsByUserId);
     }
 }

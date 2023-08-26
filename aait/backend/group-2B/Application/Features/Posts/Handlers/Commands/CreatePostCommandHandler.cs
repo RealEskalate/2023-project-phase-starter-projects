@@ -1,47 +1,38 @@
 using AutoMapper;
 using MediatR;
 using SocialSync.Application.Contracts.Persistence;
-using SocialSync.Application.DTOs.PostDtos;
-using SocialSync.Application.DTOs.PostDtos.Validators;
 using SocialSync.Application.Features.Posts.Requests.Commands;
 using SocialSync.Application.Common.Responses;
+using SocialSync.Application.DTOs.PostDtos.Validators;
 using SocialSync.Domain.Entities;
 
 namespace SocialSync.Application.Features.Posts.Handlers.Commands;
 
-public class CreatePostCommandHandler : PostsRequestHandler, IRequestHandler<CreatePostCommand, BaseCommandResponse>
+public class CreatePostCommandHandler : PostsRequestHandler, IRequestHandler<CreatePostCommand, CommonResponse<int>>
 {
     public CreatePostCommandHandler(IUnitOfWork unitOfWork, IMapper mapper) : base(unitOfWork, mapper)
     {
     }
 
-    public async Task<BaseCommandResponse> Handle(CreatePostCommand request, CancellationToken cancellationToken)
+    public async Task<CommonResponse<int>> Handle(CreatePostCommand request, CancellationToken cancellationToken)
     {
 
-        var CreateValidator = new CreatePostDtoValidator(_userRepository);
-        var ValidationResult = await CreateValidator.ValidateAsync(request.CreatePostDto);
-        var response = new BaseCommandResponse();
+        var createValidator = new CreatePostDtoValidator(_userRepository);
+        var validationResult = await createValidator.ValidateAsync(request.CreatePostDto);
+        CommonResponse<int> response;
 
-        if (!ValidationResult.IsValid)
+        if (!validationResult.IsValid)
         {
-
-            response.Success = false;
-            response.Message = $"Post Creation Failed";
-            response.Errors = ValidationResult.Errors.Select(q => q.ErrorMessage).ToList();
-
+            response = CommonResponse<int>.FailureWithError("Post creation failed", validationResult.Errors.Select(q => q.ErrorMessage));
         }
         else
         {
-
             var post = _mapper.Map<Post>(request.CreatePostDto);
             var newPost = await _postRepository.AddAsync(post);
+            await _unitOfWork.SaveAsync();
 
-            response.Success = true;
-            response.Message = "Post Created Successful.";
-            response.Id = newPost.Id;
+            response = CommonResponse<int>.Success(newPost.Id);
         }
-
-
         return response;
     }
 }
