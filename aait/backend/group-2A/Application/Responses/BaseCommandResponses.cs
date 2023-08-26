@@ -4,7 +4,6 @@ namespace Application.Responses
 {
     public class BaseCommandResponse<T>
     {
-        public int Id { get; set; }
         public bool Success { get; set; } = true;
         public T? Value { get; set; }
         public List<string>? Errors { get; set; }
