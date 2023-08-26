@@ -8,7 +8,7 @@ using MediatR;
 
 namespace Application.Features.Post.Handlers.Command;
 
-public class DeletePostCommandHandler : IRequestHandler<DeletePostCommand, BaseCommandResponse>
+public class DeletePostCommandHandler : IRequestHandler<DeletePostCommand, BaseCommandResponse<Unit>>
 {
     private readonly IUnitOfWork _unitOfWork;
     private readonly IMapper _mapper;
@@ -20,21 +20,21 @@ public class DeletePostCommandHandler : IRequestHandler<DeletePostCommand, BaseC
 
     }
 
-    public async Task<BaseCommandResponse> Handle(DeletePostCommand request, CancellationToken cancellationToken)
+    public async Task<BaseCommandResponse<Unit>> Handle(DeletePostCommand request, CancellationToken cancellationToken)
     {
-        var response = new BaseCommandResponse();
-        var post = await _unitOfWork.postRepository.Get(request.Id);
-        if (post == null)
+        try
         {
-            response.Success = false;
-            response.Message = "Post Delete Failed";
-            response.Errors = new List<string> { "Post not created" };
-        }
-        await _unitOfWork.postRepository.Delete(post);
-        await _unitOfWork.Save();
+            var post = await _unitOfWork.postRepository.Get(request.Id);
+            if (post == null) throw new NotFoundException(nameof(post), request.Id);
 
-        response.Success = true;
-        response.Message = "Post Deleted";
-        return response;
+            await _unitOfWork.postRepository.Delete(post);
+            int affectedRows = await _unitOfWork.Save();
+            if (affectedRows == 0) throw new ServerErrorException("Something Went Wrong");
+
+            return BaseCommandResponse<Unit>.SuccessHandler(Unit.Value); ;
+        }catch (Exception ex)
+        {
+            return BaseCommandResponse<Unit>.FailureHandler(ex);
+        }
     }
 }

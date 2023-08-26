@@ -9,7 +9,7 @@ using MediatR;
 
 namespace Application.Features.Comment.Handlers.Commands;
 
-public class DeleteCommentCommandHandler : IRequestHandler<DeleteCommentCommand, BaseCommandResponse>
+public class DeleteCommentCommandHandler : IRequestHandler<DeleteCommentCommand, BaseCommandResponse<Unit>>
 {
     private readonly IUnitOfWork _unitOfWork;
     private readonly IMapper _mapper;
@@ -19,28 +19,27 @@ public class DeleteCommentCommandHandler : IRequestHandler<DeleteCommentCommand,
         _unitOfWork = unitOfWork;
     }
 
-    public async Task<BaseCommandResponse> Handle(DeleteCommentCommand request, CancellationToken cancellationToken)
+    public async Task<BaseCommandResponse<Unit>> Handle(DeleteCommentCommand request, CancellationToken cancellationToken)
     {
-        var response = new BaseCommandResponse();
-        var comment = await _unitOfWork.commentRepository.Get(request.Id);
+        try
+        {
 
-        if (comment == null)
-        {
-            response.Success = false;
-            response.Message = "Comment Deletion Faild";
-            response.Errors = new List<string> { "Comment Not found" };
-        }
-        else
-        {
+            var comment = await _unitOfWork.commentRepository.Get(request.Id);
+
+            if (comment == null) throw new NotFoundException(nameof(Domain.Entities.Comment), request.Id);
+
+
             await _unitOfWork.commentRepository.Delete(comment);
-            await _unitOfWork.Save();
+            int affectedRows = await _unitOfWork.Save();
+            if (affectedRows == 0) throw new ServerErrorException("Something Went Wrong");
 
-            response.Success = true;
-            response.Message = "Comment Deletion Successful";
+
+            return BaseCommandResponse<Unit>.SuccessHandler(Unit.Value);
+
+        }catch (Exception ex)
+        {
+            return BaseCommandResponse<Unit>.FailureHandler(ex);
+
         }
-
-
-
-        return response;
     }
 }

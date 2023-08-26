@@ -2,13 +2,15 @@
 using Application.DTO.CommentDTO;
 using Application.Exceptions;
 using Application.Features.Comment.Requests.Queries;
+using Application.Responses;
 using AutoMapper;
 using Domain.Entities;
 using MediatR;
 
 namespace Application.Features.Comment.Handlers.Queries;
 
-public class GetCommentRequestHandler : IRequestHandler<GetCommentRequest, CommentDto>{
+public class GetCommentRequestHandler : IRequestHandler<GetCommentRequest, BaseCommandResponse<CommentDto>>
+{
     
     private readonly IUnitOfWork _unitOfWork;
     private readonly IMapper _mapper;
@@ -19,14 +21,16 @@ public class GetCommentRequestHandler : IRequestHandler<GetCommentRequest, Comme
         _unitOfWork = unitOfWork;
     }
     
-    public async Task<CommentDto> Handle(GetCommentRequest request, CancellationToken cancellationToken)
+    public async Task<BaseCommandResponse<CommentDto>> Handle(GetCommentRequest request, CancellationToken cancellationToken)
     {
         var comment = await _unitOfWork.commentRepository.Get(request.commentId);
         if (comment == null)
         {
-            throw new NotFoundException(nameof(Domain.Entities.Comment), request.commentId);
+            var notFoundException = new NotFoundException(nameof(Domain.Entities.Comment), request.commentId);
+            return BaseCommandResponse<CommentDto>.FailureHandler(notFoundException);
         }
+    
 
-        return _mapper.Map<CommentDto>(comment);
+        return BaseCommandResponse<CommentDto>.SuccessHandler(_mapper.Map<CommentDto>(comment));
     }
 }

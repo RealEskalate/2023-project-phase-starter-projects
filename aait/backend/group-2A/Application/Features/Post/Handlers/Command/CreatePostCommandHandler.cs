@@ -8,7 +8,7 @@ using MediatR;
 
 namespace Application.Features.Post.Handlers.Command;
 
-public class CreatePostCommandHandler : IRequestHandler<CreatePostCommand, BaseCommandResponse>
+public class CreatePostCommandHandler : IRequestHandler<CreatePostCommand, BaseCommandResponse<int>>
 {
     private readonly IUnitOfWork _unitOfWork;
     private readonly IMapper _mapper;
@@ -20,25 +20,26 @@ public class CreatePostCommandHandler : IRequestHandler<CreatePostCommand, BaseC
 
     }
 
-    public async Task<BaseCommandResponse> Handle(CreatePostCommand request, CancellationToken cancellationToken)
+    public async Task<BaseCommandResponse<int>> Handle(CreatePostCommand request, CancellationToken cancellationToken)
     {
-        var response = new BaseCommandResponse();
-        var validator = new CreatePostDtoValidator(_unitOfWork.postRepository, _unitOfWork.userRepository);
-        var validationResult = await validator.ValidateAsync(request.CreatePost);
-        if (!validationResult.IsValid)
+        try
         {
-            response.Success = false;
-            response.Message = "Post Creation Failed";
-            response.Errors = validationResult.Errors.Select(x => x.ErrorMessage).ToList();
+            var validator = new CreatePostDtoValidator(_unitOfWork.postRepository, _unitOfWork.userRepository);
+            var validationResult = await validator.ValidateAsync(request.CreatePost);
+            if (!validationResult.IsValid) throw new ValidationException(validationResult);
+
+            var post = _mapper.Map<Domain.Entities.Post>(request.CreatePost);
+            await _unitOfWork.postRepository.Add(post);
+            int affectedRows = await _unitOfWork.Save();
+            if (affectedRows == 0) throw new ServerErrorException("Something Went Wrong");
+
+
+            return BaseCommandResponse<int>.SuccessHandler(post.Id);
+        }catch (Exception ex)
+        {
+            return BaseCommandResponse<int>.FailureHandler(ex);
         }
-        var post = _mapper.Map<Domain.Entities.Post>(request.CreatePost);
-        await _unitOfWork.postRepository.Add(post);
-        await _unitOfWork.Save();
 
-        response.Success = true;
-        response.Message = "Post Creation Successful";
-        response.Id = post.Id;
-
-        return response;
+        
     }
 }

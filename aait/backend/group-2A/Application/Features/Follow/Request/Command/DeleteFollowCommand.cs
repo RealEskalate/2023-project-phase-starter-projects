@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Application.Features.FollowFeatures.Request.Command
 {
-    public class DeleteFollowCommand : IRequest<BaseCommandResponse>
+    public class DeleteFollowCommand : IRequest<BaseCommandResponse<Unit>>
     {
         public FollowDto follow { get; set; }
     }

@@ -8,7 +8,7 @@ using MediatR;
 
 namespace Application.Features.Post.Handlers.Command;
 
-public class UpdatePostCommandHandler : IRequestHandler<UpdatePostCommand, BaseCommandResponse>
+public class UpdatePostCommandHandler : IRequestHandler<UpdatePostCommand, BaseCommandResponse<Unit>>
 {
     private readonly IUnitOfWork _unitOfWork;
     private readonly IMapper _mapper;
@@ -20,26 +20,25 @@ public class UpdatePostCommandHandler : IRequestHandler<UpdatePostCommand, BaseC
 
     }
 
-    public async Task<BaseCommandResponse> Handle(UpdatePostCommand request, CancellationToken cancellationToken)
+    public async Task<BaseCommandResponse<Unit>> Handle(UpdatePostCommand request, CancellationToken cancellationToken)
     {
-        var response = new BaseCommandResponse();
-        var validator = new UpdatePostDtoValidator(_unitOfWork.postRepository, _unitOfWork.userRepository);
-        var validationResult = await validator.ValidateAsync(request.UpdatedPost);
-        if (!validationResult.IsValid)
+        try
         {
-            response.Success = false;
-            response.Message = "Post Update Faild";
-            response.Errors = validationResult.Errors.Select(x => x.ErrorMessage).ToList();
+            var validator = new UpdatePostDtoValidator(_unitOfWork.postRepository, _unitOfWork.userRepository);
+            var validationResult = await validator.ValidateAsync(request.UpdatedPost);
+            if (!validationResult.IsValid) throw new ValidationException(validationResult);
+
+            var post = await _unitOfWork.postRepository.Get(request.UpdatedPost.Id);
+            _mapper.Map(request.UpdatedPost, post);
+            await _unitOfWork.postRepository.Update(post);
+            int affectedRows = await _unitOfWork.Save();
+            if (affectedRows == 0) throw new ServerErrorException("Something Went Wrong");
+
+            return BaseCommandResponse<Unit>.SuccessHandler(Unit.Value); ;
+        }catch (Exception ex)
+        {
+            return BaseCommandResponse<Unit>.FailureHandler(ex);
         }
-        var post = await _unitOfWork.postRepository.Get(request.UpdatedPost.Id);
-        _mapper.Map(request.UpdatedPost, post);
-        await _unitOfWork.postRepository.Update(post);
-        await _unitOfWork.Save();
-
-        response.Success = true;
-        response.Message = "Post updated Successfuly";
-
-        return response;
     }
 
 }

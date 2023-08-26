@@ -8,7 +8,7 @@ using Application.Responses;
 
 namespace Application.Features.Like.Handlers.Commands
 {
-    public class CreateLikeCommandHandler : IRequestHandler<CreateLikeCommand, BaseCommandResponse>
+    public class CreateLikeCommandHandler : IRequestHandler<CreateLikeCommand, BaseCommandResponse<Unit>>
     {
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
@@ -19,24 +19,23 @@ namespace Application.Features.Like.Handlers.Commands
             _unitOfWork = unitOfWork;
         }
 
-        public async Task<BaseCommandResponse> Handle(CreateLikeCommand request, CancellationToken cancellationToken)
+        public async Task<BaseCommandResponse<Unit>> Handle(CreateLikeCommand request, CancellationToken cancellationToken)
         {
-            var response = new BaseCommandResponse();
-            var validator = new LikedDtoValidator(_unitOfWork.userRepository, _unitOfWork.postRepository);
-            var validationResult = await validator.ValidateAsync(request.like);
-            if (!validationResult.IsValid)
+            try
             {
-                response.Success = false;
-                response.Message = "Like unsuccessful";
-                response.Errors = validationResult.Errors.Select(x => x.ErrorMessage).ToList();
+                var validator = new LikedDtoValidator(_unitOfWork.userRepository, _unitOfWork.postRepository);
+                var validationResult = await validator.ValidateAsync(request.like);
+                if (!validationResult.IsValid) throw new ValidationException(validationResult);
+
+                await _unitOfWork.likeRepository.LikePost(_mapper.Map<Domain.Entities.Like>(request.like));
+                int affectedRows = await _unitOfWork.Save();
+                if (affectedRows == 0) throw new ServerErrorException("Something Went Wrong");
+
+                return BaseCommandResponse<Unit>.SuccessHandler(Unit.Value); ;
+            }catch (Exception ex)
+            {
+                return BaseCommandResponse<Unit>.FailureHandler(ex);
             }
-            await _unitOfWork.likeRepository.LikePost(_mapper.Map<Domain.Entities.Like>(request.like));
-            await _unitOfWork.Save();
-
-            response.Success = true;
-            response.Message = "Like Successful";
-
-            return response;
         }
     }
 }

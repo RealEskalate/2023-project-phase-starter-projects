@@ -8,7 +8,7 @@ using MediatR;
 
 namespace Application.Features.Comment.Handlers.Commands;
 
-public class UpdateCommentCommandHandler : IRequestHandler<UpdateCommentCommand, BaseCommandResponse>
+public class UpdateCommentCommandHandler : IRequestHandler<UpdateCommentCommand, BaseCommandResponse<Unit?>>
 {
     private readonly IUnitOfWork _unitOfWork;
     private readonly IMapper _mapper;
@@ -19,36 +19,32 @@ public class UpdateCommentCommandHandler : IRequestHandler<UpdateCommentCommand,
         _unitOfWork = unitOfWork;
     }
 
-    public async Task<BaseCommandResponse> Handle(UpdateCommentCommand request, CancellationToken cancellationToken)
+    public async Task<BaseCommandResponse<Unit?>> Handle(UpdateCommentCommand request, CancellationToken cancellationToken)
     {
-        var response = new BaseCommandResponse();
-        var validator = new UpdateCommentDtoValidator(_unitOfWork.commentRepository);
-        var validationResult = await validator.ValidateAsync(request.UpdateCommentDto);
+        try
+        {
+            var validator = new UpdateCommentDtoValidator(_unitOfWork.commentRepository);
+            var validationResult = await validator.ValidateAsync(request.UpdateCommentDto);
 
-        if (!validationResult.IsValid)
-        {
-            response.Success = false;
-            response.Message = "Comment Update Faild";
-            response.Errors = validationResult.Errors.Select(q => q.ErrorMessage).ToList();
-        }
+            if (!validationResult.IsValid) throw new ValidationException(validationResult);
 
-        var comment = await _unitOfWork.commentRepository.Get(request.UpdateCommentDto.Id);
-        if (comment is null)
-        {
-            response.Success = false;
-            response.Message = "Comment Not found";
-            response.Errors = new List<string> { "Comment Not found" };
-        }
-        else
-        {
+
+            var comment = await _unitOfWork.commentRepository.Get(request.UpdateCommentDto.Id);
+            if (comment is null) throw new NotFoundException(nameof(Comment), request.UpdateCommentDto.Id);
+
             _mapper.Map(request.UpdateCommentDto, comment);
             await _unitOfWork.commentRepository.Update(comment);
-            await _unitOfWork.Save();
 
-            response.Success = true;
-            response.Message = "Comment Updated Successfuly";
+            if (await _unitOfWork.Save() == 0) throw new ServerErrorException("Something Went Wrong");
+
+
+            return BaseCommandResponse<Unit?>.SuccessHandler(Unit.Value);
+
         }
-        return response;
+        catch (Exception ex)
+        {
+            return BaseCommandResponse<Unit?>.FailureHandler(ex);
+        }
 
     }
 }

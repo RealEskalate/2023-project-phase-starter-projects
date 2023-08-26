@@ -4,10 +4,11 @@ using MediatR;
 using Application.Contracts.Persistance;
 using AutoMapper;
 using Application.Responses;
+using Application.Exceptions;
 
 namespace Application.Features.Like.Handlers.Commands
 {
-    public class DeleteLikeCommandHandler : IRequestHandler<DeleteLikeCommand, BaseCommandResponse>
+    public class DeleteLikeCommandHandler : IRequestHandler<DeleteLikeCommand, BaseCommandResponse<Unit>>
     {
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
@@ -18,16 +19,20 @@ namespace Application.Features.Like.Handlers.Commands
             _unitOfWork = unitOfWork;
         }
 
-        public async Task<BaseCommandResponse> Handle(DeleteLikeCommand request, CancellationToken cancellationToken)
+        public async Task<BaseCommandResponse<Unit>> Handle(DeleteLikeCommand request, CancellationToken cancellationToken)
         {
-            var response = new BaseCommandResponse();
-            await _unitOfWork.likeRepository.UnlikePost(_mapper.Map<Domain.Entities.Like>(request.like));
-            await _unitOfWork.Save();
+            try
+            {
+                await _unitOfWork.likeRepository.UnlikePost(_mapper.Map<Domain.Entities.Like>(request.like));
+                int affectedRows = await _unitOfWork.Save();
+                if (affectedRows == 0) throw new ServerErrorException("Something Went Wrong");
 
-            response.Success = true;
-            response.Message = "like Faild";
 
-            return response;
+                return BaseCommandResponse<Unit>.SuccessHandler(Unit.Value); ;
+            }catch (Exception ex)
+            {
+                return BaseCommandResponse<Unit>.FailureHandler(ex);
+            }
         }
     }
 }

@@ -8,7 +8,7 @@ using Application.Responses;
 
 namespace Application.Features.Comment.Handlers.Commands;
 
-public class CreateCommentCommandHandler : IRequestHandler<CreateCommentCommand, BaseCommandResponse>
+public class CreateCommentCommandHandler : IRequestHandler<CreateCommentCommand, BaseCommandResponse<int?>>
 {
     private readonly IUnitOfWork _unitOfWork;
     private readonly IMapper _mapper;
@@ -19,27 +19,27 @@ public class CreateCommentCommandHandler : IRequestHandler<CreateCommentCommand,
         _unitOfWork = unitOfWork;
     }
 
-    public async Task<BaseCommandResponse> Handle(CreateCommentCommand request, CancellationToken cancellationToken)
+    public async Task<BaseCommandResponse<int?>> Handle(CreateCommentCommand request, CancellationToken cancellationToken)
     {
-        var response = new BaseCommandResponse();
-        var validator = new CreateCommentDtoValidator(_unitOfWork.postRepository, _unitOfWork.userRepository);
-        var validationResult = await validator.ValidateAsync(request.CommentDto);
-
-        if (!validationResult.IsValid)
+        try 
         {
-            response.Success = false;
-            response.Message = "Comment Creation Faild";
-            response.Errors = validationResult.Errors.Select(q => q.ErrorMessage).ToList();
+            var validator = new CreateCommentDtoValidator(_unitOfWork.postRepository, _unitOfWork.userRepository);
+            var validationResult = await validator.ValidateAsync(request.CommentDto);
+
+            if (!validationResult.IsValid) throw new ValidationException(validationResult);
+
+            var comment = _mapper.Map<Domain.Entities.Comment>(request.CommentDto);
+            await _unitOfWork.commentRepository.Add(comment);
+
+            int affectedRows = await _unitOfWork.Save();
+            if (affectedRows == 0) throw new ServerErrorException("Something Went Wrong");
+
+
+            return BaseCommandResponse<int?>.SuccessHandler(comment.Id);
         }
-
-        var comment = _mapper.Map<Domain.Entities.Comment>(request.CommentDto);
-        await _unitOfWork.commentRepository.Add(comment);
-        await _unitOfWork.Save();
-
-        response.Success = true;
-        response.Message = "Comment Creation Successful";
-        response.Id = comment.Id;
-
-        return response;
+        catch (Exception ex) 
+        {
+            return BaseCommandResponse<int?>.FailureHandler(ex);
+        }
     }
 }

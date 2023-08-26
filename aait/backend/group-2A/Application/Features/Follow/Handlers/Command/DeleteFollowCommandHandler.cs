@@ -1,5 +1,6 @@
 ﻿using Application.Contracts.Persistance;
 using Application.DTO.FollowDTO.Validator;
+using Application.Exceptions;
 using Application.Features.FollowFeatures.Request.Command;
 using Application.Responses;
 using AutoMapper;
@@ -13,7 +14,7 @@ using System.Threading.Tasks;
 
 namespace Application.Features.FollowFeatures.Handlers.Command
 {
-    public class DeleteFollowCommandHandler : IRequestHandler<DeleteFollowCommand, BaseCommandResponse>
+    public class DeleteFollowCommandHandler : IRequestHandler<DeleteFollowCommand, BaseCommandResponse<Unit>>
     {
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
@@ -23,25 +24,24 @@ namespace Application.Features.FollowFeatures.Handlers.Command
             _mapper = mapper;
             _unitOfWork = unitOfWork;
         }
-        public async Task<BaseCommandResponse> Handle(DeleteFollowCommand request, CancellationToken cancellationToken)
+        public async Task<BaseCommandResponse<Unit>> Handle(DeleteFollowCommand request, CancellationToken cancellationToken)
         {
-            var response = new BaseCommandResponse();
-            var validation = new FollowDtoValidator(_unitOfWork.userRepository);
-            var validationResult = await validation.ValidateAsync(request.follow);
-            if (!validationResult.IsValid)
+            try
             {
-                response.Success = false;
-                response.Message = "Unfollowing Faild";
-                response.Errors = validationResult.Errors.Select(x => x.ErrorMessage).ToList();
+                var validation = new FollowDtoValidator(_unitOfWork.userRepository);
+                var validationResult = await validation.ValidateAsync(request.follow);
+                if (!validationResult.IsValid) throw new ValidationException(validationResult);
+
+                var unfollow = _mapper.Map<Follow>(request.follow);
+                await _unitOfWork.followRepository.Unfollow(unfollow);
+                int affectedRows = await _unitOfWork.Save();
+                if (affectedRows == 0) throw new ServerErrorException("Something Went Wrong");
+
+                return BaseCommandResponse<Unit>.SuccessHandler(Unit.Value); ;
+            }catch(Exception ex)
+            {
+                return BaseCommandResponse<Unit>.FailureHandler(ex);
             }
-            var unfollow = _mapper.Map<Follow>(request.follow);
-            await _unitOfWork.followRepository.Unfollow(unfollow);
-            await _unitOfWork.Save();
-
-            response.Success = true;
-            response.Message = "Successfuly unfollowed";
-
-            return response;
         }
     }
 }

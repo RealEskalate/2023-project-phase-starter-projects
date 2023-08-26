@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Application.Features.FollowFeatures.Request.Command
 {
-    public class CreateFollowCommand : IRequest<BaseCommandResponse>
+    public class CreateFollowCommand : IRequest<BaseCommandResponse<Unit>>
     {
         public required FollowDto follow { get; set; }
     }

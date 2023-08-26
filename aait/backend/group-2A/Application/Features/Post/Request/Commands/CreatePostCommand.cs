@@ -4,7 +4,7 @@ using MediatR;
 
 namespace Application.Features.Post.Request.Commands;
 
-public class CreatePostCommand : IRequest<BaseCommandResponse>
+public class CreatePostCommand : IRequest<BaseCommandResponse<int>>
 {
     public required CreatePostDto CreatePost { get; set; }
     

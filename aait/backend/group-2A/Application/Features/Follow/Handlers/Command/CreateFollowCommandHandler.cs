@@ -14,7 +14,7 @@ using Application.Responses;
 
 namespace Application.Features.FollowFeatures.Handlers.Command
 {
-    public class CreateFollowCommandHandler : IRequestHandler<CreateFollowCommand, BaseCommandResponse>
+    public class CreateFollowCommandHandler : IRequestHandler<CreateFollowCommand, BaseCommandResponse<Unit>>
     {
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
@@ -23,25 +23,25 @@ namespace Application.Features.FollowFeatures.Handlers.Command
             _mapper = mapper;
             _unitOfWork = unitOfWork;
         }
-        public async Task<BaseCommandResponse> Handle(CreateFollowCommand request, CancellationToken cancellationToken)
+        public async Task<BaseCommandResponse<Unit>> Handle(CreateFollowCommand request, CancellationToken cancellationToken)
         {
-            var response = new BaseCommandResponse();
-            var validation = new FollowDtoValidator(_unitOfWork.userRepository);
-            var validationResult = await validation.ValidateAsync(request.follow);
-            if (!validationResult.IsValid)
+            try
             {
-                response.Success = false;
-                response.Message = "Following Faild";
-                response.Errors = validationResult.Errors.Select(x => x.ErrorMessage).ToList();
+                var validation = new FollowDtoValidator(_unitOfWork.userRepository);
+                var validationResult = await validation.ValidateAsync(request.follow);
+                if (!validationResult.IsValid) throw new ValidationException(validationResult);
+
+                var follow = _mapper.Map<Follow>(request.follow);
+                await _unitOfWork.followRepository.Follow(follow);
+                int affectedRows = await _unitOfWork.Save();
+                if (affectedRows == 0) throw new ServerErrorException("Something Went Wrong");
+
+
+                return BaseCommandResponse<Unit>.SuccessHandler(Unit.Value); ;
+            }catch (Exception ex) 
+            { 
+                return BaseCommandResponse<Unit>.FailureHandler(ex);
             }
-            var follow = _mapper.Map<Follow>(request.follow);
-            await _unitOfWork.followRepository.Follow(follow);
-            await _unitOfWork.Save();
-
-            response.Success = true;
-            response.Message = "Successfuly followed";
-
-            return response;
         }
     }
 }
