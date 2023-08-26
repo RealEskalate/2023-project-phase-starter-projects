@@ -5,5 +5,10 @@
   },
   "CHECKS": {
     "regexp": "^[a-z]*\\((AASTU|AAiT)-(web|backend|mobile)-(1|2|3|4|1A|1B|2A|2B)\\):.*"
+  },
+  "MESSAGES": {
+    "success": "All OK",
+    "failure": "Failing CI test",
+    "notice": ""
   }
 }
