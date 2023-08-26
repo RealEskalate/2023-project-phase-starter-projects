@@ -23,14 +23,17 @@ class App extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ScreenUtilInit(
-      designSize: const Size(428, 926),
+      designSize: const Size(390, 844),
       minTextAdapt: true,
       splitScreenMode: true,
-      builder: (_, child) => MaterialApp.router(
-        title: 'Blog app',
-        theme: AppTheme.themeData,
-        debugShowCheckedModeBanner: false,
-        routerConfig: router,
+      builder: (_, child) => BlocProvider(
+        create: (context) => di.serviceLocator<AuthBloc>(),
+        child: MaterialApp.router(
+          title: 'Blog app',
+          theme: AppTheme.themeData,
+          debugShowCheckedModeBanner: false,
+          routerConfig: router,
+        ),
       ),
     );
   }

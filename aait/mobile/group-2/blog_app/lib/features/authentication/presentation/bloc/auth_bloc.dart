@@ -4,6 +4,7 @@ import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../core/error/failure.dart';
+import '../../../../core/network/custom_client.dart';
 import '../../domain/entities/authenticated_user_info.dart';
 import '../../domain/entities/authentication_entity.dart';
 import '../../domain/entities/login_entity.dart';
@@ -32,10 +33,12 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
   final LoginUseCase loginUseCase;
   final SignUpUseCase signUpUseCase;
   final LogoutUseCase logoutUseCase;
+  final CustomClient client;
   AuthBloc({
     required this.loginUseCase,
     required this.signUpUseCase,
     required this.logoutUseCase,
+    required this.client,
   }) : super(AuthInitial()) {
     on<LoginEvent>(_onLoginEvent);
     on<SignUpEvent>(_onSignUpEvent);
