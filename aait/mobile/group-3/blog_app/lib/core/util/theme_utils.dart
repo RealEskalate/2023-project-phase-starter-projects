@@ -2,7 +2,7 @@ import 'package:blog_app/core/util/app_colors.dart';
 import 'package:flutter/material.dart';
 
 class ThemeUtils {
-  static ThemeData appdTheme = ThemeData(
+  static ThemeData appTheme = ThemeData(
     useMaterial3: true,
     primaryColor: AppColors.primaryColor,
     cardColor: AppColors.whiteColor,
@@ -22,7 +22,7 @@ class ThemeUtils {
       displayLarge: TextStyle(
         fontFamily: 'Poppins-SemiBold',
         color: AppColors.whiteColor,
-        fontSize: 12,
+        fontSize: 2,
       ),
       displayMedium: TextStyle(
         fontFamily: 'Poppins-Regular',
