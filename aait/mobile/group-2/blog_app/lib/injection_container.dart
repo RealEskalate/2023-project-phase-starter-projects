@@ -120,6 +120,66 @@ Future<void> init() async {
     () => UserRemoteDataSourceImpl(client: serviceLocator()),
   );
 
+  // Feature-Authentication
+  //! Bloc
+  serviceLocator.registerFactory(
+    () => AuthBloc(
+      loginUseCase: serviceLocator(),
+      signUpUseCase: serviceLocator(),
+      logoutUseCase: serviceLocator(),
+    ),
+  );
+
+  //! Use cases
+  serviceLocator.registerLazySingleton(
+    () => LoginUseCase(
+      authRepository: serviceLocator(),
+    ),
+  );
+
+  serviceLocator.registerLazySingleton(
+    () => SignUpUseCase(
+      authRepository: serviceLocator(),
+    ),
+  );
+
+  serviceLocator.registerLazySingleton(
+    () => LogoutUseCase(
+      authRepository: serviceLocator(),
+    ),
+  );
+
+  //! Repository
+
+  serviceLocator.registerLazySingleton<AuthRepository>(
+    () => AuthRepositoryImpl(
+      authRemoteDataSource: serviceLocator(),
+      authLocalDataSource: serviceLocator(),
+      networkInfo: serviceLocator(),
+    ),
+  );
+
+  //! Data sources
+
+  serviceLocator.registerLazySingleton<AuthRemoteDataSource>(
+    () => AuthRemoteDataSourceImpl(
+      client: serviceLocator(),
+    ),
+  );
+
+  serviceLocator.registerLazySingleton<AuthLocalDataSource>(
+    () => AuthLocalDataSourceImpl(
+      sharedPreferences: serviceLocator(),
+    ),
+  );
+
+  //! Core
+  serviceLocator.registerLazySingleton<NetworkInfo>(
+    () => NetworkInfoImpl(
+      serviceLocator(),
+    ),
+  );
+
   // External
   final sharedPreferences = await SharedPreferences.getInstance();
   serviceLocator.registerLazySingleton(() => sharedPreferences);
