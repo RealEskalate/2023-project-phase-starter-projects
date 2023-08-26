@@ -5,6 +5,7 @@ import uploadsvg from '@/assets/images/upload.svg';
 import dynamic from 'next/dynamic';
 import { useDispatch } from 'react-redux';
 import { useEffect, useState } from 'react';
+import { useRouter } from 'next/navigation';
 // import { useSelector } from '@/lib/redux';
 
 const DynamicTextEditor = dynamic(() => import('@/app/components/add-blog/TextEditor'), {
@@ -15,6 +16,13 @@ const AddBlog: React.FC = () => {
   const [blogTitle, setBlogTitle] = useState<string>();
   const [selectedTags, setSelectedTags] = useState<string[]>(['development']);
   const [blogContent, setBlogContent] = useState<string>('');
+
+  const router = useRouter()
+
+  if (!localStorage.getItem('login')) {
+    router.replace("/login")
+    return <></>
+  }
 
   const dispatch = useDispatch();
 
@@ -124,81 +132,73 @@ const AddBlog: React.FC = () => {
             <h2 className="font-semibold p-4 text-lg">Select Tag</h2>
             <div className="flex flex-wrap items-center  font-secondaryFont font-medium gap-2">
               <div
-                className={` ${
-                  selectedTags.includes('development')
+                className={` ${selectedTags.includes('development')
                     ? '!text-primaryColor !border !border-primaryColor'
                     : ''
-                } rounded-full px-3 py-2 bg-gray-200 border border-gray-200 text-sm text-center text-[#414141] hover:cursor-pointer`}
+                  } rounded-full px-3 py-2 bg-gray-200 border border-gray-200 text-sm text-center text-[#414141] hover:cursor-pointer`}
                 onClick={() => addTags('development')}
               >
                 Development
               </div>
               <div
-                className={` ${
-                  selectedTags.includes('sports')
+                className={` ${selectedTags.includes('sports')
                     ? '!text-primaryColor !border !border-primaryColor'
                     : ''
-                } rounded-full px-3 py-2 bg-gray-200 border border-gray-200 text-sm text-center text-[#414141] hover:cursor-pointer`}
+                  } rounded-full px-3 py-2 bg-gray-200 border border-gray-200 text-sm text-center text-[#414141] hover:cursor-pointer`}
                 onClick={() => addTags('sports')}
               >
                 Sports
               </div>
               <div
-                className={` ${
-                  selectedTags.includes('Writing')
+                className={` ${selectedTags.includes('Writing')
                     ? '!text-primaryColor !border !border-primaryColor'
                     : ''
-                } rounded-full px-3 py-2 bg-gray-200 border border-gray-200 text-sm text-center text-[#414141] hover:cursor-pointer`}
+                  } rounded-full px-3 py-2 bg-gray-200 border border-gray-200 text-sm text-center text-[#414141] hover:cursor-pointer`}
                 onClick={() => addTags('Writing')}
               >
                 Writing
               </div>
               <div
-                className={` ${
-                  selectedTags.includes('Self Improvement')
+                className={` ${selectedTags.includes('Self Improvement')
                     ? '!text-primaryColor !border !border-primaryColor'
                     : ''
-                } rounded-full px-3 py-2 bg-gray-200 border border-gray-200 text-sm text-center text-[#414141] hover:cursor-pointer`}
+                  } rounded-full px-3 py-2 bg-gray-200 border border-gray-200 text-sm text-center text-[#414141] hover:cursor-pointer`}
                 onClick={() => addTags('Self Improvement')}
               >
                 Self Improvement
               </div>
               <div
-                className={` ${
-                  selectedTags.includes('Technology')
+                className={` ${selectedTags.includes('Technology')
                     ? '!text-primaryColor !border !border-primaryColor'
                     : ''
-                } rounded-full px-3 py-2 bg-gray-200 border border-gray-200 text-sm text-center text-[#414141] hover:cursor-pointer`}
+                  } rounded-full px-3 py-2 bg-gray-200 border border-gray-200 text-sm text-center text-[#414141] hover:cursor-pointer`}
                 onClick={() => addTags('Technology')}
               >
                 Technology
               </div>
               <div
-                className={` ${
-                  selectedTags.includes('Social')
+                className={` ${selectedTags.includes('Social')
                     ? '!text-primaryColor !border !border-primaryColor'
                     : ''
-                } rounded-full px-3 py-2 bg-gray-200 border border-gray-200 text-sm text-center text-[#414141] hover:cursor-pointer`}
+                  } rounded-full px-3 py-2 bg-gray-200 border border-gray-200 text-sm text-center text-[#414141] hover:cursor-pointer`}
                 onClick={() => addTags('Social')}
               >
                 Social
               </div>
               <div
-                className={` ${
-                  selectedTags.includes('Data Science')
+                className={` ${selectedTags.includes('Data Science')
                     ? '!text-primaryColor !border !border-primaryColor'
                     : ''
-                } rounded-full px-3 py-2 bg-gray-200 border border-gray-200 text-sm text-center text-[#414141] hover:cursor-pointer`}
+                  } rounded-full px-3 py-2 bg-gray-200 border border-gray-200 text-sm text-center text-[#414141] hover:cursor-pointer`}
                 onClick={() => addTags('Data Science')}
               >
                 Data Science
               </div>
               <div
-                className={` ${
-                  selectedTags.includes('Programming')
+                className={` ${selectedTags.includes('Programming')
                     ? '!text-primaryColor !border !border-primaryColor'
                     : ''
-                } rounded-full px-3 py-2 bg-gray-200 border border-gray-200  text-sm text-center text-[#414141] hover:cursor-pointer`}
+                  } rounded-full px-3 py-2 bg-gray-200 border border-gray-200  text-sm text-center text-[#414141] hover:cursor-pointer`}
                 onClick={() => addTags('Programming')}
               >
                 Programming

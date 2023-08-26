@@ -14,7 +14,7 @@ const SingleBlogCard: React.FC<Blog> = ({
 }) => {
     return (
         <div
-            className='space-y-4 bg-white overflow-hidden shadow-lg rounded-md'>
+            className='space-y-4 bg-white overflow-hidden shadow-lg rounded-md my-4 mx-3'>
             <Image
                 className='w-full'
                 src={image}
