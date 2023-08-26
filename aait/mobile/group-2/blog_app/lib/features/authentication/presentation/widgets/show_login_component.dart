@@ -1,7 +1,11 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:go_router/go_router.dart';
 
+import '../../domain/entities/login_entity.dart';
+import '../bloc/auth_bloc.dart';
 import 'custom_text_field.dart';
 import 'forgot_password.dart';
 
@@ -21,6 +25,41 @@ class _LoginComponentState extends State<LoginComponent> {
   final _formKey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
+    return BlocConsumer<AuthBloc, AuthState>(
+      listener: (context, state) {
+        if (state is AuthError) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text(state.message),
+              duration: const Duration(seconds: 4),
+            ),
+          );
+        }
+
+        if (state is LoginSuccessState) {
+          ScaffoldMessenger.of(context).showSnackBar(
+              const SnackBar(content: Text('Successfully logged in!')));
+
+          Future.delayed(const Duration(seconds: 3), () {
+            context.go('/create-article');
+          });
+        }
+      },
+      builder: (context, state) {
+        if (state is Loading) {
+          return const Center(child: CircularProgressIndicator());
+        } else if (state is AuthError) {
+          return showLoginForm();
+        } else if (state is LoginSuccessState) {
+          return showLoginForm();
+        } else {
+          return showLoginForm();
+        }
+      },
+    );
+  }
+
+  Column showLoginForm() {
     return Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
       Text('Welcome Back!',
           style: TextStyle(
@@ -95,6 +134,14 @@ class _LoginComponentState extends State<LoginComponent> {
                       print('username: ${_usernameController.text}');
                       print('password: ${_passwordController.text}');
                     }
+
+                    LoginRequestEntity loginRequestEntity = LoginRequestEntity(
+                      email: _usernameController.text,
+                      password: _passwordController.text,
+                    );
+                    context.read<AuthBloc>().add(LoginEvent(
+                          loginRequestEntity: loginRequestEntity,
+                        ));
                   },
                   style: ButtonStyle(
                     backgroundColor: MaterialStateProperty.all<Color>(
