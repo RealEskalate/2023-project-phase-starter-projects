@@ -33,20 +33,12 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
   final LoginUseCase loginUseCase;
   final SignUpUseCase signUpUseCase;
   final LogoutUseCase logoutUseCase;
-<<<<<<< HEAD
   final CustomClient customClient;
-=======
-  final CustomClient client;
->>>>>>> c3ef6ee (update main)
   AuthBloc({
     required this.loginUseCase,
     required this.signUpUseCase,
     required this.logoutUseCase,
-<<<<<<< HEAD
     required this.customClient,
-=======
-    required this.client,
->>>>>>> c3ef6ee (update main)
   }) : super(AuthInitial()) {
     on<LoginEvent>(_onLoginEvent);
     on<SignUpEvent>(_onSignUpEvent);
