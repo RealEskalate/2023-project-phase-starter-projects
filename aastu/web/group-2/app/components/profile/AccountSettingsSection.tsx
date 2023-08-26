@@ -2,38 +2,47 @@
 
 import { useEditPasswordMutation } from '@/lib/redux/slices/usersApi'
 import React, { useState } from 'react'
-import {CgDanger} from 'react-icons/cg'
+import { CgDanger } from 'react-icons/cg'
 
 const AccountSettingsSection = () => {
-  const [passwordMatch, setPasswordMatch] = useState(true)
+  const [passwordMatch, setPasswordMatch] = useState(false)
+  const [emptyFields, setEmptyFields] = useState(false)
   const [currentPassword, setCurrentPassword] = useState("")
   const [newPassword, setNewPassword] = useState("")
   const [confirmPassword, setConfirmPassword] = useState("")
-  
+  const [success, setSuccess] = useState(false)
+
   const [editPassword] = useEditPasswordMutation()
 
   const handleSaveChange = async (e: any) => {
     e.preventDefault()
 
     if (!currentPassword.length || !newPassword.length || !confirmPassword.length) {
-      alert("All fields must be filled!")
+      setEmptyFields(true)
     } else if (newPassword !== confirmPassword) {
-      setPasswordMatch(false)
+      setPasswordMatch(true)
     } else {
       const passwords = {
         oldPassword: currentPassword,
         newPassword
       }
-      
+
       try {
         const res = await editPassword(passwords).unwrap()
         console.log("hi", res);
-        
+
+        if (res.message === "Password updated successfully") {
+          setSuccess(true)
+        }
       } catch (error) {
         console.log(error);
-        
+        alert("Invalid old password.")
+      } finally {
+        setCurrentPassword("")
+        setConfirmPassword("")
+        setNewPassword("")
       }
-      
+
     }
   }
 
@@ -50,10 +59,21 @@ const AccountSettingsSection = () => {
       </div>
       <div>
         <form className='flex flex-col items-center gap-y-6 mt-16 md:mb-96 mb-20'>
-        { passwordMatch && <div className='text-base font-semibold text-white bg-red-600 rounded-md p-2'>
-                           <CgDanger className='text-xl m-2 inline-block' /> 
-                            <span>Incorrect username or password</span> 
-                        </div>}
+          {success && <div
+            className="p-4 mb-4 text-sm text-green-800 rounded-lg bg-green-50"
+            role="alert"
+          >
+            <span className="font-medium">Yay!</span> You've successfully updated your password.
+          </div>
+          }
+          {passwordMatch && <div className='text-base font-semibold text-white bg-red-600 rounded-md p-2'>
+            <CgDanger className='text-xl m-2 inline-block' />
+            <span>Passwords do not match</span>
+          </div>}
+          {emptyFields && <div className='text-base font-semibold text-white bg-red-600 rounded-md p-2'>
+            <CgDanger className='text-xl m-2 inline-block' />
+            <span>All fields are required</span>
+          </div>}
           <div className='flex flex-col items-start md:flex-row md:justify-between md:items-center md:gap-x-7 gap-y-3'>
             <label htmlFor="currentPassword" className='font-semibold text-lg text-textColor-200'>Current Password</label>
             <input
