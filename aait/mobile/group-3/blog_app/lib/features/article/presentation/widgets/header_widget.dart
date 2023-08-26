@@ -13,7 +13,8 @@ class HeaderWidget extends StatelessWidget {
       children: [
         GestureDetector(
           onTap: () {
-            debugPrint("Sorted"); // Action when the sort icon is tapped
+            Navigator.pushNamed(
+                context, '/profile'); 
           },
           child: Icon(
             Icons.sort,
@@ -24,19 +25,25 @@ class HeaderWidget extends StatelessWidget {
         Center(
           child: Text(
             "Welcome Back!", // Greeting text for the user
-            style: Theme.of(context).textTheme.headlineLarge,
+            style: TextStyle(
+              fontFamily: 'Poppins-SemiBold',
+              fontSize: 27.sp,
+              fontWeight: FontWeight.w600,
+              color: AppColors.textDark,
+            ),
           ),
         ),
         Stack(
           alignment: Alignment.center,
           children: [
-            const CircleAvatar(
-              backgroundImage: AssetImage('images/avator.jpg'), // User's avatar
-              radius: 32, // Avatar radius
+            CircleAvatar(
+              backgroundImage:
+                  const AssetImage('images/avator.jpg'), // User's avatar
+              radius: 28.sp, // Avatar radius
             ),
             Container(
-              width: 59,
-              height: 59,
+              width: 65.w,
+              height: 65.h,
               decoration: BoxDecoration(
                 shape: BoxShape.circle,
                 border: Border.all(

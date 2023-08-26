@@ -1,6 +1,7 @@
-// This screen represents the main homepage of the blog app.
+// This screen represents the main HomeScreen of the blog app.
 // It displays a list of articles and provides interaction options.
 
+import 'package:blog_app/core/util/app_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -10,14 +11,14 @@ import 'package:blog_app/features/article/presentation/widgets/header_widget.dar
 import 'package:blog_app/features/article/presentation/widgets/search_bar_widget.dart';
 import 'package:blog_app/features/article/presentation/widgets/tags_widget.dart';
 
-class HomePage extends StatelessWidget {
-  const HomePage({super.key});
+class HomeScreen extends StatelessWidget {
+  const HomeScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
     // Scaffold with the primary color background.
     return Scaffold(
-      backgroundColor: Theme.of(context).primaryColor,
+      backgroundColor: AppColors.primaryColor,
 
       // Scrollable body content.
       body: SingleChildScrollView(
@@ -56,7 +57,9 @@ class HomePage extends StatelessWidget {
 
       // button for adding new articles.
       floatingActionButton: FloatingActionButton.extended(
-        onPressed: () => debugPrint("hello"),
+        onPressed: () {
+          Navigator.pushNamed(context, '/create-article');
+        },
         label: Icon(
           Icons.add,
           size: 32.sp,
