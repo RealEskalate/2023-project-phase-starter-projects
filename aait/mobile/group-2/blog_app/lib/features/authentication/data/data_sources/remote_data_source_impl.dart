@@ -1,8 +1,9 @@
-
 import 'dart:convert';
 
+import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;
 
+import '../../../../core/constants/constants.dart';
 import '../../../../core/error/exception.dart';
 import '../models/authenticated_user_info_model.dart';
 import '../models/authentication_model.dart';
@@ -19,12 +20,15 @@ class AuthRemoteDataSourceImpl extends AuthRemoteDataSource {
   @override
   Future<AuthenticationModel> login(LoginRequestModel loginRequestModel) async {
     final http.Response response = await client.post(
-        Uri.parse('http://localhost:3000/login'),
+        Uri.parse('${apiBaseUrl}api/v1/user/login'),
         body: jsonEncode(loginRequestModel.toJson()),
         headers: {'Content-Type': 'application/json'});
 
     if (response.statusCode == 200) {
       final responseBody = jsonDecode(response.body);
+      if (kDebugMode) {
+        print('responseBody: $responseBody');
+      }
       return AuthenticationModel.fromJson(responseBody);
     } else if (response.statusCode == 400) {
       throw const LoginException(message: 'Invalid Credentials');
@@ -37,14 +41,14 @@ class AuthRemoteDataSourceImpl extends AuthRemoteDataSource {
   Future<AuthenticatedUserInfoModel> signUp(
       SignUpRequestModel signUpRequestModel) async {
     final http.Response response = await client.post(
-        Uri.parse('http://localhost:3000/signup'),
+        Uri.parse('${apiBaseUrl}api/v1/user'),
         body: jsonEncode(signUpRequestModel.toJson()),
         headers: {'Content-Type': 'application/json'});
-    if (response.statusCode == 201) {
+    if (response.statusCode == 200) {
       final responseBody = jsonDecode(response.body);
       return AuthenticatedUserInfoModel.fromJson(responseBody['data']);
     } else if (response.statusCode == 409 || response.statusCode == 400) {
-      throw const ServerException(message: 'Invalid information');
+      throw const SignUpException(message: 'Invalid information');
     } else {
       throw const ServerException(message: 'Server Error');
     }
@@ -53,7 +57,7 @@ class AuthRemoteDataSourceImpl extends AuthRemoteDataSource {
   @override
   Future<void> logout(String token) async {
     final http.Response response = await client.post(
-        Uri.parse('http://localhost:3000/logout'),
+        Uri.parse('$apiBaseUrl api/v1/user/logout'),
         body: jsonEncode({'token': token}),
         headers: {'Content-Type': 'application/json'});
 
