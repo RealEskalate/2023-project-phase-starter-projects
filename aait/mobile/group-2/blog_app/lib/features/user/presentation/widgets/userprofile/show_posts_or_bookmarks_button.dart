@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class ShowPostsOrBookmarksButton extends StatelessWidget {
   final Color col;
@@ -13,10 +14,11 @@ class ShowPostsOrBookmarksButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    ScreenUtil.init(context);
+
     return Container(
-      padding: const EdgeInsets.only(top: 12),
-      width: 130.5,
-      height: 68,
+      padding: EdgeInsets.only(top: 12.h),
+      width: 115.w,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(12.0),
         color: col,
@@ -25,20 +27,21 @@ class ShowPostsOrBookmarksButton extends StatelessWidget {
         children: [
           Text(
             "$count",
-            style: const TextStyle(
-              fontSize: 20,
+            style: TextStyle(
+              fontSize: 20.sp,
               fontWeight: FontWeight.w400,
               color: Colors.white,
             ),
           ),
           Text(
             typeOfChoice,
-            style: const TextStyle(
-              fontSize: 12,
+            style: TextStyle(
+              fontSize: 12.sp,
               fontWeight: FontWeight.w400,
               color: Colors.white,
             ),
           ),
+          SizedBox(height: 12.h),
         ],
       ),
     );

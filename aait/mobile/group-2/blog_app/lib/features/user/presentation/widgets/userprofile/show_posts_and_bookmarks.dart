@@ -1,5 +1,6 @@
 import 'package:blog_app/features/user/presentation/widgets/userprofile/show_posts_or_bookmarks_button.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class ShowPostsAndBookmarks extends StatelessWidget {
   final int numPosts, numBookmarks;
@@ -11,12 +12,14 @@ class ShowPostsAndBookmarks extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    ScreenUtil.init(context);
+    double elevation = 32.h;
+
     return Material(
-      elevation: 32,
+      elevation: elevation,
       borderRadius: BorderRadius.circular(12.0),
       child: Container(
-        width: 261,
-        height: 68,
+        width: 230.w,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(12.0),
           color: Color(0xFF386BED),
