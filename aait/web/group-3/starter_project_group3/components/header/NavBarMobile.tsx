@@ -3,8 +3,9 @@ import { navLinks } from "@/types/nav/Nav"; // Importing an array of navigation 
 import NavLink from "./NavLink"; // Importing the NavLink component
 import { ReactNode } from "react"; // Importing the ReactNode type
 
+
 // Define the NavBarMobile component
-const NavBarMobile = ({
+const NavBarMobile : React.FC<{ isOpen: boolean; children: ReactNode; }> = ({
   isOpen,
   children,
 }: {

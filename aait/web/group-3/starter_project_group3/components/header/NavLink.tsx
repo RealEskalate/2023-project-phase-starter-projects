@@ -4,7 +4,7 @@ import { usePathname } from "next/navigation";
 import Link from "next/link";
 
 // Define the NavLink component
-const NavLink = ({
+const NavLink : React.FC<{ to: string; children: React.ReactNode; }> = ({
   to,
   children,
 }: {

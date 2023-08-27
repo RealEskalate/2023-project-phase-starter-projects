@@ -3,7 +3,7 @@ import { navLinks } from "@/types/nav/Nav";
 import NavLink from "./NavLink";
 
 // Defining the 'NavBar' component.
-const NavBar = () => {
+const NavBar : React.FC = () => {
   return (
     // Container div for the navigation links, using Tailwind CSS classes.
     <div className="navigation hidden nav_bar_screen:flex-row nav_bar_screen:flex gap-9 font-semibold text-nav_text_color">

@@ -6,7 +6,7 @@ import { useState } from "react";
 import NavBarMobile from "./NavBarMobile";
 
 // Define a functional component named Header
-const Header = () => {
+const Header : React.FC = () => {
   // State to control the mobile menu open/closed state
   const [isOpen, setIsOpen] = useState(false);
 
