@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class SingleArticlePostListView extends StatelessWidget {
   final String imageUrl, articleTitle, articleSubTitle, likes;
   final double timeSincePosted;
+
   const SingleArticlePostListView({
     Key? key,
     required this.imageUrl,
@@ -14,27 +16,40 @@ class SingleArticlePostListView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    ScreenUtil.init(context);
+
+    double cardPadding = 20.w;
+    double borderRadius = 16;
+    double imageWidth = 92.w;
+    double imageHeight = 141.w;
+    double spacing = 20.w;
+    double titleFontSize = 14.sp;
+    double subTitleFontSize = 14.sp;
+    double statsFontSize = 12.sp;
+    double iconSize = 24.w;
+    double statsSpacing = 6.w;
+
     return Padding(
-      padding: const EdgeInsets.only(bottom: 20),
+      padding: EdgeInsets.only(bottom: cardPadding),
       child: Card(
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(16.0),
+          borderRadius: BorderRadius.circular(borderRadius),
         ),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
             SizedBox(
-              width: 92,
-              height: 141,
+              width: imageWidth,
+              height: imageHeight,
               child: ClipRRect(
-                borderRadius: BorderRadius.circular(16),
+                borderRadius: BorderRadius.circular(borderRadius),
                 child: Image.network(
                   imageUrl,
                   fit: BoxFit.cover,
                 ),
               ),
             ),
-            const SizedBox(width: 20),
+            SizedBox(width: spacing),
             Expanded(
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.start,
@@ -42,41 +57,40 @@ class SingleArticlePostListView extends StatelessWidget {
                 children: [
                   Text(
                     articleTitle,
-                    style: const TextStyle(
+                    style: TextStyle(
                       fontWeight: FontWeight.w100,
-                      fontSize: 14,
+                      fontSize: titleFontSize,
                       color: Color(0xFF376AED),
                     ),
                   ),
-                  const SizedBox(height: 4),
+                  SizedBox(height: statsSpacing),
                   Text(
                     articleSubTitle,
-                    style: const TextStyle(
+                    style: TextStyle(
                       fontWeight: FontWeight.w500,
-                      fontSize: 14,
+                      fontSize: subTitleFontSize,
                       color: Color(0xFF0D253C),
                     ),
                   ),
-                  const SizedBox(height: 21),
+                  SizedBox(height: statsSpacing * 3),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [
-                          const Icon(
+                          Icon(
                             Icons.thumb_up_alt_outlined,
-                            color: Color(
-                              0xFF2D4379,
-                            ),
+                            color: Color(0xFF2D4379),
+                            size: iconSize,
                           ),
-                          const SizedBox(
-                            width: 6,
+                          SizedBox(
+                            width: statsSpacing,
                           ),
                           Text(
                             likes,
-                            style: const TextStyle(
-                              fontSize: 12,
+                            style: TextStyle(
+                              fontSize: statsFontSize,
                               fontWeight: FontWeight.w500,
                               color: Color(0xFF2D4379),
                             ),
@@ -86,27 +100,29 @@ class SingleArticlePostListView extends StatelessWidget {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [
-                          const Icon(Icons.access_time,
-                              color: Color(
-                                0xFF2D4379,
-                              )),
-                          const SizedBox(
-                            width: 6,
+                          Icon(
+                            Icons.access_time,
+                            color: Color(0xFF2D4379),
+                            size: iconSize,
+                          ),
+                          SizedBox(
+                            width: statsSpacing,
                           ),
                           Text(
                             "$timeSincePosted hr ago",
-                            style: const TextStyle(
-                              fontSize: 12,
+                            style: TextStyle(
+                              fontSize: statsFontSize,
                               fontWeight: FontWeight.w500,
                               color: Color(0xFF2D4379),
                             ),
                           ),
                         ],
                       ),
-                      const Icon(Icons.bookmark_outlined,
-                          color: Color(
-                            0xFF376AED,
-                          )),
+                      Icon(
+                        Icons.bookmark_outlined,
+                        color: Color(0xFF376AED),
+                        size: iconSize,
+                      ),
                     ],
                   )
                 ],
