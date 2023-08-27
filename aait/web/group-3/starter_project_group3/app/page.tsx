@@ -28,7 +28,7 @@ export default function Home() {
         </button>
       </div>
 
-    <StorySection/>
+      <StorySection />
     </div>
   );
 }

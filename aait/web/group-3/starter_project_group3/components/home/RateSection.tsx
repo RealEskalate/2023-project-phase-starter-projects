@@ -1,4 +1,4 @@
-const RateSection = () => {
+const RateSection : React.FC = () => {
     return ( 
         <div className="interview_acceptance flex flex-col justify-center items-center gap-5">
         <h1 className="capitalize text-2xl nav_bar_screen:text-3xl font-semibold text-black_text_color leading-relaxed text-center min-[1100px]:w-2/5">

@@ -1,6 +1,6 @@
 import Image from "next/image";
 
-const TeamSection = () => {
+const TeamSection : React.FC = () => {
     return ( 
         <div className="text-center flex flex-col items-center gap-10">
         <h1 className="capitalize text-2xl nav_bar_screen:text-3xl font-semibold text-black_text_color leading-relaxed min-[1100px]:w-1/6">

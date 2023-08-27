@@ -1,7 +1,7 @@
 import { training_programs } from "@/types/home/TrainingPrograms";
 import Image from "next/image";
 
-const ProgramSection = () => {
+const ProgramSection : React.FC = () => {
     return ( 
         <div className="training_programs flex flex-col gap-36">
         {training_programs.map((training_program) => (

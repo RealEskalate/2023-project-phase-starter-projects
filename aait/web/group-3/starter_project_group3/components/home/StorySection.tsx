@@ -1,6 +1,6 @@
 import Image from "next/image";
 
-const StorySection = () => {
+const StorySection : React.FC = () => {
     return ( 
         <div className="flex flex-col gap-24">
         <h1 className="capitalize text-2xl nav_bar_screen:text-3xl font-bold text-black_text_color leading-relaxed text-center">
