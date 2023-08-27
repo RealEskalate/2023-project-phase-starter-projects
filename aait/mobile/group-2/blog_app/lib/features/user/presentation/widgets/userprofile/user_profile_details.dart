@@ -2,27 +2,46 @@ import 'package:blog_app/features/user/presentation/widgets/userprofile/user_bio
 import 'package:blog_app/features/user/presentation/widgets/userprofile/user_profile_info.dart';
 import 'package:blog_app/features/user/presentation/widgets/userprofile/user_profile_photo.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class UserProfileDetails extends StatelessWidget {
   const UserProfileDetails({
-    super.key,
-  });
+    Key? key,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    ScreenUtil.init(context);
+
+    double horizontalPadding = 40.w;
+    double topPadding = 19.h;
+    double cardMarginLeft = 32.w;
+    double cardMarginTop = 19.h;
+    double cardMarginRight = 20.w;
+    double cardBorderRadius = 16.0.w;
+
     return Container(
-      padding: const EdgeInsets.fromLTRB(40, 19, 40, 0),
-      height: 310,
+      padding: EdgeInsets.fromLTRB(
+        horizontalPadding,
+        topPadding,
+        horizontalPadding,
+        0,
+      ),
       child: Card(
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(16.0),
+          borderRadius: BorderRadius.circular(cardBorderRadius),
         ),
         color: Colors.white,
         child: Container(
-          margin: const EdgeInsets.fromLTRB(32, 19, 20, 0),
-          child: const Column(
+          margin: EdgeInsets.fromLTRB(
+            cardMarginLeft,
+            cardMarginTop,
+            cardMarginRight,
+            0,
+          ),
+          child: Column(
             children: [
-              Row(
+              const Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
                   UserProfilePhoto(
@@ -36,10 +55,13 @@ class UserProfileDetails extends StatelessWidget {
                   ),
                 ],
               ),
-              UserBio(
+              const UserBio(
                 userInfo:
                     'Madison Blackstone is a director of user experience design, with experience managing global teams.',
               ),
+              SizedBox(
+                height: 32.w,
+              )
             ],
           ),
         ),
