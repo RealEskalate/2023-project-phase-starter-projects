@@ -6,7 +6,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
 
-const Teams = () => {
+const Teams: React.FC = () => {
   const itemsPerPage = 6;
   const [currentPage, setCurrentPage] = useState(1);
   const indexOfLast = currentPage * itemsPerPage;

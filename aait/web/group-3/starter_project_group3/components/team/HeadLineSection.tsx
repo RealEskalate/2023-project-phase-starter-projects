@@ -1,6 +1,6 @@
 import Image from "next/image";
 
-const HeadLineSection = () => {
+const HeadLineSection : React.FC = () => {
   return (
     <div className="headline grid gap-9 nav_bar_screen:gap-0 nav_bar_screen:grid-cols-2 font-Poppins mt-20">
       <div className="description flex flex-col gap-12 nav_bar_screen:w-3/4">
