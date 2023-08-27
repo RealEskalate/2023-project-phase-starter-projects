@@ -1,7 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 
-const SocialProjectSection = () => {
+const SocialProjectSection: React.FC = () => {
   return (
     <div className="flex flex-col gap-20">
       <h1 className="font-semibold text-3xl nav_bar_screen:text-5xl text-center font-Poppins">

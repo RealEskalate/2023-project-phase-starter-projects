@@ -1,6 +1,6 @@
 import Image from "next/image";
 
-const ProblemSection = () => {
+const ProblemSection: React.FC = () => {
   return (
     <div className="grid gap-9 nav_bar_screen:gap-0 nav_bar_screen:grid-cols-2 w-full">
       <div className="description flex flex-col gap-12 font-Nunito nav_bar_screen:w-3/4">

@@ -1,6 +1,6 @@
 import Image from "next/image";
 
-const SolvingSection = () => {
+const SolvingSection: React.FC = () => {
   return (
     <div className="grid gap-9 nav_bar_screen:gap-0 nav_bar_screen:grid-cols-2 w-full">
       <Image

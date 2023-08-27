@@ -1,7 +1,7 @@
 import { aboutUs } from "@/data/about-us/About-Us";
 import Image from "next/image";
 
-const SessionSection = () => {
+const SessionSection: React.FC = () => {
   return (
     <div className="flex flex-col gap-20">
       <h1 className="font-semibold text-3xl nav_bar_screen:text-5xl text-center font-Poppins">
