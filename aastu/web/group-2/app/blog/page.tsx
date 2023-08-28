@@ -39,8 +39,8 @@ const Page: React.FC = () => {
   return (
     <div className="w-full font-secondaryFont mt-20 flex flex-col justify-center items-center">
       {/* search section */}
-      <div className="w-full flex flex-col lg:flex-row items-center justify-between lg:px-24 px-8 gap-10 lg:gap-0">
-        <h2 className="text-2xl  font-semibold">Blogs</h2>
+      <div className="w-full flex flex-col lg:flex-row items-center justify-between lg:px-24 px-8 gap-10 lg:gap-0 mb-10">
+        <h2 className="text-2xl  font-semibold dark:text-dark-textColor-100">Blogs</h2>
         <div className="flex gap-2">
           <input
             type="text"
@@ -48,7 +48,7 @@ const Page: React.FC = () => {
             value={search}
             onChange={(e) => setSearch(e.target.value)}
             placeholder="Search..."
-            className="border px-4 lg:px-10 py-2 rounded-3xl text-sm"
+            className="border px-4 lg:px-10 py-2 rounded-3xl text-sm dark:outline-primaryColor dark:bg-dark-textColor-100"
           />
           {loginState && (
             <Link
@@ -66,7 +66,7 @@ const Page: React.FC = () => {
       <div className="flex flex-col w-full gap-4 lg:px-52 md:px-40 px-8 mt-5 items-center justify-center">
         {paginatedBlogs.map((blog: Blog, index: number) => (
           <React.Fragment key={blog.id}>
-            {index > 0 && <hr className="mt-4 mb-6 bg-textColor-100 w-3/4" />}
+            {index > 0 && <hr className="mt-4 mb-6 bg-textColor-100  dark:invisible w-3/4" />}
             <SingleBlogCard {...blog} />
           </React.Fragment>
         ))}

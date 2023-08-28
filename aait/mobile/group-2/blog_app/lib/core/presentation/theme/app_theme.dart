@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 import 'app_colors.dart';
 
@@ -24,15 +25,15 @@ abstract class AppTheme {
     ),
 
     // Text Theme
-    textTheme: const TextTheme(
+    textTheme: TextTheme(
       // Headings
-      titleMedium: TextStyle(
+      titleMedium: const TextStyle(
         color: AppColors.darkerBlue,
         fontFamily: 'Poppins',
         fontSize: 24,
         fontWeight: FontWeight.w500,
       ),
-      titleLarge: TextStyle(
+      titleLarge: const TextStyle(
         fontFamily: 'Poppins',
         color: AppColors.darkerBlue,
         fontSize: 24,
@@ -40,21 +41,33 @@ abstract class AppTheme {
       ),
 
       // Body
-      bodySmall: TextStyle(
+      bodySmall: const TextStyle(
         color: AppColors.darkBlue,
         fontFamily: 'Poppins',
         fontSize: 14,
         fontWeight: FontWeight.w500,
       ),
-      bodyMedium: TextStyle(
+      bodyMedium: const TextStyle(
         fontFamily: 'Poppins',
         color: AppColors.darkBlue,
         fontSize: 16,
         fontWeight: FontWeight.w400,
       ),
 
+      displayLarge: const TextStyle(
+        fontWeight: FontWeight.w900,
+        fontSize: 14,
+        fontFamily: 'Poppins',
+        color: AppColors.blue300,
+      ),
+
+      displayMedium: GoogleFonts.urbanist(
+        fontSize: 24,
+        fontWeight: FontWeight.w100,
+      ),
+
       // Caption
-      labelLarge: TextStyle(
+      labelLarge: const TextStyle(
         fontFamily: 'Poppins',
         color: AppColors.darkGray,
         fontSize: 14,

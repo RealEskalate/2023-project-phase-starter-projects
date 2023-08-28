@@ -1,17 +1,17 @@
-import 'package:blog_app/core/errors/failures/failure.dart';
-import 'package:blog_app/features/authentication_and_authorization/domain/entities/sign_up_user_entity.dart';
-import 'package:blog_app/features/authentication_and_authorization/domain/entities/user_data_entity.dart';
-import 'package:blog_app/features/authentication_and_authorization/domain/repositories/auth_repository.dart';
-import 'package:blog_app/features/authentication_and_authorization/domain/usecases/user_use_case.dart';
 import 'package:dartz/dartz.dart';
 
+import '../../../../core/errors/failures/failure.dart';
+import '../entities/sign_up_user_entity.dart';
+import '../repositories/auth_repository.dart';
+import 'user_use_case.dart';
 
-class SignUpUseCase implements UseCase<UserDataEntity, SignUpUserEnity> {
+
+class SignUpUseCase implements UseCase<SignUpUserEnity, SignUpUserEnity> {
   final AuthRepository repository;
   SignUpUseCase({required this.repository});
 
   @override
-  Future<Either<Failure, UserDataEntity>> call(
+  Future<Either<Failure, SignUpUserEnity>> call(
       SignUpUserEnity signUpUserEnity) async {
     return await repository.signup(signUpUserEnity);
   }

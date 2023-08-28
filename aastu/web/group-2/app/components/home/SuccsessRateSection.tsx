@@ -29,12 +29,12 @@ export default function SuccsessRateSection(){
         <section
         className='font-primaryFont my-10 text-center flex w-full flex-col items-center space-y-4 md:space-y-8 lg:text-base'>
             <h2
-            className='font-semibold font-primaryFont text-3xl md:text-4xl'>
+            className='font-semibold font-primaryFont text-3xl md:text-4xl dark:text-dark-textColor-100'>
             Google SWE Interviews Acceptance
             <br/>Rate Comparison
             </h2>
             <div
-            className="grid grid-cols-4 lg:grid-cols-5 gap-6 w-11/12 bg-slate-50 p-8 rounded-xl">
+            className="grid grid-cols-4 lg:grid-cols-5 gap-6 w-11/12 bg-slate-50 p-8 rounded-xl dark:bg-dark-backgroundLight">
                 <p
                     className=" text-center col-span-full lg:text-left lg:col-span-1">
                     A2SV students are 
@@ -46,7 +46,7 @@ export default function SuccsessRateSection(){
                 </p>
 
                 <div
-                className='bg-white shadow-md flex flex-wrap items-center shadow-gray-200 col-span-2 md:col-span-1 rounded-lg p-4'>
+                className='bg-white shadow-md flex flex-wrap items-center shadow-gray-200 col-span-2 md:col-span-1 rounded-lg p-4 dark:bg-dark-background dark:shadow-dark-background'>
                     <p
                     className="w-full font-semibold">2019</p>
                     <p
@@ -57,8 +57,8 @@ export default function SuccsessRateSection(){
                 </div>
 
                 <div
-                className='bg-white shadow-md flex flex-wrap items-center col-span-2 md:col-span-1 shadow-gray-200 rounded-lg p-4'>
-                    <p
+                className='bg-white shadow-md flex flex-wrap items-center shadow-gray-200 col-span-2 md:col-span-1 rounded-lg p-4 dark:bg-dark-background dark:shadow-dark-background'>
+                <p
                     className="w-full font-semibold">2020</p>
                     <p
                     className="w-full self-end font-semibold">
@@ -68,8 +68,8 @@ export default function SuccsessRateSection(){
                 </div>
 
                 <div
-                className='bg-white shadow-md flex flex-wrap items-center col-span-2 md:col-span-1 shadow-gray-200 rounded-lg p-4'>
-                    <p
+                className='bg-white shadow-md flex flex-wrap items-center shadow-gray-200 col-span-2 md:col-span-1 rounded-lg p-4 dark:bg-dark-background dark:shadow-dark-background dark:shadow-lg'>
+                <p
                     className="w-full font-semibold">2021</p>
                     <p
                     className="w-full self-end font-semibold">
@@ -79,7 +79,7 @@ export default function SuccsessRateSection(){
                 </div>
 
                 <div
-                className='bg-white shadow-md flex flex-wrap items-center col-span-2 md:col-span-1 shadow-gray-200 rounded-lg p-4'>
+                className='bg-white shadow-md flex flex-wrap items-center shadow-gray-200 col-span-2 md:col-span-1 rounded-lg p-4 dark:bg-dark-background dark:shadow-dark-background'>
                     <p
                     className="w-full font-semibold">2022</p>
                     <p

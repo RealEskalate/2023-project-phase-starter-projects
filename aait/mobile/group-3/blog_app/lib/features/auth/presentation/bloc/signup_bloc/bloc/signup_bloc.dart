@@ -10,7 +10,7 @@ part 'signup_state.dart';
 class SignupBloc extends Bloc<SignupEvent, SignupState> {
   final SignUpUsecase signUpUsecase;
   SignupBloc({required this.signUpUsecase}) : super(SignupInitial()) {
-    on<SignupEvent>((event, emit) async {
+    on<SignUp>((event, emit) async {
       emit(SignupLoadingState());
       var result = await signUpUsecase(
         Params(

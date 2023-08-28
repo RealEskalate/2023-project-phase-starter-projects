@@ -1,4 +1,4 @@
-import 'package:blog_app/features/authentication_and_authorization/domain/entities/sign_up_user_entity.dart';
+import '../../domain/entities/sign_up_user_entity.dart';
 class SignUpModel extends SignUpUserEnity {
   const SignUpModel(
       {

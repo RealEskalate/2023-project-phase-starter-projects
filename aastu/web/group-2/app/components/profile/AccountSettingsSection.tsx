@@ -47,11 +47,11 @@ const AccountSettingsSection = () => {
   }
 
   return (
-    <section>
-      <div className='flex flex-col items-center gap-4 md:flex-row md:justify-between py-2 border-b-2 border-[#EFEFEF] mb-7 px-4'>
+    <section className='dark:text-dark-textColor-50'>
+      <div className='flex flex-col items-center gap-4 md:flex-row md:justify-between py-2 border-b-2 border-[#EFEFEF] dark:border-dark-textColor-50 mb-7 px-4'>
         <div className=' font-secondaryFont'>
-          <h3 className='font-semibold text-textColor-200 text-lg text-center md:text-left md:text-lg'>Manage Your Account</h3>
-          <p className='font-medium text-textColor-50 text-base'>You can change your password here</p>
+          <h3 className='font-semibold text-textColor-200 text-lg text-center md:text-left md:text-lg dark:text-dark-textColor-100'>Manage Your Account</h3>
+          <p className='font-medium text-textColor-50 text-base dark:text-dark-textColor-50 '>You can change your password here</p>
         </div>
         <div className=' flex items-center'>
           <button onClick={handleSaveChange} className='bg-primaryColor text-white font-secondaryFont font-semibold rounded-lg px-8 py-2'>Save Changes</button>
@@ -75,7 +75,7 @@ const AccountSettingsSection = () => {
             <span>All fields are required</span>
           </div>}
           <div className='flex flex-col items-start md:flex-row md:justify-between md:items-center md:gap-x-7 gap-y-3'>
-            <label htmlFor="currentPassword" className='font-semibold text-lg text-textColor-200'>Current Password</label>
+            <label htmlFor="currentPassword" className='font-semibold text-lg text-textColor-200 dark:text-dark-textColor-50'>Current Password</label>
             <input
               type="password"
               name='currentPassword'
@@ -83,11 +83,11 @@ const AccountSettingsSection = () => {
               placeholder='Enter your current password'
               value={currentPassword}
               onChange={(e) => setCurrentPassword(e.target.value)}
-              className='w-96 md:w-80 px-4 py-3 rounded-md md:ml-1 bg-gray-100'
+              className='w-96 md:w-80 px-4 py-3 rounded-md md:ml-1 bg-gray-100 dark:bg-dark-backgroundLight'
             />
           </div>
           <div className='flex flex-col items-start md:flex-row md:justify-between md:items-center md:gap-x-7 gap-y-3'>
-            <label htmlFor="newPassword" className='font-semibold text-lg text-textColor-200 md:mr-5'>New Password</label>
+            <label htmlFor="newPassword" className='font-semibold text-lg text-textColor-200 md:mr-5 dark:text-dark-textColor-50'>New Password</label>
             <input
               type="password"
               name='newPassword'
@@ -95,11 +95,11 @@ const AccountSettingsSection = () => {
               placeholder='Enter new password'
               value={newPassword}
               onChange={(e) => setNewPassword(e.target.value)}
-              className='w-96 md:w-80 px-4 py-3 rounded-md md:ml-2 bg-gray-100'
+              className='w-96 md:w-80 px-4 py-3 rounded-md md:ml-2 bg-gray-100 dark:bg-dark-backgroundLight'
             />
           </div>
           <div className='flex flex-col items-start md:flex-row md:justify-between md:items-center md:gap-x-7 gap-y-3'>
-            <label htmlFor="confirmPassword" className='font-semibold text-lg text-textColor-200'>Confirm Password</label>
+            <label htmlFor="confirmPassword" className='font-semibold text-lg text-textColor-200 dark:text-dark-textColor-50'>Confirm Password</label>
             <input
               type="password"
               name='confirmPassword'
@@ -107,7 +107,7 @@ const AccountSettingsSection = () => {
               placeholder='Confirm new password'
               value={confirmPassword}
               onChange={(e) => setConfirmPassword(e.target.value)}
-              className='w-96 md:w-80 px-4 py-3 rounded-md bg-gray-100'
+              className='w-96 md:w-80 px-4 py-3 rounded-md bg-gray-100 dark:bg-dark-backgroundLight'
             />
           </div>
         </form>

@@ -25,8 +25,8 @@ namespace WebApi.Controllers
         {
             var command = new CreateUserCommand { CreateUser = userDto };
             var userId = await _mediator.Send(command);
-
-            return Ok(new { UserId = userId });
+            
+            return ResponseHandler<AuthResponse>.HandleResponse(userId, 201);
         }
         
         
@@ -35,8 +35,7 @@ namespace WebApi.Controllers
         {
             var command = new Login() { LogInDto = userDto };
             var token = await _mediator.Send(command);
-
-            return Ok(new { Token = token });
+            return ResponseHandler<AuthResponse>.HandleResponse(token, 201);
         }
         
        

@@ -23,7 +23,7 @@ const First = () => {
 
   if (blogError) {
     return (
-      <div className="h-screen w-full flex justify-center items-center text-4xl text-textColor-100 font-bold">
+      <div className="h-screen w-full flex justify-center items-center text-4xl text-textColor-100 font-bold dark:text-dark-textColor-100">
         {' '}
         Blog Not Found
       </div>
@@ -36,10 +36,10 @@ const First = () => {
 
   return (
     <div className="grid grid-rows gap-0">
-      <div className="text-3xl font-primaryFont text-center mt-20 mx-auto">{blogInfo?.title}</div>
+      <div className="text-3xl font-primaryFont text-center mt-20 mx-auto dark:text-dark-textColor-100">{blogInfo?.title}</div>
       <div className="text-xs font-secondaryFont flex items-center justify-center font-light uppercase text-gray-500 h-5 m-3">
         {blogInfo?.tags
-          .map((tag) => {
+          .map((tag: any) => {
             return tag;
           })
           .join(', ')}
@@ -51,7 +51,7 @@ const First = () => {
           width={980}
           height={514.5}
           alt="Picture"
-          className="w-full max-w-screen-xl mx-auto"
+          className="w-full max-w-screen-xl mx-auto max-h-[65vh] object-cover object-center"
         />
       </div>
       {blogInfo?.author && (
@@ -76,9 +76,9 @@ const First = () => {
       )}
       <div
         dangerouslySetInnerHTML={{ __html: blogInfo?.description }}
-        className="text-xl lg:text-2xl font-primaryFont flex items-center justify-center mx-4 lg:mx-64 mb-4 lg:mb-8 mt-8 pl-2"
+        className=" text-base font-primaryFont flex items-center justify-center mx-4 lg:mx-64 mb-4 lg:mb-8 mt-8 pl-2"
       ></div>
-      <div className="text-base lg:text-lg font-primaryFont flex flex-col items-center text-gray-600 justify-center mx-4 lg:mx-64 pl-2">
+      <div className="text-base lg:text-lg font-primaryFont flex flex-col items-center text-gray-600 justify-center mx-4 lg:mx-64 pl-2 dark:text-dark-textColor-50">
         <p className="mb-4">
           Lorem ipsum dolor sit amet consectetur adipisicing elit. Minus nemo aspernatur, est
           tempore facilis assumenda? Soluta itaque deserunt veniam ut nemo, culpa fugiat odit!
@@ -100,7 +100,7 @@ const First = () => {
           Fugiat consequatur sed minima totam perspiciatis.
         </p>
       </div>
-      <div className="text-xl font-secondaryFont font-semibold mt-20 mb-4 text-center lg:text-left lg:mx-48">
+      <div className="text-xl font-secondaryFont font-semibold mt-20 mb-4 text-center lg:text-left lg:mx-48 dark:text-dark-textColor-100">
         Related Blogs
       </div>
       <div className="flex flex-col lg:flex-row mx-auto lg:pl-40 mb-32">

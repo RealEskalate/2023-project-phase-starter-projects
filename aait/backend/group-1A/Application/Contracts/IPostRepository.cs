@@ -9,7 +9,7 @@ namespace Application.Contracts
     {
         Task<Post> Get(int id, int userId);
 
-        Task<List<PostResponseDTO>> GetAllPostsWithReaction(Expression<Func<Post, bool>> predicate, int userId);
+        Task<List<PostResponseDTO>> GetAllPostsWithReaction(int userId);
 
         Task<bool> Exists(int id);
     }

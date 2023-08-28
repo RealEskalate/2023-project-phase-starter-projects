@@ -9,7 +9,7 @@ using Domain.Entities;
 
 namespace Application.Features.Comment.Handlers.Commands;
 
-public class CreateCommentCommandHandler : IRequestHandler<CreateCommentCommand, BaseCommandResponse<int?>>
+public class CreateCommentCommandHandler : IRequestHandler<CreateCommentCommand, BaseCommandResponse<int>>
 {
     private readonly IUnitOfWork _unitOfWork;
     private readonly IMapper _mapper;
@@ -20,7 +20,7 @@ public class CreateCommentCommandHandler : IRequestHandler<CreateCommentCommand,
         _unitOfWork = unitOfWork;
     }
 
-    public async Task<BaseCommandResponse<int?>> Handle(CreateCommentCommand request, CancellationToken cancellationToken)
+    public async Task<BaseCommandResponse<int>> Handle(CreateCommentCommand request, CancellationToken cancellationToken)
     {
         try 
         {
@@ -41,11 +41,11 @@ public class CreateCommentCommandHandler : IRequestHandler<CreateCommentCommand,
             await _unitOfWork.notificationRepository.AddNotification(notify);
             int affectedRows = await _unitOfWork.Save();
             if (affectedRows == 0) throw new ServerErrorException("Something Went Wrong");
-            return BaseCommandResponse<int?>.SuccessHandler(comment.Id);
+            return BaseCommandResponse<int>.SuccessHandler(comment.Id);
         }
         catch (Exception ex) 
         {
-            return BaseCommandResponse<int?>.FailureHandler(ex);
+            return BaseCommandResponse<int>.FailureHandler(ex);
         }
     }
 }

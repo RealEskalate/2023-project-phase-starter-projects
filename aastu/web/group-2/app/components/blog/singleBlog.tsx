@@ -20,7 +20,7 @@ const SingleBlog: React.FC<SingleBlogProps> = ({ id, image, authorName, title, t
     console.log(authorName);
 
   return (
-    <div className='m-5 w-80 shadow rounded-md'>
+    <div className='m-5 w-80 shadow rounded-md bg-dark-backgroundLight dark:shadow font-primaryFont'>
       <div>
       <Image
       src={image}
@@ -31,7 +31,7 @@ const SingleBlog: React.FC<SingleBlogProps> = ({ id, image, authorName, title, t
     />
     </div>
     <div className='p-4'>
-    <div className='font-mont font-medium text-base text-gray-700'>{title}</div>
+    <div className='font-mont font-medium text-base text-gray-700 dark:text-dark-textColor-100'>{title}</div>
 
     {authorName && (
         <div>
@@ -56,11 +56,11 @@ const SingleBlog: React.FC<SingleBlogProps> = ({ id, image, authorName, title, t
     <div className='flex'>
         {tags.map((tag: string) => {
             return (
-                <div className='bg-gray-200 rounded-full m-4 px-6 py-2 font-mont text-xs text-gray-600'>{tag}</div>
+                <div className='bg-gray-200 rounded-full m-4 px-6 py-2 font-mont text-xs text-gray-600 dark:bg-dark-background dark:text-dark-textColor-50'>{tag}</div>
             );
         })}
     </div>
-    <div className='text-sm font-mont text-gray-500'>{firstSentence}</div>
+    <div className='text-sm font-mont text-gray-500 dark:text-dark-textColor-50'>{firstSentence}</div>
     <hr className='my-6 bg-gray-100 border border-gray-200'></hr>
     <div className='flex'>
     <Image

@@ -4,7 +4,7 @@ import Image from 'next/image'
 
 const HelpUs = () => {
   return (
-    <section className='my-10 md:mt-16 bg-gradient-to-r from-primaryColor to-[#019CFA] w-full h-64 md:h-72 flex justify-center items-center relative'>
+    <section className='my-10 md:mt-16 bg-gradient-to-r from-primaryColor to-[#019CFA] w-full h-64 md:h-72 flex justify-center items-center relative dark:to-dark-backgroundLight dark:from-[#113774]'>
       <div className='flex flex-col items-center justify-center'>
         <Image
           src={AfricaMap}
