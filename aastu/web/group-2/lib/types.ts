@@ -1,4 +1,4 @@
-import { StaticImageData } from "next/image";
+import { StaticImageData } from 'next/image';
 export interface User {
   _id?: string;
   name: string;
@@ -24,11 +24,12 @@ export interface Blog {
 }
 
 export interface TokenAndUser {
-  token: string
-  user: {
-    email:string,
-    name:string
-  } | null
+  user: string;
+  userName: string;
+  userRole: string;
+  userEmail: string;
+  userProfile: string;
+  token: string;
 }
 
 export interface Story {

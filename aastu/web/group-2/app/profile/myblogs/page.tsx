@@ -4,9 +4,14 @@ import { Blog, User } from '@/lib/types';
 import MyBlogCard from '@/app/components/profile/MyblogCard';
 import { useGetBlogsQuery, useMyBlogsQuery } from '@/lib/redux/slices/blogsApi';
 import Link from 'next/link';
+import Loading from '@/app/components/loading';
 
 export default function Section() {
   const { data: blogs, error, isSuccess, isLoading } = useMyBlogsQuery();
+
+  if (isLoading) {
+    return <Loading />;
+  }
 
   return (
     <div>
