@@ -14,10 +14,10 @@ const config: Config = {
           'conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))',
       },
       fontFamily:{
-        lato: ['Lato', 'sans-serif'],
-        nunito: ['Nunito', 'sans-serif'],
-        poppins: ['Poppins', 'sans-serif'],
-        inter: ['Inter', 'sans-serif'],
+        'lato': ['Lato', 'sans-serif'],
+        'nunito': ['Nunito', 'sans-serif'],
+        'poppins': ['Poppins', 'sans-serif'],
+        'inter': ['Inter', 'sans-serif'],
         'fira-code': ['Fira Code', 'monospace'],
       }
     },
