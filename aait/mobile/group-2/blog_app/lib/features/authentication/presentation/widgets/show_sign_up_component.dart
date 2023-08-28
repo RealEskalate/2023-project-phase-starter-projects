@@ -1,4 +1,4 @@
-import 'package:flutter/foundation.dart';
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -7,6 +7,10 @@ import 'package:go_router/go_router.dart';
 import '../../data/models/sign_up_model.dart';
 import '../bloc/auth_bloc.dart';
 import 'custom_text_field.dart';
+import 'custome_password_text_form_field.dart';
+import 'elevated_button_style.dart';
+import 'elevated_button_text.dart';
+import 'show_welcome_message.dart';
 
 class SignUpComponent extends StatefulWidget {
   const SignUpComponent({super.key});
@@ -23,8 +27,6 @@ class _SignUpComponentState extends State<SignUpComponent> {
   final _fullNameController = TextEditingController();
   final _bioController = TextEditingController();
   final _expertiseController = TextEditingController();
-
-  bool _isObscureText = true;
 
   @override
   Widget build(BuildContext context) {
@@ -61,20 +63,9 @@ class _SignUpComponentState extends State<SignUpComponent> {
 
   Column showSignUpForm(BuildContext context) {
     return Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-      Text('Welcome',
-          style: TextStyle(
-              fontSize: 24.sp,
-              fontFamily: 'UrbanistSemiBold',
-              color: const Color(0xFF0D253C))),
-      SizedBox(height: 20.h),
-      Text(
-        'provide credentials to sign up',
-        style: TextStyle(
-          fontSize: 14.sp,
-          fontFamily: 'PoppinsBlack',
-          color: const Color(0xFF2D4379),
-        ),
-      ),
+      const ShowWelcomeText(
+          welcomeMessage: 'Welcome!',
+          authMessage: 'provide credentials to sign up'),
       SizedBox(height: 37.h),
       Form(
         key: _formKey,
@@ -89,45 +80,8 @@ class _SignUpComponentState extends State<SignUpComponent> {
             labelText: 'Username',
           ),
           SizedBox(height: 10.h),
-          SizedBox(
-            height: 66.h,
-            child: TextFormField(
-              keyboardType: TextInputType.visiblePassword,
-              controller: _passwordController,
-              obscureText: _isObscureText,
-              decoration: InputDecoration(
-                labelText: 'Password',
-                labelStyle: TextStyle(
-                  fontSize: 14.sp,
-                  fontFamily: 'UrbanistItalicThin',
-                  color: const Color(0xFF2D4379),
-                ),
-                contentPadding: EdgeInsets.only(top: 5.h, bottom: 5.h),
-                floatingLabelBehavior: FloatingLabelBehavior.always,
-                suffixIcon: TextButton(
-                  onPressed: () {
-                    setState(() {
-                      _isObscureText = !_isObscureText;
-                    });
-                  },
-                  child: Text(
-                    _isObscureText ? 'Show' : 'Hide',
-                    style: TextStyle(
-                      fontSize: 14.sp,
-                      fontFamily: 'UrbanistMedium',
-                      color: _isObscureText
-                          ? const Color(0xFF376AED)
-                          : Colors.red[300],
-                    ),
-                  ),
-                ),
-              ),
-              style: TextStyle(
-                fontSize: 16.sp,
-                fontFamily: 'UrbanistMedium',
-                color: const Color(0xFF0D253C),
-              ),
-            ),
+          CustomPasswordTextField(
+            passwordController: _passwordController,
           ),
           SizedBox(height: 10.h),
           CustomTextFormField(
@@ -145,14 +99,6 @@ class _SignUpComponentState extends State<SignUpComponent> {
               Expanded(
                 child: ElevatedButton(
                   onPressed: () {
-                    if (kDebugMode) {
-                      print('username: ${_usernameController.text}');
-                      print('password: ${_passwordController.text}');
-                      print('full name: ${_fullNameController.text}');
-                      print('expertise: ${_expertiseController.text}');
-                      print('bio: ${_bioController.text}');
-                    }
-
                     SignUpRequestModel signUpRequestModel = SignUpRequestModel(
                       email: _usernameController.text,
                       password: _passwordController.text,
@@ -165,21 +111,8 @@ class _SignUpComponentState extends State<SignUpComponent> {
                         .read<AuthBloc>()
                         .add(SignUpEvent(signUpRequestModel));
                   },
-                  style: ButtonStyle(
-                    backgroundColor: MaterialStateProperty.all<Color>(
-                        const Color(0xFF376AED)),
-                    shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                        RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10.r),
-                    )),
-                  ),
-                  child: Text(
-                    'SIGN UP',
-                    style: TextStyle(
-                        fontSize: 18.sp,
-                        fontFamily: 'UrbanistBold',
-                        color: Colors.white),
-                  ),
+                  style: elevatedButtonStyle(),
+                  child: const ElevatedButtonText(),
                 ),
               ),
             ],
