@@ -1,6 +1,7 @@
 import 'package:equatable/equatable.dart';
 
 import '../../domain/entities/article.dart';
+import '../../domain/entities/tag.dart';
 
 sealed class ArticleEvent extends Equatable {
   const ArticleEvent();
@@ -10,6 +11,16 @@ sealed class ArticleEvent extends Equatable {
 }
 
 final class LoadAllArticlesEvent extends ArticleEvent {}
+
+final class FilterArticlesEvent extends ArticleEvent {
+  final Tag tag;
+  final String searchParams;
+
+  const FilterArticlesEvent(this.tag, this.searchParams);
+
+  @override
+  List<Object?> get props => [tag, searchParams];
+}
 
 final class GetSingleArticleEvent extends ArticleEvent {
   final String id;

@@ -32,6 +32,16 @@ final class AllArticlesLoadedState extends ArticleState {
   List<Object> get props => [articles];
 }
 
+final class AllArticlesFilteredState extends ArticleState {
+  final List<Article> articles;
+
+  const AllArticlesFilteredState(this.articles);
+
+  @override
+  List<Object> get props => [articles];
+}
+
+
 
 
 final class ArticleCreatedState extends ArticleState {

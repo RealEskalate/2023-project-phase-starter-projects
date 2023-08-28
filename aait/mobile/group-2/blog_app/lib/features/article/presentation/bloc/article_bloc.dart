@@ -1,6 +1,7 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../core/usecase/usecase.dart';
+import '../../domain/usecases/filter_articles.dart';
 import '../../domain/usecases/usecases.dart';
 import 'article_event.dart';
 import 'article_state.dart';
@@ -11,6 +12,7 @@ export 'article_state.dart';
 class ArticleBloc extends Bloc<ArticleEvent, ArticleState> {
   final GetArticle getArticle;
   final GetAllArticles getAllArticles;
+  final FilterArticles filterArticles;
   final CreateArticle createArticle;
   final UpdateArticle updateArticle;
   final DeleteArticle deleteArticle;
@@ -18,17 +20,18 @@ class ArticleBloc extends Bloc<ArticleEvent, ArticleState> {
   ArticleBloc({
     required this.getArticle,
     required this.getAllArticles,
+    required this.filterArticles,
     required this.createArticle,
     required this.updateArticle,
     required this.deleteArticle,
   }) : super(ArticleInitialState()) {
     on<GetSingleArticleEvent>(_getArticle);
     on<LoadAllArticlesEvent>(_getAllArticles);
+    on<FilterArticlesEvent>(_filterArticles);
     on<CreateArticleEvent>(_createArticle);
     on<UpdateArticleEvent>(_updateArticle);
     on<DeleteArticleEvent>(_deleteArticle);
   }
-
 
   Future<void> _getArticle(
       GetSingleArticleEvent event, Emitter<ArticleState> emit) async {
@@ -47,6 +50,18 @@ class ArticleBloc extends Bloc<ArticleEvent, ArticleState> {
     result.fold(
       (failure) => emit(ArticleErrorState(failure.toString())),
       (articles) => emit(AllArticlesLoadedState(articles)),
+    );
+  }
+
+  Future<void> _filterArticles(
+      FilterArticlesEvent event, Emitter<ArticleState> emit) async {
+    final result = await filterArticles(
+        FilterParams(tag: event.tag, title: event.searchParams));
+    print(result);
+
+    result.fold(
+      (failure) => emit(ArticleErrorState(failure.toString())),
+      (articles) => emit(AllArticlesFilteredState(articles)),
     );
   }
 
