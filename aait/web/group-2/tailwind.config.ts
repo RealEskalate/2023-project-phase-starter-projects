@@ -19,9 +19,9 @@ const config: Config = {
         'tertiary': '#545465',
       },
       fontFamily: {
-        'poppins': ['Poppins'],
-        'lato':['Lato'],
-        'nunito':['Nunito'],
+        'poppins': "var(--font-poppins)",
+        'lato':'var(--font-lato)',
+        'nunito':'var(--font-nunito)',
       },
     },
   },
