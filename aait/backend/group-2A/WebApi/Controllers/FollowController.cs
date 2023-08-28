@@ -42,7 +42,7 @@ namespace WebApi.Controllers
         }
 
         [HttpPost("Add")]
-        public async Task<IActionResult> Follow(FollowDto follow)
+        public async Task<IActionResult> Follow([FromBody] FollowDto follow)
         {
             // token getter to be implemented
             var command = new CreateFollowCommand { follow = follow };
@@ -50,11 +50,11 @@ namespace WebApi.Controllers
             return Ok();
         }
 
-        [HttpDelete("{followeeID}")]
-        public async Task<IActionResult> Unfollow(FollowDto followeeID)
+        [HttpDelete("Remove")]
+        public async Task<IActionResult> Unfollow([FromBody] FollowDto unfollow)
         {
             // token getter to be implemented
-            var command = new DeleteFollowCommand { follow = followeeID };
+            var command = new DeleteFollowCommand { follow = unfollow };
             await _mediator.Send(command);
             return NoContent();
         }
