@@ -2,19 +2,29 @@ import 'package:blog_app/features/auth/presentation/bloc/login_bloc/bloc/login_b
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:go_router/go_router.dart';
 
 import '../widgets/password_widget.dart';
 import '../widgets/text_field_widget.dart';
 
 // ignore: must_be_immutable
-class LoginSlide extends StatelessWidget {
+class LoginSlide extends StatefulWidget {
   final VoidCallback pageChange;
   LoginSlide({super.key, required this.pageChange});
+
+  @override
+  State<LoginSlide> createState() => _LoginSlideState();
+}
+
+class _LoginSlideState extends State<LoginSlide> {
   TextEditingController emailController = TextEditingController();
+
   TextEditingController passwordController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
+    final bloc = context.watch<LoginBloc>();
+
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: 40.w),
       child: SingleChildScrollView(
@@ -58,8 +68,16 @@ class LoginSlide extends StatelessWidget {
             SizedBox(
               height: 200.h,
             ),
-            BlocBuilder<LoginBloc, LoginState>(
+            BlocConsumer<LoginBloc, LoginState>(
+              listener: (context, state) {
+                if (state is LoginSuccessState) {
+                  context.go('/profile');
+                }
+              },
               builder: (context, state) {
+                if (state is LoginInitial) {
+                  print("Hello world");
+                }
                 if (state is LoginLoadingState) {
                   return SizedBox(
                     width: 295.w,
@@ -75,9 +93,6 @@ class LoginSlide extends StatelessWidget {
                       child: const CircularProgressIndicator.adaptive(),
                     ),
                   );
-                } else if (state is LoginSuccessState) {
-                  // todo
-
                 } else if (state is LoginErrorState) {
                   return Column(
                     crossAxisAlignment: CrossAxisAlignment.center,
@@ -100,7 +115,7 @@ class LoginSlide extends StatelessWidget {
                             ),
                           ),
                           onPressed: () {
-                            BlocProvider.of<LoginBloc>(context).add(
+                            bloc.add(
                               Login(
                                 email: emailController.text,
                                 password: passwordController.text,
@@ -176,7 +191,9 @@ class LoginSlide extends StatelessWidget {
                 ),
               ],
             ),
-            SizedBox(height: 500.h,),
+            SizedBox(
+              height: 500.h,
+            ),
           ],
         ),
       ),
