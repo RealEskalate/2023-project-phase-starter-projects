@@ -33,12 +33,12 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
   final LoginUseCase loginUseCase;
   final SignUpUseCase signUpUseCase;
   final LogoutUseCase logoutUseCase;
-  final CustomClient client;
+  final CustomClient customClient;
   AuthBloc({
     required this.loginUseCase,
     required this.signUpUseCase,
     required this.logoutUseCase,
-    required this.client,
+    required this.customClient,
   }) : super(AuthInitial()) {
     on<LoginEvent>(_onLoginEvent);
     on<SignUpEvent>(_onSignUpEvent);
@@ -54,6 +54,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
         emit(AuthError(message: _mapErrorToMessage(failure)));
       },
       (loginResult) {
+        customClient.authToken = loginResult.token;
         emit(LoginSuccessState(authenticationEntity: loginResult));
       },
     );
@@ -86,6 +87,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
         emit(AuthError(message: _mapErrorToMessage(failure)));
       },
       (logoutResult) {
+        customClient.authToken = null;
         emit(LogoutSuccessState());
       },
     );
