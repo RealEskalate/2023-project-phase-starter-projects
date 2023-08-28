@@ -35,12 +35,12 @@ public class UnitOfWork : IUnitOfWork
 
     public async Task<int> SaveAsync()
     {
-      return await _dbContext.SaveChangesAsync();
+        return await _dbContext.SaveChangesAsync();
     }
 
     public void Dispose()
     {
-      _dbContext.Dispose();
-      GC.SuppressFinalize(this);
+        _dbContext.Dispose();
+        GC.SuppressFinalize(this);
     }
 }
