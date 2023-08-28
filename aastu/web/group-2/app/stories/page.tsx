@@ -35,8 +35,8 @@ export function StoriesCard ({alternate, profileImage ,personName, imgURL, role,
             <div className='flex flex-col justify-around'>
                 {story?.map((item, index) => [
                     <div className='mb-4'>
-                        <p className='font-secondaryFont font-medium text-2xl mb-8'>{item.heading}</p>
-                        <p className='font-secondaryFont font-light italic text-sm'>{item.paragraph}</p>
+                        <p className='font-secondaryFont font-medium text-2xl mb-8 dark:text-dark-textColor-100'>{item.heading}</p>
+                        <p className='font-secondaryFont font-light italic text-sm dark:text-dark-textColor-50'>{item.paragraph}</p>
                     </div>
                 ])
             }                
@@ -116,14 +116,14 @@ export default function StoriesPage() {
     const profilePictures: StaticImageData[] = [ StoriesProfile, StoriesProfile2, StoriesProfile3];
 
   return (
-    <div className="flex flex-col justify-center items-center mt-20 mb-32">
+    <div className="flex flex-col justify-center items-center mt-20 mb-32 dark:bg-dark-background">
       <div className="text-center w-5/6 md:w-2/3">
-        <p className="font-primaryFont font-medium text-4xl md:text-5xl mb-10 text-[#2B2A35]">Impact Stories</p>
-        <p className="font-primaryFont font-light text-2xl md:text-3xl text-[#2E374E]">
+        <p className="font-primaryFont font-medium text-4xl md:text-5xl mb-10 text-[#2B2A35] dark:text-dark-textColor-100">Impact Stories</p>
+        <p className="font-primaryFont font-light text-2xl md:text-3xl text-[#2E374E] dark:text-dark-textColor-50">
           Behind every success is a story. Learn about the stories of A2SVians
         </p>
       </div>
-      <div className="h-[6px] w-[88px] mt-4 bg-[#264FAD]"></div>
+      <div className="h-[6px] w-[88px] mt-4 bg-[#264FAD] dark:bg-white"></div>
       <div className="mt-8 mb-8">
             {data?.map((item,index) =>[
                 <StoriesCard key={index} profileImage={profilePictures[index]} {...item} alternate={index % 2 == 0} />
@@ -131,27 +131,27 @@ export default function StoriesPage() {
       </div>
 
       <div className="text-center w-full">
-        <p className="font-primaryFont font-normal text-4xl mb-20 text-[#363636]">Current Interview Partners</p>
+        <p className="font-primaryFont font-normal text-4xl mb-20 text-[#363636] dark:text-dark-textColor-100">Current Interview Partners</p>
         <ul className="flex flex-row item-center justify-center gap-12 flex-wrap">
           <li className="w-[200px] h-[50px]">
             <Image src={google} width={200} height={200} alt="" />
           </li>
-          <li className="w-[200px] h-[50px]">
+          <li className="w-[200px] h-[50px] dark:invert ">
             <Image src={palantir} width={200} height={200} alt="" />
           </li>
-          <li className="w-[200px] h-[50px]">
+          <li className="w-[200px] h-[50px] dark:invert">
             <Image src={instadeep} width={200} height={200} alt="" />
           </li>
-          <li className="w-[200px] h-[50px]">
+          <li className="w-[200px] h-[50px] dark:invert">
             <Image src={meta} width={200} height={200} alt="" />
           </li>
         </ul>
         <div>
-          <ul className="flex flex-wrap justify-evenly gap-24 lg:flex lg:flex-wrap mt-10 lg:justify-around w-full">
-            <li className="w-[200px] h-[50px]">
+          <ul className="flex flex-wrap justify-evenly gap-24 lg:flex lg:flex-wrap mt-10 lg:justify-evenly w-full">
+            <li className="w-[200px] h-[50px] dark:invert">
               <Image src={databricks} width={500} height={500} alt="" />
             </li>
-            <li className="w-[200px] h-[50px]">
+            <li className="w-[200px] h-[50px] dark:invert">
               <Image src={linkedin} width={500} height={500} alt="" />
             </li>
           </ul>
