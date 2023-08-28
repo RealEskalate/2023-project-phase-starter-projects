@@ -24,3 +24,33 @@ public class UserRepository : GenericRepository<User>, IUserRepository
         return await _dbContext.Users.AnyAsync(user => user.Username == username);
     }
 }
+
+    public async Task FollowUser(int follower, int followed)
+    {
+        var followerUser = await _dbContext.Users.FindByIdAsync(follower);
+
+        var followedUser = await _dbContext.Users.FindByIdAsync(followed);
+
+        if (followerUser != null && followedUser != null)
+        {
+            await followerUser.Followings.AddAsync(followedUser);
+            await followedUser.Followers.AddAsync(followerUser);
+
+        }
+
+    }
+
+    public async Task UnFOllowUser(int follower, int followed)
+    {
+        var followerUser = await _dbContext.Users.FindAsync(follower);
+        var followedUser = await _dbContext.Users.FindAsync(followed);
+
+        if (followedUser != null && followerUser != null){
+            await followerUser.Followings.RemoveAsync(followedUser);
+            await followedUser.Followers.RemoveAsync(followerUser);
+        }
+        
+
+
+    }
+}
