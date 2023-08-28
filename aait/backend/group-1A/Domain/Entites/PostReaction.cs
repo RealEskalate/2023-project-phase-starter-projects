@@ -8,6 +8,7 @@ namespace Domain.Entities
     {
 
 
+         [ForeignKey("Post")]
         public int PostId { get; set; }
 
         public virtual Post post {get ; set;}
