@@ -5,7 +5,7 @@ import { useState } from "react";
 import AddBlog from "@/components/blog/AddBlog";
 
 const CreateBlogPage: React.FC = () => {
-    const [addBlog, {isError, isLoading}] = useAddBlogMutation()
+    const [addBlog, {isError, isLoading, isSuccess}] = useAddBlogMutation()
     const [title, setTitle] = useState("");
     const [image, setImage] = useState<File | null>(null);
     const [content, setContent] = useState("");
@@ -66,12 +66,8 @@ const CreateBlogPage: React.FC = () => {
   
           try {
             const response = await addBlog(formData);
-            if (response) {
-                console.log(response)
-            }
-
           } catch (error) {
-            
+            console.error(error) 
           }
          
       };
@@ -90,6 +86,9 @@ const CreateBlogPage: React.FC = () => {
       handleSubmit={handleSubmit}
       handleTagClick={handleTagClick}
       handleTitleChange={handleTitleChange}
+      isError={isError}
+      isLoading={isLoading}
+      isSuccess={isSuccess}
       />
     );
 };
