@@ -1,5 +1,7 @@
 'use client';
 
+import { Metadata } from 'next';
+
 /* Components */
 
 import LandingSection from './components/home/LandingSection';
@@ -20,6 +22,6 @@ export default function IndexPage() {
   );
 }
 
-export const metadata = {
-  title: 'A2SV Blog',
-};
+// export const metadata: Metadata = {
+//   title: 'A2SV Blog',
+// };
