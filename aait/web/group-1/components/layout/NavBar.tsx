@@ -31,6 +31,10 @@ export const NavBar = () => {
       name: "about us",
     },
     {
+      link: "/blogs",
+      name: "blogs",
+    },
+    {
       link: "/contact",
       name: "get involved",
     },
