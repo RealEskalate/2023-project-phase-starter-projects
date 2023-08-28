@@ -1,5 +1,5 @@
 "use client";
-import { useEffect, useRef, useState } from "react";
+import { MouseEventHandler, useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import { useAuth } from "@/hooks/useAuth";
 
@@ -24,7 +24,7 @@ export default function ProfileAvatar({ imageUrl }: Props) {
     logoutHandler();
   };
 
-  const handleClickOutside = (event: MouseEvent) => {
+  const handleClickOutside = (event: any) => {
     if (
       buttonRef.current &&
       !buttonRef.current.contains(event.target as Node)
@@ -48,7 +48,6 @@ export default function ProfileAvatar({ imageUrl }: Props) {
           <Image
             width={100}
             height={100}
-            alt=""
             className="w-12 h-12 rounded-full"
             src={imageUrl}
             alt="image"
