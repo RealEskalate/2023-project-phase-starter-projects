@@ -560,7 +560,7 @@ class _ProfilePageState extends State<ProfilePage> {
             );
           } else {
             return Center(
-              child: Text("Loading"),
+              child: CircularProgressIndicator(),
             );
           }
         },
