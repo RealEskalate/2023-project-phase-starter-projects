@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:go_router/go_router.dart';
 
+import '../../../../core/presentation/router/routes.dart';
 import '../../../../core/presentation/theme/app_colors.dart';
 import '../../domain/entities/article.dart';
 import '../widgets/article_content.dart';
@@ -37,6 +39,11 @@ class ArticleScreen extends StatelessWidget {
   List<Widget> _buildActions(BuildContext context) {
     return [
       PopupMenuButton(
+        onSelected: (value) {
+          if (value == 'Edit') {
+            context.push(Routes.editArticle, extra: article);
+          }
+        },
         icon: const Icon(
           Icons.more_horiz,
           color: AppColors.darkerBlue,
@@ -44,9 +51,11 @@ class ArticleScreen extends StatelessWidget {
         itemBuilder: (context) {
           return [
             const PopupMenuItem(
+              value: 'Edit',
               child: Text('Edit'),
             ),
             const PopupMenuItem(
+              value: 'Delete',
               child: Text('Delete'),
             ),
           ];

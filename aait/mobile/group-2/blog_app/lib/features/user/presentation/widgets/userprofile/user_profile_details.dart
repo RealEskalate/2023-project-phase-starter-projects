@@ -1,13 +1,14 @@
-import 'package:blog_app/features/user/presentation/widgets/userprofile/user_bio.dart';
-import 'package:blog_app/features/user/presentation/widgets/userprofile/user_profile_info.dart';
-import 'package:blog_app/features/user/presentation/widgets/userprofile/user_profile_photo.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
+import '../../../domain/entities/user_data.dart';
+import 'user_bio.dart';
+import 'user_profile_info.dart';
+import 'user_profile_photo.dart';
+
 class UserProfileDetails extends StatelessWidget {
-  const UserProfileDetails({
-    Key? key,
-  }) : super(key: key);
+  final UserData user;
+  const UserProfileDetails({Key? key, required this.user}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -41,23 +42,21 @@ class UserProfileDetails extends StatelessWidget {
           ),
           child: Column(
             children: [
-              const Row(
+              Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
                   UserProfilePhoto(
-                    photoUrl:
-                        'https://img.freepik.com/premium-photo/young-handsome-man-with-beard-isolated-keeping-arms-crossed-frontal-position_1368-132662.jpg',
+                    photoUrl: user.image,
                   ),
                   UserProfileInfo(
-                    fullName: 'Jovi Daniel',
-                    username: '@joviedan',
-                    profession: 'UX Designer',
+                    fullName: user.fullName,
+                    username: user.email,
+                    profession: user.expertise,
                   ),
                 ],
               ),
-              const UserBio(
-                userInfo:
-                    'Madison Blackstone is a director of user experience design, with experience managing global teams.',
+              UserBio(
+                userInfo: user.bio,
               ),
               SizedBox(
                 height: 32.w,

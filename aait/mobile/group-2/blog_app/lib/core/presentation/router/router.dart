@@ -36,5 +36,16 @@ final GoRouter router = GoRouter(
     ),
 
     // Auth routes
+    GoRoute(
+      path: Routes.editArticle,
+      builder: (context, state) {
+        final article = state.extra as Article;
+        return ArticleFormScreen(article: article);
+      },
+    ),
+    GoRoute(
+      path: Routes.home,
+      builder: (context, state) => const HomePage(),
+    ),
   ],
 );

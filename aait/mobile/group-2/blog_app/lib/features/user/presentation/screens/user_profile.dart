@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
+import '../../../../injection_container.dart';
+import '../bloc/user_bloc.dart';
 import '../widgets/userprofile/article_grid_view.dart';
 import '../widgets/userprofile/article_list_view.dart';
 import '../widgets/userprofile/gradient_at_bottom.dart';
@@ -34,51 +37,60 @@ class UserProfile extends StatelessWidget {
       likes: "1.1k",
       timeSincePosted: 3,
     ),
-    // Add more articles here
   ];
+
+  UserProfile({super.key});
+
   @override
   Widget build(BuildContext context) {
-    ScreenUtil.init(context);
-
-    return Scaffold(
-      body: Stack(
-        children: [
-          SafeArea(
-            child: SingleChildScrollView(
-              child: Column(
-                children: [
-                  const ProfileBar(),
-                  const UserProfileDetails(),
-                  Center(
-                    child: Transform.translate(
-                      offset: Offset(0.w, -32.w),
-                      child: const ShowPostsAndBookmarks(
-                        numBookmarks: 12,
-                        numPosts: 52,
+    return BlocProvider<UserBloc>(
+      create: (context) => serviceLocator(),
+      child: Scaffold(
+        body: Stack(
+          children: [
+            SafeArea(
+              child: SingleChildScrollView(
+                child: Column(
+                  children: [
+                    const ProfileBar(),
+                    BlocBuilder<UserBloc, UserState>(builder: (context, state) {
+                      if (state is LoadedUserState) {
+                        return UserProfileDetails(user: state.userData);
+                      } else {
+                        return const Center(child: CircularProgressIndicator());
+                      }
+                    }),
+                    Center(
+                      child: Transform.translate(
+                        offset: Offset(0.w, -32.w),
+                        child: const ShowPostsAndBookmarks(
+                          numBookmarks: 12,
+                          numPosts: 52,
+                        ),
                       ),
                     ),
-                  ),
-                  Container(
-                    decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.circular(28.0),
-                        border: Border.all(
-                          color: Colors.grey,
-                          width: 0.025,
-                        )),
-                    child: Container(
-                      padding: const EdgeInsets.fromLTRB(40, 32, 30, 27),
-                      child:
-                          // ArticleGridView(articles: articles),
-                          ArticleListView(articles: articles),
-                    ),
-                  )
-                ],
+                    Container(
+                      decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(28.0),
+                          border: Border.all(
+                            color: Colors.grey,
+                            width: 0.025,
+                          )),
+                      child: Container(
+                        padding: const EdgeInsets.fromLTRB(40, 32, 30, 27),
+                        child:
+                            // ArticleGridView(articles: articles),
+                            ArticleListView(articles: articles),
+                      ),
+                    )
+                  ],
+                ),
               ),
             ),
-          ),
-          const GradientAtBottom()
-        ],
+            const GradientAtBottom()
+          ],
+        ),
       ),
     );
   }

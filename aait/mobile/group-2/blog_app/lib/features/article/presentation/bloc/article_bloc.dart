@@ -35,6 +35,8 @@ class ArticleBloc extends Bloc<ArticleEvent, ArticleState> {
 
   Future<void> _getArticle(
       GetSingleArticleEvent event, Emitter<ArticleState> emit) async {
+    emit(ArticleLoadingState());
+
     final result = await getArticle(GetParams(id: event.id));
 
     result.fold(
@@ -45,6 +47,8 @@ class ArticleBloc extends Bloc<ArticleEvent, ArticleState> {
 
   Future<void> _getAllArticles(
       LoadAllArticlesEvent event, Emitter<ArticleState> emit) async {
+    emit(ArticleLoadingState());
+
     final result = await getAllArticles(NoParams());
 
     result.fold(
@@ -67,6 +71,8 @@ class ArticleBloc extends Bloc<ArticleEvent, ArticleState> {
 
   Future<void> _createArticle(
       CreateArticleEvent event, Emitter<ArticleState> emit) async {
+    emit(ArticleLoadingState());
+
     final result = await createArticle(CreateParams(article: event.article));
 
     result.fold(
@@ -77,6 +83,8 @@ class ArticleBloc extends Bloc<ArticleEvent, ArticleState> {
 
   Future<void> _updateArticle(
       UpdateArticleEvent event, Emitter<ArticleState> emit) async {
+    emit(ArticleLoadingState());
+
     final result = await updateArticle(UpdateParams(article: event.article));
 
     result.fold(
@@ -87,6 +95,8 @@ class ArticleBloc extends Bloc<ArticleEvent, ArticleState> {
 
   Future<void> _deleteArticle(
       DeleteArticleEvent event, Emitter<ArticleState> emit) async {
+    emit(ArticleLoadingState());
+
     final result = await deleteArticle(DeleteParams(id: event.id));
 
     result.fold(

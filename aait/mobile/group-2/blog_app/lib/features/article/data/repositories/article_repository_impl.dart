@@ -121,7 +121,7 @@ class ArticleRepositoryImpl extends ArticleRepository {
     if (await networkInfo.isConnected) {
       try {
         final updatedArticle =
-            await remoteDataSource.updateArticle(article as ArticleModel);
+            await remoteDataSource.updateArticle(article.toArticleModel());
 
         await localDataSource.cacheArticle(updatedArticle);
 

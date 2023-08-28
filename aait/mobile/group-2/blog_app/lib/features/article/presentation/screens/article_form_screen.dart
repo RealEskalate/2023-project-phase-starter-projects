@@ -4,15 +4,19 @@ import 'package:go_router/go_router.dart';
 
 import '../../../../core/presentation/router/routes.dart';
 import '../../../../injection_container.dart';
+import '../../domain/entities/article.dart';
 import '../bloc/article_bloc.dart';
 import '../bloc/tag_bloc.dart';
 import '../bloc/tag_event.dart';
 import '../bloc/tag_selector_bloc.dart';
 import '../widgets/create_article_form.dart';
 import '../widgets/snackbar.dart';
+import '../widgets/update_article_form.dart';
 
 class ArticleFormScreen extends StatelessWidget {
-  const ArticleFormScreen({super.key});
+  final Article? article;
+
+  const ArticleFormScreen({super.key, this.article});
 
   @override
   Widget build(BuildContext context) {
@@ -21,7 +25,7 @@ class ArticleFormScreen extends StatelessWidget {
         backgroundColor: Theme.of(context).colorScheme.background,
         elevation: 0,
         title: Center(
-          child: Text('New article',
+          child: Text(article == null ? 'New article' : 'Edit article',
               style: Theme.of(context).textTheme.titleMedium),
         ),
       ),
@@ -39,7 +43,7 @@ class ArticleFormScreen extends StatelessWidget {
         ],
 
         //
-        child: BlocListener<ArticleBloc, ArticleState>(
+        child: BlocConsumer<ArticleBloc, ArticleState>(
           listener: (context, state) {
             if (state is ArticleCreatedState) {
               showSuccess(context, 'Article created successfully');
@@ -51,7 +55,17 @@ class ArticleFormScreen extends StatelessWidget {
               showError(context, state.message);
             }
           },
-          child: const CreateArticleForm(),
+          builder: (context, state) {
+            if (state is ArticleLoadingState) {
+              return const Center(child: CircularProgressIndicator());
+            }
+
+            if (article != null) {
+              return UpdateArticleForm(article: article!);
+            }
+
+            return const CreateArticleForm();
+          },
         ),
       ),
     );
