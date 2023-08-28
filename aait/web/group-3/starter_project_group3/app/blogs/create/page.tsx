@@ -1,13 +1,8 @@
 'use client'
 
-<<<<<<< HEAD
 import { useState } from "react";
 import {useRouter} from 'next/navigation'
 import { useAddBlogMutation } from "@/store/features/create-blog/create-blog-api";
-=======
-import { useAddBlogMutation } from "@/store/features/create-blog/create-blog-api";
-import { useState } from "react";
->>>>>>> 71ad5a6 (feat(aait.web.g3):Add create blog page)
 import AddBlog from "@/components/blog/AddBlog";
 
 const CreateBlogPage: React.FC = () => {
@@ -17,10 +12,7 @@ const CreateBlogPage: React.FC = () => {
     const [content, setContent] = useState("");
     const [imageText, setImageText] = useState('Please upload image');
     const [selectedTags, setSelectedTags] = useState<string[]>([]);
-<<<<<<< HEAD
     const router = useRouter()
-=======
->>>>>>> 71ad5a6 (feat(aait.web.g3):Add create blog page)
 
     const handleTagClick = (tag: string) => {
       if (selectedTags.includes(tag)) {
@@ -71,7 +63,6 @@ const CreateBlogPage: React.FC = () => {
           formData.append("description", content);
           selectedTags.forEach(tag => formData.append("tags", tag));
           if (image) {
-<<<<<<< HEAD
             formData.append("image", image as Blob);
           }
   
@@ -87,15 +78,6 @@ const CreateBlogPage: React.FC = () => {
               setTitle('')
               setSelectedTags([])
               
-=======
-            formData.append("image", image);
-          }
-  
-          try {
-            const response = await addBlog(formData);
-            if (response) {
-                console.log(response)
->>>>>>> 71ad5a6 (feat(aait.web.g3):Add create blog page)
             }
 
           } catch (error) {
