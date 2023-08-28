@@ -21,16 +21,16 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en">
-      <body className={`flex flex-col ${inter.className}`}>
-        <header>
-          <NavBar />
-        </header>
-        <StateProvider>
+    <StateProvider>
+      <html lang="en">
+        <body className={`flex flex-col ${inter.className}`}>
+          <header>
+            <NavBar />
+          </header>
           <main>{children}</main>
-        </StateProvider>
-        <Footer />
-      </body>
-    </html>
+          <Footer />
+        </body>
+      </html>
+    </StateProvider>
   );
 }
