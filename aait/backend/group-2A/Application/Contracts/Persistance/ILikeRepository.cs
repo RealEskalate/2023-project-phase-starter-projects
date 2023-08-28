@@ -3,6 +3,7 @@
 
 using Application.DTO.UserDTO;
 using Domain.Entities;
+
 namespace Application.Contracts.Persistance;
 
 public interface ILikeRepository
@@ -11,5 +12,6 @@ public interface ILikeRepository
     Task<List<User>> GetLikers(int id);
     Task LikePost(Like like);
     Task UnlikePost(Like like);
+    Task<List<Post>> GetLikedPost(int Id);
 
 }

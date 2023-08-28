@@ -24,10 +24,24 @@ public class LikeRepository : ILikeRepository{
     public async Task<bool> isLiked(Like like){
         return await _dbContext.Likes.AnyAsync(l => l.PostId == like.PostId && l.UserId == like.UserId);
     }
+    public async Task<List<Post>> GetLikedPost(int Id){
+        var postsLikedByUser = await _dbContext.Posts
+            .Join(_dbContext.Likes,
+                post => post.Id,
+                like => like.PostId,
+                (post, like) => new { Post = post, Like = like })
+            .Where(joinResult => joinResult.Like.UserId == Id)
+            .Select(joinResult => joinResult.Post)
+            .ToListAsync();
+
+        return postsLikedByUser;
+        
+    }
 
     public async Task LikePost(Like like){
         await _dbContext.Likes.AddAsync(like);
     }
+
 
     public async Task UnlikePost(Like like){
         _dbContext.Likes.Remove(like);
