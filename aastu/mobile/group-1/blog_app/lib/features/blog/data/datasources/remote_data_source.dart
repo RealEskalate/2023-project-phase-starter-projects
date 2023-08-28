@@ -4,8 +4,10 @@ import 'dart:developer';
 import 'package:blog_app/core/error/failure.dart';
 import 'package:blog_app/features/blog/data/datasources/data_source_api.dart';
 import 'package:blog_app/features/blog/domain/entities/article.dart';
+import 'package:blog_app/injection.dart';
 import 'package:dartz/dartz.dart';
 import 'package:http/http.dart' as http;
+import 'package:shared_preferences/shared_preferences.dart';
 
 class RemoteDataSource implements BlogRemoteDataSource {
   final String baseUrl;
@@ -15,17 +17,27 @@ class RemoteDataSource implements BlogRemoteDataSource {
   Future<dynamic> _fetchData(String endpoint, Map<String, dynamic> blogData,
       [bool isGetReq = false]) async {
     log("fetching: $baseUrl/$endpoint");
+    final sharedPreferences = sl<SharedPreferences>();
+    final token = sharedPreferences.getString('auth_token');
+    log('Token used $token');
+
     try {
       var response;
       if (isGetReq) {
         response = await http.get(
           Uri.parse('$baseUrl/$endpoint'),
-          headers: {'Content-Type': 'application/json'},
+          headers: {
+            'Content-Type': 'application/json',
+            "Authorization": "Bearer $token"
+          },
         );
       } else {
         response = await http.post(
           Uri.parse('$baseUrl/$endpoint'),
-          headers: {'Content-Type': 'application/json'},
+          headers: {
+            'Content-Type': 'application/json',
+            "Authorization": "Bearer $token"
+          },
         );
       }
 
@@ -37,7 +49,7 @@ class RemoteDataSource implements BlogRemoteDataSource {
       } else {
         log("error: $responseData");
         final errorMessage =
-            responseData['message'] as String? ?? 'Unknown error';
+            responseData['message'] as String? ?? 'Unknown error - here';
         throw Exception(errorMessage);
       }
     } catch (e) {
@@ -66,6 +78,7 @@ class RemoteDataSource implements BlogRemoteDataSource {
 
   @override
   Future<Map<String, dynamic>> postBlog(Map<String, dynamic> blogData) async {
+    log('Posting blog');
     return await _fetchData('article', blogData);
 
     // TODO: implement postBlog

@@ -10,6 +10,7 @@ class CreateArticleUseCase {
   CreateArticleUseCase(this.repository);
 
   Future<Either<Failure, Article>> call(Article article) async {
+    print("Create article usecase");
     return await repository.createArticle(article);
   }
 }

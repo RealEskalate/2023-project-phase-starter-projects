@@ -1,8 +1,13 @@
+import 'dart:developer';
+
+import 'package:blog_app/features/blog/presentation/blocs/bloc.dart';
+import 'package:blog_app/features/blog/presentation/blocs/createBlog/blog_event.dart';
 import 'package:blog_app/features/blog/presentation/widgets/AddButtonCustom.dart';
 import 'package:blog_app/features/blog/presentation/widgets/CustomSnackbar.dart';
 import 'package:blog_app/features/blog/presentation/widgets/DynamicWrapper.dart';
 import 'package:blog_app/features/blog/presentation/widgets/inputField.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class InputForm extends StatefulWidget {
   @override
@@ -34,16 +39,25 @@ class _InputFormState extends State<InputForm> {
             label: "Article content", controller: articleContentController),
         ElevatedButton(
             onPressed: () {
-              print(titleController.text.toString());
+              log(titleController.text.toString());
               // check if fields are empty
               // if not empty then publish
 
-              if (titleController.text.toString().isEmpty ||
-                  subTitleController.text.toString().isEmpty ||
-                  articleContentController.text.toString().isEmpty) {
-                print("fields are empty");
+              var title = titleController.text.toString();
+              var subTitle = subTitleController.text.toString();
+              var content = articleContentController.text.toString();
+
+              if (title.isEmpty || subTitle.isEmpty || content.isEmpty) {
+                log("fields are empty");
                 ScaffoldMessenger.of(context)
                     .showSnackBar(customSnackBar("Fields shouldn't be empty"));
+              } else {
+                // log("Publishing blog <> Input form");
+                context.read<BlogBloc>().add(CreateBlogEvent(
+                    title: title,
+                    subTitle: subTitle,
+                    tags: ["tag1", "tag2"],
+                    content: content));
               }
             },
             child: Text("Publish"),

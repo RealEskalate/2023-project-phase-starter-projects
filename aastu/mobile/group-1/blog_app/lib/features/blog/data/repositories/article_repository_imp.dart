@@ -45,8 +45,12 @@ class ArticleRepositoryImpl implements ArticleRepository {
         'subTitle': newArticle.subTitle,
         // 'tagList': newArticle.tagList,
       };
+      log('Create article repo = init');
       final responseData = await remoteDataSource.postBlog(articleData);
+      log('Create article repo = received');
+
       if (responseData != null) {
+        log("data not null");
         final article = Article.fromJson(responseData);
         // Save user data to local storage
         // await localDataSource.saveUserData(user);

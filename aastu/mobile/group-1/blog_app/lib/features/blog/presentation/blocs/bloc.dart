@@ -38,6 +38,7 @@ class BlogBloc extends Bloc<BlogEvent, BlogState> {
     on<CreateBlogEvent>((event, emit) async {
       try {
         emit(CreatingBlogState());
+        print('Creating blog - STARTED');
 
         Map<String, Object> newArticleMap = {
           'title': event.title,
@@ -50,7 +51,7 @@ class BlogBloc extends Bloc<BlogEvent, BlogState> {
         Article newArticle = Article(newArticleMap);
 
         final Either<Failure, Article> result = await createArticle(newArticle);
-
+        print("Finished processing - in the bloc");
         // emit UserSignedInState
         emit(result.fold(
           (failure) => BlogError(_mapFailureToMessage(failure)),
