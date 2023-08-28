@@ -18,7 +18,11 @@ const AccountSettingsSection = () => {
     if (!currentPassword.length || !newPassword.length || !confirmPassword.length) {
       alert("All fields must be filled!")
     } else if (newPassword !== confirmPassword) {
+<<<<<<< HEAD
       setPasswordMatch(false)
+=======
+      alert("Passwords do not match.")
+>>>>>>> f812908 (feat(AASTU-web-G2): Add RTK and organize some pages (#223))
     } else {
       const passwords = {
         oldPassword: currentPassword,

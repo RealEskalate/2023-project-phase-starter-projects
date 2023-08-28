@@ -6,8 +6,13 @@ export default function ProfileLayout(props: React.PropsWithChildren) {
     const currentRoute = usePathname();
     const router = useRouter()
 
+<<<<<<< HEAD
     if (!localStorage.getItem('login')) {
         router.replace("/login")
+=======
+    if(!localStorage.getItem('login')){
+        router.replace("/")
+>>>>>>> f812908 (feat(AASTU-web-G2): Add RTK and organize some pages (#223))
         return <></>
     }
 
