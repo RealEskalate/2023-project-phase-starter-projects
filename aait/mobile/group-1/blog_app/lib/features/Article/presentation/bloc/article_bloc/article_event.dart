@@ -1,5 +1,4 @@
 import 'package:blog_app/features/Article/domain/entities/create_article_entity.dart';
-import 'package:blog_app/features/Article/domain/usecases/create_article.dart';
 
 abstract class ArticleEvent {}
 

@@ -1,6 +1,5 @@
 import 'package:blog_app/features/Article/domain/entities/article_enitity.dart';
 import 'package:blog_app/features/Article/domain/entities/create_article_entity.dart';
-import 'package:blog_app/features/Article/domain/usecases/create_article.dart';
 import 'package:blog_app/features/Article/presentation/bloc/article_bloc/article_event.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
