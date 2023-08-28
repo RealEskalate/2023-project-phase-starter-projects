@@ -1,21 +1,15 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Application.Common;
 using Application.Contracts;
-using Application.DTO.Common;
-using Application.DTO.FollowDTo;
 using Application.DTO.FollowDTo.Validations;
 using Application.Exceptions;
 using Application.Features.FollowFeature.Requests.Commands;
+using Application.Response;
 using AutoMapper;
 using Domain.Entites;
 using MediatR;
 
 namespace Application.Features.FollowFeature.Handlers.Commands
 {
-    public class CreateFollowCommandHandler : IRequestHandler<CreateFollowCommand, CommonResponseDTO>
+    public class CreateFollowCommandHandler : IRequestHandler<CreateFollowCommand, BaseResponse<string>>
     {
       
         private readonly IFollowRepository _followRepository;
@@ -29,26 +23,23 @@ namespace Application.Features.FollowFeature.Handlers.Commands
             _userRepository = userRepository;
         }
 
-        public async Task<CommonResponseDTO> Handle(CreateFollowCommand request, CancellationToken cancellationToken)
+        public async Task<BaseResponse<string>> Handle(CreateFollowCommand request, CancellationToken cancellationToken)
         {   
 
             var followValidation = new FollowDTOValidation(_userRepository,_followRepository);
             var followValidationResult = await followValidation.ValidateAsync(request.FollowDTO!);
-            var createFollowResponse = new CommonResponseDTO();
+            var createFollowResponse = new BaseResponse<string>();
+            
             if (!followValidationResult.IsValid)
             {
-                createFollowResponse.Status = "Failure";
-                createFollowResponse.Message = "Unable to follow given user";
-
-                return createFollowResponse;
+                throw new BadRequestException("Unable to follo the user");
             }
 
             var followEntity = _mapper.Map<Follow>(request.FollowDTO);
             var createFollowCommandResult = await _followRepository.AddFollow(followEntity);
-
-            createFollowResponse.Status = "Success";
-            createFollowResponse.Message = "Successfully followed the given User";
-
+            createFollowResponse.Success = true;
+            createFollowResponse.Message = "Followed successfully";
+            
             return createFollowResponse;
         }
     }

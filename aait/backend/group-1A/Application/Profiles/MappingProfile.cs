@@ -1,18 +1,15 @@
 ﻿using Application.DTO.CommentDTO.DTO;
 using Application.DTO;
 using Application.DTO.Common;
-﻿using Application.DTO.Common;
 using Application.DTO.FollowDTo;
 using Application.DTO.NotificationDTO;
 using Application.DTO.PostDTO.DTO;
 using Application.DTO.UserDTO.DTO;
 using AutoMapper;
 using Domain.Entites;
-using Domain.Entites;
 using Domain.Entities;
 using SocialSync.Application.DTO;
 using SocialSync.Domain.Entities;using SocialSync.Application.Dtos.Authentication;
-using SocialSync.Domain.Entities;
 
 namespace Application.Profiles
 {

@@ -1,12 +1,11 @@
 using MediatR;
 using Application.DTO.FollowDTo;
-using Application.DTO.FollowDTo.Validations;
 using Application.DTO.Common;
-using Application.Common;
+using Application.Response;
 
 namespace Application.Features.FollowFeature.Requests.Commands
 {
-    public class CreateFollowCommand : IRequest<CommonResponseDTO>
+    public class CreateFollowCommand : IRequest<BaseResponse<string>>
     {
         public FollowDTO? FollowDTO { get; set; } 
     }

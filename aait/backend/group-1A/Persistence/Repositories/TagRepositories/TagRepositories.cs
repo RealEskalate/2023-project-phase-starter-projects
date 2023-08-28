@@ -37,17 +37,6 @@ public class TagReposiotry : ITagRepository
         _socialMediaDbContext.SaveChanges();
         return Task.FromResult(entity);
     }
-   public Task<List<Tag>>  GetAll(Expression<Func<Tag, bool>> predicate)
-    {
-        var result = _socialMediaDbContext.Tags.Where(predicate).ToList();
-        return Task.FromResult(result);
-    }
-
-    Task<List<Tag>> ITagRepository.GetAll()
-    {
-        var result = _socialMediaDbContext.Tags.ToList();
-        return Task.FromResult(result);
-    }
 
     Task<bool> IGenericRepository<Tag>.Delete(Tag entit)
     {
@@ -61,5 +50,16 @@ public class TagReposiotry : ITagRepository
     {
         var result = _socialMediaDbContext.Tags.Where(x => x.Title == tag).FirstOrDefault();
         return Task.FromResult(result);
+    }
+
+    public Task<List<Tag>> GetAll()
+    {
+        var result = _socialMediaDbContext.Tags.ToList();
+        return Task.FromResult(result);
+    }
+
+    public Task<List<Tag>> GetAll(int userId)
+    {
+        throw new NotImplementedException();
     }
 }

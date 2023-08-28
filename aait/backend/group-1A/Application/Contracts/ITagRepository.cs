@@ -5,7 +5,7 @@ namespace SocialSync.Application.Contracts;
 
 public interface ITagRepository : IGenericRepository<Tag>
 {
-    public Task<List<Tag>> GetAll();
+    public Task<List<Tag>> GetAll(int userId);
 
     public Task<bool> Exists(Tag entity);
 

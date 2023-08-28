@@ -50,7 +50,6 @@ namespace Application.Features.PostFeature.Handlers.Commands
 
             // tags
             var tags = PostTagParser(result);
-            Console.WriteLine(tags);
 
             foreach (var tag in tags)
             {
@@ -76,23 +75,14 @@ namespace Application.Features.PostFeature.Handlers.Commands
                 } 
             }
 
-            // notification
-            var notificationData = new NotificationCreateDTO
-            {
-                Content = $"New Post is created by user with id {request.userId}",
-                NotificationContentId = result.Id,
-                NotificationType = "post",
-                UserId = request.userId,
-            };
-            
-            await _mediator.Send(new CreateNotification {NotificationData = notificationData });
-
             return new BaseResponse<PostResponseDTO> {
                 Success = true,
                 Message = "Post Is cereated successfully",
                 Value =  _mapper.Map<PostResponseDTO>(result)
             };
         }
+
+
         public static List<string> PostTagParser(Post post)
         {
             string pattern = @"#\w+";

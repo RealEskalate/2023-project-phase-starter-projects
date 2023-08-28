@@ -18,14 +18,12 @@ namespace Application.Features.CommentFeatures.Handlers.Commands
         private readonly IMapper _mapper;
         private readonly ICommentRepository _commentRepository;
 
-        private readonly IMediator _mediator;
         private readonly IPostRepository _postRepository;
 
-        public CommentCreateHandler(IMapper mapper, ICommentRepository commentRepository, IMediator mediator, IPostRepository postRepository)
+        public CommentCreateHandler(IMapper mapper, ICommentRepository commentRepository, IPostRepository postRepository)
         {
             _mapper = mapper;
             _commentRepository = commentRepository;
-            _mediator = mediator;
             _postRepository = postRepository;
         }
 
@@ -51,17 +49,6 @@ namespace Application.Features.CommentFeatures.Handlers.Commands
             newComment.UserId = request.userId;
             var result = await _commentRepository.Add(newComment);
 
-            // notification
-            var notificationData = new NotificationCreateDTO
-            {
-                Content = $"New Comment is Created by user with id : {request.userId}",
-                NotificationContentId = result.Id,
-                NotificationType = "comment",
-                UserId = request.userId
-
-            };
-            
-            await _mediator.Send(new CreateNotification { NotificationData = notificationData });
 
             return new BaseResponse<CommentResponseDTO> {
                 Success = true,

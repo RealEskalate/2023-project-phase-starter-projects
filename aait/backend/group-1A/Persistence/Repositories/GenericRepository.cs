@@ -30,26 +30,6 @@ namespace Persistence.Repositories
             return true;
         }
 
-        
-        
-
-
-        public async Task<List<T>> GetAll(Expression<Func<T, bool>> predicate)
-        {
-            var result = await _dbContext.Set<T>()
-                    .Where(predicate)
-                    .ToListAsync();
-            return result;
-        }
-
-        
-
-
-        public Task<T> MakeReaction(int Id, T entity)
-        {
-            throw new NotImplementedException();
-        }
-
         public async Task<T> Update(T entity)
         {
             _dbContext.Entry(entity).State = EntityState.Modified;

@@ -9,7 +9,7 @@ using MediatR;
 
 namespace Application.Features.PostFeature.Handlers.Commands
 {
-    public class DeletePostHandler : IRequestHandler<DeletePostCommand, BaseResponse<PostResponseDTO>>
+    public class DeletePostHandler : IRequestHandler<DeletePostCommand, BaseResponse<int>>
     {
         private readonly IPostRepository _postRepository;
 
@@ -18,7 +18,7 @@ namespace Application.Features.PostFeature.Handlers.Commands
             _postRepository = postRepository;
 
         }
-        public async Task<BaseResponse<PostResponseDTO>> Handle(DeletePostCommand request, CancellationToken cancellationToken)
+        public async Task<BaseResponse<int>> Handle(DeletePostCommand request, CancellationToken cancellationToken)
         {
             var post = await _postRepository.Get(request.Id, request.userId);
             if (post == null) 
@@ -30,10 +30,15 @@ namespace Application.Features.PostFeature.Handlers.Commands
             
             var result = await _postRepository.Delete(post);
 
+            if (!result){
+                throw new BadRequestException("The post is not deleted");
+            }
 
-            return  new BaseResponse<PostResponseDTO> {
+
+            return  new BaseResponse<int> {
                 Success = true,
-                Message = "The post is deleted successfully"
+                Message = "The post is deleted successfully",
+                Value = post.Id
             };
         }
     }
