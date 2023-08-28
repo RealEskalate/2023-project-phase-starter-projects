@@ -4,6 +4,7 @@ using MediatR;
 using SocialSync.Application.Contracts;
 using SocialSync.Application.Features.Requests;
 using SocialSync.Domain.Entities;
+using Application.Exceptions;
 
 namespace SocialSync.Application.Features;
 
@@ -18,7 +19,7 @@ public class DeleteTagRequestHandler : IRequestHandler<DeleteTagRequest, Unit>
     }
     public async Task<Unit> Handle(DeleteTagRequest request, CancellationToken cancellationToken)
     {
-        var result = await _tagRepository.Exists(new Tag{ Id = request.Id});
+        var result = await _tagRepository.Exists(request.tag);
 
         if (!result){
             throw new NotFoundException("task not found");

@@ -55,11 +55,11 @@ namespace Persistence.Repositories
         }
 
 
-        public async Task<List<Post>> GetAll(int userd)
+        public Task<List<Post>> GetAll(int userd)
         {
             var result =  _dbContext.Posts
                                     .Where(x => x.UserId == userd).ToList();
-            return result;
+            return Task.FromResult(result);
         }
 
 
