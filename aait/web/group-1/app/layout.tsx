@@ -22,7 +22,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={`flex flex-col ${inter.className}`}>
+      <body className={`flex flex-col gap-20 ${inter.className}`}>
         <header>
           <NavBar />
         </header>

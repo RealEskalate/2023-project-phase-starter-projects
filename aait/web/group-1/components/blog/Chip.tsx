@@ -12,7 +12,7 @@ interface ChipProps {
       className={`px-3 py-1 font-semibold text-sm rounded-full cursor-pointer ${
         isSelected
           ? "border border-primary-color text-primary-color"
-          : "border-none text-add-blog-chip-color bg-add-blog-chip-bg"
+          : "border-none text-add-blog-chip-color"
       }`}
     >
       {tag}

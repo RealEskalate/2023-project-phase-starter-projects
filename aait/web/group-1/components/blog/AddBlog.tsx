@@ -19,9 +19,6 @@ interface Props {
   handleDeleteImage: () => void;
   handleContentChange: (newContent: any) => void;
   handleSubmit: (event: React.FormEvent) => void;
-  isError: boolean;
-  isLoading: boolean;
-  isSuccess: boolean;
 }
 
 const AddBlog: React.FC<Props> = ({
@@ -37,9 +34,6 @@ const AddBlog: React.FC<Props> = ({
   handleSubmit,
   handleTagClick,
   handleTitleChange,
-  isError,
-  isLoading,
-  isSuccess,
 }) => {
   return (
     <form className="font-montserrat p-16">
@@ -115,7 +109,7 @@ const AddBlog: React.FC<Props> = ({
               className="bg-blue-first border rounded-md text-white px-8 py-2"
               onClick={handleSubmit}
             >
-              {isLoading ? "Saving changes" : isError ? "Failed to save" : isSuccess ? "Successfully saved" : "Save changes"}
+              Save changes
             </button>
           </div>
         </div>
