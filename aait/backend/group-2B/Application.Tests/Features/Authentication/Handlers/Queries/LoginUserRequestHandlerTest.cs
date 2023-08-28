@@ -62,25 +62,10 @@ public class LoginUserRequestHandlerTest
     [Fact]
     public async Task Valid_LoginUser()
     {
-        var newUser = new RegisterUserDto
-        {
-            FirstName = "User4",
-            LastName = "User4",
-            Email = "User4@gmail.com",
-            Username = "User4",
-            Password = "User4password",
-            Phone = "1234567890",
-        };
-
-        await _registerHandler.Handle(
-            new RegisterUserCommand { RegisterUserDto = newUser },
-            CancellationToken.None
-        );
-
         var result = await _handler.Handle(
             new LoginUserRequest
             {
-                LoginUserDto = new LoginUserDto { Username = "User4", Password = "User4password" }
+                LoginUserDto = new LoginUserDto { Username = "User3", Password = "User3password" }
             },
             CancellationToken.None
         );
@@ -93,25 +78,10 @@ public class LoginUserRequestHandlerTest
     [Fact]
     public async Task Invalid_IncorrectPasswordLoginUser()
     {
-        var newUser = new RegisterUserDto
-        {
-            FirstName = "User4",
-            LastName = "User4",
-            Email = "User4@email.com", // Not an email
-            Username = "User4",
-            Password = "User4password",
-            Phone = "1234567890",
-        };
-
-        await _registerHandler.Handle(
-            new RegisterUserCommand { RegisterUserDto = newUser },
-            CancellationToken.None
-        );
-
         var result = await _handler.Handle(
             new LoginUserRequest
             {
-                LoginUserDto = new LoginUserDto { Username = "User4", Password = "User4passwordiswrong" }
+                LoginUserDto = new LoginUserDto { Username = "User3", Password = "User3passwordiswrong" }
             },
             CancellationToken.None
         );
@@ -124,25 +94,10 @@ public class LoginUserRequestHandlerTest
     [Fact]
     public async Task Invalid_IncorrectUsernameLoginUser()
     {
-        var newUser = new RegisterUserDto
-        {
-            FirstName = "User4",
-            LastName = "User4",
-            Email = "User4@email.com", // Not an email
-            Username = "User4",
-            Password = "User4password",
-            Phone = "1234567890",
-        };
-
-        await _registerHandler.Handle(
-            new RegisterUserCommand { RegisterUserDto = newUser },
-            CancellationToken.None
-        );
-
         var result = await _handler.Handle(
             new LoginUserRequest
             {
-                LoginUserDto = new LoginUserDto { Username = "User4iswrong", Password = "User4password" }
+                LoginUserDto = new LoginUserDto { Username = "User3iswrong", Password = "User3password" }
             },
             CancellationToken.None
         );

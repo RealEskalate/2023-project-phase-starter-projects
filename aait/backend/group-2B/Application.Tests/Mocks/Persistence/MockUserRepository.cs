@@ -36,7 +36,7 @@ public class MockUserRepository
                 LastName = "User3",
                 Email = "user3@gmail.com",
                 Username = "User3",
-                Password = "User3",
+                Password = "User3password",
                 Phone = "1234567890",
                 Id = 3
             }
