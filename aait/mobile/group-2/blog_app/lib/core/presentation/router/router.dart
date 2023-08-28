@@ -11,10 +11,13 @@ final GoRouter router = GoRouter(
   // TODO: Add all routes here
 
   routes: <RouteBase>[
+    // Debug area
     GoRoute(
       path: Routes.home,
       builder: (context, state) => const HomePage(),
     ),
+    // Debug end!
+
     GoRoute(
       path: Routes.home,
       builder: (context, state) => const HomePage(),
@@ -47,6 +50,13 @@ final GoRouter router = GoRouter(
     ),
 
     // Auth routes
+    GoRoute(
+      path: Routes.createArticle,
+      builder: (context, state) {
+        return const ArticleFormScreen();
+      },
+    ),
+
     GoRoute(
       path: Routes.editArticle,
       builder: (context, state) {

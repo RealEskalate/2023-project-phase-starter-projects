@@ -36,6 +36,8 @@ class ArticleFormScreen extends StatelessWidget {
             create: (context) =>
                 serviceLocator<TagBloc>()..add(LoadAllTagsEvent()),
           ),
+          BlocProvider<ArticleBloc>(
+              create: (context) => serviceLocator<ArticleBloc>()),
           BlocProvider<TagSelectorBloc>(
             create: (context) => serviceLocator<TagSelectorBloc>(),
           ),
