@@ -11,6 +11,7 @@ using SocialSync.Persistence.Repositories.Auth;
 using System.Reflection;
 using Persistence.Repositories.ReactionRespositories;
 using SocialSync.Persistnece.Repositories;
+using SocialSync.Persistence.Repositories;
 
 namespace Persistence
 {
@@ -35,6 +36,9 @@ namespace Persistence
             services.AddScoped<ICommentRepository, CommentRepository>();
 
             services.AddScoped<ITagRepository,TagReposiotry>();
+            services.AddScoped<IPostTagRepository,PostTagRepository>();
+            services.AddScoped<IAuthRepository,AuthRepository>();
+            services.AddScoped<IJwtGenerator,JwtGenerator>();
 
             return services;
         }

@@ -1,5 +1,6 @@
 using System.Linq.Expressions;
 using Application.Contracts;
+using Application.Exceptions;
 using Persistence;
 using SocialSync.Application.Contracts;
 using SocialSync.Domain.Entities;
@@ -22,17 +23,10 @@ public class TagReposiotry : ITagRepository
         return Task.FromResult(entity);
     }
 
-    public Task<bool> Delete(Tag entity)
-    {
-        //delete tag
-        _socialMediaDbContext.Tags.Remove(entity);
-        _socialMediaDbContext.SaveChanges();
-        return Task.FromResult(true);
-    }
 
-    public Task<bool> Exists(int id)
+    public Task<bool> Exists(Tag entity)
     {
-       var result = _socialMediaDbContext.Tags.Where(x => x.Id == id).Any();
+       var result = _socialMediaDbContext.Tags.Where(x => x.Id == entity.Id).Any();
          return Task.FromResult(result);
     }
 
@@ -53,6 +47,19 @@ public class TagReposiotry : ITagRepository
     {
         var result = _socialMediaDbContext.Tags.ToList();
         return Task.FromResult(result);
-        
+    }
+
+    Task<bool> IGenericRepository<Tag>.Delete(Tag entit)
+    {
+         _socialMediaDbContext.Tags.Remove(entit);
+         _socialMediaDbContext.SaveChanges();
+
+        return Task.FromResult(true);        
+    }
+
+    Task<Tag?> ITagRepository.GetTagByName(string tag)
+    {
+        var result = _socialMediaDbContext.Tags.Where(x => x.Title == tag).FirstOrDefault();
+        return Task.FromResult(result);
     }
 }
