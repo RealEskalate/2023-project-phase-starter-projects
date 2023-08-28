@@ -11,7 +11,7 @@ const store = configureStore({
     },
     middleware: (getDefaultMiddleware) =>
         getDefaultMiddleware()
-            .concat(singleSuccessApi.middleware)
+            // .concat(singleSuccessApi.middleware)
             .concat(authApi.middleware)
 })
 
