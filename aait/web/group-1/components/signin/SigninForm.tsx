@@ -15,21 +15,20 @@ const fieldInfo: Array<Array<string>> = [
 const SignInForm = () => {
   const router = useRouter()
   const [login, { isLoading, isError, isSuccess, error }] = useLoginMutation()
-  const [formData, setFormData] = useState({
+  const [credentials, setCredentials] = useState({
     email: "",
     password: "",
   })
 
   const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target
-    setFormData((prevData) => ({...prevData, [name]: value}))
+    setCredentials((prevData) => ({...prevData, [name]: value}))
   }
 
   const handleSignin = () => {
-    login(formData)
+    login(credentials)
       .unwrap()
       .then((response) => {
-        console.log('Login successful', response)
         localStorage.setItem("user", JSON.stringify(response))
         router.push('/')
       })
@@ -49,7 +48,7 @@ const SignInForm = () => {
           name={field[1]}
           id={field[1]}
           placeholder={field[2]}
-          value={formData[field[1]]}
+          value={credentials[field[1]]}
           onChange={handleInputChange}
         />
       ))}
