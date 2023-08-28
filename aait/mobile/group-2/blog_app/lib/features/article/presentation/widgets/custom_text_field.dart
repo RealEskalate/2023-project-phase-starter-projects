@@ -4,12 +4,21 @@ import '../../../../core/presentation/theme/app_colors.dart';
 
 class CustomTextField extends StatelessWidget {
   final String hintText;
+  final TextEditingController? controller;
+  final FocusNode? focusNode;
 
-  const CustomTextField({super.key, required this.hintText});
+  const CustomTextField({
+    super.key,
+    required this.hintText,
+    this.controller,
+    this.focusNode,
+  });
 
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      controller: controller,
+      focusNode: focusNode,
       style: const TextStyle(
         color: AppColors.darkerBlue,
         fontFamily: 'Poppins',
@@ -21,17 +30,17 @@ class CustomTextField extends StatelessWidget {
         ),
         border: const UnderlineInputBorder(
           borderSide: BorderSide(
-            color: AppColors.gray50,
+            color: AppColors.gray500,
           ),
         ),
         enabledBorder: const UnderlineInputBorder(
           borderSide: BorderSide(
-            color: AppColors.gray50,
+            color: AppColors.gray500,
           ),
         ),
         focusedBorder: const UnderlineInputBorder(
           borderSide: BorderSide(
-            color: AppColors.gray50,
+            color: AppColors.gray500,
           ),
         ),
         hintText: hintText,
