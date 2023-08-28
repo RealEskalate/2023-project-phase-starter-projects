@@ -7,10 +7,19 @@ using SocialSync.Application.DTOs.PostDtos.Validators;
 
 namespace SocialSync.Application.Features.Posts.Handlers.Commands;
 
-public class DeletePostCommandHandler : PostsRequestHandler, IRequestHandler<DeletePostCommand, CommonResponse<Unit>>
+public class DeletePostCommandHandler :IRequestHandler<DeletePostCommand, CommonResponse<Unit>>
 {
-    public DeletePostCommandHandler(IUnitOfWork unitOfWork, IMapper mapper) : base(unitOfWork, mapper)
+    private IPostRepository _postRepository;
+    private IUserRepository _userRepository;
+    private IUnitOfWork _unitOfWork;
+    private IMapper _mapper;
+
+    public DeletePostCommandHandler(IUnitOfWork unitOfWork, IMapper mapper)
     {
+        _unitOfWork = unitOfWork;
+        _postRepository = _unitOfWork.PostRepository;
+        _userRepository = _unitOfWork.UserRepository;
+        _mapper = mapper;
     }
 
     public async Task<CommonResponse<Unit>> Handle(DeletePostCommand request, CancellationToken cancellationToken)

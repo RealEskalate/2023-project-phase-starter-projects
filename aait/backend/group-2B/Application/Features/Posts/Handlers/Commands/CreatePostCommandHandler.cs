@@ -8,10 +8,19 @@ using SocialSync.Domain.Entities;
 
 namespace SocialSync.Application.Features.Posts.Handlers.Commands;
 
-public class CreatePostCommandHandler : PostsRequestHandler, IRequestHandler<CreatePostCommand, CommonResponse<int>>
+public class CreatePostCommandHandler : IRequestHandler<CreatePostCommand, CommonResponse<int>>
 {
-    public CreatePostCommandHandler(IUnitOfWork unitOfWork, IMapper mapper) : base(unitOfWork, mapper)
+    private IPostRepository _postRepository;
+    private IUserRepository _userRepository;
+    private IUnitOfWork _unitOfWork;
+    private IMapper _mapper;
+
+    public CreatePostCommandHandler(IUnitOfWork unitOfWork, IMapper mapper)
     {
+        _unitOfWork = unitOfWork;
+        _postRepository = _unitOfWork.PostRepository;
+        _userRepository = _unitOfWork.UserRepository;
+        _mapper = mapper;
     }
 
     public async Task<CommonResponse<int>> Handle(CreatePostCommand request, CancellationToken cancellationToken)

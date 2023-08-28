@@ -7,10 +7,19 @@ using SocialSync.Application.DTOs.PostDtos.Validators;
 
 namespace SocialSync.Application.Features.Posts.Handlers.Commands;
 
-public class UpdatePostCommandHandler : PostsRequestHandler, IRequestHandler<UpdatePostCommand, CommonResponse<Unit>>
+public class UpdatePostCommandHandler :  IRequestHandler<UpdatePostCommand, CommonResponse<Unit>>
 {
-    public UpdatePostCommandHandler(IUnitOfWork unitOfWork, IMapper mapper) : base(unitOfWork, mapper)
+    private IPostRepository _postRepository;
+    private IUserRepository _userRepository;
+    private IUnitOfWork _unitOfWork;
+    private IMapper _mapper;
+
+    public UpdatePostCommandHandler(IUnitOfWork unitOfWork, IMapper mapper)
     {
+        _unitOfWork = unitOfWork;
+        _postRepository = _unitOfWork.PostRepository;
+        _userRepository = _unitOfWork.UserRepository;
+        _mapper = mapper;
     }
 
     public async Task<CommonResponse<Unit>> Handle(UpdatePostCommand request, CancellationToken cancellationToken)
