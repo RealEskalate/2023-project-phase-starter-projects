@@ -12,6 +12,7 @@ import 'features/article/data/repositories/article_repository_impl.dart';
 import 'features/article/domain/repositories/article_repository.dart';
 import 'features/article/domain/usecases/usecases.dart';
 import 'features/article/presentation/bloc/article_bloc.dart';
+import 'features/article/presentation/bloc/tag_bloc.dart';
 import 'features/article/presentation/bloc/tag_selector_bloc.dart';
 import 'features/authentication/data/data_sources/local_data_source.dart';
 import 'features/authentication/data/data_sources/local_data_source_impl.dart';
@@ -48,6 +49,9 @@ Future<void> init() async {
   );
   serviceLocator.registerFactory(
     () => TagSelectorBloc(),
+  );
+  serviceLocator.registerFactory(
+    () => TagBloc(getTags: serviceLocator()),
   );
 
   serviceLocator.registerFactory(() => UserBloc(
