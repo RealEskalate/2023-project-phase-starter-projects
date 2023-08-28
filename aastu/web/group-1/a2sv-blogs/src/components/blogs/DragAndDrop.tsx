@@ -67,10 +67,10 @@ const DragAndDrop: React.FC<Props> = ({ selectedFile, setSelectedFile }) => {
           <Image
             src="/images/drag_and_drop_picture.png"
             alt="drag and drop"
-            width={300}
-            height={300}
+            width={200}
+            height={200}
           />
-          <div className="flex gap-4 items-center justify-center">
+          <div className="flex gap-4 items-center justify-center flex-wrap">
             <p className="text-center">
               {isDraggingOver
                 ? "Drop the image here"

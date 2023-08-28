@@ -7,58 +7,52 @@ interface props {
   member : TeamMember;
 }
 
-const TeamMemberCard: React.FC<props> = ({member}) => {
-  console.log(member)
-
-  return (
-    <div className="w-[400px] h-[600px] rounded-[12px] bg-white shadow-lg ml-2 mt-5"> 
-    <div className=' pl-[120px] pt-5'>
-    <Image 
-        className="w-[150px] h-[150px] rounded-full absolute bg-gray-300"
-        width={500}
-        height={600}
-        src="/images/profile_.png"
-        alt={member.name}  
-      />
-
-    </div>
-      
-      <div className='mt-[180px]'>
-      <div className=" pl-[90px] w-[300px] h-[51px] absolute font-poppins font-bold text-xl leading-tight tracking-widest text-center ">
-        {member.name}
+  
+  const TeamMemberCard: React.FC<props> = ({ member }) => {
+    return (
+      <div className="w-full md:w-[400px] h-[460px] rounded-[12px] bg-white shadow-lg mt-5 sm:w-full">
+        <div className="text-center py-5">
+          <Image
+            className="w-[150px] h-[150px] rounded-full mx-auto bg-gray-300"
+            width={150}
+            height={150}
+            src="/images/profile_.png"
+            alt={member.name}
+          />
+        </div>
+  
+        <div className="text-center py-2">
+          <div className="font-poppins font-bold text-xl leading-tight tracking-widest text-gray-800">
+            {member.name}
+          </div>
+  
+          <div className="text-gray-800 font-poppins font-normal text-base">{member.department}</div>
+  
+          <div className="mt-4 text-gray-400 text-center font-poppins text-sm px-2">
+            {member.bio}
+          </div>
+        </div>
+  
+        <div className="text-center pt-20">
+          <hr className="border-gray-200" />
+        </div>
+  
+        <div className="flex justify-evenly pt-4">
+          <a href={member.socialMedia.linkedin}>
+            <FaLinkedin size={30} color="#9CA3AF" />
+          </a>
+  
+          <a href={member.socialMedia.facebook} className="pl-4">
+            <FaFacebook size={30} color="#9CA3AF" />
+          </a>
+  
+          <a href={member.socialMedia.instagram} className="pl-4">
+            <FaInstagram size={30} color="#9CA3AF" />
+          </a>
+        </div>
       </div>
-
-      <div className="pl-[130px] pt-8 text-base absolute text-gray-800 font-poppins font-normal leading-tight tracking-widest text-center">
-        {member.department}
-      </div>
-
-      <div className=" mt-20 pl-10 w-[350px] h-[396px] absolute text-gray-400 text-center leading-tight font-poppins text-sm">
-        {member.bio}
-      </div>
-
-      </div>
-
-      <div className='pl-5 pr-5 text-gray-50 mt-[500px]'>
-      <hr />
-      </div>
-      
-      
-      <div className="flex pl-[100px] w-[250px] h-[40px] justify-between absolute mt-[20px]">
-        <a href={member.socialMedia.linkedin} >
-        <FaLinkedin size={30} color="#9CA3AF" /> 
-        </a>
-
-        <a href={member.socialMedia.facebook} className='pl-14'>
-
-        <FaFacebook size={30} color="#9CA3AF" />
-        </a>
-        
-        <a href={member.socialMedia.instagram} className='pl-14'>
-        <FaInstagram size={30} color="#9CA3AF" />
-        </a>
-     </div>
-    </div>
-  );
-}
-
-export default TeamMemberCard;
+    );
+  };
+  
+  export default TeamMemberCard;
+  

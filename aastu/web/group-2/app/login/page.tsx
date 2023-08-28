@@ -53,7 +53,7 @@ const Login = () => {
         <Image src={loginIcon} alt="Login illustration" height={350} />
       </div>
       <div className="w-full md:w-1/2 flex justify-center items-center">
-        <div className="bg-slate-100">
+        <div className="bg-slate-100 dark:bg-dark-backgroundLight rounded-lg">
           <form
             method="post"
             className="flex flex-col gap-6 w-96 p-6"
@@ -78,7 +78,7 @@ const Login = () => {
                 type="text"
                 {...register('email', { required: true })}
                 placeholder="Email"
-                className="w-full px-2 py-2 border border-slate-600 font-primaryFont"
+                className=" rounded-lg w-full px-2 py-2 border border-slate-600 font-primaryFont"
               />
             </div>
 
@@ -90,7 +90,7 @@ const Login = () => {
                 type="password"
                 {...register('password', { required: true })}
                 placeholder="Password"
-                className={`border border-slate-600 ${
+                className={` rounded-lg border border-slate-600 ${
                   errors.password && 'border-red-900'
                 } px-2 py-2 w-full font-primaryFont`}
               />

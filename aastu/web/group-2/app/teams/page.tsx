@@ -37,7 +37,7 @@ type profile = {
 };
 const ProfileCard = ({ name, occupation, description }: profile) => {
   return (
-    <div className="w-full h-auto pb-10 shadow px-4 lg:px-8 md:px-14 mt-20  dark:bg-dark-backgroundLight dark:text-dark-textColor-100">
+    <div className="w-full h-auto pb-10 shadow px-4 lg:px-8 md:px-14 mt-20  dark:bg-dark-backgroundLight dark:text-dark-textColor-100 hover:shadow-lg cursor-pointer dark:hover:shadow transition-all dark:hover:shadow-slate-700">
       <div className="flex justify-center w-full">
         <div className="rounded-full bg-gray-200 p-2 overflow-hidden flex justify-center items-center">
           <Image src={profilePic} alt="proflie picture" height={150} />

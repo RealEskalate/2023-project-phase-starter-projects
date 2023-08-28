@@ -11,7 +11,7 @@ const TagSelectionForm: React.FC<Props> = ({
     "Development",
     "Sports",
     "Writing",
-    "Self Improvement",
+    "Self-Improvement",
     "Technology",
     "Social",
     "Data Science",
@@ -35,7 +35,7 @@ const TagSelectionForm: React.FC<Props> = ({
         {availableTags.map((tag) => (
           <label
             key={tag}
-            className={`font-montserrat text-sm flex items-center rounded-full border px-4 ${
+            className={`font-montserrat text-sm flex items-center rounded-full border py-1 px-4 ${
               selectedTags.includes(tag)
                 ? "border-blue-500 bg-blue-100 font-bold"
                 : "border-gray-300 bg-gray-200"
