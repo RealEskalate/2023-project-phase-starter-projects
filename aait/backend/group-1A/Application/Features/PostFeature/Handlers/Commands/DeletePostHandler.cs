@@ -1,38 +1,49 @@
-﻿using Application.Contracts;
-using Application.DTO.Common;
+﻿
+
+using Application.Contracts;
+using Application.DTO.NotificationDTO;
+using Application.DTO.PostDTO.DTO;
+using Application.Exceptions;
+using Application.Features.NotificationFeaure.Requests.Commands;
 using Application.Features.PostFeature.Requests.Commands;
-using AutoMapper;
+using Application.Response;
 using MediatR;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Application.Features.PostFeature.Handlers.Commands
 {
-    public class DeletePostHandler : IRequestHandler<DeletePostCommand, CommonResponseDTO>
+    public class DeletePostHandler : IRequestHandler<DeletePostCommand, BaseResponse<PostResponseDTO>>
     {
         private readonly IPostRepository _postRepository;
-
-        public DeletePostHandler(IPostRepository postRepository)
+        private readonly IMediator _mediator;
+        public DeletePostHandler(IPostRepository postRepository, IMediator mediator)
         {
             _postRepository = postRepository;
+            _mediator = mediator;
         }
-        public async Task<CommonResponseDTO> Handle(DeletePostCommand request, CancellationToken cancellationToken)
+        public async Task<BaseResponse<PostResponseDTO>> Handle(DeletePostCommand request, CancellationToken cancellationToken)
         {
             var post = await _postRepository.Get(request.Id, request.userId);
-            if (request.Id <= 0 || post == null) 
+            if (post == null) 
             {
-                throw new Exception();
+                throw new NotFoundException("Post is not found");
+                
             }
             
             var result = await _postRepository.Delete(post);
 
-            return new CommonResponseDTO
+            // notification
+            var notificationData = new NotificationCreateDTO
             {
-                Status = "Success",
-                Message = "Post is  deleted successfully"
+                Content = $"The post with id : {post.Id} is deleted",
+                NotificationType = "post",
+                UserId = request.userId,
+            };
+
+            await _mediator.Send(new CreateNotification {  NotificationData = notificationData });
+
+            return  new BaseResponse<PostResponseDTO> {
+                Success = true,
+                Message = "The post is deleted successfully"
             };
         }
     }

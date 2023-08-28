@@ -2,6 +2,9 @@ import 'dart:convert';
 
 import 'package:json_annotation/json_annotation.dart';
 
+import 'package:blog_app/features/article/data/models/user_model.dart';
+import 'package:blog_app/features/article/domain/entity/user.dart';
+
 import '../../domain/entity/article.dart';
 
 class ArticleModel extends Article {
@@ -26,19 +29,7 @@ class ArticleModel extends Article {
           title: '_empty.title',
           subTitle: '_empty.subTitle',
           estimatedReadTime: '_empty.estimatedReadTime',
-          user: {
-            "_id": "64e25674bfc65d390e781205",
-            "fullName": "Tamirat Dereje",
-            "email": "tamiratdereje@gmail.com",
-            "expertise": "designer",
-            "bio": "I am passionate designer who see beauty in everything",
-            "createdAt": "2023-08-20T18:07:48.829Z",
-            "__v": 0,
-            "image":
-                "https://res.cloudinary.com/dzpmgwb8t/image/upload/v1692557684/guf4tul1ftar9hdpnaev.jpg",
-            "imageCloudinaryPublicId": "guf4tul1ftar9hdpnaev",
-            "id": "64e25674bfc65d390e781205"
-          },
+          user: UserModel.empty(),
           image: '_empty.image',
           imageCloudinaryPublicId: '_empty.imageCloudinaryPublicId',
           createdAt: DateTime.parse('2023-08-20T19:36:03.414Z'),
@@ -53,11 +44,7 @@ class ArticleModel extends Article {
     result.addAll({'title': title});
     result.addAll({'subTitle': subTitle});
     result.addAll({'estimatedReadTime': estimatedReadTime});
-    result.addAll({'user': user});
-    result.addAll({'image': image});
-    result.addAll({'imageCloudinaryPublicId': imageCloudinaryPublicId});
-    result.addAll({'createdAt': createdAt.toUtc().toIso8601String()});
-    result.addAll({'id': id});
+    result.addAll({'photo': image});
 
     return result;
   }
@@ -65,22 +52,35 @@ class ArticleModel extends Article {
   factory ArticleModel.fromMap(Map<String, dynamic> map) {
     return ArticleModel(
       tags: (map['tags'] as List<dynamic>?)?.cast<String>() ?? [],
-      content: map['content'] ?? '',
-      title: map['title'] ?? '',
-      subTitle: map['subTitle'] ?? '',
-      estimatedReadTime: map['estimatedReadTime'] ?? '',
-      user: Map<String, dynamic>.from(map['user']),
-      image: map['image'] ?? '',
-      imageCloudinaryPublicId: map['imageCloudinaryPublicId'] ?? '',
+      content: map['content'] ?? 'No Content',
+      title: map['title'] ?? 'No Title',
+      subTitle: map['subTitle'] ?? 'No subTitle',
+      estimatedReadTime: map['estimatedReadTime'] ?? 'No Etimated Read Time',
+      user: UserModel.fromJson(map['user']),
+      image: map['image'] ?? 'assets/images/article-image.jpg',
+      imageCloudinaryPublicId: map['imageCloudinaryPublicId'] ?? 'No imageCloudinaryPublicId',
       createdAt: _dateTimeFromJson(map['createdAt']),
-      id: map['id'] ?? '',
+      id: map['id'] ?? 'No Id',
     );
   }
 
   String toJson() => json.encode(toMap());
 
-  factory ArticleModel.fromJson(String source) =>
-      ArticleModel.fromMap(json.decode(source));
+
+  factory ArticleModel.fromJson(Map<String, dynamic> json) {
+    return ArticleModel(
+      tags: json['tags'] ?? [],
+      content: json['content'] ?? "No Content",
+      title: json['title'] ?? "No Title",
+      subTitle: json['subTitle'] ?? "No subTitle",
+      estimatedReadTime: json['estimatedReadTime'] ?? "5 min",
+      user: json['user'] is String? UserModel.empty() : UserModel.fromJson(json['user']),
+      image: json['image'] ?? "assets/images/article-image.jpg",
+      imageCloudinaryPublicId: json['imageCloudinaryPublicId'] ?? "No imageCloudinaryPublicId",
+      createdAt: _dateTimeFromJson(json['createdAt']),
+      id: json['id'] ?? "No ID",
+    );
+  }
 
   ArticleModel copyWith({
     List<String>? tags,
@@ -88,7 +88,7 @@ class ArticleModel extends Article {
     String? title,
     String? subTitle,
     String? estimatedReadTime,
-    Map<String, dynamic>? user,
+    User? user,
     String? image,
     String? imageCloudinaryPublicId,
     DateTime? createdAt,
@@ -103,16 +103,21 @@ class ArticleModel extends Article {
         user: user ?? this.user,
         image: image ?? this.image,
         imageCloudinaryPublicId:
-            imageCloudinaryPublicId ?? this.imageCloudinaryPublicId,
+        imageCloudinaryPublicId ?? this.imageCloudinaryPublicId,
         createdAt: createdAt ?? this.createdAt,
         id: id ?? this.id);
   }
 
   static DateTime _dateTimeFromJson(dynamic json) {
-    if (json is String) {
-      return DateTime.parse(json);
+    try {
+      if (json is String) {
+        return DateTime.parse(json);
+      } else {
+        return DateTime.now();
+      }
+    } catch (e) {
+      return DateTime.now();
     }
-    throw Exception("Invalid date format");
   }
 
   static String _dateTimeToJson(DateTime dateTime) {

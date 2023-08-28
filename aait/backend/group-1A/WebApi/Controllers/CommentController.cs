@@ -1,13 +1,18 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using Application.DTO.CommentDTO.DTO;
 using Application.Features.CommentFeatures.Requests.Commands;
 using Application.Features.CommentFeatures.Requests.Queries;
+using Application.Response;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
-
 
 namespace WebApi.Controllers
 {
     [ApiController]
-    [Route("/[controller]")]
+    [Route("comment")]
     public class CommentController : ControllerBase
     {
         private readonly IMediator _mediator;
@@ -17,54 +22,52 @@ namespace WebApi.Controllers
             _mediator = mediator;
         }
 
-        [HttpPost("create")]
-        public async Task<IActionResult> CreateComment(CommentCreateCommand command)
-        {
-            int commentId = await _mediator.Send(command);
-            return Ok(commentId);
+        [HttpGet("by-post-Id/{id}")]
+        public async Task<ActionResult<BaseResponse<List<CommentResponseDTO>>>> GetByPost(int id)
+        {       
+            var result = await _mediator.Send(new GetCommentsForPostQuery { PostId = id});
+            return Ok(result);
+            
         }
 
-        [HttpPut("update/{id}")]
-        public async Task<IActionResult> UpdateComment(int id, CommentUpdateCommand command)
+        [HttpGet("{id}")]
+        public async Task<ActionResult<BaseResponse<CommentResponseDTO>>> GetByID(int id)
         {
-            if (id != command.Id)
-            {
-                return BadRequest("Comment Id mismatch");
-            }
-
-            await _mediator.Send(command);
-            return NoContent();
-        }
-
-        [HttpDelete("delete/{id}")]
-        public async Task<IActionResult> DeleteComment(int id)
-        {
-            await _mediator.Send(new CommentDeleteCommand { Id = id });
-            return NoContent();
-        }
-
-        [HttpGet("/all")]
-        public async Task<IActionResult> GetAllComments()
-        {
-            var comments = await _mediator.Send(new GetAllComments());
-            return Ok(comments);
-        }
-
-        [HttpGet("getOne/{id}")]
-        public async Task<IActionResult> GetCommentById(int id)
-        {
-            var comment = await _mediator.Send(new GetCommentQuery { CommentId = id });
-            if (comment == null)
-            {
-                return NotFound();
-            }
-            return Ok(comment);
+            var result = await _mediator.Send(new GetSingleCommentQuery { Id = id });
+            return Ok(result);
+            
         }
 
 
-    }
+        [HttpPost]
+        public async Task<ActionResult<BaseResponse<CommentResponseDTO>>> Post([FromBody] CommentCreateDTO newCommentData)
+        {
+            var userId = 3;
+            var result = await _mediator.Send(new CommentCreateCommand{ NewCommentData = newCommentData, userId = userId });
+            return Ok(result);
+            
+        }
 
-    internal class GetAllComments : IRequest<object>
-    {
+        
+        [HttpPut("{id}")]
+        public async Task<ActionResult<BaseResponse<CommentResponseDTO>>> Put(int id, [FromBody] CommentUpdateDTO UpdateCommentData)
+        {
+            var userId = 3;
+            var result = await _mediator.Send(new UpdateCommentCommand { Id = id, CommentData = UpdateCommentData , userId = userId });
+            return Ok(result);
+            
+        }
+
+
+
+        [HttpDelete("{id}")]
+        public async Task<ActionResult<BaseResponse<string>>> Delete(int id)
+        {
+            var userId = 3;
+            var result = await _mediator.Send(new CommentDeleteCommand { userId = userId, Id = id });            
+            return Ok(result);
+            
+        }
+
     }
 }

@@ -3,6 +3,7 @@ import 'package:http/http.dart' as http;
 import 'package:internet_connection_checker/internet_connection_checker.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import 'core/constants/constants.dart';
 import 'core/network/custom_client.dart';
 import 'core/network/network_info.dart';
 import 'features/article/data/datasources/local/local.dart';
@@ -11,6 +12,7 @@ import 'features/article/data/repositories/article_repository_impl.dart';
 import 'features/article/domain/repositories/article_repository.dart';
 import 'features/article/domain/usecases/usecases.dart';
 import 'features/article/presentation/bloc/article_bloc.dart';
+import 'features/article/presentation/bloc/tag_selector_bloc.dart';
 
 final serviceLocator = GetIt.instance;
 
@@ -19,6 +21,7 @@ Future<void> init() async {
   // Bloc
   serviceLocator.registerFactory(
     () => ArticleBloc(
+      getTags: serviceLocator(),
       createArticle: serviceLocator(),
       deleteArticle: serviceLocator(),
       getAllArticles: serviceLocator(),
@@ -26,8 +29,14 @@ Future<void> init() async {
       updateArticle: serviceLocator(),
     ),
   );
+  serviceLocator.registerFactory(
+    () => TagSelectorBloc(),
+  );
 
   // Use cases
+  serviceLocator.registerLazySingleton(
+    () => GetTags(serviceLocator()),
+  );
   serviceLocator.registerLazySingleton(
     () => CreateArticle(serviceLocator()),
   );
@@ -48,7 +57,7 @@ Future<void> init() async {
   serviceLocator.registerLazySingleton<NetworkInfo>(
       () => NetworkInfoImpl(serviceLocator()));
   serviceLocator.registerLazySingleton<CustomClient>(
-      () => CustomClient(serviceLocator()));
+      () => CustomClient(serviceLocator(), apiBaseUrl: apiBaseUrl),);
 
   // Repository
   serviceLocator.registerLazySingleton<ArticleRepository>(

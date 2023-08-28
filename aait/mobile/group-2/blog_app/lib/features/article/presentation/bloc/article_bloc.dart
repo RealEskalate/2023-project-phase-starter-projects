@@ -5,7 +5,11 @@ import '../../domain/usecases/usecases.dart';
 import 'article_event.dart';
 import 'article_state.dart';
 
+export 'article_event.dart';
+export 'article_state.dart';
+
 class ArticleBloc extends Bloc<ArticleEvent, ArticleState> {
+  final GetTags getTags;
   final GetArticle getArticle;
   final GetAllArticles getAllArticles;
   final CreateArticle createArticle;
@@ -13,6 +17,7 @@ class ArticleBloc extends Bloc<ArticleEvent, ArticleState> {
   final DeleteArticle deleteArticle;
 
   ArticleBloc({
+    required this.getTags,
     required this.getArticle,
     required this.getAllArticles,
     required this.createArticle,
@@ -21,9 +26,20 @@ class ArticleBloc extends Bloc<ArticleEvent, ArticleState> {
   }) : super(ArticleInitialState()) {
     on<GetSingleArticleEvent>(_getArticle);
     on<LoadAllArticlesEvent>(_getAllArticles);
+    on<LoadAllTagsEvent>(_getTags);
     on<CreateArticleEvent>(_createArticle);
     on<UpdateArticleEvent>(_updateArticle);
     on<DeleteArticleEvent>(_deleteArticle);
+  }
+
+  Future<void> _getTags(
+      LoadAllTagsEvent event, Emitter<ArticleState> emit) async {
+    final result = await getTags(NoParams());
+
+    result.fold(
+      (failure) => emit(ArticleErrorState(failure.toString())),
+      (tags) => emit(AllTagsLoadedState(tags)),
+    );
   }
 
   Future<void> _getArticle(

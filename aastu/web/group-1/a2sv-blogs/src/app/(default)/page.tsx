@@ -40,27 +40,27 @@ export default function Home() {
                 fill="none"
                 xmlns=""
               >
-                <g clip-path="url(#clip0_3602_2395) ">
+                <g clipPath="url(#clip0_3602_2395) ">
                   <path
                     d="M5.75195 13.7996H21.8514"
                     stroke="white"
-                    stroke-width="2.29993"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
+                    strokeWidth="2.29993"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
                   />
                   <path
                     d="M17.251 18.3994L21.8508 13.7996"
                     stroke="white"
-                    stroke-width="2.29993"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
+                    strokeWidth="2.29993"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
                   />
                   <path
                     d="M17.251 9.19971L21.8508 13.7996"
                     stroke="white"
-                    stroke-width="2.29993"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
+                    strokeWidth="2.29993"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
                   />
                 </g>
                 <defs>

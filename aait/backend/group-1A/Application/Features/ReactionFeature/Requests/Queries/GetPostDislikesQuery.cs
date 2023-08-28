@@ -1,4 +1,5 @@
 ﻿using Application.DTO.Common;
+using Application.Response;
 using MediatR;
 using System;
 using System.Collections.Generic;
@@ -8,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Application.Features.PostFeature.Requests.Queries
 {
-    public class GetPostDislikesQuery : IRequest<List<ReactionResponseDTO>>
+    public class GetPostDislikesQuery : IRequest<BaseResponse<List<ReactionResponseDTO>>>
     {
         public int PostId { get; set; }
     }

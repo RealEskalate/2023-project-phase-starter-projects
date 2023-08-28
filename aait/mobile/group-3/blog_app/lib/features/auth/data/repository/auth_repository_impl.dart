@@ -19,10 +19,15 @@ class AuthRepositoryImpl extends AuthRepository {
       await authRemoteDataSource.login(authEntitieModel: authEntitieModel);
       return const Right(true);
     } on CacheException {
-      return const Left(CacheFailure(message: "something went wrong"));
+      return const Left(CacheFailure(
+        message: "something went wrong",
+        statusCode: 400,
+      ));
     } on EmailAndPasswordNotMatchException {
       return const Left(EmailAndPasswordNotMatchFailure(
-          message: "your email and password does not match"));
+        message: "your email and password does not match",
+        statusCode: 401,
+      ));
     } on ServerException catch (e) {
       return Left(
         ServerFailure(
@@ -31,8 +36,10 @@ class AuthRepositoryImpl extends AuthRepository {
         ),
       );
     } on NetworkConnectionException {
-      return const Left(
-          NetworkConnectionFailure(message: "there is no connection"));
+      return const Left(NetworkConnectionFailure(
+        message: "there is no connection",
+        statusCode: 400,
+      ));
     }
   }
 
@@ -51,7 +58,9 @@ class AuthRepositoryImpl extends AuthRepository {
       return const Right(true);
     } on EmailAndPasswordNotMatchException {
       return const Left(EmailAndPasswordNotMatchFailure(
-          message: "your email and password does not match"));
+        message: "your email and password does not match",
+        statusCode: 400,
+      ));
     } on ServerException catch (e) {
       return Left(
         ServerFailure(
@@ -60,8 +69,10 @@ class AuthRepositoryImpl extends AuthRepository {
         ),
       );
     } on NetworkConnectionException {
-      return const Left(
-          NetworkConnectionFailure(message: "there is no connection"));
+      return const Left(NetworkConnectionFailure(
+        message: "there is no connection",
+        statusCode: 400,
+      ));
     }
   }
 }

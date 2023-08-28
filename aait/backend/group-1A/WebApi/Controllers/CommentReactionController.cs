@@ -1,50 +1,46 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
-using Application.Features.CommentReactionFeatures.Requests.Commands;
-using Application.Features.CommentReactionFeatures.Requests.Queries;
+using Application.DTO.Common;
+using Application.Features.CommentReactionFeature.Requests.Commands;
+using Application.Features.CommentReactionFeature.Requests.Queries;
+using Application.Response;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
 namespace WebApi.Controllers
 {
     [ApiController]
-    [Route("/[controller]")]
+    [Route("comment-reaction")]
     public class CommentReactionController : ControllerBase
     {
-        private readonly IMediator _mediator;
+         private readonly IMediator _mediator;
 
         public CommentReactionController(IMediator mediator)
         {
             _mediator = mediator;
         }
 
-        [HttpPost("/create")]
-        public async Task<IActionResult> CreateCommentReaction(CommentReactionCreateCommand command)
+        [HttpGet("likes/{id}")]
+        public async Task<ActionResult<BaseResponse<List<ReactionResponseDTO>>>>  GetLikes(int id)
         {
-            var result = await _mediator.Send(command);
+            var result = await _mediator.Send(new GetCommentsLikeQuery{ CommentId = id });
             return Ok(result);
         }
 
-        [HttpPut("update/{id}")]
-        public async Task<IActionResult> UpdateCommentReaction(int id, CommentReactionUpdateCommand command)
+
+        [HttpGet("dislikes/{id}")]
+        public async Task<ActionResult<BaseResponse<List<ReactionResponseDTO>>>> GetDislikes(int id)
         {
-            command.Id = id;
-            var result = await _mediator.Send(command);
+            var result = await _mediator.Send(new GetCommentsDislikeQuery { CommentId = id });
             return Ok(result);
         }
-
-        [HttpDelete("delete/{id}")]
-        public async Task<IActionResult> DeleteCommentReaction(int id)
+        
+        [HttpPost("react")]
+        public async Task<ActionResult<BaseResponse<string>>> Post([FromBody] ReactionDTO reactionData)
         {
-            var command = new CommentReactionDeleteCommand { Id = id };
-            var result = await _mediator.Send(command);
-            return Ok(result);
-        }
-
-        [HttpGet("get/{id}")]
-        public async Task<IActionResult> GetCommentReaction(int id)
-        {
-            var query = new GetCommentReactionQuery { Id = id };
-            var result = await _mediator.Send(query);
+            var result = await _mediator.Send(new MakeReactionOnComment{ UserId = 3, ReactionData = reactionData });
             return Ok(result);
         }
     }

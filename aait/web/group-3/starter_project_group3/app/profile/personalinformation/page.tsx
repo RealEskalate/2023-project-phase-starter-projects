@@ -30,7 +30,7 @@ const PersonalInformation = () => {
             Name <span className="text-[red]"> *</span>
           </label>
 
-          <div className="w-9/12 flex justify-around  ">
+          <div className="w-9/12  flex justify-around  ">
             <input
               type="text"
               id="name"

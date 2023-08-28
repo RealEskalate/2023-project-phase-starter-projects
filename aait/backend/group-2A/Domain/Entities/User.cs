@@ -1,19 +1,18 @@
 ﻿
 
+using Domain.Common;
+
 namespace Domain.Entities
 {
-    public class User
+    public class User : BaseEntity
     {
-        public int Id { get; set; }
         public required string FullName { get; set; }
         public required string UserName { get; set; }
         public required string Email { get; set; }
-        public required string Password { get; set; }
         public string Bio { get; set; } = "";
         public int FollowerCount{ get; set; } = 0;
         public int FolloweeCount{ get; set; } = 0;
         public int PostCount{ get; set; } = 0;
-        public DateTime CreatedAt { get; set; }
         public DateTime? UpdatedAt { get; set; }
         
         // Navigation Property

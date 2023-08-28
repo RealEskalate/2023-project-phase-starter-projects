@@ -1,30 +1,40 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+
+import '../../../../core/util/app_colors.dart';
+import '../../domain/entity/article.dart';
 
 class BlogCardWidget extends StatelessWidget {
-  const BlogCardWidget({
-    super.key,
-  });
+  const BlogCardWidget({super.key, required this.article});
+
+  final Article article;
 
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
+    return GestureDetector(
+      onTap: () {
+        // raise load article by id event
+        // Navigator.pushNamed(context, '/article-detail');
+      },
       child: Container(
-        height: 240,
+        height: 240.h,
+        width: 388.w,
         decoration: BoxDecoration(
-          color:
-              Theme.of(context).cardColor, // Background color for the container
+          color: AppColors.whiteColor, // Background color for the container
           borderRadius:
               BorderRadius.circular(15), // Rounded corners for the container
         ),
-        padding: const EdgeInsets.all(16), // Padding for the content
+        padding: EdgeInsets.all(11.sp), // Padding for the content
         child: Stack(
           children: [
-            const Row(
+            Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                BlogImageWidget(), // Widget for displaying the blog image
-                SizedBox(width: 16), // Spacing between image and text
-                BlogExcerptWidget(), // Widget for displaying blog excerpt
+                const BlogImageWidget(), // Widget for displaying the blog image
+                SizedBox(width: 16.w), // Spacing between image and text
+                BlogExcerptWidget(
+                  article: article,
+                ), // Widget for displaying blog excerpt
               ],
             ),
             Positioned(
@@ -32,7 +42,11 @@ class BlogCardWidget extends StatelessWidget {
               right: 0,
               child: Text(
                 "Jan 12,2022", // Publication date of the blog
-                style: Theme.of(context).textTheme.labelSmall,
+                style: TextStyle(
+                  fontFamily: 'Poppins-Light',
+                  color: AppColors.textLightGray,
+                  fontSize: 12.sp,
+                ),
               ),
             ),
           ],
@@ -43,9 +57,14 @@ class BlogCardWidget extends StatelessWidget {
 }
 
 class BlogExcerptWidget extends StatelessWidget {
-  const BlogExcerptWidget({
+  BlogExcerptWidget({
     super.key,
+    required this.article,
   });
+
+  Article article;
+
+  List<String> tags = ["education", "Entertainment", "education", "Entertainment",];
 
   @override
   Widget build(BuildContext context) {
@@ -57,29 +76,56 @@ class BlogExcerptWidget extends StatelessWidget {
           children: [
             Text(
               "STUDENTS SHOULD WORK ON IMPROVING THEIR WRITING SKILL", // Blog title
-              style: Theme.of(context).textTheme.titleLarge,
+              style: TextStyle(
+                fontFamily: 'Urbanist-Regular',
+                fontSize: 17.sp,
+                fontWeight: FontWeight.w400,
+                height: 1,
+              ),
               maxLines: 4,
               overflow: TextOverflow.ellipsis,
             ),
-            const SizedBox(height: 8), // Spacing between title and category
-            Container(
-              padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-              decoration: BoxDecoration(
-                color: Theme.of(context)
-                    .disabledColor, // Background color for category box
-                borderRadius: BorderRadius.circular(4),
-              ),
-              child: Text(
-                "Education", // Category of the blog
-                style: Theme.of(context).textTheme.displayLarge,
-                maxLines: 1,
-                overflow: TextOverflow.ellipsis,
+            SizedBox(height: 8.h), // Spacing between title and category
+            SingleChildScrollView(
+              scrollDirection: Axis.horizontal,
+              child: Row(
+                children: [
+                  ...tags.map(
+                    (tagName) {
+                      return Container(
+                        margin: const EdgeInsets.only(right: 12),
+                        padding: EdgeInsets.symmetric(
+                            horizontal: 8.w, vertical: 4.h),
+                        decoration: BoxDecoration(
+                          color: AppColors
+                              .disabledButtonColor, // Background color for category box
+                          borderRadius: BorderRadius.circular(4),
+                        ),
+                        child: Text(
+                          "Education", // Category of the blog
+                          style: TextStyle(
+                            fontFamily: 'Poppins-SemiBold',
+                            color: AppColors.whiteColor,
+                            fontSize: 13.sp,
+                          ),
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                        ),
+                      );
+                    },
+                  ),
+                ],
               ),
             ),
-            const SizedBox(height: 8), // Spacing between category and author
+            SizedBox(height: 8.h), // Spacing between category and author
             Text(
-              "by John Doe", // Author of the blog
-              style: Theme.of(context).textTheme.displayMedium,
+              "john Doe", // Author of the blog
+              style: TextStyle(
+                fontFamily: 'Poppins-Regular',
+                color: AppColors.primaryTextGray,
+                fontSize: 14.sp,
+              ),
+
               maxLines: 1,
               overflow: TextOverflow.ellipsis,
             ),
@@ -104,8 +150,8 @@ class BlogImageWidget extends StatelessWidget {
               BorderRadius.circular(8), // Rounded corners for the image
           child: Image.asset(
             'images/avator.jpg', // Image asset for the blog
-            width: 160,
-            height: 160,
+            width: 160.w,
+            height: 160.h,
             fit: BoxFit.cover,
           ),
         ),
@@ -113,17 +159,20 @@ class BlogImageWidget extends StatelessWidget {
           top: 8,
           left: 8,
           child: Container(
-            padding: const EdgeInsets.symmetric(
-              horizontal: 8,
-              vertical: 4,
+            padding: EdgeInsets.symmetric(
+              horizontal: 8.w,
+              vertical: 4.h,
             ),
             decoration: BoxDecoration(
               color: Colors.white, // Background color for the "min read" label
               borderRadius: BorderRadius.circular(4),
             ),
-            child: Text(
+            child: const Text(
               "5 min read", // Estimated reading time
-              style: Theme.of(context).textTheme.labelLarge,
+              style: TextStyle(
+                fontFamily: 'Poppins-Medium',
+                color: AppColors.primaryTextGray,
+              ),
             ),
           ),
         ),

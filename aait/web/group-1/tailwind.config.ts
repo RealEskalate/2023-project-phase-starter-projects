@@ -25,6 +25,9 @@ const config: Config = {
         'laptop': '1024px', 
         'desktop': '1440px', 
       },
+      fontFamily: {
+        montserrat: ["Montserrat", "sans-serif"],
+      },
     },
   },
   plugins: [],

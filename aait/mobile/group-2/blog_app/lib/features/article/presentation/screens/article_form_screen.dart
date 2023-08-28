@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../../core/presentation/router/routes.dart';
-import '../../../../core/presentation/theme/app_colors.dart';
-import '../widgets/custom_chip.dart';
-import '../widgets/custom_text_field.dart';
-import '../widgets/multiline_text_field.dart';
+import '../../../../injection_container.dart';
+import '../bloc/article_bloc.dart';
+import '../bloc/tag_selector_bloc.dart';
+import '../widgets/create_article_form.dart';
+import '../widgets/snackbar.dart';
 
 class ArticleFormScreen extends StatelessWidget {
   const ArticleFormScreen({super.key});
@@ -24,84 +25,31 @@ class ArticleFormScreen extends StatelessWidget {
       ),
 
       //
-      body: SingleChildScrollView(
-        padding: EdgeInsets.symmetric(
-          horizontal: 45.w,
-          vertical: 45.h,
-        ),
-        child: Form(
-          child: Column(
-            children: [
-              const CustomTextField(
-                hintText: 'Add title',
-              ),
-              const SizedBox(height: 15),
-              const CustomTextField(
-                hintText: 'Add subtitle',
-              ),
-              const SizedBox(height: 15),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  Row(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      const Flexible(
-                        child: CustomTextField(
-                          hintText: 'Add tags',
-                        ),
-                      ),
-                      const SizedBox(width: 15),
-                      GestureDetector(
-                        onTap: () {},
-                        child: const Icon(
-                          Icons.add_circle_outline,
-                          color: AppColors.blue,
-                          size: 26,
-                        ),
-                      ),
-                    ],
-                  ),
-                  const SizedBox(height: 5),
-                  const Text(
-                    'add as many tags as you want',
-                    style: TextStyle(
-                      color: AppColors.gray300,
-                      fontFamily: 'Poppins',
-                      fontSize: 13,
-                      fontWeight: FontWeight.w200,
-                    ),
-                  ),
-                ],
-              ),
-              const SizedBox(height: 15),
-              const SizedBox(
-                width: double.infinity,
-                child: Wrap(
-                  runSpacing: 10,
-                  spacing: 10,
-                  children: [
-                    CustomChip(label: 'Art'),
-                    CustomChip(label: 'Design'),
-                    CustomChip(label: 'Culture'),
-                    CustomChip(label: 'Production'),
-                  ],
-                ),
-              ),
-              const SizedBox(height: 30),
-              const MultilineTextInput(
-                hintText: 'Article content',
-              ),
-              const SizedBox(height: 50),
-              Center(
-                child: ElevatedButton(
-                  onPressed: () => context.push(Routes.articleDetail),
-                  child: const Text('Publish'),
-                ),
-              ),
-            ],
+      body: MultiBlocProvider(
+        providers: [
+          BlocProvider<ArticleBloc>(
+            create: (context) =>
+                serviceLocator<ArticleBloc>()..add(LoadAllTagsEvent()),
           ),
+          BlocProvider<TagSelectorBloc>(
+            create: (context) => serviceLocator<TagSelectorBloc>(),
+          ),
+        ],
+
+        //
+        child: BlocListener<ArticleBloc, ArticleState>(
+          listener: (context, state) {
+            if (state is ArticleCreatedState) {
+              showSuccess(context, 'Article created successfully');
+              context.go(Routes.articleDetail, extra: state.article);
+            }
+
+            // Show error
+            else if (state is ArticleErrorState) {
+              showError(context, state.message);
+            }
+          },
+          child: const CreateArticleForm(),
         ),
       ),
     );

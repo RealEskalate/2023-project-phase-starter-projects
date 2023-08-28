@@ -2,13 +2,29 @@
 "use client";
 import Image from "next/image";
 import NavBar from "./NavBar";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import NavBarMobile from "./NavBarMobile";
+import Link from "next/link";
+import { authTypes } from "@/types/auth/authTypes";
 
 // Define a functional component named Header
-const Header : React.FC = () => {
+const Header: React.FC = () => {
   // State to control the mobile menu open/closed state
   const [isOpen, setIsOpen] = useState(false);
+
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  useEffect(() => {
+    const userString = localStorage.getItem("user");
+    const user: authTypes | null = userString ? JSON.parse(userString) : null;
+    if (user) {
+      setIsLoggedIn(true);
+    }
+  }, []);
+
+  const handleLogout = () => {
+    localStorage.clear();
+    window.location.href = '/';
+  };
 
   // Function to toggle the mobile menu state
   const toggleMenu = () => {
@@ -35,14 +51,32 @@ const Header : React.FC = () => {
         {/* Button container with gap, aligning items in a row */}
         <div className="button_contnet flex gap-7 items-center ">
           {/* Text for Login */}
-          <button className="text-login_color hidden nav_bar_screen:inline-block">
-            Login
-          </button>
+          {!isLoggedIn && (
+            <Link
+              href={"/login"}
+              className="text-login_color hidden nav_bar_screen:inline-block"
+            >
+              Login
+            </Link>
+          )}
 
           {/* Button with padding, background color, text color, and rounded corners */}
-          <button className="p-3 bg-primary text-white rounded-lg hidden nav_bar_screen:inline-block">
-            Donate
-          </button>
+          {!isLoggedIn && (
+            <Link
+              href={"/register"}
+              className="p-3 bg-primary text-white rounded-lg hidden nav_bar_screen:inline-block"
+            >
+              Register
+            </Link>
+          )}
+          {isLoggedIn && (
+            <button
+              onClick={() => handleLogout()}
+              className="p-3 bg-primary text-white rounded-lg hidden nav_bar_screen:inline-block"
+            >
+              Log Out
+            </button>
+          )}
 
           {/* hamburger icon */}
           <button
