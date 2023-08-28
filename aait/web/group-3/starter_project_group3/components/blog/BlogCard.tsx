@@ -2,6 +2,7 @@ import React from 'react';
 import { Blog, Author } from '@/types/blog/blog';
 import parse from 'html-react-parser';
 
+
 interface BlogProps extends Blog {
   author: Author | null;
 }
@@ -12,6 +13,8 @@ const formatDate = (dateString: string): string => {
   return date.toDateString(); 
 };
 
+const MAX_DESCRIPTION_LENGTH = 150;
+
 const BlogCard: React.FC<BlogProps> = ({
   author,
   image,
@@ -20,13 +23,19 @@ const BlogCard: React.FC<BlogProps> = ({
   tags,
   createdAt,
 }) => {
+
+  const truncatedDescription =
+    description.length > MAX_DESCRIPTION_LENGTH
+      ? `${description.substring(0, MAX_DESCRIPTION_LENGTH)}...`
+      : description;
+
   return (
     <div>
       
 
       <div className="bg-white rounded-md py-4 px-48">
         <hr className='my-6'/>
-        <div className="flex items-center mb-2">
+        <div className="flex  items-center mb-2">
           {author && (
             <img
               src={author.image}
@@ -44,10 +53,13 @@ const BlogCard: React.FC<BlogProps> = ({
             {author && <p className="uppercase  text-gray-400 mt-1">Software Engineer</p>}
           </div>
         </div>
-        <div className='flex flex-col xl:flex-row gap-8'>
+        <div className='flex justify-between flex-col xl:flex-row'>
           <div>
             <h2 className="text-2xl font-bold mt-2">{title}</h2>
-            <p className="text-gray-700 ">{parse(description)}</p>
+            <p className="text-gray-700 text-wrap">{parse(truncatedDescription)}</p>
+            {description.length > MAX_DESCRIPTION_LENGTH && (
+                <a className="text-blue-500">Read more</a>
+            )}
             <div className="flex flex-wrap mt-4">
               {tags.map((tag, index) => (
                 <span
