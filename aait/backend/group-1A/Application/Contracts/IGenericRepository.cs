@@ -16,10 +16,9 @@ namespace Application.Contracts
 
         public Task<bool> Delete(T entity);
 
-        public Task<bool> Exists(int id);
-
+        
         public Task<T> Update(T entity);
 
-        
+
     }
 }

@@ -59,5 +59,12 @@ namespace Persistence.Repositories
                     .Where(x => x.Id == id)
                     .SingleOrDefaultAsync();
         }
+
+
+        public async Task<bool> Exists(int id)
+        {
+            var result = await _dbContext.PostReactions.FindAsync(id);
+            return result != null;
+        }
     }
 }

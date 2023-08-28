@@ -1,106 +1,71 @@
-using Application.Contracts;
-using Application.DTO.CommentReactionDTOS.DTO;
-using AutoMapper;
-using Domain.Entities;
-using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Linq.Expressions;
 using System.Threading.Tasks;
+using Application.Contracts;
+using Domain.Entities;
+using Microsoft.EntityFrameworkCore;
 
-namespace Persistence.Repositories.ReactionRepositories
+namespace Persistence.Repositories.ReactionRespositories
 {
-    public class CommentReactionRepository : ICommentReactionRepository
+    public class CommentReactionRepository : GenericRepository<CommentReaction>, ICommentReactionRepository
     {
         private readonly SocialMediaDbContext _dbContext;
-        private readonly IMapper _mapper;
 
-        public CommentReactionRepository(SocialMediaDbContext dbContext, IMapper mapper)
+        public CommentReactionRepository(SocialMediaDbContext dbContext) : base(dbContext)
         {
             _dbContext = dbContext;
-            _mapper = mapper;
+        }
+        public async Task<List<CommentReaction>> DisLikes(int Id)
+        {
+            var result = await GetCommentWithId(Id);
+
+            return result.CommentReactions.Where(x => x.Dislike == true).ToList();
         }
 
-        public async Task<List<CommentReaction>> GetReactionsForCommentAsync(int commentId)
+
+        public async Task<List<CommentReaction>> Likes(int Id)
         {
-            return await _dbContext.CommentReaction
-                .Where(reaction => reaction.CommentId == commentId)
-                .ToListAsync();
+            var result = await GetCommentWithId(Id);
+
+            return result.CommentReactions.Where(x => x.Like == true).ToList();
         }
 
-        public async Task<List<CommentReaction>> GetReactionsByUserAsync(int userId)
+
+
+        public async Task<CommentReaction> MakeReaction(int UserId, CommentReaction entity)
         {
-            return await _dbContext.CommentReaction
-                .Where(reaction => reaction.UserId == userId)
-                .ToListAsync();
+            var reaction = _dbContext.CommentReaction.FirstOrDefault(x => x.UserId == UserId && x.CommentId == entity.CommentId);
+
+            if (reaction == null)
+            {
+                entity.UserId = UserId;
+                await _dbContext.CommentReaction.AddAsync(entity);
+                await _dbContext.SaveChangesAsync();
+                return entity;
+            }
+            else
+            {
+                reaction.Like = entity.Like;
+                reaction.Dislike = entity.Dislike;
+                await _dbContext.SaveChangesAsync();
+                return entity;
+            }
         }
 
-        public async Task<List<CommentReaction>> GetAll(Expression<Func<CommentReaction, bool>> predicate)
-        {
-            return await _dbContext.CommentReaction
-                .Where(predicate)
-                .ToListAsync();
-        }
 
-        public async Task<CommentReaction> Add(CommentReaction entity)
+        private async Task<Comment> GetCommentWithId(int id)
         {
-            await _dbContext.CommentReaction.AddAsync(entity);
-            await _dbContext.SaveChangesAsync();
-            return entity;
-        }
-
-        public async Task<bool> Delete(CommentReaction entity)
-        {
-            _dbContext.CommentReaction.Remove(entity);
-            int rowsAffected = await _dbContext.SaveChangesAsync();
-            return rowsAffected > 0;
+            return await _dbContext.Comments
+                    .Include(x => x.CommentReactions)
+                    .Where(x => x.Id == id)
+                    .SingleOrDefaultAsync();
         }
 
         public async Task<bool> Exists(int id)
         {
-            return await _dbContext.CommentReaction.AnyAsync(reaction => reaction.Id == id);
-        }
-
-        public async Task<CommentReaction> Update(CommentReaction entity)
-        {
-            _dbContext.CommentReaction.Update(entity);
-            await _dbContext.SaveChangesAsync();
-            return entity;
-        }
-
-        public async Task<CommentReaction> GetCommentReactionByIdAsync(int id)
-        {
-            return await _dbContext.CommentReaction.FindAsync(id);
-        }
-
-        public async Task AddCommentReactionAsync(CommentReaction commentReaction)
-        {
-            await _dbContext.CommentReaction.AddAsync(commentReaction);
-            await _dbContext.SaveChangesAsync();
-        }
-
-        public async Task UpdateCommentReactionAsync(CommentReaction commentReaction)
-        {
-            _dbContext.CommentReaction.Update(commentReaction);
-            await _dbContext.SaveChangesAsync();
-        }
-
-        public async Task DeleteCommentReactionAsync(int id)
-        {
-            var commentReaction = await _dbContext.CommentReaction.FindAsync(id);
-            if (commentReaction != null)
-            {
-                _dbContext.CommentReaction.Remove(commentReaction);
-                await _dbContext.SaveChangesAsync();
-            }
-        }
-
-        public async Task<List<CommentReactionDTO>> GetAllCommentReactionsAsync()
-        {
-            var commentReactions = await _dbContext.CommentReaction.ToListAsync();
-            var commentReactionDTOs = _mapper.Map<List<CommentReactionDTO>>(commentReactions);
-            return commentReactionDTOs;
+            var result = await _dbContext.CommentReaction.FindAsync(id);
+            return result != null;
         }
     }
 }
