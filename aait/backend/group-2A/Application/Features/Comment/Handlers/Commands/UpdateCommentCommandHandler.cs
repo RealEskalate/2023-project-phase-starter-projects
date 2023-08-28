@@ -8,7 +8,7 @@ using MediatR;
 
 namespace Application.Features.Comment.Handlers.Commands;
 
-public class UpdateCommentCommandHandler : IRequestHandler<UpdateCommentCommand, BaseCommandResponse<Unit?>>
+public class UpdateCommentCommandHandler : IRequestHandler<UpdateCommentCommand, BaseCommandResponse<Unit>>
 {
     private readonly IUnitOfWork _unitOfWork;
     private readonly IMapper _mapper;
@@ -19,7 +19,7 @@ public class UpdateCommentCommandHandler : IRequestHandler<UpdateCommentCommand,
         _unitOfWork = unitOfWork;
     }
 
-    public async Task<BaseCommandResponse<Unit?>> Handle(UpdateCommentCommand request, CancellationToken cancellationToken)
+    public async Task<BaseCommandResponse<Unit>> Handle(UpdateCommentCommand request, CancellationToken cancellationToken)
     {
         try
         {
@@ -38,12 +38,12 @@ public class UpdateCommentCommandHandler : IRequestHandler<UpdateCommentCommand,
             if (await _unitOfWork.Save() == 0) throw new ServerErrorException("Something Went Wrong");
 
 
-            return BaseCommandResponse<Unit?>.SuccessHandler(Unit.Value);
+            return BaseCommandResponse<Unit>.SuccessHandler(Unit.Value);
 
         }
         catch (Exception ex)
         {
-            return BaseCommandResponse<Unit?>.FailureHandler(ex);
+            return BaseCommandResponse<Unit>.FailureHandler(ex);
         }
 
     }
