@@ -56,12 +56,12 @@ const Blog = ({ params }: { params: { id: string } }) => {
       </div>
       <div className="md:px-32 flex flex-col gap-8 text-justify py-4">
         <div>
-          <p className="font-montserrat text-lg font-bold">
+          <p className="font-montserrat text-lg font-bold text-left">
             {blogData.description}
           </p>
         </div>
         {blogData.description.split("\n").map((paragraph: any, index: any) => (
-          <p key={index} className="font-montserrat text-sm">
+          <p key={index} className="font-montserrat text-sm text-left">
             {paragraph}
           </p>
         ))}
