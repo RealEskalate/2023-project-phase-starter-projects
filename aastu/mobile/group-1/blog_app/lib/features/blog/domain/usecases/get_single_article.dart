@@ -1,12 +1,15 @@
+import 'package:blog_app/core/error/failure.dart';
+import 'package:dartz/dartz.dart';
+
 import '../entities/article.dart';
 import '../repositories/article_repository.dart';
 
-class GetArticleUseCase {
+class GetSingleArticleUseCase {
   final ArticleRepository repository;
 
-  GetArticleUseCase(this.repository);
+  GetSingleArticleUseCase(this.repository);
 
-  Future<Article> call(String articleId) async {
+  Future<Either<Failure, Article>> call(String articleId) async {
     return await repository.getSingleArticle(articleId);
   }
 }
