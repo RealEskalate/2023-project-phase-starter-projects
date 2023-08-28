@@ -6,9 +6,6 @@ namespace SocialSync.Application.Features.Posts.Requests.Commands;
 
 public class CreatePostCommand : IRequest<CommonResponse<int>>
 {
-    public CreatePostDto CreatePostDto { get; set; }
-    public CreatePostCommand(CreatePostDto newPostDto)
-    {
-        CreatePostDto = newPostDto;
-    }
+    public CreatePostDto CreatePostDto { get; set; } = null!;
+
 }

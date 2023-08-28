@@ -16,14 +16,14 @@ public class CreatePostCommandHandler : PostsRequestHandler, IRequestHandler<Cre
 
     public async Task<CommonResponse<int>> Handle(CreatePostCommand request, CancellationToken cancellationToken)
     {
-
         var createValidator = new CreatePostDtoValidator(_userRepository);
         var validationResult = await createValidator.ValidateAsync(request.CreatePostDto);
         CommonResponse<int> response;
 
         if (!validationResult.IsValid)
         {
-            response = CommonResponse<int>.FailureWithError("Post creation failed", validationResult.Errors.Select(q => q.ErrorMessage));
+            var errorMessages = validationResult.Errors.Select(q => q.ErrorMessage).ToList();
+            response = CommonResponse<int>.FailureWithError("Post creation failed", errorMessages);
         }
         else
         {

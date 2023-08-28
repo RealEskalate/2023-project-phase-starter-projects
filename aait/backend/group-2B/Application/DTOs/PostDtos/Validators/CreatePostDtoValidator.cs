@@ -6,10 +6,9 @@ namespace SocialSync.Application.DTOs.PostDtos.Validators;
 
 public class CreatePostDtoValidator : AbstractValidator<CreatePostDto>
 {
-    private IUserRepository _userRepository;
+    private readonly IUserRepository _userRepository;
     public CreatePostDtoValidator(IUserRepository userRepository)
     {
-
         _userRepository = userRepository;
 
         RuleFor(p => p.Content)
@@ -23,8 +22,5 @@ public class CreatePostDtoValidator : AbstractValidator<CreatePostDto>
             var user =  await _userRepository.GetAsync(id);
             return user != null;
         }).WithMessage("Post author id doesnot match with any user id.");
-
-
-
     }
 }

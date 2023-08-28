@@ -6,15 +6,15 @@ using SocialSync.Application.Features.Posts.Requests.Queries;
 
 namespace SocialSync.Application.Features.Posts.Handlers.Queries;
 
-public class GetPostByIdRequestHandler : PostsRequestHandler, IRequestHandler<GetPostByIdRequest, GeneralPostDto>
+public class GetPostByIdRequestHandler : PostsRequestHandler, IRequestHandler<GetPostByIdRequest, PostDto>
 {
     public GetPostByIdRequestHandler(IUnitOfWork unitOfWork, IMapper mapper) : base(unitOfWork, mapper)
     {
     }
 
-    public async Task<GeneralPostDto> Handle(GetPostByIdRequest request, CancellationToken cancellationToken)
+    public async Task<PostDto> Handle(GetPostByIdRequest request, CancellationToken cancellationToken)
     {
         var post = await _postRepository.GetAsync(request.Id);
-        return _mapper.Map<GeneralPostDto>(post);
+        return _mapper.Map<PostDto>(post);
     }
 }

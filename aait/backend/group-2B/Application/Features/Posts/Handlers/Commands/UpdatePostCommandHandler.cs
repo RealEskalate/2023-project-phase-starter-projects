@@ -21,7 +21,8 @@ public class UpdatePostCommandHandler : PostsRequestHandler, IRequestHandler<Upd
 
         if (!updateValidationResult.IsValid)
         {
-            response = CommonResponse<Unit>.FailureWithError("Post update failed", updateValidationResult.Errors.Select(q => q.ErrorMessage));
+            var errorMessages = updateValidationResult.Errors.Select(q => q.ErrorMessage).ToList();
+            response = CommonResponse<Unit>.FailureWithError("Post update failed", errorMessages);
         }
 
         else

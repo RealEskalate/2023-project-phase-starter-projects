@@ -6,15 +6,15 @@ using SocialSync.Application.Features.Posts.Requests.Queries;
 
 namespace SocialSync.Application.Features.Posts.Handlers.Queries;
 
-public class GetPostsByTagsRequestHandler : PostsRequestHandler, IRequestHandler<GetPostsByTagsRequest, List<GeneralPostDto>>
+public class GetPostsByTagsRequestHandler : PostsRequestHandler, IRequestHandler<GetPostsByTagsRequest, List<PostDto>>
 {
     public GetPostsByTagsRequestHandler(IUnitOfWork unitOfWork, IMapper mapper) : base(unitOfWork, mapper)
     {
     }
 
-    public async Task<List<GeneralPostDto>> Handle(GetPostsByTagsRequest request, CancellationToken cancellationToken)
+    public async Task<List<PostDto>> Handle(GetPostsByTagsRequest request, CancellationToken cancellationToken)
     {
         var postsByTags = await _postRepository.GetPostsByTagsAsync(request.Tags);
-        return _mapper.Map<List<GeneralPostDto>>(postsByTags);
+        return _mapper.Map<List<PostDto>>(postsByTags);
     }
 }

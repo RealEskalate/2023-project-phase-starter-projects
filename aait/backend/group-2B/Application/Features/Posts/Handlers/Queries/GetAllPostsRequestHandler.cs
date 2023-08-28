@@ -7,14 +7,14 @@ using SocialSync.Application.Features.Posts.Requests.Queries;
 namespace SocialSync.Application.Features.Posts.Handlers.Queries;
 
 
-public class GetAllPostsRequestHandler : PostsRequestHandler, IRequestHandler<GetAllPostsRequest, List<GeneralPostDto>>
+public class GetAllPostsRequestHandler : PostsRequestHandler, IRequestHandler<GetAllPostsRequest, List<PostDto>>
 {
     public GetAllPostsRequestHandler(IUnitOfWork unitOfWork, IMapper mapper) : base(unitOfWork, mapper)
     {
     }
 
-    public async Task<List<GeneralPostDto>> Handle(GetAllPostsRequest request, CancellationToken cancellationToken)
+    public async Task<List<PostDto>> Handle(GetAllPostsRequest request, CancellationToken cancellationToken)
     {
-        return _mapper.Map<List<GeneralPostDto>>(await _postRepository.GetAsync());
+        return _mapper.Map<List<PostDto>>(await _postRepository.GetAsync());
     }
 }

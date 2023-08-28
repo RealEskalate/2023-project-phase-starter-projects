@@ -6,9 +6,6 @@ namespace SocialSync.Application.Features.Posts.Requests.Commands;
 
 public class UpdatePostCommand : IRequest<CommonResponse<Unit>>
 {
-    public UpdatePostDto UpdatePostDto { get; set; }
-    public UpdatePostCommand(UpdatePostDto newPostDto)
-    {
-        UpdatePostDto = newPostDto;
-    }
+    public UpdatePostDto UpdatePostDto { get; set; } = null!;
+
 }
