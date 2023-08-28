@@ -20,6 +20,7 @@ class _SigninToggleState extends State<SigninToggle> {
   }
 
   Widget build(BuildContext context) {
+    
     if(is_login){
       return Login(toggleAuth: toggleAuth);
     }else{
