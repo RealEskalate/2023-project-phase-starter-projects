@@ -7,6 +7,8 @@ import BlogCard from "@/components/blog/BlogCard";
 import { useGetSingleBlogQuery } from "@/store/features/blog-detail/blog-detail";
 import Loading from "@/components/commons/Loading";
 import Error from "@/components/commons/Error";
+import SmallBlogCard from "@/components/blog/SmallBlogCard";
+
 
 const BlogDetailPage :React.FC = () => {
   const params = useParams()
@@ -65,9 +67,7 @@ const BlogDetailPage :React.FC = () => {
           <div className=" px-4 mt-8">
               <h1 className="text-2xl pl-8 font-semibold">Related Blogs</h1>
               <div className="flex gap-4 px-5 my-4">
-                  {blog.relatedBlogs.map((relatedBlog => (
-                      <BlogCard key={blog._id} {...blog} />
-                  )))}
+                 <SmallBlogCard blogs={blog.relatedBlogs} />
               </div>
           </div>
         </div>
