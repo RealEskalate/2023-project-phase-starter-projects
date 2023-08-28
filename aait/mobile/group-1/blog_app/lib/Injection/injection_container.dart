@@ -1,3 +1,4 @@
+import 'package:blog_app/features/authentication_and_authorization/domain/usecases/login_use_case.dart';
 import 'package:get_it/get_it.dart';
 import 'package:internet_connection_checker/internet_connection_checker.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -22,6 +23,7 @@ Future<void> init() async {
   // Use cases
   sl.registerLazySingleton(() => GetUserInfo(sl()));
   sl.registerLazySingleton(() => UpdateUserImage(sl()));
+  // sl.registerLazySingleton(() => LoginUseCase(repository: sl()));
 
   // Repository
   sl.registerLazySingleton<UserRepository>(() => UserRepositoryImpl(

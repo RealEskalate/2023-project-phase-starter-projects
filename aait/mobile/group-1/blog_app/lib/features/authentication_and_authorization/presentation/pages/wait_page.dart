@@ -4,6 +4,7 @@ import 'package:blog_app/features/authentication_and_authorization/presentation/
 import 'package:blog_app/features/authentication_and_authorization/presentation/bloc/Log_in_bloc/state.dart';
 import 'package:blog_app/features/authentication_and_authorization/presentation/pages/circular_indicator.dart';
 import 'package:blog_app/features/authentication_and_authorization/presentation/pages/success_page.dart';
+import 'package:blog_app/features/user_profile/presentation/pages/profile.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -31,7 +32,7 @@ class _WaitPageState extends State<WaitPage> {
       listener: (context, state) {
         if (state is LoginLoadedState) {
           Navigator.push(
-              context, MaterialPageRoute(builder: (context) => Success_Page()));
+              context, MaterialPageRoute(builder: (context) => ProfilePage()));
         }
       },
       builder: (context, state) {
