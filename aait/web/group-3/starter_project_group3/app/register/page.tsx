@@ -18,7 +18,7 @@ const Register: React.FC = () => {
       .then((response) => {
         console.log("register success message");
         localStorage.setItem("user", JSON.stringify(response));
-        // router.push('/')
+        window.location.href = '/login';
       })
       .catch((err) => {
         // seterrorMessage(err.message.data);

@@ -17,9 +17,8 @@ const LogIn: React.FC = () => {
       .unwrap()
       .then((response: any) => {
         console.log("log in success", response);
-
         localStorage.setItem("user", JSON.stringify(response));
-        // router.push('/')
+        window.location.href = "/";
       })
       .catch((err) => {
         seterrorMessage(err.data.message);
@@ -27,17 +26,12 @@ const LogIn: React.FC = () => {
       });
   };
 
-  useEffect(() => {
-    const userString = localStorage.getItem("user");
-    const user: authTypes | null = userString ? JSON.parse(userString) : null;
-    console.log(user);
-    //token
-    console.log(user?.token);
-    
-    
-    
-    console.log()
-  }, []);
+  // useEffect(() => {
+  //   const userString = localStorage.getItem("user");
+  //   const user: authTypes | null = userString ? JSON.parse(userString) : null;
+  //   console.log(user?.token);
+
+  // }, []);
 
   return (
     <>
@@ -95,42 +89,3 @@ const LogIn: React.FC = () => {
 };
 
 export default LogIn;
-// "use client"
-// import { useState } from 'react';
-// import { useLoginMutation } from '@/store/features/auth';
-
-// function LogIn() {
-//   const [email, setEmail] = useState('');
-//   const [password, setPassword] = useState('');
-
-//   const [login, { isLoading, isError, data }] = useLoginMutation();
-
-//   const handleLogin = () => {
-//     login({ email, password });
-//   };
-
-//   console.log('Login data:', data); // Display login information in console.log
-
-//   return (
-//     <div>
-//       <input
-//         type="text"
-//         placeholder="Email"
-//         value={email}
-//         onChange={(e) => setEmail(e.target.value)}
-//       />
-//       <input
-//         type="password"
-//         placeholder="Password"
-//         value={password}
-//         onChange={(e) => setPassword(e.target.value)}
-//       />
-//       <button onClick={handleLogin} disabled={isLoading}>
-//         {isLoading ? 'Logging in...' : 'Login'}
-//       </button>
-//       {isError && <p>Error occurred during login.</p>}
-//     </div>
-//   );
-// }
-
-// export default LogIn;

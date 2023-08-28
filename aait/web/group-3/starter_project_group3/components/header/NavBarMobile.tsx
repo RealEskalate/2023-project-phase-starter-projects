@@ -22,7 +22,7 @@ const NavBarMobile : React.FC<{ isOpen: boolean; children: ReactNode; }> = ({
       {/* Mapping over the 'navLinks' array and creating 'NavLink' components */}
       {navLinks.map((navLink) => (
         // Using the 'NavLink' component and passing link path and name as props
-        <NavLink to={navLink.linkPath}>{navLink.linkName}</NavLink>
+        <NavLink key={navLink.linkName} to={navLink.linkPath}>{navLink.linkName}</NavLink>
       ))}
 
       {/* Displaying the children passed to the component */}

@@ -21,7 +21,14 @@ export const authApi = createApi({
         body: { name, email, password },
       }),
     }),
+    passwordReset: builder.mutation<authTypes, { oldPassword: string; newPassword: string }>({
+      query: ({ oldPassword, newPassword }) => ({
+        url: "/manage-account",
+        method: "POST",
+        body: {oldPassword, newPassword},
+      }),
+    }),
   }),
 });
 
-export const { useLoginMutation, useRegisterMutation } = authApi;
+export const { useLoginMutation, useRegisterMutation,usePasswordResetMutation } = authApi;
