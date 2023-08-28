@@ -14,7 +14,7 @@ const BlogItem: React.FC<Blog> = ({
   return (
     <div className="w-full flex flex-col gap-6 mb-10">
       {/* horizontal line */}
-      <div className="mx-2 rounded-full bg-gray-200 h-0.5"></div>
+      <div className="mx-2 mb-4 rounded-full bg-gray-200 h-0.05"></div>
 
       {/* Author info */}
       <div className="flex gap-8">
@@ -44,7 +44,7 @@ const BlogItem: React.FC<Blog> = ({
       {/* Blog content */}
       <div>
         <h1 className="font-bold text-xl">{title}</h1>
-        <p className="mt-4 text-gray-500">{description}</p>
+        <p className="mt-4  font-light">{description}</p>
       </div>
 
       {/* tags */}
