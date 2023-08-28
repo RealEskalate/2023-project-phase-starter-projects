@@ -42,5 +42,29 @@ namespace Application.Tests.Features.PostFeatureTest.Commands
             result.ShouldBeOfType<BaseResponse<PostResponseDTO>>();
 
         }
+
+
+        [Fact]
+        public async Task DeleteUnExistingPost_ValidationFailure()
+        {
+            var handler = new DeletePostHandler(_mockRepo.Object);
+
+            var result = await handler.Handle(new DeletePostCommand(){userId = 1, Id = 100}, CancellationToken.None);
+
+            result.ShouldBeOfType<BaseResponse<PostResponseDTO>>();
+
+        }
+
+
+        [Fact]
+        public async Task DeleteUnAuthorizedgPost_ValidationFailure()
+        {
+            var handler = new DeletePostHandler(_mockRepo.Object);
+
+            var result = await handler.Handle(new DeletePostCommand(){userId = 1000, Id = 1}, CancellationToken.None);
+
+            result.ShouldBeOfType<BaseResponse<PostResponseDTO>>();
+
+        }
     }
 }

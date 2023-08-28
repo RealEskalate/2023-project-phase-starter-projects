@@ -35,18 +35,6 @@ namespace Application.Features.PostFeature.Handlers.Commands
             var newPost = _mapper.Map<Post>(request.NewPostData);
             newPost.UserId = request.userId;
             var result = await _postRepository.Add(newPost);
-
-            // notification
-            // var notificationData = new NotificationCreateDTO
-            // {
-            //     Content = $"New Post is created by user with id {request.userId}",
-            //     NotificationContentId = result.Id,
-            //     NotificationType = "post",
-            //     UserId = request.userId,
-            // };
-            
-            // await _mediator.Send(new CreateNotification {NotificationData = notificationData });
-
             return new BaseResponse<PostResponseDTO> {
                 Success = true,
                 Message = "Post Is cereated successfully",

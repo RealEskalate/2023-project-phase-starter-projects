@@ -1,24 +1,13 @@
 ﻿using Application.Contracts;
 using Application.DTO.Common;
-using Application.DTO.NotificationDTO;
-<<<<<<< HEAD
 using Application.Exceptions;
-using Application.Features.NotificationFeaure.Requests.Commands;
-=======
->>>>>>> 144f3669 (feat(AAiT-backend-1A): updated comment feature)
-using Application.Exceptions;
-using Application.Features.NotificationFeaure.Requests.Commands;
 using Application.Features.PostFeature.Requests.Commands;
 using Application.Response;
 using Application.Response;
 using AutoMapper;
 using Domain.Entities;
 using MediatR;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+
 
 namespace Application.Features.PostFeature.Handlers.Commands
 {
@@ -36,8 +25,7 @@ namespace Application.Features.PostFeature.Handlers.Commands
             _mapper = mapper;
             _mediator = mediator;
             _postRepository = postRepository;
-        }
-        public async Task<BaseResponse<string>> Handle(PostReactionCommand request, CancellationToken cancellationToken)
+        }        
         public async Task<BaseResponse<string>> Handle(PostReactionCommand request, CancellationToken cancellationToken)
         {
             var validator = new ReactionValidator();
@@ -80,15 +68,13 @@ namespace Application.Features.PostFeature.Handlers.Commands
             if (result == null)
             if (result == null)
             {
-                throw new BadRequestException("Post is not found"
-                );
-                throw new BadRequestException("Post is not found"
-                );
+                throw new BadRequestException("Post is not found");
             }
 
 
-            // notification
-            var notificationData = new NotificationCreateDTO
+
+
+            return new BaseResponse<string>()
             {
                 Content = $"User with id : {request.UserId} made reaction on post with id : {postReaction.PostId}",
                 NotificationContentId = postReaction.PostId,
@@ -99,9 +85,6 @@ namespace Application.Features.PostFeature.Handlers.Commands
 
 
 
-            return new BaseResponse<string>()
-            {
-            
             return new BaseResponse<string>()
             {
                 Success = true,

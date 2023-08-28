@@ -50,6 +50,6 @@ namespace Application.Features.PostFeature.Handlers.Queries
                 Value = _mapper.Map<List<ReactionResponseDTO>>(result)
             }
             };
+            }
         }
     }
-}

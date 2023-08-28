@@ -56,16 +56,6 @@ namespace Application.Features.PostFeature.Handlers.Commands
             var result = _mapper.Map<PostResponseDTO>(updationResult);
             var result = _mapper.Map<PostResponseDTO>(updationResult);
 
-            // notification
-            var notificationData = new NotificationCreateDTO
-            {
-                Content = $"The Post with id {request.userId} is updated",
-                NotificationContentId = result.Id,
-                NotificationType = "post",
-                UserId = request.userId,
-            };
-
-            await _mediator.Send(new CreateNotification { NotificationData = notificationData });
 
             // notification
             // var notificationData = new NotificationCreateDTO

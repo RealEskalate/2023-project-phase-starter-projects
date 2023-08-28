@@ -39,7 +39,9 @@ namespace Application.Features.PostFeature.Handlers.Queries
             {
                 throw new NotFoundException("Post is not found to get the Reactions");
             }
+            
             var result = await _postReaction.DisLikes(request.PostId);
+
             return new BaseResponse<List<ReactionResponseDTO>> () {
                 Success = true,
                 Message = "Dislikes are retrieved successfully",
@@ -49,7 +51,7 @@ namespace Application.Features.PostFeature.Handlers.Queries
                 Value = _mapper.Map<List<ReactionResponseDTO>>(result)
             }
             };
+            }
 
         }
-    }
 }
