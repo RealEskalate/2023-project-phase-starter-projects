@@ -7,7 +7,7 @@ using SocialSync.Application.DTOs.PostDtos;
 namespace WebApi.Controllers
 {
     [ApiController]
-    [Route("/posts")]
+    [Route("api/posts")]
     public class PostsController : ControllerBase
     {
         private readonly IMediator _mediator;
@@ -18,7 +18,7 @@ namespace WebApi.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetAll()
+        public async Task<IActionResult> GetAllAsync()
         {
             var getAllRequest = new GetAllPostsRequest();
             var posts = await _mediator.Send(getAllRequest);
@@ -28,18 +28,17 @@ namespace WebApi.Controllers
         [HttpGet("{id}")]
         public async Task<IActionResult> Get(int id)
         {
-            var getPostByIdRequest = new GetPostByIdRequest(id);
+            var getPostByIdRequest = new GetPostByIdRequest { Id = id };
             var post = await _mediator.Send(getPostByIdRequest);
             return Ok(post);
         }
 
         [HttpPost]
-        [Route("/posts/create")]
-        public async Task<IActionResult> Create2([FromBody] CreatePostDto createPostDto)
+        public async Task<IActionResult> CreatePostAsync([FromBody] CreatePostDto createPostDto)
         {
-            var createCommand = new CreatePostCommand(createPostDto);
+            var createCommand = new CreatePostCommand { CreatePostDto = createPostDto };
             var response = await _mediator.Send(createCommand);
-            if(response.IsSuccess)
+            if (response.IsSuccess)
             {
                 return CreatedAtAction(nameof(Get), new { id = response.Value }, response);
             }
@@ -50,49 +49,48 @@ namespace WebApi.Controllers
         }
 
         [HttpPatch]
-        [Route("/posts/edit")]
         public async Task<IActionResult> Update([FromBody] UpdatePostDto updatePostDto)
         {
-            var updateCommand = new UpdatePostCommand(updatePostDto);
+            var updateCommand = new UpdatePostCommand { UpdatePostDto = updatePostDto };
             var response = await _mediator.Send(updateCommand);
 
-            if (response.IsSuccess){
+            if (response.IsSuccess)
+            {
                 return Ok();
             }
-            else{
+            else
+            {
                 return BadRequest(response.Message);
             }
         }
 
-        [HttpGet]
-        [Route("/posts/by/{userId}")]
-        public async Task<IActionResult> GetByAuthor(int userId)
+        [HttpGet("/user-posts/{userId}")]
+        public async Task<IActionResult> GetByAuthorAsync(int userId)
         {
-            var getByAuthorRequest = new GetPostsByUserIdRequest(userId);
+            var getByAuthorRequest = new GetPostsByUserIdRequest { UserId = userId };
             var response = await _mediator.Send(getByAuthorRequest);
             return Ok(response);
         }
 
-        [HttpGet]
-        [Route("/posts/tags/")]
-        public async Task<IActionResult> GetByTags([FromQuery] List<string> tags)
+        [HttpGet("tags/")]
+        public async Task<IActionResult> GetByTagsAsync([FromQuery] List<string> tags)
         {
-            var getByTagsRequest = new GetPostsByTagsRequest(tags);
+            var getByTagsRequest = new GetPostsByTagsRequest { Tags = tags };
             var response = await _mediator.Send(getByTagsRequest);
             return Ok(response);
         }
 
         [HttpDelete]
-        [Route("/posts/delete")]
-        public async Task<IActionResult> Delete([FromQuery] int id)
+        public async Task<IActionResult> DeleteAsync([FromQuery] int id)
         {
-            var removePostDto = new RemovePostDto{
-                                        Id = id,
-                                        UserId = 1
-                                    };
-            var deletePostCommand = new RemovePostCommand(removePostDto);
+            var deletePostDto = new DeletePostDto
+            {
+                Id = id,
+                UserId = 1
+            };
+            var deletePostCommand = new DeletePostCommand { DeletePostDto = deletePostDto };
             var response = await _mediator.Send(deletePostCommand);
-            if(response.IsSuccess)
+            if (response.IsSuccess)
             {
                 return Ok();
             }
