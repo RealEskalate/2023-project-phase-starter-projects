@@ -1,13 +1,19 @@
-  import React from 'react'
+import React from 'react'
 import Image from 'next/image'
-import person1 from '@/assets/images/bees.png'
+import person1 from '@/assets/images/profiles/Abel Getahun.png'
+import person2 from '@/assets/images/profiles/Aklile Seyoum.png'
+import person3 from '@/assets/images/profiles/Mintesnot Markos.png'
+import person4 from '@/assets/images/profiles/Naol Tamrat.png'
+import person5 from '@/assets/images/profiles/Natanim Ashenafi.png'
+import person6 from '@/assets/images/profiles/Solomon Abate.png'
+import person7 from '@/assets/images/profiles/Wubshet Zeleke.png'
 
 const ImpactStoriesSection = () => {
   return (
     <section className='flex flex-col justify-center items-center gap-y-12 my-10 md:mt-24'>
       <h2 className='text-textColor-300 font-secondaryFont text-3xl font-bold'>Impact Stories</h2>
 
-      <div className='grid grid-cols-1 lg:grid-cols-2 lg:grid-rows-1 lg:gap-x-36 gap-y-5 lg:gap-2 w-11/12 md:w-10/12'>
+      <div className='grid grid-cols-1 lg:grid-cols-2 lg:grid-rows-1 lg:gap-x-32 gap-y-5 lg:gap-2 w-11/12 md:w-10/12'>
         <div>
           <h3 className='font-semibold text-lg text-textColor-300 mb-1 md:mb-1.5'>Abel Tsegaye</h3>
           <p className='text-base font-medium text-textColor-200 mb-3 md:mb-5'>Software Engineer at Google</p>
@@ -17,61 +23,45 @@ const ImpactStoriesSection = () => {
 
           <button className='text-sm text-white font-medium bg-primaryColor px-9 py-2.5 rounded'>See more</button>
         </div>
-        <div>
-          <div className="grid grid-cols-2 md:grid-cols-3 md:grid-rows-3 gap-2">
-            <div className="md:col-start-2 bg-black h-40 md:w-32 text-white">
-              <Image
-                src={person1}
-                alt='person 1'
-                className='h-40 w-32'
-              />
-            </div>
-            <div className="md:col-start-3 md:row-start-2 bg-black h-40 md:w-32 text-white  md:-mt-20">
-              <Image
-                src={person1}
-                alt='person 1'
-                className='h-40 w-32'
-              />
-            </div>
-            <div className="md:col-start-2 md:row-start-2 bg-black h-40 md:w-32 text-white">
-              <Image
-                src={person1}
-                alt='person 1'
-                className='h-40 w-32'
-              />
-            </div>
-            <div className="md:col-start-1 md:row-start-2 bg-black h-40 md:w-32 text-white md:-mt-20">
-              <Image
-                src={person1}
-                alt='person 1'
-                className='h-40 w-32'
-              />
-            </div>
-            <div className="md:row-start-3 bg-black h-40 md:w-32 text-white md:-mt-20">
-              <Image
-                src={person1}
-                alt='person 1'
-                className='h-40 w-32'
-              />
-            </div>
-            <div className='md:col-start-3 md:row-start-3 bg-black h-40 md:w-32 text-white  md:-mt-20'>
-              <Image
-                src={person1}
-                alt='person 1'
-                className='h-40 w-32'
-              />
-            </div>
-            <div className="md:row-start-3 bg-black h-40 md:w-32 text-white">
-              <Image
-                src={person1}
-                alt='person 1'
-                className='h-40 w-32'
-              />
-            </div>
-          </div>
+
+        <div className="grid md:mx-auto grid-cols-4 md:grid-cols-3 md:grid-rows-3 lg:gap-4 md:gap-8 gap-4">
+          <Image
+            src={person1}
+            alt='person 1'
+            className="col-span-2 md:col-span-1 md:col-start-2 bg-black md:h-[30vw] lg:h-[13vw] h-[50vw] text-white  object-cover"
+          />
+          <Image
+            src={person2}
+            alt='person 1'
+            className="col-span-2 md:col-span-1 md:col-start-3 md:row-start-2 md:h-[30vw] lg:h-[13vw] md:bg-black h-[50vw] text-white  md:-mt-24 object-cover" />
+          <Image
+            src={person3}
+            alt='person 1'
+            className="col-span-2 object-cover md:col-span-1 md:col-start-2 md:h-[30vw] lg:h-[13vw] md:row-start-2 md:bg-black h-[50vw] text-white" />
+
+          <Image
+            src={person4}
+            alt='person 1'
+            className="col-span-2 object-cover md:col-span-1 md:col-start-1 md:h-[30vw] lg:h-[13vw] md:row-start-2 md:bg-black h-[50vw] text-white md:-mt-24" />
+
+          <Image
+            src={person5}
+            alt='person 1'
+            className="col-span-2 object-cover md:col-span-1 md:row-start-3 md:h-[30vw] lg:h-[13vw] md:bg-black h-[50vw] text-white md:-mt-24" />
+
+          <Image
+            src={person6}
+            alt='person 1'
+            className='col-span-2 object-cover md:col-span-1 md:col-start-3 md:h-[30vw] lg:h-[13vw] md:row-start-3 md:bg-black h-[50vw] text-white  md:-mt-24' />
+
+          <Image
+            src={person7}
+            alt='person 1'
+            className="col-span-2 object-cover md:col-span-1 md:row-start-3 md:h-[30vw] lg:h-[13vw] col-start-2 md:bg-black h-[50vw] text-white " />
+
         </div>
       </div>
-    </section>
+    </section >
   )
 }
 

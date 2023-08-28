@@ -1,4 +1,6 @@
-import BuildBetterImage from '@/assets/images/build-better-tommorow.jpg'
+import BuildBetterImage from '@/assets/images/internships.png'
+import BuildBetterImage2 from '@/assets/images/training.png'
+import BuildBetterImage3 from '@/assets/images/social projects.png'
 import SuccsessRateCard from './SuccsessRateCard'
 import type { SuccsessRateCardProps } from './SuccsessRateCard'
 
@@ -13,13 +15,13 @@ export default function SuccsessRateSection(){
         {
             title: '360° Training',
             reversed: false,
-            image: BuildBetterImage,
+            image: BuildBetterImage2,
             content:"A2SV upskills students with a 360° software engineering program that focuses on problem-solving, effective speaking, and personal development."
         },
         {
             title: 'Internship',
             reversed: true,
-            image: BuildBetterImage,
+            image: BuildBetterImage3,
             content:"Students who passed their interviews get 3-month internships to gain experience in building scalable products that are widely used around the world."
         }
     ]

@@ -1,5 +1,5 @@
 import Image  from 'next/image'
-import background from '@/assets/images/build-better-tommorow.jpg'
+import background from '@/assets/images/download.webp'
 import MessageSvg from '@/assets/images/messages.svg'
 export default function BuildBetterSection() {
     return (
