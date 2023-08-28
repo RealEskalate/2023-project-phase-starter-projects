@@ -19,6 +19,8 @@ import 'package:blog_app/features/blog/domain/usecases/get_single_article.dart';
 import 'package:blog_app/features/blog/presentation/blocs/bloc.dart';
 import 'package:blog_app/injection.dart';
 
+import 'features/blog/domain/usecases/create_article.dart';
+
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
@@ -67,7 +69,7 @@ class MyApp extends StatelessWidget {
               BlocProvider<BlogBloc>(
                 create: (context) => BlogBloc(
                   getAllArticle: sl<GetArticleUseCase>(),
-                  getSingleArticle: sl<GetSingleArticleUseCase>(),
+                  getSingleArticle: sl<GetSingleArticleUseCase>(), createArticle:  sl<CreateArticleUseCase>(),
                 ),
               ),
               // Other BlocProviders if needed

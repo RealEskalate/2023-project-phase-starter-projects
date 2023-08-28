@@ -1,5 +1,6 @@
 import 'dart:developer';
 import 'package:blog_app/core/utils/greeting.dart';
+import 'package:blog_app/features/blog/domain/usecases/create_article.dart';
 import 'package:blog_app/features/blog/domain/usecases/get_all_articles.dart';
 import 'package:blog_app/features/blog/domain/usecases/get_single_article.dart';
 import 'package:blog_app/features/blog/presentation/blocs/bloc.dart';
@@ -40,6 +41,7 @@ class _HomeState extends State<Home> {
       create: (context) => BlogBloc(
         getAllArticle: sl<GetArticleUseCase>(),
         getSingleArticle: sl<GetSingleArticleUseCase>(),
+        createArticle: sl<CreateArticleUseCase>(),
       ),
       child: BlocConsumer<BlogBloc, BlogState>(
         listener: (context, state) {

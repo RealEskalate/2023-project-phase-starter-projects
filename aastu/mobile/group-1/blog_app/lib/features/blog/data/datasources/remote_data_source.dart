@@ -12,13 +12,22 @@ class RemoteDataSource implements BlogRemoteDataSource {
 
   RemoteDataSource({required this.baseUrl});
 
-  Future<dynamic> _fetchData(String endpoint) async {
+  Future<dynamic> _fetchData(String endpoint, Map<String, dynamic> blogData,
+      [bool isGetReq = false]) async {
     log("fetching: $baseUrl/$endpoint");
     try {
-      final response = await http.get(
-        Uri.parse('$baseUrl/$endpoint'),
-        headers: {'Content-Type': 'application/json'},
-      );
+      var response;
+      if (isGetReq) {
+        response = await http.get(
+          Uri.parse('$baseUrl/$endpoint'),
+          headers: {'Content-Type': 'application/json'},
+        );
+      } else {
+        response = await http.post(
+          Uri.parse('$baseUrl/$endpoint'),
+          headers: {'Content-Type': 'application/json'},
+        );
+      }
 
       final responseData = json.decode(response.body);
 
@@ -39,7 +48,7 @@ class RemoteDataSource implements BlogRemoteDataSource {
 
   @override
   Future<List<Article>> getAllBlog() async {
-    final responseData = await _fetchData('article');
+    final responseData = await _fetchData('article', {});
 
     List<Article> articles = [];
     try {
@@ -56,9 +65,11 @@ class RemoteDataSource implements BlogRemoteDataSource {
   }
 
   @override
-  Future<void> postBlog(Map<String, dynamic> blogData) {
+  Future<Map<String, dynamic>> postBlog(Map<String, dynamic> blogData) async {
+    return await _fetchData('article', blogData);
+
     // TODO: implement postBlog
-    throw UnimplementedError();
+    // throw UnimplementedError();
   }
 
   @override
@@ -71,7 +82,7 @@ class RemoteDataSource implements BlogRemoteDataSource {
   Future<List<Article>> searchArticle(String tag, String key) async {
     try {
       final endpoint = 'article?tags=$tag&searchParams=$key';
-      final response = await _fetchData(endpoint);
+      final response = await _fetchData(endpoint, {});
 
       List<Article> articles = [];
       for (var articleData in response) {

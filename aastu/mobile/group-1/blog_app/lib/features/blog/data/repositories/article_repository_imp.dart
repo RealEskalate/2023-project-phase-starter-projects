@@ -37,7 +37,28 @@ class ArticleRepositoryImpl implements ArticleRepository {
   }
 
   @override
-  Future<Either<Failure, void>> createArticle(Article article) {
+  Future<Either<Failure, Article>> createArticle(Article newArticle) async {
+    try {
+      Map<String, dynamic> articleData = {
+        'title': newArticle.title,
+        'content': newArticle.content,
+        'subTitle': newArticle.subTitle,
+        // 'tagList': newArticle.tagList,
+      };
+      final responseData = await remoteDataSource.postBlog(articleData);
+      if (responseData != null) {
+        final article = Article.fromJson(responseData);
+        // Save user data to local storage
+        // await localDataSource.saveUserData(user);
+
+        return Right(article);
+      } else {
+        log("Invalid response data format: $responseData");
+        return const Left(ServerFailure('Invalid response data format'));
+      }
+    } catch (e) {
+      return const Left(ServerFailure('Error registering user'));
+    }
     // TODO: implement createArticle
     throw UnimplementedError();
   }

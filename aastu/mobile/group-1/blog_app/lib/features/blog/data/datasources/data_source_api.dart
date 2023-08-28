@@ -4,7 +4,7 @@ import 'package:dartz/dartz.dart';
 
 abstract class BlogRemoteDataSource {
   Future<List<Article>> getAllBlog();
-  Future<void> postBlog(Map<String, dynamic> blogData);
+  Future<Map<String, dynamic>> postBlog(Map<String, dynamic> blogData);
   Future<void> deleteBlog(String articleId);
   Future<List<Article>> searchArticle(String tag, String key);
 }
