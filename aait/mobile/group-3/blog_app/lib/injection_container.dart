@@ -1,9 +1,9 @@
-
 import 'package:blog_app/features/profile/data/data_sources/profile_local_data_source.dart';
 import 'package:blog_app/features/profile/data/data_sources/profile_remote_data_source.dart';
 import 'package:blog_app/features/profile/data/repository/profile_repository_impl.dart';
 import 'package:blog_app/features/profile/domain/repositories/profile_repository.dart';
 import 'package:blog_app/features/profile/domain/use_case/get_profile.dart';
+import 'package:blog_app/features/profile/domain/use_case/update_profile_picture.dart';
 import 'package:blog_app/features/profile/presentation/bloc/profile_bloc.dart';
 import 'package:get_it/get_it.dart';
 import 'package:http/http.dart' as http;
@@ -18,14 +18,17 @@ Future<void> init() async {
   //! Features - Article
   // Bloc
   serviceLocator.registerFactory(
-    () => ProfileBloc(getProfile: serviceLocator()),
+    () => ProfileBloc(
+        getProfile: serviceLocator(), updateProfilePicture: serviceLocator()),
   );
 
   // Use cases
   serviceLocator.registerLazySingleton(
     () => GetProfile(repository: serviceLocator()),
   );
-
+  serviceLocator.registerLazySingleton(
+    () => UpdateProfilePicture(repository: serviceLocator()),
+  );
   // Core
   serviceLocator.registerLazySingleton<NetworkInfo>(
       () => NetworkInfoImpl(serviceLocator()));

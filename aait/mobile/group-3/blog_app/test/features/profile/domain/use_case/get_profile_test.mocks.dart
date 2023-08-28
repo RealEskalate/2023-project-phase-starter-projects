@@ -10,6 +10,7 @@ import 'package:blog_app/features/profile/domain/entity/profile.dart' as _i6;
 import 'package:blog_app/features/profile/domain/repositories/profile_repository.dart'
     as _i3;
 import 'package:dartz/dartz.dart' as _i2;
+import 'package:image_picker/image_picker.dart' as _i7;
 import 'package:mockito/mockito.dart' as _i1;
 
 // ignore_for_file: type=lint
@@ -64,7 +65,7 @@ class MockProfileRepository extends _i1.Mock implements _i3.ProfileRepository {
       ) as _i4.Future<_i2.Either<_i5.Failure, _i6.Profile>>);
   @override
   _i4.Future<_i2.Either<_i5.Failure, _i6.Profile>> updateProfilePicture(
-          String? image) =>
+          _i7.XFile? image) =>
       (super.noSuchMethod(
         Invocation.method(
           #updateProfilePicture,
