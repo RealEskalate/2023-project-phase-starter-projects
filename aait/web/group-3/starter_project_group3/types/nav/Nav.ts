@@ -18,7 +18,7 @@ export const navLinks = [
         linkPath: "/blogs"   
     },
     {
-        linkName: "Get Invlolved",
-        linkPath: "/get-invlolved"
+        linkName: "Profile",
+        linkPath: "/profile"
     }
 ]
