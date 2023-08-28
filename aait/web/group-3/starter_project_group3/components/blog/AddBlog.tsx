@@ -50,7 +50,7 @@ const AddBlog:React.FC<Props> = ({
         </div>
         <div className="mr-20 pb-16 bg-bg_blog_upload relative">
             <img
-                src={image ? URL.createObjectURL(image) : "../assets/upload_image.svg"}
+                src={image ? URL.createObjectURL(image) : "../assets/upload_image.png"}
                 alt="Blog Image"
                 className="mx-auto mt-24 mb-8 object-center object-cover"
             />
@@ -114,7 +114,7 @@ const AddBlog:React.FC<Props> = ({
                 onClick={handleTagClick}
                 />
             ))}
-            </div>
+        </div>
       </div>
     </div>
   </form>

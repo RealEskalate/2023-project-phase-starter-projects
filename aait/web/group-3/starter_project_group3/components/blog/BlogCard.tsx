@@ -1,5 +1,6 @@
 import React from 'react';
 import { Blog, Author } from '@/types/blog/blog';
+import parse from 'html-react-parser';
 
 interface BlogProps extends Blog {
   author: Author | null;
@@ -46,7 +47,7 @@ const BlogCard: React.FC<BlogProps> = ({
         <div className='flex flex-col xl:flex-row gap-8'>
           <div>
             <h2 className="text-2xl font-bold mt-2">{title}</h2>
-            <p className="text-gray-700 ">{description}</p>
+            <p className="text-gray-700 ">{parse(description)}</p>
             <div className="flex flex-wrap mt-4">
               {tags.map((tag, index) => (
                 <span

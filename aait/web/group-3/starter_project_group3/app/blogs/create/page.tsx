@@ -61,11 +61,13 @@ const CreateBlogPage: React.FC = () => {
           formData.append("description", content);
           selectedTags.forEach(tag => formData.append("tags", tag));
           if (image) {
-            formData.append("image", image);
+            formData.append("image", image as Blob);
           }
   
           try {
+            
             const response = await addBlog(formData);
+
             if (response) {
                 console.log(response)
             }
