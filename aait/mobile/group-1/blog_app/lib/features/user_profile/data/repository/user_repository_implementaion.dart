@@ -1,5 +1,8 @@
 import 'package:blog_app/core/errors/failures/failure.dart';
+<<<<<<< HEAD
 // import 'package:blog_app/core/errors/failures/server_failure.dart';
+=======
+>>>>>>> 2cd84a9 (auth_completed)
 import 'package:blog_app/features/user_profile/data/datasources/profile_local_data_source.dart';
 import 'package:blog_app/features/user_profile/data/datasources/proile_remote_data_source.dart';
 import 'package:blog_app/features/user_profile/domain/entities/user_entity.dart';
@@ -27,7 +30,11 @@ class UserRepositoryImpl extends UserRepository {
         return Right(user);
       } catch (e) {
         print("error occured $e");
+<<<<<<< HEAD
         return Left(ServerFailure(message:e.toString()));
+=======
+        return Left(ServerFailure(message: e.toString()));
+>>>>>>> 2cd84a9 (auth_completed)
       }
     } else {
       try {

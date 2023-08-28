@@ -1,4 +1,5 @@
 import 'package:bloc/bloc.dart';
+import 'package:blog_app/Injection/injection.dart';
 import 'package:blog_app/core/network/network_info.dart';
 import 'package:blog_app/features/user_profile/data/datasources/profile_local_data_source.dart';
 import 'package:blog_app/features/user_profile/data/datasources/proile_remote_data_source.dart';
@@ -7,7 +8,7 @@ import 'package:blog_app/features/user_profile/domain/repositories/user_reposito
 import 'package:blog_app/features/user_profile/domain/usecases/get_user_info.dart';
 import 'package:meta/meta.dart';
 
-import '../../../../injection_container.dart';
+import '../../../../Injection/injection_container.dart';
 import '../../domain/entities/user_entity.dart';
 
 part 'profile_event.dart';

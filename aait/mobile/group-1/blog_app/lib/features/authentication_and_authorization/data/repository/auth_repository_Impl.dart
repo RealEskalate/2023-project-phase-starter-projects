@@ -55,10 +55,10 @@ class AuthRepositoryImpl extends AuthRepository {
             email: loginUserEnity.email, password: loginUserEnity.password);
         final remotelogin = await authRemoteDataSource.login(loginUserModel);
         authLocalDataSource.cacheToken(remotelogin.token);
-        print("shared token");
-        print(await authLocalDataSource.getToken());
-        print("shared user");
-        print(await authLocalDataSource.getUser());
+        // print("shared token");
+        // print(await authLocalDataSource.getToken());
+        // print("shared user");
+        // print(await authLocalDataSource.getUser());
 
         authLocalDataSource.setUser(DataModel(
             id: remotelogin.data.id,
