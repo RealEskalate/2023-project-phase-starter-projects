@@ -1,10 +1,10 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Link from "next/link";
-import { useRegisterUserMutation } from "@/store/features/auth-api";
+import { useRegisterUserMutation } from "@/store/features/auth/auth-api";
 import { useRouter } from "next/navigation";
-import Cookies from 'js-cookie';
+import Cookies from "js-cookie";
 
 const SignUp = () => {
   const [name, setName] = useState("");
@@ -17,7 +17,8 @@ const SignUp = () => {
   const [hasValidationError, setValidationError] = useState(true);
   const [formError, setFormError] = useState("");
 
-  const [registerUser, { isLoading,error,isError }] = useRegisterUserMutation();
+  const [registerUser, { isLoading, error, isError }] =
+    useRegisterUserMutation();
 
   const router = useRouter();
 
@@ -31,32 +32,14 @@ const SignUp = () => {
 
   const handleNameInput = (e: React.ChangeEvent<HTMLInputElement>) => {
     setName(e.target.value);
-    if (name.length < 3) {
-      setNameError("name must be atleast 3 characters");
-    } else {
-      setNameError("");
-    }
-    validateError();
   };
 
   const handleEmailInput = (e: React.ChangeEvent<HTMLInputElement>) => {
     setEmail(e.target.value);
-    if (/\S+@\S+\.\S+/.test(email)) {
-      setEmailError("");
-    } else {
-      setEmailError("not valid email");
-    }
-    validateError();
   };
 
   const handlePasswordInput = (e: React.ChangeEvent<HTMLInputElement>) => {
     setPassword(e.target.value);
-    if (password.length < 4) {
-      setPasswordError("password must be atleast 4 characters");
-    } else {
-      setPasswordError("");
-    }
-    validateError();
   };
 
   const handleRegisterUser = async (e: React.MouseEvent<HTMLButtonElement>) => {
@@ -72,19 +55,54 @@ const SignUp = () => {
         }
       } else {
         const currUser = {
-            user:res.data.userId,
-            userName:name,
-            userRole:"user",
-            userEmail:email,
-            userProfile:"https://res.cloudinary.com/djtkzulun/image/upload/v1684307248/Portfolio/dgxjqlgpys1imwnw2bhq.png",
-            token:res.data.token
-        }
-        Cookies.set('user',JSON.stringify(currUser),{expires:7,path:"/",sameSite:"none",secure:true})
+          user: res.data.userId,
+          userName: name,
+          userRole: "user",
+          userEmail: email,
+          userProfile:
+            "https://res.cloudinary.com/djtkzulun/image/upload/v1684307248/Portfolio/dgxjqlgpys1imwnw2bhq.png",
+          token: res.data.token,
+        };
+        Cookies.set("user", JSON.stringify(currUser), {
+          expires: 7,
+          path: "/",
+          sameSite: "none",
+          secure: true,
+        });
         router.push("/");
       }
     }
   };
 
+  useEffect(()=>{
+    if (/\S+@\S+\.\S+/.test(email)) {
+      setEmailError("");
+    } else {
+      setEmailError("not valid email");
+    }
+
+  },[email])
+
+  useEffect(()=>{
+    if (password.length < 4) {
+      setPasswordError("password must be atleast 4 characters");
+    } else {
+      setPasswordError("");
+    }
+  },[password])
+
+  useEffect(()=>{
+    if (name.length < 3) {
+      setNameError("name must be atleast 3 characters");
+    } else {
+      setNameError("");
+    }
+  },[name])
+
+  useEffect(()=>{
+    validateError()
+  },[nameError,passwordError,emailError])
+  
   return (
     <main className="flex w-full">
       <div className="hidden md:block w-1/2 pl-12">

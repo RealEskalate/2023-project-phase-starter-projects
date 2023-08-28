@@ -3,7 +3,7 @@ import UserCredential from '@/types/auth/userCredential'
 import {createApi,fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 
 const authApi = createApi({
-    reducerPath: 'api',
+    reducerPath: 'auth-api',
     baseQuery:fetchBaseQuery({baseUrl:'https://a2sv-backend.onrender.com/api/auth/'}),
     endpoints: (build)=>({
         registerUser:build.mutation({
