@@ -31,10 +31,11 @@ const page = () => {
       )}
       {!isLoading && !isError && (
         <div className="py-10 font-montserrat">
+          
           {/* Search section and header */}
-          <div className="px-20 flex flex-col md:flex-row gap-4 md:gap-96">
+          <div className="px-20 flex flex-col md:flex-row space-y-4 md:space-y-0 md:space-x-96">
             <h1 className="font-semibold text-xl">Blogs</h1>
-            <div className="flex gap-6">
+            <div className="flex space-x-6">
               <input
                 type="text"
                 placeholder="Search..."
@@ -72,7 +73,7 @@ const page = () => {
           </div>
 
           {/* pagination */}
-          <div className="w-full flex justify-center gap-5 mt-4">
+          <div className="w-full flex justify-center space-x-5 mt-4">
             <div className="page bg-blue-800 text-white">1</div>
             <div className="page bg-gray-200">2</div>
             <div className="page bg-gray-200">3</div>
