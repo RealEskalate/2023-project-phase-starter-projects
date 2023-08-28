@@ -1,12 +1,13 @@
+'use client'
 import { Story } from "@/types/Story/story-type";
 import { useGetAllStoriesQuery } from "@/store/story/story-api";
-import {SuccessStoryCard} from './StoryCard'
-import {Partners} from "./Partners";
-import { StoryHead } from "./StoryHead";
+import {SuccessStoryCard} from '@/components/story//StoryCard'
+import {Partners} from "@/components/story//Partners";
+import { StoryHead } from "@/components/story/StoryHead";
 
-export const ShowStories = ()=> {
-    const{data:allStories, isLoading, isError} = useGetAllStoriesQuery()
-     
+export default function ShowStories () {
+    const{data:allStories=[], isLoading, isError} = useGetAllStoriesQuery()
+     console.log(allStories);
     if(isError)
     {
         return <h1>Error: {isError.toString()}</h1>

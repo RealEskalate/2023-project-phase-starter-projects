@@ -1,5 +1,10 @@
+'use client'
+import { Provider } from "react-redux";
 import "./globals.css";
 import type { Metadata } from "next";
+import { store } from "@/store/page";
+import { ApiProvider } from "@reduxjs/toolkit/dist/query/react";
+import { storiesApi } from "@/store/story/story-api";
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -13,7 +18,13 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body>{children}</body>
+      <body>
+        <Provider store={store}>
+          <ApiProvider api={storiesApi}>
+          {children}
+          </ApiProvider>
+        </Provider>
+        </body>
     </html>
   );
 }
