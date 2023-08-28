@@ -10,6 +10,7 @@ import 'features/article/data/datasources/local/local.dart';
 import 'features/article/data/datasources/remote/remote.dart';
 import 'features/article/data/repositories/article_repository_impl.dart';
 import 'features/article/domain/repositories/article_repository.dart';
+import 'features/article/domain/usecases/filter_articles.dart';
 import 'features/article/domain/usecases/usecases.dart';
 import 'features/article/presentation/bloc/article_bloc.dart';
 import 'features/article/presentation/bloc/tag_bloc.dart';
@@ -40,12 +41,12 @@ Future<void> init() async {
   // Bloc
   serviceLocator.registerFactory(
     () => ArticleBloc(
-      createArticle: serviceLocator(),
-      deleteArticle: serviceLocator(),
-      getAllArticles: serviceLocator(),
-      getArticle: serviceLocator(),
-      updateArticle: serviceLocator(),
-    ),
+        createArticle: serviceLocator(),
+        deleteArticle: serviceLocator(),
+        getAllArticles: serviceLocator(),
+        getArticle: serviceLocator(),
+        updateArticle: serviceLocator(),
+        filterArticles: serviceLocator()),
   );
   serviceLocator.registerFactory(
     () => TagSelectorBloc(),
@@ -89,6 +90,9 @@ Future<void> init() async {
   );
   serviceLocator.registerLazySingleton(
     () => GetArticle(serviceLocator()),
+  );
+  serviceLocator.registerLazySingleton(
+    () => FilterArticles(serviceLocator()),
   );
 
   serviceLocator.registerLazySingleton(

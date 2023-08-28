@@ -110,6 +110,8 @@ class _HomePageState extends State<HomePage> {
               builder: (context, state) {
                 if (state is ArticleLoadingState) {
                   return const LoadingWidget();
+                } else if (state is AllArticlesFilteredState) {
+                  return ArticleList(articles: state.articles);
                 } else if (state is AllArticlesLoadedState) {
                   return ArticleList(articles: state.articles);
                 }

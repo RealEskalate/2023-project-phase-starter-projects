@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../../../core/presentation/theme/app_colors.dart';
+import '../../domain/entities/tag.dart';
+import '../bloc/article_bloc.dart';
 
 class CustomSearchBar extends StatelessWidget {
   const CustomSearchBar({super.key});
@@ -44,6 +47,10 @@ class CustomSearchBar extends StatelessWidget {
             borderSide: const BorderSide(color: AppColors.blue),
           ),
         ),
+        onSubmitted: (value) {
+          BlocProvider.of<ArticleBloc>(context)
+              .add(FilterArticlesEvent(Tag(name: ''), value));
+        },
       ),
     );
   }
