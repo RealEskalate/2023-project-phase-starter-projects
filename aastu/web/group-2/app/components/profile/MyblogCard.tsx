@@ -60,7 +60,7 @@ const SingleBlogCard: React.FC<Blog> = ({
                     {tags.map((tag, i) => {
                         return (
                             <p
-                                className='block m-2 rounded-full py-1 px-3 bg-gray-100 dark:bg-dark-backgroundLight dark:text-dark-textColor-50'>{tag}</p>
+                                className='block m-2 rounded-full py-1 px-3 bg-gray-100 dark:bg-dark-background dark:text-dark-textColor-50'>{tag}</p>
                         )
 
                     })}
