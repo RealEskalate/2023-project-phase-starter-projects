@@ -14,7 +14,7 @@ const fieldInfo: Array<Array<string>> = [
 
 const SignupForm = () => {
   const [register, { isLoading, isError, isSuccess, error }] = useRegisterMutation()
-  const [formData, setFormData] = useState({
+  const [credentials, setCredentials] = useState({
     name: "",
     email: "",
     password: "",
@@ -22,12 +22,11 @@ const SignupForm = () => {
 
   const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target
-    setFormData((prevData) => ({...prevData, [name]: value}))
+    setCredentials((prevData) => ({...prevData, [name]: value}))
   }
 
   const handleSignup = () => {
-    console.log(formData)
-    register(formData)
+    register(credentials)
   }
 
   return (
@@ -41,7 +40,7 @@ const SignupForm = () => {
           name={field[1]}
           id={field[1]}
           placeholder={field[2]}
-          value={formData[field[1]]}
+          value={credentials[field[1]]}
           onChange={handleInputChange}
         />
       ))}
