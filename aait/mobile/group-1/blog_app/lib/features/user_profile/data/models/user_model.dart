@@ -1,3 +1,5 @@
+import 'dart:collection';
+
 import 'package:blog_app/features/user_profile/domain/entities/article.dart';
 import 'package:equatable/equatable.dart';
 
