@@ -1,4 +1,6 @@
 import Image from "@/node_modules/next/image";
+import BuildBetter from "./BuildBetter";
+import Landing from "./Landing";
 
 export default function HomePage() {
   return (
@@ -6,68 +8,11 @@ export default function HomePage() {
       {
         //landing section
       }
-      <div className="h-screen flex">
-        {
-          //written part
-        }
-        <div className="w-1/2 m-4">
-          <h1 className="text-7xl leading-80 my-12">
-            <b className="font-poppins text-dark-blue">Africa to</b>
-            <b className="text-blue-800 font-Roboto"> Silicon Valley</b>
-          </h1>
-          <div className="w-3/4">
-            <p className="text-3xl leading-60 my-10">
-              A2SV up-skills high-potential university students, connects them
-              with opportunities at top tech companies
-            </p>
-            <div className="flex justify-center">
-              <button className="border border-blue-500 text-blue-800 bg-white px-4 py-2 rounded-md mr-5 w-1/2">
-                Get Started
-              </button>
-              <button className="bg-blue-800 text-white px-4 py-2 rounded-md w-1/2">
-                SUPPORT US
-              </button>
-            </div>
-          </div>
-        </div>
-
-        {
-          //pic part
-        }
-        <div className="w-1/2 m-4">
-          <img src="/images/Home/front.png" />
-        </div>
-      </div>
-
+      <Landing />
       {
         //etter section
       }
-      <div className="h-screen flex items-center justify-center">
-        <div>
-          <h1 className="text-7xl leading-80  my-12 text-center">
-            Lets build a better
-            <br />
-            tomorrow
-          </h1>
-          <p className="text-xl leading-60 my-12 text-center">
-            A2SV upskills high-potential university students, connects them with
-            opportunities at top tech companies around the
-            <br /> world, and creates digital solutions to urgent problems in
-            their home countries. The program is free for students,
-            <br /> making the opportunity available for youth who have talent
-            but lack the means to use it.
-          </p>
-          <div className="flex justify-center">
-            <button className="bg-blue-500 text-white w-405 h-89 px-4 py-2 rounded-md">
-              Connect to our team
-            </button>
-          </div>
-        </div>
-      </div>
-
-      <div className="h-screen">
-        <img src="/images/Home/group-pic.jpg" />
-      </div>
+      <BuildBetter />
 
       <div className="h-screen m-4">
         <h1 className="text-center text-5xl font-bold">
