@@ -1,0 +1,22 @@
+{
+    "headerData":[
+        {
+          "name": "Personal Information",
+          "link": "/profile",
+          "manageText": "Personal Information",
+          "manageDetail": "Add all the required information about yourself"
+        },
+        {
+          "name": "My Blogs",
+          "link": "/profile/my-blogs",
+          "manageText": "Blogs",
+          "manageDetail": "Edit, Delete and View the Status of your blogs"
+        },
+        {
+          "name": "Account Setting",
+          "link": "/profile/account-setting",
+          "manageText": "Your Account",
+          "manageDetail": "You can change your password here"
+        }
+      ]
+}
