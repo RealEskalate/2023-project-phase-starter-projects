@@ -1,3 +1,5 @@
+import 'package:image_picker/image_picker.dart';
+
 import '../../../../core/util/typedef.dart';
 import '../entity/article.dart';
 
@@ -9,7 +11,7 @@ abstract class ArticleRepository {
     required String title,
     required String subTitle,
     required String estimatedReadTime,
-    required String image,
+    required XFile image,
   });
   // Read Ariticle
   ResultFuture<List<Article>> getArticle({
@@ -25,7 +27,7 @@ abstract class ArticleRepository {
     required String title,
     required String subTitle,
     required String estimatedReadTime,
-    required String image,
+    required XFile image,
     required String id,
   });
   // Delete  Article
