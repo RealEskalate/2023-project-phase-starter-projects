@@ -41,7 +41,7 @@ class ArticleModel extends Article implements Equatable {
         title: json["title"],
         subTitle: json["subTitle"],
         content: json["content"],
-        authorId: json["authorId"],
+        authorId: json["user"],
         image: json["image"],
         tags: json["tags"]);
   }

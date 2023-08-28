@@ -29,14 +29,7 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
 
     on<ProfileEvent>((event, emit) async {
       if (event is GetProfileInfo) {
-        emit(Loaded(User(
-            id: "",
-            email: "abe@gmail.com",
-            fullName: 'Abebe Kebede',
-            bio:
-                "I am an inspiring Designer who focuses on UI/UX design and development. I have worked on several projects and I am looking forward to working on more projects.",
-            expertise: "UI/UX Designer",
-            image: "https://i.pravatar.cc/150?img=1")));
+        emit(Loading());
         final userInfo = await getProfileInfo();
         if (userInfo.isRight()) {
           userInfo.fold(
