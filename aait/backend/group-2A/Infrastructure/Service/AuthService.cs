@@ -64,7 +64,7 @@ public class AuthService : IAuthService {
          if (!creatingUser.Succeeded){
              throw new BadRequestException($"Check Your Password \n"); 
          } 
-         AuthRequest request = new AuthRequest {Email = req.Email, Password = req.Password };
+
          return true;
      }
      private async Task<JwtSecurityToken> GenerateToken(ApplicaionUser user, string Id){
