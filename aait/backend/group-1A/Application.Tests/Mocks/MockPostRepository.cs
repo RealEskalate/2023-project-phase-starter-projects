@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
@@ -14,7 +14,7 @@ namespace Application.Tests.Mocks
     {
         public static Mock<IPostRepository> GetPostRepository()
         {
-            var posts = new List<Post> ()
+            var posts = new List<Post>()
             {
                 new Post(){
                     Id = 1,
@@ -52,24 +52,24 @@ namespace Application.Tests.Mocks
                 ).ReturnsAsync(posts);
 
             mockPostRepository.Setup(
-                repo => repo.Get(It.IsAny<int>(),It.IsAny<int>())).
+                repo => repo.Get(It.IsAny<int>(), It.IsAny<int>())).
                 ReturnsAsync(
-                    (int id, int userId) => 
+                    (int id, int userId) =>
                     posts.FirstOrDefault(post => post.Id == id && post.UserId == userId));
-            
+
             mockPostRepository.Setup(
                 repo => repo.Add(It.IsAny<Post>())).
                 ReturnsAsync(
-                    (Post post) => 
+                    (Post post) =>
                     {
                         posts.Add(post);
                         return post;
                     });
-            
+
             mockPostRepository.Setup(
                 repo => repo.Delete(It.IsAny<Post>())).
                 ReturnsAsync(
-                    (Post post) => 
+                    (Post post) =>
                     {
                         posts.Remove(post);
                         return true;
@@ -78,22 +78,22 @@ namespace Application.Tests.Mocks
             mockPostRepository.Setup(
                 repo => repo.Update(It.IsAny<Post>())).
                 ReturnsAsync(
-                    (Post post) => 
+                    (Post post) =>
                     {
                         var postToUpdate = posts.FirstOrDefault(post => post.Id == post.Id);
                         postToUpdate = post;
                         return postToUpdate;
                     });
-            
+
             mockPostRepository.Setup(
                 repo => repo.Exists(It.IsAny<int>())).
                 ReturnsAsync(
-                    (int id) => 
+                    (int id) =>
                     {
                         return posts.Any(post => post.Id == id);
                     });
-            
-            
+
+
             return mockPostRepository;
 
         }

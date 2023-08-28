@@ -6,6 +6,8 @@ using Persistence;
 using Persistence.Repositories;
 using Persistence.Repositories.CommentRespositories;
 using Persistence.Repositories.NotificationRepository;
+using SocialSync.Application.Contracts;
+using SocialSync.Persistence.Repositories.Auth;
 using System.Reflection;
 using Persistence.Repositories.ReactionRespositories;
 
@@ -24,6 +26,13 @@ namespace Persistence
             services.AddScoped<ICommentRepository, CommentRepository>(); // Add this line
             services.AddScoped<ICommentReactionRepository, CommentReactionRepository>(); // Add this line
             services.AddScoped<INotificationRepository, NotificationRepository>();
+            services.AddScoped<IFollowRepository, FollowRepository>();
+            services.AddScoped<IUserRepository, UserRepository>();
+            services.AddScoped<IAuthRepository, AuthRepository>();
+            services.AddScoped<IJwtGenerator, JwtGenerator>();
+            services.AddScoped<ICommentReactionRepository, CommentReactionRepository>();
+            services.AddScoped<ICommentRepository, CommentRepository>();
+
             return services;
         }
     }

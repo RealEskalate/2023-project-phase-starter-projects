@@ -1,8 +1,11 @@
 ﻿using Application.DTO.CommentDTO.DTO;
+using Application.DTO;
 using Application.DTO.Common;
 ﻿using Application.DTO.Common;
+using Application.DTO.FollowDTo;
 using Application.DTO.NotificationDTO;
 using Application.DTO.PostDTO.DTO;
+using Application.DTO.UserDTO.DTO;
 using AutoMapper;
 using Domain.Entites;
 using Domain.Entites;
@@ -42,6 +45,11 @@ namespace Application.Profiles
             CreateMap<CommentUpdateDTO, Comment>().ReverseMap();
             
         
+            CreateMap<FollowDTO, Follow>().ReverseMap();
+            CreateMap<UserDto, User>().ReverseMap();
+            CreateMap<UserResponseDTO, User>().ReverseMap();
+            CreateMap<UserCreateDTO, User>().ReverseMap();
+            CreateMap<UserUpdateDTO, User>().ReverseMap();
         }
     }
 }

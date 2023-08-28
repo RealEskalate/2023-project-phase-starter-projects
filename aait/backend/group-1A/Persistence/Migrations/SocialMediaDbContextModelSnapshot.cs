@@ -23,6 +23,21 @@ namespace Persistence.Migrations
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
+            modelBuilder.Entity("Domain.Entites.Follow", b =>
+                {
+                    b.Property<int>("FollowerId")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("FolloweeId")
+                        .HasColumnType("integer");
+
+                    b.HasKey("FollowerId", "FolloweeId");
+
+                    b.HasIndex("FolloweeId");
+
+                    b.ToTable("Follow");
+                });
+
             modelBuilder.Entity("Domain.Entites.Notification", b =>
                 {
                     b.Property<int>("Id")
@@ -174,6 +189,62 @@ namespace Persistence.Migrations
                     b.ToTable("PostReactions");
                 });
 
+            modelBuilder.Entity("SocialSync.Domain.Entities.User", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Bio")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("FirstName")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("LastName")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("Password")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("Username")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Users");
+                });
+
+            modelBuilder.Entity("Domain.Entites.Follow", b =>
+                {
+                    b.HasOne("SocialSync.Domain.Entities.User", "Follower")
+                        .WithMany("Followee")
+                        .HasForeignKey("FolloweeId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("SocialSync.Domain.Entities.User", "Followee")
+                        .WithMany("Follower")
+                        .HasForeignKey("FollowerId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Followee");
+
+                    b.Navigation("Follower");
+                });
+
             modelBuilder.Entity("Domain.Entities.Comment", b =>
                 {
                     b.HasOne("Domain.Entities.Post", "post")
@@ -235,6 +306,13 @@ namespace Persistence.Migrations
                     b.Navigation("Comments");
 
                     b.Navigation("PostReactions");
+                });
+
+            modelBuilder.Entity("SocialSync.Domain.Entities.User", b =>
+                {
+                    b.Navigation("Followee");
+
+                    b.Navigation("Follower");
                 });
 #pragma warning restore 612, 618
         }

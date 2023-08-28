@@ -1,4 +1,5 @@
 ﻿using Domain.Entites;
+using Domain.Entites;
 using Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 
@@ -17,6 +18,9 @@ namespace Persistence
         public virtual DbSet<Comment> Comments { get; set; }
 
         public virtual DbSet<PostReaction> PostReactions { get; set; }
+        public virtual DbSet<Follow> Follow { get; set; }
+        public virtual DbSet<User> Users {get; set;}
+
         public virtual DbSet<CommentReaction> CommentReaction { get; set; }
 
         public virtual DbSet<Notification> Notifications {get ; set ;}
@@ -28,7 +32,6 @@ namespace Persistence
             base.OnModelCreating(modelBuilder);
 
             modelBuilder.ApplyConfigurationsFromAssembly(typeof(SocialMediaDbContext).Assembly);
-
         }
     }
 }
