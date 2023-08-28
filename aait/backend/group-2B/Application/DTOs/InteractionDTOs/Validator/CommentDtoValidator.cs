@@ -21,17 +21,17 @@ public class CommentDtoValidator : AbstractValidator<InteractionDto>
             .MaximumLength(200)
             .WithMessage("{proprtyName} can not exceed 200 characters");
 
-        RuleFor(interaction => interaction.PostId)
-            .GreaterThan(0)
-            .MustAsync(
-                async (id, token) =>
-                {
-                    var postExists = await _unitOfWork.PostRepository.GetAsync(id);
-                    return postExists != null;
-                }
-            )
-            .WithMessage("{PropertyName} doesn't exist");
-
+        // RuleFor(interaction => interaction.PostId)
+        //     .GreaterThan(0)
+        //     .MustAsync(
+        //         async (id, token) =>
+        //         {
+        //             var postExists = await _unitOfWork.PostRepository.GetAsync(id);
+        //             return postExists != null;
+        //         }
+        //     )
+        //     .WithMessage("{PropertyName} doesn't exist");
+        //
         RuleFor(interaction => interaction.UserId)
             .GreaterThan(0)
             .MustAsync(
@@ -39,7 +39,7 @@ public class CommentDtoValidator : AbstractValidator<InteractionDto>
                 {
                     var userExists = await _unitOfWork.UserRepository.GetAsync(id);
                     return userExists != null;
-
+        
                 }
             )
             .WithMessage("{PropertyName} doesn't exist");

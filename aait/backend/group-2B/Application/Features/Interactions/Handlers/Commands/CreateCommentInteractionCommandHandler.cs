@@ -31,7 +31,7 @@ public class CreateCommentInteractionCommandHandler
     {
         var response = new BaseCommandResponse();
         var validator = new CommentDtoValidator(_unitOfWork);
-
+        
         var validationResult = await validator.ValidateAsync(command.CreateCommentDto);
         
         if (!validationResult.IsValid)
