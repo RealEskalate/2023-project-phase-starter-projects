@@ -24,29 +24,35 @@ public class TagReposiotry : ITagRepository
 
     public Task<bool> Delete(Tag entity)
     {
-        throw new NotImplementedException();
+        //delete tag
+        _socialMediaDbContext.Tags.Remove(entity);
+        _socialMediaDbContext.SaveChanges();
+        return Task.FromResult(true);
     }
 
     public Task<bool> Exists(int id)
     {
-        throw new NotImplementedException();
+       var result = _socialMediaDbContext.Tags.Where(x => x.Id == id).Any();
+         return Task.FromResult(result);
     }
 
 
     public Task<Tag> Update(Tag entity)
     {
-        throw new NotImplementedException();
+        _socialMediaDbContext.Tags.Update(entity);
+        _socialMediaDbContext.SaveChanges();
+        return Task.FromResult(entity);
     }
    public Task<List<Tag>>  GetAll(Expression<Func<Tag, bool>> predicate)
     {
-        throw new NotImplementedException();
+        var result = _socialMediaDbContext.Tags.Where(predicate).ToList();
+        return Task.FromResult(result);
     }
 
     Task<List<Tag>> ITagRepository.GetAll()
     {
-        // var result =   _socialMediaDbContext.Tags.All();
-        // return Task.FromResult()
-        throw new NotImplementedException();
+        var result = _socialMediaDbContext.Tags.ToList();
+        return Task.FromResult(result);
         
     }
 }

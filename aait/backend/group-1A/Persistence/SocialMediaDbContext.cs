@@ -25,6 +25,7 @@ namespace Persistence
         public virtual DbSet<Tag> Tags { get; set; }
 
         public virtual DbSet<Notification> Notifications {get ; set ;}
+        public virtual DbSet<PostTag> PostTags {get;set;}
 
         public SocialMediaDbContext(DbContextOptions<SocialMediaDbContext> options) : base(options) { }
 
