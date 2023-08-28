@@ -17,7 +17,7 @@ final GoRouter router = GoRouter(
     ),
     GoRoute(
       path: Routes.home,
-      builder: (context, state) => const SplashScreen(),
+      builder: (context, state) => const HomePage(),
     ),
     GoRoute(
       path: Routes.articles,
@@ -34,9 +34,7 @@ final GoRouter router = GoRouter(
         return ArticleScreen(article: article);
       },
     ),
-    GoRoute(
-      path: Routes.home,
-      builder: (context, state) => const HomePage(),
-    ),
+
+    // Auth routes
   ],
 );
