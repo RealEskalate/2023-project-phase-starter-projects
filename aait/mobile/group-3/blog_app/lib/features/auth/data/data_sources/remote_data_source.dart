@@ -48,7 +48,10 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
           return throw EmailAndPasswordNotMatchException();
         }
       } else {
-        return throw ServerException(statusCode: response.statusCode);
+        return throw ServerException(
+          statusCode: response.statusCode,
+          message: "Something went wrong please try again",
+        );
       }
     } else {
       return throw NetworkConnectionException();
@@ -70,7 +73,10 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
           return throw EmailAndPasswordNotMatchException();
         }
       } else {
-        return throw ServerException(statusCode: response.statusCode);
+        return throw ServerException(
+          statusCode: response.statusCode,
+          message: "Something went wrong please try again",
+        );
       }
     } else {
       return throw NetworkConnectionException();

@@ -30,7 +30,10 @@ class ProfileRemoteDataSourceImpl implements ProfileRemoteDataSource {
       final ProfileModel profile = ProfileModel.fromJson(jsonResponse);
       return profile;
     } else {
-      throw ServerException(statusCode: 400);
+      throw ServerException(
+        statusCode: 400,
+        message: "Could not connect to the internet",
+      );
     }
   }
 
@@ -64,7 +67,10 @@ class ProfileRemoteDataSourceImpl implements ProfileRemoteDataSource {
       final result = await http.Response.fromStream(response);
       print(result.body);
       print(response.statusCode);
-      throw ServerException(statusCode: 400);
+      throw ServerException(
+        statusCode: 400,
+        message: "Could not successfully upadte profile picture",
+      );
     }
   }
 
