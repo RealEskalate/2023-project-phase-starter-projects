@@ -6,6 +6,7 @@ import 'package:blog_app/features/profile/data/data_sources/profile_remote_data_
 import 'package:blog_app/features/profile/domain/entity/profile.dart';
 import 'package:blog_app/features/profile/domain/repositories/profile_repository.dart';
 import 'package:dartz/dartz.dart';
+import 'package:image_picker/image_picker.dart';
 
 class ProfileRepositoryImpl implements ProfileRepository {
   final NetworkInfo networkInfo;
@@ -29,8 +30,14 @@ class ProfileRepositoryImpl implements ProfileRepository {
   }
 
   @override
-  Future<Either<Failure, Profile>> updateProfilePicture(String image) {
-    // TODO: implement updateProfilePicture
-    throw UnimplementedError();
+  Future<Either<Failure, Profile>> updateProfilePicture(XFile image) async {
+    try {
+      final remoteProfile = await remoteDataSource.updateProfilePicture(image);
+      final bookmarks = await localDataSource.getBookmarkArticles();
+      return Right(remoteProfile.copyWith(bookmarks: bookmarks));
+    } on ServerException {
+      return Left(ServerFailure(
+          message: "Update profile picture failed", statusCode: 400));
+    }
   }
 }

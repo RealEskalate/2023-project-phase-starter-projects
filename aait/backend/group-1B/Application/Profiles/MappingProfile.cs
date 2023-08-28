@@ -5,6 +5,7 @@ using Application.DTOs.PostLikes;
 using Application.DTOs.Posts;
 using AutoMapper;
 using Domain.Entities;
+using Application.DTOs.Users;
 
 namespace Application.Profiles;
 
@@ -31,6 +32,12 @@ public class MappingProfile : Profile
         CreateMap<User, RegisterRequestDto>().ReverseMap();
             CreateMap<User, LoginRequestDto>().ReverseMap();
             CreateMap<User, LoginResponseDto>().ReverseMap();
+
+        CreateMap<User, UpdateUserDto>().ReverseMap();
+        CreateMap<User, UserDetail>().ReverseMap();
+        CreateMap<User, UserListDto>().ReverseMap();
+
+        CreateMap<Follow, FollowDto>().ReverseMap();
     }
 }
 

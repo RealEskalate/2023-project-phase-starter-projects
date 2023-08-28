@@ -5,13 +5,14 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'dart:async' as _i4;
 
-import 'package:blog_app/core/network/network_info.dart' as _i7;
+import 'package:blog_app/core/network/network_info.dart' as _i8;
 import 'package:blog_app/features/profile/data/data_sources/profile_local_data_source.dart'
-    as _i5;
+    as _i6;
 import 'package:blog_app/features/profile/data/data_sources/profile_remote_data_source.dart'
     as _i3;
-import 'package:blog_app/features/profile/domain/entity/article.dart' as _i6;
+import 'package:blog_app/features/profile/domain/entity/article.dart' as _i7;
 import 'package:blog_app/features/profile/domain/entity/profile.dart' as _i2;
+import 'package:image_picker/image_picker.dart' as _i5;
 import 'package:mockito/mockito.dart' as _i1;
 
 // ignore_for_file: type=lint
@@ -61,29 +62,51 @@ class MockProfileRemoteDataSource extends _i1.Mock
           ),
         )),
       ) as _i4.Future<_i2.Profile>);
+  @override
+  _i4.Future<_i2.Profile> updateProfilePicture(_i5.XFile? photoFile) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #updateProfilePicture,
+          [photoFile],
+        ),
+        returnValue: _i4.Future<_i2.Profile>.value(_FakeProfile_0(
+          this,
+          Invocation.method(
+            #updateProfilePicture,
+            [photoFile],
+          ),
+        )),
+        returnValueForMissingStub: _i4.Future<_i2.Profile>.value(_FakeProfile_0(
+          this,
+          Invocation.method(
+            #updateProfilePicture,
+            [photoFile],
+          ),
+        )),
+      ) as _i4.Future<_i2.Profile>);
 }
 
 /// A class which mocks [ProfileLocalDataSource].
 ///
 /// See the documentation for Mockito's code generation for more information.
 class MockProfileLocalDataSource extends _i1.Mock
-    implements _i5.ProfileLocalDataSource {
+    implements _i6.ProfileLocalDataSource {
   @override
-  _i4.Future<List<_i6.Article>> getBookmarkArticles() => (super.noSuchMethod(
+  _i4.Future<List<_i7.Article>> getBookmarkArticles() => (super.noSuchMethod(
         Invocation.method(
           #getBookmarkArticles,
           [],
         ),
-        returnValue: _i4.Future<List<_i6.Article>>.value(<_i6.Article>[]),
+        returnValue: _i4.Future<List<_i7.Article>>.value(<_i7.Article>[]),
         returnValueForMissingStub:
-            _i4.Future<List<_i6.Article>>.value(<_i6.Article>[]),
-      ) as _i4.Future<List<_i6.Article>>);
+            _i4.Future<List<_i7.Article>>.value(<_i7.Article>[]),
+      ) as _i4.Future<List<_i7.Article>>);
 }
 
 /// A class which mocks [NetworkInfo].
 ///
 /// See the documentation for Mockito's code generation for more information.
-class MockNetworkInfo extends _i1.Mock implements _i7.NetworkInfo {
+class MockNetworkInfo extends _i1.Mock implements _i8.NetworkInfo {
   @override
   _i4.Future<bool> get isConnected => (super.noSuchMethod(
         Invocation.getter(#isConnected),

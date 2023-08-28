@@ -1,4 +1,6 @@
+import 'package:blog_app/core/util/image_sheet.dart';
 import 'package:blog_app/features/profile/presentation/bloc/profile_bloc.dart';
+import 'package:blog_app/features/profile/presentation/widgets/loading_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -19,17 +21,11 @@ class ProfileScreen extends StatelessWidget {
       case ProfileInitial():
         bloc.add(GetData());
         return Scaffold(
-          body: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [TitleBar(), CircularProgressIndicator()],
-          ),
+          body: LoadingWidget(message: state.message,)
         );
       case ProfileLoading():
         return Scaffold(
-          body: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [TitleBar(), CircularProgressIndicator()],
-          ),
+          body: LoadingWidget(message: state.message),
         );
       case ProfileLoaded():
         return Scaffold(
@@ -42,7 +38,13 @@ class ProfileScreen extends StatelessWidget {
                     height: 25.h,
                   ),
                   Stack(children: [
-                    ProfileContent(profile: state.profile,),
+                    ProfileContent(
+                      profile: state.profile,
+                      onChangeImage: () async {
+                        final file = await ImageSheet().show(context);
+                        bloc.add(UpdatePicture(imageFile: file));
+                      },
+                    ),
                     Column(children: [
                       SizedBox(
                         height: 52.h,
@@ -71,3 +73,4 @@ class ProfileScreen extends StatelessWidget {
     }
   }
 }
+

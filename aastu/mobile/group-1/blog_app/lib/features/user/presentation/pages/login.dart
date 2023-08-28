@@ -1,6 +1,8 @@
+import 'dart:developer';
+
+import 'package:blog_app/features/onboarding/widgets/login_widget.dart';
 import 'package:blog_app/features/onboarding/widgets/signUp_widget.dart';
 import 'package:flutter/material.dart';
-import 'package:blog_app/features/onboarding/widgets/login_widget.dart';
 
 class Login extends StatefulWidget {
   const Login({Key? key}) : super(key: key);
@@ -11,10 +13,9 @@ class Login extends StatefulWidget {
 
 class _LoginState extends State<Login> {
   int activeIndex = 0;
- final List<Widget> AuthWidgets = [
-   LoginWidget(),
-   SignUpWidget()
- ];
+
+  final List<Widget> AuthWidgets = [const LoginWidget(), const SignUpWidget()];
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -27,23 +28,23 @@ class _LoginState extends State<Login> {
                 Container(
                   width: double.infinity,
                   height: 300,
-                  decoration: BoxDecoration(color: Colors.white),
+                  decoration: const BoxDecoration(color: Colors.white),
                   child: Center(
                     child: Container(
-                        width: 141,
-                        height: 54,
-                        margin: EdgeInsets.only(bottom: 50),
-                        child: Image.asset('assets/images/A2SV Blue 2.png'),
+                      width: 141,
+                      height: 54,
+                      margin: const EdgeInsets.only(bottom: 50),
+                      child: Image.asset('assets/images/A2SV Blue 2.png'),
                     ),
                   ),
                 ),
                 Positioned(
                   top: 200,
                   child: Container(
-                    alignment: Alignment(0, 0),
+                    alignment: const Alignment(0, 0),
                     width: MediaQuery.of(context).size.width,
                     height: 120,
-                    decoration: BoxDecoration(
+                    decoration: const BoxDecoration(
                       color: Color(0xFF376AED),
                       borderRadius: BorderRadius.only(
                         topLeft: Radius.circular(20),
@@ -51,39 +52,43 @@ class _LoginState extends State<Login> {
                       ),
                     ),
                     child: Container(
-                      margin: EdgeInsets.only(bottom: 40),
+                      margin: const EdgeInsets.only(bottom: 40),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           TextButton(
-                              onPressed: (){
+                              onPressed: () {
                                 setState(() {
-                                   activeIndex = 0;
+                                  activeIndex = 0;
                                 });
                               },
-                              child: Text('LOGIN',
-                              style: TextStyle(
-                                color: activeIndex == 0 ? Colors.white : Colors.grey,
-                                fontFamily:'Urbanist-Bold',
-                                fontSize: 18
-                              ),
-                              )
+                              child: Text(
+                                'LOGIN',
+                                style: TextStyle(
+                                    color: activeIndex == 0
+                                        ? Colors.white
+                                        : Colors.grey,
+                                    fontFamily: 'Urbanist-Bold',
+                                    fontSize: 18),
+                              )),
+                          const SizedBox(
+                            width: 50,
                           ),
-                          SizedBox(width: 50,),
                           TextButton(
-                              onPressed: (){
+                              onPressed: () {
                                 setState(() {
                                   activeIndex = 1;
                                 });
                               },
-                              child: Text('SIGN UP',
+                              child: Text(
+                                'SIGN UP',
                                 style: TextStyle(
-                                    color: activeIndex == 1 ? Colors.white : Colors.grey,
-                                    fontFamily:'Urbanist-Bold',
-                                    fontSize: 18
-                                ),
-                              )
-                          ),
+                                    color: activeIndex == 1
+                                        ? Colors.white
+                                        : Colors.grey,
+                                    fontFamily: 'Urbanist-Bold',
+                                    fontSize: 18),
+                              )),
                         ],
                       ),
                     ),
@@ -92,10 +97,10 @@ class _LoginState extends State<Login> {
                 Positioned(
                   top: 270,
                   child: Container(
-                    alignment: Alignment(0, 0),
+                    alignment: const Alignment(0, 0),
                     width: MediaQuery.of(context).size.width,
                     height: 200,
-                    decoration: BoxDecoration(
+                    decoration: const BoxDecoration(
                       color: Colors.white,
                       borderRadius: BorderRadius.only(
                         topLeft: Radius.circular(20),
@@ -106,6 +111,20 @@ class _LoginState extends State<Login> {
                 ),
               ],
             ),
+            // BlocBuilder<UserBloc, UserState>(
+            //   builder: (context, state) {
+            //     if (state is UserLoaded) {
+            //       final user = state.user;
+            //       log("User logged in");
+
+            //       return Text('Welcome, ${user.fullName}');
+            //     } else if (state is UserError) {
+            //       return Text('Error: ${state.errorMessage}');
+            //     } else {
+            //       return const CircularProgressIndicator(); // Loading state
+            //     }
+            //   },
+            // ),
             Container(
               child: AuthWidgets[activeIndex],
             ),

@@ -17,6 +17,7 @@ class UpdateArticleUsecase implements UseCase<Article, UpdateArticleParams> {
       subTitle: params.subTitle,
       estimatedReadTime: params.estimatedReadTime,
       image: params.image,
+      id: params.id,
     );
   }
 }
@@ -28,6 +29,7 @@ class UpdateArticleParams extends Equatable {
   final String subTitle;
   final String estimatedReadTime;
   final String image;
+  final String id;
 
   const UpdateArticleParams({
     required this.tags,
@@ -36,6 +38,7 @@ class UpdateArticleParams extends Equatable {
     required this.subTitle,
     required this.estimatedReadTime,
     required this.image,
+    required this.id,
   });
 
   UpdateArticleParams.empty()
@@ -46,9 +49,10 @@ class UpdateArticleParams extends Equatable {
           subTitle: '_empty.subTitle',
           estimatedReadTime: '_empty.estimatedReadTime',
           image: '_empty.image',
+          id: '1',
         );
 
   @override
   List<Object?> get props =>
-      [tags, content, title, subTitle, estimatedReadTime, image];
+      [tags, content, title, subTitle, estimatedReadTime, image, id];
 }

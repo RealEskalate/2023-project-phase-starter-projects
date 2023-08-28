@@ -64,7 +64,8 @@ void main() {
     test(
         'Should return server failure when the call to remote data is unsuccessful',
         () async {
-      when(remoteDataSource.getProfile()).thenThrow(ServerException(statusCode: 400));
+      when(remoteDataSource.getProfile())
+          .thenThrow(ServerException(statusCode: 400));
       final result = await repository.getProfile();
       verify(remoteDataSource.getProfile());
       verifyZeroInteractions(localDataSource);

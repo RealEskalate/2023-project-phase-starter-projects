@@ -1,72 +1,132 @@
-import 'package:blog_app/features/blog/presentation/screen/home_screen.dart';
+import 'package:blog_app/features/onboarding/widgets/loading_widget.dart';
+import 'package:blog_app/features/user/domain/usecases/get_user.dart';
+import 'package:blog_app/features/user/domain/usecases/login_user.dart';
+import 'package:blog_app/features/user/domain/usecases/register_user.dart';
+import 'package:blog_app/features/user/domain/usecases/update_user.dart';
+import 'package:blog_app/features/user/presentation/blocs/bloc.dart';
+import 'package:blog_app/features/user/presentation/blocs/bloc_state.dart';
+import 'package:blog_app/features/user/presentation/blocs/login/login_event.dart';
+import 'package:blog_app/features/user/presentation/blocs/login/login_state.dart';
+import 'package:blog_app/injection.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class LoginWidget extends StatefulWidget {
   const LoginWidget({Key? key}) : super(key: key);
-
 
   @override
   State<LoginWidget> createState() => _LoginWidgetState();
 }
 
 class _LoginWidgetState extends State<LoginWidget> {
-  TextEditingController _usernameController = TextEditingController();
-  TextEditingController _passwordController = TextEditingController();
-
+  final TextEditingController _usernameController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
+  bool pasword_obscure = true;
   @override
   void dispose() {
     super.dispose();
     _usernameController.dispose();
     _passwordController.dispose();
   }
+
   @override
   Widget build(BuildContext context) {
+    return BlocProvider(
+      create: (context) => UserBloc(
+        registerUser: sl<RegisterUserUseCase>(),
+        getUser: sl<GetUserUseCase>(),
+        loginUser: sl<LoginUserUseCase>(),
+        updateProfilePhoto: sl<UpdateProfilePhotoUseCase>(),
+      ),
+      child: BlocConsumer<UserBloc, UserState>(
+        listener: (context, state) {
+          if (state is LoadedUserState) {
+            Navigator.pushNamed(context, '/home', arguments: state.user.id);
+          }
+          // loading state
+          else if (state is UserLoading) {
+            loadingDialog(context);
+          } else if (state is UserError) {
+            // Handle error if login fails
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(
+                backgroundColor: Colors.red,
+                content: Text(state.errorMessage),
+              ),
+            );
+          }
+        },
+        builder: (context, state) {
+          return buildBody(context);
+        },
+      ),
+    );
+  }
+
+  Widget buildBody(BuildContext context) {
     return Container(
-        padding: EdgeInsets.symmetric(horizontal: 25),
+        padding: const EdgeInsets.symmetric(horizontal: 25),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const Text('Welcome back',
+            const Text(
+              'Welcome back',
               style: TextStyle(
                   color: Color(0xFF0D253C),
-                  fontFamily:'Urbanist-Regular',
-                  fontSize: 30
-              ),
+                  fontFamily: 'Urbanist-Regular',
+                  fontSize: 30),
             ),
-            const Text('Sign in with your account',
+            const Text(
+              'Sign in with your account',
               style: TextStyle(
                 color: Color(0xFF2D4379),
-                fontFamily:'Urbanist-Bold',
+                fontFamily: 'Urbanist-Bold',
                 fontSize: 20,
               ),
             ),
-            SizedBox(
+            const SizedBox(
               height: 10,
             ),
             TextField(
               controller: _usernameController,
-              decoration: InputDecoration(
+              decoration: const InputDecoration(
                 labelText: 'Username',
                 labelStyle: TextStyle(
                   color: Color(0xFF2D4379),
-                  fontFamily:'Urbanist-Light',
+                  fontFamily: 'Urbanist-Light',
                   fontSize: 18,
                 ),
               ),
             ),
             TextField(
               controller: _passwordController,
-              obscureText: true,
+              obscureText: pasword_obscure,
               decoration: InputDecoration(
                 labelText: 'Password',
-                labelStyle: TextStyle(
+                labelStyle: const TextStyle(
                   color: Color(0xFF2D4379),
-                  fontFamily:'Urbanist-Light',
+                  fontFamily: 'Urbanist-Light',
                   fontSize: 18,
                 ),
+                suffixIcon: TextButton(
+                    onPressed: () {
+                      setState(() {
+                        pasword_obscure = !pasword_obscure;
+                      });
+                    },
+                    child: Text(
+                      pasword_obscure ? 'show' : 'Hide',
+                      style: const TextStyle(
+                        color: Color(0xFF2D4379),
+                        fontFamily: 'Urbanist-Bold',
+                        fontSize: 14,
+                      ),
+                    )),
               ),
             ),
-            SizedBox(height: 100,),
+            const SizedBox(
+              height: 100,
+            ),
             //Login button
             Center(
               child: SizedBox(
@@ -74,52 +134,53 @@ class _LoginWidgetState extends State<LoginWidget> {
                 width: 295,
                 child: ElevatedButton(
                   onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => Home()),
-                    );
+                    final email = _usernameController.text;
+                    final password = _passwordController.text;
+                    context
+                        .read<UserBloc>()
+                        .add(LoginUserEvent(email: email, password: password));
                   },
                   style: ElevatedButton.styleFrom(
-                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-                      backgroundColor: Color(0xFF376AED)
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    backgroundColor: const Color(0xFF376AED),
                   ),
-                  child: Text('LOGIN',
+                  child: const Text(
+                    'LOGIN',
                     style: TextStyle(
-                        color: Colors.white,
-                        fontFamily:'Urbanist-Bold',
-                        fontSize: 16
+                      color: Colors.white,
+                      fontFamily: 'Urbanist-Bold',
+                      fontSize: 16,
                     ),
                   ),
                 ),
               ),
             ),
-
             Center(
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  const Text('Forgot your password?',
+                  const Text(
+                    'Forgot your password?',
                     style: TextStyle(
                         color: Color(0xFF2D4379),
                         fontFamily: 'Urbanist-Bold',
-                        fontSize: 14
-                    ),
+                        fontSize: 14),
                   ),
                   TextButton(
-                      onPressed: (){},
-                      child: const Text('Reset here',
+                      onPressed: () {},
+                      child: const Text(
+                        'Reset here',
                         style: TextStyle(
                             color: Color(0xFF376AED),
                             fontFamily: 'Urbanist-Regular',
-                            fontSize: 14
-                        ),
-                      )
-                  ),
+                            fontSize: 14),
+                      )),
                 ],
               ),
             ),
           ],
-        )
-    );
+        ));
   }
 }
