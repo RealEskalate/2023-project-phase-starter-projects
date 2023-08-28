@@ -2,6 +2,7 @@ import 'package:go_router/go_router.dart';
 
 import '../../../features/article/domain/entities/article.dart';
 import '../../../features/article/presentation/screens/screens.dart';
+import '../../../features/onboard/presentation/screens/splash_screen.dart';
 import 'routes.dart';
 
 final GoRouter router = GoRouter(
@@ -9,8 +10,8 @@ final GoRouter router = GoRouter(
 
   routes: <RouteBase>[
     GoRoute(
-      path: Routes.createArticle,
-      builder: (context, state) => const ArticleFormScreen(),
+      path: Routes.home,
+      builder: (context, state) => const SplashScreen(),
     ),
     GoRoute(
       path: Routes.articleDetail,
