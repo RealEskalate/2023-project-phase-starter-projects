@@ -20,23 +20,23 @@ namespace WebApi.Controllers
         }
 
         [HttpGet("followers/{UserId}")]
-        public async Task<ActionResult<List<UserDto>>> GetFollower( int UserId)
+        public async Task<IActionResult> GetFollower( int UserId)
         {
             // token getter to be implemented
             var command = new GetFollowerRequest { Id = UserId };
             var follower = await _mediator.Send(command);
 
-            return Ok(follower);
+            return ResponseHandler<List<UserDto>>.HandleResponse(follower, 200);
         }
 
         [HttpGet("followees/{UserId}")]
-        public async Task<ActionResult<List<UserDto>>> GetFollowee(int UserId)
+        public async Task<IActionResult> GetFollowee(int UserId)
         {
             // token getter to be implemented
             var command = new GetFollowingRequest { Id = UserId };
             var followee = await _mediator.Send(command);
 
-            return Ok(followee);
+            return ResponseHandler<List<UserDto>>.HandleResponse(followee, 200);
         }
 
         [HttpPost("follow/{UserId}")]
@@ -47,8 +47,8 @@ namespace WebApi.Controllers
                 FollowerId = int.Parse(User.FindFirst("reader").Value),
                 FollowedId = UserId
             } };
-            await _mediator.Send(command);
-            return Ok();
+            var result = await _mediator.Send(command);
+            return ResponseHandler<Unit>.HandleResponse(result, 201);
         }
 
         [HttpDelete("unfollow/{UserId}")]
@@ -59,8 +59,8 @@ namespace WebApi.Controllers
                 FollowerId = int.Parse(User.FindFirst("reader").Value),
                 FollowedId = UserId
             } };
-            await _mediator.Send(command);
-            return NoContent();
+            var result = await _mediator.Send(command);
+            return ResponseHandler<Unit>.HandleResponse(result, 204);
         }
 
     }

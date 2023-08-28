@@ -38,7 +38,7 @@ public class AuthService : IAuthService {
     
          var isCorrect = await _signInManager.PasswordSignInAsync(userName: user.UserName, request.Password,isPersistent:true, lockoutOnFailure:false);
          if (!isCorrect.Succeeded){
-             throw new Exception($"invalid credentials for user: {request.Email}"); 
+             throw new BadRequestException($"invalid credentials for user: {request.Email}"); 
          }
          
          var customeUser = await userRepository.GetUserByEmail(user.Email);
@@ -52,7 +52,7 @@ public class AuthService : IAuthService {
      {
          var alreadyExist = await _userManager.FindByEmailAsync(req.Email); 
          if (alreadyExist is not null){
-             throw new Exception("Email already used");
+             throw new BadRequestException("Email already used");
 
          }
          var user = new ApplicaionUser { 
@@ -62,7 +62,7 @@ public class AuthService : IAuthService {
          };
          var creatingUser = await _userManager.CreateAsync(user, req.Password);
          if (!creatingUser.Succeeded){
-             throw new Exception($"Check Your Password \n"); 
+             throw new BadRequestException($"Check Your Password \n"); 
          } 
          AuthRequest request = new AuthRequest {Email = req.Email, Password = req.Password };
          return true;
