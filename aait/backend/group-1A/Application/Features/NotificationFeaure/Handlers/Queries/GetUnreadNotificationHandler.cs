@@ -24,7 +24,7 @@ namespace Application.Features.NotificationFeaure.Handlers.Queries
         public async Task<BaseResponse<List<NotificationResponseDTO>>> Handle(GetUnreadNotification request, CancellationToken cancellationToken)
         {
 
-            var result = await _notificationRepository.GetAll(entity => entity.UserId == request.UserId && entity.IsRead == false);
+            var result = await _notificationRepository.GetAllUnread(request.UserId);
             
             return new BaseResponse<List<NotificationResponseDTO>> () {
                 Success = true,

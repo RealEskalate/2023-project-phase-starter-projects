@@ -17,13 +17,11 @@ namespace Application.Features.CommentFeatures.Handlers.Commands
     {
         private readonly ICommentRepository _commentRepository;
         private readonly IMapper _mapper;
-        private readonly IMediator _mediator;
 
-        public UpdateCommentHandler(ICommentRepository commentRepository, IMapper mapper, IMediator mediator)
+        public UpdateCommentHandler(ICommentRepository commentRepository, IMapper mapper)
         {
             _commentRepository = commentRepository;
             _mapper = mapper;
-            _mediator = mediator;
         }
         public async Task<BaseResponse<CommentResponseDTO>> Handle(UpdateCommentCommand request, CancellationToken cancellationToken)
         {
@@ -48,18 +46,6 @@ namespace Application.Features.CommentFeatures.Handlers.Commands
             newComment.UserId = request.userId;
             var updationResult = await _commentRepository.Update(newComment);
             var result = _mapper.Map<CommentResponseDTO>(updationResult);
-
-
-
-            // notification
-            var notificationData = new NotificationCreateDTO
-            {
-                Content = $"The Comment with id : {result.Id} is updated",
-                NotificationType = "comment",
-                UserId = request.userId
-            };
-            await _mediator.Send(new CreateNotification { NotificationData = notificationData });
-
 
 
 

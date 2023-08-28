@@ -1,12 +1,11 @@
-﻿using Application.Common;
-using Application.DTO.Common;
-using Application.DTO.UserDTO.DTO;
+﻿using Application.DTO.UserDTO.DTO;
+using Application.Response;
 using MediatR;
 
 
 namespace Application.Features.UserFeature.Requests.Commands
 {
-    public class CreateUserCommand : IRequest<CommonResponseDTO>
+    public class CreateUserCommand : IRequest<BaseResponse<string>>
     {
         public UserCreateDTO? NewUserData { get; set; }
     }

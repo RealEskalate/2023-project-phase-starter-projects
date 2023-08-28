@@ -1,12 +1,8 @@
 using System.Security.Claims;
-using Application.DTO;
-using Application.DTO.Common;
 using Application.DTO.FollowDTo;
-using Application.DTO.PostDTO.DTO;
 using Application.DTO.UserDTO.DTO;
 using Application.Features.FollowFeature.Requests.Commands;
 using Application.Features.FollowFeature.Requests.Queries;
-using Domain.Entites;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;

@@ -11,18 +11,16 @@ using System.Threading.Tasks;
 
 namespace Application.Features.CommentFeatures.Handlers.Commands
 {
-    public class CommentDeleteHandler : IRequestHandler<CommentDeleteCommand, BaseResponse<string>>
+    public class CommentDeleteHandler : IRequestHandler<CommentDeleteCommand, BaseResponse<int>>
     {
         private readonly ICommentRepository _commentRepository;
-        private readonly IMediator _mediator;
 
-        public CommentDeleteHandler(ICommentRepository commentRepository, IMediator mediator)
+        public CommentDeleteHandler(ICommentRepository commentRepository)
         {
             _commentRepository = commentRepository;
-            _mediator = mediator;
         }
 
-        public async Task<BaseResponse<string>> Handle(CommentDeleteCommand request, CancellationToken cancellationToken)
+        public async Task<BaseResponse<int>> Handle(CommentDeleteCommand request, CancellationToken cancellationToken)
         {
 
             
@@ -34,19 +32,11 @@ namespace Application.Features.CommentFeatures.Handlers.Commands
             
             var result = await _commentRepository.Delete(comment);
 
-            // notification
-            var notificationData = new NotificationCreateDTO
-            {
-                Content = $"The Comment with id : {comment.Id} is deleted",
-                NotificationType = "comment",
-                UserId = request.userId
-            };
-            await _mediator.Send(new CreateNotification { NotificationData = notificationData });
 
-
-            return new BaseResponse<string> {
+            return new BaseResponse<int> {
                 Success = true,
-                Message = "The Comment is deleted successfully"
+                Message = "The Comment is deleted successfully",
+                Value = comment.Id
             };
 
         }

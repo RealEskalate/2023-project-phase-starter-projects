@@ -20,7 +20,6 @@ namespace Persistence
 
         public virtual DbSet<PostReaction> PostReactions { get; set; }
         public virtual DbSet<Follow> Follow { get; set; }
-        public virtual DbSet<User> Users {get; set;}
 
         public virtual DbSet<CommentReaction> CommentReaction { get; set; }
 

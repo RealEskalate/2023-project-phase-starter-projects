@@ -1,18 +1,13 @@
-﻿using Application.Common;
-using Application.Contracts;
-using Application.DTO.Common;
+﻿using Application.Contracts;
+using Application.Exceptions;
 using Application.Features.UserFeature.Requests.Commands;
-using AutoMapper;
+using Application.Response;
 using MediatR;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+
 
 namespace Application.Features.UserFeature.Handlers.Commands
 {
-    public class DeleteUserHandler : IRequestHandler<DeleteUserCommand, CommonResponseDTO>
+    public class DeleteUserHandler : IRequestHandler<DeleteUserCommand, BaseResponse<string>>
     {
         private readonly IUserRepository _UserRepository;
 
@@ -20,23 +15,21 @@ namespace Application.Features.UserFeature.Handlers.Commands
         {
             _UserRepository = UserRepository;
         }
-        public async Task<CommonResponseDTO> Handle(DeleteUserCommand request, CancellationToken cancellationToken)
+        public async Task<BaseResponse<string>> Handle(DeleteUserCommand request, CancellationToken cancellationToken)
         {
-            var deleteResponse = new CommonResponseDTO();
+            var deleteResponse = new BaseResponse<string>();
             var user = await _UserRepository.Get(request.userId);
             if (user == null)
             {
-                deleteResponse.Status = "Faliure";
-                deleteResponse.Message = "The User doesn't exist";
-                return deleteResponse;
+                throw new NotFoundException("user is not found");
             }
             
             var result = await _UserRepository.Delete(user!);
 
-            deleteResponse.Status = "Success";
-            deleteResponse.Message = "User is  deleted successfully";
-
+            deleteResponse.Success = true;
+            deleteResponse.Message = "User deleted successfully";
             return deleteResponse;
+            
         }
     }
 }

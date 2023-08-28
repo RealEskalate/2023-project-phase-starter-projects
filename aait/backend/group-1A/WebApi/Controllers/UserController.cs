@@ -1,8 +1,8 @@
-﻿using Application.Common;
-using Application.DTO.Common;
+﻿using Application.DTO.Common;
 using Application.DTO.UserDTO.DTO;
 using Application.Features.UserFeature.Requests.Commands;
 using Application.Features.UserFeature.Requests.Queries;
+using Application.Response;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -35,13 +35,6 @@ namespace WebApi.Controllers
         }
 
 
-        [HttpPost]
-        public async Task<ActionResult<CommonResponseDTO>> User([FromBody] UserCreateDTO newUserData)
-        {
-            var result = await _mediator.Send(new CreateUserCommand{ NewUserData = newUserData });
-            return Ok(result);
-        }
-
         
         [HttpPut("{id}")]
         public async Task<ActionResult<UserResponseDTO>> Put(int id, [FromBody] UserUpdateDTO UpdateUserData)
@@ -54,7 +47,7 @@ namespace WebApi.Controllers
 
 
         [HttpDelete("{id}")]
-        public async Task<ActionResult<CommonResponseDTO>> Delete(int id)
+        public async Task<ActionResult<BaseResponse<string>>> Delete(int id)
         {
             var userId = 3;
             var result = await _mediator.Send(new DeleteUserCommand { userId = id});

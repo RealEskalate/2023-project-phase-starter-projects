@@ -38,7 +38,7 @@ namespace WebApi.Controllers
         }
         
         [HttpPost("react")]
-        public async Task<ActionResult<BaseResponse<string>>> Post([FromBody] ReactionDTO reactionData)
+        public async Task<ActionResult<BaseResponse<int>>> Post([FromBody] ReactionDTO reactionData)
         {
             var result = await _mediator.Send(new MakeReactionOnComment{ UserId = 3, ReactionData = reactionData });
             return Ok(result);

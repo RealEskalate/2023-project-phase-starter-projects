@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Application.Features.PostFeature.Requests.Commands
 {
-    public class PostReactionCommand : IRequest<BaseResponse<string>>
+    public class PostReactionCommand : IRequest<BaseResponse<int>>
     {
         public int UserId { get; set; }
         public ReactionDTO ReactionData { get; set; }

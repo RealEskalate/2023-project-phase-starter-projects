@@ -1,3 +1,4 @@
+using Application.Response;
 using AutoMapper;
 using MediatR;
 using SocialSync.Application.Contracts;
@@ -7,7 +8,7 @@ using SocialSync.Domain.Entities;
 
 namespace SocialSync.Application.Features.Handlers;
 
-public class CreateTagCommandHandler : IRequestHandler<CreateTagCommand, TagResponseDto>
+public class CreateTagCommandHandler : IRequestHandler<CreateTagCommand, BaseResponse<string>>
 {
 
     private readonly IMapper _mapper;
@@ -18,10 +19,12 @@ public class CreateTagCommandHandler : IRequestHandler<CreateTagCommand, TagResp
         _mapper = mapper;
         _tagReposiotory = tagRepository;
     }
-    public async Task<TagResponseDto> Handle(CreateTagCommand request, CancellationToken cancellationToken)
+    public async Task<BaseResponse<string>> Handle(CreateTagCommand request, CancellationToken cancellationToken)
     {
         var result = await _tagReposiotory.Add(_mapper.Map<Tag>(request.CreateTagDto));
 
-        return new TagResponseDto(){Title = result.Title};
+        return new BaseResponse<string>(){
+            Value = result.Title
+        };
     }
 }
