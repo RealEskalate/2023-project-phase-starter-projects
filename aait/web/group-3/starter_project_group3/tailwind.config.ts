@@ -24,11 +24,16 @@ const config: Config = {
         lavender: "#F6F6FC",
         dark_chocol: "#4D4A49",
         blue_gray: "#37474F",
-        dodger_blue: "#019CFA"
+        dodger_blue: "#019CFA",
+        very_dark_blue: "#01112D"
       },
       fontFamily: {
         Montserrat: ["Montserrat", "sans-serif"],
-        Poppins: ["Poppins", "sans-serif"]
+        Poppins: ["Poppins", "sans-serif"],
+        Nunito: ['Nunito', 'sans-serif'],
+        Lato: ['Lato', 'sans-serif'],
+        Fira_code: ['Fira Code', 'monospace'],
+        Inter: ['Inter', 'sans-serif']
       },
       screens: {
         "nav_bar_screen" : "983px"
