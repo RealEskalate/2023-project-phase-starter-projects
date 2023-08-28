@@ -26,16 +26,19 @@ public class UpdateCommentInteractionCommandHandlerTests
 
         var interactionDto = new UpdateCommentInteractionDto
         {
-           PostId = 1, Body = "sfsdfsd", Id = 1, UserId = 1
+           PostId = 2 , Body = "sfsdfsd bhjb" , Id = 2, UserId = 2
         };
 
-        var command = new UpdateCommentInteractionCommand { UpdateCommentDto = interactionDto };
+        var command = new UpdateCommentInteractionCommand
+        {
+            UpdateCommentDto = interactionDto
+        };
 
 
         var response = await handler.Handle(command, CancellationToken.None);
 
         Assert.NotNull(response.Value);
-        // Assert.True(response.IsSuccess);
+        Assert.True(response.IsSuccess);
     }
 
     [Fact]
