@@ -34,12 +34,14 @@ class CustomSearchBar extends StatelessWidget {
             fontWeight: FontWeight.w200,
           ),
           suffixIcon: const SearchIcon(),
-          border: InputBorder.none,
-          contentPadding: const EdgeInsets.fromLTRB(5.0, 10.0, 0.0, 0.0).w,
+          border: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(10.0),
+            borderSide: const BorderSide(color: Colors.transparent),
+          ),
+          contentPadding: const EdgeInsets.fromLTRB(5.0, 10.0, 10.0, 0.0).w,
           focusedBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(10.0),
-            borderSide:
-                BorderSide(color: Theme.of(context).colorScheme.primary),
+            borderSide: const BorderSide(color: AppColors.blue),
           ),
         ),
       ),

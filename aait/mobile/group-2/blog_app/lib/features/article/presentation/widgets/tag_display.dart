@@ -27,7 +27,9 @@ class TagDisplay extends StatelessWidget {
         ),
       );
     } else {
-      return Container();
+      return Container(
+        width: 10,
+      );
     }
   }
 }
