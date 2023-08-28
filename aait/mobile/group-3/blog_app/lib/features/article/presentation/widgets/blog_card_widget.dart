@@ -2,53 +2,52 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../../../core/util/app_colors.dart';
+import '../../domain/entity/article.dart';
 
 class BlogCardWidget extends StatelessWidget {
-  const BlogCardWidget({
-    super.key,
-  });
+  final Article article;
+
+  const BlogCardWidget({super.key, required this.article});
 
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      child: GestureDetector(
-        onTap: () {
-          // raise load article by id event
-          Navigator.pushNamed(context, '/article-detail');
-        },
-        child: Container(
-          height: 240.h,
-          width: 388.w,
-          decoration: BoxDecoration(
-            color: AppColors.whiteColor, // Background color for the container
-            borderRadius:
-                BorderRadius.circular(15), // Rounded corners for the container
-          ),
-          padding: EdgeInsets.all(11.sp), // Padding for the content
-          child: Stack(
-            children: [
-              Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  const BlogImageWidget(), // Widget for displaying the blog image
-                  SizedBox(width: 16.w), // Spacing between image and text
-                  const BlogExcerptWidget(), // Widget for displaying blog excerpt
-                ],
-              ),
-              Positioned(
-                bottom: 0,
-                right: 0,
-                child: Text(
-                  "Jan 12,2022", // Publication date of the blog
-                  style: TextStyle(
-                    fontFamily: 'Poppins-Light',
-                    color: AppColors.textLightGray,
-                    fontSize: 12.sp,
-                  ),
+    return GestureDetector(
+      onTap: () {
+        // raise load article by id event
+        // Navigator.pushNamed(context, '/article-detail');
+      },
+      child: Container(
+        height: 240.h,
+        width: 388.w,
+        decoration: BoxDecoration(
+          color: AppColors.whiteColor, // Background color for the container
+          borderRadius:
+              BorderRadius.circular(15), // Rounded corners for the container
+        ),
+        padding: EdgeInsets.all(11.sp), // Padding for the content
+        child: Stack(
+          children: [
+            Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const BlogImageWidget(), // Widget for displaying the blog image
+                SizedBox(width: 16.w), // Spacing between image and text
+                 BlogExcerptWidget( article: article,), // Widget for displaying blog excerpt
+              ],
+            ),
+            Positioned(
+              bottom: 0,
+              right: 0,
+              child: Text(
+                "Jan 12,2022", // Publication date of the blog
+                style: TextStyle(
+                  fontFamily: 'Poppins-Light',
+                  color: AppColors.textLightGray,
+                  fontSize: 12.sp,
                 ),
               ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );
@@ -56,8 +55,10 @@ class BlogCardWidget extends StatelessWidget {
 }
 
 class BlogExcerptWidget extends StatelessWidget {
-  const BlogExcerptWidget({
+  Article article;
+   BlogExcerptWidget({
     super.key,
+    required this.article,
   });
 
   @override
@@ -100,7 +101,7 @@ class BlogExcerptWidget extends StatelessWidget {
             ),
             SizedBox(height: 8.h), // Spacing between category and author
             Text(
-              "by John Doe", // Author of the blog
+              "john Doe", // Author of the blog
               style: TextStyle(
                 fontFamily: 'Poppins-Regular',
                 color: AppColors.primaryTextGray,

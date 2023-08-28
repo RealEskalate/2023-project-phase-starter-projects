@@ -11,9 +11,86 @@ import 'package:blog_app/features/article/presentation/widgets/header_widget.dar
 import 'package:blog_app/features/article/presentation/widgets/search_bar_widget.dart';
 import 'package:blog_app/features/article/presentation/widgets/tags_widget.dart';
 
-class HomeScreen extends StatelessWidget {
-  const HomeScreen({super.key});
+import '../../domain/entity/article.dart';
 
+// ignore: must_be_immutable
+class HomeScreen extends StatelessWidget {
+  HomeScreen({super.key});
+
+  List<Article> dummyArticles = [
+    Article(
+      tags: const ['_empty.tags'],
+      content: '_empty.content',
+      title: '_empty.title',
+      subTitle: '_empty.subTitle',
+      estimatedReadTime: '_empty.estimatedReadTime',
+      user: const {
+        "_id": "64e25674bfc65d390e781205",
+        "fullName": "Tamirat Dereje",
+        "email": "tamiratdereje@gmail.com",
+        "expertise": "designer",
+        "bio": "I am passionate designer who see beauty in everything",
+        "createdAt": "2023-08-20T18:07:48.829Z",
+        "__v": 0,
+        "image":
+            "https://res.cloudinary.com/dzpmgwb8t/image/upload/v1692557684/guf4tul1ftar9hdpnaev.jpg",
+        "imageCloudinaryPublicId": "guf4tul1ftar9hdpnaev",
+        "id": "64e25674bfc65d390e781205"
+      },
+      image: '_empty.image',
+      imageCloudinaryPublicId: '_empty.imageCloudinaryPublicId',
+      createdAt: DateTime.parse('2023-08-20T19:36:03.414Z'),
+      id: '1',
+    ),
+    Article(
+      tags: const ['_empty.tags'],
+      content: '_empty.content',
+      title: '_empty.title',
+      subTitle: '_empty.subTitle',
+      estimatedReadTime: '_empty.estimatedReadTime',
+      user: const {
+        "_id": "64e25674bfc65d390e781205",
+        "fullName": "Tamirat Dereje",
+        "email": "tamiratdereje@gmail.com",
+        "expertise": "designer",
+        "bio": "I am passionate designer who see beauty in everything",
+        "createdAt": "2023-08-20T18:07:48.829Z",
+        "__v": 0,
+        "image":
+            "https://res.cloudinary.com/dzpmgwb8t/image/upload/v1692557684/guf4tul1ftar9hdpnaev.jpg",
+        "imageCloudinaryPublicId": "guf4tul1ftar9hdpnaev",
+        "id": "64e25674bfc65d390e781205"
+      },
+      image: '_empty.image',
+      imageCloudinaryPublicId: '_empty.imageCloudinaryPublicId',
+      createdAt: DateTime.parse('2023-08-20T19:36:03.414Z'),
+      id: '2',
+    ),
+    Article(
+      tags: const ['_empty.tags'],
+      content: '_empty.content',
+      title: '_empty.title',
+      subTitle: '_empty.subTitle',
+      estimatedReadTime: '_empty.estimatedReadTime',
+      user: const {
+        "_id": "64e25674bfc65d390e781205",
+        "fullName": "Tamirat Dereje",
+        "email": "tamiratdereje@gmail.com",
+        "expertise": "designer",
+        "bio": "I am passionate designer who see beauty in everything",
+        "createdAt": "2023-08-20T18:07:48.829Z",
+        "__v": 0,
+        "image":
+            "https://res.cloudinary.com/dzpmgwb8t/image/upload/v1692557684/guf4tul1ftar9hdpnaev.jpg",
+        "imageCloudinaryPublicId": "guf4tul1ftar9hdpnaev",
+        "id": "64e25674bfc65d390e781205"
+      },
+      image: '_empty.image',
+      imageCloudinaryPublicId: '_empty.imageCloudinaryPublicId',
+      createdAt: DateTime.parse('2023-08-20T19:36:03.414Z'),
+      id: '3',
+    ),
+  ];
   @override
   Widget build(BuildContext context) {
     // Scaffold with the primary color background.
@@ -48,8 +125,15 @@ class HomeScreen extends StatelessWidget {
               ),
               SizedBox(height: 50.h),
 
-              // List of blog cards displaying articles.
-              const BlogCardWidget(),
+              ListView.separated(
+                shrinkWrap: true,
+                itemCount: dummyArticles.length,
+                separatorBuilder: (context, index) =>
+                    const SizedBox(height: 10),
+                itemBuilder: (context, index) {
+                  return BlogCardWidget(article: dummyArticles[index]);
+                },
+              ),
             ],
           ),
         ),
