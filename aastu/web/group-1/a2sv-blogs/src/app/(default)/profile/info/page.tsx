@@ -1,5 +1,5 @@
 "use client";
-import { ChangeEvent, useEffect, useRef, useState } from "react";
+import { ChangeEvent, useRef, useState } from "react";
 import { useAuth } from "@/hooks/useAuth";
 import Image from "next/image";
 import classNames from "classnames";
@@ -12,6 +12,7 @@ export default function Info() {
   const [selectedImage, setSelectedImage] = useState<File | null>();
   const [previewImage, setPreviewImage] = useState<string | null>(null);
   const [isEditing, setIsEditing] = useState<boolean>(false);
+  const [isProcessing, setIsProcessing] = useState<boolean>(false);
   const [isSuccess, setIsSuccess] = useState<boolean>(false);
   const [isError, setIsError] = useState<boolean>(false);
   const [dragging, setDragging] = useState<boolean>(false);
@@ -48,6 +49,7 @@ export default function Info() {
   const dispatch = useDispatch();
 
   const handleSave = () => {
+    setIsProcessing(true);
     const formData = new FormData();
 
     if (selectedImage) {
@@ -58,7 +60,8 @@ export default function Info() {
     formData.append("name", `${firstName} ${lastName}`);
 
     editProfileHandler(formData)
-      .then((res) => {
+      .then((res: any) => {
+        setIsProcessing(false);
         if (!res!.error) {
           setIsEditing(false);
           setIsSuccess(true);
@@ -184,10 +187,14 @@ export default function Info() {
               className={classNames("px-3 py-1 bg-primary text-white rounded", {
                 "bg-slate-300": !isEditing,
               })}
-              disabled={!isEditing}
+              disabled={!isEditing || isProcessing}
               onClick={handleSave}
             >
-              Save Changes
+              {isProcessing ? (
+                <span>Processing ...</span>
+              ) : (
+                <span> Save Changes</span>
+              )}
             </button>
           </div>
         </div>
@@ -204,6 +211,7 @@ export default function Info() {
               value={isEditing ? firstName : auth.userName?.split(" ")[0]}
               onChange={(e) => setFirstName(e.target.value)}
               disabled={!isEditing}
+              required
             />
             <input
               type="text"
@@ -213,6 +221,7 @@ export default function Info() {
               value={isEditing ? lastName : auth.userName?.split(" ")[1]}
               onChange={(e) => setLastName(e.target.value)}
               disabled={!isEditing}
+              required
             />
           </div>
         </div>
@@ -230,6 +239,7 @@ export default function Info() {
               value={isEditing ? email : auth.userEmail}
               onChange={(e) => setEmail(e.target.value)}
               disabled={!isEditing}
+              required
             />
           </div>
         </div>
@@ -245,7 +255,7 @@ export default function Info() {
                 width={70}
                 height={70}
                 alt=""
-                className="object-contain w-20 h-20 overflow-hidden rounded-full"
+                className="object-contain w-20 h-20 overflow-hidden rounded-full aspect-square "
               />
             ) : auth.userProfile ? (
               <Image
@@ -253,7 +263,7 @@ export default function Info() {
                 height={70}
                 src={auth.userProfile}
                 alt="img"
-                className="object-contain w-20 h-20 overflow-hidden rounded-full"
+                className="object-contain w-20 h-20 overflow-hidden rounded-full aspect-square "
               />
             ) : (
               <Image
@@ -266,11 +276,15 @@ export default function Info() {
             )}
 
             <div
-              className="border border-blue-50 p-2 rounded-lg ml-5"
-              onDragEnter={handleDragEnter}
-              onDragLeave={handleDragLeave}
-              onDragOver={handleDragOver}
-              onDrop={handleDrop}
+              className={classNames(
+                "border border-blue-50 p-2 rounded-lg ml-5",
+                { "border-2 border-primary": dragging }
+              )}
+              onDragEnter={isEditing ? handleDragEnter : undefined}
+              onDragLeave={isEditing ? handleDragLeave : undefined}
+              onDragOver={isEditing ? handleDragOver : undefined}
+              onDrop={isEditing ? handleDrop : undefined}
+              draggable={isEditing}
             >
               <input
                 type="file"

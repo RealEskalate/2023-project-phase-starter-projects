@@ -6,8 +6,8 @@ export default function ProfileLayout({
   children: React.ReactNode;
 }) {
   return (
-    <main className="lg:px-32 py-20 px-6 mx-auto font-montserrat">
-      <h1 className="text-2xl mt-5">Profile</h1>
+    <main className="lg:px-32 py-28 px-5 mx-auto font-montserrat">
+      <h1 className="text-2xl">Profile</h1>
       <div>
         <NavigationTab />
         <hr className="mt-3" />
