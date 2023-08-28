@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
+import '../../../../core/presentation/theme/app_colors.dart';
+
 class CustomTextFormField extends StatelessWidget {
   const CustomTextFormField({
     super.key,
@@ -23,14 +25,14 @@ class CustomTextFormField extends StatelessWidget {
             labelStyle: TextStyle(
               fontSize: 14.sp,
               fontFamily: 'UrbanistItalicThin',
-              color: const Color(0xFF2D4379),
+              color: AppColors.darkBlue,
             ),
             contentPadding: EdgeInsets.only(top: 5.h, bottom: 5.h),
             floatingLabelBehavior: FloatingLabelBehavior.always),
         style: TextStyle(
           fontSize: 16.sp,
           fontFamily: 'UrbanistMedium',
-          color: const Color(0xFF0D253C),
+          color: AppColors.darkerBlue,
         ),
       ),
     );

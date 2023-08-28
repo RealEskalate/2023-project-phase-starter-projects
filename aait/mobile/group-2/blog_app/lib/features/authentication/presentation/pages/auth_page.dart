@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
+import '../../../../core/presentation/theme/app_colors.dart';
 import '../widgets/show_login_component.dart';
 import '../widgets/show_sign_up_component.dart';
 
@@ -45,7 +46,7 @@ class _AuthPageState extends State<AuthPage> {
                         borderRadius: BorderRadius.only(
                             topLeft: Radius.circular(30.r),
                             topRight: Radius.circular(30.r)),
-                        color: const Color(0xFF376AED),
+                        color: AppColors.blue,
                       ),
                       child: Row(
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -68,8 +69,9 @@ class _AuthPageState extends State<AuthPage> {
                                       fontSize: 18.sp,
                                       fontFamily: 'UrbanistBold',
                                       color: _isLogin
-                                          ? Colors.white
-                                          : Colors.white.withOpacity(0.75)))),
+                                          ? AppColors.white
+                                          : AppColors.white
+                                              .withOpacity(0.75)))),
                           SizedBox(width: 84.w),
                           ElevatedButton(
                               style: ButtonStyle(
@@ -88,8 +90,8 @@ class _AuthPageState extends State<AuthPage> {
                                       fontSize: 18.sp,
                                       fontFamily: 'UrbanistBold',
                                       color: _isLogin
-                                          ? Colors.white.withOpacity(0.75)
-                                          : Colors.white))),
+                                          ? AppColors.white.withOpacity(0.75)
+                                          : AppColors.white))),
                         ],
                       ),
                     ),
@@ -108,7 +110,7 @@ class _AuthPageState extends State<AuthPage> {
                           borderRadius: BorderRadius.only(
                               topLeft: Radius.circular(25.r),
                               topRight: Radius.circular(25.r)),
-                          color: Colors.white,
+                          color: AppColors.white,
                         ),
                         child: _isLogin
                             ? const LoginComponent()

@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
+import '../../../../core/presentation/theme/app_colors.dart';
+
 class ElevatedButtonText extends StatelessWidget {
   const ElevatedButtonText({
     super.key,
@@ -14,7 +16,7 @@ class ElevatedButtonText extends StatelessWidget {
     return Text(
       text,
       style: TextStyle(
-          fontSize: 18.sp, fontFamily: 'UrbanistBold', color: Colors.white),
+          fontSize: 18.sp, fontFamily: 'UrbanistBold', color: AppColors.white),
     );
   }
 }

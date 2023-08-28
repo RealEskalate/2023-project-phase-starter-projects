@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
+import '../../../../core/presentation/theme/app_colors.dart';
+
 class ShowWelcomeText extends StatelessWidget {
   const ShowWelcomeText(
       {super.key,
@@ -19,14 +21,14 @@ class ShowWelcomeText extends StatelessWidget {
             style: TextStyle(
                 fontSize: 24.sp,
                 fontFamily: 'UrbanistSemiBold',
-                color: const Color(0xFF0D253C))),
+                color: AppColors.darkerBlue)),
         SizedBox(height: 20.h),
         Text(
           authMessage,
           style: TextStyle(
             fontSize: 14.sp,
             fontFamily: 'PoppinsBlack',
-            color: const Color(0xFF2D4379),
+            color: AppColors.darkBlue,
           ),
         ),
       ],

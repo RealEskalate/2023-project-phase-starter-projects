@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../../../core/presentation/theme/app_colors.dart';
 import '../../data/models/sign_up_model.dart';
 import '../bloc/auth_bloc.dart';
 import 'custom_text_field.dart';
@@ -126,7 +127,7 @@ class _SignUpComponentState extends State<SignUpComponent> {
                 style: TextStyle(
                   fontSize: 14.sp,
                   fontFamily: 'PoppinsBlack',
-                  color: const Color(0xFF2D4379),
+                  color: AppColors.darkBlue,
                 ),
               ),
               TextButton(
@@ -140,7 +141,7 @@ class _SignUpComponentState extends State<SignUpComponent> {
                   style: TextStyle(
                     fontSize: 14.sp,
                     fontFamily: 'UrbanistMedium',
-                    color: const Color(0xFF376AED),
+                    color: AppColors.blue,
                   ),
                 ),
               ),

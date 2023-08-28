@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
+import '../../../../core/presentation/theme/app_colors.dart';
+
 class ForgotPassword extends StatelessWidget {
   const ForgotPassword({
     super.key,
@@ -16,7 +18,7 @@ class ForgotPassword extends StatelessWidget {
           style: TextStyle(
             fontSize: 14.sp,
             fontFamily: 'PoppinsBlack',
-            color: const Color(0xFF2D4379),
+            color: AppColors.darkBlue,
           ),
         ),
         TextButton(
@@ -26,7 +28,7 @@ class ForgotPassword extends StatelessWidget {
             style: TextStyle(
               fontSize: 14.sp,
               fontFamily: 'UrbanistMedium',
-              color: const Color(0xFF376AED),
+              color: AppColors.blue,
             ),
           ),
         ),
