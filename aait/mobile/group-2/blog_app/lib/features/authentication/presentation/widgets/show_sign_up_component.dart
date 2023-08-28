@@ -1,20 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:go_router/go_router.dart';
 
-import '../../../../core/presentation/router/routes.dart';
 import '../../../../core/presentation/theme/app_colors.dart';
 import '../../data/models/sign_up_model.dart';
 import '../bloc/auth_bloc.dart';
+import 'custom_password_text_form_field.dart';
 import 'custom_text_field.dart';
-import 'custome_password_text_form_field.dart';
 import 'elevated_button_style.dart';
 import 'elevated_button_text.dart';
 import 'show_welcome_message.dart';
 
 class SignUpComponent extends StatefulWidget {
-  const SignUpComponent({super.key});
+  const SignUpComponent({super.key, required this.toggleLoginMode});
+
+  final Function toggleLoginMode;
 
   @override
   State<SignUpComponent> createState() => _SignUpComponentState();
@@ -42,12 +42,9 @@ class _SignUpComponentState extends State<SignUpComponent> {
       }
 
       if (state is SignUpSuccessState) {
-        ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(content: Text(' Successfully created account!')));
-
-        Future.delayed(const Duration(seconds: 3), () {
-          context.go(Routes.articles);
-        });
+        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+            duration: Duration(seconds: 4),
+            content: Text(' Successfully created account!. Please login')));
       }
     }, builder: (context, state) {
       if (state is Loading) {
@@ -100,17 +97,20 @@ class _SignUpComponentState extends State<SignUpComponent> {
               Expanded(
                 child: ElevatedButton(
                   onPressed: () {
-                    SignUpRequestModel signUpRequestModel = SignUpRequestModel(
-                      email: _usernameController.text,
-                      password: _passwordController.text,
-                      fullName: _fullNameController.text,
-                      expertise: _expertiseController.text,
-                      bio: _bioController.text,
-                    );
+                    if (_formKey.currentState!.validate()) {
+                      SignUpRequestModel signUpRequestModel =
+                          SignUpRequestModel(
+                        email: _usernameController.text,
+                        password: _passwordController.text,
+                        fullName: _fullNameController.text,
+                        expertise: _expertiseController.text,
+                        bio: _bioController.text,
+                      );
 
-                    context
-                        .read<AuthBloc>()
-                        .add(SignUpEvent(signUpRequestModel));
+                      context
+                          .read<AuthBloc>()
+                          .add(SignUpEvent(signUpRequestModel));
+                    }
                   },
                   style: elevatedButtonStyle(),
                   child: const ElevatedButtonText(),
@@ -131,11 +131,7 @@ class _SignUpComponentState extends State<SignUpComponent> {
                 ),
               ),
               TextButton(
-                onPressed: () {
-                  setState(() {
-                    // _isLogin = true;
-                  });
-                },
+                onPressed: () => widget.toggleLoginMode(),
                 child: Text(
                   'Login',
                   style: TextStyle(

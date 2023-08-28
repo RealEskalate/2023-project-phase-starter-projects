@@ -60,6 +60,17 @@ Future<void> init() async {
         getBookmarkedArticles: serviceLocator(),
       ));
 
+  //! Feature-Authentication
+  // Auth Bloc
+  serviceLocator.registerFactory(
+    () => AuthBloc(
+      loginUseCase: serviceLocator(),
+      signUpUseCase: serviceLocator(),
+      logoutUseCase: serviceLocator(),
+      customClient: serviceLocator(),
+    ),
+  );
+
   // Use cases
   serviceLocator.registerLazySingleton(
     () => GetTags(serviceLocator()),
@@ -91,6 +102,24 @@ Future<void> init() async {
   serviceLocator.registerLazySingleton(
     () => UpdateUserPhoto(serviceLocator()),
   );
+  // Auth Use cases
+  serviceLocator.registerLazySingleton(
+    () => LoginUseCase(
+      authRepository: serviceLocator(),
+    ),
+  );
+
+  serviceLocator.registerLazySingleton(
+    () => SignUpUseCase(
+      authRepository: serviceLocator(),
+    ),
+  );
+
+  serviceLocator.registerLazySingleton(
+    () => LogoutUseCase(
+      authRepository: serviceLocator(),
+    ),
+  );
 
   // Core
   serviceLocator.registerLazySingleton<NetworkInfo>(
@@ -115,6 +144,14 @@ Future<void> init() async {
       localDataSource: serviceLocator(),
     ),
   );
+  // Auth Repository
+  serviceLocator.registerLazySingleton<AuthRepository>(
+    () => AuthRepositoryImpl(
+      authRemoteDataSource: serviceLocator(),
+      authLocalDataSource: serviceLocator(),
+      networkInfo: serviceLocator(),
+    ),
+  );
 
   // Data sources
   serviceLocator.registerLazySingleton<ArticleLocalDataSource>(
@@ -129,6 +166,17 @@ Future<void> init() async {
   );
   serviceLocator.registerLazySingleton<UserRemoteDataSource>(
     () => UserRemoteDataSourceImpl(client: serviceLocator()),
+  );
+  //Auth Data sources
+  serviceLocator.registerLazySingleton<AuthRemoteDataSource>(
+    () => AuthRemoteDataSourceImpl(
+      client: serviceLocator(),
+    ),
+  );
+  serviceLocator.registerLazySingleton<AuthLocalDataSource>(
+    () => AuthLocalDataSourceImpl(
+      sharedPreferences: serviceLocator(),
+    ),
   );
 
   // Feature-Authentication

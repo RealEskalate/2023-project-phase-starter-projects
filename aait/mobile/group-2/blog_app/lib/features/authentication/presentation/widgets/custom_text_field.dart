@@ -13,12 +13,19 @@ class CustomTextFormField extends StatelessWidget {
   final TextEditingController _controller;
   final String labelText;
 
+  // method to validate email
+  bool isValidEmail(String email) {
+    return RegExp(r'^[a-zA-Z0-9.]+@[a-zA-Z0-9]+\.[a-zA-Z]+').hasMatch(email);
+  }
+
   @override
   Widget build(BuildContext context) {
     return SizedBox(
       height: 66.h,
       child: TextFormField(
-        keyboardType: TextInputType.emailAddress,
+        keyboardType: labelText == 'Username'
+            ? TextInputType.emailAddress
+            : TextInputType.text,
         controller: _controller,
         decoration: InputDecoration(
             labelText: labelText,
@@ -34,6 +41,21 @@ class CustomTextFormField extends StatelessWidget {
           fontFamily: 'UrbanistMedium',
           color: AppColors.darkerBlue,
         ),
+        validator: (value) {
+          if (value == null || value.isEmpty) {
+            return 'Please enter $labelText';
+          } else if (labelText.trim() == 'Username' && !isValidEmail(value)) {
+            return 'Please enter a valid email';
+          } else if (labelText.trim() == 'Short Bio' &&
+              (value.length < 25 || value.length > 150)) {
+            return 'Bio must be between 25 and 150 characters';
+          } else if (labelText.trim() == 'Expertise' &&
+              (value.length < 5 || value.length > 50)) {
+            return 'Expertise must be between 5 and 50 characters';
+          }
+          return null;
+        },
+        autovalidateMode: AutovalidateMode.onUserInteraction,
       ),
     );
   }
