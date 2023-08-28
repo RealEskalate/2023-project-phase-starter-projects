@@ -3,6 +3,7 @@ using HRLeaveManagement.Application.Profiles;
 using Microsoft.Extensions.Options;
 using Moq;
 using Shouldly;
+using SocialSync.Application.Common.Responses;
 using SocialSync.Application.Contracts.Infrastructure;
 using SocialSync.Application.Contracts.Persistence;
 using SocialSync.Application.DTOs.Authentication;
@@ -67,6 +68,10 @@ public class RegisterUserCommandHandlerTest
             CancellationToken.None
         );
 
+        result.ShouldBeOfType<CommonResponse<LoggedInUserDto>>();
+        result.IsSuccess.ShouldBeTrue();
+        result.Value.ShouldNotBeNull();
+
         var Users = await _mockUnitOfWork.Object.UserRepository.GetAsync();
         Users.Count.ShouldBe(4);
     }
@@ -89,9 +94,9 @@ public class RegisterUserCommandHandlerTest
             CancellationToken.None
         );
 
-        var Users = await _mockUnitOfWork.Object.UserRepository.GetAsync();
-        Users.Count.ShouldBe(3);
-    }
+        result.ShouldBeOfType<CommonResponse<LoggedInUserDto>>();
+        result.IsSuccess.ShouldBeFalse();
+        result.Value.ShouldBeNull();    }
 
     [Fact]
     public async Task Invalid_DuplicateEmailRegisterNewUsew()
@@ -121,14 +126,8 @@ public class RegisterUserCommandHandlerTest
             Phone = "1234567890",
         };
 
-        await Should.ThrowAsync<Exception>(() =>
-            _handler.Handle(
-                new RegisterUserCommand { RegisterUserDto = newUser },
-                CancellationToken.None
-            )
-        );
-
-        var Users = await _mockUnitOfWork.Object.UserRepository.GetAsync();
-        Users.Count.ShouldBe(4);
+        result.ShouldBeOfType<CommonResponse<LoggedInUserDto>>();
+        result.IsSuccess.ShouldBeFalse();
+        result.Value.ShouldBeNull();
     }
 }

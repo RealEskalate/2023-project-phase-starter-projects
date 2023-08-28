@@ -60,7 +60,7 @@ public class LoginUserRequestHandlerTest
     }
 
     [Fact]
-    public async Task Valid_RegisterNewUser()
+    public async Task Valid_LoginUser()
     {
         var newUser = new RegisterUserDto
         {
@@ -91,7 +91,7 @@ public class LoginUserRequestHandlerTest
     }
 
     [Fact]
-    public async Task Invalid_IncorrectPasswordRegisterNewUser()
+    public async Task Invalid_IncorrectPasswordLoginUser()
     {
         var newUser = new RegisterUserDto
         {
@@ -122,7 +122,7 @@ public class LoginUserRequestHandlerTest
     }
 
     [Fact]
-    public async Task Invalid_IncorrectUsernameRegisterNewUser()
+    public async Task Invalid_IncorrectUsernameLoginUser()
     {
         var newUser = new RegisterUserDto
         {
