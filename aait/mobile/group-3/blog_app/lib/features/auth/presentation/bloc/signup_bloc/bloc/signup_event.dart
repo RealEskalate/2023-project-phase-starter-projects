@@ -14,3 +14,13 @@ sealed class SignupEvent extends Equatable {
   @override
   List<Object> get props => [];
 }
+
+class SignUp extends SignupEvent {
+  const SignUp({
+    required super.email,
+    required super.password,
+    required super.fullName,
+    required super.bio,
+    required super.expertise,
+  });
+}
