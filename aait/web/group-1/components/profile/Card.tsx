@@ -4,7 +4,7 @@ import Image from 'next/image';
 
 const Card = () => {
   return (
-    <div className='col-span-1 font-montserrat shadow-sm rounded-md w-80 max-w-[280px]'>
+    <div className='col-span-1 font-montserrat shadow-sm rounded-md w-64'>
       <Image
         className='object-cover w-full'
         src='/images/test-card-image.png'
