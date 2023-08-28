@@ -1,4 +1,5 @@
 using Application.Contracts.Persistance;
+using Application.Exceptions;
 using Application.Features.User.Request.Queries;
 using Application.Responses;
 using AutoMapper;
@@ -22,7 +23,7 @@ public class GetNotificationHandler : IRequestHandler<GetNotifications, BaseComm
         try{
             var notifications = await _unitOfWork.notificationRepository.GetNotifications(request.Id);
             if (notifications == null){
-                notifications = new List<Notification>();
+                throw new NotFoundException(nameof(Notification), request.Id);
             }
             return BaseCommandResponse<List<Notification>>.SuccessHandler(notifications);
     

@@ -39,20 +39,6 @@ namespace WebApi.Controllers
             return Ok(new { Token = token });
         }
         
-        [HttpGet("{UserId}")]
-        public async Task<IActionResult> GetProfile( int UserId)
-        {
-            var command = new GetUserProfile() { Id = UserId };
-            var token = await _mediator.Send(command);
-            return Ok(token);
-        }
-        
-        [HttpGet]
-        public async Task<IActionResult> GetUsers( )
-        {
-            var command = new GetUsers();
-            var token = await _mediator.Send(command);
-            return Ok(token);
-        }
+       
     }
 }

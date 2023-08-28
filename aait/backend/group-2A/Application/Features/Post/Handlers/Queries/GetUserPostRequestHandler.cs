@@ -7,31 +7,31 @@ using Application.Responses;
 using System.Collections.Generic;
 using Application.Exceptions;
 
-namespace Application.Features.Post.Handlers.Queries
-{
-    public class GetUserPostRequestHandler : IRequestHandler<GetUserPostRequest, BaseCommandResponse<List<PostDto>>>
-    {
+namespace Application.Features.Post.Handlers.Queries{
+    public class GetUserPostRequestHandler : IRequestHandler<GetUserPostRequest, BaseCommandResponse<List<PostDto>>>{
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
 
-        public GetUserPostRequestHandler(IUnitOfWork unitOfWork, IMapper mapper)
-        {
+        public GetUserPostRequestHandler(IUnitOfWork unitOfWork, IMapper mapper){
             _mapper = mapper;
             _unitOfWork = unitOfWork;
         }
 
-        public async Task<BaseCommandResponse<List<PostDto>>> Handle(GetUserPostRequest request, CancellationToken cancellationToken)
-        {
-            var posts = await _unitOfWork.postRepository.GetUserPost(request.Id);
+        public async Task<BaseCommandResponse<List<PostDto>>> Handle(GetUserPostRequest request,
+            CancellationToken cancellationToken){
+            try{
+                var posts = await _unitOfWork.postRepository.GetUserPost(request.Id);
 
-            if (posts == null || posts.Count == 0)
-            {
-                var notFoundException = new NotFoundException(nameof(Domain.Entities.Post), request.Id);
-                return BaseCommandResponse<List<PostDto>>.FailureHandler(notFoundException);
+                if (posts == null || posts.Count == 0){
+                    throw new NotFoundException(nameof(Domain.Entities.Post), request.Id);
+                }
+
+                var postDtos = _mapper.Map<List<PostDto>>(posts);
+                return BaseCommandResponse<List<PostDto>>.SuccessHandler(postDtos);
             }
-
-            var postDtos = _mapper.Map<List<PostDto>>(posts);
-            return BaseCommandResponse<List<PostDto>>.SuccessHandler(postDtos);
+            catch(Exception ex){
+                return BaseCommandResponse<List<PostDto>>.FailureHandler(ex);
+            }
         }
     }
 }

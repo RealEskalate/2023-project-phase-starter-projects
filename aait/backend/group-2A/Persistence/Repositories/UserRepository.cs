@@ -11,14 +11,12 @@ public class UserRepository : GenericRepository<User>, IUserRepository
     public UserRepository(SocialSyncDbContext context) : base(context){
         _dbContext = context;
     }
-
-    public Task<List<User>> SearchByFullName(string email){
-        throw new NotImplementedException();
+    public async Task<List<User>> Search(string name){
+        return await _dbContext.Users
+            .Where(user => user.FullName.Contains(name) || user.UserName.Contains(name))
+            .ToListAsync();
     }
-
-    public Task<List<User>> SearchByUserName(string email){
-        throw new NotImplementedException();
-    }
+    
     public async Task<User> GetUserByEmail(string email){
         return await _dbContext.Users.FirstOrDefaultAsync(u => u.Email == email);
     }
@@ -26,8 +24,5 @@ public class UserRepository : GenericRepository<User>, IUserRepository
     public async Task<User> GetUserByUserName(string Username){
         return await _dbContext.Users.FirstOrDefaultAsync(u => u.UserName == Username);
     }
-
-    public Task<List<Notification>> GetNotification(int Id){
-        throw new NotImplementedException();
-    }
+    
 }

@@ -1,6 +1,7 @@
 using Application.Contracts.Identity;
 using Application.Contracts.Persistance;
 using Application.DTO.UserDTO;
+using Application.Exceptions;
 using Application.Features.User.Request.Queries;
 using Application.Responses;
 using AutoMapper;
@@ -22,7 +23,7 @@ public class GetUsersHandler : IRequestHandler<GetUsers, BaseCommandResponse<Lis
     public async Task<BaseCommandResponse<List<UserDto>>> Handle(GetUsers request, CancellationToken cancellationToken){
         var user = await _unitOfWork.userRepository.GetAll();
         if (user == null){
-            return BaseCommandResponse<List<UserDto>>.SuccessHandler(new List<UserDto>());
+            throw new NotFoundException(nameof(Domain.Entities.User), "User Not Found");
         }
         var userDto = _mapper.Map<List<UserDto>>(user);
         return BaseCommandResponse<List<UserDto>>.SuccessHandler(userDto);

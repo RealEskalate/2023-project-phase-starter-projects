@@ -2,6 +2,7 @@
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Application.DTO.UserDTO;
+using Application.Features.User.Request;
 using Application.Features.User.Request.Queries;
 using Application.Model;
 using Microsoft.AspNetCore.Authorization;
@@ -9,6 +10,7 @@ using Microsoft.AspNetCore.Authorization;
 namespace WebApi.Controllers
 {
     [ApiController]
+    [Authorize]
     [Route("api/[controller]")]
     
     public class UserController : ControllerBase
@@ -43,5 +45,13 @@ namespace WebApi.Controllers
             var token = await _mediator.Send(command);
             return Ok(token);
         }
+
+        [HttpGet]
+        public async Task<IActionResult> SearchUsers([FromQuery] string name){
+            var command = new SearchUsers{ Query = name };
+            var users = await _mediator.Send(command);
+            return Ok(users);
+        }
+
     }
 }

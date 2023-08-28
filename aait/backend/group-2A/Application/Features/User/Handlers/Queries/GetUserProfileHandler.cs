@@ -26,7 +26,6 @@ public class GetUserProfileHandler : IRequestHandler<GetUserProfile, BaseCommand
             if (user is null){
                 throw new NotFoundException(nameof(user), request.Id);
             }
-
             return BaseCommandResponse<UserProfileDTO>.SuccessHandler(_mapper.Map<UserProfileDTO>(user));
         }
         catch(Exception ex){

@@ -22,16 +22,20 @@ namespace Application.Features.Post.Handlers.Queries
 
         public async Task<BaseCommandResponse<List<PostDto>>> Handle(GetFollowingPostRequest request, CancellationToken cancellationToken)
         {
-            var posts = await _unitOfWork.postRepository.GetFollowingPost(request.Id);
+            try{
+                var posts = await _unitOfWork.postRepository.GetFollowingPost(request.Id);
 
-            if (posts == null || posts.Count == 0)
-            {
-                var notFoundException = new NotFoundException(nameof(Domain.Entities.Post), request.Id);
-                return BaseCommandResponse<List<PostDto>>.FailureHandler(notFoundException);
+                if (posts == null){
+                    throw new NotFoundException(nameof(Domain.Entities.Post), request.Id);
+                }
+
+                var postDtos = _mapper.Map<List<PostDto>>(posts);
+                return BaseCommandResponse<List<PostDto>>.SuccessHandler(postDtos);
             }
-
-            var postDtos = _mapper.Map<List<PostDto>>(posts);
-            return BaseCommandResponse<List<PostDto>>.SuccessHandler(postDtos);
+            catch(Exception ex){
+                    return BaseCommandResponse<List<PostDto>>.FailureHandler(ex);
+                
+            }
         }
     }
 }

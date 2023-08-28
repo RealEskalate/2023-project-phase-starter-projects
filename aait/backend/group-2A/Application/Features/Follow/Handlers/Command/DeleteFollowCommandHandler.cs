@@ -31,7 +31,6 @@ namespace Application.Features.FollowFeatures.Handlers.Command
                 var validation = new FollowDtoValidator(_unitOfWork.userRepository);
                 var validationResult = await validation.ValidateAsync(request.follow);
                 if (!validationResult.IsValid) throw new ValidationException(validationResult);
-
                 var unfollow = _mapper.Map<Follow>(request.follow);
                 await _unitOfWork.followRepository.Unfollow(unfollow);
                 int affectedRows = await _unitOfWork.Save();
