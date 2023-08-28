@@ -1,8 +1,8 @@
+import 'package:blog_app/core/utils/human_readable_time.dart';
 import 'package:blog_app/features/blog/presentation/screen/viewBlog.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import '../widgets/like_button.dart';
-import '../../../../core/utils/human_readable_time.dart';
 
 class Blog {
   final String image;
@@ -24,15 +24,14 @@ class Blog {
 List<Blog> blogs = [
   Blog(
       image: 'assets/images/bigdata.png',
-      title: 'Big Data Analytics for Beginners - Level 1',
+      title: 'Blog Title 1',
       subtitle: 'Subtitle 1',
       date: '2023-08-01',
       category: 'Big Data',
       likes: 200),
   Blog(
       image: 'assets/images/bif.jpg',
-      title:
-          'Ethiopia: The Battle for Benshangul-Gumuz is a Battle for Ethiopia',
+      title: 'Blog Title 2',
       subtitle: 'Subtitle 2',
       date: '2023-08-02',
       category: 'Scocial',
@@ -99,8 +98,8 @@ class BlogCards extends StatelessWidget {
                       children: <Widget>[
                         Container(height: 25),
                         Text(
-                          object.title,
-                          maxLines: 1,
+                          object.category,
+                          maxLines: 3,
                           style: const TextStyle(
                             color: Color.fromARGB(255, 70, 66, 66),
                             fontWeight: FontWeight.w200,
@@ -113,7 +112,7 @@ class BlogCards extends StatelessWidget {
                               top: 8.0, bottom: 16.0, left: 0, right: 8.0),
                           child: Text(
                             object.title,
-                            maxLines: 2,
+                            maxLines: 3,
                             style: TextStyle(
                               color: Colors.grey[800],
                               fontWeight: FontWeight.w500,
@@ -146,7 +145,7 @@ class BlogCards extends StatelessWidget {
                               ),
                             ),
                             const Spacer(),
-                            //    const FaIcon(FontAwesomeIcons.solidBookmark)
+                            const FaIcon(FontAwesomeIcons.solidBookmark)
                           ],
                         ),
                       ],

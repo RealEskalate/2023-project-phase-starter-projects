@@ -1,16 +1,25 @@
+import 'package:blog_app/features/user/presentation/widgets/about_me.dart';
+import 'package:blog_app/features/user/presentation/widgets/header.dart';
+import 'package:blog_app/features/user/presentation/widgets/my_activities.dart';
 import 'package:flutter/material.dart';
-import '../widgets/about_me.dart';
-import '../widgets/my_post.dart';
-import '../widgets/header.dart';
 
 class UserProfileScreen extends StatefulWidget {
   const UserProfileScreen({super.key});
 
   @override
-  State<UserProfileScreen> createState() => UserProfileScreenState();
+  State<UserProfileScreen> createState() => _UserProfileScreenState();
 }
 
-class UserProfileScreenState extends State<UserProfileScreen> {
+class _UserProfileScreenState extends State<UserProfileScreen> {
+  late String selectedActivity = 'Posts';
+  late int selectedIndex = 0; // Initially selected index
+
+  void updateSelectedActivity(String newActivity) {
+    setState(() {
+      selectedActivity = newActivity;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -24,9 +33,11 @@ class UserProfileScreenState extends State<UserProfileScreen> {
             children: [
               Padding(
                 padding: const EdgeInsets.all(8.0),
-                child: Aboutme(),
+                child: Aboutme(onActivitySelected: updateSelectedActivity),
               ),
-              const Expanded(child: Myposts()),
+              Expanded(
+                child: MyActivity(activity: selectedActivity),
+              ),
             ],
           ),
         ),
