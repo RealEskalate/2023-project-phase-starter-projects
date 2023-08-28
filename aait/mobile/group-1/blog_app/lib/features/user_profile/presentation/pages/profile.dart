@@ -28,6 +28,7 @@ class _ProfilePageState extends State<ProfilePage> {
 
   final ImagePicker picker = ImagePicker();
   Widget profileImage = Icon(Icons.person);
+  bool firstTime = true;
 
   @override
   Widget build(BuildContext context) {
@@ -35,10 +36,9 @@ class _ProfilePageState extends State<ProfilePage> {
       body: BlocBuilder<ProfileBloc, ProfileState>(
         builder: (context, state) {
           if (state is Loaded) {
-            if (state.user.image != null) {
-              setState(() {
-                profileImage = Image(image: NetworkImage(state.user.image!));
-              });
+            if (state.user.image != null && firstTime) {
+              profileImage = Image(image: NetworkImage(state.user.image!));
+              firstTime = false;
             }
             return SafeArea(
               child: SizedBox(
