@@ -14,7 +14,7 @@ const Header: React.FC<HeaderProps> = ({ title }) => {
       
   return (
     <>
-    <nav className="bg-white">
+    <nav className="bg-white fixed top-0 left-0 right-0">
 			<div className="max-w-8xl mx-auto px-4">
 				<div className="flex justify-between">
 					<div className="flex items-start space-x-7">
@@ -41,7 +41,7 @@ const Header: React.FC<HeaderProps> = ({ title }) => {
 						<svg className=" w-6 h-6 text-gray-500 hover:text-blue-700 "
 							x-show="!showMenu"
 							fill="none"
-							stroke-linecap="round"
+							strokeLinecap="round"
 							stroke-linejoin="round"
 							stroke-width="2"
 							viewBox="0 0 24 24"
