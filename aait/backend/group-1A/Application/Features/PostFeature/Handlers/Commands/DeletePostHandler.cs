@@ -12,9 +12,11 @@ namespace Application.Features.PostFeature.Handlers.Commands
     public class DeletePostHandler : IRequestHandler<DeletePostCommand, BaseResponse<PostResponseDTO>>
     {
         private readonly IPostRepository _postRepository;
+
         public DeletePostHandler(IPostRepository postRepository)
         {
             _postRepository = postRepository;
+
         }
         public async Task<BaseResponse<PostResponseDTO>> Handle(DeletePostCommand request, CancellationToken cancellationToken)
         {
