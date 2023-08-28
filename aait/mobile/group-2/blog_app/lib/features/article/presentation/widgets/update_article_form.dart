@@ -7,6 +7,7 @@ import '../../../../core/utils/url_to_file.dart';
 import '../../../user/domain/entities/user_data.dart';
 import '../../domain/entities/article.dart';
 import '../bloc/article_bloc.dart';
+import '../bloc/tag_bloc.dart';
 import '../bloc/tag_selector_bloc.dart';
 import '../bloc/tag_state.dart';
 import 'custom_text_field.dart';
