@@ -6,5 +6,5 @@ namespace SocialSync.Application.Features.Requests;
 
 public class CreateTagCommand : IRequest<TagResponseDto>
 {
-    public string Title { get; set; } = string.Empty;
+    public CreateTagDto CreateTagDto {get; set;} = null!;
 }
