@@ -8,7 +8,8 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'Injection/auth_injection.dart' as di;
+import './features/user_profile/presentation/pages/profile.dart';
+import './Injection/injection_container.dart' as di;
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -22,15 +23,15 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MultiBlocProvider(
-        providers: [
-          BlocProvider(create: (context)=>sl<LogInBloc>()),
-          BlocProvider(create: (context)=>sl<SignUpBloc>())
-        ],
-        child: MaterialApp(
-          darkTheme: ThemeData.dark(),
-          debugShowCheckedModeBanner: false,
-          home: StackOfCards(),
-        ));
+    return MaterialApp(
+      //DevicePreview
+      locale: DevicePreview.locale(context),
+      builder: DevicePreview.appBuilder,
+      debugShowCheckedModeBanner: false,
+      //DevicePreview
+
+      darkTheme: ThemeData.dark(),
+      home: const ProfilePage(),
+    );
   }
 }
