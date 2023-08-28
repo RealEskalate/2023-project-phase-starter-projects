@@ -34,5 +34,9 @@ final GoRouter router = GoRouter(
         return ArticleScreen(article: article);
       },
     ),
+    GoRoute(
+      path: Routes.home,
+      builder: (context, state) => const HomePage(),
+    ),
   ],
 );

@@ -48,7 +48,6 @@ class ArticleLocalDataSourceImpl extends ArticleLocalDataSource {
 
     if (jsonEncoded != null) {
       final List<dynamic> jsonDecoded = jsonDecode(jsonEncoded);
-
       final articles = jsonDecoded
           .map<ArticleModel>((map) => ArticleModel.fromJson(map))
           .toList();
@@ -102,6 +101,6 @@ class ArticleLocalDataSourceImpl extends ArticleLocalDataSource {
     final jsonEncoded =
         jsonEncode(tags.map<String>((tag) => tag.name).toList());
 
-    await sharedPreferences.setString(articleKey, jsonEncoded);
+    await sharedPreferences.setString(tagKey, jsonEncoded);
   }
 }

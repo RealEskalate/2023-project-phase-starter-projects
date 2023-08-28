@@ -7,6 +7,7 @@ import '../../../../core/presentation/theme/app_colors.dart';
 import '../../../user/domain/entities/user_data.dart';
 import '../../domain/entities/article.dart';
 import '../bloc/article_bloc.dart';
+import '../bloc/tag_bloc.dart';
 import '../bloc/tag_selector_bloc.dart';
 import 'custom_chip.dart';
 import 'custom_text_field.dart';
@@ -51,7 +52,7 @@ class _CreateArticleFormState extends State<CreateArticleForm> {
             const SizedBox(height: 15),
 
             // Tag field
-            BlocBuilder<ArticleBloc, ArticleState>(
+            BlocBuilder<TagBloc, TagState>(
               builder: (context, state) {
                 if (state is AllTagsLoadedState) {
                   return TagSelector(tags: state.tags);

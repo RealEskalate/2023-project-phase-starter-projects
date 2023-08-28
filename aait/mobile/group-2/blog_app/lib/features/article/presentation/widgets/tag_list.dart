@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../../../../core/presentation/theme/app_colors.dart';
 import '../../domain/entities/tag.dart';
 
 class TagList extends StatelessWidget {
@@ -35,17 +36,15 @@ class TagWidget extends StatelessWidget {
     return Container(
       width: 100,
       decoration: BoxDecoration(
-          border: Border.all(
-              color: Theme.of(context).colorScheme.primary, width: 2),
+          border: Border.all(color: AppColors.blue, width: 2),
           borderRadius: BorderRadius.circular(1000),
           color:
               selected ? Theme.of(context).colorScheme.primary : Colors.white),
       child: Center(
         child: Text(
           tagName,
-          style: TextStyle(
-              color: Theme.of(context).colorScheme.primary,
-              fontWeight: FontWeight.w200),
+          style: const TextStyle(
+              color: AppColors.blue, fontWeight: FontWeight.w200),
         ),
       ),
     );

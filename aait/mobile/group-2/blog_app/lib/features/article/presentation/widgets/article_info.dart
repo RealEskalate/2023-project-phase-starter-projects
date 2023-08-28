@@ -1,8 +1,9 @@
-import 'package:blog_app/features/article/presentation/widgets/tag_display.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
+import '../../../../core/presentation/util/date_to_string_convertor.dart';
 import '../../domain/entities/article.dart';
+import 'tag_display.dart';
 
 class ArticleInfo extends StatelessWidget {
   const ArticleInfo({
@@ -19,28 +20,40 @@ class ArticleInfo extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Expanded(
-          child: Container(
-            width: 200,
+          child: SizedBox(
+            width: 180.w,
+            // child:
             child: Text(
               article.title.toUpperCase(),
               style: const TextStyle(
                 fontSize: 16.5,
               ),
               softWrap: true,
+              overflow: TextOverflow.ellipsis, // Add this line
+              maxLines: 2,
             ),
           ),
         ),
-        SizedBox(height: 30.h),
+        SizedBox(height: 10.h),
         TagDisplay(article: article),
         SizedBox(height: 10.h),
-        Text(
-          'by ${article.author}',
-          style: const TextStyle(fontSize: 15.0),
+        SizedBox(
+          width: 170.w,
+          child: Text(
+            'by ${article.author}',
+            style: const TextStyle(fontSize: 15.0),
+            softWrap: true,
+            overflow: TextOverflow.ellipsis, // Add this line
+            maxLines: 1,
+          ),
+        ),
+        SizedBox(
+          height: 50.h,
         ),
         Align(
           alignment: Alignment.bottomRight,
           child: Text(
-            article.date.toString(),
+            dateTimeToString(article.date),
             style: TextStyle(color: Theme.of(context).colorScheme.onBackground),
           ),
         ),

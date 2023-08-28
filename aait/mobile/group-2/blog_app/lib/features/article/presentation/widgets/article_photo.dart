@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -19,12 +20,11 @@ class ArticlePhoto extends StatelessWidget {
         SizedBox(
           width: 160.w,
           height: 160.h,
-          child: ClipRRect(
-            borderRadius: BorderRadius.circular(20.0),
-            child: Image(
-              image: AssetImage(article.photoUrl),
-              fit: BoxFit.cover,
-            ),
+          child: CachedNetworkImage(
+            height: 300.h,
+            width: 428.w,
+            fit: BoxFit.cover,
+            imageUrl: article.photoUrl,
           ),
         ),
         Positioned(
