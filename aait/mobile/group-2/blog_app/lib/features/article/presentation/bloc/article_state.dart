@@ -1,7 +1,6 @@
 import 'package:equatable/equatable.dart';
 
 import '../../domain/entities/article.dart';
-import '../../domain/entities/tag.dart';
 
 sealed class ArticleState extends Equatable {
   const ArticleState();
