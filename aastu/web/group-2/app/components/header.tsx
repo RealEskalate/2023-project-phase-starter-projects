@@ -10,10 +10,23 @@ import ProfileDropDown from './home/ProfileDropDown';
 import { useClickOutside } from '../hooks/useClickOutside';
 import { useAppDispatch, useAppSelector } from '@/lib/redux/hooks';
 import { unsetUser } from '@/lib/redux/slices/loginSlice';
+import useDarkMode from '@/lib/useDarkMode';
 
 const Header: FC = () => {
   const currentRoute = usePathname();
   const [openMenu, setOpenMenu] = useState<boolean>(false);
+  const [loggedIn, setLoggedIn] = useState(false);
+  // console.log(useDarkMode());
+  const [colorTheme, setTheme] = useDarkMode()
+
+  const handleDarkMode = () => {
+    console.log("color theme", colorTheme);
+    
+    setTheme(
+      colorTheme === "light" ? "light" : "dark"
+    )
+  }
+  
   const wrapperRef = useRef(null);
 
   const dispatch = useAppDispatch();
@@ -91,60 +104,91 @@ const Header: FC = () => {
       </div>
       <nav className="hidden lg:flex list-none py-4 px-9">
         <li
-          className={`mr-9 font-secondaryFont font-semibold ${
-            currentRoute === '/'
+          className={`mr-9 font-secondaryFont font-semibold ${currentRoute === '/'
               ? 'text-[#264FAD] pb-8 border-b-[4px] border-[#264FAD] rounded-sm'
               : ' text-[#565656]'
-          }`}
+            }`}
         >
           <Link href="/">Home</Link>
         </li>
         <li
-          className={`mr-9 font-secondaryFont font-semibold ${
-            currentRoute === '/teams'
+          className={`mr-9 font-secondaryFont font-semibold ${currentRoute === '/teams'
               ? 'text-[#264FAD] pb-8 border-b-[4px] border-[#264FAD] rounded-sm'
               : ' text-[#565656]'
-          }`}
+            }`}
         >
           <Link href="/teams">Teams</Link>
         </li>
         <li
-          className={`mr-9 font-secondaryFont font-semibold ${
-            currentRoute === '/stories'
+          className={`mr-9 font-secondaryFont font-semibold ${currentRoute === '/stories'
               ? 'text-[#264FAD] pb-8 border-b-[4px] border-[#264FAD] rounded-sm'
               : ' text-[#565656]'
-          }`}
+            }`}
         >
           <Link href="/stories">Success Stories</Link>
         </li>
         <li
-          className={`mr-9 font-secondaryFont font-semibold ${
-            currentRoute === '/about'
+          className={`mr-9 font-secondaryFont font-semibold ${currentRoute === '/about'
               ? 'text-[#264FAD] pb-8 border-b-[4px] border-[#264FAD] rounded-sm'
               : ' text-[#565656]'
-          }`}
+            }`}
         >
           <Link href="/about">About Us</Link>
         </li>
         <li
-          className={`mr-9 font-secondaryFont font-semibold ${
-            currentRoute === '/blog'
+          className={`mr-9 font-secondaryFont font-semibold ${currentRoute === '/blog'
               ? 'text-[#264FAD] pb-8 border-b-[4px] border-[#264FAD] rounded-sm'
               : ' text-[#565656]'
-          }`}
+            }`}
         >
           <Link href="/blog">Blogs</Link>
         </li>
         <li
-          className={`mr-9 font-secondaryFont font-semibold ${
-            currentRoute === '/donate'
+          className={`mr-9 font-secondaryFont font-semibold ${currentRoute === '/donate'
               ? 'text-[#264FAD] pb-8 border-b-[4px] border-[#264FAD] rounded-sm'
               : ' text-[#565656]'
-          }`}
+            }`}
         >
           <Link href="/donate">Get Involved</Link>
         </li>
       </nav>
+
+      <div onClick={handleDarkMode}>
+        {colorTheme === "light" ? (
+          <svg
+            // onClick={() => handleDarkMode}
+            xmlns="http://www.w3.org/2000/svg"
+            className="h-6 w-6"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth={2}
+              d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"
+            />
+          </svg>
+        ) : (
+          <svg
+            // onClick={() => handleDarkMode}
+            xmlns="http://www.w3.org/2000/svg"
+            className="h-6 w-6"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth={2}
+              d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"
+            />
+          </svg>
+        )}
+      </div>
+
       {openMenu && (
         <nav
           className={`absolute right-5 w-48 px-4 py-2  mt-12 bg-slate-100 text-left flex flex-col lg:hidden shadow-md`}
@@ -215,11 +259,10 @@ export const Nav = ({
         className={`w-full px-2 py-2 flex gap-4 items-center  hover:bg-slate-300 transition-all ease-in-out rounded`}
       >
         <span
-          className={` ${
-            currentRoute === `${href}`
+          className={` ${currentRoute === `${href}`
               ? 'text-[#264FAD] font-medium border-b-[4px] border-[#264FAD] rounded-sm'
               : ' text-[#565656]'
-          }`}
+            }`}
         >
           {name}
         </span>
