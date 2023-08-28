@@ -4,7 +4,7 @@ export default function Home() {
     <main className=" w-full py-10 px-16 pt-20 font-sans-serif	mt-20">
       <header className="grid grid-cols-2 sm:grid-cols-1 md:grid-cols-1 lg:grid-cols-2 gap-4 ">
         <div className="">
-          <div className="text-7xl	font-extrabold ">
+          <div className="xl:text-7xl	font-extrabold ">
             <span className="text-[#160041] leading-10">Africa to </span>
             <span className="text-primary leading-10 font-poppins">
               Silicon
@@ -29,27 +29,27 @@ export default function Home() {
                 fill="none"
                 xmlns=""
               >
-                <g clip-path="url(#clip0_3602_2395) ">
+                <g clipPath="url(#clip0_3602_2395) ">
                   <path
                     d="M5.75195 13.7996H21.8514"
                     stroke="white"
-                    stroke-width="2.29993"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
+                    strokeWidth="2.29993"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
                   />
                   <path
                     d="M17.251 18.3994L21.8508 13.7996"
                     stroke="white"
-                    stroke-width="2.29993"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
+                    strokeWidth="2.29993"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
                   />
                   <path
                     d="M17.251 9.19971L21.8508 13.7996"
                     stroke="white"
-                    stroke-width="2.29993"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
+                    strokeWidth="2.29993"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
                   />
                 </g>
                 <defs>
