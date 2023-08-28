@@ -24,7 +24,7 @@ namespace Application.DTO.FollowDTO.Validator
                     return exist;
                 }).WithMessage("User not found");
 
-            RuleFor(p => p.FolloweeId)
+            RuleFor(p => p.FollowedId)
                 .NotEmpty().WithMessage("{PropertyName} is Invalid.")
                 .NotNull()
                 .MustAsync(async (id, cancellation) => {
@@ -35,7 +35,7 @@ namespace Application.DTO.FollowDTO.Validator
             RuleFor(p => p)
                 .Must((follow, cancellation) =>
                 {
-                    return follow.FollowerId != follow.FolloweeId;
+                    return follow.FollowerId != follow.FollowedId;
                 })
                 .WithMessage("You can't follow yourself");
 

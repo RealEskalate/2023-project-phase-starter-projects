@@ -30,9 +30,14 @@ namespace Application.Features.FollowFeatures.Handlers.Command
                 var validation = new FollowDtoValidator(_unitOfWork.userRepository);
                 var validationResult = await validation.ValidateAsync(request.follow);
                 if (!validationResult.IsValid) throw new ValidationException(validationResult);
-
+            
+                var notify = new Notification(){
+                    UserId =  request.follow.FollowedId,
+                    NotifierId = request.follow.FollowerId,
+                    Message = "Started Following You" };
                 var follow = _mapper.Map<Follow>(request.follow);
                 await _unitOfWork.followRepository.Follow(follow);
+                await _unitOfWork.notificationRepository.AddNotification(notify);
                 int affectedRows = await _unitOfWork.Save();
                 if (affectedRows == 0) throw new ServerErrorException("Something Went Wrong");
 
