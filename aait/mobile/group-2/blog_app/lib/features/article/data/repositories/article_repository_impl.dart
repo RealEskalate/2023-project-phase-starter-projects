@@ -74,6 +74,24 @@ class ArticleRepositoryImpl extends ArticleRepository {
   }
 
   @override
+  Future<Either<Failure, List<Article>>> filterArticles(
+      Tag tag, String title) async {
+    if (await networkInfo.isConnected) {
+      try {
+        final articles = await remoteDataSource.filterArticles(tag, title);
+
+        return Right(articles);
+      } catch (e) {
+        final articles = await localDataSource.getArticles();
+        return Right(articles);
+      }
+    } else {
+      final articles = await localDataSource.getArticles();
+      return Right(articles);
+    }
+  }
+
+  @override
   Future<Either<Failure, Article>> getArticle(String id) async {
     if (await networkInfo.isConnected) {
       try {
