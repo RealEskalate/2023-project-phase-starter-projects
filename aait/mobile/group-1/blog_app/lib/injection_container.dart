@@ -1,6 +1,6 @@
-import 'package:blog_app/features/blog/domain/usecases/create_article.dart';
-import 'package:blog_app/features/blog/domain/usecases/update_article.dart';
-import 'package:blog_app/features/blog/presentation/bloc/article_bloc/article_bloc.dart';
+import 'package:blog_app/features/Article/domain/usecases/create_article.dart';
+import 'package:blog_app/features/Article/domain/usecases/update_article.dart';
+import 'package:blog_app/features/Article/presentation/bloc/article_bloc/article_bloc.dart';
 import 'package:blog_app/features/user_profile/data/repository/user_repository_implementaion.dart';
 import 'package:blog_app/features/user_profile/domain/repositories/user_repository.dart';
 import 'package:blog_app/features/user_profile/domain/usecases/get_user_info.dart';
@@ -11,7 +11,7 @@ import 'package:internet_connection_checker/internet_connection_checker.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'core/network/network_info.dart';
-import 'features/blog/data/datasources/remote_remote_data_source.dart';
+import 'features/Article/data/datasources/remote_remote_data_source.dart';
 import 'features/user_profile/data/datasources/profile_local_data_source.dart';
 import 'features/user_profile/data/datasources/proile_remote_data_source.dart';
 import 'features/user_profile/domain/entities/user_entity.dart';

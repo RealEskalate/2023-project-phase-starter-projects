@@ -1,5 +1,5 @@
-import 'package:blog_app/features/blog/domain/usecases/create_article.dart';
-import 'package:blog_app/features/blog/domain/usecases/update_article.dart';
+import 'package:blog_app/features/Article/domain/usecases/create_article.dart';
+import 'package:blog_app/features/Article/domain/usecases/update_article.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../../core/network/network_info.dart';
@@ -20,13 +20,12 @@ class ArticleBloc extends Bloc<ArticleEvent, ArticleState> {
 
     on<CreateArticleEvent>((CreateArticleEvent event, Emitter emit) async {
       CreateArticle createArticle = CreateArticle(repository);
-      
     });
-
 
     on<UpdateArticleEvent>((UpdateArticleEvent event, Emitter emit) async {
-    UpdateArticle updateArticle = UpdateArticle(repository);
-
+      UpdateArticle updateArticle = UpdateArticle(repository);
     });
+
+    on<GetArticleEvent>((GetArticleEvent event, Emitter emit) async {});
   }
 }

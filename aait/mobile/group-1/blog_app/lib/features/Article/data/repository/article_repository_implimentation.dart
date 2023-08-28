@@ -1,9 +1,9 @@
 import 'package:blog_app/core/errors/failures/failure.dart';
 import 'package:blog_app/core/network/network_info.dart';
-import 'package:blog_app/features/blog/data/datasources/remote_remote_data_source.dart';
-import 'package:blog_app/features/blog/data/models/create_article_model.dart';
-import 'package:blog_app/features/blog/domain/entities/article_enitity.dart';
-import 'package:blog_app/features/blog/domain/repositories/article_repository.dart';
+import 'package:blog_app/features/Article/data/datasources/remote_remote_data_source.dart';
+import 'package:blog_app/features/Article/data/models/create_article_model.dart';
+import 'package:blog_app/features/Article/domain/entities/article_enitity.dart';
+import 'package:blog_app/features/Article/domain/repositories/article_repository.dart';
 import 'package:dartz/dartz.dart';
 
 import '../../domain/entities/create_article_entity.dart';

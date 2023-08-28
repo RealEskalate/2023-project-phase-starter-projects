@@ -1,6 +1,6 @@
 import 'package:blog_app/core/errors/failures/failure.dart';
-import 'package:blog_app/features/blog/domain/entities/article_enitity.dart';
-import 'package:blog_app/features/blog/domain/repositories/article_repository.dart';
+import 'package:blog_app/features/Article/domain/entities/article_enitity.dart';
+import 'package:blog_app/features/Article/domain/repositories/article_repository.dart';
 import 'package:dartz/dartz.dart';
 
 import '../entities/create_article_entity.dart';
