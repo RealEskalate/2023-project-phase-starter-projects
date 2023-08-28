@@ -31,7 +31,7 @@ const SingleBlogCard: React.FC<Blog> = ({
     const formattedDate = `${dayOfWeek}, ${month} ${day}, ${year}`;
     return (
         <div
-            className='space-y-4 relative bg-white overflow-hidden shadow-lg dark:shadow dark:shadow-dark-backgroundLight rounded-md my-4 mx-3 dark:bg-dark-backgroundLight'>
+            className='space-y-4 relative bg-white overflow-hidden shadow-lg hover:shadow-xl dark:hover:shadow-sm dark:hover:shadow-slate-700 transition-all cursor-pointer dark:shadow dark:shadow-dark-backgroundLight rounded-md my-4 mx-3 dark:bg-dark-backgroundLight'>
             <Image
                 className='w-full h-48 object-cover'
                 src={image}
@@ -39,7 +39,7 @@ const SingleBlogCard: React.FC<Blog> = ({
                 width={300}
                 height={200}
             />
-            <h3 className='font-bold text-2xl w-11/12 mx-auto dark:text-dark-textColor-100'>{title}</h3>
+            <h3 className='font-semibold text-xl w-11/12 mx-auto dark:text-dark-textColor-100'>{title}</h3>
             <div
                 className='p-3 space-y-4 dark:text-dark-textColor-50'>
                 <div
@@ -68,7 +68,7 @@ const SingleBlogCard: React.FC<Blog> = ({
 
                 
                 <div
-                    className='absolute bottom-0 left-0 w-full p-4 mx-auto flex flex-wrap justify-between font-semibold'>
+                    className='text-sm absolute bottom-0 left-0 w-full p-4 mx-auto flex flex-wrap justify-between font-base'>
                     <hr className='w-full mb-4' />
                     <span
                         className='text-[#FF9F43]'>
