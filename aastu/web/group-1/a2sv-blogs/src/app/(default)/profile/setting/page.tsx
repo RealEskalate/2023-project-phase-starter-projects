@@ -9,15 +9,31 @@ import { useState } from "react";
 export default function page() {
   const [oldPassword, setOldPassword] = useState<string>("");
   const [newPassword, setNewPassword] = useState<string>("");
+  const [confirmPassword, setConfirmPassword] = useState<string>("");
   const [isEditing, setIsEditing] = useState<boolean>(false);
+
+  const [isProcessing, setIsProcessing] = useState<boolean>(false);
   const [isSuccess, setIsSuccess] = useState<boolean>(false);
   const [isError, setIsError] = useState<boolean>(false);
   const [alertMessage, setAlertMessage] = useState<string>("");
+
   const { changePasswordHandler } = useAuth();
+
   const handleSave = () => {
     try {
-      changePasswordHandler({ oldPassword, newPassword }).then((res) => {
-        console.log(res, { newPassword, oldPassword });
+      setIsProcessing(true);
+      if (confirmPassword !== newPassword) {
+        setAlertMessage("Password must match");
+        setIsError(true);
+        setIsProcessing(false);
+        setTimeout(() => {
+          setIsError(false);
+        }, 2000);
+        return;
+      }
+
+      changePasswordHandler({ oldPassword, newPassword }).then((res: any) => {
+        setIsProcessing(false);
         if (res.error) {
           setAlertMessage("Invalid Password, try again");
           setIsError(true);
@@ -38,6 +54,7 @@ export default function page() {
       });
     } catch (error) {}
   };
+
   return (
     <section className="mt-4">
       {isSuccess && <SuccessAlert message={alertMessage} />}
@@ -74,7 +91,11 @@ export default function page() {
             disabled={!isEditing}
             onClick={handleSave}
           >
-            Save Changes
+            {isProcessing ? (
+              <span>Processing ...</span>
+            ) : (
+              <span> Save Changes</span>
+            )}
           </button>
         </div>
       </div>
@@ -113,6 +134,24 @@ export default function page() {
               value={newPassword}
               disabled={!isEditing}
               onChange={(e) => setNewPassword(e.target.value)}
+              required
+            />
+          </div>
+          <div className="mt-5 grid grid-cols-6 items-center">
+            <label
+              htmlFor="password"
+              className="text-sm text-text-content col-span-2"
+            >
+              Confirm Password
+            </label>
+            <input
+              type="password"
+              id="confirm_password"
+              placeholder="Confirm password"
+              className="col-span-4 border border-neutral-200 focus:outline-none rounded px-3 py-2 mx-2 mt-1 placeholder:text-sm"
+              value={confirmPassword}
+              disabled={!isEditing}
+              onChange={(e) => setConfirmPassword(e.target.value)}
               required
             />
           </div>
