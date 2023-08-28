@@ -22,12 +22,8 @@ public class CommentController : ControllerBase
     public async Task<ActionResult<int>> AddComment([FromBody] CreateCommentDto commentDto)
     {
         var command = new CreateCommentCommand{ CommentDto = commentDto };
-        var commentId = await _mediator.Send(command);
-        var response = new
-        {
-            Message = "Comment created successfully.",
-            CommentId = commentId
-        };
+        var response= await _mediator.Send(command);
+
         return Ok(response);
     }
     
@@ -45,8 +41,8 @@ public class CommentController : ControllerBase
     public async Task<ActionResult> DeleteComment(int id)
     {
         var command = new DeleteCommentCommand { Id = id };
-        await _mediator.Send(command);
-        return NoContent();
+        var response = await _mediator.Send(command);
+        return Ok(response);
     }
     
     // GET /Comment/{commentId}

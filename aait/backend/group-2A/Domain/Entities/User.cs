@@ -1,8 +1,10 @@
 ﻿
 
+using Domain.Common;
+
 namespace Domain.Entities
 {
-    public class User
+    public class User : BaseEntity
     {
         public int Id { get; set; }
         public required string FullName { get; set; }
@@ -13,8 +15,6 @@ namespace Domain.Entities
         public int FollowerCount{ get; set; } = 0;
         public int FolloweeCount{ get; set; } = 0;
         public int PostCount{ get; set; } = 0;
-        public DateTime CreatedAt { get; set; }
-        public DateTime? UpdatedAt { get; set; }
         
         // Navigation Property
         public ICollection<Post> Posts{ get; set; } = new HashSet<Post>();
