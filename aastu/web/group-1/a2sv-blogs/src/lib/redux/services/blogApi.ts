@@ -9,7 +9,7 @@ const blogApi = baseApi.injectEndpoints({
     getBlogById: builder.query({
       query: (id: string) => `/blogs/${id}`,
     }),
-    createBlog: builder.mutation<Blog, Partial<Blog>>({
+    createBlog: builder.mutation<Blog, FormData>({
       query: (body) => ({
         url: "/blogs",
         method: "POST",
@@ -28,6 +28,9 @@ const blogApi = baseApi.injectEndpoints({
         url: `/blogs/${id}`,
         method: "DELETE",
       }),
+    }),
+    getMyBlogs: builder.query<Blog[], void>({
+      query: () => "/blogs/my-blogs",
     }),
   }),
   overrideExisting: false,

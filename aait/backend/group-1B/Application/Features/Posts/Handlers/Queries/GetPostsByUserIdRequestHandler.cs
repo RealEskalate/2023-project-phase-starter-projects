@@ -23,7 +23,7 @@ public class GetPostsByUserIdRequestHandler : IRequestHandler<GetPostsByUserIdRe
 
     public async Task<List<PostContentDto>> Handle(GetPostsByUserIdRequest request, CancellationToken token)
     {
-        var user = await _userRepository.Get(request.UserId);
+        var user = await _userRepository.GetUserDetail(request.UserId);
         if (user == null)
             throw new NotFoundException(nameof(User), request.UserId);
 

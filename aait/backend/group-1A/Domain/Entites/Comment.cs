@@ -5,13 +5,19 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Domain.Common;
 
 namespace Domain.Entities
 {
-    public class Comment
+    public class Comment : BaseEntity
     {
-        [Key]
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int Id { get; set; }
+
+        
+        public int PostId { get; set; }
+
+        public virtual Post post {get ; set;}
+        public virtual ICollection<CommentReaction> CommentReactions { get; set; }
+
+
     }
 }

@@ -1,17 +1,37 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-void main() {
-  runApp(const MyApp());
+import 'bloc_observer.dart';
+import 'core/presentation/router/router.dart';
+import 'core/presentation/theme/app_theme.dart';
+import 'injection_container.dart' as di;
+
+Future<void> main() async {
+  Bloc.observer = SimpleBlocObserver();
+
+  WidgetsFlutterBinding.ensureInitialized();
+
+  await di.init();
+
+  runApp(const App());
 }
 
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+class App extends StatelessWidget {
+  const App({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
-      title: 'Blog app',
-      home: Center(child: Text('Blog app')),
+    return ScreenUtilInit(
+      designSize: const Size(428, 926),
+      minTextAdapt: true,
+      splitScreenMode: true,
+      builder: (_, child) => MaterialApp.router(
+        title: 'Blog app',
+        theme: AppTheme.themeData,
+        debugShowCheckedModeBanner: false,
+        routerConfig: router,
+      ),
     );
   }
 }

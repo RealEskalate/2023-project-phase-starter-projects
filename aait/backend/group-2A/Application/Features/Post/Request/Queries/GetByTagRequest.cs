@@ -1,9 +1,10 @@
 using Application.DTO.Post;
+using Application.Responses;
 using MediatR;
 
 namespace Application.Features.Post.Request.Queries;
 
-public class GetByTagRequest : IRequest<List<PostDto>>
+public class GetByTagRequest : IRequest<BaseCommandResponse<List<PostDto>>>
 {
-    public string Tag{ set; get;}
+    public required string Tag{ set; get;}
 }

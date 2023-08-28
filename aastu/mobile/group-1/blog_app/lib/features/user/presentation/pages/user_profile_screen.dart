@@ -3,10 +3,14 @@ import '../widgets/about_me.dart';
 import '../widgets/my_post.dart';
 import '../widgets/header.dart';
 
-class UserProfileScreen extends StatelessWidget {
+class UserProfileScreen extends StatefulWidget {
   const UserProfileScreen({super.key});
 
-  // This widget is the root of your application.
+  @override
+  State<UserProfileScreen> createState() => UserProfileScreenState();
+}
+
+class UserProfileScreenState extends State<UserProfileScreen> {
   @override
   Widget build(BuildContext context) {
     return Container(

@@ -5,7 +5,7 @@ import React from "react";
 
 const Footer = () => {
   return (
-    <section className="bg-white mx-1  flex justify-center flex-col items-center  py-4 mb-2 mt-5 font-Montserrat">
+    <section className="bg-white mx-1 flex justify-center flex-col items-center border-t-[1px] mb-2 mt-5 font-Montserrat py-14">
       <div className=" w-[90%] p-5  flex justify-around gap-4 flex-col md:flex-row  ">
         {/* image for desktop */}
         <div className=" hidden md:block flex w-[20%]  justify-center items-center ">

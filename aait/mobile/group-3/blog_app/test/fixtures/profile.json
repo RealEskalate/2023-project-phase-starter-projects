@@ -1,0 +1,63 @@
+{
+	"success": true,
+	"data": {
+		"_id": "64e84d87ac244566c7726050",
+		"fullName": "doodle roamer",
+		"email": "doodleGhost@gmail.com",
+		"expertise": "Engineer",
+		"bio": "I like games and I'm good at them",
+		"createdAt": "2023-08-25T06:43:19.228Z",
+		"__v": 0,
+		"articles": [
+			{
+				"_id": "64e8575bac244566c77260dc",
+				"tags": [
+					"design"
+				],
+				"content": "Elden ring is a game that has surpassed expectations and will keep on surpassing any gamer who decides to play it",
+				"title": "Elden Ring",
+				"subTitle": "why elden ring is the best game ever made",
+				"estimatedReadTime": "5min",
+				"user": "64e84d87ac244566c7726050",
+				"image": "https://res.cloudinary.com/dzpmgwb8t/image/upload/v1692948314/exqkotqbe7ngchgqsowq.jpg",
+				"imageCloudinaryPublicId": "exqkotqbe7ngchgqsowq",
+				"createdAt": "2023-08-25T07:25:15.245Z",
+				"__v": 0,
+				"id": "64e8575bac244566c77260dc"
+			},
+			{
+				"_id": "64e859c7ac244566c77260e3",
+				"tags": [
+					"art"
+				],
+				"content": "The beauty of art is something to behold and ....",
+				"title": "Art",
+				"subTitle": "Art in the dawn of AI age",
+				"estimatedReadTime": "5min",
+				"user": "64e84d87ac244566c7726050",
+				"image": "https://res.cloudinary.com/dzpmgwb8t/image/upload/v1692948934/neqy6jwuvtm5sgdmzstc.jpg",
+				"imageCloudinaryPublicId": "neqy6jwuvtm5sgdmzstc",
+				"createdAt": "2023-08-25T07:35:35.166Z",
+				"__v": 0,
+				"id": "64e859c7ac244566c77260e3"
+			},
+			{
+				"_id": "64e85cfcac244566c77260f6",
+				"tags": [
+					"others"
+				],
+				"content": "Nature, is the greatest gift we have and .....",
+				"title": "Nature",
+				"subTitle": "Revert to nature",
+				"estimatedReadTime": "5min",
+				"user": "64e84d87ac244566c7726050",
+				"image": "https://res.cloudinary.com/dzpmgwb8t/image/upload/v1692949755/pkyllfyr2io73ojsw8qz.jpg",
+				"imageCloudinaryPublicId": "pkyllfyr2io73ojsw8qz",
+				"createdAt": "2023-08-25T07:49:16.225Z",
+				"__v": 0,
+				"id": "64e85cfcac244566c77260f6"
+			}
+		],
+		"id": "64e84d87ac244566c7726050"
+	}
+}

@@ -4,9 +4,11 @@ import '../../../../core/error/exception.dart';
 import '../../../../core/error/failure.dart';
 import '../../../../core/network/network_info.dart';
 import '../../domain/entities/article.dart';
+import '../../domain/entities/tag.dart';
 import '../../domain/repositories/article_repository.dart';
 import '../datasources/local/local_datasource.dart';
 import '../datasources/remote/remote_datasource.dart';
+import '../models/article_mapper.dart';
 import '../models/article_model.dart';
 
 class ArticleRepositoryImpl extends ArticleRepository {
@@ -24,7 +26,8 @@ class ArticleRepositoryImpl extends ArticleRepository {
     if (await networkInfo.isConnected) {
       try {
         final createdArticle =
-            await remoteDataSource.createArticle(article as ArticleModel);
+            await remoteDataSource.createArticle(article.toArticleModel());
+
         return Right(createdArticle);
       } on ServerException {
         return Left(ServerFailure());
@@ -112,6 +115,23 @@ class ArticleRepositoryImpl extends ArticleRepository {
       }
     } else {
       return Left(NetworkFailure());
+    }
+  }
+
+  @override
+  Future<Either<Failure, List<Tag>>> getTags() async {
+    if (await networkInfo.isConnected) {
+      try {
+        final tags = await remoteDataSource.getTags();
+        await localDataSource.cacheTags(tags);
+        return Right(tags);
+      } catch (e) {
+        final tags = await localDataSource.getTags();
+        return Right(tags);
+      }
+    } else {
+      final tags = await localDataSource.getTags();
+      return Right(tags);
     }
   }
 }

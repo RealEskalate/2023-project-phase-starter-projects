@@ -1,6 +1,7 @@
 ﻿using Application.DTO.Common;
 using Application.Features.PostFeature.Requests.Commands;
 using Application.Features.PostFeature.Requests.Queries;
+using Application.Response;
 using AutoMapper;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
@@ -19,27 +20,26 @@ namespace WebApi.Controllers
         }
 
         [HttpGet("likes/{id}")]
-        public async Task<List<ReactionResponseDTO>>  GetLikes(int id)
+        public async Task<ActionResult<BaseResponse<List<ReactionResponseDTO>>>>  GetLikes(int id)
         {
             var result = await _mediator.Send(new GetPostLikesQuery{ PostId = id });
-            return result;
+            return Ok(result);
         }
 
 
         [HttpGet("dislikes/{id}")]
-        public async Task<List<ReactionResponseDTO>> GetDislikes(int id)
+        public async Task<ActionResult<BaseResponse<List<ReactionResponseDTO>>>> GetDislikes(int id)
         {
             var result = await _mediator.Send(new GetPostDislikesQuery { PostId = id });
-            return result;
+            return Ok(result);
         }
         
         [HttpPost("react")]
-        public async Task<ActionResult<CommonResponseDTO>> Post([FromBody] ReactionDTO reactionData)
+        public async Task<ActionResult<BaseResponse<string>>> Post([FromBody] ReactionDTO reactionData)
         {
             // var user id from the context
             var result = await _mediator.Send(new PostReactionCommand{ UserId = 3, ReactionData = reactionData });
-            return result;
-
+            return Ok(result);
         }
     }
 }

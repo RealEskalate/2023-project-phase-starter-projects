@@ -1,26 +1,78 @@
-import { useLoginMutation, useSignupMutation } from "@/lib/redux/features/user";
-import { selectAuth } from "@/lib/redux/slices/authSlice";
+import {
+  useChangePasswordMutation,
+  useEditProfileMutation,
+  useLoginMutation,
+  useSignupMutation,
+} from "@/lib/redux/features/user";
+import { AuthState, selectAuth, setAuth } from "@/lib/redux/slices/authSlice";
 import { Credentials } from "@/types";
-import { useSelector } from "react-redux";
+import { useCookies } from "next-client-cookies";
+import { useRouter } from "next/navigation";
+import { useDispatch, useSelector } from "react-redux";
 
 export const useAuth = () => {
+  const dispatch = useDispatch();
+  const cookies = useCookies();
+  const router = useRouter();
   const auth = useSelector(selectAuth);
-
+  const [login] = useLoginMutation();
+  const [signup] = useSignupMutation();
+  const [changePassword] = useChangePasswordMutation();
+  const [editProfile, { isLoading, error, isSuccess }] =
+    useEditProfileMutation();
   return {
     auth,
+
     loginHandler: async (credentials: Credentials) => {
-      const [login] = useLoginMutation();
       try {
-        await login(credentials);
+        return await login(credentials);
       } catch (err) {
         return null;
       }
     },
-    logoutHandler: () => {},
+
+    logoutHandler: async () => {
+      localStorage.removeItem("auth");
+
+      cookies.set("token", "", { path: "/", expires: Date.parse("3/10/1997") });
+
+      const dummy: AuthState = {
+        token: "",
+        isAuthenticated: false,
+        isLoading: false,
+        userId: "",
+        userName: "",
+        userRole: "",
+        userProfile: "",
+        userEmail: "",
+        error: null,
+      };
+
+      dispatch(setAuth(dummy));
+
+      router.refresh();
+    },
+
     signupHandler: async (credentials: Credentials) => {
-      const [signup] = useSignupMutation();
       try {
-        await signup(credentials);
+        return await signup(credentials);
+      } catch (error) {
+        return null;
+      }
+    },
+
+    editProfileHandler: async (data: FormData) => {
+      console.log(data);
+      try {
+        return await editProfile(data);
+      } catch (error) {
+        return null;
+      }
+    },
+
+    changePasswordHandler: async (passwords: any) => {
+      try {
+        return await changePassword(passwords);
       } catch (error) {
         return null;
       }

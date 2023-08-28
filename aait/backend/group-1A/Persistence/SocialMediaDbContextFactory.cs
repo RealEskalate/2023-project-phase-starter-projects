@@ -22,6 +22,8 @@ namespace Persistence
             var connectionString = configuration.GetConnectionString("SocialMediaApp");
 
             builder.UseNpgsql(connectionString);
+            builder.EnableSensitiveDataLogging();
+
 
             return new SocialMediaDbContext(builder.Options);
         }

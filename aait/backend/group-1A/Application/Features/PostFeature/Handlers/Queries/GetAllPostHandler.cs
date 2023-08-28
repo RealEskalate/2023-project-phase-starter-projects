@@ -1,6 +1,7 @@
 ﻿using Application.Contracts;
 using Application.DTO.PostDTO.DTO;
 using Application.Features.PostFeature.Requests.Queries;
+using Application.Response;
 using AutoMapper;
 using MediatR;
 using System;
@@ -11,7 +12,7 @@ using System.Threading.Tasks;
 
 namespace Application.Features.PostFeature.Handlers.Queries
 {
-    public class GetAllPostHandler : IRequestHandler<GetAllPostsQuery, List<PostResponseDTO>>
+    public class GetAllPostHandler : IRequestHandler<GetAllPostsQuery, BaseResponse<List<PostResponseDTO>>>
     {
         private readonly IPostRepository _postRepository;
         private readonly IMapper _mapper;
@@ -21,11 +22,14 @@ namespace Application.Features.PostFeature.Handlers.Queries
             _postRepository = postRepository;
             _mapper = mapper;
         }
-        public async Task<List<PostResponseDTO>> Handle(GetAllPostsQuery request, CancellationToken cancellationToken)
+        public async Task<BaseResponse<List<PostResponseDTO>>> Handle(GetAllPostsQuery request, CancellationToken cancellationToken)
         {
-            var result = await _postRepository.GetAll(entity => entity.UserId == request.userId);
-
-            return _mapper.Map<List<PostResponseDTO>>(result);
+            var result = await _postRepository.GetAllPostsWithReaction(entity => entity.UserId == request.userId, request.userId);
+            return new BaseResponse<List<PostResponseDTO>> {
+                Success = true,
+                Message = "Posts are retrieved successfully",
+                Value = _mapper.Map<List<PostResponseDTO>>(result)
+            };
         }
     }
 }
