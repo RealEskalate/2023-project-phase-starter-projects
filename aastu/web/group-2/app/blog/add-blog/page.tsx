@@ -7,7 +7,7 @@ import { useDispatch } from 'react-redux';
 import { useEffect, useState } from 'react';
 import { useAddBlogsMutation } from '@/lib/redux/slices/blogsApi';
 import { useRouter } from 'next/navigation';
-// import { useSelector } from '@/lib/redux';
+import { AiOutlineLoading3Quarters } from 'react-icons/ai';
 
 const DynamicTextEditor = dynamic(() => import('@/app/components/add-blog/TextEditor'), {
   ssr: false,
@@ -19,11 +19,9 @@ const AddBlog: React.FC = () => {
   const [blogTitle, setBlogTitle] = useState<string>('');
   const [selectedTags, setSelectedTags] = useState<string[]>(['development']);
   const [blogContent, setBlogContent] = useState<string>('');
-  const [isAddingBlog, setIsAddingBlog] = useState(false);
 
-  const [addBlogs] = useAddBlogsMutation();
+  const [addBlogs, { isLoading }] = useAddBlogsMutation();
   const handleSaveChanges = () => {
-    setIsAddingBlog(true);
     const formData = new FormData();
     formData.append('image', file!);
     selectedTags.forEach((tag) => {
@@ -38,7 +36,6 @@ const AddBlog: React.FC = () => {
     if (blogTitle && blogContent) {
       addBlogs(formData).then((res) => {});
     }
-    setIsAddingBlog(false);
     router.replace('/blog');
     // console.log(blogData);
   };
@@ -250,10 +247,11 @@ const AddBlog: React.FC = () => {
             Cancel
           </button>
           <button
-            className="px-4 py-3 bg-primaryColor text-white rounded-md text-center shadow text-sm hover:opacity-95"
+            className="px-4 py-3 bg-primaryColor text-white rounded-md text-center shadow text-sm flex items-center justify-center gap-3 hover:scale-95 transition-all ease-linear hover:bg-blue-900 disabled:bg-neutral-300 disabled:text-neutral-500"
             onClick={handleSaveChanges}
           >
-            {!isAddingBlog ? 'Save Changes' : 'Saving Changes'}
+            {isLoading && <AiOutlineLoading3Quarters className="animate-spin" />}
+            {isLoading ? 'saving' : 'save'}
           </button>
         </div>
       </div>
