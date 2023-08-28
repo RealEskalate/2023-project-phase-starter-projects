@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 
 const Footer = () => {
   return (
@@ -45,16 +46,16 @@ const Footer = () => {
           <p className="mb-4 md:mb-20">we would like to hear from you</p>
           <section className="flex justify-between md:justify-start md:gap-6">
             <Link href={"#"}>
-              <img src="./images/footer/facebook-logo.png" alt="facebook" />
+              <Image src="/images/footer/facebook-logo.png" alt="facebook" width={28} height={28}/>
             </Link>
             <Link href={"#"}>
-              <img src="./images/footer/linkedin-logo.png" alt="linkedin" />
+              <Image src="/images/footer/linkedin-logo.png" alt="linkedin" width={28} height={28}/>
             </Link>
             <Link href={"#"}>
-              <img src="./images/footer/telegram-logo.png" alt="telegram" />
+              <Image src="/images/footer/telegram-logo.png" alt="telegram" width={28} height={28}/>
             </Link>
             <Link href={"#"}>
-              <img src="./images/footer/twitter-logo.png" alt="twitter" />
+              <Image src="/images/footer/twitter-logo.png" alt="twitter" width={28} height={28}/>
             </Link>
           </section>
         </div>
