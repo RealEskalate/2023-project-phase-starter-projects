@@ -25,6 +25,18 @@ class ArticleRepositoryImpl implements ArticleRepository {
   }
 
   @override
+  Future<Either<Failure, List<Article>>> searchArticle(
+      String tag, String key) async {
+    try {
+      final articles = await remoteDataSource.searchArticle(tag, key);
+      return Right(articles);
+    } catch (e) {
+      log("Error searching articles: $e");
+      return const Left(ServerFailure('Error searching articles'));
+    }
+  }
+
+  @override
   Future<Either<Failure, void>> createArticle(Article article) {
     // TODO: implement createArticle
     throw UnimplementedError();

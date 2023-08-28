@@ -1,3 +1,4 @@
+import 'package:blog_app/features/blog/presentation/screen/viewBlog.dart';
 import 'package:blog_app/features/user/presentation/blocs/bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart'; // Import SharedPreferences package
@@ -90,6 +91,7 @@ class MyApp extends StatelessWidget {
                 '/profile': (context) => const UserProfileScreen(),
                 '/login': (context) => const Login(),
                 '/addBlog': (context) => const AddBlog(),
+                '/viewBLlog': (context) => const ViewBlog(),
 
                 // Define routes here
               },

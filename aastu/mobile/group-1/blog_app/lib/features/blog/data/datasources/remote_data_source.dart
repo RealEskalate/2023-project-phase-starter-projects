@@ -1,8 +1,10 @@
 import 'dart:convert';
 import 'dart:developer';
 
+import 'package:blog_app/core/error/failure.dart';
 import 'package:blog_app/features/blog/data/datasources/data_source_api.dart';
 import 'package:blog_app/features/blog/domain/entities/article.dart';
+import 'package:dartz/dartz.dart';
 import 'package:http/http.dart' as http;
 
 class RemoteDataSource implements BlogRemoteDataSource {
@@ -63,5 +65,22 @@ class RemoteDataSource implements BlogRemoteDataSource {
   Future<void> deleteBlog(String articleId) {
     // TODO: implement deleteBlog
     throw UnimplementedError();
+  }
+
+  @override
+  Future<List<Article>> searchArticle(String tag, String key) async {
+    try {
+      final endpoint = 'article?tags=$tag&searchParams=$key';
+      final response = await _fetchData(endpoint);
+
+      List<Article> articles = [];
+      for (var articleData in response) {
+        articles.add(Article.fromJson(articleData));
+      }
+      return articles;
+    } catch (e) {
+      log("Error fetching search articles: $e");
+      throw Exception('An error occurred: $e');
+    }
   }
 }

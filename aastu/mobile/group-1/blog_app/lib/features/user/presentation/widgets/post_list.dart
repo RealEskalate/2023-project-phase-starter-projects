@@ -100,7 +100,7 @@ class BlogCards extends StatelessWidget {
                         Container(height: 25),
                         Text(
                           object.title,
-                          maxLines: 3,
+                          maxLines: 1,
                           style: const TextStyle(
                             color: Color.fromARGB(255, 70, 66, 66),
                             fontWeight: FontWeight.w200,
@@ -113,7 +113,7 @@ class BlogCards extends StatelessWidget {
                               top: 8.0, bottom: 16.0, left: 0, right: 8.0),
                           child: Text(
                             object.title,
-                            maxLines: 3,
+                            maxLines: 2,
                             style: TextStyle(
                               color: Colors.grey[800],
                               fontWeight: FontWeight.w500,
