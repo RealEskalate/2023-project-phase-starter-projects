@@ -16,15 +16,15 @@ const SingleBlogCard: React.FC<Blog> = ({
   _id,
 }) => {
   return (
-    <Link href={`/blog/singleBlog/${_id}`}>
-      <div className="hover:bg-neutral-200 lg:hover:bg-white px-4 py-4 rounded-lg cursor:pointer transition-all ease-in-out">
+    <Link href={`/blog/singleBlog/${_id}`} className="w-full">
+      <div className="hover:bg-neutral-200 lg:hover:bg-white px-4 py-4 rounded-lg cursor:pointer transition-all ease-in-out w-full">
         {/* author profile */}
         <div className="flex items-start gap-5 mb-7">
-          <div className="w-14 h-14 overflow-hidden rounded-full">
+          <div className="w-14 h-14 rounded-full overflow-hidden relative">
             <Image
               src={'https://picsum.photos/id/1/300/300'}
-              width={60}
-              height={60}
+              layout="fill" // required
+              objectFit="cover" // change to suit your needs
               alt="Picture of the author"
               className="center"
             />
@@ -41,21 +41,22 @@ const SingleBlogCard: React.FC<Blog> = ({
           </div>
         </div>
         {/* blog title , excerpt and image  */}
-        <div className="lg:flex lg:flex-row lg:gap-10 flex flex-col-reverse justify-between gap-5 flex-shrink">
-          <div>
+        <div className="lg:flex lg:flex-row lg:gap-10 flex flex-col-reverse justify-between gap-5">
+          <div className="w-full">
             <h2 className="text-lg font-bold mb-4 cursor-pointer md:text-2xl">{title}</h2>
             <div
               className="text-base text-textColor-100"
               dangerouslySetInnerHTML={{ __html: description?.slice(0, 200) }}
             ></div>
           </div>
-          <Image
-            src={image || 'https://picsum.photos/id/10/300/200'}
-            width={300}
-            height={200}
-            alt="Blog cover image"
-            className="h-fit lg:h-48 object-cover rounded-lg  cursor-pointer"
-          />
+          <div className="relative w-full sm:w-[400px] h-[200px] rounded overflow-hidden">
+            <Image
+              src={image || 'https://picsum.photos/id/10/300/200'}
+              alt="Blog cover image"
+              layout="fill" // required
+              objectFit="cover" // change
+            />
+          </div>
         </div>
 
         {/* tags */}

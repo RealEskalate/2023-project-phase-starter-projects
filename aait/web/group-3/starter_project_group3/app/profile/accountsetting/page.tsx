@@ -1,11 +1,39 @@
 "use client";
+import { usePasswordResetMutation } from "@/store/features/auth";
+import { authTypes } from "@/types/auth/authTypes";
 import Image from "next/image";
 import Link from "next/link";
-import React from "react";
+import React, { useState } from "react";
 
 const AccountSetting = () => {
+  const [currentPassword, setcurrentPassword] = useState("");
+  const [newPassword, setnewPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const [errorMessage, seterrorMessage] = useState("");
+
+  const [passwordReset, { isLoading, isError, data }] =
+    usePasswordResetMutation();
+
+  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault(); // Prevent default form submission behavior
+    passwordReset({
+      oldPassword: confirmPassword,
+      newPassword: currentPassword,
+    })
+      .unwrap()
+      .then((response: any) => {
+        console.log("success", response);
+
+        // router.push('/')
+      })
+      .catch((err) => {
+        seterrorMessage(err.data.message);
+        console.error("password change error", err);
+      });
+  };
+
   return (
-    <div >
+    <div>
       <div className=" py-10 text-blog_list_sub_text_color flex justify-between items-center ">
         <p>
           <p className="text-xl  font-bold">Manage Personal Information</p>
@@ -17,12 +45,12 @@ const AccountSetting = () => {
           href={""}
           className="px-8 py-2 mr-10 text-white bg-primary rounded-md font-semibold"
         >
-          Save Changes
+          {isLoading ? "Procesessing" : " Save Changes"}
         </Link>
       </div>
       <hr className="py-1" />
 
-      <form className="  p-6 py-20 w-7/12 mx-auto ">
+      <form onSubmit={handleSubmit} className="  p-6 py-20 w-7/12 mx-auto ">
         {/* current password */}
         <div className="py-5 flex p-1 justify-between items-center">
           {/* label */}
@@ -39,6 +67,8 @@ const AccountSetting = () => {
               placeholder="Enter you current password"
               type="password"
               name="current-password"
+              value={currentPassword}
+              onChange={(e) => setcurrentPassword(e.target.value)}
               id="current-password"
               className="text-sm outline:none focus:outline-none rounded-md border-none w-9/12  text-[#767676B2] font-bold p-2 px-4 bg-[#EFF3F9]"
             />
@@ -67,6 +97,8 @@ const AccountSetting = () => {
             <input
               placeholder="Enter new password"
               type="password"
+              value={newPassword}
+              onChange={(e) => setnewPassword(e.target.value)}
               name="current-password"
               id="current-password"
               className="text-sm outline:none focus:outline-none rounded-md border-none w-9/12  text-[#767676B2] font-bold p-2 px-4 bg-[#EFF3F9]"
@@ -97,6 +129,8 @@ const AccountSetting = () => {
               placeholder="Confirm new password"
               type="password"
               name="current-password"
+              value={confirmPassword}
+              onChange={(e) => setConfirmPassword(e.target.value)}
               id="current-password"
               className="text-sm outline:none focus:outline-none rounded-md border-none w-9/12  text-[#767676B2] font-bold p-2 px-4 bg-[#EFF3F9]"
             />
@@ -109,8 +143,8 @@ const AccountSetting = () => {
             />
           </div>
         </div>
+        {isError ? errorMessage : ""}
       </form>
-
     </div>
   );
 };

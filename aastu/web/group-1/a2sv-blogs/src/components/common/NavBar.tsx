@@ -2,16 +2,30 @@
 import React, { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
+import { useAuth } from "@/hooks/useAuth";
+import ProfileAvatar from "./ProfileAvatar";
 
 export default function Nav() {
   const [openMenu, setOpenMenu] = useState<boolean>(false);
+  const router = useRouter();
+  const auth = useAuth().auth.isAuthenticated;
+  const imageUrl = useAuth().auth.userProfile;
+
+  const handleAuth = () => {
+    if (auth) {
+      router.push("/auth/profile");
+    } else {
+      router.push("/auth/login");
+    }
+  };
 
   const handleToggle = () => {
     setOpenMenu(!openMenu);
   };
   return (
-    <nav className="bg-white fixed w-full z-50 top-0 left-0">
-      <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
+    <nav className="bg-white fixed w-full z-50 top-0">
+      <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto py-4 px-2">
         <Link href="/">
           <Image
             src="/images/a2sv-logo.svg"
@@ -21,13 +35,25 @@ export default function Nav() {
             className="w-32 h-8"
           />
         </Link>
-        <div className="flex lg:order-2">
-          <div className="hidden lg:block content-end row-span-1 ">
-            <span className="text-[#3C3C3C] text-base font-semibold font-montserrat px-5 ">
-              Login
-            </span>
+        <div className="flex lg:order-2 items-center">
+          <div className="hidden content-end row-span-1 lg:flex lg:gap-0 lg:items-center">
+            {auth ? (
+              <div className=" translate-x-5 -translate-y-1">
+                <ProfileAvatar imageUrl={imageUrl} />
+              </div>
+            ) : (
+              <span
+                onClick={() => router.push("/auth/login")}
+                className={`text-[#3C3C3C] text-base font-semibold font-montserrat px-5 cursor-pointer`}
+              >
+                Login
+              </span>
+            )}
             <span>
-              <button className="border-2 rounded-xl px-5 w-22 h-12 bg-primary text-white text-base font-semibold font-montserrat">
+              <button
+                onClick={() => router.push("/")}
+                className="border-2 rounded-xl  px-5 w-22 h-12 bg-primary text-white text-base font-semibold font-montserrat"
+              >
                 {" "}
                 Donate{" "}
               </button>
@@ -62,7 +88,7 @@ export default function Nav() {
         <div
           className={`${
             openMenu ? "" : "hidden"
-          } items-center justify-between w-full lg:flex lg:w-auto lg:order-1`}
+          } items-center justify-between w-full lg:flex lg:w-auto lg:order-1 lg:ml-10`}
           id="navbar-sticky"
         >
           <ul className="flex flex-col p-4 lg:p-0 mt-4 font-medium border  border-gray-100 rounded-lg  lg:flex-row lg:space-x-8 lg:mt-0 lg:border-0 lg:bg-white ">
@@ -93,7 +119,7 @@ export default function Nav() {
             </li>
             <li>
               <Link
-                href="#"
+                href="/about"
                 className="block py-2 pl-3 pr-4  rounded lg:bg-transparent   lg:hover:bg-white  lg:p-0  text-[#3C3C3C] text-base hover:bg-gray-100   font-semibold font-montserrat"
               >
                 About

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../../../core/presentation/theme/app_colors.dart';
+import '../../domain/entities/article.dart';
 import '../widgets/article_content.dart';
 import '../widgets/article_image.dart';
 import '../widgets/author_card.dart';
@@ -9,9 +10,9 @@ import '../widgets/gradient_scroll_view.dart';
 import '../widgets/like_button.dart';
 
 class ArticleScreen extends StatelessWidget {
-  final String articleId;
+  final Article article;
 
-  const ArticleScreen({super.key, required this.articleId});
+  const ArticleScreen({super.key, required this.article});
 
   @override
   Widget build(BuildContext context) {
@@ -63,16 +64,15 @@ class ArticleScreen extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text('Four Things Every One Needs To Know',
+              Text(article.title,
                   style: Theme.of(context).textTheme.titleLarge),
 
               SizedBox(height: 35.h),
 
               // Author card
-              const AuthorCard(
-                profileImageUrl:
-                    'https://res.cloudinary.com/dzpmgwb8t/image/upload/v1692557684/guf4tul1ftar9hdpnaev.jpg',
-                authorName: 'Richard Gervain',
+              AuthorCard(
+                profileImageUrl: article.author.image,
+                authorName: article.author.fullName,
                 publishedAt: '2m ago',
               ),
             ],
@@ -81,18 +81,12 @@ class ArticleScreen extends StatelessWidget {
         SizedBox(height: 30.h),
 
         // Article image
-        const ArticleImage(
-            imageUrl:
-                'https://res.cloudinary.com/dzpmgwb8t/image/upload/v1692557684/guf4tul1ftar9hdpnaev.jpg'),
+        ArticleImage(imageUrl: article.photoUrl),
         const SizedBox(height: 15),
 
         // Article content
-        const ArticleContent(
-          paragraphs: [
-            'That marked a turnaround from last year, when the social network reported a decline in users for the first time.',
-            'The drop wiped billions from the firm\'s market value.',
-            'Since executives disclosed the fall in February, the firm\'s share price has nearly halved. But shares jumped 19% in after-hours trade on Wednesday.',
-          ],
+        ArticleContent(
+          paragraphs: [article.content],
         ),
         SizedBox(height: 100.h)
       ]),

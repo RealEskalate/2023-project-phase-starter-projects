@@ -19,14 +19,13 @@ void main() {
   test("should call [ArticleReository.getArticle]",
      () async {
     // Arrange
-    final article = Article.empty();
-    const id = "1";
-    when(() => repository.getArticle(any())).thenAnswer((_) async => Right(article));
+    final article = [Article.empty()];
+    when(() => repository.getArticle(tags: any(named: 'tags'), searchParams: any(named: 'searchParams'))).thenAnswer((_) async => Right(article));
     // Act
-    final result = await usecase(id);
+    final result = await usecase(GetArticleParams.empty());
     // Assert
-    expect(result, Right<dynamic, Article>(article));
-    verify(() => repository.getArticle(id)).called(1);
+    expect(result, equals(Right<dynamic, List<Article>>(article)));
+    verify(() => repository.getArticle(tags: 'Other', searchParams: 'searchParams')).called(1);
     verifyNoMoreInteractions(repository);
   });
 

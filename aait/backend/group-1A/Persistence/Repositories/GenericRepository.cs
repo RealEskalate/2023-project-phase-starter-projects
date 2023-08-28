@@ -29,12 +29,8 @@ namespace Persistence.Repositories
             return true;
         }
 
-
-        public async Task<bool> Exists(int id)
-        {
-            var result = await _dbContext.Set<T>().FindAsync(id);
-            return result != null;
-        }
+        
+        
 
 
         public async Task<List<T>> GetAll(Expression<Func<T, bool>> predicate)
@@ -45,9 +41,18 @@ namespace Persistence.Repositories
             return result;
         }
 
+        
+
+
+        public Task<T> MakeReaction(int Id, T entity)
+        {
+            throw new NotImplementedException();
+        }
+
         public async Task<T> Update(T entity)
         {
             _dbContext.Entry(entity).State = EntityState.Modified;
+            //_dbContext.Set<T>().Update(entity);
             await _dbContext.SaveChangesAsync();
             return entity;
         }

@@ -8,7 +8,7 @@ class Aboutme extends StatelessWidget {
       width: 295,
       height: 318,
       decoration: ShapeDecoration(
-        color: Color.fromARGB(255, 255, 255, 255),
+        color: const Color.fromARGB(255, 255, 255, 255),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(16),
         ),
@@ -26,10 +26,10 @@ class Aboutme extends StatelessWidget {
           Column(
             children: [
               Container(
-                color: Color.fromARGB(255, 255, 255, 255),
+                color: const Color.fromARGB(255, 255, 255, 255),
                 width: double.infinity,
                 height: 120,
-                padding: EdgeInsets.all(16),
+                padding: const EdgeInsets.all(16),
                 child: Row(
                   children: [
                     Container(
@@ -37,7 +37,8 @@ class Aboutme extends StatelessWidget {
                       height: 84,
                       decoration: ShapeDecoration(
                         shape: RoundedRectangleBorder(
-                          side: BorderSide(width: 1, color: Color(0xFF376AED)),
+                          side: const BorderSide(
+                              width: 1, color: Color(0xFF376AED)),
                           borderRadius: BorderRadius.circular(35),
                         ),
                       ),
@@ -48,11 +49,11 @@ class Aboutme extends StatelessWidget {
                           height: 67,
                           decoration: ShapeDecoration(
                             shape: RoundedRectangleBorder(
-                              side: BorderSide(
+                              side: const BorderSide(
                                   width: 1, color: Color(0xFF376AED)),
                               borderRadius: BorderRadius.circular(22),
                             ),
-                            image: DecorationImage(
+                            image: const DecorationImage(
                               image: AssetImage("assets/images/profile.png"),
                               fit: BoxFit.fill,
                             ),
@@ -103,12 +104,12 @@ class Aboutme extends StatelessWidget {
                 ),
               ),
               Container(
-                child: Column(
+                child: const Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Padding(
-                      padding: const EdgeInsets.symmetric(
-                          vertical: 8, horizontal: 16),
+                      padding:
+                          EdgeInsets.symmetric(vertical: 8, horizontal: 16),
                       child: Text(
                         'About me',
                         style: TextStyle(
@@ -121,8 +122,8 @@ class Aboutme extends StatelessWidget {
                       ),
                     ),
                     Padding(
-                      padding: const EdgeInsets.symmetric(
-                          vertical: 8, horizontal: 16),
+                      padding:
+                          EdgeInsets.symmetric(vertical: 8, horizontal: 16),
                       child: Text(
                         'Madison Blackstone is a director of user experience design, with experience managing global teams.',
                         style: TextStyle(

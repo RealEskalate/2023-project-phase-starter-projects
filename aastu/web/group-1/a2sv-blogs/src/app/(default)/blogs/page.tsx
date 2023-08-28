@@ -5,9 +5,11 @@ import React from "react";
 
 export default function page() {
   return (
-    <div className="mt-32 flex flex-col gap-16">
-      <BlogHeader />
-      <div className="w-[72%] flex flex-col gap-10 items-center mx-auto">
+    <div className="py-28 flex flex-col gap-16">
+      <div className="justify-center flex">
+        <BlogHeader />
+      </div>
+      <div className="w-[95%] lg:w-[75%] px-4 flex flex-col md:gap-8 gap-5 items-center mx-auto">
         <BlogCard />
       </div>
     </div>

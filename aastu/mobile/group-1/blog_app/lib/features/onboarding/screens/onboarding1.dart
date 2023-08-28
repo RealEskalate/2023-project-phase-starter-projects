@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-
 import '../widgets/login_widget.dart';
 
 class OnBoardingScreen extends StatefulWidget {
@@ -8,6 +7,7 @@ class OnBoardingScreen extends StatefulWidget {
   @override
   State<OnBoardingScreen> createState() => _OnBoardingScreenState();
 }
+
 class _OnBoardingScreenState extends State<OnBoardingScreen> {
   late PageController _pageController;
   int _pageIndex = 0;
@@ -22,6 +22,7 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
     _pageController.dispose();
     super.dispose();
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -30,19 +31,19 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
         children: [
           Expanded(
               child: PageView.builder(
-                itemCount: demo_data.length,
-                 controller: _pageController,
-                  onPageChanged: (index){
-                    setState(() {
-                      _pageIndex = index;
-                    });
-                  },
-                  itemBuilder: (context, index) => onboardingContent(
-                    image: demo_data[index].image,
-                  ),
-              )
-          ),
-          onBoardingNavigation(pageIndex: _pageIndex, pageController: _pageController),
+            itemCount: demo_data.length,
+            controller: _pageController,
+            onPageChanged: (index) {
+              setState(() {
+                _pageIndex = index;
+              });
+            },
+            itemBuilder: (context, index) => onboardingContent(
+              image: demo_data[index].image,
+            ),
+          )),
+          onBoardingNavigation(
+              pageIndex: _pageIndex, pageController: _pageController),
         ],
       ),
     );
@@ -54,74 +55,82 @@ class onBoardingNavigation extends StatelessWidget {
     super.key,
     required int pageIndex,
     required PageController pageController,
-  }) : _pageIndex = pageIndex, _pageController = pageController;
+  })  : _pageIndex = pageIndex,
+        _pageController = pageController;
 
   final int _pageIndex;
   final PageController _pageController;
 
   @override
   Widget build(BuildContext context) {
-    return _pageIndex == demo_data.length-1 ?
-        Container(
-          padding: EdgeInsets.only(bottom: 10),
-          color: Colors.white,
-          width: MediaQuery.of(context).size.width,
-          child: Container(
-            padding: EdgeInsets.only(left: 50,right: 50),
-            height: 60,
-            width: 150,
-            child: ElevatedButton(
-              onPressed: () {
-                // Navigator.pushReplacement(
-                //   context,
-                //   MaterialPageRoute(builder: (context) => Login()), // Replace MainPage with your desired page
-                // );
-              },
-              style: ElevatedButton.styleFrom(
-                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-                  backgroundColor: Color(0xFF376AED)
-              ),
-              child: const Text('Get Started',
-                style: TextStyle(color: Colors.white),
-              ),
-            ),
-          ),
-        ):
-        Container(
-          padding: EdgeInsets.only(bottom: 10),
-          color: Colors.white,
-          child: Row(
-            children: [
-              const SizedBox(width: 50,),
-              ...List.generate(
-                  demo_data.length,
-                      (index) => Padding(
-                    padding: EdgeInsets.only(right: 8),
-                    child: DotIndicator(isActive: index == _pageIndex,),
-                  )),
-              const Spacer(),
-              SizedBox(
-                height: 60,
-                width: 88,
-                child: ElevatedButton(
-                  onPressed: () {
-                    _pageController.nextPage(duration: Duration(milliseconds: 1000), curve: Curves.ease);
-                  },
-                  style: ElevatedButton.styleFrom(
-                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-                      backgroundColor: Color(0xFF376AED)
-                  ),
-                  child: Icon(Icons.arrow_forward,color: Colors.white,),
+    return _pageIndex == demo_data.length - 1
+        ? Container(
+            padding: const EdgeInsets.only(bottom: 10),
+            color: Colors.white,
+            width: MediaQuery.of(context).size.width,
+            child: Container(
+              padding: const EdgeInsets.only(left: 50, right: 50),
+              height: 60,
+              width: 150,
+              child: ElevatedButton(
+                onPressed: () {
+                  Navigator.pushReplacementNamed(context, '/login');
+                },
+                style: ElevatedButton.styleFrom(
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10)),
+                    backgroundColor: const Color(0xFF376AED)),
+                child: const Text(
+                  'Get Started',
+                  style: TextStyle(color: Colors.white),
                 ),
               ),
-              const SizedBox(width: 50,),
-            ],
-          ),
-        );
+            ),
+          )
+        : Container(
+            padding: const EdgeInsets.only(bottom: 10),
+            color: Colors.white,
+            child: Row(
+              children: [
+                const SizedBox(
+                  width: 50,
+                ),
+                ...List.generate(
+                    demo_data.length,
+                    (index) => Padding(
+                          padding: const EdgeInsets.only(right: 8),
+                          child: DotIndicator(
+                            isActive: index == _pageIndex,
+                          ),
+                        )),
+                const Spacer(),
+                SizedBox(
+                  height: 60,
+                  width: 88,
+                  child: ElevatedButton(
+                    onPressed: () {
+                      _pageController.nextPage(
+                          duration: const Duration(milliseconds: 1000),
+                          curve: Curves.ease);
+                    },
+                    style: ElevatedButton.styleFrom(
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(10)),
+                        backgroundColor: const Color(0xFF376AED)),
+                    child: const Icon(
+                      Icons.arrow_forward,
+                      color: Colors.white,
+                    ),
+                  ),
+                ),
+                const SizedBox(
+                  width: 50,
+                ),
+              ],
+            ),
+          );
   }
 }
-
-
 
 class DotIndicator extends StatelessWidget {
   const DotIndicator({
@@ -134,37 +143,30 @@ class DotIndicator extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AnimatedContainer(
-      duration: Duration(milliseconds: 300),
+      duration: const Duration(milliseconds: 300),
       height: 8,
-      width: isActive?18: 12,
+      width: isActive ? 18 : 12,
       decoration: BoxDecoration(
-        color: isActive ? Color(0xFF376AED) : Colors.grey,
-        borderRadius: const BorderRadius.all(Radius.circular(12))
-      ),
+          color: isActive ? const Color(0xFF376AED) : Colors.grey,
+          borderRadius: const BorderRadius.all(Radius.circular(12))),
     );
   }
 }
 
-
 class Onboard {
   late final String image;
 
-  Onboard({
-    required this.image
-  });
+  Onboard({required this.image});
 }
-  final List<Onboard> demo_data = [
-    Onboard(image: 'assets/images/IMAGETILES.png'),
-    Onboard(image: 'assets/images/IMAGETILES.png'),
-    Onboard(image: 'assets/images/IMAGETILES.png'),
-  ];
 
+final List<Onboard> demo_data = [
+  Onboard(image: 'assets/images/IMAGETILES.png'),
+  Onboard(image: 'assets/images/IMAGETILES.png'),
+  Onboard(image: 'assets/images/IMAGETILES.png'),
+];
 
 class onboardingContent extends StatelessWidget {
-  const onboardingContent({
-    super.key,
-    required this.image
-  });
+  const onboardingContent({super.key, required this.image});
 
   final String image;
 
@@ -172,7 +174,7 @@ class onboardingContent extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        Spacer(),
+        const Spacer(),
         Image.asset(image),
         Container(
           // alignment: Alignment(0, 0),
@@ -185,27 +187,21 @@ class onboardingContent extends StatelessWidget {
               topRight: Radius.circular(20),
             ),
           ),
-          child: Column(
-              children:[
-                const SizedBox(height: 10),
-                const Text('Read the article you want \n'
-                    'instantly',
-                  style: TextStyle(
-                      fontFamily: 'Urbanist-Italic',
-                      fontSize: 24
-                  ),
-                ),
-                SizedBox(height: 10),
-                const Text('You can read thousands of articles on \n'
-                    'Blog Club, save them in the application \n'
-                    'and share them with your loved ones',
-                  style: TextStyle(
-                      fontFamily: 'Poppins-SemiBold',
-                      fontSize: 14
-                  ),
-                ),
-              ]
-          ),
+          child: const Column(children: [
+            SizedBox(height: 10),
+            Text(
+              'Read the article you want \n'
+              'instantly',
+              style: TextStyle(fontFamily: 'Urbanist-Italic', fontSize: 24),
+            ),
+            SizedBox(height: 10),
+            Text(
+              'You can read thousands of articles on \n'
+              'Blog Club, save them in the application \n'
+              'and share them with your loved ones',
+              style: TextStyle(fontFamily: 'Poppins-SemiBold', fontSize: 14),
+            ),
+          ]),
         ),
       ],
     );

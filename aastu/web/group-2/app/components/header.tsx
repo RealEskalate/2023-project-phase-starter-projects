@@ -8,26 +8,23 @@ import { usePathname } from 'next/navigation';
 import { AiOutlineMenu, AiOutlineClose } from 'react-icons/ai';
 import ProfileDropDown from './home/ProfileDropDown';
 import { useClickOutside } from '../hooks/useClickOutside';
+import { useAppDispatch, useAppSelector } from '@/lib/redux/hooks';
+import { unsetUser } from '@/lib/redux/slices/loginSlice';
 
 const Header: FC = () => {
   const currentRoute = usePathname();
   const [openMenu, setOpenMenu] = useState<boolean>(false);
-  const [loggedIn, setLoggedIn] = useState(false);
   const wrapperRef = useRef(null);
+
+  const dispatch = useAppDispatch();
+  const loginState = useAppSelector((state: any) => state.login);
 
   useClickOutside(wrapperRef, () => {
     setOpenMenu(false);
   });
 
-  useEffect(() => {
-    if (localStorage.getItem('login')) {
-      setLoggedIn(true);
-    }
-  }, []);
-
   const handleSignOut = () => {
-    localStorage.removeItem('login');
-    setLoggedIn(false);
+    dispatch(unsetUser());
   };
 
   interface NavProps {
@@ -155,9 +152,9 @@ const Header: FC = () => {
         >
           {links
             .filter((link) => {
-              if (loggedIn && ['Login'].includes(link.name)) {
+              if (loginState && ['Login'].includes(link.name)) {
                 return false;
-              } else if (!loggedIn && [('Profile', 'Logout')].includes(link.name)) {
+              } else if (!loginState && [('Profile', 'Logout')].includes(link.name)) {
                 return false;
               }
 
@@ -169,7 +166,7 @@ const Header: FC = () => {
         </nav>
       )}
 
-      <button className="text-2xl  mr-10 lg:hidden " onClick={() => setOpenMenu(!openMenu)}>
+      <button className="text-2xl lg:hidden " onClick={() => setOpenMenu(!openMenu)}>
         {' '}
         {openMenu ? <AiOutlineClose /> : <AiOutlineMenu />}
       </button>
@@ -180,8 +177,8 @@ const Header: FC = () => {
         >
           Donate
         </Link>
-        {loggedIn ? (
-          <ProfileDropDown handleSignOut={handleSignOut} isLoggedin={loggedIn} />
+        {loginState ? (
+          <ProfileDropDown handleSignOut={handleSignOut} />
         ) : (
           <Link
             href="/login"

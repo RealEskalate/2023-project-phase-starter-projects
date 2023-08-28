@@ -1,4 +1,5 @@
 ﻿using Application.DTO.Common;
+using Application.Response;
 using MediatR;
 using System;
 using System.Collections.Generic;
@@ -8,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Application.Features.PostFeature.Requests.Commands
 {
-    public class PostReactionCommand : IRequest<CommonResponseDTO>
+    public class PostReactionCommand : IRequest<BaseResponse<string>>
     {
         public int UserId { get; set; }
         public ReactionDTO ReactionData { get; set; }

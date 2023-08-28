@@ -8,6 +8,13 @@ sealed class ProfileEvent extends Equatable {
 
 final class GetData extends ProfileEvent {}
 
+final class UpdatePicture extends ProfileEvent {
+  final XFile? imageFile;
+
+  UpdatePicture({required this.imageFile});
+
+}
+
 final class ToggleViewMode extends ProfileEvent {
   final bool isGridView;
 

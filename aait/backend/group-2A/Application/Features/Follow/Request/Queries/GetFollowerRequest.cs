@@ -1,4 +1,5 @@
 ﻿using Application.DTO.UserDTO;
+using Application.Responses;
 using MediatR;
 using System;
 using System.Collections.Generic;
@@ -8,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Application.Features.FollowFeatures.Request.Queries
 {
-    public class GetFollowerRequest : IRequest<List<UserDto>>
+    public class GetFollowerRequest : IRequest<BaseCommandResponse<List<UserDto>>>
     {
         public int Id { get; set; }
     }

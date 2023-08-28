@@ -1,6 +1,10 @@
 ﻿using Application.Contracts;
 using Application.DTO.Common;
+using Application.DTO.NotificationDTO;
+using Application.Exceptions;
+using Application.Features.NotificationFeaure.Requests.Commands;
 using Application.Features.PostFeature.Requests.Commands;
+using Application.Response;
 using AutoMapper;
 using Domain.Entities;
 using MediatR;
@@ -12,25 +16,36 @@ using System.Threading.Tasks;
 
 namespace Application.Features.PostFeature.Handlers.Commands
 {
-    public class PostReactionHandler : IRequestHandler<PostReactionCommand, CommonResponseDTO>
+    public class PostReactionHandler : IRequestHandler<PostReactionCommand, BaseResponse<string>>
     {
         private readonly IPostReactionRepository _postReactionRespository;
         private readonly IMapper _mapper;
+        private readonly IMediator _mediator;
+        private readonly IPostRepository _postRepository;
 
-        public PostReactionHandler(IPostReactionRepository postReactionRepository, IMapper mapper)
+        public PostReactionHandler(IPostReactionRepository postReactionRepository, IMapper mapper, IMediator mediator, IPostRepository postRepository)
         {
             _postReactionRespository = postReactionRepository;
             _mapper = mapper;
+            _mediator = mediator;
+            _postRepository = postRepository;
         }
-        public async Task<CommonResponseDTO> Handle(PostReactionCommand request, CancellationToken cancellationToken)
+        public async Task<BaseResponse<string>> Handle(PostReactionCommand request, CancellationToken cancellationToken)
         {
             var validator = new ReactionValidator();
             var validationResult = await validator.ValidateAsync(request.ReactionData);
 
             if (!validationResult.IsValid)
             {
-                throw new Exception();
+                throw new ValidationException(validationResult);
             }
+
+            var exists = await _postRepository.Exists(request.ReactionData.ReactedId);
+            if (exists == false)
+            {
+                throw new NotFoundException("Post is not found to make the Reactions");
+            }
+
 
             var postReaction = _mapper.Map<PostReaction>(request.ReactionData);
             
@@ -50,22 +65,30 @@ namespace Application.Features.PostFeature.Handlers.Commands
 
 
             var result = await _postReactionRespository.MakeReaction(request.UserId, postReaction);
-            if (result != null)
+            if (result == null)
             {
-                return new CommonResponseDTO()
-                {
-                    Status = "Success",
-                    Message = "Post is reacted successfully"
-                };
+                throw new BadRequestException("Post is not found"
+                );
             }
-            else
+
+
+            // notification
+            var notificationData = new NotificationCreateDTO
             {
-                return new CommonResponseDTO()
-                {
-                    Status = "Failure",
-                    Message = "Post is not reacted successfully"
-                };
-            }
+                Content = $"User with id : {request.UserId} made reaction on post with id : {postReaction.PostId}",
+                NotificationContentId = postReaction.PostId,
+                NotificationType = "reaction",
+                UserId = request.UserId
+            };
+            await _mediator.Send(new CreateNotification { NotificationData = notificationData });
+
+
+
+            return new BaseResponse<string>()
+            {
+                Success = true,
+                Message = "Reaction is made successfully"
+            };
         }
     }
 }
