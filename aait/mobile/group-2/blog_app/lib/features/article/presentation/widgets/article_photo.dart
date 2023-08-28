@@ -18,15 +18,17 @@ class ArticlePhoto extends StatelessWidget {
       alignment: Alignment.centerLeft,
       children: [
         SizedBox(
-          width: 160.w,
-          height: 160.h,
-          child: CachedNetworkImage(
-            height: 300.h,
-            width: 428.w,
-            fit: BoxFit.cover,
-            imageUrl: article.photoUrl,
-          ),
-        ),
+            width: 160.w,
+            height: 160.h,
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(10.0),
+              child: CachedNetworkImage(
+                height: 300.h,
+                width: 428.w,
+                fit: BoxFit.cover,
+                imageUrl: article.photoUrl,
+              ),
+            )),
         Positioned(
           top: 20,
           left: 15,
@@ -37,7 +39,7 @@ class ArticlePhoto extends StatelessWidget {
               color: Colors.white,
             ),
             child: Text(
-              "${article.estimatedReadTime} read",
+              '${article.estimatedReadTime} read',
               style: TextStyle(
                   color: Theme.of(context).colorScheme.secondary,
                   fontSize: 11.5,

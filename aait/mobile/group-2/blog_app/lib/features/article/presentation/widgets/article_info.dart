@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
+import '../../../../core/presentation/theme/app_colors.dart';
 import '../../../../core/presentation/util/date_to_string_convertor.dart';
 import '../../domain/entities/article.dart';
 import 'tag_display.dart';
@@ -20,7 +21,7 @@ class ArticleInfo extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         SizedBox(
-          width: 10.w,
+          width: 160.w,
           child: Expanded(
             // child:
             // child:
@@ -55,7 +56,7 @@ class ArticleInfo extends StatelessWidget {
           alignment: Alignment.bottomRight,
           child: Text(
             dateTimeToString(article.date),
-            style: TextStyle(color: Theme.of(context).colorScheme.onBackground),
+            style: const TextStyle(color: AppColors.gray300),
           ),
         ),
       ],
