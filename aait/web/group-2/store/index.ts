@@ -1,17 +1,16 @@
 import { configureStore } from "@reduxjs/toolkit";
-import { singleSuccessApi } from "./features/success-stories";
-import { setupListeners } from "@reduxjs/toolkit/dist/query";
+import { successApi } from "./features/success-stories";
+import authApi from "./features/auth/auth-api";
 
-const store = configureStore({
+export const store = configureStore({
+  reducer: {
+    [successApi.reducerPath]: successApi.reducer,
+    [authApi.reducerPath]: authApi.reducer,
+  },
+  middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware()
+      .concat(authApi.middleware, successApi.middleware),
+});
 
-    reducer:{
-        [singleSuccessApi.reducerPath]:singleSuccessApi.reducer,
-    },
-    middleware: (getDefaultMiddleware) =>
-        getDefaultMiddleware().concat(singleSuccessApi.middleware),
-})
-
-
-export type AppDispatch = typeof store.dispatch
-export type RootState = ReturnType<typeof store.getState>
-export default store
+export type AppDispatch = typeof store.dispatch;
+export type RootState = ReturnType<typeof store.getState>;
