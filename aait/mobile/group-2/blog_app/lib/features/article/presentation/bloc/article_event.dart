@@ -11,6 +11,8 @@ sealed class ArticleEvent extends Equatable {
 
 final class LoadAllArticlesEvent extends ArticleEvent {}
 
+final class LoadAllTagsEvent extends ArticleEvent {}
+
 final class GetSingleArticleEvent extends ArticleEvent {
   final String id;
 
