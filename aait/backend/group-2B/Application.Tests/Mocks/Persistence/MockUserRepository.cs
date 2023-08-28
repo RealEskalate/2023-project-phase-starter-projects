@@ -6,7 +6,7 @@ namespace SocialSync.Application.Tests.Mocks;
 
 public class MockUserRepository
 {
-    public static Mock<IUserRepository> GetUserRepository()
+    public static Mock<IUserRepository> GetMockUserRepository()
     {
         var users = new List<User>
         {
@@ -36,7 +36,7 @@ public class MockUserRepository
                 LastName = "User3",
                 Email = "user3@gmail.com",
                 Username = "User3",
-                Password = "User3",
+                Password = "User3password",
                 Phone = "1234567890",
                 Id = 3
             }
@@ -52,6 +52,7 @@ public class MockUserRepository
 
         userRepository
             .Setup(repo => repo.AddAsync(It.IsAny<User>()))
+            // Add the user to the list and return the user with the new Id
             .ReturnsAsync(
                 (User user) =>
                 {
