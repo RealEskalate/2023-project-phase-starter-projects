@@ -22,8 +22,10 @@ const Blog = ({ params }: { params: { id: string } }) => {
 
   return (
     <div className="md:p-20 p-5 flex flex-col items-center gap-10">
-      <div className="flex flex-col items-center gap-4">
-        <h1 className="text-3xl font-french">{blogData.title}</h1>
+      <div className="flex flex-col items-center gap-4 mt-24">
+        <h1 className="text-3xl font-french md:max-md:max-lg:text-xl">
+          {blogData.title}
+        </h1>
         <p className="font-montserrat uppercase text-xs text-center">
           {blogData.tags.map((tag: any, index: any) =>
             index != blogData.tags.length - 1 ? `${tag}, ` : tag
@@ -45,7 +47,7 @@ const Blog = ({ params }: { params: { id: string } }) => {
             alt="author image"
             width={50}
             height={50}
-            className="rounded-full w-20 h-20 object-cover"
+            className="rounded-full"
           />
         )}
         <p className="font-montserrat uppercase text-xs">
@@ -53,12 +55,15 @@ const Blog = ({ params }: { params: { id: string } }) => {
         </p>
       </div>
       <div className="md:px-32 flex flex-col gap-8 text-justify py-4">
+        <div>
+          <p className="font-montserrat text-lg font-bold text-left">
+            {blogData.description}
+          </p>
+        </div>
         {blogData.description.split("\n").map((paragraph: any, index: any) => (
-          <p
-            key={index}
-            className="font-montserrat text-sm"
-            dangerouslySetInnerHTML={{ __html: paragraph }}
-          ></p>
+          <p key={index} className="font-montserrat text-sm text-left">
+            {paragraph}
+          </p>
         ))}
       </div>
       <div className="text-left w-full flex flex-col gap-12">
