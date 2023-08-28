@@ -1,5 +1,6 @@
 import 'package:blog_app/core/util/app_colors.dart'; // Importing app-specific colors
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class TagButtonListWidget extends StatelessWidget {
   final List<String> tagNames;
@@ -25,7 +26,7 @@ class TagButtonListWidget extends StatelessWidget {
     var outlinedButtonStyle = OutlinedButton.styleFrom(
       side: BorderSide(color: outlineColor),
       padding: EdgeInsets.symmetric(
-        vertical: 5,
+        vertical: 5.h,
         horizontal: horizontalPadding,
       ),
       shape: RoundedRectangleBorder(
@@ -36,7 +37,7 @@ class TagButtonListWidget extends StatelessWidget {
     var elevatedButtonStyle = ElevatedButton.styleFrom(
       backgroundColor: buttonColor,
       padding: EdgeInsets.symmetric(
-        vertical: 2,
+        vertical: 2.h,
         horizontal: horizontalPadding,
       ),
       shape: RoundedRectangleBorder(
@@ -52,19 +53,18 @@ class TagButtonListWidget extends StatelessWidget {
         children: [
           // "All" button
           SizedBox(
-            height: 30,
-            width: 100,
+            height: 28.h,
+            width: 77.w,
             child: ElevatedButton(
               onPressed: () {
                 // Action for the "All" button
               },
-              style: elevatedButtonStyle, // Apply selected button style
+              style: elevatedButtonStyle, 
               child: const Text(
                 'All',
                 style: TextStyle(
                   color: AppColors.whiteColor,
                 ),
-                maxLines: 1,
                 overflow: TextOverflow.ellipsis,
               ),
             ),
@@ -75,8 +75,7 @@ class TagButtonListWidget extends StatelessWidget {
           ...tagNames.map(
             (tagName) {
               return Container(
-                height: 30,
-                width: 100,
+                height: 28.h,
                 margin: EdgeInsets.only(right: spaceBetweenButtons),
                 child: OutlinedButton(
                   onPressed: () {}, // Action for each tag button
@@ -86,6 +85,8 @@ class TagButtonListWidget extends StatelessWidget {
                     style: TextStyle(
                       color: outlineColor,
                       fontFamily: 'Urbanist',
+                      fontSize: 12.sp,
+                      fontWeight: FontWeight.bold,
                     ),
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
