@@ -12,7 +12,7 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
-      <body className="bg-white">
+      <body className="bg-white dark:bg-dark-background">
         <ReduxProvider>
           <Header />
           {children}
