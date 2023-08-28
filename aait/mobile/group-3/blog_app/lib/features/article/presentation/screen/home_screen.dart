@@ -2,6 +2,7 @@
 // It displays a list of articles and provides interaction options.
 
 import 'package:blog_app/core/util/app_colors.dart';
+import 'package:blog_app/features/article/domain/entity/user.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -24,19 +25,7 @@ class HomeScreen extends StatelessWidget {
       title: '_empty.title',
       subTitle: '_empty.subTitle',
       estimatedReadTime: '_empty.estimatedReadTime',
-      user: const {
-        "_id": "64e25674bfc65d390e781205",
-        "fullName": "Tamirat Dereje",
-        "email": "tamiratdereje@gmail.com",
-        "expertise": "designer",
-        "bio": "I am passionate designer who see beauty in everything",
-        "createdAt": "2023-08-20T18:07:48.829Z",
-        "__v": 0,
-        "image":
-            "https://res.cloudinary.com/dzpmgwb8t/image/upload/v1692557684/guf4tul1ftar9hdpnaev.jpg",
-        "imageCloudinaryPublicId": "guf4tul1ftar9hdpnaev",
-        "id": "64e25674bfc65d390e781205"
-      },
+      user: User.empty(),
       image: '_empty.image',
       imageCloudinaryPublicId: '_empty.imageCloudinaryPublicId',
       createdAt: DateTime.parse('2023-08-20T19:36:03.414Z'),
@@ -48,19 +37,7 @@ class HomeScreen extends StatelessWidget {
       title: '_empty.title',
       subTitle: '_empty.subTitle',
       estimatedReadTime: '_empty.estimatedReadTime',
-      user: const {
-        "_id": "64e25674bfc65d390e781205",
-        "fullName": "Tamirat Dereje",
-        "email": "tamiratdereje@gmail.com",
-        "expertise": "designer",
-        "bio": "I am passionate designer who see beauty in everything",
-        "createdAt": "2023-08-20T18:07:48.829Z",
-        "__v": 0,
-        "image":
-            "https://res.cloudinary.com/dzpmgwb8t/image/upload/v1692557684/guf4tul1ftar9hdpnaev.jpg",
-        "imageCloudinaryPublicId": "guf4tul1ftar9hdpnaev",
-        "id": "64e25674bfc65d390e781205"
-      },
+      user: User.empty(),
       image: '_empty.image',
       imageCloudinaryPublicId: '_empty.imageCloudinaryPublicId',
       createdAt: DateTime.parse('2023-08-20T19:36:03.414Z'),
@@ -72,19 +49,7 @@ class HomeScreen extends StatelessWidget {
       title: '_empty.title',
       subTitle: '_empty.subTitle',
       estimatedReadTime: '_empty.estimatedReadTime',
-      user: const {
-        "_id": "64e25674bfc65d390e781205",
-        "fullName": "Tamirat Dereje",
-        "email": "tamiratdereje@gmail.com",
-        "expertise": "designer",
-        "bio": "I am passionate designer who see beauty in everything",
-        "createdAt": "2023-08-20T18:07:48.829Z",
-        "__v": 0,
-        "image":
-            "https://res.cloudinary.com/dzpmgwb8t/image/upload/v1692557684/guf4tul1ftar9hdpnaev.jpg",
-        "imageCloudinaryPublicId": "guf4tul1ftar9hdpnaev",
-        "id": "64e25674bfc65d390e781205"
-      },
+      user: User.empty(),
       image: '_empty.image',
       imageCloudinaryPublicId: '_empty.imageCloudinaryPublicId',
       createdAt: DateTime.parse('2023-08-20T19:36:03.414Z'),
