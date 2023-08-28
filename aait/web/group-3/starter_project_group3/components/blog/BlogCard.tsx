@@ -65,7 +65,7 @@ const BlogCard: React.FC<BlogProps> = ({
             <h2 className="text-2xl font-bold mt-2">{title}</h2>
             <p className="text-gray-700 text-wrap">{parse(truncatedDescription)}</p>
             {description.length > MAX_DESCRIPTION_LENGTH && (
-                <a className="text-blue-500">Read more</a>
+                <a className="text-primary">Read more</a>
             )}
             <div className="flex flex-wrap mt-4">
               {tags.map((tag, index) => (
