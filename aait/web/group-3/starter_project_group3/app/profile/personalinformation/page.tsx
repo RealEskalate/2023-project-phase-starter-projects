@@ -13,7 +13,12 @@ const PersonalInformation = () => {
             Add all the required information about yourself
           </p>
         </p>
-        <Link href={""} className="px-8 py-2 mr-10 text-white bg-primary rounded-md font-semibold">Save Changes</Link>
+        <Link
+          href={""}
+          className="px-8 py-2 mr-10 text-white bg-primary rounded-md font-semibold"
+        >
+          Save Changes
+        </Link>
       </div>
       <hr className="py-1" />
 
@@ -116,8 +121,6 @@ const PersonalInformation = () => {
             </div>
           </div>
         </div>
-
-        <hr />
       </form>
     </div>
   );

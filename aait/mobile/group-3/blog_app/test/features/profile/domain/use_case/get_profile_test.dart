@@ -21,6 +21,7 @@ void main() {
 
   group("GetProfile", () {
     final Profile tProfile = Profile(
+      bookmarks: [],
         username: "@John",
         articles: [],
         fullName: "John Doe",

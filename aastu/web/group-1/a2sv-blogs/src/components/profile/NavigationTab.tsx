@@ -7,7 +7,7 @@ export default function NavigationTab() {
   const routeName = path.split("/")[2];
   return (
     <div className="flex justify-between items-center mt-5">
-      <div className="space-x-5 flex">
+      <div className="md:space-x-5 space-x-2 flex">
         <Link
           href={"/profile/info"}
           className={classNames("relative text-sm font-bold", {

@@ -20,7 +20,8 @@ class ProfileRepositoryImpl implements ProfileRepository {
   Future<Either<Failure, Profile>> getProfile() async {
     try {
       final remoteProfile = await remoteDataSource.getProfile();
-      return Right(remoteProfile);
+      final bookmarks = await localDataSource.getBookmarkArticles();
+      return Right(remoteProfile.copyWith(bookmarks: bookmarks));
     } on ServerException {
       return Left(ServerFailure(
           message: "Couldn't connect to the internet", statusCode: 400));

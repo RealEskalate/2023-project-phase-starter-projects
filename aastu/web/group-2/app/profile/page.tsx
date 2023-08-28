@@ -10,6 +10,7 @@ import uploadIcon from '@/assets/images/Group 9542.svg'
 
 export default function Section() {
     const [profileImage, setProfileImage] = useState<File>()
+    const [success, setSuccess] = useState(false)
 
     const createFile = async (url: string) => {
         let response = await fetch(url);
@@ -18,31 +19,30 @@ export default function Section() {
             type: 'image/jpeg'
         };
         let file = new File([data], "test.jpg", metadata);
-        // ... do something with the file or return it
+
         setProfileImage(file)
     }
 
     const data = localStorage.getItem("login")
-    console.log(data)
-    let user = null
-    if (data) {
 
+    let user: any = null
+    if (data) {
         user = JSON.parse(data)
     }
+
     useEffect(() => {
         createFile(user.userProfile)
     }, [])
+
     const [editUser] = useEditUserMutation()
 
     const [first, setFirst] = useState(user.userName.split(" ")[0])
     const [second, setSecond] = useState(user.userName.split(" ")[1])
     const [email, setEmail] = useState(user.userEmail)
 
-    console.log(user.userProfile)
     const [imgPath, setImgPath] = useState<any>(user.userProfile || "")
 
     const onDrop = useCallback((acceptedFiles: File[]) => {
-        // Do something with the files
         setImgPath(URL.createObjectURL(acceptedFiles[0]))
         setProfileImage(acceptedFiles[0])
     }, [])
@@ -51,25 +51,33 @@ export default function Section() {
 
     const handleEditUser = async () => {
         // e.preventDefault()
-        console.log(email, profileImage)
+
         const form = new FormData()
+
         form.append("email", email)
         form.append("name", first + " " + second)
+
         if (profileImage) {
             form.append("image", profileImage)
         }
+
         try {
             const res = await editUser(form).unwrap()
-            console.log("worked", res)
             const userData = JSON.parse(localStorage.getItem('login') || "");
-            console.log("upated11", userData)
             const obj = { ...userData }
+
+            console.log(res);
+
             obj.userEmail = res.body.email
             obj.userProfile = res.body.image
             obj.userName = res.body.name
-            console.log("upated", obj)
+
             localStorage.removeItem("login")
             localStorage.setItem("login", JSON.stringify(obj))
+
+            if (res.message === "Profile updated successfully") {
+                setSuccess(true)
+            }
 
         } catch (error) {
             console.log(error)
@@ -94,6 +102,14 @@ export default function Section() {
             <form
                 className='space-y-6'
                 action="">
+                {
+                    success && <div
+                        className="w-3/6 p-4 mb-4 text-sm text-green-800 rounded-lg bg-green-50"
+                        role="alert"
+                    >
+                        <span className="font-medium">Yay!</span> You've successfully updated your profile.
+                    </div>
+                }
                 <div className="space-x-8 flex border-b-[1px] py-6">
                     <label
                         className="mr-16 font-semibold"
@@ -159,7 +175,7 @@ export default function Section() {
                                 isDragActive ?
                                     (<p>Drop the files here ...</p>) :
                                     (<p className='text-center'>Clcik to upload <span className='text-textColor-100'>or drag and drop <br />
-                                    SVG, PNG, JPG or GIF(max 800x400px)</span></p>)
+                                        SVG, PNG, JPG or GIF(max 800x400px)</span></p>)
                             }
                         </div>
                     </div>

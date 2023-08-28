@@ -38,6 +38,9 @@ namespace Persistence
                 {
                     entry.Entity.DateCreated = DateTime.UtcNow;
                 }
+
+
+
             }
 
             return base.SaveChangesAsync(cancellationToken);
