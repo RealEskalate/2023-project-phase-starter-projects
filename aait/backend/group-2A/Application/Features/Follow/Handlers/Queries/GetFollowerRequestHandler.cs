@@ -30,13 +30,15 @@ namespace Application.Features.FollowFeatures.Handlers.Queries
 
         public async Task<BaseCommandResponse<List<UserDto>>> Handle(GetFollowerRequest request, CancellationToken cancellationToken)
         {
-            var followers = await _unitOfWork.followRepository.GetFollower(request.Id);
-            if (followers == null)
-            {
-                var notFoundException = new NotFoundException(nameof(Domain.Entities.Comment), request.Id);
-                return BaseCommandResponse<List<UserDto>>.FailureHandler(notFoundException);
+            try{
+                var followers = await _unitOfWork.followRepository.GetFollower(request.Id);
+                if (followers == null){
+                    throw new NotFoundException(nameof(Domain.Entities.Comment), request.Id);
+                }
+                return BaseCommandResponse<List<UserDto>>.SuccessHandler(_mapper.Map<List<UserDto>>(followers));
+            } catch(Exception ex){
+                return BaseCommandResponse<List<UserDto>>.FailureHandler(ex);
             }
-            return BaseCommandResponse<List<UserDto>>.SuccessHandler(_mapper.Map<List<UserDto>>(followers));
         }
     }
 }

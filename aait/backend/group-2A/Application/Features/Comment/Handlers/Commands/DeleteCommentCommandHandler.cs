@@ -27,6 +27,7 @@ public class DeleteCommentCommandHandler : IRequestHandler<DeleteCommentCommand,
             var comment = await _unitOfWork.commentRepository.Get(request.Id);
 
             if (comment == null) throw new NotFoundException(nameof(Domain.Entities.Comment), request.Id);
+            if (comment.UserId != request.UserId) throw new BadRequestException("You can't Do this");
 
 
             await _unitOfWork.commentRepository.Delete(comment);

@@ -22,14 +22,17 @@ public class GetCommentsByPostIdRequestHandler : IRequestHandler<GetCommentsByPo
     
     public async Task<BaseCommandResponse<List<CommentDto>>> Handle(GetCommentsByPostIdRequest request, CancellationToken cancellationToken)
     {
-        var comments = await _unitOfWork.commentRepository.GetCommentByPost(request.PostId);
+        try{
+            var comments = await _unitOfWork.commentRepository.GetCommentByPost(request.PostId);
 
-        if (comments == null)
-        {
-            var notFoundException = new NotFoundException(nameof(Domain.Entities.Comment), request.PostId);
-            return BaseCommandResponse<List<CommentDto>>.FailureHandler(notFoundException);
+            if (comments == null){
+                throw new NotFoundException(nameof(Domain.Entities.Comment), request.PostId);
+            }
+
+            return BaseCommandResponse<List<CommentDto>>.SuccessHandler(_mapper.Map<List<CommentDto>>(comments));
         }
-
-        return BaseCommandResponse<List<CommentDto>>.SuccessHandler(_mapper.Map<List<CommentDto>>(comments));
+        catch(Exception ex){
+                return BaseCommandResponse<List<CommentDto>>.FailureHandler(ex);
+        }
     }
 }

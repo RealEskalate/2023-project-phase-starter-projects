@@ -26,7 +26,7 @@ public class DeletePostCommandHandler : IRequestHandler<DeletePostCommand, BaseC
         {
             var post = await _unitOfWork.postRepository.Get(request.Id);
             if (post == null) throw new NotFoundException(nameof(post), request.Id);
-
+            if (post.UserId != request.UserId) throw new BadRequestException("You are Unauthtized to do this");
             await _unitOfWork.postRepository.Delete(post);
             int affectedRows = await _unitOfWork.Save();
             if (affectedRows == 0) throw new ServerErrorException("Something Went Wrong");

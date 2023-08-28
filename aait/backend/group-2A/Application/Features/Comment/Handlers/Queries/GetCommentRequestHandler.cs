@@ -23,14 +23,14 @@ public class GetCommentRequestHandler : IRequestHandler<GetCommentRequest, BaseC
     
     public async Task<BaseCommandResponse<CommentDto>> Handle(GetCommentRequest request, CancellationToken cancellationToken)
     {
-        var comment = await _unitOfWork.commentRepository.Get(request.commentId);
-        if (comment == null)
-        {
-            var notFoundException = new NotFoundException(nameof(Domain.Entities.Comment), request.commentId);
-            return BaseCommandResponse<CommentDto>.FailureHandler(notFoundException);
+        try{
+            var comment = await _unitOfWork.commentRepository.Get(request.commentId);
+            if (comment == null){
+                throw new NotFoundException(nameof(Domain.Entities.Comment), request.commentId);
+            }
+            return BaseCommandResponse<CommentDto>.SuccessHandler(_mapper.Map<CommentDto>(comment));
+        } catch(Exception ex){
+            return BaseCommandResponse<CommentDto>.FailureHandler(ex);
         }
-    
-
-        return BaseCommandResponse<CommentDto>.SuccessHandler(_mapper.Map<CommentDto>(comment));
     }
 }
