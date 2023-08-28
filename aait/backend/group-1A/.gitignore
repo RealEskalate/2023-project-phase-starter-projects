@@ -286,4 +286,5 @@ Temporary Items
 
 
 ./Persistence/Migrations/*
+*/Migrations/*
 
