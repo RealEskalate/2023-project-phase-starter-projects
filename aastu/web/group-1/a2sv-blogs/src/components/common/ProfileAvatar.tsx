@@ -10,7 +10,7 @@ interface Props {
 export default function ProfileAvatar({ imageUrl }: Props) {
   const [popoverVisible, setPopoverVisible] = useState(false);
   const { logoutHandler } = useAuth();
-  if (imageUrl.length == 0) {
+  if (!imageUrl) {
     imageUrl = "/images/avatar.jpg";
   }
 
