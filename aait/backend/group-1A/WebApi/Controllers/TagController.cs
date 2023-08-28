@@ -30,4 +30,35 @@ public class TagController : ControllerBase{
         return Ok(result);
     }
 
+    [HttpGet("{id}")]
+    public IActionResult Get(int id){
+        // var result = _mediator.Send(new Ge)
+        return Ok();
+    }
+
+    [HttpPut("{id}")]
+    public IActionResult Update(UpdateTagRequest request){
+        var result = _mediator.Send(request);
+        if (result.IsCompletedSuccessfully)
+        {
+            return NoContent();
+        }
+        else
+        {
+            return BadRequest();
+        }
+        
+    }
+
+    [HttpDelete("{id}")]
+    public IActionResult Delete(DeleteTagRequest request){
+
+        var result = _mediator.Send(request);
+
+        if(result.IsCompletedSuccessfully){
+            return NoContent();
+        }
+        return BadRequest();
+    }
+
 }

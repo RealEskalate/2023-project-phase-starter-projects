@@ -1,7 +1,8 @@
 using MediatR;
+using SocialSync.Domain.Entities;
 
 namespace SocialSync.Application.Features.Requests;
 
 public class DeleteTagRequest : IRequest<Unit>{
-    public int Id {get; set;}
+    public Tag tag;
 }

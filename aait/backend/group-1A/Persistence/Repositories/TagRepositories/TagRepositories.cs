@@ -23,7 +23,10 @@ public class TagReposiotry : ITagRepository
 
     public Task<bool> Delete(Tag entity)
     {
-        throw new NotImplementedException();
+        //delete tag
+        _socialMediaDbContext.Tags.Remove(entity);
+        _socialMediaDbContext.SaveChanges();
+        return Task.FromResult(true);
     }
 
     public Task<bool> Exists(int id)
@@ -40,9 +43,8 @@ public class TagReposiotry : ITagRepository
 
     public Task<List<Tag>> GetAll(int userId)
     {
-        // var result =   _socialMediaDbContext.Tags.All();
-        // return Task.FromResult()
-        throw new NotImplementedException();
+        var result = _socialMediaDbContext.Tags.ToList();
+        return Task.FromResult(result);
         
     }
 }
