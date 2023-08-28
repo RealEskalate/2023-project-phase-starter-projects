@@ -4,7 +4,7 @@ import { usePathname } from "next/navigation";
 import Link from "next/link";
 
 // Define the NavLink component
-const NavLink : React.FC<{ to: string; children: React.ReactNode; }> = ({
+const NavLink: React.FC<{ to: string; children: React.ReactNode }> = ({
   to,
   children,
 }: {
@@ -20,7 +20,12 @@ const NavLink : React.FC<{ to: string; children: React.ReactNode; }> = ({
   return (
     <div>
       {/* Create a Link component with the provided "to" prop */}
-      <Link href={to} className={isActive ? "text-primary" : ""}>
+      <Link
+        href={to}
+        className={`${
+          isActive ? "text-primary" : ""
+        } hover:text-black hover:font-bold`}
+      >
         {children}
       </Link>
 
