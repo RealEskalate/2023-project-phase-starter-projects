@@ -96,7 +96,8 @@ public class RegisterUserCommandHandlerTest
 
         result.ShouldBeOfType<CommonResponse<LoggedInUserDto>>();
         result.IsSuccess.ShouldBeFalse();
-        result.Value.ShouldBeNull();    }
+        result.Value.ShouldBeNull();
+    }
 
     [Fact]
     public async Task Invalid_DuplicateEmailRegisterNewUsew()
@@ -111,20 +112,15 @@ public class RegisterUserCommandHandlerTest
             Phone = "1234567890",
         };
 
-        var result = await _handler.Handle(
+        await _handler.Handle(
             new RegisterUserCommand { RegisterUserDto = newUser },
             CancellationToken.None
         );
 
-        newUser = new RegisterUserDto
-        {
-            FirstName = "User4",
-            LastName = "User4",
-            Email = "User4@gmail.com",
-            Username = "User5",
-            Password = "User4password",
-            Phone = "1234567890",
-        };
+        var result = await _handler.Handle(
+            new RegisterUserCommand { RegisterUserDto = newUser },
+            CancellationToken.None
+        );
 
         result.ShouldBeOfType<CommonResponse<LoggedInUserDto>>();
         result.IsSuccess.ShouldBeFalse();
