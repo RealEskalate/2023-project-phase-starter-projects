@@ -31,25 +31,32 @@ const BlogCard: React.FC<BlogProps> = ({
 
   return (
     <div>
-      
 
-      <div className="bg-white rounded-md py-4 px-48">
+      <div className="bg-white pl-8 rounded-md py-4  md:px-48">
         <hr className='my-6'/>
         <div className="flex  items-center mb-2">
           {author && (
             <img
-              src={author.image}
+              src={author.image }
               alt={`${author.name}'s Avatar`}
               className="w-16 h-16 rounded-full"
             />
           )}
+
+          {!author && (
+            <img
+              src={'../assets/profile.svg' }
+              alt={`Avatar`}
+              className="w-16 h-16 rounded-full"
+            />
+          )}
           <div className="ml-2">
-            {author && (
+            { 
               <div className="flex items-center">
-                <p className="text-gray-600 font-semibold ">{author.name}</p>
+                <p className="text-gray-600 font-semibold ">{author ? author.name : 'Unknown'}</p>
                 <span className="text-xs text-gray-400 ml-2">. {formatDate(createdAt)}</span>
               </div>
-            )}
+            }
             {author && <p className="uppercase  text-gray-400 mt-1">Software Engineer</p>}
           </div>
         </div>

@@ -11,8 +11,8 @@ interface ChipProps {
       onClick={() => onClick(tag)}
       className={`px-3 py-1 rounded-full cursor-pointer ${
         isSelected
-          ? "border border-blue-500 text-blue-500"
-          : "border-none bg-gray-300"
+          ? "border border-primary text-primary"
+          : "border-none bg-gray-100"
       }`}
     >
       {tag}

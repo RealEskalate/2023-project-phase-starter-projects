@@ -1,7 +1,8 @@
 'use client'
 
-import { useAddBlogMutation } from "@/store/features/create-blog/create-blog-api";
 import { useState } from "react";
+import {useRouter} from 'next/navigation'
+import { useAddBlogMutation } from "@/store/features/create-blog/create-blog-api";
 import AddBlog from "@/components/blog/AddBlog";
 
 const CreateBlogPage: React.FC = () => {
@@ -11,6 +12,7 @@ const CreateBlogPage: React.FC = () => {
     const [content, setContent] = useState("");
     const [imageText, setImageText] = useState('Please upload image');
     const [selectedTags, setSelectedTags] = useState<string[]>([]);
+    const router = useRouter()
 
     const handleTagClick = (tag: string) => {
       if (selectedTags.includes(tag)) {
@@ -67,9 +69,15 @@ const CreateBlogPage: React.FC = () => {
           try {
             
             const response = await addBlog(formData);
-
             if (response) {
-                console.log(response)
+                router.push('/blogs')
+            }else{
+              setImage(null)
+              setImageText('Please upload image')
+              setContent('')
+              setTitle('')
+              setSelectedTags([])
+              
             }
 
           } catch (error) {
