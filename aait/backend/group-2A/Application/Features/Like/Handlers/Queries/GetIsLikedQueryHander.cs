@@ -15,7 +15,7 @@ public class GetIsLikedQueryHander : IRequestHandler<GetIsLikedQuery, bool>{
     }
 
     public Task<bool> Handle(GetIsLikedQuery request, CancellationToken cancellationToken){
-        var exist = _unitOfWork.likeRepository.isLiked(_mapper.Map<Domain.Entities.Like>(request.LikedDto));
+        var exist = _unitOfWork.likeRepository.isLiked(_mapper.Map<Domain.Entities.Like>(request.GetIsLikedDto));
         return exist;
     }
 }
