@@ -5,6 +5,19 @@ import useStories from "@/hooks/useStories";
 
 export default function SuccessStoryCard() {
   const { stories, isLoading, error } = useStories();
+
+  if (isLoading) {
+    return (
+      <div className="flex justify-center items-center h-[400px]">
+        <div className="animate-spin rounded-full border-t-4 border-blue-500 border-opacity-75 h-12 w-12"></div>
+      </div>
+    );
+  }
+
+  if (error) {
+    return <div>Error loading data.</div>;
+  }
+
   return (
     <>
       {stories?.map((item, index) => (
