@@ -20,25 +20,14 @@ namespace WebApi.Controllers
             _mediator = mediator;
         }
 
-        [HttpPost("Register")]
-        public async Task<IActionResult> CreateUser( CreateUserDTO userDto)
-        {
-            var command = new CreateUserCommand { CreateUser = userDto };
-            var userId = await _mediator.Send(command);
-
-            return Ok(new { UserId = userId });
+        [HttpGet("{notifications}")]
+        public async Task<IActionResult> GetNotification(){
+            var command = new GetNotifications(){Id = int.Parse(User.FindFirst("reader").Value)};
+            var notifcations = await _mediator.Send(command);
+            return Ok(notifcations);
         }
-        
-        
-        [HttpPost("Login")]
-        public async Task<IActionResult> LoginUser(AuthRequest userDto)
-        {
-            var command = new Login() { LogInDto = userDto };
-            var token = await _mediator.Send(command);
 
-            return Ok(new { Token = token });
-        }
-        
+
         [HttpGet("{UserId}")]
         public async Task<IActionResult> GetProfile( int UserId)
         {

@@ -6,12 +6,13 @@ using System.Threading.Tasks;
 using Application.DTO.Post;
 using Application.DTO.UserDTO;
 using Application.Model;
+using Application.Responses;
 using Domain;
 using MediatR;
 
 namespace Application.Features.User.Request.Commands
 {
-    public class CreateUserCommand : IRequest<AuthResponse>
+    public class CreateUserCommand : IRequest<BaseCommandResponse<AuthResponse?>>
         {
             public required CreateUserDTO CreateUser { get; set; }
 

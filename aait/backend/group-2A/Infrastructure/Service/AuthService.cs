@@ -5,6 +5,7 @@ using System.Text;
 using Application.Contracts.Identity;
 using Application.Contracts.Persistance;
 using Application.DTO.UserDTO;
+using Application.Exceptions;
 using Application.Model;
 using Domain.Entities;
 using Infrastructure.Model;
@@ -32,26 +33,17 @@ public class AuthService : IAuthService {
      {
          var user = await _userManager.FindByEmailAsync(request.Email);
          if (user is null){
-             Console.WriteLine("-------------------User Not Found ");
-             return null;
-             // throw new NotFoundException("Account",req.Email); 
+             throw new NotFoundException(nameof(user), request.Email); 
          }
     
          var isCorrect = await _signInManager.PasswordSignInAsync(userName: user.UserName, request.Password,isPersistent:true, lockoutOnFailure:false);
          if (!isCorrect.Succeeded){
-             Console.WriteLine("-------------------Creditial Not Found ");
-             return null;
-             // throw new Exception($"invalid credentials for user: {request.Email}"); 
+             throw new Exception($"invalid credentials for user: {request.Email}"); 
          }
          
-         Console.WriteLine("-------------UseR Repository started");
-
          var customeUser = await userRepository.GetUserByEmail(user.Email);
-
-         Console.WriteLine("---------------OKKKKKKKKKKKKK  JWT");
          JwtSecurityToken token = await GenerateToken(user, customeUser.Id.ToString());
          var Token = new JwtSecurityTokenHandler().WriteToken(token);
-         Console.WriteLine("---------------OKKKKKKKKKKKKK  JWT");
          return Token; 
      
      } 
@@ -60,11 +52,9 @@ public class AuthService : IAuthService {
      {
          var alreadyExist = await _userManager.FindByEmailAsync(req.Email); 
          if (alreadyExist is not null){
-             Console.WriteLine("----Email Exist");
-             return null;
-             // throw new Exception($"{req.Email} already exist"); 
-         } 
-    
+             throw new Exception("Email already used");
+
+         }
          var user = new ApplicaionUser { 
              Email = req.Email, 
              UserName = req.UserName, 
@@ -72,15 +62,10 @@ public class AuthService : IAuthService {
          };
          var creatingUser = await _userManager.CreateAsync(user, req.Password);
          if (!creatingUser.Succeeded){
-             Console.WriteLine("Create Error ---------------");
-             Console.WriteLine(creatingUser.ToString());
-             return null;
-             // throw new Exception($"Failed to register \n"); 
+             throw new Exception($"Check Your Password \n"); 
          } 
-         Console.WriteLine("User Registered");
          AuthRequest request = new AuthRequest {Email = req.Email, Password = req.Password };
          return true;
-         // return await this.Login(request, userRepository);
      }
      private async Task<JwtSecurityToken> GenerateToken(ApplicaionUser user, string Id){
          var claims = new[]{
@@ -106,13 +91,8 @@ public class AuthService : IAuthService {
      public async Task<bool> Update(UpdateUserDTO request, string prevEmail){
          
          var user = await _userManager.FindByEmailAsync(prevEmail);
-         if (user is null){
-             return false;
-             // throw new NotFoundException("User", userId); 
-         }
-
          user.Email = request.Email;
-         user.UserName = request.UserName; // Assuming email is also used as the username
+         user.UserName = request.UserName; 
          var result = await _userManager.UpdateAsync(user);
          return result.Succeeded;
      }
