@@ -68,7 +68,6 @@ class ProfileRemoteDataSourceImpl extends ProfileRemoteDataSource {
 
   Future<String?> getToken() async {
     final prefs = await SharedPreferences.getInstance();
-    // return prefs.getString('token');
-    return "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0ZWM0YzczOTkzNTQ0YTE2YmJkNTA0OSIsImlhdCI6MTY5MzIwNzcyOCwiZXhwIjoxNjk1Nzk5NzI4fQ.jKOa5V5m-xRPWO9VCVENFH0KJWbO27mE3UvurLvP3P0";
+    return prefs.getString('token');
   }
 }
