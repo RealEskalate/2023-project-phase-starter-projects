@@ -1,3 +1,5 @@
+import 'dart:collection';
+
 import 'package:blog_app/features/user_profile/domain/entities/article.dart';
 import 'package:equatable/equatable.dart';
 
@@ -36,6 +38,16 @@ class UserModel extends User implements Equatable {
   final List<Article> articles;
 
   factory UserModel.fromJson(Map<String, dynamic> json) {
+    List<Article> articles = [];
+    json['articles'].map((article) {
+      articles.add(Article(
+          id: article.id,
+          title: article.title,
+          content: article.content,
+          authorId: article.user,
+          subTitle: article.subTitle));
+    });
+
     return UserModel(
         id: json['id'],
         fullName: json['fullName'],
@@ -43,7 +55,7 @@ class UserModel extends User implements Equatable {
         expertise: json['expertise'],
         bio: json['bio'],
         image: json['image'],
-        articles: json['articles']);
+        articles: articles);
   }
 
   Map<String?, dynamic> toJson(UserModel userModel) {
