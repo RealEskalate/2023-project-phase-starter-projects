@@ -11,5 +11,5 @@ abstract class ArticleRepository {
   Future<Either<Failure, void>> updateArticle(Article article);
   Future<Either<Failure, void>> createArticle(Article article);
   Future<Either<Failure, void>> deleteArticle(String articleId);
-  Future<List<String>> getTags();
+  Future<Either<Failure, List<String>>> getTags();
 }

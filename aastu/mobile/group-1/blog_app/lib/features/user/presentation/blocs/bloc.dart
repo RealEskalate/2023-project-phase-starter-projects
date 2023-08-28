@@ -47,7 +47,7 @@ class UserBloc extends Bloc<UserEvent, UserState> {
           (user) => UserSignedInState(user),
         ));
       } catch (e) {
-        emit(UserError('Error registering user'));
+        emit(const UserError('Error registering user'));
       }
     });
 

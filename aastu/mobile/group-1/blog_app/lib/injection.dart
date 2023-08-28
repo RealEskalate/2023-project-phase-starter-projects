@@ -45,8 +45,8 @@ Future<void> init() async {
   //
 
   // register blog
-  sl.registerFactory(
-      () => BlogBloc(getAllArticle: sl(), getSingleArticle: sl()));
+  sl.registerFactory(() =>
+      BlogBloc(getAllArticle: sl(), getSingleArticle: sl(), getTags: sl()));
 
   // Register use cases
   sl.registerFactory(() => RegisterUserUseCase(sl()));

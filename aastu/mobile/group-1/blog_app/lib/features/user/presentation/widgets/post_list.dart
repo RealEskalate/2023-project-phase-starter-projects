@@ -57,6 +57,8 @@ class BlogCards extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    double screenWidth = MediaQuery.of(context).size.width;
+    double screenHeight = MediaQuery.of(context).size.height;
     return InkWell(
       onTap: () {
         //navigate to ViewBlog() without named
@@ -85,8 +87,10 @@ class BlogCards extends StatelessWidget {
                     clipBehavior: Clip.antiAliasWithSaveLayer,
                     child: Image.asset(
                       object.image,
-                      height: 120,
-                      width: 100,
+                      // height: 120,
+                      // width: 100,
+                      height: screenHeight * 0.14,
+                      width: screenWidth * 0.25,
                       fit: BoxFit.cover,
                     ),
                   ),

@@ -1,3 +1,4 @@
+import 'package:blog_app/core/utils/is_email_valid.dart';
 import 'package:blog_app/features/onboarding/widgets/loading_widget.dart';
 import 'package:blog_app/features/user/domain/usecases/get_user.dart';
 import 'package:blog_app/features/user/domain/usecases/login_user.dart';
@@ -19,8 +20,10 @@ class LoginWidget extends StatefulWidget {
 }
 
 class _LoginWidgetState extends State<LoginWidget> {
+  bool _isLoading = false;
   final TextEditingController _usernameController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
+
   bool pasword_obscure = true;
   @override
   void dispose() {
@@ -41,11 +44,16 @@ class _LoginWidgetState extends State<LoginWidget> {
       child: BlocConsumer<UserBloc, UserState>(
         listener: (context, state) {
           if (state is LoadedUserState) {
+            setState(() {
+              _isLoading = false;
+            });
             Navigator.pushNamed(context, '/home', arguments: state.user.id);
           }
           // loading state
           else if (state is UserLoading) {
-            loadingDialog(context);
+            setState(() {
+              _isLoading = true;
+            });
           } else if (state is UserError) {
             // Handle error if login fails
             ScaffoldMessenger.of(context).showSnackBar(
@@ -74,14 +82,14 @@ class _LoginWidgetState extends State<LoginWidget> {
               style: TextStyle(
                   color: Color(0xFF0D253C),
                   fontFamily: 'Urbanist-Regular',
-                  fontSize: 30),
+                  fontSize: 28),
             ),
             const Text(
               'Sign in with your account',
               style: TextStyle(
                 color: Color(0xFF2D4379),
                 fontFamily: 'Urbanist-Bold',
-                fontSize: 20,
+                fontSize: 17,
               ),
             ),
             const SizedBox(
@@ -90,7 +98,7 @@ class _LoginWidgetState extends State<LoginWidget> {
             TextField(
               controller: _usernameController,
               decoration: const InputDecoration(
-                labelText: 'Username',
+                labelText: 'Email',
                 labelStyle: TextStyle(
                   color: Color(0xFF2D4379),
                   fontFamily: 'Urbanist-Light',
@@ -136,9 +144,17 @@ class _LoginWidgetState extends State<LoginWidget> {
                   onPressed: () {
                     final email = _usernameController.text;
                     final password = _passwordController.text;
-                    context
-                        .read<UserBloc>()
-                        .add(LoginUserEvent(email: email, password: password));
+                    if (isEmailValid(email) && password.isNotEmpty) {
+                      context.read<UserBloc>().add(
+                          LoginUserEvent(email: email, password: password));
+                    } else {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(
+                          backgroundColor: Colors.red,
+                          content: Text('Invalid email or Password'),
+                        ),
+                      );
+                    }
                   },
                   style: ElevatedButton.styleFrom(
                     shape: RoundedRectangleBorder(
@@ -146,14 +162,18 @@ class _LoginWidgetState extends State<LoginWidget> {
                     ),
                     backgroundColor: const Color(0xFF376AED),
                   ),
-                  child: const Text(
-                    'LOGIN',
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontFamily: 'Urbanist-Bold',
-                      fontSize: 16,
-                    ),
-                  ),
+                  child: _isLoading
+                      ? const CircularProgressIndicator(
+                          color: Colors.white,
+                        ) // Show a CircularProgressIndicator if login is in progress
+                      : const Text(
+                          'LOGIN',
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontFamily: 'Urbanist-Bold',
+                            fontSize: 16,
+                          ),
+                        ),
                 ),
               ),
             ),

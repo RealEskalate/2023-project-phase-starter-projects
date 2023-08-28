@@ -15,7 +15,7 @@ class CustomizedCard extends StatefulWidget {
 class _CustomizedCardState extends State<CustomizedCard> {
   @override
   Widget build(BuildContext context) {
-    String tag = "Other";
+    String tag = "Other"; // If tags are null
     String formattedDate = DateFormat("MMM d, y")
         .format(DateTime.parse(widget.article.createdAt!));
 
@@ -131,7 +131,8 @@ class _CustomizedCardState extends State<CustomizedCard> {
                               //widget.article.title!.toUpperCase()  ,
 
                               maxLines: 3,
-                              style: TextStyle(fontSize: 17),
+                              style: const TextStyle(
+                                  fontSize: 17, fontFamily: "Urbanist-Regular"),
                             ),
                             Container(height: 3),
                             Row(

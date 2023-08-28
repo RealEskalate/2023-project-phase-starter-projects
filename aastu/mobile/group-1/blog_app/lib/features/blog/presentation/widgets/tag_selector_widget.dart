@@ -1,3 +1,4 @@
+import 'package:blog_app/features/blog/domain/entities/article.dart';
 import 'package:blog_app/features/blog/presentation/blocs/bloc.dart';
 import 'package:blog_app/features/blog/presentation/blocs/bloc_event.dart';
 import 'package:blog_app/features/blog/presentation/blocs/bloc_state.dart';
@@ -7,14 +8,16 @@ import 'package:blog_app/features/onboarding/widgets/loading_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-class All extends StatefulWidget {
-  const All({super.key});
+class TagSelector extends StatefulWidget {
+  final String tag;
+
+  const TagSelector({super.key, required this.tag});
 
   @override
-  State<All> createState() => _AllState();
+  State<TagSelector> createState() => _TagSelectorState();
 }
 
-class _AllState extends State<All> {
+class _TagSelectorState extends State<TagSelector> {
   @override
   void initState() {
     super.initState();
@@ -41,14 +44,29 @@ class _AllState extends State<All> {
             context.read<BlogBloc>().add(const GetAllArticlesEvent());
             return loadingDialog(context);
           } else if (state is LoadedGetBlogState) {
-            return ListView.builder(
-              itemCount: state.articles.length,
-              itemBuilder: (context, index) {
-                return CustomizedCard(
-                  article: state.articles[index],
-                );
-              },
-            );
+            List<Article> sportArticles = state.articles;
+            if (widget.tag.toLowerCase() != "all") {
+              sportArticles = state.articles
+                  .where((article) =>
+                      article.tags != null &&
+                      article.tags!.contains(widget.tag.toLowerCase()))
+                  .toList();
+            }
+
+            if (sportArticles.isEmpty) {
+              return const Center(
+                child: Text('No articles'),
+              );
+            } else {
+              return ListView.builder(
+                itemCount: sportArticles.length,
+                itemBuilder: (context, index) {
+                  return CustomizedCard(
+                    article: sportArticles[index],
+                  );
+                },
+              );
+            }
           } else {
             return const Center(
               child: Text('No articles'),

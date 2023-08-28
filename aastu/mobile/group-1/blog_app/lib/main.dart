@@ -1,3 +1,4 @@
+import 'package:blog_app/features/blog/domain/usecases/get_tags.dart';
 import 'package:blog_app/features/blog/presentation/screen/viewBlog.dart';
 import 'package:blog_app/features/user/presentation/blocs/bloc.dart';
 import 'package:flutter/material.dart';
@@ -67,6 +68,7 @@ class MyApp extends StatelessWidget {
                 create: (context) => BlogBloc(
                   getAllArticle: sl<GetArticleUseCase>(),
                   getSingleArticle: sl<GetSingleArticleUseCase>(),
+                  getTags: sl<GetTagsUseCase>(),
                 ),
               ),
               // Other BlocProviders if needed

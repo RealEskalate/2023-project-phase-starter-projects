@@ -1,14 +1,11 @@
-import 'package:blog_app/features/user/presentation/blocs/get_user.dart/user_event.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-
-import '../blocs/bloc.dart';
+import 'package:blog_app/features/user/domain/entities/user.dart' as UserEntity;
 
 class Aboutme extends StatefulWidget {
   final Function(String) onActivitySelected;
-
-  const Aboutme({required this.onActivitySelected});
+  final UserEntity.User user;
+  const Aboutme(
+      {super.key, required this.onActivitySelected, required this.user});
 
   @override
   State<Aboutme> createState() => _AboutmeState();
@@ -67,7 +64,9 @@ class _AboutmeState extends State<Aboutme> {
 
   @override
   Widget build(BuildContext context) {
-    Widget buildCustomMetricRow(String value, String title, int isSelected) {
+    double screenWidth = MediaQuery.of(context).size.width;
+    double screenHeight = MediaQuery.of(context).size.height;
+    Widget buildCustomMetricRow(String title, String value, int isSelected) {
       return GestureDetector(
         onTap: () {
           setState(() {
@@ -79,29 +78,19 @@ class _AboutmeState extends State<Aboutme> {
           widget.onActivitySelected(title);
         },
         child: Container(
-          width: 80,
-          height: 80, // Adjust the height as needed
+          width: screenWidth * 0.2,
+          height: screenWidth * 0.2, // Adjust the height as needed
           decoration: BoxDecoration(
             color: isSelected == selectedIndex
                 ? const Color.fromARGB(255, 8, 85, 148)
                 : const Color.fromARGB(255, 33, 150, 243),
-            borderRadius:
-                isSelected == selectedIndex ? BorderRadius.circular(16) : null,
+            borderRadius: BorderRadius.circular(16),
           ),
           child: Center(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                Text(
-                  title,
-                  style: const TextStyle(
-                    color: Colors.white,
-                    fontWeight: FontWeight.w400,
-                    fontFamily: 'Urbanist',
-                  ),
-                ),
-                const SizedBox(height: 8),
                 Text(
                   value,
                   style: const TextStyle(
@@ -110,6 +99,15 @@ class _AboutmeState extends State<Aboutme> {
                     fontFamily: 'Urbanist',
                   ),
                 ),
+                const SizedBox(height: 8),
+                Text(
+                  title,
+                  style: const TextStyle(
+                      color: Colors.white,
+                      fontWeight: FontWeight.w400,
+                      fontFamily: 'Urbanist',
+                      fontSize: 12),
+                ),
               ],
             ),
           ),
@@ -117,211 +115,198 @@ class _AboutmeState extends State<Aboutme> {
       );
     }
 
-    return Container(
-      width: 295,
-      height: 318,
-      decoration: ShapeDecoration(
-        color: const Color.fromARGB(255, 255, 255, 255),
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(16),
-        ),
-        // shadows: [
-        //   BoxShadow(
-        //     color: Color(0x0F5182FF),
-        //     blurRadius: 15,
-        //     offset: Offset(0, 10),
-        //     spreadRadius: 0,
-        //   ),
-        // ],
-      ),
-      child: Stack(alignment: Alignment.bottomCenter, children: [
-        Column(
+    return Center(
+      child: SizedBox(
+        // width: screenWidth * 0.8,
+        height: screenHeight * 0.4,
+        // color: Colors.red,
+        child: Stack(
+          alignment: Alignment.topCenter,
           children: [
-            Column(
-              children: [
-                Container(
-                  color: const Color.fromARGB(255, 255, 255, 255),
-                  width: double.infinity,
-                  height: 120,
-                  padding: const EdgeInsets.all(16),
-                  child: Row(
-                    children: [
-                      Container(
-                        width: 84,
-                        height: 84,
-                        decoration: ShapeDecoration(
-                          shape: RoundedRectangleBorder(
-                            side: const BorderSide(
-                                width: 1, color: Color(0xFF376AED)),
-                            borderRadius: BorderRadius.circular(35),
-                          ),
-                        ),
-                        child: Padding(
-                          padding: const EdgeInsets.all(10.0),
-                          child: Container(
-                            width: 67,
-                            height: 67,
+            Container(
+              width: screenWidth * 0.85,
+              height: screenHeight * 0.37,
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(25),
+                boxShadow: const [
+                  BoxShadow(
+                    color: Color.fromRGBO(149, 157, 165, 0.2),
+                    offset: Offset(0, 8),
+                    blurRadius: 24,
+                  ),
+                ],
+              ),
+              child: Container(
+                padding: const EdgeInsets.all(10),
+                child: Column(
+                  children: [
+                    Container(
+                      width: double.infinity,
+                      height: 120,
+                      padding: const EdgeInsets.all(16),
+                      child: Row(
+                        children: [
+                          Container(
+                            width: 0.23 *
+                                screenWidth, // Adjust the width based on screen width
+                            height: 0.3 * screenHeight,
                             decoration: ShapeDecoration(
                               shape: RoundedRectangleBorder(
                                 side: const BorderSide(
                                     width: 1, color: Color(0xFF376AED)),
-                                borderRadius: BorderRadius.circular(22),
-                              ),
-                              image: const DecorationImage(
-                                image: AssetImage("assets/images/profile.png"),
-                                fit: BoxFit.fill,
+                                borderRadius: BorderRadius.circular(35),
                               ),
                             ),
-                          ),
-                        ),
-                      ),
-                      const SizedBox(width: 16),
-                      const Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Text(
-                            '@joviedan',
-                            style: TextStyle(
-                              color: Color(0xFF2D4379),
-                              fontSize: 14,
-                              fontFamily: 'Poppins',
-                              fontWeight: FontWeight.w900,
-                              letterSpacing: -0.24,
+                            child: Padding(
+                              padding: const EdgeInsets.all(10.0),
+                              child: Container(
+                                width: 0.1 *
+                                    screenWidth, // Adjust the width based on screen width
+                                height: 0.2 * screenHeight,
+                                decoration: ShapeDecoration(
+                                  shape: RoundedRectangleBorder(
+                                    side: const BorderSide(
+                                        width: 1, color: Color(0xFF376AED)),
+                                    borderRadius: BorderRadius.circular(22),
+                                  ),
+                                  image: const DecorationImage(
+                                    image:
+                                        AssetImage("assets/images/profile.png"),
+                                    fit: BoxFit.fill,
+                                  ),
+                                ),
+                              ),
                             ),
                           ),
-                          SizedBox(height: 6),
-                          Text(
-                            'Jovi Daniel',
-                            style: TextStyle(
-                              color: Color(0xFF0D253C),
-                              fontSize: 18,
-                              fontStyle: FontStyle.italic,
-                              fontFamily: 'Urbanist',
-                              fontWeight: FontWeight.w100,
-                            ),
-                          ),
-                          SizedBox(height: 6),
-                          Text(
-                            'UX Designer',
-                            style: TextStyle(
-                              color: Color(0xFF376AED),
-                              fontSize: 16,
-                              fontStyle: FontStyle.italic,
-                              fontFamily: 'Urbanist',
-                              fontWeight: FontWeight.w100,
-                            ),
+                          const SizedBox(width: 16),
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Text(
+                                "@${widget.user.fullName}",
+                                style: const TextStyle(
+                                  color: Color(0xFF2D4379),
+                                  fontSize: 14,
+                                  fontFamily: 'Poppins',
+                                  fontWeight: FontWeight.w900,
+                                  letterSpacing: -0.24,
+                                ),
+                              ),
+                              const SizedBox(height: 6),
+                              Text(
+                                "${widget.user.fullName}",
+                                style: const TextStyle(
+                                  color: Color(0xFF0D253C),
+                                  fontSize: 18,
+                                  fontStyle: FontStyle.italic,
+                                  fontFamily: 'Urbanist',
+                                  fontWeight: FontWeight.w100,
+                                ),
+                              ),
+                              const SizedBox(height: 6),
+                              const Text(
+                                'UX Designer',
+                                style: TextStyle(
+                                  color: Color(0xFF376AED),
+                                  fontSize: 16,
+                                  fontStyle: FontStyle.italic,
+                                  fontFamily: 'Urbanist',
+                                  fontWeight: FontWeight.w100,
+                                ),
+                              ),
+                            ],
                           ),
                         ],
                       ),
-                    ],
-                  ),
-                ),
-                Container(
-                  child: const Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Padding(
-                        padding:
-                            EdgeInsets.symmetric(vertical: 8, horizontal: 16),
-                        child: Text(
-                          'About me',
-                          style: TextStyle(
-                            color: Color(0xFF0D253C),
-                            fontSize: 16,
-                            fontStyle: FontStyle.italic,
-                            fontFamily: 'Urbanist',
-                            fontWeight: FontWeight.w100,
+                    ),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        const Padding(
+                          padding:
+                              EdgeInsets.symmetric(vertical: 8, horizontal: 16),
+                          child: Text(
+                            'About me',
+                            style: TextStyle(
+                              color: Color(0xFF0D253C),
+                              fontSize: 17,
+                              fontStyle: FontStyle.italic,
+                              fontFamily: 'Urbanist',
+                              fontWeight: FontWeight.w100,
+                            ),
                           ),
                         ),
-                      ),
-                      Padding(
-                        padding:
-                            EdgeInsets.symmetric(vertical: 8, horizontal: 16),
-                        child: Text(
-                          'Madison Blackstone is a director of user experience design, with experience managing global teams.',
-                          style: TextStyle(
-                            color: Color(0xFF2D4379),
-                            fontSize: 14,
-                            fontStyle: FontStyle.italic,
-                            fontFamily: 'Urbanist',
-                            fontWeight: FontWeight.w100,
-                            height: 1.43,
+                        Padding(
+                          padding: const EdgeInsets.symmetric(
+                              vertical: 8, horizontal: 16),
+                          child: Text(
+                            "${widget.user.bio}",
+                            style: const TextStyle(
+                              color: Color(0xFF2D4379),
+                              fontSize: 15,
+                              fontStyle: FontStyle.italic,
+                              fontFamily: 'Urbanist',
+                              fontWeight: FontWeight.w100,
+                              height: 1.43,
+                            ),
                           ),
                         ),
-                      ),
-                    ],
-                  ),
-                ),
-              ],
-            ),
-            Container(
-              // width: 230,
-              decoration: BoxDecoration(
-                color: const Color.fromARGB(255, 33, 150, 243),
-                borderRadius: BorderRadius.circular(16),
-              ),
-              child: Expanded(
-                child: Row(
-                  children: [
-                    Expanded(
-                      child: buildCustomMetricRow(
-                        '4.5K',
-                        "Posts",
-                        1,
-                      ),
-                    ),
-                    Expanded(
-                      child: buildCustomMetricRow(
-                        '4.5K',
-                        "Following",
-                        2,
-                      ),
-                    ),
-                    Expanded(
-                      child: buildCustomMetricRow(
-                        '4.5K',
-                        "Follower",
-                        3,
-                      ),
+                      ],
                     ),
                   ],
                 ),
               ),
             ),
-
-            // Expanded(
-            //   child: Stack(
-            //     children: [
-            //       const SizedBox(height: 20),
-            //       Center(
-            //         child: Align(
-            //           alignment: Alignment.bottomCenter,
-            //           child: FractionallySizedBox(
-            //             heightFactor: 0.8,
-            //             child: Padding(
-            //               padding: const EdgeInsets.symmetric(
-            //                   vertical: 2, horizontal: 16),
-            //               child: Container(
-            //                 height: 120,
-            //                 decoration: ShapeDecoration(
-            //                   color: const Color.fromARGB(255, 33, 150, 243),
-            //                   shape: RoundedRectangleBorder(
-            //                     borderRadius: BorderRadius.circular(20),
-            //                   ),
-            //                 ),
-            //               ),
-            //             ),
-            //           ),
-            //         ),
-            //       ),
-            //     ],
-            //   ),
-            // ),
-            // SizedBox(height: 20),
+            Positioned(
+              bottom: 0,
+              child: Container(
+                width: screenWidth * 0.6, // Adjust the width
+                height: screenHeight * 0.08,
+                decoration: BoxDecoration(
+                  color: const Color.fromARGB(255, 33, 150, 243),
+                  borderRadius: BorderRadius.circular(20),
+                  boxShadow: const [
+                    BoxShadow(
+                      color: Color.fromRGBO(149, 157, 165, 0.2),
+                      offset: Offset(0, 8),
+                      blurRadius: 24,
+                    ),
+                  ],
+                ),
+                child: Container(
+                  child: Row(
+                    children: [
+                      Expanded(
+                        child: buildCustomMetricRow(
+                          "Posts",
+                          '4.5K',
+                          1,
+                        ),
+                      ),
+                      Expanded(
+                        child: buildCustomMetricRow(
+                          "Following",
+                          '4.5K',
+                          2,
+                        ),
+                      ),
+                      Expanded(
+                        child: buildCustomMetricRow(
+                          "Follower",
+                          '4.5K',
+                          3,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ),
           ],
         ),
-      ]),
+      ),
     );
   }
 }

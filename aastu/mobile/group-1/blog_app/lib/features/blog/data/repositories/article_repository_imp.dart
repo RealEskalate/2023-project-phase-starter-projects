@@ -25,6 +25,17 @@ class ArticleRepositoryImpl implements ArticleRepository {
   }
 
   @override
+  Future<Either<Failure, List<String>>> getTags() async {
+    try {
+      final tags = await remoteDataSource.getTags();
+      return Right(tags);
+    } catch (e) {
+      log("Error fetching tags: $e");
+      return const Left(ServerFailure('Error fetching tags'));
+    }
+  }
+
+  @override
   Future<Either<Failure, List<Article>>> searchArticle(
       String tag, String key) async {
     try {
@@ -57,12 +68,6 @@ class ArticleRepositoryImpl implements ArticleRepository {
   @override
   Future<Either<Failure, Article>> getSingleArticle(String articleId) {
     // TODO: implement getSingleArticle
-    throw UnimplementedError();
-  }
-
-  @override
-  Future<List<String>> getTags() {
-    // TODO: implement getTags
     throw UnimplementedError();
   }
 

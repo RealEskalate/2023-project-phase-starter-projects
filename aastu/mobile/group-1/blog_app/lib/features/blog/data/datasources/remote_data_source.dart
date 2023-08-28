@@ -37,6 +37,31 @@ class RemoteDataSource implements BlogRemoteDataSource {
     }
   }
 
+  Future<dynamic> _fetchTags(String endpoint) async {
+    log("fetching: $baseUrl/$endpoint");
+    try {
+      final response = await http.get(
+        Uri.parse('$baseUrl/$endpoint'),
+        headers: {'Content-Type': 'application/json'},
+      );
+
+      final responseData = json.decode(response.body);
+
+      if (response.statusCode == 200 && responseData['success'] == true) {
+        ////  log("fetched: $responseData");
+        return responseData['tags'];
+      } else {
+        log("error: $responseData");
+        final errorMessage =
+            responseData['message'] as String? ?? 'Unknown error';
+        throw Exception(errorMessage);
+      }
+    } catch (e) {
+      log("error:: $e");
+      throw Exception('An error occurred: $e');
+    }
+  }
+
   @override
   Future<List<Article>> getAllBlog() async {
     final responseData = await _fetchData('article');
@@ -50,6 +75,25 @@ class RemoteDataSource implements BlogRemoteDataSource {
       return articles;
     } catch (e) {
       log("Error fetching articles: $e");
+      throw Exception('An error occurred: $e');
+    }
+  }
+
+  @override
+  Future<List<String>> getTags() async {
+    final responseData = await _fetchTags('tags');
+
+    List<String> tags = [];
+    try {
+      for (var tagData in responseData) {
+        //      log(blogData.toString());
+        tags.add(tagData);
+      }
+      log("tags: $responseData");
+
+      return tags;
+    } catch (e) {
+      log("Error fetching tags: $e");
       throw Exception('An error occurred: $e');
     }
   }
