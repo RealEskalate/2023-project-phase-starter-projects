@@ -49,7 +49,7 @@ class _LoginSignUpPageState extends State<LoginSignUpPage> {
               ),
               child: Image(
                 image: const AssetImage(
-                  "assets/a2sv.png",
+                  "assets/images/a2sv.png",
                 ),
                 width: 141.w,
                 height: 54.h,
