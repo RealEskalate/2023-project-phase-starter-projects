@@ -27,11 +27,11 @@ namespace Persistence.Repositories
             return result;
         }
 
-        public async Task<List<PostResponseDTO>> GetAllPostsWithReaction(Expression<Func<Post, bool>> predicate, int userId)
+        public async Task<List<PostResponseDTO>> GetAllPostsWithReaction(int userId)
         {
             var allPosts = await _dbContext.Posts
+                    .Where(x => x.UserId == userId)
                     .Include(x => x.PostReactions)
-                    .Where(predicate)
                     .ToListAsync();
 
             var result = new List<PostResponseDTO> ();
@@ -52,5 +52,6 @@ namespace Persistence.Repositories
             var result = await _dbContext.Posts.FindAsync(id);
             return result != null;
         }
+
     }
 }

@@ -20,12 +20,10 @@ namespace Application.Features.PostFeature.Handlers.Commands
     {
         private readonly IPostRepository _postRepository;
         private readonly IMapper _mapper;
-        private readonly IMediator _mediator;
-        public UpdatePostHandler(IPostRepository postRepository, IMapper mapper, IMediator mediator)
+        public UpdatePostHandler(IPostRepository postRepository, IMapper mapper)
         {
             _postRepository = postRepository;
             _mapper = mapper;
-            _mediator = mediator;
         }
 
         public async Task<BaseResponse<BaseResponse<PostResponseDTO>>> Handle(UpdatePostCommand request, CancellationToken cancellationToken)
@@ -70,15 +68,15 @@ namespace Application.Features.PostFeature.Handlers.Commands
             await _mediator.Send(new CreateNotification { NotificationData = notificationData });
 
             // notification
-            var notificationData = new NotificationCreateDTO
-            {
-                Content = $"The Post with id {request.userId} is updated",
-                NotificationContentId = result.Id,
-                NotificationType = "post",
-                UserId = request.userId,
-            };
+            // var notificationData = new NotificationCreateDTO
+            // {
+            //     Content = $"The Post with id {request.userId} is updated",
+            //     NotificationContentId = result.Id,
+            //     NotificationType = "post",
+            //     UserId = request.userId,
+            // };
 
-            await _mediator.Send(new CreateNotification { NotificationData = notificationData });
+            // await _mediator.Send(new CreateNotification { NotificationData = notificationData });
 
             return new BaseResponse<PostResponseDTO> {
                 Success = true,
