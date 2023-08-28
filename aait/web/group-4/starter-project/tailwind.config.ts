@@ -19,6 +19,9 @@ const config: Config = {
         'poppins': ['Poppins', 'sans-serif'],
         'inter': ['Inter', 'sans-serif'],
         'fira-code': ['Fira Code', 'monospace'],
+      },
+      screens:{
+        'tablet': '1013px'
       }
     },
   },

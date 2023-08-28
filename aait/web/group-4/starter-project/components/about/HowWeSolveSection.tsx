@@ -2,7 +2,7 @@ import Image from "next/image"
 
 export const HowWeSolveSection = () => {
   return (
-    <div className="lg:w-1446px lg:h-[558px] rounded-md flex flex-col p-4 gap-12 items-center lg:flex-row lg:gap-32 md:flex-col">
+    <div className="lg:w-1446px lg:h-[558px] rounded-md flex flex-col sm:flex-col p-4 gap-12 items-center lg:flex-row lg:gap-32 md:flex-col">
             <div className="lg:w-1/2 lg:[h-558px]">
                 <Image src={"/images/about/amico-puzzle.svg"} width={500} height={400} alt="how we solve puzzle "/>
             </div>

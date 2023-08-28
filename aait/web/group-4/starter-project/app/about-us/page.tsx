@@ -8,7 +8,7 @@ import SocialProjectsSections from "@/components/about//SocialProjectsSections"
 
 export default function About(){
   return (
-    <div className="min-h-full px-5 lg:px-10 m-5 lg:m-10 flex flex-col items-center gap-12 lg:gap-24 max-w-screen">
+    <div className="min-h-full max-w-screen px-5  lg:px-10 m-5 lg:m-10 flex flex-col items-center gap-8 lg:gap-24 tablet:flex-col">
         <AboutSection/>
         <ProblemsSection/>
         <HowWeSolveSection/>
