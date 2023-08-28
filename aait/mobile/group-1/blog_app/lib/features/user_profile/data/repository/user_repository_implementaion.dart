@@ -1,5 +1,4 @@
 import 'package:blog_app/core/errors/failures/failure.dart';
-import 'package:blog_app/core/errors/failures/server_failure.dart';
 import 'package:blog_app/features/user_profile/data/datasources/profile_local_data_source.dart';
 import 'package:blog_app/features/user_profile/data/datasources/proile_remote_data_source.dart';
 import 'package:blog_app/features/user_profile/domain/entities/user_entity.dart';
@@ -27,7 +26,7 @@ class UserRepositoryImpl extends UserRepository {
         return Right(user);
       } catch (e) {
         print("error occured $e");
-        return Left(ServerFailure(e.toString()));
+        return Left(ServerFailure(message:e.toString()));
       }
     } else {
       try {
@@ -35,7 +34,7 @@ class UserRepositoryImpl extends UserRepository {
         return Right(user);
       } catch (e) {
         print("error occured $e");
-        return Left(ServerFailure(e.toString()));
+        return Left(ServerFailure(message:e.toString()));
       }
     }
   }
@@ -47,7 +46,7 @@ class UserRepositoryImpl extends UserRepository {
       return Right(user);
     } catch (e) {
       print("error occured $e");
-      return Left(ServerFailure(e.toString()));
+      return Left(ServerFailure(message:e.toString()));
     }
   }
 }
