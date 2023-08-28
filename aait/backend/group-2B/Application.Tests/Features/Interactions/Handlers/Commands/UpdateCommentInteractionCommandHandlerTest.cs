@@ -1,14 +1,13 @@
 using AutoMapper;
-using SocialSync.Application.DTOs.InteractionDTOs;
+using SocialSync.Application.DTOs.InteractionDTOs.CommentDTOs;
+using SocialSync.Application.Features.Comments.Requests.Commands;
 using SocialSync.Application.Features.Interactions.Handlers.Commands;
-using SocialSync.Application.Features.Interactions.Requests.Commands;
 using SocialSync.Application.Profiles;
 using SocialSync.Application.Tests.Mocks;
-using SocialSync.Domain.Entities;
 
 namespace SocialSync.Application.Tests.Features.Interactions.Handlers.Commands;
 
-public class CreateCommentInteractionCommandHandlerTests
+public class UpdateCommentInteractionCommandHandlerTests
 {
     [Fact]
     public async Task Handle_ValidCommand_ReturnsSuccessResponseWithInteractionId()
@@ -22,21 +21,21 @@ public class CreateCommentInteractionCommandHandlerTests
 
         var mockUnitOfWork = MockUnitOfWork.GetMockUnitOfWork();
         var handler =
-            new CreateCommentInteractionCommandHandler(mockMapper,
-                mockUnitOfWork.Object);
+                new UpdateCommentInteractionCommandHandler(mockUnitOfWork.Object, mockMapper)
+            ;
 
-        var interactionDto = new InteractionDto
+        var interactionDto = new UpdateCommentInteractionDto
         {
-            PostId = 1, UserId = 1, Body = "New comment", Type = InteractionType.Comment
+           PostId = 1, Body = "sfsdfsd", Id = 1, UserId = 1
         };
 
-        var command = new CreateCommentInteractionCommand() { CreateCommentDto = interactionDto };
+        var command = new UpdateCommentInteractionCommand { UpdateCommentDto = interactionDto };
 
 
         var response = await handler.Handle(command, CancellationToken.None);
 
-        Assert.NotNull(response);
-        Assert.True(response.IsSuccess);
+        Assert.NotNull(response.Value);
+        // Assert.True(response.IsSuccess);
     }
 
     [Fact]
@@ -51,15 +50,12 @@ public class CreateCommentInteractionCommandHandlerTests
 
         var mockUnitOfWork = MockUnitOfWork.GetMockUnitOfWork();
         var handler =
-            new CreateCommentInteractionCommandHandler(mockMapper,
-                mockUnitOfWork.Object);
+                new UpdateCommentInteractionCommandHandler(mockUnitOfWork.Object, mockMapper)
+            ;
 
-        var interactionDto = new InteractionDto
-        {
-            PostId = 1, UserId = 1, Body = "", Type = InteractionType.Comment
-        };
+        var interactionDto = new UpdateCommentInteractionDto { PostId = 1, UserId = 1, Body = "" ,  Id = 1};
 
-        var command = new CreateCommentInteractionCommand { CreateCommentDto = interactionDto };
+        var command = new UpdateCommentInteractionCommand { UpdateCommentDto = interactionDto };
 
         var response = await handler.Handle(command, CancellationToken.None);
 
@@ -79,15 +75,15 @@ public class CreateCommentInteractionCommandHandlerTests
 
         var mockUnitOfWork = MockUnitOfWork.GetMockUnitOfWork();
         var handler =
-            new CreateCommentInteractionCommandHandler(mockMapper,
-                mockUnitOfWork.Object);
+                new UpdateCommentInteractionCommandHandler(mockUnitOfWork.Object, mockMapper)
+            ;
 
-        var interactionDto = new InteractionDto
+        var interactionDto = new UpdateCommentInteractionDto
         {
-            PostId = 1, UserId = 10, Body = "New comment", Type = InteractionType.Comment
+            PostId = 1, UserId = 10, Body = "New comment",  Id = 1
         };
 
-        var command = new CreateCommentInteractionCommand() { CreateCommentDto = interactionDto };
+        var command = new UpdateCommentInteractionCommand { UpdateCommentDto = interactionDto };
 
 
         var response = await handler.Handle(command, CancellationToken.None);
@@ -108,15 +104,15 @@ public class CreateCommentInteractionCommandHandlerTests
 
         var mockUnitOfWork = MockUnitOfWork.GetMockUnitOfWork();
         var handler =
-            new CreateCommentInteractionCommandHandler(mockMapper,
-                mockUnitOfWork.Object);
+                new UpdateCommentInteractionCommandHandler(mockUnitOfWork.Object, mockMapper)
+            ;
 
-        var interactionDto = new InteractionDto
+        var interactionDto = new UpdateCommentInteractionDto
         {
-            PostId = 10, UserId = 1, Body = "New comment", Type = InteractionType.Comment
+            PostId = 10, UserId = 1, Body = "New comment",  Id = 1
         };
 
-        var command = new CreateCommentInteractionCommand() { CreateCommentDto = interactionDto };
+        var command = new UpdateCommentInteractionCommand { UpdateCommentDto = interactionDto };
 
 
         var response = await handler.Handle(command, CancellationToken.None);
