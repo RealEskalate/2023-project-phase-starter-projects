@@ -1,16 +1,17 @@
-import 'package:blog_app/core/errors/failures/exception.dart';
-import 'package:blog_app/core/errors/failures/failure.dart';
-import 'package:blog_app/core/network/network_info.dart';
-import 'package:blog_app/features/authentication_and_authorization/data/data_source/auth_local_data_source.dart';
-import 'package:blog_app/features/authentication_and_authorization/data/data_source/auth_remote_data_source.dart';
-import 'package:blog_app/features/authentication_and_authorization/data/models/login_user_model.dart';
-import 'package:blog_app/features/authentication_and_authorization/data/models/sign_up_user_model.dart';
-import 'package:blog_app/features/authentication_and_authorization/domain/entities/login_user_entitiy.dart';
-import 'package:blog_app/features/authentication_and_authorization/domain/entities/sign_up_user_entity.dart';
-import 'package:blog_app/features/authentication_and_authorization/domain/entities/user_data_entity.dart';
-import 'package:blog_app/features/authentication_and_authorization/domain/repositories/auth_repository.dart';
 import 'package:dartz/dartz.dart';
 
+import '../../../../core/errors/failures/exception.dart';
+import '../../../../core/errors/failures/failure.dart';
+import '../../../../core/network/network_info.dart';
+import '../../domain/entities/login_user_entitiy.dart';
+import '../../domain/entities/sign_up_user_entity.dart';
+import '../../domain/entities/user_data_entity.dart';
+import '../../domain/repositories/auth_repository.dart';
+import '../data_source/auth_local_data_source.dart';
+import '../data_source/auth_remote_data_source.dart';
+import '../models/login_user_model.dart';
+import '../models/sign_up_user_model.dart';
+import '../models/user_data_model.dart';
 
 class AuthRepositoryImpl extends AuthRepository {
   final AuthRemoteDataSource authRemoteDataSource;
@@ -22,17 +23,18 @@ class AuthRepositoryImpl extends AuthRepository {
       required this.networkInfo});
 
   @override
-  Future<Either<Failure, UserDataEntity>> signup(
+  Future<Either<Failure, SignUpUserEnity>> signup(
       SignUpUserEnity signUpUserEnity) async {
     if (await networkInfo.isConnected) {
       try {
         SignUpModel newUserModel = SignUpModel(
-            fullName: signUpUserEnity.fullName,
-            email: signUpUserEnity.email,
-            password: signUpUserEnity.password,
-            expertise: signUpUserEnity.expertise,
-            bio: signUpUserEnity.bio,
-          );
+          fullName: signUpUserEnity.fullName,
+          email: signUpUserEnity.email,
+          password: signUpUserEnity.password,
+          expertise: signUpUserEnity.expertise,
+          bio: signUpUserEnity.bio,
+        );
+
         final remoteSignup = await authRemoteDataSource.signup(newUserModel);
 
         return Right(remoteSignup);
@@ -45,27 +47,36 @@ class AuthRepositoryImpl extends AuthRepository {
   }
 
   @override
-  Future<Either<Failure, UserDataEntity>> login(LoginUserEnity loginUserEnity) async{
+  Future<Either<Failure, UserDataEntity>> login(
+      LoginUserEnity loginUserEnity) async {
+    if (await networkInfo.isConnected) {
+      try {
+        LoginUserModel loginUserModel = LoginUserModel(
+            email: loginUserEnity.email, password: loginUserEnity.password);
+        final remotelogin = await authRemoteDataSource.login(loginUserModel);
+        authLocalDataSource.cacheToken(remotelogin.token);
+        print("shared token");
+        print(await authLocalDataSource.getToken());
+        print("shared user");
+        print(await authLocalDataSource.getUser());
 
-    if(await networkInfo.isConnected){
+        authLocalDataSource.setUser(DataModel(
+            id: remotelogin.data.id,
+            fullName: remotelogin.data.fullName,
+            email: remotelogin.data.email,
+            password: remotelogin.data.password,
+            expertise: remotelogin.data.expertise,
+            bio: remotelogin.data.bio,
+            createdAt: remotelogin.data.createdAt,
+            image: remotelogin.data.image,
+            imageCloudinaryPublicId: remotelogin.data.imageCloudinaryPublicId));
 
-      try{
-        LoginUserModel loginUserModel=LoginUserModel(
-          email: loginUserEnity.email, 
-          password: loginUserEnity.password);
-      final remotelogin=await authRemoteDataSource.login(loginUserModel);
-
-      return Right(remotelogin);
-
-      }on ServerException catch (e) {
-        
+        return Right(remotelogin);
+      } on ServerException catch (e) {
         return Left(ServerFailure(message: "Server Error"));
       }
     } else {
       return Left(ConnectionFailure(message: "No Internet Connection"));
     }
-      
-    }
-
   }
-
+}

@@ -1,14 +1,15 @@
-import 'package:blog_app/core/errors/failures/failure.dart';
-import 'package:blog_app/features/authentication_and_authorization/domain/entities/login_user_entitiy.dart';
-import 'package:blog_app/features/authentication_and_authorization/domain/entities/user_data_entity.dart';
-import 'package:blog_app/features/authentication_and_authorization/domain/repositories/auth_repository.dart';
-import 'package:blog_app/features/authentication_and_authorization/domain/usecases/user_use_case.dart';
 import 'package:dartz/dartz.dart';
 
+import '../../../../core/errors/failures/failure.dart';
+import '../entities/login_user_entitiy.dart';
+import '../entities/user_data_entity.dart';
+import '../repositories/auth_repository.dart';
+import 'user_use_case.dart';
 
-class Login_UseCase implements UseCase<UserDataEntity, LoginUserEnity> {
+
+class LoginUseCase implements UseCase<UserDataEntity, LoginUserEnity> {
   final AuthRepository repository;
-  Login_UseCase({required this.repository});
+  LoginUseCase({required this.repository});
 
   @override
   Future<Either<Failure, UserDataEntity>> call(
