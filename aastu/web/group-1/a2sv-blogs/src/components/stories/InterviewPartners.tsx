@@ -7,7 +7,7 @@ export default function InterviewPartners() {
       <div className=" w-[65%] mb-20">
         {/* title for partner */}
         <div className="flex justify-center">
-          <h1 className="text-4xl text-center h-10 leading-10 text-text-header-1 font-medium font-DmSans mb-5">
+          <h1 className="text-2xl lg:text-4xl text-center h-10 leading-10 text-text-header-1 font-medium font-DmSans mb-5">
             Current Interview Partners
           </h1>
         </div>
@@ -15,7 +15,7 @@ export default function InterviewPartners() {
         <div className=" mt-5 mx-5 flex flex-col">
           {/* the TOP 4 partner */}
           <div className="flex justify-between gap-5">
-            <div className="w-48 h-24  ">
+            <div className="flex-auto w-48 h-24">
               <svg
                 className="w-full h-full flex-shrink-0"
                 viewBox="0 0 250 62"
