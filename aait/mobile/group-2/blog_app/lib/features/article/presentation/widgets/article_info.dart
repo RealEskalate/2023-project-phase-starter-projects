@@ -19,9 +19,10 @@ class ArticleInfo extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Expanded(
-          child: SizedBox(
-            width: 180.w,
+        SizedBox(
+          width: 10.w,
+          child: Expanded(
+            // child:
             // child:
             child: Text(
               article.title.toUpperCase(),
@@ -38,7 +39,7 @@ class ArticleInfo extends StatelessWidget {
         TagDisplay(article: article),
         SizedBox(height: 10.h),
         SizedBox(
-          width: 170.w,
+          width: 160.w,
           child: Text(
             'by ${article.author}',
             style: const TextStyle(fontSize: 15.0),

@@ -28,7 +28,7 @@ class ArticleCard extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             ArticlePhoto(article: article),
-            const SizedBox(width: 20),
+            const SizedBox(width: 10),
             ArticleInfo(article: article),
           ],
         ),
