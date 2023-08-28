@@ -6,9 +6,17 @@ sealed class ProfileState extends Equatable {
   List<Object> get props => [];
 }
 
-final class ProfileInitial extends ProfileState {}
+final class ProfileInitial extends ProfileState {
+  final String message;
 
-final class ProfileLoading extends ProfileState {}
+  ProfileInitial({required this.message});
+}
+
+final class ProfileLoading extends ProfileState {
+  final String message;
+
+  ProfileLoading({required this.message});
+}
 
 final class ProfileLoaded extends ProfileState {
   final Profile profile;
@@ -19,7 +27,7 @@ final class ProfileLoaded extends ProfileState {
       required this.isGridView,
       required this.isBookmark});
   @override
-  List<Object> get props => [isBookmark,profile, isGridView];
+  List<Object> get props => [isBookmark, profile, isGridView];
 }
 
 final class ProfileEmpty extends ProfileState {}

@@ -8,9 +8,10 @@ import 'profile_image.dart';
 
 class ProfileContent extends StatelessWidget {
   final Profile profile;
+  final VoidCallback onChangeImage;
 
-  const ProfileContent({super.key, required this.profile});
-  
+  const ProfileContent({super.key, required this.profile, required this.onChangeImage});
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -28,7 +29,8 @@ class ProfileContent extends StatelessWidget {
                   padding:
                       EdgeInsets.symmetric(horizontal: 32.w, vertical: 32.h),
                   child: ProfileImage(
-                    imageName:profile.imageName,
+                    imageName: profile.imageName,
+                    onChangeImage: onChangeImage,
                   ),
                 ),
                 SizedBox(
@@ -36,7 +38,7 @@ class ProfileContent extends StatelessWidget {
                 ),
                 Container(
                   child: BasicInformationWidget(
-                      username:profile.username,
+                      username: profile.username,
                       fullName: profile.fullName,
                       occupation: profile.expertise),
                 ),
@@ -48,9 +50,7 @@ class ProfileContent extends StatelessWidget {
             Container(
               padding: EdgeInsets.symmetric(horizontal: 32.w),
               alignment: Alignment.centerLeft,
-              child: AboutSection(
-                  description:
-                     profile.bio),
+              child: AboutSection(description: profile.bio),
             ),
           ],
         ),

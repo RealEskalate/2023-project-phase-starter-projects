@@ -1,10 +1,11 @@
 import 'package:blog_app/core/util/image_converter.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:image_picker/image_picker.dart';
 
 class ImageSheet {
-  static void show(BuildContext context) {
-    showModalBottomSheet(
+  Future<XFile?> show(BuildContext context) async {
+    return showModalBottomSheet<XFile?>(
         context: context,
         builder: (context) {
           return Container(
@@ -22,7 +23,8 @@ class ImageSheet {
                   leading: Icon(Icons.camera_alt_outlined),
                   title: Text('Take a Photo'),
                   onTap: () async {
-                    final chosenImage = ImageConverter().pickImageFromCamera();
+                    final chosenImage =
+                        await ImageConverter().pickImageFromCamera();
                     Navigator.pop(context, chosenImage);
                   },
                 ),
@@ -30,7 +32,8 @@ class ImageSheet {
                   leading: Icon(Icons.photo_library),
                   title: Text('Choose from gallery'),
                   onTap: () async {
-                    final chosenImage = ImageConverter().pickImageFromGallery();
+                    final chosenImage =
+                        await ImageConverter().pickImageFromGallery();
                     Navigator.pop(context, chosenImage);
                   },
                 ),
