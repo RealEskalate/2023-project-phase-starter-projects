@@ -31,7 +31,7 @@ const SingleBlogCard: React.FC<Blog> = ({
     const formattedDate = `${dayOfWeek}, ${month} ${day}, ${year}`;
     return (
         <div
-            className='space-y-4 relative bg-white overflow-hidden shadow-lg rounded-md my-4 mx-3'>
+            className='space-y-4 relative bg-white overflow-hidden shadow-lg dark:shadow dark:shadow-dark-backgroundLight rounded-md my-4 mx-3 dark:bg-dark-backgroundLight'>
             <Image
                 className='w-full h-48 object-cover'
                 src={image}
@@ -39,9 +39,9 @@ const SingleBlogCard: React.FC<Blog> = ({
                 width={300}
                 height={200}
             />
-            <h3 className='font-bold text-2xl w-11/12 mx-auto'>{title}</h3>
+            <h3 className='font-bold text-2xl w-11/12 mx-auto dark:text-dark-textColor-100'>{title}</h3>
             <div
-                className='p-3 space-y-4'>
+                className='p-3 space-y-4 dark:text-dark-textColor-50'>
                 <div
                     
                     className='flex items-center space-x-4 text-sm'>
@@ -60,7 +60,7 @@ const SingleBlogCard: React.FC<Blog> = ({
                     {tags.map((tag, i) => {
                         return (
                             <p
-                                className='block m-2 rounded-full py-1 px-3 bg-gray-100'>{tag}</p>
+                                className='block m-2 rounded-full py-1 px-3 bg-gray-100 dark:bg-dark-backgroundLight dark:text-dark-textColor-50'>{tag}</p>
                         )
 
                     })}
