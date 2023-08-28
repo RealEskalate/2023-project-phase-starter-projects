@@ -23,6 +23,16 @@ public class MockInteractionRepository
             },
             new Interaction
             {
+                Id = 1,
+                PostId = 1,
+                UserId = 1,
+                Type = InteractionType.Comment,
+                Body = "this is the body",
+                CreatedAt = DateTime.Now,
+                LastModified = DateTime.Now
+            },
+            new Interaction
+            {
                 Id = 2,
                 PostId = 2,
                 UserId = 2,
