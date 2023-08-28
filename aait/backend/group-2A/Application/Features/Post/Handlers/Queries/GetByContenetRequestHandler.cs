@@ -24,7 +24,7 @@ namespace Application.Features.Post.Handlers.Queries
         {
             var posts = await _unitOfWork.postRepository.GetByContent(request.Contenet);
 
-            if (posts == null || posts.Count == 0)
+            if (posts == null)
             {
                 var notFoundException = new NotFoundException(nameof(Domain.Entities.Post), request.Contenet);
                 return BaseCommandResponse<List<PostDto>>.FailureHandler(notFoundException);

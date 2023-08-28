@@ -23,7 +23,7 @@ namespace Application.Features.Like.Handlers.Query
         {
             var likes = await _unitOfWork.likeRepository.GetLikers(request.Id);
 
-            if (likes == null || likes.Count == 0)
+            if (likes == null)
             {
                 var notFoundException = new NotFoundException(nameof(Domain.Entities.Like), request.Id);
                 return BaseCommandResponse<List<UserDto>>.FailureHandler(notFoundException);
