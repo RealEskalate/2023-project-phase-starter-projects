@@ -1,4 +1,5 @@
 import 'package:dartz/dartz.dart';
+import 'package:image_picker/image_picker.dart';
 
 import '../../../../core/error/exception.dart';
 import '../../../../core/error/failure.dart';
@@ -25,7 +26,7 @@ class ArticleRepositoryImpl implements ArticleRepository {
     required String title,
     required String subTitle,
     required String estimatedReadTime,
-    required String image,
+    required XFile image,
   }) async {
     if (await networkInfo.isConnected) {
       try {
@@ -35,7 +36,7 @@ class ArticleRepositoryImpl implements ArticleRepository {
           "subTitle": subTitle,
           "content": content,
           "estimatedReadTime": estimatedReadTime,
-          "image": image,
+          "image": image.path,
         };
 
         final article = ArticleModel.fromJson(articleMap);
@@ -137,7 +138,7 @@ class ArticleRepositoryImpl implements ArticleRepository {
       required String title,
       required String subTitle,
       required String estimatedReadTime,
-      required String image,
+      required XFile image,
       required String id,
       }) async {
     if (await networkInfo.isConnected) {
@@ -148,7 +149,7 @@ class ArticleRepositoryImpl implements ArticleRepository {
           "title": title,
           "subTitle": subTitle,
           "estimatedReadTime": estimatedReadTime,
-          "image": image,
+          "image": image.path,
           "id": id,
         };
         final article = ArticleModel.fromJson(articleMap);
