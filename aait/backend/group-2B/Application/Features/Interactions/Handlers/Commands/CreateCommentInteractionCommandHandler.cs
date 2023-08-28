@@ -33,7 +33,7 @@ public class CreateCommentInteractionCommandHandler
         var validator = new CommentDtoValidator(_unitOfWork);
 
         var validationResult = await validator.ValidateAsync(command.CreateCommentDto);
-
+        
         if (!validationResult.IsValid)
         {
             return CommonResponse<int>.Failure("Validation error");
