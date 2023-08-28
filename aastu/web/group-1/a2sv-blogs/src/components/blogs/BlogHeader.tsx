@@ -3,8 +3,8 @@ import React from "react";
 
 export default function BlogHeader() {
   return (
-    <div className="md:w-[70%] flex lg:flex-row flex-col">
-      <h1 className="text-xl font-montserrat lg:block hidden font-extrabold text-black leading-5 self-start">
+    <div className="md:w-[70%] flex lg:flex-row flex-col ">
+      <h1 className="text-xl font-montserrat lg:block hidden font-extrabold text-black leading-5 self-center">
         Blogs
       </h1>
       <div className="flex lg:gap-5 gap-5 items-center mx-auto lg:px-10">
