@@ -12,10 +12,10 @@ const Section1 = () => {
     <div className="px-4 flex justify-center">
       <div className="grid grid-cols-1 md:grid-cols-2 mt-8 md:mt-40">
         <div className="w-full xl:w-[400px] mr-14">
-          <h1 className="font-primaryFont text-3xl md:text-[40px] font-bold text-[#2B2A35] dark:text-dark-textColor-100">
+          <h1 className="font-primaryFont text-3xl md:text-[40px] font-bold text-[#2B2A35]transition-colors ease-linear dark:text-dark-textColor-100">
             The team we’re currently working with
           </h1>
-          <p className="font-secondaryFont mt-10 text-base md:text-xl leading-8 dark:text-dark-textColor-50">
+          <p className="font-secondaryFont mt-10 text-base md:text-xl leading-8transition-colors ease-linear dark:text-dark-textColor-50">
             Meet our development team is a small but highly skilled and experienced group of
             professionals. We have a talented mix of web developers, software engineers, project
             managers and quality assurance specialists who are passionate about developing
@@ -37,7 +37,7 @@ type profile = {
 };
 const ProfileCard = ({ name, occupation, description }: profile) => {
   return (
-    <div className="w-full h-auto pb-10 shadow px-4 lg:px-8 md:px-14 mt-20  dark:bg-dark-backgroundLight dark:text-dark-textColor-100 hover:shadow-lg cursor-pointer dark:hover:shadow transition-all dark:hover:shadow-slate-700">
+    <div className="w-full h-auto pb-10 shadow px-4 lg:px-8 md:px-14 mt-20  dark:bg-dark-backgroundLight dark:text-dark-textColor-100 hover:shadow-lg cursor-pointer dark:hover:shadow dark:hover:shadow-slate-700 transition-all ease-linear">
       <div className="flex justify-center w-full">
         <div className="rounded-full bg-gray-200 p-2 overflow-hidden flex justify-center items-center">
           <Image src={profilePic} alt="proflie picture" height={150} />
@@ -47,14 +47,14 @@ const ProfileCard = ({ name, occupation, description }: profile) => {
         <h1 className="flex justify-center mt-4 font-primaryFont text-3xl tracking-widest font-bold">
           {name}
         </h1>
-        <h2 className="flex w-full justify-center text-xl font-secondaryFont font-bold mt-2 dark:text-dark-textColor-50">
+        <h2 className="flex w-full justify-center text-xl font-secondaryFont font-bold mt-2transition-colors ease-linear dark:text-dark-textColor-50">
           {occupation}
         </h2>
-        <p className="mt-4  font-secondaryFont text-center text-base dark:text-dark-textColor-50">
+        <p className="mt-4  font-secondaryFont text-center text-base transition-colors ease-linear dark:text-dark-textColor-50">
           {description}
         </p>
       </div>
-      <div className="flex justify-between mt-10 border-t dark:border-none border-gray-300 pt-4">
+      <div className="flex justify-between mt-10 border-t transition-colors ease-linear dark:border-none border-gray-300 pt-4">
         <Image
           src={faceBookIcon}
           alt="facebook icon"
@@ -111,8 +111,9 @@ const Section3 = () => {
   return (
     <div className="w-full flex justify-center mb-20">
       <div className="flex flex-wrap gap-4">
-        {pages.map((page) => (
+        {pages.map((page, index) => (
           <span
+            key={index}
             onClick={() => updatePage(page)}
             className={`flex justify-center items-center h-10 w-10 font-bold font-primaryFont bg-slate-300 rounded-lg cursor-pointer ${
               page == currentNav && '!bg-blue-800 !text-white'
