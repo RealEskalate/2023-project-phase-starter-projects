@@ -35,7 +35,7 @@ void main() {
       // Arrange
 
       // Act
-      final result = ArticleModel.fromJson(tJsonData);
+      final result = ArticleModel.fromJson(jsonDecode(tJsonData));
       // Assert
       expect(result, equals(tModel));
     });
