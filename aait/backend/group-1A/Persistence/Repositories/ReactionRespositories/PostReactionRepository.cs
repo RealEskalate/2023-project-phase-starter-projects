@@ -33,7 +33,7 @@ namespace Persistence.Repositories
 
         public async Task<PostReaction> MakeReaction(int UserId, PostReaction entity)
         {
-            var reaction = _dbContext.PostReactions.FirstOrDefault(x => x.UserId == UserId && x.PostId == entity.PostId);
+            var reaction = _dbContext.PostReactions.FirstOrDefault(x =>  x.PostId == entity.PostId);
 
             if (reaction == null)
             {

@@ -10,7 +10,8 @@ using AutoMapper;
 using Domain.Entites;
 using Domain.Entites;
 using Domain.Entities;
-using SocialSync.Application.Dtos.Authentication;
+using SocialSync.Application.DTO;
+using SocialSync.Domain.Entities;using SocialSync.Application.Dtos.Authentication;
 using SocialSync.Domain.Entities;
 
 namespace Application.Profiles
@@ -23,10 +24,6 @@ namespace Application.Profiles
             
             CreateMap<PostResponseDTO, Post>().ReverseMap();
             CreateMap<PostCreateDTO, Post>().ReverseMap();
-            CreateMap<PostUpdateDTO, Post>().ReverseMap();
-            
-
-            
             CreateMap<ReactionDTO, PostReaction>().ReverseMap();
             CreateMap<ReactionResponseDTO, PostReaction>().ReverseMap();
             CreateMap<ReactionDTO, CommentReaction>().ReverseMap();
@@ -43,6 +40,7 @@ namespace Application.Profiles
             CreateMap<CommentResponseDTO, Comment>().ReverseMap();
             CreateMap<CommentCreateDTO, Comment>().ReverseMap();
             CreateMap<CommentUpdateDTO, Comment>().ReverseMap();
+            CreateMap<TagResponseDto, Tag>().ReverseMap();
             
         
             CreateMap<FollowDTO, Follow>().ReverseMap();

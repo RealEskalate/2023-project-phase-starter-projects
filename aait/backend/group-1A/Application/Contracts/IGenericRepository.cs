@@ -14,7 +14,7 @@ namespace Application.Contracts
 
         public Task<T> Add(T entity);
 
-        public Task<bool> Delete(T entity);
+        public Task<bool> Delete(T entit );
 
         
         public Task<T> Update(T entity);

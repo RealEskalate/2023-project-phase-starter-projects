@@ -1,4 +1,5 @@
 ﻿using System.Linq.Expressions;
+using System.Text.RegularExpressions;
 using Application.Contracts;
 using Application.DTO.PostDTO.DTO;
 using AutoMapper;
@@ -27,8 +28,8 @@ namespace Persistence.Repositories
             return result;
         }
 
-        public async Task<List<PostResponseDTO>> GetAllPostsWithReaction(int userId)
-        {
+        public async Task<List<PostResponseDTO>> GetAllPostsWithReaction(Expression<Func<Post, bool>> predicate, int userId)
+        {   
             var allPosts = await _dbContext.Posts
                     .Where(x => x.UserId == userId)
                     .Include(x => x.PostReactions)
@@ -53,5 +54,9 @@ namespace Persistence.Repositories
             return result != null;
         }
 
+        Task<List<PostResponseDTO>> IPostRepository.GetAllPostsWithReaction(int userId)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
