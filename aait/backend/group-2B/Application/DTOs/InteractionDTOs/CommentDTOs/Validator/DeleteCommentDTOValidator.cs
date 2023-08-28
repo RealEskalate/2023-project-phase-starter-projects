@@ -21,16 +21,16 @@ public class DeleteCommentDtoValidator : AbstractValidator<DeleteCommentInteract
                 }
             )
             .WithMessage("{PropertyName} doesn't exist");
-        // RuleFor(interaction => interaction.PostId)
-        //     .GreaterThan(0)
-        //     .MustAsync(
-        //         async (id, token) =>
-        //         {
-        //             var postExists = await _unitOfWork.PostRepository.GetAsync(id);
-        //             return postExists != null;
-        //         }
-        //     )
-        //     .WithMessage("{PropertyName} doesn't exist");
+        RuleFor(interaction => interaction.PostId)
+            .GreaterThan(0)
+            .MustAsync(
+                async (id, token) =>
+                {
+                    var postExists = await _unitOfWork.PostRepository.GetAsync(id);
+                    return postExists != null;
+                }
+            )
+            .WithMessage("{PropertyName} doesn't exist");
         RuleFor(interaction => interaction.UserId)
             .GreaterThan(0)
             .MustAsync(
