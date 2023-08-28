@@ -87,6 +87,7 @@ class _LoginComponentState extends State<LoginComponent> {
                       email: _usernameController.text,
                       password: _passwordController.text,
                     );
+
                     context.read<AuthBloc>().add(LoginEvent(
                           loginRequestEntity: loginRequestEntity,
                         ));
