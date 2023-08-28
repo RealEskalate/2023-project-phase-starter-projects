@@ -11,12 +11,12 @@ import helpingPartner from '@/assets/images/helpingPartner.svg';
 const Footer = () => {
   return (
     <div className="grid mt-auto">
-      <div className="grid grid-cols-1 mx-auto h-full lg:grid-cols-[4fr_7fr_5fr_7fr_4fr] lg:h-[250px] pl-[55px] py-[40px]  border-t-[#C7C7C7] border-t-[0.4px]">
+      <div className="grid grid-cols-1 mx-auto h-full lg:grid-cols-[4fr_7fr_5fr_7fr_4fr] lg:h-[250px] pl-[55px] py-[40px]  border-t-[#C7C7C7] dark:border-dark-backgroundLight border-t-[0.4px]">
         <div className='hidden lg:block w-[160px] h-[160px] pb-2'>
           <Image src={helpingPartner} width={200} height={200} alt="Helping a Partner" />
         </div>
         <div className='text-center mr-8 lg:ml-4' >
-            <p className='font-secondaryFont font-semibold mt-8 mb-4 '>Get involved in improving tech education in Africa!</p>
+            <p className='font-secondaryFont font-semibold mt-8 mb-4  dark:text-dark-textColor-50'>Get involved in improving tech education in Africa!</p>
             <Link className='bg-[#264FAD] text-white font-secondaryFont font-bold rounded-lg px-8 py-2 mt-4' href='/donate'>Support Us</Link>
         </div>
         <div>
@@ -46,7 +46,7 @@ const Footer = () => {
         </div>
       </div>
 
-      <div className="flex flex-col-reverse items-center lg:flex-row justify-between px-[40px] py-[35px] border-t-[#C7C7C7] border-t-[0.4px]">
+      <div className="flex flex-col-reverse items-center lg:flex-row justify-between px-[40px] py-[35px] border-t-[#C7C7C7] dark:border-dark-backgroundLight border-t-[0.4px]">
         <div className="mt-8 md:font-secondaryFont font-light text-base">
           <span className="text-xl text-[#555555]">&copy;</span> 2020 Africa to Silicon Valley ,
           Inc. All right reserved.
