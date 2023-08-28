@@ -8,25 +8,31 @@ const config: Config = {
   ],
   theme: {
     extend: {
-      backgroundImage: {
-        "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
-        "gradient-conic":
-          "conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))",
-      },
       colors: {
-        background: "#E6E6E6",
         primary: "#264FAD",
+        background: "#FFF",
         nav_text_color: "#565656",
         blog_list_sub_text_color: "#737373",
         blog_icons_text_color: "#8E8E8E",
         blog_readMore_text_color: "#7367F0",
         blog_owner_name_text_color: "#5E5873",
         blog_pending_icon_text_color: "#FF9F43",
-        bg_blog_upload:'#F2F3F4'
+        bg_blog_upload:'#F2F3F4',
+        login_color: "#3C3C3C",
+        light_gray_text_color: "#7D7D7D",
+        black_text_color: "#363636",
+        lavender: "#F6F6FC",
+        dark_chocol: "#4D4A49",
+        blue_gray: "#37474F",
+        dodger_blue: "#019CFA"
       },
       fontFamily: {
         Montserrat: ["Montserrat", "sans-serif"],
+        Poppins: ["Poppins", "sans-serif"]
       },
+      screens: {
+        "nav_bar_screen" : "983px"
+      }
     },
   },
   plugins: [],
