@@ -5,6 +5,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'bloc_observer.dart';
 import 'core/presentation/router/router.dart';
 import 'core/presentation/theme/app_theme.dart';
+import 'features/authentication/presentation/bloc/auth_bloc.dart';
 import 'injection_container.dart' as di;
 
 Future<void> main() async {
@@ -26,8 +27,12 @@ class App extends StatelessWidget {
       designSize: const Size(390, 844),
       minTextAdapt: true,
       splitScreenMode: true,
-      builder: (_, child) => BlocProvider(
-        create: (context) => di.serviceLocator<AuthBloc>(),
+      builder: (_, child) => MultiBlocProvider(
+        providers: [
+          BlocProvider<AuthBloc>(
+            create: (_) => di.serviceLocator<AuthBloc>(),
+          ),
+        ],
         child: MaterialApp.router(
           title: 'Blog app',
           theme: AppTheme.themeData,
