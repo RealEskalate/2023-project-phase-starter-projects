@@ -11,6 +11,7 @@ const SingleBlogCard: React.FC<Blog> = ({
     createdAt,
     title,
     tags,
+    _id
 }) => {
     const inputString = createdAt;
     // Parse the input string into a Date object
@@ -38,9 +39,11 @@ const SingleBlogCard: React.FC<Blog> = ({
                 width={300}
                 height={200}
             />
+            <h3 className='font-bold text-2xl w-11/12 mx-auto'>{title}</h3>
             <div
                 className='p-3 space-y-4'>
                 <div
+                    
                     className='flex items-center space-x-4 text-sm'>
                     <Image
                         src={author?.image ? author.image : ""}
@@ -74,7 +77,7 @@ const SingleBlogCard: React.FC<Blog> = ({
                     </span>
                     <Link
                         className='text-[#7367F0]'
-                        href='#'>
+                        href={`/blog/singleBlog/${_id}`}>
 
                         Read More
                     </Link>
