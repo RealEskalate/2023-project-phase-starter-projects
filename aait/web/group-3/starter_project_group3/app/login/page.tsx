@@ -12,7 +12,7 @@ const LogIn: React.FC = () => {
   const [login, { isLoading, isError, data }] = useLoginMutation();
 
   const handleLogin = (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault(); // Prevent default form submission behavior
+    event.preventDefault(); 
     login({ email, password })
       .unwrap()
       .then((response: any) => {

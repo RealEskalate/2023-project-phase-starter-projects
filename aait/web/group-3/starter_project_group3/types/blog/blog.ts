@@ -15,7 +15,7 @@ interface Blog {
   isPending: boolean;
   tags: string[];
   likes: number;
-  relatedBlogs: string[];
+  relatedBlogs: Blog[];
   skills: string[];
   createdAt: string;
   updatedAt: string;
