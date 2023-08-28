@@ -1,12 +1,13 @@
-import 'package:blog_app/features/user/presentation/widgets/userprofile/posts_bar.dart';
-import 'package:blog_app/features/user/presentation/widgets/userprofile/single_article_post_list_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
+import '../../../../article/domain/entities/article.dart';
 import 'article_grid_view.dart';
+import 'posts_bar.dart';
+import 'single_article_post_list_view.dart';
 
 class ArticleListView extends StatelessWidget {
-  final List<ArticleData> articles;
+  final List<Article> articles;
 
   const ArticleListView({Key? key, required this.articles}) : super(key: key);
 
@@ -21,11 +22,11 @@ class ArticleListView extends StatelessWidget {
           itemCount: articles.length,
           itemBuilder: (context, index) {
             return SingleArticlePostListView(
-              imageUrl: articles[index].imageUrl,
-              articleTitle: articles[index].articleTitle,
-              articleSubTitle: articles[index].articleSubTitle,
-              likes: articles[index].likes,
-              timeSincePosted: articles[index].timeSincePosted,
+              imageUrl: articles[index].photoUrl,
+              articleTitle: articles[index].title,
+              articleSubTitle: articles[index].subTitle,
+              likes: '2.1k',
+              timeSincePosted: 1,
             );
           },
         ),

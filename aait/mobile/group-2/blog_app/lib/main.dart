@@ -29,7 +29,7 @@ class App extends StatelessWidget {
       builder: (_, child) => MultiBlocProvider(
         providers: [
           BlocProvider<AuthBloc>(
-            create: (_) => di.serviceLocator<AuthBloc>(),
+            create: (_) => di.serviceLocator<AuthBloc>()..add(GetTokenEvent()),
           ),
         ],
         child: MaterialApp.router(

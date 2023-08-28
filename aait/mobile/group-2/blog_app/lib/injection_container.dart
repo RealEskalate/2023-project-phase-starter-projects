@@ -65,6 +65,7 @@ Future<void> init() async {
   serviceLocator.registerLazySingleton(
     () => GetTags(serviceLocator()),
   );
+
   serviceLocator.registerLazySingleton(
     () => CreateArticle(serviceLocator()),
   );
@@ -94,6 +95,10 @@ Future<void> init() async {
 
   serviceLocator.registerLazySingleton(
     () => UpdateUserPhoto(serviceLocator()),
+  );
+
+  serviceLocator.registerLazySingleton(
+    () => GetTokenUseCase(authRepository: serviceLocator()),
   );
 
   // Core
@@ -139,6 +144,7 @@ Future<void> init() async {
   //! Bloc
   serviceLocator.registerFactory(
     () => AuthBloc(
+      getTokenUsecase: serviceLocator(),
       loginUseCase: serviceLocator(),
       signUpUseCase: serviceLocator(),
       logoutUseCase: serviceLocator(),

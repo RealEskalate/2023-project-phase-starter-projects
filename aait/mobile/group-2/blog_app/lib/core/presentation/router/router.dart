@@ -4,6 +4,8 @@ import '../../../features/article/domain/entities/article.dart';
 import '../../../features/article/presentation/screens/home_page.dart';
 import '../../../features/article/presentation/screens/screens.dart';
 import '../../../features/authentication/presentation/pages/auth_page.dart';
+import '../../../features/onboard/presentation/screens/initial_screen.dart';
+import '../../../features/onboard/presentation/screens/on_boarding.dart';
 import '../../../features/onboard/presentation/screens/splash_screen.dart';
 import '../../../features/user/presentation/screens/user_profile.dart';
 import 'routes.dart';
@@ -15,19 +17,13 @@ final GoRouter router = GoRouter(
     // Debug area
     GoRoute(
       path: Routes.home,
-      builder: (context, state) => const HomePage(),
+      builder: (context, state) => const AppInitialScreen(),
     ),
     // Debug end!
 
     GoRoute(
-      path: Routes.home,
-      builder: (context, state) => const HomePage(),
-    ),
-
-    // splash screen
-    GoRoute(
-      path: Routes.splashScreen,
-      builder: (context, state) => const SplashScreen(),
+      path: Routes.onBoard,
+      builder: (context, state) => const OnBoarding(),
     ),
 
     // auth
@@ -68,7 +64,7 @@ final GoRouter router = GoRouter(
 
     GoRoute(
       path: Routes.profileScreen,
-      builder: (context, state) => UserProfile(),
+      builder: (context, state) => const UserProfile(),
     ),
   ],
 );

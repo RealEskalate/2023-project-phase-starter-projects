@@ -1,6 +1,7 @@
 import 'package:dartz/dartz.dart';
 
 import '../../../../core/error/failure.dart';
+import '../../../../core/usecase/usecase.dart';
 import '../entities/authenticated_user_info.dart';
 import '../entities/authentication_entity.dart';
 import '../entities/login_entity.dart';
@@ -39,5 +40,15 @@ class LogoutUseCase extends UseCase<void, String> {
   @override
   Future<Either<Failure, void>> call(String params) async {
     return await authRepository.logout(params);
+  }
+}
+
+class GetTokenUseCase extends UseCase<void, NoParams> {
+  final AuthRepository authRepository;
+
+  GetTokenUseCase({required this.authRepository});
+  @override
+  Future<Either<Failure, String>> call(NoParams params) async {
+    return await authRepository.getToken();
   }
 }
