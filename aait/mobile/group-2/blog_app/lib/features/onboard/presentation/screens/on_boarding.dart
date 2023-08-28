@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:go_router/go_router.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 import '../../../../core/presentation/content/on_boarding_data.dart';
+import '../../../../core/presentation/router/routes.dart';
 import '../../../../core/presentation/theme/app_colors.dart';
 import '../widgets/on_boarding_widget.dart';
-import 'login_screen.dart';
 
 class OnBoarding extends StatefulWidget {
   const OnBoarding({super.key});
@@ -93,11 +94,7 @@ class _OnBoardingState extends State<OnBoarding> {
                               curve: Curves.easeOut,
                             );
                           } else {
-                            Navigator.of(context).pushReplacement(
-                              MaterialPageRoute(
-                                builder: (context) => const LoginScreen(),
-                              ),
-                            );
+                            context.go(Routes.auth);
                           }
                         },
                         child: Container(

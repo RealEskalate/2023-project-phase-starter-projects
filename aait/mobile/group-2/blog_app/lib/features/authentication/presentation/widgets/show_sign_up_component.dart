@@ -1,9 +1,9 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../../../core/presentation/router/routes.dart';
 import '../../../../core/presentation/theme/app_colors.dart';
 import '../../data/models/sign_up_model.dart';
 import '../bloc/auth_bloc.dart';
@@ -46,7 +46,7 @@ class _SignUpComponentState extends State<SignUpComponent> {
             const SnackBar(content: Text(' Successfully created account!')));
 
         Future.delayed(const Duration(seconds: 3), () {
-          context.go('/create-article');
+          context.go(Routes.articles);
         });
       }
     }, builder: (context, state) {

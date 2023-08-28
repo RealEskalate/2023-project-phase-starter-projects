@@ -88,24 +88,6 @@ Future<void> init() async {
   serviceLocator.registerLazySingleton(
     () => UpdateUserPhoto(serviceLocator()),
   );
-  // Auth Use cases
-  serviceLocator.registerLazySingleton(
-    () => LoginUseCase(
-      authRepository: serviceLocator(),
-    ),
-  );
-
-  serviceLocator.registerLazySingleton(
-    () => SignUpUseCase(
-      authRepository: serviceLocator(),
-    ),
-  );
-
-  serviceLocator.registerLazySingleton(
-    () => LogoutUseCase(
-      authRepository: serviceLocator(),
-    ),
-  );
 
   // Core
   serviceLocator.registerLazySingleton<NetworkInfo>(
@@ -128,15 +110,6 @@ Future<void> init() async {
       networkInfo: serviceLocator(),
       remoteDataSource: serviceLocator(),
       localDataSource: serviceLocator(),
-    ),
-  );
-
-  // Auth Repository
-  serviceLocator.registerLazySingleton<AuthRepository>(
-    () => AuthRepositoryImpl(
-      authRemoteDataSource: serviceLocator(),
-      authLocalDataSource: serviceLocator(),
-      networkInfo: serviceLocator(),
     ),
   );
 
@@ -186,7 +159,6 @@ Future<void> init() async {
   );
 
   //! Repository
-
   serviceLocator.registerLazySingleton<AuthRepository>(
     () => AuthRepositoryImpl(
       authRemoteDataSource: serviceLocator(),
@@ -196,8 +168,6 @@ Future<void> init() async {
   );
 
   //! Data sources
-
-  //Auth Data sources
   serviceLocator.registerLazySingleton<AuthRemoteDataSource>(
     () => AuthRemoteDataSourceImpl(
       client: serviceLocator(),

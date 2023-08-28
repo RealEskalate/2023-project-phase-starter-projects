@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../../../core/presentation/router/routes.dart';
 import '../../domain/entities/login_entity.dart';
 import '../bloc/auth_bloc.dart';
 import 'custom_text_field.dart';
@@ -45,7 +46,7 @@ class _LoginComponentState extends State<LoginComponent> {
           );
 
           Future.delayed(const Duration(seconds: 3), () {
-            context.go('/create-article');
+            context.go(Routes.articles);
           });
         }
       },

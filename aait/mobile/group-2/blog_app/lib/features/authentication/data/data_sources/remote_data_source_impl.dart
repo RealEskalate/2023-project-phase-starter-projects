@@ -20,7 +20,7 @@ class AuthRemoteDataSourceImpl extends AuthRemoteDataSource {
   @override
   Future<AuthenticationModel> login(LoginRequestModel loginRequestModel) async {
     final http.Response response = await client.post(
-        Uri.parse('${apiBaseUrl}api/v1/user/login'),
+        Uri.parse('${apiBaseUrl}user/login'),
         body: jsonEncode(loginRequestModel.toJson()),
         headers: {'Content-Type': 'application/json'});
 
@@ -41,7 +41,7 @@ class AuthRemoteDataSourceImpl extends AuthRemoteDataSource {
   Future<AuthenticatedUserInfoModel> signUp(
       SignUpRequestModel signUpRequestModel) async {
     final http.Response response = await client.post(
-        Uri.parse('${apiBaseUrl}api/v1/user'),
+        Uri.parse('${apiBaseUrl}user'),
         body: jsonEncode(signUpRequestModel.toJson()),
         headers: {'Content-Type': 'application/json'});
     if (response.statusCode == 200) {
@@ -57,7 +57,7 @@ class AuthRemoteDataSourceImpl extends AuthRemoteDataSource {
   @override
   Future<void> logout(String token) async {
     final http.Response response = await client.post(
-        Uri.parse('$apiBaseUrl api/v1/user/logout'),
+        Uri.parse('${apiBaseUrl}user/logout'),
         body: jsonEncode({'token': token}),
         headers: {'Content-Type': 'application/json'});
 

@@ -12,8 +12,20 @@ final GoRouter router = GoRouter(
 
   routes: <RouteBase>[
     GoRoute(
+      path: Routes.splashScreen,
+      builder: (context, state) => const SplashScreen(),
+    ),
+    GoRoute(
       path: Routes.home,
       builder: (context, state) => const SplashScreen(),
+    ),
+    GoRoute(
+      path: Routes.articles,
+      builder: (context, state) => const HomePage(),
+    ),
+    GoRoute(
+      path: Routes.auth,
+      builder: (context, state) => const AuthPage(),
     ),
     GoRoute(
       path: Routes.articleDetail,
@@ -21,16 +33,6 @@ final GoRouter router = GoRouter(
         final article = state.extra as Article;
         return ArticleScreen(article: article);
       },
-    ),
-    GoRoute(
-      path: Routes.home,
-      builder: (context, state) => const HomePage(),
-    ),
-
-    // Auth routes
-    GoRoute(
-      path: Routes.auth,
-      builder: (context, state) => const AuthPage(),
     ),
   ],
 );
