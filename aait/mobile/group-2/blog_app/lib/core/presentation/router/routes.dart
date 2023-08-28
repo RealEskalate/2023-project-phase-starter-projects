@@ -10,4 +10,5 @@ class Routes {
   static const onBoard = '/onboarding';
 
   static const auth = '/auth';
+  static const profileScreen = '/profile';
 }

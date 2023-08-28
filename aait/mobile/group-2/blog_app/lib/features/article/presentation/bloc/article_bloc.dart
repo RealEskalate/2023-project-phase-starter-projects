@@ -89,7 +89,7 @@ class ArticleBloc extends Bloc<ArticleEvent, ArticleState> {
 
     result.fold(
       (failure) => emit(ArticleErrorState(failure.toString())),
-      (article) => emit(ArticleCreatedState(article)),
+      (article) => emit(ArticleUpdatedState(article)),
     );
   }
 

@@ -18,17 +18,31 @@ class ArticleModel extends Article {
     final tags =
         json['tags'].map<TagModel>((name) => TagModel(name: name)).toList();
 
-    // final author = UserDataModel.fromJson(json['user']);
-    final author = UserDataModel(
-        id: json['id'],
-        fullName: 'fullName',
-        email: 'email',
-        expertise: 'expertise',
-        bio: 'bio',
-        createdAt: 'createdAt',
-        image: 'image',
-        imageCloudinaryPublicId: 'imageCloudinaryPublicId',
-        articles: const []);
+    UserDataModel author;
+    try {
+      author = UserDataModel(
+          id: json['user']['id'],
+          fullName: json['user']['fullName'] ?? '',
+          email: json['user']['email'] ?? '',
+          expertise: json['user']['expertise'] ?? '',
+          bio: json['user']['bio'] ?? '',
+          createdAt: json['user']['createdAt'] ?? '',
+          image: json['user']['image'] ?? '',
+          imageCloudinaryPublicId:
+              json['user']['imageCloudinaryPublicId'] ?? '',
+          articles: const []);
+    } catch (e) {
+      author = UserDataModel(
+          id: json['user'],
+          fullName: '',
+          email: '',
+          expertise: '',
+          bio: '',
+          createdAt: '',
+          image: '',
+          imageCloudinaryPublicId: '',
+          articles: const []);
+    }
 
     return ArticleModel(
       id: json['id'],

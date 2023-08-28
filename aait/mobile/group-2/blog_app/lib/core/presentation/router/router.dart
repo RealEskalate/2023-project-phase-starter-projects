@@ -5,6 +5,7 @@ import '../../../features/article/presentation/screens/home_page.dart';
 import '../../../features/article/presentation/screens/screens.dart';
 import '../../../features/authentication/presentation/pages/auth_page.dart';
 import '../../../features/onboard/presentation/screens/splash_screen.dart';
+import '../../../features/user/presentation/screens/user_profile.dart';
 import 'routes.dart';
 
 final GoRouter router = GoRouter(
@@ -63,6 +64,11 @@ final GoRouter router = GoRouter(
         final article = state.extra as Article;
         return ArticleFormScreen(article: article);
       },
+    ),
+
+    GoRoute(
+      path: Routes.profileScreen,
+      builder: (context, state) => UserProfile(),
     ),
   ],
 );

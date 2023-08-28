@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../../../injection_container.dart';
+import '../../../authentication/presentation/bloc/auth_bloc.dart';
 import '../bloc/user_bloc.dart';
 import '../widgets/userprofile/article_grid_view.dart';
 import '../widgets/userprofile/article_list_view.dart';
@@ -44,7 +45,9 @@ class UserProfile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider<UserBloc>(
-      create: (context) => serviceLocator(),
+      create: (context) => serviceLocator<UserBloc>()
+        ..add(
+            GetUserEvent(token: BlocProvider.of<AuthBloc>(context).authToken)),
       child: Scaffold(
         body: Stack(
           children: [

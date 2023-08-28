@@ -34,6 +34,11 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
   final SignUpUseCase signUpUseCase;
   final LogoutUseCase logoutUseCase;
   final CustomClient customClient;
+
+  String? _token;
+
+  String get authToken => _token ?? '';
+
   AuthBloc({
     required this.loginUseCase,
     required this.signUpUseCase,
@@ -55,6 +60,8 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       },
       (loginResult) {
         customClient.authToken = loginResult.token;
+        _token = loginResult.token;
+
         emit(LoginSuccessState(authenticationEntity: loginResult));
       },
     );
@@ -88,6 +95,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       },
       (logoutResult) {
         customClient.authToken = null;
+        _token = null;
         emit(LogoutSuccessState());
       },
     );
