@@ -3,9 +3,13 @@ import { createSlice } from '@reduxjs/toolkit';
 
 let initialState: TokenAndUser | null = null;
 
-const data = localStorage.getItem('login');
-if (data) {
-  initialState = JSON.parse(data);
+if (typeof window !== 'undefined') {
+  // Perform localStorage action
+
+  const data = localStorage.getItem('login');
+  if (data) {
+    initialState = JSON.parse(data);
+  }
 }
 
 export const loginSlice = createSlice({
