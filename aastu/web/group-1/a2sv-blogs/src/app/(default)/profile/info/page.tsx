@@ -14,6 +14,7 @@ export default function Info() {
   const [isEditing, setIsEditing] = useState<boolean>(false);
   const [isSuccess, setIsSuccess] = useState<boolean>(false);
   const [isError, setIsError] = useState<boolean>(false);
+  const [dragging, setDragging] = useState<boolean>(false);
   const [alertMessage, setAlertMessage] = useState<string>("");
 
   const { auth, editProfileHandler } = useAuth();
@@ -103,6 +104,51 @@ export default function Info() {
           setIsError(false);
         }, 2000);
       });
+  };
+
+  const handleDragEnter = (e: React.DragEvent<HTMLDivElement>) => {
+    e.preventDefault();
+    e.stopPropagation();
+    setDragging(true);
+  };
+
+  const handleDragLeave = (e: React.DragEvent<HTMLDivElement>) => {
+    e.preventDefault();
+    e.stopPropagation();
+    setDragging(false);
+  };
+
+  const handleDragOver = (e: React.DragEvent<HTMLDivElement>) => {
+    e.preventDefault();
+    e.stopPropagation();
+  };
+
+  const handleDrop = (e: React.DragEvent<HTMLDivElement>) => {
+    e.preventDefault();
+    e.stopPropagation();
+    setDragging(false);
+
+    const file = e.dataTransfer.files[0];
+
+    if (file.type.startsWith("image/")) {
+      setSelectedImage(file);
+      const reader = new FileReader();
+
+      reader.onload = () => {
+        setPreviewImage(reader.result as string);
+        setIsError(false);
+      };
+
+      reader.onerror = () => {
+        setIsError(true);
+        setAlertMessage("Error reading the file");
+      };
+
+      reader.readAsDataURL(file);
+    } else {
+      setIsError(true);
+      setAlertMessage("Invalid file type. Please drop an image file.");
+    }
   };
   return (
     auth.token && (
@@ -219,7 +265,13 @@ export default function Info() {
               />
             )}
 
-            <div className="border border-blue-50 p-2 rounded-lg ml-5">
+            <div
+              className="border border-blue-50 p-2 rounded-lg ml-5"
+              onDragEnter={handleDragEnter}
+              onDragLeave={handleDragLeave}
+              onDragOver={handleDragOver}
+              onDrop={handleDrop}
+            >
               <input
                 type="file"
                 name="image"
@@ -240,7 +292,7 @@ export default function Info() {
                   onClick={() => fileInput.current?.click()}
                 />
               </div>
-              <div className="flex items-center">
+              <div className="flex items-center" onDragOver={handleDragOver}>
                 <p className="text-black ml-2 text-sm">
                   <span className="font-bold">Click to upload</span> or drag and
                   drop <br /> SVG, PNG, JPG or GIF (max 800x400px)

@@ -9,7 +9,7 @@ interface Props {
 
 export default function ProfileAvatar({ imageUrl }: Props) {
   const [popoverVisible, setPopoverVisible] = useState(false);
-  console.log(imageUrl);
+  const { logoutHandler } = useAuth();
   if (imageUrl.length == 0) {
     imageUrl = "/images/avatar.jpg";
   }
@@ -21,7 +21,7 @@ export default function ProfileAvatar({ imageUrl }: Props) {
   };
 
   const handleSignOut = () => {
-    useAuth().logoutHandler();
+    logoutHandler();
   };
 
   const handleClickOutside = (event: MouseEvent) => {
@@ -51,7 +51,7 @@ export default function ProfileAvatar({ imageUrl }: Props) {
             alt=""
             className="w-12 h-12 rounded-full"
             src={imageUrl}
-            alt=""
+            alt="image"
           />
         </button>
       </div>
