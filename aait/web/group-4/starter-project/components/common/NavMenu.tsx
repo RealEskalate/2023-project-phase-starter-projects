@@ -1,8 +1,8 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { ReactNode } from "react";
+import { useState } from "react";
 
-const NavMenu = ({ children }: { children?: JSX.Element }) => {
+const NavMenu = () => {
   const links: { link: string; name: string }[] = [
     { name: "Home", link: "/" },
     { name: "Team", link: "/teams" },
@@ -12,18 +12,20 @@ const NavMenu = ({ children }: { children?: JSX.Element }) => {
     { name: "Get Involved", link: "/get-involved" },
   ];
   const pathname = usePathname();
+  const [activeLink, setActiveLink] = useState(0);
+  
   return (
     <>
-      {links.map((lin) => {
+      {links.map((lin, i) => {
         return (
             <div>
               <div key={lin.name} className="flex flex-col group">
-                <Link className="pb-2 hover:text-gray-400" href={`${lin.link}`}>
+                <Link className="pb-2 hover:text-gray-400" href={`${lin.link}`} onClick={() => setActiveLink(i)}>
                   {lin.name}
                 </Link>
                 <span
                   className={`${
-                    pathname === lin.link ? "w-full" : "w-0"
+                    activeLink === i ? "w-full" : "w-0"
                   } group-hover:w-full h-[2px] bg-blue-800`}
                   style={{ transition: "width 0.3s ease-in-out" }}
                 ></span>

@@ -5,7 +5,7 @@ const config: Config = {
     './pages/**/*.{js,ts,jsx,tsx,mdx}',
     './components/**/*.{js,ts,jsx,tsx,mdx}',
     './app/**/*.{js,ts,jsx,tsx,mdx}',
-  ],
+],
   theme: {
     extend: {
       colors: {
@@ -27,9 +27,9 @@ const config: Config = {
         "very-dark-gray" : "#0F0F0F"
       },
       fontFamily: {
-        poppins: ['Poppins', 'sans-serif'],
-        montserrat: ['Montserrat', 'sans-serif'],
-        roboto: ['Roboto', 'sans-serif']
+        "poppins": ['Poppins', 'sans-serif'],
+        "montserrat": ['Montserrat', 'sans-serif'],
+        "roboto": ['Roboto', 'sans-serif']
       },
       screens:{
         // Custom screen break point

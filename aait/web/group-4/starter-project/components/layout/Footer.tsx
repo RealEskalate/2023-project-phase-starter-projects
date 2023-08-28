@@ -3,12 +3,14 @@ import Link from "next/link";
 import Image from "next/image";
 
 const Footer: React.FC = () => {
+  const baseURL = "/images/common";
+
   let socialMedia: string[] = [
-    "/images/common/facebook.png",
-    "/images/common/linkedin.png",
-    "/images/common/instagram.png",
-    "/images/common/twitter.png",
-    "/images/common/youtube.png",
+    `${baseURL}/facebook.png`,
+    `${baseURL}/linkedin.png`,
+    `${baseURL}/instagram.png`,
+    `${baseURL}/twitter.png`,
+    `${baseURL}/youtube.png`,
   ];
   return (
     <footer className="flex flex-col pt-16 border-t-2 px-20 pb-10 font-{montserrat} ">
@@ -19,7 +21,7 @@ const Footer: React.FC = () => {
             objectFit="cover"
             width={400}
             height={400}
-            alt="A2SV"
+            alt="Helping a partner"
           />
         </div>
         <div className="flex text-left items-center flex-col gap-8">
@@ -34,16 +36,16 @@ const Footer: React.FC = () => {
           <h3 className="font-semibold text-lg">Links</h3>
           <ul className="flex flex-col gap-6 font-light">
             <li>
-              <Link href="#">Home</Link>
+              <Link href="/">Home</Link>
             </li>
             <li>
-              <Link href="#">Success Stories</Link>
+              <Link href="/success-stories">Success Stories</Link>
             </li>
             <li>
-              <Link href="#">About Us</Link>
+              <Link href="/about">About Us</Link>
             </li>
             <li>
-              <Link href="#">Get Involved</Link>
+              <Link href="/get-involved">Get Involved</Link>
             </li>
           </ul>
         </div>
@@ -52,16 +54,16 @@ const Footer: React.FC = () => {
 
           <ul className="flex flex-col gap-6 font-light">
             <li>
-              <Link href="#">Board Members</Link>
+              <a href="https://a2sv.org/board">Board Members</a>
             </li>
             <li>
-              <Link href="#">Advisors/Mentors</Link>
+              <a href="https://a2sv.org/advisors">Advisors/Mentors</a>
             </li>
             <li>
-              <Link href="#">Executives</Link>
+              <a href="https://a2sv.org/executives">Executives</a>
             </li>
             <li>
-              <Link href="#">Staffs</Link>
+              <a href="https://a2sv.org/staff">Staffs</a>
             </li>
           </ul>
         </div>
@@ -83,9 +85,9 @@ const Footer: React.FC = () => {
           &copy; 2020 Africa to Silicon Valley, Inc. All right reserved.
         </p>
         <div className="flex gap-5 justify-center items-end md:justify-end ">
-          {socialMedia.map((link: string) => {
+          {socialMedia.map((link: string, i) => {
             return (
-              <a href="http://www.fb.com">
+              <a href="http://www.fb.com" key={i}>
                 <img className="w-[20px] h-[20px]" src={link} />
               </a>
             );

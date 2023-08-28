@@ -1,4 +1,5 @@
 import Image from "next/image";
+import {BsArrowRightShort} from "react-icons/bs"
 
 const LandingSection = () => (
   <section className="grid grid-flow-row auto-rows-max place-items-center gap-12 xl:grid-flow-col xl:auto-cols-fr">
@@ -7,7 +8,7 @@ const LandingSection = () => (
       <h1 className="text-6xl font-extrabold text-center text-blue-purple md:text-7xl xl:w-3/4 xl:text-left">
         Africa to <span className="text-primary-color">Silicon Valley</span>
       </h1>
-      <p className="text-2xl text-center text-dark-gray max-w-xl leading-relaxed mb-8 md:text-left md:text-4xl">
+      <p className="text-2xl text-center text-[#424242] max-w-xl leading-relaxed mb-8 md:text-left md:text-4xl">
         A2SV up-skills high-potential university students, connects them with
         opportunities at top tech companies
       </p>
@@ -17,12 +18,7 @@ const LandingSection = () => (
         </button>
         <button className="bg-primary-color uppercase px-4 py-3 rounded-lg flex items-center gap-1 text-white md:flex-row md:w-fit  md:px-10 md:py-4">
           <span className="font-{roboto} font-semibold">Support Us</span>
-          <Image
-            src="/images/homepage/right-arrow.svg"
-            width={20}
-            height={70}
-            alt="right-arrow"
-          />
+          <BsArrowRightShort className="w-5 h-5"/>
         </button>
       </div>
     </div>

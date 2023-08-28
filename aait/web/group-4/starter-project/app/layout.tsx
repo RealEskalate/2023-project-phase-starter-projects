@@ -1,7 +1,7 @@
 import Navbar from "@/components/common/Navbar";
-import "./globals.css";
 import type { Metadata } from "next";
-import Footer from "@/components/common/Footer";
+import Footer from "@/components/layout/Footer";
+import "./globals.css";
 
 export const metadata: Metadata = {
   title: "A2SV",
@@ -17,7 +17,9 @@ export default function RootLayout({
     <html lang="en">
       <body className="font-{poppins}">
         <Navbar/>
+        <main className="p-10 md:p-20">
         {children}
+        </main>
         <Footer/>
       </body>
     </html>
