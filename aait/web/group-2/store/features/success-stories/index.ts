@@ -1,13 +1,14 @@
+import { SuccessStory } from "@/types/successStories"
 import { createApi,fetchBaseQuery } from "@reduxjs/toolkit/query/react"
 
-export const singleSuccessApi = createApi({
-    reducerPath: 'api',
+export const successApi = createApi({
+    reducerPath: 'success-api',
     baseQuery: fetchBaseQuery({baseUrl:'https://a2sv-backend.onrender.com/api'}),
     endpoints:(build)=>({
-        getSuccessStories: build.query<any,void>({
+        getSuccessStories: build.query<SuccessStory [],void>({
             query: ()=>'/success-stories'
         })
     })
 })
 
-export const { useGetSuccessStoriesQuery } = singleSuccessApi
+export const { useGetSuccessStoriesQuery } = successApi
