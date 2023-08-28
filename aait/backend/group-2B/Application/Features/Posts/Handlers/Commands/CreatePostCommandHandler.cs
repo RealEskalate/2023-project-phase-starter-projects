@@ -18,21 +18,26 @@ public class CreatePostCommandHandler : PostsRequestHandler, IRequestHandler<Cre
     {
         var createValidator = new CreatePostDtoValidator(_userRepository);
         var validationResult = await createValidator.ValidateAsync(request.CreatePostDto);
-        CommonResponse<int> response;
 
         if (!validationResult.IsValid)
         {
             var errorMessages = validationResult.Errors.Select(q => q.ErrorMessage).ToList();
-            response = CommonResponse<int>.FailureWithError("Post creation failed", errorMessages);
+            return CommonResponse<int>.FailureWithError("Post creation failed", errorMessages);
         }
         else
         {
             var post = _mapper.Map<Post>(request.CreatePostDto);
             var newPost = await _postRepository.AddAsync(post);
-            await _unitOfWork.SaveAsync();
+            int success = await _unitOfWork.SaveAsync();
 
-            response = CommonResponse<int>.Success(newPost.Id);
+            if (success != 0)
+            {
+                return CommonResponse<int>.Success(newPost.Id);
+            }
+            else
+            {
+                return CommonResponse<int>.Failure("Post Creation Failed");
+            }
         }
-        return response;
     }
 }

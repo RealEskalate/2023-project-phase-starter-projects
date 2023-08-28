@@ -15,24 +15,27 @@ public class DeletePostCommandHandler : PostsRequestHandler, IRequestHandler<Del
 
     public async Task<CommonResponse<Unit>> Handle(DeletePostCommand request, CancellationToken cancellationToken)
     {
-        var removePostValidator = new RemovePostDtoValidator(_userRepository, _postRepository);
+        var removePostValidator = new DeletePostDtoValidator(_userRepository, _postRepository);
         var validationResult = await removePostValidator.ValidateAsync(request.DeletePostDto);
-        CommonResponse<Unit> response;
 
         if (validationResult.IsValid)
         {
-
             var post = await _postRepository.GetAsync(request.DeletePostDto.Id);
             await _postRepository.DeleteAsync(post);
-            await _unitOfWork.SaveAsync();
-
-            response = CommonResponse<Unit>.Success(Unit.Value);
+            int success = await _unitOfWork.SaveAsync();
+            if (success > 0)
+            {
+                return CommonResponse<Unit>.Success(Unit.Value);
+            }
+            else
+            {
+                return CommonResponse<Unit>.Failure("Post Deletion Failed");
+            }
         }
         else
         {
             var errorMessages = validationResult.Errors.Select(q => q.ErrorMessage).ToList();
-            response = CommonResponse<Unit>.FailureWithError("Post Deletion Failed", errorMessages);
+            return CommonResponse<Unit>.FailureWithError("Post Deletion Failed", errorMessages);
         }
-        return response;
     }
 }

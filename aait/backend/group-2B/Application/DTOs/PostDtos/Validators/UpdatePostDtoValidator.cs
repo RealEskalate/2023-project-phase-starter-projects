@@ -33,9 +33,5 @@ public class UpdatePostDtoValidator : AbstractValidator<UpdatePostDto>
             return user != null && post.UserId == user.Id;
         }).WithMessage("Post author id does not match with the id of author of the post being updated.");
 
-
-
-
-
     }
 }

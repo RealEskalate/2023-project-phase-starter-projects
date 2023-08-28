@@ -1,21 +1,29 @@
 using AutoMapper;
 using MediatR;
+using SocialSync.Application.Common.Responses;
 using SocialSync.Application.Contracts.Persistence;
 using SocialSync.Application.DTOs.PostDtos;
 using SocialSync.Application.Features.Posts.Requests.Queries;
-using SocialSync.Domain.Entities;
 
 namespace SocialSync.Application.Features.Posts.Handlers.Queries;
 
-public class GetPostsByUserIdRequestHandler : PostsRequestHandler, IRequestHandler<GetPostsByUserIdRequest, List<PostDto>>
+public class GetPostsByUserIdRequestHandler : IRequestHandler<GetPostsByUserIdRequest, CommonResponse<List<PostDto>>>
 {
-    public GetPostsByUserIdRequestHandler(IUnitOfWork unitOfWork, IMapper mapper) : base(unitOfWork, mapper)
+    private IPostRepository _postRepository;
+    private IUnitOfWork _unitOfWork;
+    private IMapper _mapper;
+
+    public GetPostsByUserIdRequestHandler(IUnitOfWork unitOfWork, IMapper mapper)
     {
+        _unitOfWork = unitOfWork;
+        _postRepository = _unitOfWork.PostRepository;
+        _mapper = mapper;
     }
 
-    public async Task<List<PostDto>> Handle(GetPostsByUserIdRequest request, CancellationToken cancellationToken)
+    public async Task<CommonResponse<List<PostDto>>> Handle(GetPostsByUserIdRequest request, CancellationToken cancellationToken)
     {
-        IReadOnlyList<Post> postsByUserId = await _postRepository.GetPostsByUserIdAsync(request.UserId);
-        return _mapper.Map<List<PostDto>>(postsByUserId);
+        var postsByUserId = await _postRepository.GetPostsByUserIdAsync(request.UserId);
+        var response = CommonResponse<List<PostDto>>.Success(_mapper.Map<List<PostDto>>(postsByUserId));
+        return response;
     }
 }

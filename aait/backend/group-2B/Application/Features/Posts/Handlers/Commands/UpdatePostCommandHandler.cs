@@ -17,12 +17,11 @@ public class UpdatePostCommandHandler : PostsRequestHandler, IRequestHandler<Upd
     {
         var updateValidator = new UpdatePostDtoValidator(_userRepository, _postRepository);
         var updateValidationResult = await updateValidator.ValidateAsync(request.UpdatePostDto);
-        CommonResponse<Unit> response;
 
         if (!updateValidationResult.IsValid)
         {
             var errorMessages = updateValidationResult.Errors.Select(q => q.ErrorMessage).ToList();
-            response = CommonResponse<Unit>.FailureWithError("Post update failed", errorMessages);
+            return CommonResponse<Unit>.FailureWithError("Post update failed", errorMessages);
         }
 
         else
@@ -31,12 +30,16 @@ public class UpdatePostCommandHandler : PostsRequestHandler, IRequestHandler<Upd
             _mapper.Map(request.UpdatePostDto, post);
 
             await _postRepository.UpdateAsync(post);
-            await _unitOfWork.SaveAsync();
+            int success = await _unitOfWork.SaveAsync();
+            if (success > 0)
+            {
+                return CommonResponse<Unit>.Success(Unit.Value);
 
-            response = CommonResponse<Unit>.Success(Unit.Value);
+            }
+            else
+            {
+                return CommonResponse<Unit>.Failure("Post Update Failed");
+            }
         }
-        return response;
-
-
     }
 }

@@ -2,11 +2,11 @@ using FluentValidation;
 using SocialSync.Application.Contracts.Persistence;
 
 namespace SocialSync.Application.DTOs.PostDtos.Validators;
-public class RemovePostDtoValidator : AbstractValidator<DeletePostDto>
+public class DeletePostDtoValidator : AbstractValidator<DeletePostDto>
 {
     private readonly IUserRepository _userRepository;
     private readonly IPostRepository _postRepository;
-    public RemovePostDtoValidator(IUserRepository userRepository, IPostRepository postRepository)
+    public DeletePostDtoValidator(IUserRepository userRepository, IPostRepository postRepository)
     {
         _userRepository = userRepository;
         _postRepository = postRepository;
@@ -28,10 +28,5 @@ public class RemovePostDtoValidator : AbstractValidator<DeletePostDto>
             return user != null && post.UserId == user.Id;
 
         }).WithMessage("Post author id does not match with the id of author of the post being deleted.");
-
-
-
-
-
     }
 }
