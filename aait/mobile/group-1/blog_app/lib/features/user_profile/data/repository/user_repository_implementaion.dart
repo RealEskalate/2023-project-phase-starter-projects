@@ -26,7 +26,7 @@ class UserRepositoryImpl extends UserRepository {
         return Right(user);
       } catch (e) {
         print("error occured $e");
-        return Left(ServerFailure(message:e.toString()));
+        return Left(ServerFailure(message: e.toString()));
       }
     } else {
       try {
@@ -34,7 +34,7 @@ class UserRepositoryImpl extends UserRepository {
         return Right(user);
       } catch (e) {
         print("error occured $e");
-        return Left(ServerFailure(message:e.toString()));
+        return Left(ServerFailure(message: e.toString()));
       }
     }
   }
@@ -46,7 +46,7 @@ class UserRepositoryImpl extends UserRepository {
       return Right(user);
     } catch (e) {
       print("error occured $e");
-      return Left(ServerFailure(message:e.toString()));
+      return Left(ServerFailure(message: e.toString()));
     }
   }
 }
