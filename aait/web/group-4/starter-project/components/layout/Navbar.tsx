@@ -56,7 +56,7 @@ export default function Navbar() {
       <nav
         className={`flex ${
           nav ? "flex-col" : "hidden"
-        } gap-4 items-center text-gunmetal-gray text-xl lg-1:hidden`}
+        } gap-4 items-center text-[#565656] text-xl lg-1:hidden`}
       >
         <NavMenu/>
         {loginDonateBtn}

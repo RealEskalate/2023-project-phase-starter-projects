@@ -11,7 +11,7 @@ const SuccessRateCard = ({year, rate, average}: Props) => {
       <p className="text-grayish-brown font-semibold text-2xl">{year}</p>
       <div className="space-y-4">
         <p className="text-2xl font-semibold">{rate}</p>
-        <p className="text-xl text-medium-gray">{average}</p>
+        <p className="text-xl text-[#7D7D7D]">{average}</p>
       </div>
     </div>
   );

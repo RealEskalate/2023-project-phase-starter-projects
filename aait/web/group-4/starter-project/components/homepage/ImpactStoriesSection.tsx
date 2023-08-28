@@ -3,21 +3,21 @@ import Image from "next/image";
 const ImpactStoriesSection = () => {
   return (
     <section className="flex flex-col gap-12 items-center">
-      <h2 className="font-{montserrat} font-bold text-4xl md:text-5xl text-charcoal">
+      <h2 className="font-{montserrat} font-bold text-4xl md:text-5xl text-[#363636]">
         Impact Stories
       </h2>
       <div className="grid grid-flow-row auto-rows-max place-items-center gap-12 lg-1:gap-0 lg-1:grid-cols-2">
         {/* left section */}
         <div className="flex flex-col gap-12">
           <div className="flex flex-col gap-4 items-start">
-            <h3 className="font-semibold text-2xl text-charcoal">
+            <h3 className="font-semibold text-2xl text-[#363636]">
               Abel Tsegaye
             </h3>
-            <p className="font-medium text-lg text-grayish-brown">
+            <p className="font-medium text-lg text-[#4D4A49]">
               Software Engineer at Google
             </p>
           </div>
-          <p className="text-sm md:text-xl text-jet-black">
+          <p className="text-sm md:text-xl text-[#242424]">
             “ When I joined A2SV in 2019, I found the concept of data structures
             and algorithms quite challenging. A2SV's smooth learning process and
             dedicated team molded me to see the peak of my abilities. Through

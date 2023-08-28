@@ -5,7 +5,7 @@ const LandingSection = () => (
   <section className="grid grid-flow-row auto-rows-max place-items-center gap-12 xl:grid-flow-col xl:auto-cols-fr">
     {/* Left Section */}
     <div className="flex flex-col gap-8 items-center lg-1:items-start">
-      <h1 className="text-6xl font-extrabold text-center text-blue-purple md:text-7xl xl:w-3/4 xl:text-left">
+      <h1 className="text-6xl font-extrabold text-center text-[#160041] md:text-7xl xl:w-3/4 xl:text-left">
         Africa to <span className="text-primary-color">Silicon Valley</span>
       </h1>
       <p className="text-2xl text-center text-[#424242] max-w-xl leading-relaxed mb-8 md:text-left md:text-4xl">
