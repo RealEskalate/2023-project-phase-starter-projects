@@ -20,18 +20,20 @@ namespace Application.Features.Post.Handlers.Queries
             _unitOfWork = unitOfWork;
         }
 
-        public async Task<BaseCommandResponse<List<PostDto>>> Handle(GetByContenetRequest request, CancellationToken cancellationToken)
-        {
-            var posts = await _unitOfWork.postRepository.GetByContent(request.Contenet);
+        public async Task<BaseCommandResponse<List<PostDto>>> Handle(GetByContenetRequest request, CancellationToken cancellationToken){
+            try{
+                var posts = await _unitOfWork.postRepository.GetByContent(request.Contenet);
+                if (posts == null){
+                    throw new NotFoundException(nameof(Domain.Entities.Post), request.Contenet);
+                }
 
-            if (posts == null)
-            {
-                var notFoundException = new NotFoundException(nameof(Domain.Entities.Post), request.Contenet);
-                return BaseCommandResponse<List<PostDto>>.FailureHandler(notFoundException);
+                var postDtos = _mapper.Map<List<PostDto>>(posts);
+                return BaseCommandResponse<List<PostDto>>.SuccessHandler(postDtos);
             }
-
-            var postDtos = _mapper.Map<List<PostDto>>(posts);
-            return BaseCommandResponse<List<PostDto>>.SuccessHandler(postDtos);
+            catch(Exception ex){
+                
+                    return BaseCommandResponse<List<PostDto>>.FailureHandler(ex);
+            }
         }
     }
 }
