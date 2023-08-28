@@ -1,4 +1,5 @@
 import 'package:equatable/equatable.dart';
+import 'package:image_picker/image_picker.dart';
 
 import '../../../../core/use_case/usecase.dart';
 import '../../../../core/util/typedef.dart';
@@ -28,7 +29,7 @@ class UpdateArticleParams extends Equatable {
   final String title;
   final String subTitle;
   final String estimatedReadTime;
-  final String image;
+  final XFile image;
   final String id;
 
   const UpdateArticleParams({
@@ -48,7 +49,7 @@ class UpdateArticleParams extends Equatable {
           title: '_empty.title',
           subTitle: '_empty.subTitle',
           estimatedReadTime: '_empty.estimatedReadTime',
-          image: '_empty.image',
+          image: XFile(''),
           id: '1',
         );
 
