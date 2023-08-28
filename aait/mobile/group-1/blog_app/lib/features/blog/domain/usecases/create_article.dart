@@ -9,7 +9,7 @@ class CreateArticle {
   final ArticleRepository repository;
   CreateArticle(this.repository);
 
-  Future<Either<Failure, Article>> call(CreateArticleEntity article) async {
+  Future<Either<Failure, Article>> createArticle(CreateArticleEntity article) async {
     return await repository.createArticle(article);
   }
 }
