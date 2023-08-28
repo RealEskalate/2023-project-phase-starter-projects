@@ -39,7 +39,6 @@ Future<void> init() async {
   // Bloc
   serviceLocator.registerFactory(
     () => ArticleBloc(
-      getTags: serviceLocator(),
       createArticle: serviceLocator(),
       deleteArticle: serviceLocator(),
       getAllArticles: serviceLocator(),
