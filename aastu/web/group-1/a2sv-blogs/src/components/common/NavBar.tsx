@@ -24,8 +24,8 @@ export default function Nav() {
     setOpenMenu(!openMenu);
   };
   return (
-    <nav className="bg-white fixed w-full z-50 top-0 left-0">
-      <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
+    <nav className="bg-white fixed w-full z-50 top-0">
+      <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto py-4 px-2">
         <Link href="/">
           <Image
             src="/images/a2sv-logo.svg"
@@ -35,8 +35,8 @@ export default function Nav() {
             className="w-32 h-8"
           />
         </Link>
-        <div className="flex lg:order-2">
-          <div className="hidden content-end row-span-1 lg:flex lg:gap-0">
+        <div className="flex lg:order-2 items-center">
+          <div className="hidden content-end row-span-1 lg:flex lg:gap-0 lg:items-center">
             {auth ? (
               <div className=" translate-x-5 -translate-y-1">
                 <ProfileAvatar imageUrl={imageUrl} />
