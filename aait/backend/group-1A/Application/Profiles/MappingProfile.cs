@@ -40,6 +40,7 @@ namespace Application.Profiles
             CreateMap<CommentResponseDTO, Comment>().ReverseMap();
             CreateMap<CommentCreateDTO, Comment>().ReverseMap();
             CreateMap<CommentUpdateDTO, Comment>().ReverseMap();
+            CreateMap<TagResponseDto, Tag>().ReverseMap();
             
         
             CreateMap<FollowDTO, Follow>().ReverseMap();

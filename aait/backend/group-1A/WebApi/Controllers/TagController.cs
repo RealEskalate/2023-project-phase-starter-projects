@@ -23,8 +23,8 @@ public class TagController : ControllerBase{
     }
 
     [HttpGet]
-    public IActionResult Get(GetAllTagsRequest request){
-        var result = _mediator.Send(request);
+    public IActionResult Get(){
+        var result = _mediator.Send(new GetAllTagsRequest());
         return Ok(result);
     }
 

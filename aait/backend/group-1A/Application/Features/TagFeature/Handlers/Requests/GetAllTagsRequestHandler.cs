@@ -19,6 +19,7 @@ public class GetAllTagsRequestHandler : IRequestHandler<GetAllTagsRequest, IEnum
     public async Task<IEnumerable<TagResponseDto>> Handle(GetAllTagsRequest request, CancellationToken cancellationToken)
     {
         var tags = await _tagReposiotry.GetAll();
+        Console.WriteLine(tags);
         
         return _mapper.Map<IEnumerable<TagResponseDto>>(tags);
 

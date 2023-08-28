@@ -54,5 +54,9 @@ namespace Persistence.Repositories
             return result != null;
         }
 
+        Task<List<PostResponseDTO>> IPostRepository.GetAllPostsWithReaction(int userId)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

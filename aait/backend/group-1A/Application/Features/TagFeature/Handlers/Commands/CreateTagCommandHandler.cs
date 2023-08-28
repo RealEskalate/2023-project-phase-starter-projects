@@ -22,6 +22,6 @@ public class CreateTagCommandHandler : IRequestHandler<CreateTagCommand, TagResp
     {
         var result = await _tagReposiotory.Add(_mapper.Map<Tag>(request.CreateTagDto));
 
-        return new TagResponseDto(){Tag = result};
+        return new TagResponseDto(){Title = result.Title};
     }
 }
