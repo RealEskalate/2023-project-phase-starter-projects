@@ -22,6 +22,8 @@ public class SocialSyncDbContext : DbContext
         {
             entity.HasKey(u => u.Id);
             entity.HasMany(u => u.Followers).WithMany(u => u.Followings);
+            entity.HasMany(u => u.NotificationsReceived).WithOne(u => u.Recepient);
+            entity.HasMany(u => u.NotificationsSent).WithOne(u => u.Sender);
         });
 
         modelBuilder.Entity<Post>(entity =>
