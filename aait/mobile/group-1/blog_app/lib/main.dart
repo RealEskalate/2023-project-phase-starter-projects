@@ -5,6 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import './features/user_profile/presentation/pages/profile.dart';
+import 'features/intro_screens/onboarding_screens/onboarding_screen1.dart';
+import 'features/intro_screens/splash_screen/splashScreenpage.dart';
 import 'injection_container.dart' as di;
 
 void main() async {
@@ -35,7 +37,7 @@ class MyApp extends StatelessWidget {
       //DevicePreview
 
       darkTheme: ThemeData.dark(),
-      home: const ProfilePage(),
+      home: SplashScreen(),
     );
   }
 }
