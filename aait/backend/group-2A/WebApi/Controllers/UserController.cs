@@ -5,6 +5,7 @@ using Application.DTO.UserDTO;
 using Application.Features.User.Request;
 using Application.Features.User.Request.Queries;
 using Application.Model;
+using Domain.Entities;
 using Microsoft.AspNetCore.Authorization;
 
 namespace WebApi.Controllers
@@ -26,7 +27,7 @@ namespace WebApi.Controllers
         public async Task<IActionResult> GetNotification(){
             var command = new GetNotifications(){Id = int.Parse(User.FindFirst("reader").Value)};
             var notifcations = await _mediator.Send(command);
-            return Ok(notifcations);
+            return ResponseHandler<List<Notification>>.HandleResponse(notifcations, 200);
         }
 
 
@@ -35,7 +36,7 @@ namespace WebApi.Controllers
         {
             var command = new GetUserProfile() { Id = UserId };
             var token = await _mediator.Send(command);
-            return Ok(token);
+            return ResponseHandler<UserProfileDTO>.HandleResponse(token, 200);
         }
         
         [HttpGet]
@@ -43,14 +44,14 @@ namespace WebApi.Controllers
         {
             var command = new GetUsers();
             var token = await _mediator.Send(command);
-            return Ok(token);
+            return ResponseHandler<List<UserDto>>.HandleResponse(token, 200);
         }
 
-        [HttpGet]
+        [HttpGet("search")]
         public async Task<IActionResult> SearchUsers([FromQuery] string name){
             var command = new SearchUsers{ Query = name };
             var users = await _mediator.Send(command);
-            return Ok(users);
+            return ResponseHandler<List<UserDto>>.HandleResponse(users, 200);
         }
 
     }
