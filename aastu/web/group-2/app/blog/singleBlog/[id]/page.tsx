@@ -39,7 +39,7 @@ const First = () => {
       <div className="text-3xl font-primaryFont text-center mt-20 mx-auto">{blogInfo?.title}</div>
       <div className="text-xs font-secondaryFont flex items-center justify-center font-light uppercase text-gray-500 h-5 m-3">
         {blogInfo?.tags
-          .map((tag) => {
+          .map((tag: any) => {
             return tag;
           })
           .join(', ')}
@@ -51,7 +51,7 @@ const First = () => {
           width={980}
           height={514.5}
           alt="Picture"
-          className="w-full max-w-screen-xl mx-auto"
+          className="w-full max-w-screen-xl mx-auto max-h-[65vh] object-cover object-center"
         />
       </div>
       {blogInfo?.author && (
