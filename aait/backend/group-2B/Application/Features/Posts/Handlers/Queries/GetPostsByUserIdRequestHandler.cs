@@ -22,7 +22,7 @@ public class GetPostsByUserIdRequestHandler : IRequestHandler<GetPostsByUserIdRe
 
     public async Task<CommonResponse<List<PostDto>>> Handle(GetPostsByUserIdRequest request, CancellationToken cancellationToken)
     {
-        var postsByUserId = await _postRepository.GetPostsByUserIdAsync(request.UserId);
+        var postsByUserId = await _unitOfWork.PostRepository.GetPostsByUserIdAsync(request.UserId);
         var response = CommonResponse<List<PostDto>>.Success(_mapper.Map<List<PostDto>>(postsByUserId));
         return response;
     }

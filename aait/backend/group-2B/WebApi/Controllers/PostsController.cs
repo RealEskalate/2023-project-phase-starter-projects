@@ -64,7 +64,7 @@ namespace WebApi.Controllers
             }
         }
 
-        [HttpGet("/user-posts/{userId}")]
+        [HttpGet("user-posts/{userId}")]
         public async Task<IActionResult> GetByAuthorAsync(int userId)
         {
             var getByAuthorRequest = new GetPostsByUserIdRequest { UserId = userId };
@@ -72,7 +72,7 @@ namespace WebApi.Controllers
             return Ok(response);
         }
 
-        [HttpGet("tags/")]
+        [HttpGet("tags")]
         public async Task<IActionResult> GetByTagsAsync([FromQuery] List<string> tags)
         {
             var getByTagsRequest = new GetPostsByTagsRequest { Tags = tags };

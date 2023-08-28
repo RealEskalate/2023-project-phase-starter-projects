@@ -9,20 +9,18 @@ namespace SocialSync.Application.Features.Posts.Handlers.Queries;
 
 public class GetPostsByTagsRequestHandler : IRequestHandler<GetPostsByTagsRequest, CommonResponse<List<PostDto>>>
 {
-    private IPostRepository _postRepository;
     private IUnitOfWork _unitOfWork;
     private IMapper _mapper;
 
     public GetPostsByTagsRequestHandler(IUnitOfWork unitOfWork, IMapper mapper)
     {
         _unitOfWork = unitOfWork;
-        _postRepository = _unitOfWork.PostRepository;
         _mapper = mapper;
     }
 
     public async Task<CommonResponse<List<PostDto>>> Handle(GetPostsByTagsRequest request, CancellationToken cancellationToken)
     {
-        var postsByTags = await _postRepository.GetPostsByTagsAsync(request.Tags);
+        var postsByTags = await _unitOfWork.PostRepository.GetPostsByTagsAsync(request.Tags);
         var response = CommonResponse<List<PostDto>>.Success(_mapper.Map<List<PostDto>>(postsByTags));
         return response;
     }

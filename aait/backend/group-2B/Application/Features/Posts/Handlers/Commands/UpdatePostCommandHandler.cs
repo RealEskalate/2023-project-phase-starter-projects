@@ -9,22 +9,19 @@ namespace SocialSync.Application.Features.Posts.Handlers.Commands;
 
 public class UpdatePostCommandHandler :  IRequestHandler<UpdatePostCommand, CommonResponse<Unit>>
 {
-    private IPostRepository _postRepository;
-    private IUserRepository _userRepository;
+
     private IUnitOfWork _unitOfWork;
     private IMapper _mapper;
 
     public UpdatePostCommandHandler(IUnitOfWork unitOfWork, IMapper mapper)
     {
         _unitOfWork = unitOfWork;
-        _postRepository = _unitOfWork.PostRepository;
-        _userRepository = _unitOfWork.UserRepository;
         _mapper = mapper;
     }
 
     public async Task<CommonResponse<Unit>> Handle(UpdatePostCommand request, CancellationToken cancellationToken)
     {
-        var updateValidator = new UpdatePostDtoValidator(_userRepository, _postRepository);
+        var updateValidator = new UpdatePostDtoValidator(_unitOfWork.UserRepository,_unitOfWork.PostRepository);
         var updateValidationResult = await updateValidator.ValidateAsync(request.UpdatePostDto);
 
         if (!updateValidationResult.IsValid)
@@ -35,10 +32,10 @@ public class UpdatePostCommandHandler :  IRequestHandler<UpdatePostCommand, Comm
 
         else
         {
-            var post = await _postRepository.GetAsync(request.UpdatePostDto.Id);
+            var post = await _unitOfWork.PostRepository.GetAsync(request.UpdatePostDto.Id);
             _mapper.Map(request.UpdatePostDto, post);
 
-            await _postRepository.UpdateAsync(post);
+            await _unitOfWork.PostRepository.UpdateAsync(post);
             int success = await _unitOfWork.SaveAsync();
             if (success > 0)
             {

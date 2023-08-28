@@ -10,20 +10,18 @@ namespace SocialSync.Application.Features.Posts.Handlers.Queries;
 
 public class GetAllPostsRequestHandler : IRequestHandler<GetAllPostsRequest, CommonResponse<List<PostDto>>>
 {
-    private IPostRepository _postRepository;
     private IUnitOfWork _unitOfWork;
     private IMapper _mapper;
     public GetAllPostsRequestHandler(IUnitOfWork unitOfWork, IMapper mapper)
     {
         _unitOfWork = unitOfWork;
-        _postRepository = _unitOfWork.PostRepository;
         _mapper = mapper;
     }
 
     public async Task<CommonResponse<List<PostDto>>> Handle(GetAllPostsRequest request, CancellationToken cancellationToken)
     {
         CommonResponse<List<PostDto>> response;
-        response = CommonResponse<List<PostDto>>.Success(_mapper.Map<List<PostDto>>(await _postRepository.GetAsync()));
+        response = CommonResponse<List<PostDto>>.Success(_mapper.Map<List<PostDto>>(await _unitOfWork.PostRepository.GetAsync()));
         return response;
     }
 }

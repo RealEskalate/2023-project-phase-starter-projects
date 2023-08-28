@@ -10,22 +10,18 @@ namespace SocialSync.Application.Features.Posts.Handlers.Commands;
 
 public class CreatePostCommandHandler : IRequestHandler<CreatePostCommand, CommonResponse<int>>
 {
-    private IPostRepository _postRepository;
-    private IUserRepository _userRepository;
     private IUnitOfWork _unitOfWork;
     private IMapper _mapper;
 
     public CreatePostCommandHandler(IUnitOfWork unitOfWork, IMapper mapper)
     {
         _unitOfWork = unitOfWork;
-        _postRepository = _unitOfWork.PostRepository;
-        _userRepository = _unitOfWork.UserRepository;
         _mapper = mapper;
     }
 
     public async Task<CommonResponse<int>> Handle(CreatePostCommand request, CancellationToken cancellationToken)
     {
-        var createValidator = new CreatePostDtoValidator(_userRepository);
+        var createValidator = new CreatePostDtoValidator(_unitOfWork.UserRepository);
         var validationResult = await createValidator.ValidateAsync(request.CreatePostDto);
 
         if (!validationResult.IsValid)
@@ -36,7 +32,7 @@ public class CreatePostCommandHandler : IRequestHandler<CreatePostCommand, Commo
         else
         {
             var post = _mapper.Map<Post>(request.CreatePostDto);
-            var newPost = await _postRepository.AddAsync(post);
+            var newPost = await _unitOfWork.PostRepository.AddAsync(post);
             int success = await _unitOfWork.SaveAsync();
 
             if (success != 0)

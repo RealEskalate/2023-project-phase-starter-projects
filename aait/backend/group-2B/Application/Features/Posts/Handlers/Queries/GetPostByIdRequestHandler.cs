@@ -9,19 +9,17 @@ namespace SocialSync.Application.Features.Posts.Handlers.Queries;
 
 public class GetPostByIdRequestHandler : IRequestHandler<GetPostByIdRequest, CommonResponse<PostDto>>
 {
-    private IPostRepository _postRepository;
     private IUnitOfWork _unitOfWork;
     private IMapper _mapper;
     public GetPostByIdRequestHandler(IUnitOfWork unitOfWork, IMapper mapper)
     {
         _unitOfWork = unitOfWork;
-        _postRepository = _unitOfWork.PostRepository;
         _mapper = mapper;
     }
 
     public async Task<CommonResponse<PostDto>> Handle(GetPostByIdRequest request, CancellationToken cancellationToken)
     {
-        var post = await _postRepository.GetAsync(request.Id);
+        var post = await _unitOfWork.PostRepository.GetAsync(request.Id);
         var response = CommonResponse<PostDto>.Success(_mapper.Map<PostDto>(post));
         return response;
     }
