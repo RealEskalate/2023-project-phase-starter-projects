@@ -14,10 +14,10 @@ const LandingSection = () => {
       <div className="grid grid-cols-1 md:grid-cols-2 md:grid-rows-1 md:gap-4 gap-y-12">
         <div className="flex flex-col justify-start items-center space-y-10">
           <h1 className="text-4xl md:text-5xl font-extrabold lg:w-3/4 text-center md:text-left">
-            <span className="text-secondaryColor">African to</span>{' '}
+            <span className="text-secondaryColor dark:text-dark-textColor-100">African to</span>{' '}
             <span className="text-primaryColor">Silicon Valley</span>
           </h1>
-          <p className="text-center sm:!leading-10 md:text-left text-xl md:text-2xl text-[#424242] lg:w-3/4 mt-2 md:mt-2.5">
+          <p className="text-center sm:!leading-10 md:text-left text-xl md:text-2xl text-[#424242] lg:w-3/4 mt-2 md:mt-2.5 dark:text-dark-textColor-50">
             A2SV up-skills high-potential university students, connects them with opportunities at
             top tech companies
           </p>

@@ -5,7 +5,7 @@ export default function BuildBetterSection() {
     return (
         <section className='text-center flex flex-col items-center space-y-4 md:space-y-8 md:text-lg'>
         <h2 
-        className='font-semibold font-primaryFont text-3xl md:text-4xl'>
+        className='font-semibold font-primaryFont text-3xl md:text-4xl dark:text-dark-textColor-100'>
             Lets build a better
             <br /> tomorrow
         </h2>
@@ -31,7 +31,7 @@ export default function BuildBetterSection() {
         </button>
 
         <Image 
-            className='w-10/12 object-top object-cover h-10/12' 
+            className='w-10/12 object-top object-cover h-10/12 rounded-md' 
             src={background}
             alt='hero'/>
         </section>
