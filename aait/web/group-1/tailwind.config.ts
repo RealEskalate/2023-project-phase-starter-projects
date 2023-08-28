@@ -18,6 +18,9 @@ const config: Config = {
         'light-text-color': '#7D7D7D',
         'home-card-gray-bg': '#F6F6FC',
         'deep-gray': '#37474F',
+        'form-gray-primary': '#434343',
+        'form-input-color': '#767676',
+        'form-field-bg': '#EFF3F9',
       },
       screens: {
         'mobile': '375px',
