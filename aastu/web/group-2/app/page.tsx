@@ -11,13 +11,13 @@ import SuccsessRateSection from "./components/home/SuccsessRateSection"
 export default function IndexPage() {
 
   return (
-    <>
+    <div className='space-y-16'>
       <LandingSection />
       <BuildBetterSection />
       <SuccsessRateSection />
       <HelpUs />
       <ImpactStoriesSection />
-    </>
+    </div>
   )
 }
 
