@@ -95,7 +95,7 @@ export default function BlogCard() {
       ) : (
         currentItems?.map((item) => (
           <Link className="w-full" href={`/blogs/${item._id}`}>
-            <div className="w-full border-t border-[#D7D7D7] py-5">
+            <div className="w-full border-t border-[#D7D7D7] py-5 flex flex-col gap-1">
               <div className="h-[25%] flex items-center gap-3 px-4">
                 <Image
                   className="w-14 h-14 rounded-full object-cover"
@@ -136,7 +136,7 @@ export default function BlogCard() {
                   </p>
                 </div>
               </div>
-              <div className="h-[60%] flex  lg:flex-row flex-col items-center  px-4 lg:gap-14 gap-5 py-5 justify-between">
+              <div className="h-[60%] flex  lg:flex-row flex-col items-center px-4 lg:gap-14 gap-5 justify-between">
                 <div className="flex flex-col h-full gap-5 px-2">
                   <h1 className="font-montserrat text-xl font-black  text-black line-clamp-4">
                     {item.title}
@@ -155,7 +155,7 @@ export default function BlogCard() {
                   className="lg:w-72 w-full h-48 rounded-xl object-cover"
                 />
               </div>
-              <div className="flex items-center bg-white flex-wrap lg:gap-1 gap-3">
+              <div className="flex items-center bg-white flex-wrap lg:gap-1 gap-3 px-2">
                 {item?.tags?.map(
                   (tag, index) =>
                     tag && (
