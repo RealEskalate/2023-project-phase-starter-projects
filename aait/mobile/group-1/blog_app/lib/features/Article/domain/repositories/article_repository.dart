@@ -7,4 +7,5 @@ import '../entities/create_article_entity.dart';
 abstract class ArticleRepository {
   Future<Either<Failure, Article>> createArticle(CreateArticleEntity article);
   Future<Either<Failure, Article>> updateArticle(CreateArticleEntity article);
+  Future<Either<Failure, Article>> getArticle(String id);
 }

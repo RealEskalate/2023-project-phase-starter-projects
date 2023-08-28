@@ -1,4 +1,6 @@
+import 'package:blog_app/features/Article/domain/entities/article_enitity.dart';
 import 'package:blog_app/features/Article/domain/usecases/create_article.dart';
+import 'package:blog_app/features/Article/domain/usecases/get_article.dart';
 import 'package:blog_app/features/Article/domain/usecases/update_article.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -19,13 +21,23 @@ class ArticleBloc extends Bloc<ArticleEvent, ArticleState> {
         networkInfo: networkInfo, remoteDataSource: remoteDataSource);
 
     on<CreateArticleEvent>((CreateArticleEvent event, Emitter emit) async {
-      CreateArticle createArticle = CreateArticle(repository);
+      CreateArticle usecase = CreateArticle(repository);
+      await usecase.repository.createArticle(event.article);
     });
 
     on<UpdateArticleEvent>((UpdateArticleEvent event, Emitter emit) async {
-      UpdateArticle updateArticle = UpdateArticle(repository);
+      UpdateArticle usecase = UpdateArticle(repository);
+      await usecase.repository.updateArticle(event.article);
     });
 
-    on<GetArticleEvent>((GetArticleEvent event, Emitter emit) async {});
+    on<GetArticleEvent>((GetArticleEvent event, Emitter emit) async {
+      GetArticle usecase = GetArticle(repository);
+      final article = await usecase.repository.getArticle(event.id);
+      if (article is Article) {
+        emit(ArticleFetched(article as Article));
+      } else {
+        emit(Error());
+      }
+    });
   }
 }

@@ -49,4 +49,18 @@ class ArticleRepositoryImpl extends ArticleRepository {
           ConnectionFailure(message: "Failed to connect to the ethernet"));
     }
   }
+
+
+  @override
+  Future<Either<Failure, Article>> getArticle(
+      String id) async {
+    final isConnected = await networkInfo.isConnected;
+    if (isConnected) {
+      final article = await remoteDataSource.getArticle(id);
+      return Right(article);
+    } else {
+      return Left(
+          ConnectionFailure(message: "Failed to connect to the ethernet"));
+    }
+  }
 }

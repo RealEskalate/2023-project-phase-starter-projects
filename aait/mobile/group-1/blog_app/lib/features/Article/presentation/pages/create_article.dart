@@ -1,3 +1,7 @@
+import 'package:blog_app/features/Article/domain/entities/article_enitity.dart';
+import 'package:blog_app/features/Article/domain/entities/create_article_entity.dart';
+import 'package:blog_app/features/Article/domain/usecases/create_article.dart';
+import 'package:blog_app/features/Article/presentation/bloc/article_bloc/article_event.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -13,7 +17,6 @@ class ArticlePage extends StatefulWidget {
 }
 
 class _ArticlePageState extends State<ArticlePage> {
-
   @override
   void initState() {
     super.initState();
@@ -43,6 +46,7 @@ class _ArticlePageState extends State<ArticlePage> {
 
   @override
   Widget build(BuildContext context) {
+    Article? initialArticle;
     bool tonalSelected = true;
 
     final formKey = GlobalKey<FormState>();
@@ -55,7 +59,19 @@ class _ArticlePageState extends State<ArticlePage> {
       body: BlocBuilder<ArticleBloc, ArticleState>(
         builder: (context, state) {
           if (widget.id != null) {
-            
+            final getArticle = BlocProvider.of<ArticleBloc>(context);
+            getArticle.add(GetArticleEvent(widget.id!));
+          }
+          if (state is ArticleFetched) {
+            setState(() {
+              initialArticle = state.article;
+              titleController.text = state.article.title;
+              subTitleController.text = state.article.subTitle;
+              articleContent.text = state.article.subTitle;
+              for (String tag in state.article.tags) {
+                tagsMap[tag] = true;
+              }
+            });
           }
           return SafeArea(
             child: Container(
@@ -206,6 +222,23 @@ class _ArticlePageState extends State<ArticlePage> {
                             if (!formValid) {
                               return;
                             }
+
+                            final bloc = BlocProvider.of<ArticleBloc>(context);
+                            final tags = tagsMap.keys
+                                .where((key) => tagsMap[key]!)
+                                .toList();
+                            CreateArticleEntity article = CreateArticleEntity(
+                                id: initialArticle!.id,
+                                title: titleController.text,
+                                subTitle: subTitleController.text,
+                                tags: tags,
+                                content: articleContent.text);
+                            if (widget.id != null && initialArticle != null) {
+                              bloc.add(UpdateArticleEvent(article));
+                            } else {
+                              bloc.add(CreateArticleEvent(article));
+                            }
+                            Navigator.pop(context);
                           },
                           style: ButtonStyle(
                             backgroundColor: MaterialStateProperty.all<Color>(
