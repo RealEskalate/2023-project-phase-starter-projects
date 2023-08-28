@@ -12,11 +12,27 @@ const SingleBlogCard: React.FC<Blog> = ({
     title,
     tags,
 }) => {
+    const inputString = createdAt;
+    // Parse the input string into a Date object
+    const parsedDate = new Date(inputString as string);
+
+    // Days of the week and months arrays
+    const daysOfWeek = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+    const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+
+    // Get day of the week, month, day, and year
+    const dayOfWeek = daysOfWeek[parsedDate.getUTCDay()];
+    const month = months[parsedDate.getUTCMonth()];
+    const day = parsedDate.getUTCDate();
+    const year = parsedDate.getUTCFullYear();
+
+    // Format the date into the desired output format
+    const formattedDate = `${dayOfWeek}, ${month} ${day}, ${year}`;
     return (
         <div
-            className='space-y-4 bg-white overflow-hidden shadow-lg rounded-md my-4 mx-3'>
+            className='space-y-4 relative bg-white overflow-hidden shadow-lg rounded-md my-4 mx-3'>
             <Image
-                className='w-full'
+                className='w-full h-48 object-cover'
                 src={image}
                 alt={title}
                 width={300}
@@ -34,10 +50,10 @@ const SingleBlogCard: React.FC<Blog> = ({
                         className='rounded-full'
                     />
                     <span> by {author?.name}</span>
-                    <span>{createdAt}</span>
-                </div>
+                    <span>{formattedDate}</span>
+                    </div>
                 <div
-                    className='flex flex-wrap w-full items-start text-center'>
+                    className='flex flex-wrap w-full items-start text-center !mb-12'>
                     {tags.map((tag, i) => {
                         return (
                             <p
@@ -47,11 +63,10 @@ const SingleBlogCard: React.FC<Blog> = ({
                     })}
                 </div>
 
-                <hr
-                    className='w-10/12 mx-auto' />
+                
                 <div
-                    className='px-4 flex justify-between font-semibold'>
-
+                    className='absolute bottom-0 left-0 w-full p-4 mx-auto flex flex-wrap justify-between font-semibold'>
+                    <hr className='w-full mb-4' />
                     <span
                         className='text-[#FF9F43]'>
                         <AiFillClockCircle className='inline-block mr-1' />
