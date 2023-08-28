@@ -13,6 +13,14 @@ import 'features/article/domain/repositories/article_repository.dart';
 import 'features/article/domain/usecases/usecases.dart';
 import 'features/article/presentation/bloc/article_bloc.dart';
 import 'features/article/presentation/bloc/tag_selector_bloc.dart';
+import 'features/authentication/data/data_sources/local_data_source.dart';
+import 'features/authentication/data/data_sources/local_data_source_impl.dart';
+import 'features/authentication/data/data_sources/remote_data_source.dart';
+import 'features/authentication/data/data_sources/remote_data_source_impl.dart';
+import 'features/authentication/data/repositories/auth_repository_impl.dart';
+import 'features/authentication/domain/repositories/auth_repo.dart';
+import 'features/authentication/domain/use_cases/auth_use_case.dart';
+import 'features/authentication/presentation/bloc/auth_bloc.dart';
 import 'features/user/data/datasources/local/user_local_data_source.dart';
 import 'features/user/data/datasources/local/user_local_data_source_impl.dart';
 import 'features/user/data/datasources/user_remote_data_source.dart';
@@ -99,9 +107,9 @@ Future<void> init() async {
 
   serviceLocator.registerLazySingleton<UserRepository>(
     () => UserRespositoryImpl(
+      networkInfo: serviceLocator(),
       remoteDataSource: serviceLocator(),
       localDataSource: serviceLocator(),
-      networkInfo: serviceLocator(),
     ),
   );
 
@@ -118,6 +126,58 @@ Future<void> init() async {
   );
   serviceLocator.registerLazySingleton<UserRemoteDataSource>(
     () => UserRemoteDataSourceImpl(client: serviceLocator()),
+  );
+
+  // Feature-Authentication
+  //! Bloc
+  serviceLocator.registerFactory(
+    () => AuthBloc(
+      loginUseCase: serviceLocator(),
+      signUpUseCase: serviceLocator(),
+      logoutUseCase: serviceLocator(),
+      customClient: serviceLocator(),
+    ),
+  );
+
+  //! Use cases
+  serviceLocator.registerLazySingleton(
+    () => LoginUseCase(
+      authRepository: serviceLocator(),
+    ),
+  );
+
+  serviceLocator.registerLazySingleton(
+    () => SignUpUseCase(
+      authRepository: serviceLocator(),
+    ),
+  );
+
+  serviceLocator.registerLazySingleton(
+    () => LogoutUseCase(
+      authRepository: serviceLocator(),
+    ),
+  );
+
+  //! Repository
+  serviceLocator.registerLazySingleton<AuthRepository>(
+    () => AuthRepositoryImpl(
+      authRemoteDataSource: serviceLocator(),
+      authLocalDataSource: serviceLocator(),
+      networkInfo: serviceLocator(),
+    ),
+  );
+
+  //! Data sources
+  serviceLocator.registerLazySingleton<AuthRemoteDataSource>(
+    () => AuthRemoteDataSourceImpl(
+      client: serviceLocator(),
+    ),
+  );
+
+  serviceLocator.registerLazySingleton<AuthLocalDataSource>(
+    () => AuthLocalDataSourceImpl(
+      sharedPreferences: serviceLocator(),
+    ),
   );
 
   // External
