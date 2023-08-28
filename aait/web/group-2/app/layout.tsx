@@ -1,5 +1,20 @@
 import "./globals.css";
 import type { Metadata } from "next";
+import { Inter,Lato, Nunito, Poppins  } from 'next/font/google'
+
+const inter = Inter({ subsets: ['latin'] })
+
+const lato = Lato({
+  subsets: ['latin'], variable: '--font-lato', weight: ['100','300','400','700','900']
+})
+
+const nunito = Nunito({
+  subsets: ['latin'], variable: '--font-nunito'
+})
+
+const poppins = Poppins({
+  subsets: ['latin'], variable: '--font-poppins', weight: ['100','300','400','700','900']
+})
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -12,10 +27,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html>
-      <link rel="preconnect" href="https://fonts.googleapis.com"/>
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
-<link href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&family=Nunito:ital,wght@0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;0,1000;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900;1,1000&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet"></link>
+    <html lang='en' className={`${poppins.className} ${nunito.className} ${lato.className}`}>
       <body>{children}</body>
     </html>
   );
