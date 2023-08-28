@@ -7,7 +7,7 @@ import '../../../../core/presentation/router/routes.dart';
 import '../../domain/entities/login_entity.dart';
 import '../bloc/auth_bloc.dart';
 import 'custom_text_field.dart';
-import 'custome_password_text_form_field.dart';
+import 'custom_password_text_form_field.dart';
 import 'elevated_button_style.dart';
 import 'elevated_button_text.dart';
 import 'forgot_password.dart';
@@ -42,12 +42,11 @@ class _LoginComponentState extends State<LoginComponent> {
           ScaffoldMessenger.of(context).showSnackBar(
             const SnackBar(
               content: Text('Successfully logged in!'),
+              duration: Duration(seconds: 4),
             ),
           );
 
-          Future.delayed(const Duration(seconds: 3), () {
-            context.go(Routes.articles);
-          });
+          context.go(Routes.home);
         }
       },
       builder: (context, state) {
@@ -83,14 +82,17 @@ class _LoginComponentState extends State<LoginComponent> {
               Expanded(
                 child: ElevatedButton(
                   onPressed: () {
-                    LoginRequestEntity loginRequestEntity = LoginRequestEntity(
-                      email: _usernameController.text,
-                      password: _passwordController.text,
-                    );
+                    if (_formKey.currentState!.validate()) {
+                      LoginRequestEntity loginRequestEntity =
+                          LoginRequestEntity(
+                        email: _usernameController.text,
+                        password: _passwordController.text,
+                      );
 
-                    context.read<AuthBloc>().add(LoginEvent(
-                          loginRequestEntity: loginRequestEntity,
-                        ));
+                      context.read<AuthBloc>().add(LoginEvent(
+                            loginRequestEntity: loginRequestEntity,
+                          ));
+                    }
                   },
                   style: elevatedButtonStyle(),
                   child: const ElevatedButtonText(

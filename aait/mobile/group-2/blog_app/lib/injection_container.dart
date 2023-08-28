@@ -59,6 +59,7 @@ Future<void> init() async {
         updateUserPhoto: serviceLocator(),
         getBookmarkedArticles: serviceLocator(),
       ));
+
   //! Feature-Authentication
   // Auth Bloc
   serviceLocator.registerFactory(

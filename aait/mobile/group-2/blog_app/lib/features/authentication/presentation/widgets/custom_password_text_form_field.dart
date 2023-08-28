@@ -58,6 +58,15 @@ class _CustomPasswordTextFieldState extends State<CustomPasswordTextField> {
           fontFamily: 'UrbanistMedium',
           color: AppColors.darkerBlue,
         ),
+        validator: (value) {
+          if (value == null || value.isEmpty) {
+            return 'Please enter your password';
+          } else if (value.length < 6 || value.length > 16) {
+            return 'Password must be between 6 and 16 characters';
+          }
+          return null;
+        },
+        autovalidateMode: AutovalidateMode.onUserInteraction,
       ),
     );
   }
