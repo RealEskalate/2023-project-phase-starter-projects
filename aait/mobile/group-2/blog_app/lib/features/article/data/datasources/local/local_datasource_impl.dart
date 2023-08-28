@@ -4,10 +4,12 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../../../../core/error/exception.dart';
 import '../../models/article_model.dart';
+import '../../models/tag_model.dart';
 import 'local_datasource.dart';
 
 class ArticleLocalDataSourceImpl extends ArticleLocalDataSource {
-  final key = 'CACHED_ARTICLES';
+  final articleKey = 'CACHED_ARTICLES';
+  final tagKey = 'CACHED_TAGS';
 
   final SharedPreferences sharedPreferences;
 
@@ -17,7 +19,7 @@ class ArticleLocalDataSourceImpl extends ArticleLocalDataSource {
   Future<void> cacheArticles(List<ArticleModel> articles) async {
     final jsonEncoded = jsonEncode(articles);
 
-    await sharedPreferences.setString(key, jsonEncoded);
+    await sharedPreferences.setString(articleKey, jsonEncoded);
   }
 
   @override
@@ -42,7 +44,7 @@ class ArticleLocalDataSourceImpl extends ArticleLocalDataSource {
 
   @override
   Future<List<ArticleModel>> getArticles() async {
-    final jsonEncoded = sharedPreferences.getString(key);
+    final jsonEncoded = sharedPreferences.getString(articleKey);
 
     if (jsonEncoded != null) {
       final List<dynamic> jsonDecoded = jsonDecode(jsonEncoded);
@@ -77,5 +79,29 @@ class ArticleLocalDataSourceImpl extends ArticleLocalDataSource {
     final filteredArticles = articles.where((article) => article.id != id);
 
     await cacheArticles(filteredArticles.toList());
+  }
+
+  @override
+  Future<List<TagModel>> getTags() async {
+    final jsonEncoded = sharedPreferences.getString(tagKey);
+
+    if (jsonEncoded != null) {
+      final List<dynamic> jsonDecoded = jsonDecode(jsonEncoded);
+
+      final tags =
+          jsonDecoded.map<TagModel>((name) => TagModel(name: name)).toList();
+
+      return tags;
+    }
+
+    return <TagModel>[];
+  }
+
+  @override
+  Future<void> cacheTags(List<TagModel> tags) async {
+    final jsonEncoded =
+        jsonEncode(tags.map<String>((tag) => tag.name).toList());
+
+    await sharedPreferences.setString(articleKey, jsonEncoded);
   }
 }
