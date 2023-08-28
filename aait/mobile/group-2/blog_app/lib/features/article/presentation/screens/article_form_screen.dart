@@ -7,7 +7,6 @@ import '../../../../injection_container.dart';
 import '../../domain/entities/article.dart';
 import '../bloc/article_bloc.dart';
 import '../bloc/tag_bloc.dart';
-import '../bloc/tag_event.dart';
 import '../bloc/tag_selector_bloc.dart';
 import '../widgets/create_article_form.dart';
 import '../widgets/snackbar.dart';

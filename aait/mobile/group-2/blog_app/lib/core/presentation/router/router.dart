@@ -12,21 +12,32 @@ final GoRouter router = GoRouter(
 
   routes: <RouteBase>[
     GoRoute(
-      path: Routes.splashScreen,
-      builder: (context, state) => const SplashScreen(),
+      path: Routes.home,
+      builder: (context, state) => const HomePage(),
     ),
     GoRoute(
       path: Routes.home,
       builder: (context, state) => const HomePage(),
     ),
+
+    // splash screen
     GoRoute(
-      path: Routes.articles,
-      builder: (context, state) => const HomePage(),
+      path: Routes.splashScreen,
+      builder: (context, state) => const SplashScreen(),
     ),
+
+    // auth
     GoRoute(
       path: Routes.auth,
       builder: (context, state) => const AuthPage(),
     ),
+
+    // article
+    GoRoute(
+      path: Routes.articles,
+      builder: (context, state) => const HomePage(),
+    ),
+
     GoRoute(
       path: Routes.articleDetail,
       builder: (context, state) {
@@ -42,10 +53,6 @@ final GoRouter router = GoRouter(
         final article = state.extra as Article;
         return ArticleFormScreen(article: article);
       },
-    ),
-    GoRoute(
-      path: Routes.home,
-      builder: (context, state) => const HomePage(),
     ),
   ],
 );

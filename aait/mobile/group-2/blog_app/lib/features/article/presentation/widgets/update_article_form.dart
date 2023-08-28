@@ -8,6 +8,7 @@ import '../../../../core/utils/url_to_file.dart';
 import '../../../user/domain/entities/user_data.dart';
 import '../../domain/entities/article.dart';
 import '../bloc/article_bloc.dart';
+import '../bloc/tag_bloc.dart';
 import '../bloc/tag_selector_bloc.dart';
 import 'custom_chip.dart';
 import 'custom_text_field.dart';
@@ -84,7 +85,7 @@ class _UpdateArticleFormState extends State<UpdateArticleForm> {
             const SizedBox(height: 15),
 
             // Tag field
-            BlocBuilder<ArticleBloc, ArticleState>(
+            BlocBuilder<TagBloc, TagState>(
               builder: (context, state) {
                 if (state is AllTagsLoadedState) {
                   return TagSelector(tags: state.tags);
