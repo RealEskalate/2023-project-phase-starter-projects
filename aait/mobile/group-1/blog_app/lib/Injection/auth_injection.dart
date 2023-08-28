@@ -19,7 +19,7 @@ import '../features/authentication_and_authorization/presentation/bloc/sign_up_b
 final sl = GetIt.instance;
 Future<void> init() async {
   //Bloc
-  sl.registerFactory(() => SignUpBloc(signUp: sl(),loginUseCase: sl()));
+  sl.registerFactory(() => SignUpBloc(signUp: sl(), loginUseCase: sl()));
   sl.registerFactory(() => LogInBloc(loginUseCase: sl()));
 
   //usecases
@@ -39,10 +39,6 @@ Future<void> init() async {
       () => LocalDataSourceImpl(sharedPreferences: sl()));
   //! Core
   sl.registerLazySingleton(() => InputConverter());
-  sl.registerLazySingleton<NetworkInfo>(() => NetworkInfoImpl(sl()));
 
-  final sharedPreferences = await SharedPreferences.getInstance();
-  sl.registerLazySingleton(() => sharedPreferences);
   sl.registerLazySingleton(() => http.Client());
-  sl.registerLazySingleton(() => InternetConnectionChecker());
 }
