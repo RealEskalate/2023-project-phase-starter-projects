@@ -23,7 +23,7 @@ class RemoteDataSource implements BlogRemoteDataSource {
       final responseData = json.decode(response.body);
 
       if (response.statusCode == 200 && responseData['success'] == true) {
-        log("fetched: $responseData");
+        ////  log("fetched: $responseData");
         return responseData['data'];
       } else {
         log("error: $responseData");
@@ -44,9 +44,8 @@ class RemoteDataSource implements BlogRemoteDataSource {
     List<Article> articles = [];
     try {
       for (var blogData in responseData) {
-        log(blogData.toString());
+        //      log(blogData.toString());
         articles.add(Article.fromJson(blogData));
-        log("Check 2");
       }
       return articles;
     } catch (e) {

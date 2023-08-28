@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:bloc/bloc.dart';
 import 'package:blog_app/core/error/failure.dart';
 import 'package:blog_app/features/user/domain/entities/user.dart';
@@ -71,7 +73,8 @@ class UserBloc extends Bloc<UserEvent, UserState> {
       emit(UserLoading()); // Emit UserLoading state here
 
       try {
-        final Either<Failure, User> result = await getUser(event.userId);
+        final Either<Failure, User> result = await getUser();
+        log("User fetched on bloc $result");
         emit(result.fold(
           (failure) => UserError(_mapFailureToMessage(failure)),
           (user) => LoadedGetUserState(user),

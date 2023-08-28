@@ -52,7 +52,6 @@ class MyApp extends StatelessWidget {
           final initialRoute = authToken != null ? '/home' : '/splash';
 
           return MultiBlocProvider(
-            // Use MultiBlocProvider to provide multiple blocs
             providers: [
               BlocProvider<UserBloc>(
                 // Provide UserBloc here
@@ -91,7 +90,7 @@ class MyApp extends StatelessWidget {
                 '/profile': (context) => const UserProfileScreen(),
                 '/login': (context) => const Login(),
                 '/addBlog': (context) => const AddBlog(),
-                '/viewBLlog': (context) => const ViewBlog(),
+                '/viewBlog': (context) => const ViewBlog(),
 
                 // Define routes here
               },

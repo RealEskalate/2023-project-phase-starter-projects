@@ -78,10 +78,10 @@ class UserRepositoryImpl implements UserRepository {
   }
 
   @override
-  Future<Either<Failure, User>> getUser(String userId) async {
+  Future<Either<Failure, User>> getUser() async {
     try {
-      final responseData = await remoteDataSource.getUser(userId);
-      final user = UserModel.fromJson(responseData) as User;
+      final user = await remoteDataSource.getUser();
+      log("Fetched on Repo Imp $user");
       return Right(user); // Return user as Right with success case
     } catch (e) {
       return const Left(ServerFailure('Error fetching user'));
