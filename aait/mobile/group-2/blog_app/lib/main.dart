@@ -1,10 +1,19 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
+import 'bloc_observer.dart';
 import 'core/presentation/router/router.dart';
 import 'core/presentation/theme/app_theme.dart';
+import 'injection_container.dart' as di;
 
-void main() {
+Future<void> main() async {
+  Bloc.observer = SimpleBlocObserver();
+
+  WidgetsFlutterBinding.ensureInitialized();
+
+  await di.init();
+
   runApp(const App());
 }
 
