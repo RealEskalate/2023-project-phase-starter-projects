@@ -55,7 +55,8 @@ class ProfileRemoteDataSourceImpl extends ProfileRemoteDataSource {
     // Attach the image file to the request
     request.files.add(http.MultipartFile(
         'photo', imageFile.readAsBytes().asStream(), imageFile.lengthSync(),
-        filename: 'person_kelvin.jpg', contentType: MediaType.parse(fileType)));
+        filename: imageFile.path.split("/").last,
+        contentType: MediaType.parse(fileType)));
 
     // Send the request and get the response
     var response = await request.send();
@@ -68,6 +69,7 @@ class ProfileRemoteDataSourceImpl extends ProfileRemoteDataSource {
 
   Future<String?> getToken() async {
     final prefs = await SharedPreferences.getInstance();
-    return prefs.getString('token');
+    // return prefs.getString('token');
+    return "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0ZWM0YzczOTkzNTQ0YTE2YmJkNTA0OSIsImlhdCI6MTY5MzIwNzcyOCwiZXhwIjoxNjk1Nzk5NzI4fQ.jKOa5V5m-xRPWO9VCVENFH0KJWbO27mE3UvurLvP3P0";
   }
 }
