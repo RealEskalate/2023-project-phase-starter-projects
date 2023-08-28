@@ -142,7 +142,8 @@ class HomeScreen extends StatelessWidget {
       // button for adding new articles.
       floatingActionButton: FloatingActionButton.extended(
         onPressed: () {
-          Navigator.pushNamed(context, '/create-article');
+          
+          // Navigator.pushNamed(context, '/create-article');
         },
         label: Icon(
           Icons.add,

@@ -5,9 +5,9 @@ import '../../../../core/util/app_colors.dart';
 import '../../domain/entity/article.dart';
 
 class BlogCardWidget extends StatelessWidget {
-  final Article article;
-
   const BlogCardWidget({super.key, required this.article});
+
+  final Article article;
 
   @override
   Widget build(BuildContext context) {
@@ -32,7 +32,9 @@ class BlogCardWidget extends StatelessWidget {
               children: [
                 const BlogImageWidget(), // Widget for displaying the blog image
                 SizedBox(width: 16.w), // Spacing between image and text
-                 BlogExcerptWidget( article: article,), // Widget for displaying blog excerpt
+                BlogExcerptWidget(
+                  article: article,
+                ), // Widget for displaying blog excerpt
               ],
             ),
             Positioned(
@@ -55,11 +57,14 @@ class BlogCardWidget extends StatelessWidget {
 }
 
 class BlogExcerptWidget extends StatelessWidget {
-  Article article;
-   BlogExcerptWidget({
+  BlogExcerptWidget({
     super.key,
     required this.article,
   });
+
+  Article article;
+
+  List<String> tags = ["education", "Entertainment", "education", "Entertainment",];
 
   @override
   Widget build(BuildContext context) {
@@ -81,22 +86,35 @@ class BlogExcerptWidget extends StatelessWidget {
               overflow: TextOverflow.ellipsis,
             ),
             SizedBox(height: 8.h), // Spacing between title and category
-            Container(
-              padding: EdgeInsets.symmetric(horizontal: 8.w, vertical: 4.h),
-              decoration: BoxDecoration(
-                color: AppColors
-                    .disabledButtonColor, // Background color for category box
-                borderRadius: BorderRadius.circular(4),
-              ),
-              child: Text(
-                "Education", // Category of the blog
-                style: TextStyle(
-                  fontFamily: 'Poppins-SemiBold',
-                  color: AppColors.whiteColor,
-                  fontSize: 13.sp,
-                ),
-                maxLines: 1,
-                overflow: TextOverflow.ellipsis,
+            SingleChildScrollView(
+              scrollDirection: Axis.horizontal,
+              child: Row(
+                children: [
+                  ...tags.map(
+                    (tagName) {
+                      return Container(
+                        margin: const EdgeInsets.only(right: 12),
+                        padding: EdgeInsets.symmetric(
+                            horizontal: 8.w, vertical: 4.h),
+                        decoration: BoxDecoration(
+                          color: AppColors
+                              .disabledButtonColor, // Background color for category box
+                          borderRadius: BorderRadius.circular(4),
+                        ),
+                        child: Text(
+                          "Education", // Category of the blog
+                          style: TextStyle(
+                            fontFamily: 'Poppins-SemiBold',
+                            color: AppColors.whiteColor,
+                            fontSize: 13.sp,
+                          ),
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                        ),
+                      );
+                    },
+                  ),
+                ],
               ),
             ),
             SizedBox(height: 8.h), // Spacing between category and author
