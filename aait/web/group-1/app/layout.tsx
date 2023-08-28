@@ -8,6 +8,7 @@ const inter = Poppins({
   subsets: ["latin"],
 });
 import StateProvider from "@/components/provider/StateProvider";
+import Footer from "@/components/layout/Footer";
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -28,6 +29,7 @@ export default function RootLayout({
         <StateProvider>
           <main>{children}</main>
         </StateProvider>
+        <Footer />
       </body>
     </html>
   );
