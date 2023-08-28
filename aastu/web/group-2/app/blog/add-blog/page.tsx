@@ -19,10 +19,11 @@ const AddBlog: React.FC = () => {
   const [blogTitle, setBlogTitle] = useState<string>('');
   const [selectedTags, setSelectedTags] = useState<string[]>(['development']);
   const [blogContent, setBlogContent] = useState<string>('');
+  const [isAddingBlog, setIsAddingBlog] = useState(false);
 
   const [addBlogs] = useAddBlogsMutation();
   const handleSaveChanges = () => {
-    console.log(file, previewImage, blogTitle, selectedTags, blogContent);
+    setIsAddingBlog(true);
     const formData = new FormData();
     formData.append('image', file!);
     selectedTags.forEach((tag) => {
@@ -35,9 +36,10 @@ const AddBlog: React.FC = () => {
     });
     console.log(formData);
     if (blogTitle && blogContent) {
-      addBlogs(formData).then((res) => console.log(res));
+      addBlogs(formData).then((res) => {});
     }
-    // router.replace('/blog');
+    setIsAddingBlog(false);
+    router.replace('/blog');
     // console.log(blogData);
   };
 
@@ -241,14 +243,17 @@ const AddBlog: React.FC = () => {
       </div>
       <div className="grid-cols-12 grid w-[94%] md:mb-48">
         <div className="flex col-span-8 items-center justify-end space-x-8 mt-4 ">
-          <button className="text-primaryColor text-sm" onClick={handleCancel}>
+          <button
+            className="text-primaryColor py-3 px-4 rounded-md text-center text-sm border border-white hover:shadow hover:border-primaryColor"
+            onClick={handleCancel}
+          >
             Cancel
           </button>
           <button
-            className="px-4 py-3 bg-primaryColor text-white rounded-md text-center shadow text-sm"
+            className="px-4 py-3 bg-primaryColor text-white rounded-md text-center shadow text-sm hover:opacity-95"
             onClick={handleSaveChanges}
           >
-            Save Changes
+            {!isAddingBlog ? 'Save Changes' : 'Saving Changes'}
           </button>
         </div>
       </div>
