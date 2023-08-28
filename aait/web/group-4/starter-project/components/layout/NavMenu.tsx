@@ -16,12 +16,12 @@ const NavMenu = () => {
   
   return (
     <>
-      {links.map((lin, i) => {
+      {links.map((link, i) => {
         return (
             <div>
-              <div key={lin.name} className="flex flex-col group">
-                <Link className="pb-2 hover:text-gray-400" href={`${lin.link}`} onClick={() => setActiveLink(i)}>
-                  {lin.name}
+              <div key={link.name} className="flex flex-col group">
+                <Link className="pb-2 hover:text-gray-400" href={`${link.link}`} onClick={() => setActiveLink(i)}>
+                  {link.name}
                 </Link>
                 <span
                   className={`${
