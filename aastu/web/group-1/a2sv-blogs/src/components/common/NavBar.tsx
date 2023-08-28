@@ -2,15 +2,19 @@
 import React, { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { useRouter } from "next/navigation";
+import { useRouter, usePathname } from "next/navigation";
 import { useAuth } from "@/hooks/useAuth";
 import ProfileAvatar from "./ProfileAvatar";
 
 export default function Nav() {
   const [openMenu, setOpenMenu] = useState<boolean>(false);
   const router = useRouter();
+  const path = usePathname();
+  const routeName = path.split("/")[2];
   const auth = useAuth().auth.isAuthenticated;
   const imageUrl = useAuth().auth.userProfile;
+
+  console.log(`${routeName}`);
 
   const handleAuth = () => {
     if (auth) {
@@ -95,7 +99,12 @@ export default function Nav() {
             <li>
               <Link
                 href="/"
-                className="block py-2 pl-3 pr-4  rounded lg:bg-transparent  lg:p-0 lg:hover:bg-white text-[#3C3C3C] text-base hover:bg-gray-100  font-semibold font-montserrat"
+                onClick={handleToggle}
+                className={`${
+                  path === "/"
+                    ? "text-[#264FAD] border-b-2 border-[#264FAD]"
+                    : ""
+                } block py-5 pl-3 pr-4   lg:bg-transparent  lg:p-0 lg:hover:bg-white  text-base hover:bg-gray-100  font-semibold font-montserrat`}
                 aria-current="page"
               >
                 Home
@@ -103,8 +112,13 @@ export default function Nav() {
             </li>
             <li>
               <Link
-                href="/team"
-                className="block py-2 pl-3 pr-4  rounded lg:bg-transparent  lg:p-0 lg:hover:bg-white  text-[#3C3C3C] text-base hover:bg-gray-100  font-semibold font-montserrat"
+                href="/teams"
+                onClick={handleToggle}
+                className={`${
+                  path === "/teams"
+                    ? "text-[#264FAD] border-b-2 border-[#264FAD]"
+                    : ""
+                } block py-3 pl-3 pr-4   lg:bg-transparent  lg:p-0 lg:hover:bg-white  text-base hover:bg-gray-100  font-semibold font-montserrat`}
               >
                 Team
               </Link>
@@ -112,7 +126,12 @@ export default function Nav() {
             <li>
               <Link
                 href="/stories"
-                className="block py-2 pl-3 pr-4  rounded lg:bg-transparent  lg:p-0 lg:hover:bg-white  text-[#3C3C3C] text-base hover:bg-gray-100 font-semibold font-montserrat"
+                onClick={handleToggle}
+                className={`${
+                  path === "/stories"
+                    ? "text-[#264FAD] border-b-2 border-[#264FAD]"
+                    : ""
+                } block py-3 pl-3 pr-4   lg:bg-transparent  lg:p-0 lg:hover:bg-white  text-base hover:bg-gray-100  font-semibold font-montserrat`}
               >
                 Success Stories
               </Link>
@@ -120,7 +139,12 @@ export default function Nav() {
             <li>
               <Link
                 href="/about"
-                className="block py-2 pl-3 pr-4  rounded lg:bg-transparent   lg:hover:bg-white  lg:p-0  text-[#3C3C3C] text-base hover:bg-gray-100   font-semibold font-montserrat"
+                onClick={handleToggle}
+                className={`${
+                  path === "/about"
+                    ? "text-[#264FAD] border-b-2 border-[#264FAD]"
+                    : ""
+                } block py-3 pl-3 pr-4   lg:bg-transparent  lg:p-0 lg:hover:bg-white  text-base hover:bg-gray-100  font-semibold font-montserrat`}
               >
                 About
               </Link>
@@ -128,31 +152,43 @@ export default function Nav() {
             <li>
               <Link
                 href="/blogs"
-                className="block py-2 pl-3 pr-4  rounded lg:bg-transparent lg:hover:bg-white  lg:p-0  text-[#3C3C3C] text-base hover:bg-gray-100   font-semibold font-montserrat"
+                onClick={handleToggle}
+                className={`${
+                  path === "/blogs"
+                    ? "text-[#264FAD] border-b-2 border-[#264FAD]"
+                    : ""
+                } block py-3 pl-3 pr-4   lg:bg-transparent  lg:p-0 lg:hover:bg-white  text-base hover:bg-gray-100  font-semibold font-montserrat`}
               >
                 Blogs
               </Link>
             </li>
             <li>
               <Link
-                href="#"
-                className="block py-2 pl-3 pr-4  rounded lg:bg-transparent  lg:hover:bg-white  lg:p-0  text-[#3C3C3C] text-base hover:bg-gray-100  font-semibold font-montserrat"
+                href="/donate"
+                onClick={handleToggle}
+                className={`${
+                  path === "/donate"
+                    ? "text-[#264FAD] border-b-2 border-[#264FAD]"
+                    : ""
+                } block py-3 pl-3 pr-4   lg:bg-transparent  lg:p-0 lg:hover:bg-white  text-base hover:bg-gray-100  font-semibold font-montserrat`}
               >
                 Get Involved
               </Link>
             </li>
             <li>
               <Link
-                href="#"
-                className="lg:hidden block py-2 pl-3 pr-4 rounded text-[#3C3C3C] text-base font-semibold font-montserrat hover:bg-gray-100 lg:hover:bg-white   lg:p-0   "
+                href="/auth/login"
+                onClick={handleToggle}
+                className="lg:hidden block py-2 pl-3 pr-4  text-[#3C3C3C] text-base font-semibold font-montserrat hover:bg-gray-100 lg:hover:bg-white   lg:p-0   "
               >
                 Login
               </Link>
             </li>
             <li>
               <Link
-                href="#"
-                className="lg:hidden block py-2 pl-3 pr-4 rounded text-[#3C3C3C] text-base font-semibold font-montserrat hover:bg-gray-100 lg:hover:bg-white   lg:p-0   "
+                href="/donate"
+                onClick={handleToggle}
+                className="lg:hidden block py-2 pl-3 pr-4  text-[#3C3C3C] text-base font-semibold font-montserrat hover:bg-gray-100 lg:hover:bg-white   lg:p-0   "
               >
                 Donate
               </Link>
