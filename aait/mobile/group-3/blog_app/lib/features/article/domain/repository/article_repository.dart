@@ -12,7 +12,11 @@ abstract class ArticleRepository {
     required String image,
   });
   // Read Ariticle
-  ResultFuture<Article> getArticle(String id);
+  ResultFuture<List<Article>> getArticle({
+    required String tags,
+    required String searchParams,
+  });
+  ResultFuture<Article> getArticleById(String id);
   ResultFuture<List<Article>> getAllArticles();
   // Update Article
   ResultFuture<Article> updateArticle({
@@ -22,9 +26,11 @@ abstract class ArticleRepository {
     required String subTitle,
     required String estimatedReadTime,
     required String image,
+    required String id,
   });
   // Delete  Article
   ResultFuture<Article> deleteArticle(String id);
 
   ResultFuture<List<String>> getTags();
+
 }

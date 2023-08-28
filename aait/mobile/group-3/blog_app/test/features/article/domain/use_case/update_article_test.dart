@@ -27,18 +27,22 @@ void main() {
           subTitle: any(named: 'subTitle'),
           estimatedReadTime: any(named: 'estimatedReadTime'),
           image: any(named: 'image'),
+          id:  any(named: 'id'),
         )).thenAnswer((_) async => Right(article));
     // Act
     final result = await usecase(params);
     // Assert
 
     expect(result, Right<dynamic, Article>(article));
-    verify(() => repository.updateArticle(tags: any(named: 'tags'),
+    verify(() => repository.updateArticle(
+          tags: any(named: 'tags'),
           content: any(named: 'content'),
           title: any(named: 'title'),
           subTitle: any(named: 'subTitle'),
           estimatedReadTime: any(named: 'estimatedReadTime'),
-          image: any(named: 'image'),)).called(1);
+          image: any(named: 'image'),
+          id: any(named: 'id'),
+          )).called(1);
     verifyNoMoreInteractions(repository);
   });
 }
