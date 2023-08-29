@@ -32,15 +32,7 @@ public class InteractionRepository : GenericRepository<Interaction>, IInteractio
                 && i.Type == InteractionType.Like
         );
 
-        if (existingInteraction != null)
-        {
-            _context.Interactions.Remove(existingInteraction);
-        }
-        else
-        {
-            _context.Interactions.Add(interaction);
-        }
-
+       
         return interaction;
     }
 }
