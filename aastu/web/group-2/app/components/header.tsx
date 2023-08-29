@@ -18,6 +18,7 @@ const Header: FC = () => {
   const currentRoute = usePathname();
   const [openMenu, setOpenMenu] = useState<boolean>(false);
   const [loggedIn, setLoggedIn] = useState(false);
+  const [isClient, setClient] = useState(false);
   // console.log(useDarkMode());
   const [colorTheme, setTheme] = useDarkMode();
 
@@ -26,6 +27,10 @@ const Header: FC = () => {
 
     setTheme(colorTheme === 'light' ? 'light' : 'dark');
   };
+
+  useEffect(() => {
+    setClient(true);
+  }, []);
 
   const wrapperRef = useRef(null);
 
@@ -179,7 +184,7 @@ const Header: FC = () => {
           >
             Donate
           </Link>
-          {loginState ? (
+          {loginState && isClient ? (
             <ProfileDropDown handleSignOut={handleSignOut} />
           ) : (
             <Link
