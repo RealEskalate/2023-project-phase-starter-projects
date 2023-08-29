@@ -45,11 +45,18 @@ public class LikeUnlikePostInteractionCommandHandler
                 );
             if (existingInteraction != null)
             {
-                await _unitOfWork.PostRepository.
+                await _unitOfWork.PostRepository.UnlikePostAsync(existingInteraction.PostId);
+                await _unitOfWork.InteractionRepository.DeleteAsync(existingInteraction);
+            }
+            else
+            {
+                await _unitOfWork.PostRepository.LikePostAsync(command.LikeDto.PostId);
+                await _unitOfWork.InteractionRepository.AddAsync(
+                    _mapper.Map<Interaction>(command.LikeDto));
             }
             if (await _unitOfWork.SaveAsync() > 0)
             {
-                return CommonResponse<int>.Success(createdInteraction.Id);
+                return CommonResponse<int>.Success(1);
             }
             else
             {
