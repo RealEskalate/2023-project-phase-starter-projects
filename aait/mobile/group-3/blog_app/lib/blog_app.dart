@@ -21,7 +21,7 @@ class BlogApp extends StatelessWidget {
         GoRouter(navigatorKey: GlobalKey<NavigatorState>(), routes: [
       // GoRoute(path: '/mmb', builder: (context,state)=>SplashScreen()), 
       // GoRoute(path: '/onboarding', builder: (context,state)=>OnboardingScreen()), 
-      GoRoute(path: '/', builder: (context,state)=>LoginSignUpPage()), 
+      GoRoute(path: '/', builder: (context,state)=>SplashScreen()), 
       // GoRoute(path: '/home', builder: null), //=> TODO: IMPLEMENT HOME SCREEN,
       // GoRoute(
       //     path: '/article', builder: null), //=> TODO: IMPLEMENT ARTICLE SCREEN
