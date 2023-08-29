@@ -2,9 +2,10 @@
 import { useEffect, useState } from "react";
 import PasswordForm from "./PasswordForm";
 import PersonalInfo from "./PersonalInfo";
+import MyBlogs from "../blog/MyBlogs";
 
 export default function ProfilePage() {
-  const components = [<PersonalInfo />, <PasswordForm />];
+  const components = [<PersonalInfo />, <MyBlogs/>,<PasswordForm />];
   const [component, setComponent] = useState(2);
   const activeClass =
     "border-b-2 h-22 border-spacing-4 outline-offset-4 border-blue-600  outline-sky-600 text-blue-600 decoration-sky-600 font-semibold";
@@ -20,11 +21,18 @@ export default function ProfilePage() {
         >
           Personal Information
         </p>
-        <p className={`mx-5 cursor-pointer py-4`}>My Blogs</p>
         <p
           onClick={() => setComponent(2)}
           className={`mx-5 cursor-pointer py-4 ${
             component == 2 ? `${activeClass}` : "text-black"
+          } `}
+        >
+          My blogs
+        </p>
+        <p
+          onClick={() => setComponent(3)}
+          className={`mx-5 cursor-pointer py-4 ${
+            component == 3 ? `${activeClass}` : "text-black"
           } `}
         >
           Account Setting
