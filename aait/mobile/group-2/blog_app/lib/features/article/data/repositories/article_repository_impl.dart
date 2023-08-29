@@ -9,7 +9,6 @@ import '../../domain/repositories/article_repository.dart';
 import '../datasources/local/local_datasource.dart';
 import '../datasources/remote/remote_datasource.dart';
 import '../models/article_mapper.dart';
-import '../models/article_model.dart';
 
 class ArticleRepositoryImpl extends ArticleRepository {
   final ArticleLocalDataSource localDataSource;
