@@ -30,39 +30,31 @@ const BlogPage: React.FC = () => {
     }
 
     if (blogs) {
-
-      const indexOfLastBlog = currentPage * itemsPerPage;
-      const indexOfFirstBlog = indexOfLastBlog - itemsPerPage
-      const currentBlogs = blogs.slice(indexOfFirstBlog, indexOfLastBlog);
-      const totalPages = Math.ceil(blogs.length / itemsPerPage)
-  
-      const handlePageChange = (page:number) => {
-          setCurrentPage(page)
+      return (
+        <div>
+          <SearchBar />
+          <div className="flex flex-col gap-4">
+            {currentBlogs?.map((blog) => (
+              <Link href={`/blogs/${blog._id}`}>
+                  <BlogCard key={blog._id} {...blog} />
+              </Link>
+            ))}
+          </div>
+          <div className="m-16 flex justify-center">
+            <Pagination
+              className="pagination-bar"
+              currentPage={currentPage}
+              totalCount={blogs.length}
+              pageSize={PageSize}
+              onPageChange={page => setCurrentPage(page)}
+            
+            />
+          </div>
+        </div>
+      );
+      }else{
+        return null
       }
-  
-    return (
-      <div>
-        <SearchBar />
-        <div className="flex flex-col gap-4">
-          {currentBlogs.map((blog) => (
-            <Link key={blog._id} href={`/blogs/${blog._id}`}>
-                <BlogCard key={blog._id} {...blog} />
-            </Link>
-          ))}
-        </div>
-        <div className="m-16 flex justify-center">
-          <Pagination
-            currentPage={currentPage}
-            totalPages={totalPages}
-            onPageChange={handlePageChange}
-            className="pagination"
-          />
-        </div>
-      </div>
-    );
-    }else{
-      return null
-    }
 };
 
 export default BlogPage;
