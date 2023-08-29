@@ -597,3 +597,8 @@ FodyWeavers.xsd
 # Additional files built by Visual Studio
 
 # End of https://www.toptal.com/developers/gitignore/api/macos,linux,windows,visualstudiocode,intellij,visualstudio
+aait/mobile/group-1/blog_app/linux/flutter/generated_plugin_registrant.cc
+aait/mobile/group-1/blog_app/linux/flutter/generated_plugins.cmake
+aait/mobile/group-1/blog_app/macos/Flutter/GeneratedPluginRegistrant.swift
+aait/mobile/group-1/blog_app/windows/flutter/generated_plugin_registrant.cc
+aait/mobile/group-1/blog_app/windows/flutter/generated_plugins.cmake

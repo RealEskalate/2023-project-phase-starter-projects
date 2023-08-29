@@ -1,6 +1,6 @@
 import 'package:blog_app/core/errors/failures/failure.dart';
 import 'package:blog_app/features/user_profile/data/datasources/profile_local_data_source.dart';
-import 'package:blog_app/features/user_profile/data/datasources/proile_remote_data_source.dart';
+import 'package:blog_app/features/user_profile/data/datasources/profile_remote_data_source.dart';
 import 'package:blog_app/features/user_profile/domain/entities/user_entity.dart';
 import 'package:blog_app/features/user_profile/domain/repositories/user_repository.dart';
 import 'package:dartz/dartz.dart';
@@ -40,10 +40,10 @@ class UserRepositoryImpl extends UserRepository {
   }
 
   @override
-  Future<Either<Failure, User>> updateUserInfo() async {
+  Future<Either<Failure, User>> updateUserImage(User user) async {
     try {
-      final user = await remoteDataSource.updateUserInfo();
-      return Right(user);
+      final userNew = await remoteDataSource.updateUserImage(user);
+      return Right(userNew);
     } catch (e) {
       print("error occured $e");
       return Left(ServerFailure(message: e.toString()));

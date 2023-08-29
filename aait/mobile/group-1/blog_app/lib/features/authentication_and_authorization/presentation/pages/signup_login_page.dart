@@ -14,6 +14,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../core/utils/app_dimension.dart';
+import '../../../user_profile/presentation/pages/profile.dart';
 
 class StackOfCards extends StatefulWidget {
   @override
@@ -112,7 +113,7 @@ class _LogInState extends State<LogIn> {
       listener: (context, state) {
         if (state is LoginLoadedState) {
           Navigator.push(
-              context, MaterialPageRoute(builder: (context) => Success_Page()));
+              context, MaterialPageRoute(builder: (context) => ProfilePage()));
         } else if (state is ErrorState) {
           ScaffoldMessenger.of(context)
               .showSnackBar(SnackBar(content: Text(state.message)));
