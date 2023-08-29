@@ -12,8 +12,8 @@ class ArticleModel extends Article implements Equatable {
       required this.tags,
       this.user,
       required this.content,
-      this.image,
-      this.estimatedtime,
+      required this.image,
+      required this.estimatedtime,
       this.imageCloudinaryPublicId,
       this.createdAt})
       : super(
@@ -42,9 +42,9 @@ class ArticleModel extends Article implements Equatable {
   @override
   final String content;
   @override
-  final String? image;
+  final String image;
   @override
-  final String? estimatedtime;
+  final String estimatedtime;
   @override
   final String? imageCloudinaryPublicId;
   @override
@@ -69,7 +69,9 @@ class ArticleModel extends Article implements Equatable {
       'title': articleModel.title,
       'subTitle': articleModel.subTitle,
       'content': articleModel.content,
-      'tags': jsonEncode(articleModel.tags)
+      'tags': jsonEncode(articleModel.tags),
+      'image': articleModel.image,
+      'estimatedReadTime': articleModel.estimatedtime
     };
   }
 

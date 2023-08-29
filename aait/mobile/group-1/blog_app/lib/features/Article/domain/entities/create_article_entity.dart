@@ -4,8 +4,8 @@ class CreateArticleEntity {
   final String subTitle;
   final List<String> tags;
   final String content;
-  final String? image;
-  final String? estimatedtime;
+  final String image;
+  final String estimatedtime;
 
   CreateArticleEntity(
       {this.id,
@@ -13,6 +13,6 @@ class CreateArticleEntity {
       required this.subTitle,
       required this.tags,
       required this.content,
-      this.image,
-      this.estimatedtime});
+      required this.image,
+      required this.estimatedtime});
 }
