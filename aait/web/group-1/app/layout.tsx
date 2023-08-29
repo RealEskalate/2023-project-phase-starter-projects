@@ -1,6 +1,3 @@
-"use client";
-
-import { Provider } from "react-redux";
 import "./globals.css";
 import type { Metadata } from "next";
 import { Poppins } from "next/font/google";

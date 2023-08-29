@@ -5,6 +5,7 @@ import { Blog } from "@/types/Blog";
 import Image from "next/image";
 import { useParams } from "next/navigation";
 import React from "react";
+import parse from "html-react-parser";
 
 const page = () => {
   const { blogId } = useParams();
@@ -29,11 +30,7 @@ const page = () => {
     <div className="py-20 font-montserrat">
       <div className="text-center text-4xl font-canon">{blog?.title}</div>
       <div className="flex justify-center mt-4 space-x-4 text-gray-500 uppercase text-xs">
-        <div>
-          {blog?.tags.map((tag: string) => (
-            <span>{tag}, </span>
-          ))}
-        </div>
+        <div>{blog?.tags.join(", ")}</div>
         <div className="w-0.5 my-0.5 bg-gray-400"></div>
         <p>6 min Read</p>
       </div>
@@ -64,7 +61,9 @@ const page = () => {
         </p>
       </div>
 
-      <div className="mt-10 w-7/12 mx-auto font-light">{blog?.description}</div>
+      <div className="mt-10 w-7/12 mx-auto font-light">
+        {parse(blog?.description as string)}
+      </div>
 
       <div
         className={`${

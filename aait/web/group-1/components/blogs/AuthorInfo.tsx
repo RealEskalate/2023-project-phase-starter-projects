@@ -3,17 +3,16 @@ import Image from "next/image";
 import React from "react";
 
 interface AuthorAndImage {
-    image: string, 
     author: Author,
     createdAt: string
 }
 
-const AuthorInfo: React.FC<AuthorAndImage> = ({ image, author, createdAt }) => {
+const AuthorInfo: React.FC<AuthorAndImage> = ({ author, createdAt }) => {
   return (
     <div className="flex space-x-8">
       <Image
-        src={image}
-        alt={"pfp"}
+        src={author ? author.image : './images/blogs/Default_pfp.svg'}
+        alt={"Author's profile picture"}
         width={100}
         height={100}
         className="w-12 h-12 object-cover rounded-full"

@@ -2,6 +2,8 @@ import { Blog } from "@/types/Blog";
 import Image from "next/image";
 import React from "react";
 import AuthorInfo from "./AuthorInfo";
+import parse from 'html-react-parser';
+import Link from "next/link";
 
 const BlogItem: React.FC<Blog> = ({
   _id,
@@ -12,6 +14,12 @@ const BlogItem: React.FC<Blog> = ({
   tags,
   createdAt,
 }) => {
+
+  const reducedDescription =
+    description.length > 150
+      ? `${description.substring(0, 150)}...`
+      : description;
+
   return (
     <div className="w-full">
       {/* horizontal line */}
@@ -21,17 +29,20 @@ const BlogItem: React.FC<Blog> = ({
         
         <div className="w-3/4 flex flex-col space-y-6 mb-10">
           {/* Author info */}
-          <AuthorInfo image={image} author={author} createdAt={createdAt} />
+          <AuthorInfo author={author} createdAt={createdAt} />
 
           {/* Blog content */}
           <div>
             <h1 className="font-bold text-xl">{title}</h1>
-            <p className="mt-4  font-light">{description}</p>
+            <p className="mt-4  font-light">{parse(reducedDescription)} {description.length > 150 && (
+                <Link href={`/blog/${_id}}`} className="text-blue-500 hover:text-blue-800 hover:underline inline ml-3">Read more</Link>
+            )}</p>
+            
           </div>
 
           {/* tags */}
           <div className="mt-2">
-            <div className="flex flex-wrap space-x-4">
+            <div className="flex flex-wrap gap-4">
               {tags?.map((tag: string) => (
                 <div className="blog-tag bg-gray-200 text-gray-600">{tag}</div>
               ))}
@@ -39,7 +50,7 @@ const BlogItem: React.FC<Blog> = ({
           </div>
         </div>
 
-        <Image src={"./images/blogs/coder.svg"} alt={""} width={100} height={50} className="-mt-6 w-64 h-44 object-cover rounded-lg justify-self-end"/>
+        <Image src={image ? image : "./images/blogs/coder.svg"} alt={""} width={100} height={50} className="-mt-6 w-64 h-44 object-cover rounded-lg justify-self-end"/>
       </div>
     </div>
   );
