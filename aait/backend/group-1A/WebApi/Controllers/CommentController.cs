@@ -67,12 +67,12 @@ namespace WebApi.Controllers
 
         [HttpDelete("{id}")]
         [Authorize]
-        public async Task<ActionResult<BaseResponse<string>>> Delete(int id)
+        public async Task<ActionResult<BaseResponse<int>>> Delete(int id)
         {
             var userId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier)!.Value);
             var result = await _mediator.Send(new CommentDeleteCommand { userId = userId, Id = id });     
              await _mediator.Send(new CreateNotification {NotificationData = new NotificationCreateDTO()
-            {Content = "A comment on you post has been removed",NotificationContentId = result.Value,NotificationType = "comment",UserId = userId}});       
+            {Content = "A comment on your post has been removed",NotificationContentId = result.Value,NotificationType = "comment",UserId = userId}});       
             return Ok(result);
             
         }

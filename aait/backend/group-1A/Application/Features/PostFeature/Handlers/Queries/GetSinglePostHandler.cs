@@ -21,7 +21,7 @@ namespace Application.Features.PostFeature.Handlers.Queries
         }
         public async Task<BaseResponse<PostResponseDTO>> Handle(GetSinglePostQuery request, CancellationToken cancellationToken)
         {
-            var result = await _postRepository.Get(request.Id, request.userId);
+            var result = await _postRepository.Get(request.Id);
             if (result == null)
             {
                 throw new NotFoundException("Post is not found");
