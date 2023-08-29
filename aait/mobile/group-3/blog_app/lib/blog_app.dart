@@ -25,7 +25,7 @@ class BlogApp extends StatelessWidget {
   Widget build(BuildContext context) {
     final GoRouter _router =
         GoRouter(navigatorKey: GlobalKey<NavigatorState>(), routes: [
-      GoRoute(path: '/', builder: (context, state) => SplashScreen()),
+      GoRoute(path: '/', builder: (context, state) => HomeScreen()),
       GoRoute(
           path: '/onboarding', builder: (context, state) => OnboardingScreen()),
       GoRoute(path: '/login', builder: (context, state) => LoginSignUpPage()),
@@ -40,7 +40,6 @@ class BlogApp extends StatelessWidget {
               )),
       GoRoute(path: '/profile', builder: (context, state) => ProfileScreen()),
     ]);
-    //TODO: ADD BLOC
     return ScreenUtilInit(
       designSize: const Size(375, 812),
       minTextAdapt: true,
