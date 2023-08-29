@@ -1,4 +1,5 @@
 import 'package:blog_app/Injection/auth_injection.dart';
+import 'package:blog_app/features/article_reading/presentation/pages/read_article.dart';
 import 'package:blog_app/features/authentication_and_authorization/presentation/bloc/Log_in_bloc/bloc.dart';
 import 'package:blog_app/features/authentication_and_authorization/presentation/bloc/sign_up_bloc/bloc.dart';
 import 'package:blog_app/features/authentication_and_authorization/presentation/pages/signup_login_page.dart';
@@ -46,7 +47,7 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       //DevicePreview
 
-      home: OnboardingPage(),
+      home: ArticleDetail(),
     );
   }
 }

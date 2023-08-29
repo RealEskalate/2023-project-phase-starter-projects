@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:blog_app/features/user_profile/domain/entities/user_entity.dart';
 import 'package:equatable/equatable.dart';
 
 import '../../domain/entities/article_enitity.dart';
@@ -17,17 +18,17 @@ class ArticleModel extends Article implements Equatable {
       this.imageCloudinaryPublicId,
       this.createdAt})
       : super(
-            id: id,
-            title: title,
-            subTitle: subTitle,
-            user: user,
-            tags: tags,
-            content: content,
-            image: image,
-            estimatedtime: estimatedtime,
-            imageCloudinaryPublicId: imageCloudinaryPublicId,
-            createdAt: createdAt,
-            );
+          id: id,
+          title: title,
+          subTitle: subTitle,
+          user: user,
+          tags: tags,
+          content: content,
+          image: image,
+          estimatedtime: estimatedtime,
+          imageCloudinaryPublicId: imageCloudinaryPublicId,
+          createdAt: createdAt,
+        );
 
   @override
   final String id;
@@ -36,7 +37,7 @@ class ArticleModel extends Article implements Equatable {
   @override
   final String subTitle;
   @override
-  final String? user;
+  final User? user;
   @override
   final List<String> tags;
   @override
