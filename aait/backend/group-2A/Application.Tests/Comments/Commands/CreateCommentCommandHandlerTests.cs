@@ -45,14 +45,72 @@ namespace Application.Tests.Comments.Commands
         }
 
         [Fact]
-        public async Task CreateCommentCommandTest()
+        public async Task CreateCommentCommand_Success()
         {
+
             var handler = new CreateCommentCommandHandler(_mockRepo.Object, _mapper);
 
             var result = await handler.Handle(new CreateCommentCommand() { CommentDto = _commentDto }, CancellationToken.None);
 
+            result.ShouldNotBeNull();
             result.ShouldBeOfType<BaseCommandResponse<int>>();
+            result.Success.ShouldBeTrue();
+            result.Value.ShouldBeGreaterThan(0);
+        }
 
+        [Fact]
+        public async Task CreateCommentCommand_InvalidDto_Failure()
+        {
+            var invalidDto = new CreateCommentDto();
+
+            var handler = new CreateCommentCommandHandler(_mockRepo.Object, _mapper);
+
+            var result = await handler.Handle(new CreateCommentCommand() { CommentDto = invalidDto }, CancellationToken.None);
+
+            result.ShouldNotBeNull();
+            result.ShouldBeOfType<BaseCommandResponse<int>>();
+            result.Success.ShouldBeFalse();
+            result.Value.ShouldBe(0);
+        }
+
+        [Fact]
+        public async Task CreateCommentCommand_InvalidPostId_Failure()
+        {
+            var invalidDto = new CreateCommentDto
+            {
+                Content = "Invalid Post Comment",
+                PostId = -1,
+                UserId = 1,
+            };
+
+            var handler = new CreateCommentCommandHandler(_mockRepo.Object, _mapper);
+
+            var result = await handler.Handle(new CreateCommentCommand() { CommentDto = invalidDto }, CancellationToken.None);
+
+            result.ShouldNotBeNull();
+            result.ShouldBeOfType<BaseCommandResponse<int>>();
+            result.Success.ShouldBeFalse();
+            result.Value.ShouldBe(0);
+        }
+
+        [Fact]
+        public async Task CreateCommentCommand_InvalidUserId_Failure()
+        {
+            var invalidDto = new CreateCommentDto
+            {
+                Content = "Invalid User Comment",
+                PostId = 2,
+                UserId = -1,
+            };
+
+            var handler = new CreateCommentCommandHandler(_mockRepo.Object, _mapper);
+
+            var result = await handler.Handle(new CreateCommentCommand() { CommentDto = invalidDto }, CancellationToken.None);
+
+            result.ShouldNotBeNull();
+            result.ShouldBeOfType<BaseCommandResponse<int>>();
+            result.Success.ShouldBeFalse();
+            result.Value.ShouldBe(0);
         }
     }
 }

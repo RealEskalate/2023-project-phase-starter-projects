@@ -8,6 +8,7 @@ public interface IUnitOfWork : IDisposable
     IFollowRepository followRepository{ get;  }
     ILikeRepository likeRepository{ get;  }
     INotificationRepository notificationRepository{ get; }
+
     Task<int> Save();
 
 }
