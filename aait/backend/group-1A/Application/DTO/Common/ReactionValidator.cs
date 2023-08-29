@@ -1,4 +1,5 @@
-﻿using FluentValidation;
+﻿using Application.Common;
+using FluentValidation;
 using System;
 using System.Collections.Generic;
 using System.Linq;
