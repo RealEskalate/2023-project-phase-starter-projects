@@ -13,9 +13,11 @@ namespace Persistence.Configurations.Entities
     {
         public void Configure(EntityTypeBuilder<PostReaction> builder)
         {
+            builder.HasOne(p => p.post)             
+               .WithMany(a => a.PostReactions)          
+               .HasForeignKey(p => p.PostId)   
+               .OnDelete(DeleteBehavior.Cascade);
         }
     }
 }
-            //builder.Property(e => e.Id)
-            //      .HasDefaultValueSql("nextval('Id')");
-                  //.ValueGeneratedOnAdd();
+            

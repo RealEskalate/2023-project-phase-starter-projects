@@ -4,12 +4,16 @@ import {
   useLoginMutation,
   useSignupMutation,
 } from "@/lib/redux/features/user";
-import { selectAuth, setAuth } from "@/lib/redux/slices/authSlice";
+import { AuthState, selectAuth, setAuth } from "@/lib/redux/slices/authSlice";
 import { Credentials } from "@/types";
+import { useCookies } from "next-client-cookies";
+import { useRouter } from "next/navigation";
 import { useDispatch, useSelector } from "react-redux";
 
 export const useAuth = () => {
   const dispatch = useDispatch();
+  const cookies = useCookies();
+  const router = useRouter();
   const auth = useSelector(selectAuth);
   const [login] = useLoginMutation();
   const [signup] = useSignupMutation();
@@ -18,6 +22,7 @@ export const useAuth = () => {
     useEditProfileMutation();
   return {
     auth,
+
     loginHandler: async (credentials: Credentials) => {
       try {
         return await login(credentials);
@@ -25,11 +30,29 @@ export const useAuth = () => {
         return null;
       }
     },
-    logoutHandler: () => {
+
+    logoutHandler: async () => {
       localStorage.removeItem("auth");
-      document.cookie = "";
-      dispatch(setAuth(null));
+
+      cookies.set("token", "", { path: "/", expires: Date.parse("3/10/1997") });
+
+      const dummy: AuthState = {
+        token: "",
+        isAuthenticated: false,
+        isLoading: false,
+        userId: "",
+        userName: "",
+        userRole: "",
+        userProfile: "",
+        userEmail: "",
+        error: null,
+      };
+
+      dispatch(setAuth(dummy));
+
+      router.refresh();
     },
+
     signupHandler: async (credentials: Credentials) => {
       try {
         return await signup(credentials);
@@ -37,6 +60,7 @@ export const useAuth = () => {
         return null;
       }
     },
+
     editProfileHandler: async (data: FormData) => {
       console.log(data);
       try {
@@ -45,6 +69,7 @@ export const useAuth = () => {
         return null;
       }
     },
+
     changePasswordHandler: async (passwords: any) => {
       try {
         return await changePassword(passwords);

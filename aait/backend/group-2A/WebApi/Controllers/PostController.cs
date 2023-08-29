@@ -3,71 +3,86 @@
 using Application.DTO.Post;
 using Application.Features.Post.Request.Commands;
 using Application.Features.Post.Request.Queries;
+using Application.Responses;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace WebApi.Controllers;
 
 [ApiController]
+[Authorize]
 [Route("api/[controller]")]
 public class PostController : ControllerBase
 {
     private readonly IMediator _mediator;
 
-    public PostController(IMediator mediator)
-    {
+    public PostController(IMediator mediator){
         _mediator = mediator;
     }
 
+    [HttpGet("User/{UserId}")]
+    public async Task<IActionResult> GetUserPosts(int UserId)
+    {
+        var command = new GetUserPostRequest() { Id = UserId };
+        var posts = await _mediator.Send(command);
+        return ResponseHandler<List<PostDto>>.HandleResponse(posts, 200);
+    }
+
+    
+    
     [HttpGet]
-    public async Task<IActionResult> GetNewsFeed( )
+    public async Task<IActionResult> GetPosts([FromQuery] string? search, [FromQuery] string? tag)
     {
-        // token getter to be implemented
-        var command = new GetFollowingPostRequest{Id = 1};
-        var posts = await _mediator.Send(command);
 
-        return Ok(posts);
-    }
-    [HttpGet("{tag}")]
-    public async Task<IActionResult> GetByTag( string tag)
-    {
-        // token getter to be implemented
-        var command = new GetByTagRequest{Tag = tag};
-        var posts = await _mediator.Send(command);
-
-        return Ok(posts);
+        if (!string.IsNullOrEmpty(search))
+        {
+            var command = new GetByContenetRequest() { Contenet = search };
+            var posts = await _mediator.Send(command);
+            return ResponseHandler<List<PostDto>>.HandleResponse(posts, 200);
+        }
+        else if (!string.IsNullOrEmpty(tag))
+        {
+            var command = new GetByTagRequest { Tag = tag };
+            var posts = await _mediator.Send(command);
+            return ResponseHandler<List<PostDto>>.HandleResponse(posts, 200);
+        }
+        else
+        {
+            var command = new GetFollowingPostRequest{Id = int.Parse(User.FindFirst("reader").Value)};
+            var posts = await _mediator.Send(command);
+            return ResponseHandler<List<PostDto>>.HandleResponse(posts, 200);
+        }
     }
     
-    
-    [HttpGet("{Search}")]
-    public async Task<IActionResult> GetByContent( string search)
-    {
-        // token getter to be implemented
-        var command = new GetByContenetRequest{Contenet = search};
-        var posts = await _mediator.Send(command);
-
-        return Ok(posts);
-    }
+   
     
     [HttpPost("Add")]
-    public async Task<IActionResult> AddPost(CreatePostDto createPost){
-        // token getter to be implemented
+    public async Task<IActionResult> AddPost([FromBody]CreatePostDto createPost){
+        createPost.UserId = int.Parse(User.FindFirst("reader").Value);
         var command = new CreatePostCommand {CreatePost = createPost};
         var postId = await _mediator.Send(command);
-        return Ok(postId);
-    }
-    [HttpPut("{PostID}")]
-    public async Task<IActionResult> UpdatePost(UpdatePostDto updatePost){
-        // token getter to be implemented
-        var command = new UpdatePostCommand { UpdatedPost= updatePost};
-        return NoContent();
+        return ResponseHandler<int>.HandleResponse(postId, 201);
     }
     
-    [HttpDelete("{PostID}")]
+    
+    
+    [HttpPut("{PostId}")]
+    public async Task<IActionResult> UpdatePost([FromBody] UpdatePostDto updatePost, int UserId, int PostId){
+        updatePost.UserId = int.Parse(User.FindFirst("reader").Value);;
+        updatePost.Id = PostId;
+        var command = new UpdatePostCommand { UpdatedPost= updatePost};
+        var result = await _mediator.Send(command);
+        return ResponseHandler<Unit>.HandleResponse(result, 204);
+    }
+    
+    
+    [HttpDelete("{PostId}")]
     public async Task<IActionResult> DeletePoset(int PostId){
-        // token getter to be implemented
-        var command = new DeletePostCommand { Id= PostId};
-        return NoContent();
+        
+        var command = new DeletePostCommand { Id= PostId, UserId = int.Parse(User.FindFirst("reader").Value)};
+        var result = await _mediator.Send(command);
+        return ResponseHandler<Unit>.HandleResponse(result, 204);
     }
 }
 

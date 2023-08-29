@@ -11,7 +11,7 @@ part 'login_state.dart';
 class LoginBloc extends Bloc<LoginEvent, LoginState> {
   final LogInUsecase logInUsecase;
   LoginBloc({required this.logInUsecase}) : super(LoginInitial()) {
-    on<LoginEvent>((event, emit) async{
+    on<Login>((event, emit) async{
       emit(LoginLoadingState());
       var result = await logInUsecase(
         Params(

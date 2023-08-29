@@ -14,5 +14,7 @@ namespace Application.Contracts
         public Task<List<PostReaction>> DisLikes(int Id);
 
         public Task<PostReaction> MakeReaction(int Id, PostReaction entity);
+
+        Task<bool> Exists(int id);
     }
 }

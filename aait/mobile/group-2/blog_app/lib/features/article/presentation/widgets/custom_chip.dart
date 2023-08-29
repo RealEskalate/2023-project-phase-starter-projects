@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import '../../../../core/presentation/theme/app_colors.dart';
 
 class CustomChip extends StatelessWidget {
   final String label;
+  final VoidCallback onDelete;
 
-  const CustomChip({super.key, required this.label});
+  const CustomChip({super.key, required this.label, required this.onDelete});
 
   @override
   Widget build(BuildContext context) {
@@ -11,7 +13,7 @@ class CustomChip extends StatelessWidget {
       padding: const EdgeInsets.fromLTRB(15, 4, 4, 4),
       decoration: BoxDecoration(
         border: Border.all(
-          color: const Color(0xFF376AED),
+          color: AppColors.blue,
           width: 2,
         ),
         borderRadius: BorderRadius.circular(75),
@@ -22,7 +24,7 @@ class CustomChip extends StatelessWidget {
           Text(
             label,
             style: const TextStyle(
-              color: Color(0xFF376AED),
+              color: AppColors.blue,
               fontFamily: 'Poppins',
               fontSize: 12,
               fontWeight: FontWeight.w500,
@@ -32,14 +34,14 @@ class CustomChip extends StatelessWidget {
           Container(
             padding: const EdgeInsets.all(6),
             decoration: BoxDecoration(
-              color: const Color(0x26376AED),
+              color: AppColors.translucentBlue,
               borderRadius: BorderRadius.circular(75),
             ),
             child: GestureDetector(
-              onTap: () {},
+              onTap: onDelete,
               child: const Icon(
                 Icons.close,
-                color: Color(0xFF376AED),
+                color: AppColors.blue,
                 size: 15,
               ),
             ),

@@ -9,6 +9,6 @@ public interface IUserRepository : IGenericRepository<User>
     public Task<User> GetByUsername(string username);
 
     public Task FollowUser (int follower , int follewed);
-    public Task UnFOllowUser (int follower, int follewed);
+    public Task UnFollowUser (int follower, int follewed);
     
 }

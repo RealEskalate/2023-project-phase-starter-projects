@@ -4,18 +4,23 @@ import { Blog, User } from '@/lib/types';
 import MyBlogCard from '@/app/components/profile/MyblogCard';
 import { useGetBlogsQuery, useMyBlogsQuery } from '@/lib/redux/slices/blogsApi';
 import Link from 'next/link';
+import Loading from '@/app/components/loading';
 
 export default function Section() {
   const { data: blogs, error, isSuccess, isLoading } = useMyBlogsQuery();
 
+  if (isLoading) {
+    return <Loading />;
+  }
+
   return (
     <div>
-      <div className="flex flex-col items-center gap-4 md:flex-row md:justify-between py-2 border-b-2 border-[#EFEFEF] mb-7 px-4">
+      <div className="flex flex-col items-center gap-4 md:flex-row md:justify-between py-2 border-b-2 border-[#EFEFEF] mb-7 px-4 dark:border-dark-backgroundLight  dark:bg-dark-background">
         <div className=" font-secondaryFont">
-          <h3 className="font-semibold text-textColor-200 text-lg text-center md:text-left md:text-lg">
+          <h3 className="font-semibold text-textColor-200 text-lg text-center md:text-left md:text-lg dark:text-dark-white">
             Manage Blogs
           </h3>
-          <p className="font-medium text-textColor-50 text-base text-center md:text-left">
+          <p className="font-medium text-textColor-50 text-base text-center md:text-left dark:text-dark-textColor-50">
             Edit, Delete and View the Status of your blogs
           </p>
         </div>

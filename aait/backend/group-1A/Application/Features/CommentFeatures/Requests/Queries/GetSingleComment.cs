@@ -1,10 +1,11 @@
-using Application.DTO.CommentDTOS.DTO;
+using Application.DTO.CommentDTO.DTO;
+using Application.Response;
 using MediatR;
 
 namespace Application.Features.CommentFeatures.Requests.Queries
 {
-    public class GetCommentQuery : IRequest<CommentDTO>
+    public class GetSingleCommentQuery : IRequest<BaseResponse<CommentResponseDTO>>
     {
-        public int CommentId { get; set; }
+        public int Id { get; set; }
     }
 }

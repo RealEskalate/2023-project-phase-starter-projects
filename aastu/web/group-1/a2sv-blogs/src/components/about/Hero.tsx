@@ -1,5 +1,6 @@
 import React from "react";
 import Image from "next/image";
+import Link from "next/link";
 
 const Hero = () => {
   return (
@@ -16,9 +17,11 @@ const Hero = () => {
                 university students to create digital solutions to Africa’s most
                 pressing problems.
               </p>
-              <button className="bg-primary rounded-md px-9 py-4 text-white my-10 w-max">
-                Meet our team
-              </button>
+              <Link href="/teams">
+                <button className="bg-primary rounded-md px-9 py-4 text-white my-10 w-max">
+                  Meet our team
+                </button>
+              </Link>
               <p className=" text-neutral-500 text-base max-w-[50ch] italic leading-relaxed">
                 A2SV is a social enterprise that enables high-potential
                 university students to create digital solutions to Africa’s most

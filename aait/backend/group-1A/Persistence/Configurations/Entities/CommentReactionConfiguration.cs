@@ -8,11 +8,10 @@ namespace Persistence.Configurations.Entities
     {
         public void Configure(EntityTypeBuilder<CommentReaction> builder)
         {
-            builder.Property(e => e.Id)
-                .ValueGeneratedOnAdd();
-
-            builder.HasKey(e => e.Id);
-
+            builder.HasOne(p => p.Comment)             
+               .WithMany(a => a.CommentReactions)          
+               .HasForeignKey(p => p.CommentId)   
+               .OnDelete(DeleteBehavior.Cascade);
         }
     }
 }

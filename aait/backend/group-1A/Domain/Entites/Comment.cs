@@ -12,8 +12,11 @@ namespace Domain.Entities
     public class Comment : BaseEntity
     {
 
-
+        
         public int PostId { get; set; }
+
+        public virtual Post post {get ; set;}
+        public virtual ICollection<CommentReaction> CommentReactions { get; set; }
 
 
     }

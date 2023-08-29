@@ -8,7 +8,7 @@ namespace Application.DTO.Common
 {
     public class CommonResponseDTO
     {
-        public string Status { get; set; }
+        public string Status { get; set; } 
         public string Message { get; set; }
     }
 }

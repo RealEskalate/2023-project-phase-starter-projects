@@ -2,7 +2,6 @@ using AutoMapper;
 using SocialSync.Application.Features.Interactions.Requests.Commands;
 using MediatR;
 using SocialSync.Application.Contracts.Persistence;
-using System.ComponentModel.DataAnnotations;
 using SocialSync.Application.Common.Responses;
 using SocialSync.Application.DTOs.InteractionDTOs.CommentDTOs.Validator;
 

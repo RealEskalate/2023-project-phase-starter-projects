@@ -1,5 +1,6 @@
 
 
+using System.ComponentModel.DataAnnotations.Schema;
 using Domain.Common;
 
 namespace Domain.Entities
@@ -9,6 +10,7 @@ namespace Domain.Entities
 
         public int CommentId { get; set; }
 
+        public virtual Comment Comment {get ; set;}
 
     }
 

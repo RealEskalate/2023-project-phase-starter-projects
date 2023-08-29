@@ -2,16 +2,34 @@
 import React, { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
+import { useRouter, usePathname } from "next/navigation";
+import { useAuth } from "@/hooks/useAuth";
+import ProfileAvatar from "./ProfileAvatar";
 
 export default function Nav() {
   const [openMenu, setOpenMenu] = useState<boolean>(false);
+  const router = useRouter();
+  const path = usePathname();
+  const routeName = path.split("/")[2];
+  const auth = useAuth().auth.isAuthenticated;
+  const imageUrl = useAuth().auth.userProfile;
+
+  console.log(`${routeName}`);
+
+  const handleAuth = () => {
+    if (auth) {
+      router.push("/auth/profile");
+    } else {
+      router.push("/auth/login");
+    }
+  };
 
   const handleToggle = () => {
     setOpenMenu(!openMenu);
   };
   return (
-    <nav className="bg-white fixed w-full z-50 top-0 left-0">
-      <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
+    <nav className="bg-white fixed w-full z-50 top-0">
+      <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto py-4 px-2">
         <Link href="/">
           <Image
             src="/images/a2sv-logo.svg"
@@ -21,13 +39,25 @@ export default function Nav() {
             className="w-32 h-8"
           />
         </Link>
-        <div className="flex lg:order-2">
-          <div className="hidden lg:block content-end row-span-1 ">
-            <span className="text-[#3C3C3C] text-base font-semibold font-montserrat px-5 ">
-              Login
-            </span>
+        <div className="flex lg:order-2 items-center">
+          <div className="hidden content-end row-span-1 lg:flex lg:gap-0 lg:items-center">
+            {auth ? (
+              <div className=" translate-x-5 -translate-y-1">
+                <ProfileAvatar imageUrl={imageUrl} />
+              </div>
+            ) : (
+              <span
+                onClick={() => router.push("/auth/login")}
+                className={`text-[#3C3C3C] text-base font-semibold font-montserrat px-5 cursor-pointer`}
+              >
+                Login
+              </span>
+            )}
             <span>
-              <button className="border-2 rounded-xl px-5 w-22 h-12 bg-primary text-white text-base font-semibold font-montserrat">
+              <button
+                onClick={() => router.push("/")}
+                className="border-2 rounded-xl  px-5 w-22 h-12 bg-primary text-white text-base font-semibold font-montserrat"
+              >
                 {" "}
                 Donate{" "}
               </button>
@@ -62,14 +92,19 @@ export default function Nav() {
         <div
           className={`${
             openMenu ? "" : "hidden"
-          } items-center justify-between w-full lg:flex lg:w-auto lg:order-1`}
+          } items-center justify-between w-full lg:flex lg:w-auto lg:order-1 lg:ml-10`}
           id="navbar-sticky"
         >
           <ul className="flex flex-col p-4 lg:p-0 mt-4 font-medium border  border-gray-100 rounded-lg  lg:flex-row lg:space-x-8 lg:mt-0 lg:border-0 lg:bg-white ">
             <li>
               <Link
                 href="/"
-                className="block py-2 pl-3 pr-4  rounded lg:bg-transparent  lg:p-0 lg:hover:bg-white text-[#3C3C3C] text-base hover:bg-gray-100  font-semibold font-montserrat"
+                onClick={handleToggle}
+                className={`${
+                  path === "/"
+                    ? "text-[#264FAD] border-b-2 border-[#264FAD]"
+                    : ""
+                } block py-5 pl-3 pr-4   lg:bg-transparent  lg:p-0 lg:hover:bg-white  text-base hover:bg-gray-100  font-semibold font-montserrat`}
                 aria-current="page"
               >
                 Home
@@ -77,8 +112,13 @@ export default function Nav() {
             </li>
             <li>
               <Link
-                href="/team"
-                className="block py-2 pl-3 pr-4  rounded lg:bg-transparent  lg:p-0 lg:hover:bg-white  text-[#3C3C3C] text-base hover:bg-gray-100  font-semibold font-montserrat"
+                href="/teams"
+                onClick={handleToggle}
+                className={`${
+                  path === "/teams"
+                    ? "text-[#264FAD] border-b-2 border-[#264FAD]"
+                    : ""
+                } block py-3 pl-3 pr-4   lg:bg-transparent  lg:p-0 lg:hover:bg-white  text-base hover:bg-gray-100  font-semibold font-montserrat`}
               >
                 Team
               </Link>
@@ -86,15 +126,25 @@ export default function Nav() {
             <li>
               <Link
                 href="/stories"
-                className="block py-2 pl-3 pr-4  rounded lg:bg-transparent  lg:p-0 lg:hover:bg-white  text-[#3C3C3C] text-base hover:bg-gray-100 font-semibold font-montserrat"
+                onClick={handleToggle}
+                className={`${
+                  path === "/stories"
+                    ? "text-[#264FAD] border-b-2 border-[#264FAD]"
+                    : ""
+                } block py-3 pl-3 pr-4   lg:bg-transparent  lg:p-0 lg:hover:bg-white  text-base hover:bg-gray-100  font-semibold font-montserrat`}
               >
                 Success Stories
               </Link>
             </li>
             <li>
               <Link
-                href="#"
-                className="block py-2 pl-3 pr-4  rounded lg:bg-transparent   lg:hover:bg-white  lg:p-0  text-[#3C3C3C] text-base hover:bg-gray-100   font-semibold font-montserrat"
+                href="/about"
+                onClick={handleToggle}
+                className={`${
+                  path === "/about"
+                    ? "text-[#264FAD] border-b-2 border-[#264FAD]"
+                    : ""
+                } block py-3 pl-3 pr-4   lg:bg-transparent  lg:p-0 lg:hover:bg-white  text-base hover:bg-gray-100  font-semibold font-montserrat`}
               >
                 About
               </Link>
@@ -102,31 +152,43 @@ export default function Nav() {
             <li>
               <Link
                 href="/blogs"
-                className="block py-2 pl-3 pr-4  rounded lg:bg-transparent lg:hover:bg-white  lg:p-0  text-[#3C3C3C] text-base hover:bg-gray-100   font-semibold font-montserrat"
+                onClick={handleToggle}
+                className={`${
+                  path === "/blogs"
+                    ? "text-[#264FAD] border-b-2 border-[#264FAD]"
+                    : ""
+                } block py-3 pl-3 pr-4   lg:bg-transparent  lg:p-0 lg:hover:bg-white  text-base hover:bg-gray-100  font-semibold font-montserrat`}
               >
                 Blogs
               </Link>
             </li>
             <li>
               <Link
-                href="#"
-                className="block py-2 pl-3 pr-4  rounded lg:bg-transparent  lg:hover:bg-white  lg:p-0  text-[#3C3C3C] text-base hover:bg-gray-100  font-semibold font-montserrat"
+                href="/donate"
+                onClick={handleToggle}
+                className={`${
+                  path === "/donate"
+                    ? "text-[#264FAD] border-b-2 border-[#264FAD]"
+                    : ""
+                } block py-3 pl-3 pr-4   lg:bg-transparent  lg:p-0 lg:hover:bg-white  text-base hover:bg-gray-100  font-semibold font-montserrat`}
               >
                 Get Involved
               </Link>
             </li>
             <li>
               <Link
-                href="#"
-                className="lg:hidden block py-2 pl-3 pr-4 rounded text-[#3C3C3C] text-base font-semibold font-montserrat hover:bg-gray-100 lg:hover:bg-white   lg:p-0   "
+                href="/auth/login"
+                onClick={handleToggle}
+                className="lg:hidden block py-2 pl-3 pr-4  text-[#3C3C3C] text-base font-semibold font-montserrat hover:bg-gray-100 lg:hover:bg-white   lg:p-0   "
               >
                 Login
               </Link>
             </li>
             <li>
               <Link
-                href="#"
-                className="lg:hidden block py-2 pl-3 pr-4 rounded text-[#3C3C3C] text-base font-semibold font-montserrat hover:bg-gray-100 lg:hover:bg-white   lg:p-0   "
+                href="/donate"
+                onClick={handleToggle}
+                className="lg:hidden block py-2 pl-3 pr-4  text-[#3C3C3C] text-base font-semibold font-montserrat hover:bg-gray-100 lg:hover:bg-white   lg:p-0   "
               >
                 Donate
               </Link>

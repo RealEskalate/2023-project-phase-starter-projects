@@ -3,21 +3,37 @@ using Application.DTO.Post;
 using Application.Features.Post.Request.Queries;
 using AutoMapper;
 using MediatR;
+using Application.Responses;
+using System.Collections.Generic;
+using Application.Exceptions;
 
-namespace Application.Features.Post.Handlers.Queries;
+namespace Application.Features.Post.Handlers.Queries
+{
+    public class GetByContentRequestHandler : IRequestHandler<GetByContenetRequest, BaseCommandResponse<List<PostDto>>>
+    {
+        private readonly IUnitOfWork _unitOfWork;
+        private readonly IMapper _mapper;
 
-public class GetByContentRequestHandler : IRequestHandler<GetByContenetRequest, List<PostDto>>{
-    
-    private readonly IUnitOfWork _unitOfWork;
-    private readonly IMapper _mapper;
+        public GetByContentRequestHandler(IUnitOfWork unitOfWork, IMapper mapper)
+        {
+            _mapper = mapper;
+            _unitOfWork = unitOfWork;
+        }
 
-    public GetByContentRequestHandler(IUnitOfWork unitOfWork, IMapper mapper){
-        _mapper = mapper;
-        _unitOfWork = unitOfWork;
-    }
+        public async Task<BaseCommandResponse<List<PostDto>>> Handle(GetByContenetRequest request, CancellationToken cancellationToken){
+            try{
+                var posts = await _unitOfWork.postRepository.GetByContent(request.Contenet);
+                if (posts == null){
+                    throw new NotFoundException(nameof(Domain.Entities.Post), request.Contenet);
+                }
 
-    public async Task<List<PostDto>> Handle(GetByContenetRequest request, CancellationToken cancellationToken){
-        var posts = await _unitOfWork.postRepository.GetByContent(request.Contenet);
-        return _mapper.Map<List<PostDto>>(posts);
+                var postDtos = _mapper.Map<List<PostDto>>(posts);
+                return BaseCommandResponse<List<PostDto>>.SuccessHandler(postDtos);
+            }
+            catch(Exception ex){
+                
+                    return BaseCommandResponse<List<PostDto>>.FailureHandler(ex);
+            }
+        }
     }
 }

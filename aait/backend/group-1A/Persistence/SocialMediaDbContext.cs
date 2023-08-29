@@ -1,4 +1,5 @@
-﻿using Domain.Entities;
+﻿using Domain.Entites;
+using Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 
 using SocialSync.Domain.Entities;
@@ -14,10 +15,11 @@ namespace Persistence
     {
         public virtual DbSet<Post> Posts { get; set; }
         public virtual DbSet<Comment> Comments { get; set; }
-        public virtual DbSet<PostReaction> PostReactions { get; set; }
 
+        public virtual DbSet<PostReaction> PostReactions { get; set; }
         public virtual DbSet<CommentReaction> CommentReaction { get; set; }
 
+        public virtual DbSet<Notification> Notifications {get ; set ;}
 
         public SocialMediaDbContext(DbContextOptions<SocialMediaDbContext> options) : base(options) { }
 

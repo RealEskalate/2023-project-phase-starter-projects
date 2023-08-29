@@ -6,8 +6,12 @@ import A2SVLogo from '@/assets/images/Group 39.svg';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import { useRouter } from 'next/navigation';
 import { useLoginMutation } from '@/lib/redux/slices/usersApi';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { CgDanger } from 'react-icons/cg';
+import { useAppDispatch, useAppSelector } from '@/lib/redux/hooks';
+import { setUser } from '@/lib/redux/slices/loginSlice';
+import { AiOutlineLoading3Quarters } from 'react-icons/ai';
+
 type Inputs = {
   email: string;
   password: string;
@@ -15,24 +19,29 @@ type Inputs = {
 const Login = () => {
   const [loginError, setLoginError] = useState(false);
   const router = useRouter();
-  if (localStorage.getItem('login')) {
+  const dispatch = useAppDispatch();
+
+  const loginState = useAppSelector((state: any) => state.login);
+
+  if (loginState) {
     router.push('/');
-    //return <>/</>
   }
 
-  const [loginUser] = useLoginMutation();
-
+  const [loginUser, { isLoading }] = useLoginMutation();
+  console.log(useLoginMutation());
   const {
     register,
     handleSubmit,
     watch,
     formState: { errors },
   } = useForm<Inputs>();
+
   const onSubmit: SubmitHandler<Inputs> = async (data) => {
     try {
       const loginData = await loginUser(data).unwrap();
       if (loginData) {
-        localStorage.setItem('login', JSON.stringify({ ...loginData }));
+        dispatch(setUser(loginData));
+        router.push('/');
       }
     } catch (e) {
       setLoginError(true);
@@ -44,7 +53,7 @@ const Login = () => {
         <Image src={loginIcon} alt="Login illustration" height={350} />
       </div>
       <div className="w-full md:w-1/2 flex justify-center items-center">
-        <div className="bg-slate-100">
+        <div className="bg-slate-100 dark:bg-dark-backgroundLight rounded-lg">
           <form
             method="post"
             className="flex flex-col gap-6 w-96 p-6"
@@ -69,7 +78,7 @@ const Login = () => {
                 type="text"
                 {...register('email', { required: true })}
                 placeholder="Email"
-                className="w-full px-2 py-2 border border-slate-600 font-primaryFont"
+                className=" rounded-lg w-full px-2 py-2 border border-slate-600 font-primaryFont"
               />
             </div>
 
@@ -81,14 +90,18 @@ const Login = () => {
                 type="password"
                 {...register('password', { required: true })}
                 placeholder="Password"
-                className={`border border-slate-600 ${
+                className={` rounded-lg border border-slate-600 ${
                   errors.password && 'border-red-900'
                 } px-2 py-2 w-full font-primaryFont`}
               />
             </div>
 
             <div className="flex justify-center">
-              <button className="mt-6 w-32 bg-primaryColor py-1 text-white text-l font-medium font-secondaryFont rounded-xl">
+              <button
+                className="mt-6 w-32 bg-primaryColor py-2 px-4 text-white text-l font-medium font-secondaryFont rounded-lg flex items-center justify-center gap-3 hover:scale-95 transition-all ease-linear hover:bg-blue-900 disabled:bg-neutral-300 disabled:text-neutral-500"
+                disabled={isLoading}
+              >
+                {isLoading && <AiOutlineLoading3Quarters className="animate-spin" />}
                 Login
               </button>
             </div>

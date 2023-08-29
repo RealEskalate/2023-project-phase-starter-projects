@@ -1,4 +1,5 @@
 import 'package:equatable/equatable.dart';
+import 'package:image_picker/image_picker.dart';
 
 import '../../../../core/use_case/usecase.dart';
 import '../../../../core/util/typedef.dart';
@@ -17,6 +18,7 @@ class UpdateArticleUsecase implements UseCase<Article, UpdateArticleParams> {
       subTitle: params.subTitle,
       estimatedReadTime: params.estimatedReadTime,
       image: params.image,
+      id: params.id,
     );
   }
 }
@@ -27,7 +29,8 @@ class UpdateArticleParams extends Equatable {
   final String title;
   final String subTitle;
   final String estimatedReadTime;
-  final String image;
+  final XFile image;
+  final String id;
 
   const UpdateArticleParams({
     required this.tags,
@@ -36,6 +39,7 @@ class UpdateArticleParams extends Equatable {
     required this.subTitle,
     required this.estimatedReadTime,
     required this.image,
+    required this.id,
   });
 
   UpdateArticleParams.empty()
@@ -45,10 +49,11 @@ class UpdateArticleParams extends Equatable {
           title: '_empty.title',
           subTitle: '_empty.subTitle',
           estimatedReadTime: '_empty.estimatedReadTime',
-          image: '_empty.image',
+          image: XFile(''),
+          id: '1',
         );
 
   @override
   List<Object?> get props =>
-      [tags, content, title, subTitle, estimatedReadTime, image];
+      [tags, content, title, subTitle, estimatedReadTime, image, id];
 }

@@ -1,10 +1,12 @@
 
 using Application.DTOs.Common;
 using MediatR;
+using SocialSync.Application.Common.Responses;
 
 namespace Application.Features.Users.Requests.Commands
 {
-    public class FollowUserCommand : IRequest<Unit>{
+    public class FollowUserCommand : IRequest<CommonResponse<int>>
+    {
 
         public required FollowUnFollowDto FollowUnfollowDto { get; set; }
     

@@ -15,11 +15,20 @@ class ArticleModel extends Article {
       required super.estimatedReadTime});
 
   factory ArticleModel.fromJson(Map<String, dynamic> json) {
-    final tags = (json['tags'] as List<String>)
-        .map<TagModel>((name) => TagModel(name: name))
-        .toList();
+    final tags =
+        json['tags'].map<TagModel>((name) => TagModel(name: name)).toList();
 
-    final author = UserDataModel.fromJson(json['user']);
+    // final author = UserDataModel.fromJson(json['user']);
+    final author = UserDataModel(
+        id: json['id'],
+        fullName: 'fullName',
+        email: 'email',
+        expertise: 'expertise',
+        bio: 'bio',
+        createdAt: 'createdAt',
+        image: 'image',
+        imageCloudinaryPublicId: 'imageCloudinaryPublicId',
+        articles: const []);
 
     return ArticleModel(
       id: json['id'],
@@ -27,7 +36,7 @@ class ArticleModel extends Article {
       subTitle: json['subTitle'],
       content: json['content'],
       estimatedReadTime: json['estimatedReadTime'],
-      date: json['createdAt'],
+      date: DateTime.parse(json['createdAt']),
       photoUrl: json['image'],
       author: author,
       tags: tags,
