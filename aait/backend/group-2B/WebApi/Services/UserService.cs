@@ -15,9 +15,13 @@ public class UserService : IUserService
     public int GetUserId()
     {
         var userId = _httpContextAccessor.HttpContext?.User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+<<<<<<< HEAD
         if(userId != null){
             return int.Parse(userId);
         }
         return 0;
+=======
+        return int.Parse(userId);
+>>>>>>> df672ccb (fix(AAiT-backend-2b): update post endpoints with authorizaton feature)
     }
 }
