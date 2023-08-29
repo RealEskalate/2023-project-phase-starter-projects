@@ -15,7 +15,9 @@ abstract class ArticleRemoteDataSource {
 class ArticleRemoteDataSourceImpl extends ArticleRemoteDataSource {
   @override
   Future<ArticleModel> postArticle(CreateArticleModel articleModel) async {
-    final String? token = await getToken();
+    String? token = await getToken();
+    token =
+        "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0ZWNmMzgzODk5NDQ1M2ZhMzkxZTIxMSIsImlhdCI6MTY5MzI1MDQ1MiwiZXhwIjoxNjk1ODQyNDUyfQ.ZgYBMdKyBgVLIxFnZ7CX5Rrg4jVIjj6fG6O_SoWhwk0";
     final response = await http.post(Uri.parse('$baseApi/article'),
         headers: {'Content-Type': 'application/json', "token": token!},
         body: json.encode(articleModel.toJson()));

@@ -8,18 +8,18 @@ import '../bloc/article_bloc/article_bloc.dart';
 import '../bloc/article_bloc/article_state.dart';
 
 class ArticlePage extends StatefulWidget {
-  const ArticlePage({super.key, this.id});
   final String? id;
+  const ArticlePage({this.id});
 
   @override
   State<ArticlePage> createState() => _ArticlePageState();
 }
 
 class _ArticlePageState extends State<ArticlePage> {
-  @override
-  void initState() {
-    super.initState();
-  }
+  // @override
+  // void initState() {
+  //   super.initState();
+  // }
 
   List<String> tags = [
     "Sports",
