@@ -4,10 +4,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using Application.DTO.Common;
 using Application.Exceptions;
-using Application.Features.CommentFeature.Handlers.Commands;
-using Application.Features.CommentFeature.Handlers.Queries;
-using Application.Features.CommentFeature.Requests.Commands;
-using Application.Features.CommentFeature.Requests.Queries;
+using Application.Features.CommentReactionFeature.Handlers.Queries;
+using Application.Features.CommentReactionFeature.Requests.Queries;
 using Application.Profiles;
 using Application.Response;
 using Application.Tests.Mocks;
@@ -47,9 +45,9 @@ namespace Application.Tests.Features.CommentReactionFeature.Commands
         {
             var mocCommentReactionRepository = MockCommentReactionRepository.GetCommentReactionRepository().Object;
             var mockCommentRepository = MockCommentRepository.GetCommentRepository().Object;
-            var _handler = new GetCommentLikesHandler(mocCommentReactionRepository,_mapper,mockCommentRepository);
+            var _handler = new GetCommentsLikeHandler(mocCommentReactionRepository,_mapper,mockCommentRepository);
                          
-            var result = await _handler.Handle(new GetCommentLikesQuery() {CommentId = 1}, CancellationToken.None);
+            var result = await _handler.Handle(new GetCommentsLikeQuery() {CommentId = 1}, CancellationToken.None);
             result.ShouldBeOfType<BaseResponse<List<ReactionResponseDTO>>>();
         }
 
@@ -58,9 +56,9 @@ namespace Application.Tests.Features.CommentReactionFeature.Commands
         {
             var mocCommentReactionRepository = MockCommentReactionRepository.GetCommentReactionRepository().Object;
             var mockCommentRepository = MockCommentRepository.GetCommentRepository().Object;
-            var _handler = new GetCommentLikesHandler(mocCommentReactionRepository,_mapper,mockCommentRepository);
+            var _handler = new GetCommentsLikeHandler(mocCommentReactionRepository,_mapper,mockCommentRepository);
             await Should.ThrowAsync<NotFoundException>(async () =>
-               await _handler.Handle(new GetCommentLikesQuery() { CommentId = 100}, CancellationToken.None));
+               await _handler.Handle(new GetCommentsLikeQuery() { CommentId = 100}, CancellationToken.None));
         }
 
     }
