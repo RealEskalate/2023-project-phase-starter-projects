@@ -30,14 +30,17 @@ public class MappingProfile : Profile
         CreateMap<Notification, GetNotificationDto>().ReverseMap();
 
         CreateMap<User, RegisterRequestDto>().ReverseMap();
-            CreateMap<User, LoginRequestDto>().ReverseMap();
-            CreateMap<User, LoginResponseDto>().ReverseMap();
+        CreateMap<User, LoginRequestDto>().ReverseMap();
+        CreateMap<User, LoginResponseDto>().ReverseMap();
 
         CreateMap<User, UpdateUserDto>().ReverseMap();
         CreateMap<User, UserDetail>().ReverseMap();
         CreateMap<User, UserListDto>().ReverseMap();
 
         CreateMap<Follow, FollowDto>().ReverseMap();
+
+        CreateMap<Tag, TagDto>().ReverseMap();
+        CreateMap<Tag, TagNameDto>().ReverseMap();
     }
 }
 
