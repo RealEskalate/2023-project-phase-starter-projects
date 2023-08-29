@@ -24,6 +24,8 @@ public class SocialSyncDbContext : DbContext
             entity.HasMany(u => u.Followers).WithMany(u => u.Followings);
             entity.HasMany(u => u.NotificationsReceived).WithOne(u => u.Recepient);
             entity.HasMany(u => u.NotificationsSent).WithOne(u => u.Sender);
+            entity.Property(u => u.CreatedAt).IsRequired();
+            entity.Property(u => u.LastModified).IsRequired();
         });
 
         modelBuilder.Entity<Post>(entity =>
@@ -35,6 +37,10 @@ public class SocialSyncDbContext : DbContext
             entity.Property(e => e.Content).IsRequired();
 
             entity.Property(e => e.UserId).IsRequired();
+
+            entity.Property(e => e.CreatedAt).IsRequired();
+
+            entity.Property(e => e.LastModified).IsRequired();
 
             entity
                 .HasOne(e => e.User)
@@ -49,7 +55,14 @@ public class SocialSyncDbContext : DbContext
                 .OnDelete(DeleteBehavior.Cascade);
         });
 
-        modelBuilder.Entity<Interaction>().HasKey(i => i.Id);
+        modelBuilder.Entity<Interaction>(entity =>
+        {
+            entity.HasKey(i => i.Id);
+            entity.Property(i => i.CreatedAt);
+            entity.Property(i => i.LastModified);
+        });
+
+
 
         modelBuilder.Entity<Notification>(entity =>
         {
@@ -58,6 +71,10 @@ public class SocialSyncDbContext : DbContext
             entity.HasKey(e => e.Id);
 
             entity.Property(e => e.NotificationType).IsRequired();
+
+            entity.Property(e => e.CreatedAt).IsRequired();
+
+            entity.Property(e => e.LastModified).IsRequired();
 
             entity
                 .HasOne(e => e.Recepient)
