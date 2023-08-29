@@ -1,4 +1,3 @@
-import 'package:blog_app/features/article/presentation/screen/write_aricle_page.dart';
 import 'package:blog_app/features/onboarding/widgets/on-boarding_images.dart';
 import 'package:blog_app/features/onboarding/widgets/scrollable_content.dart';
 import 'package:flutter/material.dart';
@@ -46,11 +45,11 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
       body: Column(
         children: [
           SizedBox(
-            height: ScreenUtil().setHeight(60),
+            height: ScreenUtil().setHeight(100),
           ),
           OnboardingImagesWidget(),
           SizedBox(
-            height: ScreenUtil().setHeight(40),
+            height: ScreenUtil().setHeight(60),
           ),
           Expanded(
             child: Container(
@@ -103,7 +102,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                       );
                     } else {
                       Navigator.of(context).pushReplacement(
-                        MaterialPageRoute(builder: (context) => WriteArticlePage()),
+                        MaterialPageRoute(builder: (context) => Container()),
                       );
                     }
                   },

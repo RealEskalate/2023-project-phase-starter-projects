@@ -10,7 +10,7 @@ Widget buildContent(String title, String description) {
         child: Text(
           title,
           style: TextStyle(
-            fontSize: 20.sp,
+            fontSize: 24.sp,
             fontWeight: FontWeight.w100,
             color: Color(0xFF0D253C),
           ),
