@@ -5,6 +5,7 @@ import Image from 'next/image';
 import SingleBlog from '@/app/components/blog/singleBlog';
 import { useGetBlogByIdQuery, useGetBlogsQuery } from '@/lib/redux/slices/blogsApi';
 import Loading from '@/app/components/loading';
+import SingleBlogSkeleton from '@/app/components/blog/SingleBlogSkeleton';
 
 const First = () => {
   const router = useParams();
@@ -18,7 +19,7 @@ const First = () => {
   } = useGetBlogByIdQuery(id);
 
   if (blogsLoading || singleBlogLoading) {
-    return <Loading />;
+    return <SingleBlogSkeleton />;
   }
 
   if (blogError) {
@@ -36,7 +37,9 @@ const First = () => {
 
   return (
     <div className="grid grid-rows gap-0">
-      <div className="text-3xl font-primaryFont text-center mt-20 mx-auto dark:text-dark-textColor-100">{blogInfo?.title}</div>
+      <div className="text-3xl font-primaryFont text-center mt-20 mx-auto dark:text-dark-textColor-100">
+        {blogInfo?.title}
+      </div>
       <div className="text-xs font-secondaryFont flex items-center justify-center font-light uppercase text-gray-500 h-5 m-3">
         {blogInfo?.tags
           .map((tag: any) => {

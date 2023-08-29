@@ -3,10 +3,10 @@ import React, { useState } from 'react';
 import { useAppSelector } from '@/lib/redux/hooks';
 import { useGetBlogsQuery } from '@/lib/redux/slices/blogsApi';
 import SingleBlogCard from '../components/blog/SingleBlogCard';
-import Loading from '../components/loading';
 import { Pagination } from '../components/Pagination';
 import Link from '@/node_modules/next/link';
 import { Blog } from '@/lib/types';
+import BlogCardSkeleton from '../components/blog/BlogCardSkeleton';
 
 const Page: React.FC = () => {
   const [page, setPage] = useState(1);
@@ -16,8 +16,20 @@ const Page: React.FC = () => {
   const loginState = useAppSelector((state: any) => state.login);
   const { data: blogs, error, isLoading, isSuccess } = useGetBlogsQuery();
 
+  if (error) {
+    throw Error('Network');
+  }
+
   if (isLoading) {
-    return <Loading />;
+    return (
+      <div>
+        <div className=" flex flex-col w-full gap-4 lg:px-52 md:px-40 px-8 mt-5 items-center justify-center ">
+          {[1, 2, 3].map((d) => {
+            return <BlogCardSkeleton key={d} />;
+          })}
+        </div>
+      </div>
+    );
   }
 
   const blogsToShow = blogs
@@ -27,15 +39,15 @@ const Page: React.FC = () => {
         blog.author?.name.toLowerCase().includes(search.toLowerCase())
       );
     })
-    .sort((a: Blog, b: Blog) => b?.createdAt?.localeCompare(a?.createdAt));
+    .sort((a: Blog, b: Blog) => b?.createdAt?.localeCompare(a?.createdAt || ''));
 
   //let bls = blogsToShow.map((blog) => blog.title);
 
-  const totalBlogs = blogsToShow.length; // Calculate total number of blogs
+  const totalBlogs = blogsToShow?.length; // Calculate total number of blogs
 
   const startIndex = (page - 1) * blogsPerPage;
   const endIndex = startIndex + blogsPerPage;
-  const paginatedBlogs = blogsToShow.slice(startIndex, endIndex);
+  const paginatedBlogs = blogsToShow?.slice(startIndex, endIndex);
 
   return (
     <div className="w-full font-secondaryFont mt-20 flex flex-col justify-center items-center">
@@ -65,8 +77,8 @@ const Page: React.FC = () => {
 
       {/* blog list */}
       <div className="flex flex-col w-full gap-4 lg:px-52 md:px-40 px-8 mt-5 items-center justify-center">
-        {paginatedBlogs.map((blog: Blog, index: number) => (
-          <React.Fragment key={blog.id}>
+        {paginatedBlogs?.map((blog: Blog, index: number) => (
+          <React.Fragment key={index}>
             {index > 0 && <hr className="mt-4 mb-6 bg-textColor-100  dark:invisible w-3/4" />}
             <SingleBlogCard {...blog} />
           </React.Fragment>
