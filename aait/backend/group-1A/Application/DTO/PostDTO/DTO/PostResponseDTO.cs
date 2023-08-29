@@ -8,6 +8,7 @@ namespace Application.DTO.PostDTO.DTO
         public string Title { get; set; }
         public string Content { get; set; }
 
+        public int UserId {get ; set ;}
         public List<CommentResponseDTO> Comments { get; set; } = new List<CommentResponseDTO> ();
 
         public int Like { get; set; }

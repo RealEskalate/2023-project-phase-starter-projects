@@ -59,15 +59,12 @@ const Blog = ({ params }: { params: { id: string } }) => {
         </p>
       </div>
       <div className="md:px-32 flex flex-col gap-8 text-justify py-4">
-        <div>
-          <p className="font-montserrat text-lg font-bold text-left">
-            {blogData.description}
-          </p>
-        </div>
         {blogData.description.split("\n").map((paragraph: any, index: any) => (
-          <p key={index} className="font-montserrat text-sm text-left">
-            {paragraph}
-          </p>
+          <p
+            key={index}
+            className="font-montserrat text-sm text-left"
+            dangerouslySetInnerHTML={{ __html: paragraph }}
+          ></p>
         ))}
       </div>
       <div className="text-left w-full flex flex-col gap-12">

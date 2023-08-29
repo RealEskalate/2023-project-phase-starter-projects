@@ -8,6 +8,7 @@ const inter = Poppins({
   subsets: ["latin"],
 });
 import StateProvider from "@/components/provider/StateProvider";
+import Footer from "@/components/layout/Footer";
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -20,15 +21,16 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en">
-      <body className={`flex flex-col gap-20 ${inter.className}`}>
-        <header>
-          <NavBar />
-        </header>
-        <StateProvider>
+    <StateProvider>
+      <html lang="en">
+        <body className={`flex flex-col ${inter.className}`}>
+          <header>
+            <NavBar />
+          </header>
           <main>{children}</main>
-        </StateProvider>
-      </body>
-    </html>
+          <Footer />
+        </body>
+      </html>
+    </StateProvider>
   );
 }

@@ -1,7 +1,7 @@
 import 'dart:convert';
-import 'dart:io';
 
 import 'package:http/http.dart' as http;
+import 'package:http_parser/http_parser.dart';
 
 import '../../../../core/constants/constants.dart';
 import '../../../../core/error/exception.dart';
@@ -25,7 +25,6 @@ class UserRemoteDataSourceImpl implements UserRemoteDataSource {
       try {
         return UserDataModel.fromJson(jsonDecode(response.body)['data']);
       } catch (e) {
-        print(e);
         throw const ServerException();
       }
     } else {
@@ -39,25 +38,31 @@ class UserRemoteDataSourceImpl implements UserRemoteDataSource {
       'Authorization': 'Bearer $token',
     };
 
-    final request = http.MultipartRequest('PUT', Uri.parse(imagePath));
+    final request = http.MultipartRequest(
+        'PUT', Uri.parse('${apiBaseUrl}user/update/image'));
     request.headers.addAll(headers);
 
-    final imageBytes = await File(imagePath).readAsBytes();
+    print(Uri.parse('${apiBaseUrl}user/update/image'));
+    // final imageBytes = await File(imagePath).readAsBytes();
 
     request.files.add(
-      http.MultipartFile.fromBytes(
+      await http.MultipartFile.fromPath(
         'photo',
-        imageBytes,
-        filename: 'profile_image',
+        imagePath,
+        contentType: MediaType('image', 'jpeg'),
       ),
     );
 
     try {
       final response = await request.send();
 
+      print(response.statusCode);
+      print(response.reasonPhrase);
+
       if (response.statusCode == 200) {
         final responseString = await response.stream.bytesToString();
-        return UserDataModel.fromJson(json.decode(responseString));
+        print(json.decode(responseString)['data']);
+        return UserDataModel.fromJson(json.decode(responseString)['data']);
       } else {
         throw const ServerException();
       }

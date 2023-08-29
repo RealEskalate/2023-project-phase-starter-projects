@@ -86,7 +86,6 @@ class ArticleBloc extends Bloc<ArticleEvent, ArticleState> {
     emit(const GettingArticle());
     final result = await _getArticleById(event.id);
 
-    print(result);
     result.fold((failure) => emit(ArticleError(failure.errorMessage)),
         (article) => emit(ArticleLoaded(article)));
   }

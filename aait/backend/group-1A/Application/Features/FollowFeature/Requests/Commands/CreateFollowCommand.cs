@@ -5,7 +5,7 @@ using Application.Response;
 
 namespace Application.Features.FollowFeature.Requests.Commands
 {
-    public class CreateFollowCommand : IRequest<BaseResponse<string>>
+    public class CreateFollowCommand : IRequest<BaseResponse<int>>
     {
         public FollowDTO? FollowDTO { get; set; } 
     }

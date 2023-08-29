@@ -3,12 +3,18 @@
 import { useAppSelector } from '@/lib/redux/hooks';
 import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
+import { useEffect, useState } from 'react';
 export default function ProfileLayout(props: React.PropsWithChildren) {
   const currentRoute = usePathname();
   const router = useRouter();
   const loginState = useAppSelector((state: any) => state.login);
+  const [isClient, setClient] = useState(false);
 
-  if (!loginState) {
+  useEffect(() => {
+    setClient(true);
+  }, []);
+
+  if (!loginState && isClient) {
     router.replace('/login');
     return <></>;
   }

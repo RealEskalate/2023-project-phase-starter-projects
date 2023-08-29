@@ -1,4 +1,5 @@
 "use client";
+import Toast from "@/components/toast-Messages/toast-message";
 import { usePasswordResetMutation } from "@/store/features/auth";
 import { authTypes } from "@/types/auth/authTypes";
 import Image from "next/image";
@@ -9,26 +10,25 @@ const AccountSetting = () => {
   const [newPassword, setnewPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [errorMessage, seterrorMessage] = useState("");
+  const [showToast, setshowToast] = useState(false);
+
 
   const [passwordReset, { isLoading, isError, data }] =
     usePasswordResetMutation();
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-
-    const userString = localStorage.getItem("user");
-    const user: authTypes | null = userString ? JSON.parse(userString) : null;
-    const token = user?.token;
-    console.log(token);
-
     event.preventDefault(); // Prevent default form submission behavior
     passwordReset({
       oldPassword: currentPassword,
       newPassword: confirmPassword,
     })
       .unwrap()
-      .then((response: any) => {
-        // NOT WORKING, not completed yet
-        console.log("success", response);
+      .then((response) => {
+        // show success message via toast
+        setshowToast(true)
+        setTimeout(() => {
+          window.location.href = "/";
+        }, 3000);
       })
       .catch((err) => {
         // seterrorMessage(err.data.message);
@@ -38,6 +38,7 @@ const AccountSetting = () => {
 
   return (
     <form onSubmit={handleSubmit}>
+      {showToast && <Toast message={"password updated succesfully."} />}
       <div className=" py-10 text-blog_list_sub_text_color flex justify-between items-center ">
         <p>
           <p className="text-xl  font-bold">Manage Personal Information</p>

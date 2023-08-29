@@ -29,7 +29,7 @@ public class JwtGenerator : IJwtGenerator
             claims: claims,
             expires: DateTime.UtcNow.AddDays(7),
             signingCredentials: signingCredentials,
-            issuer: "localhost", //TODO: Change
+            issuer: "localhost", 
             audience: "localhost"
         );
 

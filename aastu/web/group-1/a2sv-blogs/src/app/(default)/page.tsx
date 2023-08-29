@@ -8,7 +8,7 @@ export default function Home() {
   const { data, isLoading, isError } = useGetStoriesQuery();
   console.log(data);
   return (
-    <main className="mx-auto lg:px-32 px-5 pt-36 font-sans-serif	font-poppins">
+    <main className="mx-auto lg:px-24 px-5 pt-36 font-sans-serif	font-poppins">
       <header className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-1 lg:grid-cols-2 gap-4 ">
         <div className="sm:grid-cols-1 md:grid-cols-1 lg:grid-cols-2 space-y-10">
           <div className="xl:text-7xl sm:text-6xl text-4xl font-extrabold">
@@ -78,8 +78,14 @@ export default function Home() {
           </div>
         </div>
 
-        <div className="hidden xl:flex xl:justify-center xl:items-center">
-          <Image src="/images/teams.png" alt="" width={500} height={500} />
+        <div className="hidden xl:flex xl:justify-end xl:items-center">
+          <Image
+            src="/images/teams.png"
+            alt=""
+            width={500}
+            height={500}
+            className=" object-contain"
+          />
         </div>
       </header>
       <section className="mt-20 text-center space-y-10">
@@ -110,13 +116,13 @@ export default function Home() {
           <span>Connect to our team</span>
         </Link>
       </section>
-      <div className="hidden md:block mt-10">
+      <div className="hidden md:block mt-10 h-96 overflow-hidden">
         <Image
           src="/images/team.jpg"
           width={1120}
           height={515}
           alt="team"
-          className="w-full aspect-video object-contain rounded-lg"
+          className="w-full aspect-video object-cover rounded-lg"
         />
       </div>
       <section className="text-center mt-20 xl:min-h-[60vh] flex flex-col items-center justify-center text-text-header-1">
@@ -171,7 +177,7 @@ export default function Home() {
             <p className="md:text-right text-center text-4xl font-semibold	text-text-header-2 p-4">
               Internships
             </p>
-            <p className="md:text-right text-center text-2xl	font-normal	text-text-content max-w-max	p-4	">
+            <p className="md:text-right text-center text-xl	font-normal	text-text-content max-w-max	p-4	">
               Students who passed their interviews get 3-month internships to
               gain experience in building scalable products that are widely used
               around the world.
@@ -183,7 +189,7 @@ export default function Home() {
             <p className="md:text-left text-center text-4xl font-semibold	text-text-header-2 p-4">
               360° Trainings
             </p>
-            <p className="md:text-left text-center text-2xl	font-normal	text-text-content max-w-max	p-4">
+            <p className="md:text-left text-center text-xl	font-normal	text-text-content max-w-max	p-4">
               A2SV upskills students with a 360° software engineering program
               that focuses on problem-solving, effective speaking, and personal
               development.
@@ -213,7 +219,7 @@ export default function Home() {
             <p className="md:text-right text-center text-4xl font-semibold text-text-header-2 p-4">
               Social Projects
             </p>
-            <p className="md:text-right text-center text-2xl	font-normal	text-text-content max-w-max	p-4		">
+            <p className="md:text-right text-center text-xl	font-normal	text-text-content max-w-max	p-4		">
               Students work on social projects with industry experts to address
               the most pressing problems in their community.
             </p>

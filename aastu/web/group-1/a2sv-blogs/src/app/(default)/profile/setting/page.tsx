@@ -100,7 +100,7 @@ export default function page() {
         </div>
       </div>
       <div className="h-full">
-        <div className="lg:w-1/3 mx-auto mt-20">
+        <div className="lg:w-2/5 w-full mx-auto mt-20">
           <div className="mt-5 grid grid-cols-6 items-center">
             <label
               htmlFor="password"

@@ -6,15 +6,15 @@ export default function InterviewPartners() {
     <div className="w-full flex justify-center mt-16">
       <div className="mb-20">
         {/* title for partner */}
-        <div className="flex justify-center mb-10">
-          <h1 className="text-2xl lg:text-4xl text-center h-10 leading-10 text-text-header-1 font-medium font-DmSans mb-5">
+        <div className="flex justify-center">
+          <h1 className="text-2xl lg:text-4xl text-center h-10 leading-10 text-text-header-1 font-medium font-DmSans">
             Current Interview Partners
           </h1>
         </div>
         {/* partners Photo */}
-        <div className="mt-5 mx-5 flex flex-col">
+        <div className="mt-8 mx-5 flex flex-col">
           {/* the TOP 4 partner */}
-          <div className="flex flex-col sm:flex-row justify-between gap-1 w-full h-full items-center">
+          <div className="grid grid-cols-2 sm:flex sm:flex-row justify-between gap-1 w-full h-full items-center">
             <div className="flex-auto w-40 h-16 lg:w-48 lg:h-28 pb-4">
               <svg
                 className="w-full h-full flex-shrink-0"
@@ -140,7 +140,7 @@ export default function InterviewPartners() {
             </div>
           </div>
           {/* bottom 2 partner */}
-          <div className="flex flex-col md:flex-row justify-around items-center">
+          <div className="grid grid-cols-2 md:flex md:flex-row justify-around items-center">
             <div className="w-40 h-16 lg:w-48 lg:h-28 pb-4 lg:pl-5">
               <Image
                 src="/images/databricks.png"

@@ -61,8 +61,7 @@ class ArticleRemoteDataSourceImpl extends ArticleRemoteDataSource {
 
       if (response.statusCode == 200) {
         try {
-          final decoded = jsonDecode(response.body)['data'];
-
+          final decoded = jsonDecode(response.body)['date'];
           final articleModel = ArticleModel.fromJson(decoded);
 
           return articleModel;

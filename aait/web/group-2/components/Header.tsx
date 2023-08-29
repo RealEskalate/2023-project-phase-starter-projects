@@ -1,39 +1,53 @@
 "use client";
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import Link from 'next/link';
+import Image from 'next/image'
+import { usePathname } from 'next/navigation';
+import Cookies from "js-cookie";
+
 interface HeaderProps {
   title?: string;
 }
 
 const Header: React.FC<HeaderProps> = ({ title }) => {
+	const currentRoute = usePathname();
     const [showMenu, setShowMenu] = useState(false);
+    const [isLoggedIn, setisLoggedIn] = useState(false);
+
+	useEffect(() => {
+		// Get the value of a cookie
+		const cookieValue = Cookies.get("user");
+		if(cookieValue){
+			setisLoggedIn(true)
+		}
+	  }, []);
 
     const toggleMobileMenu = () => {
         setShowMenu(!showMenu);
       };
-
       
   return (
     <>
-    <nav className="bg-white fixed top-0 left-0 right-0">
+    <nav className="bg-white fixed top-0 left-0 right-0 z-50">
 			<div className="max-w-8xl mx-auto px-4">
 				<div className="flex justify-between">
 					<div className="flex items-start space-x-7">
 						<div>
 							<a href="#" className="flex items-center py-4 px-2">
-								<img src="./images/a2svlogo.png" alt="Logo" className=" h-7 mr-2"/>
+								<Image width={180} height={200}src="/images/a2svlogo.png" alt="Logo" className="  mr-2"/>
 							</a>
 						</div>
 					</div>
                     <div className="hidden lg:flex justify-between items-center space-x-1 mx-auto">
-							<a href="" className="py-4 px-2 mr-5 text-blue-700 border-b-4 border-blue-700 font-semibold ">Home</a>
-							<a href="" className="py-4 px-2 mr-5 text-gray-500 font-semibold hover:text-blue-700 transition duration-300">Teams</a>
-							<a href="" className="py-4 px-2 mr-5 text-gray-500 font-semibold hover:text-blue-700 transition duration-300">Success Stories</a>
-							<a href="" className="py-4 px-2 mr-5 text-gray-500 font-semibold hover:text-blue-700 transition duration-300">About Us</a>
-							<a href="" className="py-4 px-2 mr-5 text-gray-500 font-semibold hover:text-blue-700 transition duration-300">Blogs</a>
+							<Link href="/" className={currentRoute === "/" ? "text-blue-700 border-b-4 border-blue-700 py-4 px-2 mr-5 font-semibold" : "py-4 px-2 mr-5 font-semibold text-gray-500"}>Home</Link>
+							<Link href="/teams" className={currentRoute === "/teams" ? "text-blue-700 border-b-4 border-blue-700 py-4 px-2 mr-5 font-semibold" : "py-4 px-2 mr-5 font-semibold text-gray-500"}>Teams</Link>
+							<Link href="/success-stories" className={currentRoute === "/success-stories" ? "text-blue-700 border-b-4 border-blue-700 py-4 px-2 mr-5 font-semibold" : "py-4 px-2 mr-5 font-semibold text-gray-500"} >Success Stories</Link>
+							<Link href="/about-us" className="py-4 px-2 mr-5 text-gray-500 font-semibold hover:text-blue-700 transition duration-300">About Us</Link>
+							<Link href="/blogs" className={currentRoute === "/blogs" ? "text-blue-700 border-b-4 border-blue-700 py-4 px-2 mr-5 font-semibold" : "py-4 px-2 mr-5 font-semibold text-gray-500"}>Blogs</Link>
 							<a href="" className="py-4 px-2 mr-5 text-gray-500 font-semibold hover:text-blue-700 transition duration-300">Get Involved</a>
 					</div>
 					<div className="hidden lg:flex items-center space-x-3 ">
-						<a href="" className="py-2 px-2 font-medium rounded hover:text-gray-500 transition duration-300">Log In</a>
+					{!isLoggedIn &&<Link href="/signin" className="py-2 px-2 font-medium rounded hover:text-gray-500 transition duration-300">Log In</Link>}
 						<a href="" className="py-2 px-2 font-medium text-white bg-blue-700 rounded hover:bg-blue-900 transition duration-300">Donate</a>
 					</div>
 					<div className="lg:hidden flex items-center">
@@ -44,6 +58,7 @@ const Header: React.FC<HeaderProps> = ({ title }) => {
 							strokeLinecap="round"
 							strokeLinejoin ="round"
 							strokeWidth="2"
+						
 							viewBox="0 0 24 24"
 							stroke="currentColor"
 						>

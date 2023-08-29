@@ -1,7 +1,7 @@
 import 'dart:async';
 
-import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../core/error/failure.dart';
 import '../../../../core/usecase/usecase.dart';
@@ -49,6 +49,7 @@ class UserBloc extends Bloc<UserEvent, UserState> {
   FutureOr<void> _onGetUserData(
       GetUserEvent event, Emitter<UserState> emit) async {
     emit(LoadingState());
+
     final userOrError = await getUser(GetUserDataParams(token: event.token));
 
     userOrError.fold(
@@ -77,7 +78,7 @@ class UserBloc extends Bloc<UserEvent, UserState> {
         ),
       ),
       (user) => emit(
-        LoadedUserState(userData: user),
+        UserProfileUpdatedState(),
       ),
     );
   }

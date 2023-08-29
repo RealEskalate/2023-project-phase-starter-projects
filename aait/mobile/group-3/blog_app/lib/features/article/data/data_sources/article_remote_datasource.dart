@@ -36,15 +36,20 @@ class ArticleRemoteDataSourceImpl implements ArticleRemoteDataSource {
 
   @override
   Future<ArticleModel> createArticle(ArticleModel article) async {
-    final String token = jsonDecode(sharedPreferences.getString(cachedToken)!);
+    print("h1");
+    String token = await getStoredToken();
     final photoFile = File(article.image);
+    print("h2");
     final String mimeType = lookupMimeType(article.image)!;
+    print("h3");
 
     var request = http.MultipartRequest('POST', Uri.parse('$baseUrl/article'));
+    print("h4");
 
     //  final token =
     // "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0ZTg0ZDg3YWMyNDQ1NjZjNzcyNjA1MCIsImlhdCI6MTY5Mjk3MjAzMiwiZXhwIjoxNjk1NTY0MDMyfQ.SgdYuy3wvMEsDFhL_vs-e77s2D7txtMGUw5ew2hD-jI";
     request.headers['Authorization'] = 'Bearer $token';
+    print("h1");
 
     // Loop through the tags list and add a separate field for each tag
     for (int i = 0; i < article.tags.length; i++) {
@@ -64,10 +69,13 @@ class ArticleRemoteDataSourceImpl implements ArticleRemoteDataSource {
     ));
 
     http.StreamedResponse response = await request.send();
+    print(response);
 
     if (response.statusCode == 200) {
+      print("yes");
       final http.Response result = await http.Response.fromStream(response);
       final jsonResponse = jsonDecode(result.body);
+      print(jsonResponse);
       final newArticle = await getArticleById(jsonResponse["data"]["id"]);
       return newArticle;
     } else {
@@ -80,7 +88,7 @@ class ArticleRemoteDataSourceImpl implements ArticleRemoteDataSource {
 
   @override
   Future<ArticleModel> deleteArticle(String id) async {
-    final String token = jsonDecode(sharedPreferences.getString(cachedToken)!);
+    String token = await getStoredToken();
     var request = http.Request('DELETE', Uri.parse('$baseUrl/article/$id'));
     request.headers['Authorization'] = "Bearer $token";
 
@@ -101,7 +109,7 @@ class ArticleRemoteDataSourceImpl implements ArticleRemoteDataSource {
 
   @override
   Future<List<ArticleModel>> getAllArticles() async {
-    String token = jsonDecode(sharedPreferences.getString(cachedToken)!);
+    String token = await getStoredToken();
     var request = http.Request('GET', Uri.parse('$baseUrl/article'));
     request.headers['Authorization'] = 'Bearer $token';
     http.StreamedResponse response = await request.send();
@@ -121,7 +129,7 @@ class ArticleRemoteDataSourceImpl implements ArticleRemoteDataSource {
   @override
   Future<List<ArticleModel>> getArticle(
       String tags, String searchParams) async {
-    String token = jsonDecode(sharedPreferences.getString(cachedToken)!);
+    String token = await getStoredToken();
 
     var request = http.Request('GET',
         Uri.parse('$baseUrl/article?tags=$tags&searchParams=$searchParams'));
@@ -147,7 +155,7 @@ class ArticleRemoteDataSourceImpl implements ArticleRemoteDataSource {
 
   @override
   Future<ArticleModel> getArticleById(String id) async {
-    String token = jsonDecode(sharedPreferences.getString(cachedToken)!);
+    String token = await getStoredToken();
 
     var request = http.Request('GET', Uri.parse('$baseUrl/article/$id'));
     request.headers['Authorization'] = 'Bearer $token';
@@ -157,6 +165,7 @@ class ArticleRemoteDataSourceImpl implements ArticleRemoteDataSource {
     if (response.statusCode == 200) {
       final http.Response result = await http.Response.fromStream(response);
       final jsonResponse = jsonDecode(result.body);
+      print(jsonResponse.toString());
       final article = ArticleModel.fromJson(jsonResponse["data"]);
       return article;
     } else {
@@ -168,7 +177,7 @@ class ArticleRemoteDataSourceImpl implements ArticleRemoteDataSource {
 
   @override
   Future<List<String>> getTags() async {
-    String token = jsonDecode(sharedPreferences.getString(cachedToken)!);
+    String token = await getStoredToken();
     var request = http.Request('GET', Uri.parse('$baseUrl/tags'));
     request.headers['Authorization'] = 'Bearer $token';
 
@@ -190,7 +199,7 @@ class ArticleRemoteDataSourceImpl implements ArticleRemoteDataSource {
 
   @override
   Future<ArticleModel> updateArticle(ArticleModel article) async {
-    String token = jsonDecode(sharedPreferences.getString(cachedToken)!);
+    String token = await getStoredToken();
     final String id = article.id;
     final photoFile = File(article.image);
     final String mimeType = lookupMimeType(article.image)!;
@@ -232,7 +241,7 @@ class ArticleRemoteDataSourceImpl implements ArticleRemoteDataSource {
 
   @override
   Future<UserModel> getUser() async {
-    String token = jsonDecode(sharedPreferences.getString(cachedToken)!);
+    String token = await getStoredToken();
     final result = await client.get(Uri.parse('$baseUrl/user'),
         headers: {"Authorization": "Bearer $token"});
 
@@ -245,5 +254,11 @@ class ArticleRemoteDataSourceImpl implements ArticleRemoteDataSource {
           message: "Could not connect to the server",
           statusCode: result.statusCode);
     }
+  }
+
+  Future<String> getStoredToken() async {
+    final SharedPreferences pref = await SharedPreferences.getInstance();
+    final String token = pref.getString(cachedToken)!;
+    return token;
   }
 }

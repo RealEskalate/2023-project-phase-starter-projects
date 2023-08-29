@@ -29,7 +29,7 @@ export default function Nav() {
   };
   return (
     <nav className="bg-white fixed w-full z-50 top-0">
-      <div className="flex flex-wrap items-center justify-between mx-auto py-4 lg:px-32 px-5">
+      <div className="flex flex-wrap items-center justify-between mx-auto py-4 px-5">
         <Link href="/">
           <Image
             src="/images/a2sv-logo.svg"
@@ -39,19 +39,7 @@ export default function Nav() {
             className="w-32 h-8"
           />
         </Link>
-        <div className="flex lg:order-2 items-center">
-          {auth ? (
-            <div className="md:mr-0 -mr-12">
-              <ProfileAvatar imageUrl={imageUrl!} />
-            </div>
-          ) : (
-            <Link
-              href="/auth/login"
-              className={`text-[#3C3C3C] text-base font-semibold font-montserrat px-5 cursor-pointer`}
-            >
-              Login
-            </Link>
-          )}
+        <div className="flex lg:order-2 items-center self-end">
           <div className="hidden content-end row-span-1 lg:flex lg:gap-0 lg:items-center">
             <span>
               <button
@@ -63,6 +51,18 @@ export default function Nav() {
               </button>
             </span>
           </div>
+          {auth ? (
+            <div className="md:mr-0 -mr-12">
+              <ProfileAvatar imageUrl={imageUrl!} />
+            </div>
+          ) : (
+            <Link
+              href="/auth/login"
+              className={`text-[#3C3C3C] text-base font-semibold font-montserrat pl-5 cursor-pointer hover:text-gray-400`}
+            >
+              Login
+            </Link>
+          )}
           <button
             data-collapse-toggle="navbar-sticky"
             type="button"

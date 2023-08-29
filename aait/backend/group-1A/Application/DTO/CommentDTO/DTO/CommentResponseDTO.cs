@@ -10,5 +10,7 @@ namespace Application.DTO.CommentDTO.DTO
         public int Like { get; set; }
 
         public int Dislike { get; set; }
+
+        public int UserId { get; set; }
     }
 }

@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../../../article/domain/entities/article.dart';
-import 'article_grid_view.dart';
 import 'posts_bar.dart';
 import 'single_article_post_list_view.dart';
 

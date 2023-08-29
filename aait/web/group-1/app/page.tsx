@@ -2,7 +2,7 @@
 import React from 'react'
 import Home from '@/components/home/Home'
 
-const page = () => {
+const Page = () => {
   return (
     <div>
       <Home />
@@ -10,4 +10,4 @@ const page = () => {
   )
 }
 
-export default page
+export default Page

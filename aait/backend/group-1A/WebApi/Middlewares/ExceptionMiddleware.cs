@@ -29,7 +29,7 @@ namespace WebApi.Middlewares
             HttpStatusCode statusCode = HttpStatusCode.InternalServerError;
 
             string result = JsonConvert.SerializeObject(
-                new ExceptionResponseModel()
+                new BaseResponse<string>()
                 {
                     Message = exception.Message,
                 });

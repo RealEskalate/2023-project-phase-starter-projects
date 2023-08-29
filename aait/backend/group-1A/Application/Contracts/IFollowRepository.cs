@@ -15,5 +15,6 @@ namespace Application.Contracts
         public Task<List<User>> GetFollowedUsers(int Id);
         public Task<Follow> AddFollow(Follow follow);
         public Task DeleteFollow(Follow follow);
+        public  Task<List<Follow>> GetAll();
     }
 }

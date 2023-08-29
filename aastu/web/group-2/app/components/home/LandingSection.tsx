@@ -7,6 +7,12 @@ import Link from 'next/link';
 import { useAppSelector } from '@/lib/redux/hooks';
 
 const LandingSection = () => {
+  const [isClient, setClient] = useState(false);
+
+  useEffect(() => {
+    setClient(true);
+  }, []);
+  
   const loginState = useAppSelector((state: any) => state.login);
 
   return (
@@ -24,7 +30,7 @@ const LandingSection = () => {
             top tech companies
           </p>
           <div className="transition-colors ease-linear flex w-full lg:w-3/4 justify-center md:justify-start gap-4 mt-8">
-            {loginState ? (
+            {loginState && isClient ? (
               <Link
                 href="/profile"
                 className="transition-colors ease-linear border-solid text-sm md:text-base border-primaryColor border-2 rounded-md px-2 lg:px-10 py-1 md:py-3 text-primaryColor font-medium"

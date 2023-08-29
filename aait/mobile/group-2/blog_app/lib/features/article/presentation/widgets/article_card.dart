@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../../core/presentation/router/routes.dart';
 import '../../../../core/presentation/theme/app_colors.dart';
 import '../../domain/entities/article.dart';
+import '../bloc/article_bloc.dart';
 import 'article_info.dart';
 import 'article_photo.dart';
 
@@ -27,13 +29,23 @@ class ArticleCard extends StatelessWidget {
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            ArticlePhoto(article: article),
+            ConstrainedBox(
+              constraints: BoxConstraints(maxWidth: 120.w),
+              child: ArticlePhoto(article: article),
+            ),
             const SizedBox(width: 10),
-            ArticleInfo(article: article),
+            ConstrainedBox(
+              constraints: BoxConstraints(maxWidth: 160.w),
+              child: ArticleInfo(article: article),
+            ),
           ],
         ),
       ),
-      onTap: () => context.push(Routes.articleDetail, extra: article),
+      onTap: () async {
+        final articleBloc = context.read<ArticleBloc>();
+        await context.push(Routes.articleDetail, extra: article);
+        articleBloc.add(LoadAllArticlesEvent());
+      },
     );
   }
 }

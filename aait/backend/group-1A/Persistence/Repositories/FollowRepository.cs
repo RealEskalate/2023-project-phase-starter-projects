@@ -80,5 +80,11 @@ namespace Persistence.Repositories
             return await _socialMediaDbContext.Follow.Where(f => f.FollowerId == follow.FollowerId && f.FolloweeId == follow.FolloweeId)
                 .FirstOrDefaultAsync();
         }
+
+        public async Task<List<Follow>> GetAll()
+        {
+            return await _socialMediaDbContext.Follow.ToListAsync();
+        }
+
     }
 }

@@ -1,5 +1,9 @@
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=IM+Fell+French+Canon&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Lato&family=Neucha&family=Poppins&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Lato&family=Neucha&family=Nunito&family=Poppins&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Fira+Code&family=Lato&family=Neucha&family=Nunito&family=Poppins&display=swap');
 
 @tailwind base;
 @tailwind components;
@@ -12,6 +16,11 @@
 .font-montserrat {
   font-family: 'Montserrat';
 }
+
+.font-canon {
+  font-family: 'IM Fell French Canon';
+}
+
 
 .btn-blue {
   @apply bg-blue-first rounded-lg border text-white

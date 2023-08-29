@@ -25,9 +25,11 @@ class UserDataModel extends UserData {
       createdAt: json['createdAt'],
       image: json['image'] ?? '',
       imageCloudinaryPublicId: json['imageCloudinaryPublicId'] ?? '',
-      articles: json['articles']
-          .map<ArticleModel>((m) => ArticleModel.fromJson(m))
-          .toList(),
+      articles: json['articles'] == null
+          ? const []
+          : json['articles']
+              .map<ArticleModel>((m) => ArticleModel.fromJson(m))
+              .toList(),
     );
   }
   Map<String, dynamic> toJson() {
