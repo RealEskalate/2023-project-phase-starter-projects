@@ -5,6 +5,8 @@ import SelectBlogTag, { TagOption } from './SelectBlogTag';
 import TextEditor from "./TextEditor";
 import { useAddBlogMutation } from "@/store/blog/blogsApi";
 import { nanoid } from "nanoid";
+import { useSelector } from "react-redux"
+import { getJSDocTemplateTag } from "typescript";
 
 
 interface FileInputProps {
@@ -27,14 +29,17 @@ const BlogForm: React.FC = () => {
   const [title, setTitle] = useState<string>('');
   const [content, setContent] = useState<string>('');
   const [selectedTags, setSelectedTags] = useState<MultiValue<TagOption>>([]);
+  const [selectedFile, setSelectedFile] = useState<File | null>(null);
   
-
   const [addBlog, { isLoading }] = useAddBlogMutation();
 
   const handleTitleChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
     setTitle(event.target.value);
   };
 
+  const fileChange = (files:FileList|null)=>{
+    setSelectedFile(files![0])
+  }
 
   const handleContentChange = (value: string): void => {
     setContent(value);
@@ -55,37 +60,25 @@ const BlogForm: React.FC = () => {
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-
-    addBlog({
-      userID: "damy",
+   addBlog({
       id: nanoid(),
-      title,
-      content,
+      title:title,
+      content:content,
+      blogImage:selectedFile,
       tags: selectedTags.map(tag => tag.value),
-      date : "2/2/2023",
-      author: {
-        name : "damy",
-        email : "damy@example.com",
-        image : "/img/blog/profile.jpg",
-        profession: "SWE",
-        userName: "damy",
-      },
-      blogImage: "/img/blog/coding.jpg",
-      readTime: 4,
-      shortDescription: "short description",
     });
-
-
+     
     setTitle("");
     setContent("");
     setSelectedTags([]);
+    setSelectedFile(null);
     
   };
 
   const canSaveChanges = Boolean(title) && Boolean(content) && Boolean(selectedTags)
 
   return (
-    <form onSubmit={handleSubmit} className="m-5 w-screen h-screen">
+    <form onSubmit={handleSubmit} className="m-5 max-w-screen h-screen">
       <div className="flex flex-col lg:gap-12 lg:flex-row gap-8">
         <div className="flex flex-col w-3/4 border-r-2 border-gray-300 md:w-3/5">
           <input
@@ -99,7 +92,7 @@ const BlogForm: React.FC = () => {
           
           <div className="lg:w-3/4 max-w-2xl max-h-96 lg:h-688 md:max-h-72 mt-8 bg-gray-100 rounded-lg flex items-center justify-center flex-col p-5">
             <Image
-              src="/blog/undraw_folder_files_re_2cbm.svg"
+              src="/images/blog/undraw_folder_files_re_2cbm.svg"
               alt="File Upload"
               width={200}
               height={200}
@@ -107,9 +100,7 @@ const BlogForm: React.FC = () => {
 
             <div className="flex flex-wrap flex-col md:flex-row gap-2 items-center mt-3">
               <p>Please,</p>
-              <FileInput text="Upload File" id="upload-file" />
-              <p>Or choose file from</p>
-              <FileInput text="My Files" id="my-files" />
+              <input type='file' placeholder="upload file" id="upload-file" onChange={(e)=>fileChange(e.target.files)} />
             </div>
           </div>
           

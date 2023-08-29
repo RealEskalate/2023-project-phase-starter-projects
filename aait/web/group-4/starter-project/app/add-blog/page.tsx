@@ -8,10 +8,6 @@ import { blogApi } from "@/store/blog/blogsApi"
 export default function Home() {
   return (
     <main>
-     <Provider store={store}>
-      <ApiProvider api={blogApi}>
         <BlogForm/>
-      </ApiProvider>
-     </Provider>
     </main>)
 }

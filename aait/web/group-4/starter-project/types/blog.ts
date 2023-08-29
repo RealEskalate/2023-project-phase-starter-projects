@@ -9,7 +9,7 @@ export interface Blog extends UpdateBlog {
       profession: string;
       userName: string;
     };
-    blogImage: string;
+    blogImage: File | null;
     readTime: number;
     relatedBlogs: string[];
   };

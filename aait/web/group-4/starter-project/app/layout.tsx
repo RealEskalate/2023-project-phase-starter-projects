@@ -21,6 +21,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className="font-{poppins}">
+        <Provider store={store}>
         <Navbar/>
         <main className="p-10 md:p-20">
           <Provider store={store}>
@@ -30,6 +31,8 @@ export default function RootLayout({
           </Provider>
         </main>
         <Footer/>
+        </Provider>
+        
       </body>
     </html>
   );
