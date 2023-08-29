@@ -114,7 +114,6 @@ const PersonalInformation = () => {
                 id="image"
                 name="image"
                 accept="image/*"
-                // onChange={handleChange}
                 className="outline hidden "
                 required
               />
