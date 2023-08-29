@@ -7,21 +7,20 @@ import 'single_article_post_grid_view.dart';
 
 class ArticleGridView extends StatelessWidget {
   final List<Article> articles;
-  final VoidCallback? onGridView;
-  final VoidCallback? onListView;
+  final String title;
 
-  const ArticleGridView(
-      {Key? key, required this.articles, this.onGridView, this.onListView})
-      : super(key: key);
+  const ArticleGridView({
+    Key? key,
+    required this.articles,
+    required this.title,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Column(
       children: [
         ArticleTitleBar(
-          title: "My Bookmarks",
-          onGridView: onGridView,
-          onListView: onListView,
+          title: title,
         ),
         SizedBox(height: 27.h),
         GridView.builder(
@@ -46,20 +45,4 @@ class ArticleGridView extends StatelessWidget {
       ],
     );
   }
-}
-
-class ArticleData {
-  final String imageUrl;
-  final String articleTitle;
-  final String articleSubTitle;
-  final String likes;
-  final double timeSincePosted;
-
-  ArticleData({
-    required this.imageUrl,
-    required this.articleTitle,
-    required this.articleSubTitle,
-    required this.likes,
-    required this.timeSincePosted,
-  });
 }

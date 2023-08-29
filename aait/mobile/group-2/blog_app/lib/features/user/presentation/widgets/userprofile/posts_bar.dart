@@ -1,16 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
+import '../../../../../core/presentation/theme/app_colors.dart';
+
 class ArticleTitleBar extends StatelessWidget {
   final String title;
-  final VoidCallback? onGridView;
-  final VoidCallback? onListView;
 
   const ArticleTitleBar({
     Key? key,
     required this.title,
-    this.onGridView,
-    this.onListView,
   }) : super(key: key);
 
   @override
@@ -29,26 +27,26 @@ class ArticleTitleBar extends StatelessWidget {
           style: TextStyle(
             fontSize: titleFontSize,
             fontWeight: FontWeight.w500,
-            color: Color(0xFF0D253C),
+            color: AppColors.darkerBlue,
           ),
         ),
         Row(
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
             GestureDetector(
-              onTap: onListView,
+              onTap: () {},
               child: Icon(
                 Icons.grid_view,
-                color: Color(0xFF376AED),
+                color: AppColors.blue,
                 size: iconSize,
               ),
             ),
             SizedBox(width: iconSpacing),
             GestureDetector(
-              onTap: onGridView,
+              onTap: () {},
               child: Icon(
                 Icons.list,
-                color: Color(0xFF7B8BB2),
+                color: AppColors.darkGray,
                 size: iconSize,
               ),
             ),

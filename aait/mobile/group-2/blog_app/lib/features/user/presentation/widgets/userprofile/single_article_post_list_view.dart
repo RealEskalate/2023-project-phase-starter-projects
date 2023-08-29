@@ -1,5 +1,8 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+
+import '../../../../../core/presentation/theme/app_colors.dart';
 
 class SingleArticlePostListView extends StatelessWidget {
   final String imageUrl, articleTitle, articleSubTitle, likes;
@@ -43,8 +46,8 @@ class SingleArticlePostListView extends StatelessWidget {
               height: imageHeight,
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(borderRadius),
-                child: Image.network(
-                  imageUrl,
+                child: CachedNetworkImage(
+                  imageUrl: imageUrl,
                   fit: BoxFit.cover,
                 ),
               ),
@@ -60,7 +63,7 @@ class SingleArticlePostListView extends StatelessWidget {
                     style: TextStyle(
                       fontWeight: FontWeight.w100,
                       fontSize: titleFontSize,
-                      color: Color(0xFF376AED),
+                      color: AppColors.blue,
                     ),
                   ),
                   SizedBox(height: statsSpacing),
@@ -69,7 +72,7 @@ class SingleArticlePostListView extends StatelessWidget {
                     style: TextStyle(
                       fontWeight: FontWeight.w500,
                       fontSize: subTitleFontSize,
-                      color: Color(0xFF0D253C),
+                      color: AppColors.darkerBlue,
                     ),
                   ),
                   SizedBox(height: statsSpacing * 3),
@@ -120,7 +123,7 @@ class SingleArticlePostListView extends StatelessWidget {
                       ),
                       Icon(
                         Icons.bookmark_outlined,
-                        color: Color(0xFF376AED),
+                        color: AppColors.blue,
                         size: iconSize,
                       ),
                     ],

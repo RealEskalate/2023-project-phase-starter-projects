@@ -6,8 +6,12 @@ import 'package:go_router/go_router.dart';
 import '../../../../core/presentation/router/routes.dart';
 import '../../../../core/presentation/theme/app_colors.dart';
 import '../../../../injection_container.dart';
+import '../../../article/presentation/bloc/bookmark_bloc.dart';
 import '../../../article/presentation/widgets/snackbar.dart';
 import '../../../authentication/presentation/bloc/auth_bloc.dart';
+import '../bloc/profile_page_bloc.dart';
+import '../bloc/profile_page_event.dart';
+import '../bloc/profile_page_state.dart';
 import '../bloc/user_bloc.dart';
 import '../widgets/userprofile/article_grid_view.dart';
 import '../widgets/userprofile/article_list_view.dart';
@@ -15,23 +19,29 @@ import '../widgets/userprofile/gradient_at_bottom.dart';
 import '../widgets/userprofile/show_posts_and_bookmarks.dart';
 import '../widgets/userprofile/user_profile_details.dart';
 
-class UserProfile extends StatefulWidget {
+class UserProfile extends StatelessWidget {
   const UserProfile({super.key});
 
   @override
-  State<UserProfile> createState() => _UserProfileState();
-}
-
-class _UserProfileState extends State<UserProfile> {
-  bool grid = true;
-
-  @override
   Widget build(BuildContext context) {
-    return BlocProvider<UserBloc>(
-      create: (context) => serviceLocator<UserBloc>()
-        ..add(
-            GetUserEvent(token: BlocProvider.of<AuthBloc>(context).authToken)),
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider<UserBloc>(
+          create: (context) => serviceLocator<UserBloc>()
+            ..add(GetUserEvent(
+                token: BlocProvider.of<AuthBloc>(context).authToken)),
+        ),
 
+        //
+        BlocProvider(
+            create: (context) =>
+                serviceLocator<BookmarkBloc>()..add(LoadBookmarksEvent())),
+
+        //
+        BlocProvider(create: (context) => serviceLocator<ProfilePageBloc>()),
+      ],
+
+      //
       //
       child: BlocListener<AuthBloc, AuthState>(
         listener: (context, state) {
@@ -94,21 +104,38 @@ class _UserProfileState extends State<UserProfile> {
                               child: CircularProgressIndicator());
                         }
                       }),
-                      Center(
-                        child: Transform.translate(
-                          offset: Offset(0.w, -32.w),
-                          child: BlocBuilder<UserBloc, UserState>(
-                              builder: (context, state) {
-                            if (state is LoadedUserState) {
-                              return ShowPostsAndBookmarks(
-                                numBookmarks: 0,
-                                numPosts: state.userData.articles.length,
-                              );
-                            } else {
-                              return const Center(
-                                  child: CircularProgressIndicator());
-                            }
-                          }),
+                      GestureDetector(
+                        onTap: () {},
+
+                        //
+                        child: Center(
+                          child: Transform.translate(
+                            offset: Offset(0.w, -32.w),
+                            child: BlocBuilder<UserBloc, UserState>(
+                                builder: (context, userState) {
+                              if (userState is LoadedUserState) {
+                                return BlocBuilder<BookmarkBloc, BookmarkState>(
+                                    builder: (context, bookmarkState) {
+                                  if (bookmarkState is BookmarkLoadedState) {
+                                    return ShowPostsAndBookmarks(
+                                      numBookmarks:
+                                          bookmarkState.articles.length,
+                                      numPosts:
+                                          userState.userData.articles.length,
+                                    );
+                                  }
+                                  return ShowPostsAndBookmarks(
+                                    numBookmarks: 0,
+                                    numPosts:
+                                        userState.userData.articles.length,
+                                  );
+                                });
+                              } else {
+                                return const Center(
+                                    child: CircularProgressIndicator());
+                              }
+                            }),
+                          ),
                         ),
                       ),
                       Container(
@@ -121,25 +148,15 @@ class _UserProfileState extends State<UserProfile> {
                             )),
                         child: Container(
                           padding: const EdgeInsets.fromLTRB(40, 32, 30, 27),
-                          child: BlocBuilder<UserBloc, UserState>(
-                              builder: (context, state) {
-                            if (state is LoadedUserState) {
-                              return grid
-                                  ? ArticleGridView(
-                                      articles: state.userData.articles,
-                                      onGridView: switchView,
-                                      onListView: switchView,
-                                    )
-                                  : ArticleListView(
-                                      articles: state.userData.articles,
-                                      onGridView: switchView,
-                                      onListView: switchView,
-                                    );
-                            } else {
-                              return const Center(
-                                  child: CircularProgressIndicator());
-                            }
-                          }),
+                          child: BlocBuilder<ProfilePageBloc, ProfilePageState>(
+                            builder: (context, state) {
+                              if (state.showPost) {
+                                return _showMyPosts(state.layout);
+                              } else {
+                                return _showBookmarks(state.layout);
+                              }
+                            },
+                          ),
                         ),
                       )
                     ],
@@ -154,9 +171,47 @@ class _UserProfileState extends State<UserProfile> {
     );
   }
 
-  void switchView() {
-    setState(() {
-      grid = !grid;
-    });
+  Widget _showMyPosts(ProfileLayout layout) {
+    return BlocBuilder<UserBloc, UserState>(
+      builder: (context, state) {
+        if (state is LoadedUserState) {
+          return layout == ProfileLayout.list
+              ? ArticleListView(
+                  articles: state.userData.articles,
+                  title: 'My Posts',
+                )
+              : ArticleGridView(
+                  articles: state.userData.articles,
+                  title: 'My Posts',
+                );
+        } else {
+          return const Center(
+            child: CircularProgressIndicator(),
+          );
+        }
+      },
+    );
+  }
+
+  Widget _showBookmarks(ProfileLayout layout) {
+    return BlocBuilder<BookmarkBloc, BookmarkState>(
+      builder: (context, state) {
+        if (state is BookmarkLoadedState) {
+          return layout == ProfileLayout.grid
+              ? ArticleGridView(
+                  articles: state.articles,
+                  title: 'Bookmarks',
+                )
+              : ArticleListView(
+                  articles: state.articles,
+                  title: 'Bookmarks',
+                );
+        } else {
+          return const Center(
+            child: CircularProgressIndicator(),
+          );
+        }
+      },
+    );
   }
 }
