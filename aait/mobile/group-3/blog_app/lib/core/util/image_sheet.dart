@@ -13,7 +13,7 @@ class ImageSheet {
             child: Column(
               children: [
                 Text(
-                  'Update profile picture',
+                  'Upload Picture',
                   style: TextStyle(fontSize: 18, fontWeight: FontWeight.w500),
                 ),
                 SizedBox(

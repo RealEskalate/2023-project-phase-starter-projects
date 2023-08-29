@@ -1,3 +1,5 @@
+import 'package:blog_app/features/article/data/models/user_model.dart';
+import 'package:blog_app/features/profile/domain/use_case/get_profile.dart';
 import 'package:dartz/dartz.dart';
 import 'package:image_picker/image_picker.dart';
 
@@ -37,6 +39,7 @@ class ArticleRepositoryImpl implements ArticleRepository {
           "content": content,
           "estimatedReadTime": estimatedReadTime,
           "image": image.path,
+          "user": "semere"
         };
 
         final article = ArticleModel.fromJson(articleMap);
@@ -130,17 +133,16 @@ class ArticleRepositoryImpl implements ArticleRepository {
     }
   }
 
-
   @override
-  ResultFuture<Article> updateArticle(
-      {required List<String> tags,
-      required String content,
-      required String title,
-      required String subTitle,
-      required String estimatedReadTime,
-      required XFile image,
-      required String id,
-      }) async {
+  ResultFuture<Article> updateArticle({
+    required List<String> tags,
+    required String content,
+    required String title,
+    required String subTitle,
+    required String estimatedReadTime,
+    required XFile image,
+    required String id,
+  }) async {
     if (await networkInfo.isConnected) {
       try {
         final articleMap = {

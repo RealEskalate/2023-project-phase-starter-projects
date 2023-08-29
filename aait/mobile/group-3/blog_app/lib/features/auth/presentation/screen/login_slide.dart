@@ -75,9 +75,6 @@ class _LoginSlideState extends State<LoginSlide> {
                 }
               },
               builder: (context, state) {
-                if (state is LoginInitial) {
-                  print("Hello world");
-                }
                 if (state is LoginLoadingState) {
                   return SizedBox(
                     width: 295.w,

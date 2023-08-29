@@ -1,4 +1,5 @@
-import 'package:blog_app/features/article/presentation/bloc/create_article_bloc.dart';
+import 'package:blog_app/features/article/presentation/bloc/update_article_bloc.dart';
+import 'package:blog_app/features/article/presentation/widgets/loading_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -9,33 +10,43 @@ import 'package:image_picker/image_picker.dart';
 
 import '../../../../core/color/colors.dart';
 import '../../../../core/util/image_sheet.dart';
-import '../../../profile/presentation/widgets/loading_widget.dart';
 import '../widgets/widgets.dart';
 
-// ignore: must_be_immutable
-class WriteArticlePage extends StatelessWidget {
-  WriteArticlePage({super.key});
-
-  // final _formkey = GlobalKey<FormState>();
+class UpdateArticlePage extends StatefulWidget {
+  final String articleId;
+  const UpdateArticlePage({super.key, required this.articleId});
 
   @override
+  State<UpdateArticlePage> createState() => _UpdateArticlePageState();
+}
+
+class _UpdateArticlePageState extends State<UpdateArticlePage> {
+  @override
   Widget build(BuildContext context) {
-    final bloc = context.read<CreateArticleBloc>();
-    return BlocConsumer<CreateArticleBloc, CreateArticleState>(
+    final bloc = context.read<UpdateArticleBloc>();
+    return BlocConsumer<UpdateArticleBloc, UpdateArticleState>(
       listener: (context, state) {
-        if (state is CreateArticleResult) {
+        if (state is UpdateArticleResult) {
           context.push('/article', extra: state.article.id);
         }
       },
       builder: (context, state) {
         switch (state) {
-          case CreateArticleResult():
-            bloc.add(ResetCreate());
-            return Container();
-          case CreateArticleLoading():
+          case UpdateArticleInitial():
+            bloc.add(GetArticleData(id: widget.articleId));
             return Scaffold(
-                body: LoadingWidget(message: "Creating article please wait"));
-          case CreateArticleInitial():
+              body: LoadingWidget(message: "Fetching Article..."),
+            );
+          case UpdateArticleLoading():
+            return Scaffold(
+              body: LoadingWidget(message: "Updating article please wait"),
+            );
+
+          case UpdateArticleResult():
+            bloc.add(ResetUpdateField(id: state.article.id));
+            return SizedBox();
+
+          case UpdateArticleLoaded():
             XFile? file;
             return ScreenUtilInit(
                 designSize: const Size(428, 926),
@@ -44,7 +55,7 @@ class WriteArticlePage extends StatelessWidget {
                     backgroundColor: whiteColor,
                     appBar: PreferredSize(
                       preferredSize: Size.fromHeight(74.h),
-                      child: const CustomAppBarNewArticle(),
+                      child: const CustomAppBarUpdateArticle(),
                     ),
                     body: Padding(
                       padding: EdgeInsets.symmetric(horizontal: 45.w),
@@ -58,14 +69,15 @@ class WriteArticlePage extends StatelessWidget {
                                 controller: state.title,
                               ),
                               CustomTextField(
-                                hint: "Add subtitle",
+                                hint: "add subtitle",
                                 controller: state.subTitle,
                               ),
                               AddTagsContainer(),
                               SizedBox(height: 4.39.h),
                               SizedBox(height: 49.h),
                               ArticleContentTextField(
-                                  controller: state.content),
+                                controller: state.content,
+                              ),
                               SizedBox(height: 40.h),
                               Row(
                                 mainAxisAlignment:
@@ -77,8 +89,10 @@ class WriteArticlePage extends StatelessWidget {
                                           fontWeight: FontWeight.w500,
                                           color: darkBlue)),
                                   GestureDetector(
-                                    onTap: () async {
-                                      file = await ImageSheet().show(context);
+                                    onTap: () {
+                                      setState(() async {
+                                        file = await ImageSheet().show(context);
+                                      });
                                     },
                                     child: Icon(
                                       Icons.camera_alt_outlined,
@@ -92,16 +106,18 @@ class WriteArticlePage extends StatelessWidget {
                               ),
                               Container(
                                 child: TextField(
-                                  controller: state.photoImage,
+                                  controller:
+                                      TextEditingController(text: file?.path),
                                   decoration: InputDecoration(
                                       hintText: file != null
-                                          ? file?.path.toString()
+                                          ? file?.path
                                           : "No Image is selected"),
                                 ),
                               ),
                               FormSubmitButton(
                                 onSumbit: () {
-                                  bloc.add(SendData(
+                                  bloc.add(UpdateData(
+                                    id: state.articleId,
                                     title: state.title.text,
                                     subTitle: state.subTitle.text,
                                     content: state.content.text,
@@ -109,7 +125,7 @@ class WriteArticlePage extends StatelessWidget {
                                     tags: ["art"],
                                   ));
                                 },
-                              ),
+                              )
                             ],
                           ),
                         ),
@@ -120,7 +136,9 @@ class WriteArticlePage extends StatelessWidget {
           default:
             return Scaffold(
               body: Center(
-                child: Text("Unimplemted state from WriteArticlePage $state"),
+                child: Text(
+                  "Unimplemented state error from update article page $state",
+                ),
               ),
             );
         }

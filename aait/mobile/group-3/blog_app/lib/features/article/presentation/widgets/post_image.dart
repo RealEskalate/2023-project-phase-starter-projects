@@ -14,9 +14,10 @@ class PostImage extends StatelessWidget {
     return ClipRRect(
       borderRadius: BorderRadius.only(
           topLeft: Radius.circular(28.r), topRight: Radius.circular(28.r)),
-      child: Image.asset(
+      child: Image.network(
         postImageUrl,
         width: double.infinity,
+        fit: BoxFit.cover,
       ),
     );
   }
