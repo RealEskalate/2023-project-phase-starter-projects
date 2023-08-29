@@ -1,4 +1,7 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+
+import '../../../../../core/presentation/theme/app_colors.dart';
 
 class SingleArticlePostGridView extends StatelessWidget {
   final String imageUrl, articleTitle, articleSubTitle, likes;
@@ -27,8 +30,8 @@ class SingleArticlePostGridView extends StatelessWidget {
             height: 150,
             child: ClipRRect(
               borderRadius: BorderRadius.circular(16),
-              child: Image.network(
-                imageUrl,
+              child: CachedNetworkImage(
+                imageUrl: imageUrl,
                 fit: BoxFit.cover,
               ),
             ),
@@ -43,7 +46,7 @@ class SingleArticlePostGridView extends StatelessWidget {
                   style: const TextStyle(
                     fontWeight: FontWeight.w100,
                     fontSize: 14,
-                    color: Color(0xFF376AED),
+                    color: AppColors.blue,
                   ),
                 ),
                 const SizedBox(height: 4),
@@ -52,7 +55,7 @@ class SingleArticlePostGridView extends StatelessWidget {
                   style: const TextStyle(
                     fontWeight: FontWeight.w500,
                     fontSize: 14,
-                    color: Color(0xFF0D253C),
+                    color: AppColors.darkerBlue,
                   ),
                 ),
                 const SizedBox(height: 8),
@@ -98,7 +101,7 @@ class SingleArticlePostGridView extends StatelessWidget {
                     const SizedBox(width: 4),
                     const Icon(
                       Icons.bookmark_outlined,
-                      color: Color(0xFF376AED),
+                      color: AppColors.blue,
                       size: 16,
                     ),
                   ],

@@ -1,7 +1,6 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../core/usecase/usecase.dart';
-import '../../domain/usecases/filter_articles.dart';
 import '../../domain/usecases/usecases.dart';
 import 'article_event.dart';
 import 'article_state.dart';
