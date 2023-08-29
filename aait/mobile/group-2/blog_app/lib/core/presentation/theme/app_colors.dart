@@ -8,7 +8,8 @@ abstract class AppColors {
   static const translucentBlue = Color(0x26376AED);
   static const blue100 = Color(0xFFBBDEFB);
   static const blue300 = Color(0xFF2D4379);
-  static const saturatedBlue = Color(0xFF2151CD);
+  static const saturatedBlue200 = Color(0xFF386BED);
+  static const saturatedBlue300 = Color(0xFF2151CD);
   static const darkBlue = Color(0xFF2D4379);
   static const darkerBlue = Color(0xFF0D253C);
   static const lightBlue = Color(0xFF669AFF);

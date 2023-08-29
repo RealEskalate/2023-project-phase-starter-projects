@@ -5,10 +5,10 @@ import 'package:go_router/go_router.dart';
 
 import '../../../../core/presentation/router/routes.dart';
 import '../../../../core/presentation/theme/app_colors.dart';
-import '../../../../core/utils/time_calculator.dart';
 import '../../../../injection_container.dart';
 import '../../domain/entities/article.dart';
 import '../bloc/article_bloc.dart';
+import '../bloc/bookmark_bloc.dart';
 import '../widgets/article_content.dart';
 import '../widgets/article_image.dart';
 import '../widgets/author_card.dart';
@@ -22,10 +22,24 @@ class ArticleScreen extends StatelessWidget {
 
   const ArticleScreen({super.key, required this.article});
 
+  bool _isBookmarked(List<Article> bookmarks) {
+    return bookmarks.any((element) => element.id == article.id);
+  }
+
   @override
   Widget build(BuildContext context) {
-    return BlocProvider<ArticleBloc>(
-      create: (_) => serviceLocator<ArticleBloc>(),
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider<ArticleBloc>(
+          create: (_) => serviceLocator<ArticleBloc>(),
+        ),
+        BlocProvider(
+          create: (_) =>
+              serviceLocator<BookmarkBloc>()..add(LoadBookmarksEvent()),
+        ),
+      ],
+
+      //
       child: BlocListener<ArticleBloc, ArticleState>(
         listener: (context, state) {
           if (state is ArticleErrorState) {
@@ -34,6 +48,8 @@ class ArticleScreen extends StatelessWidget {
             context.pop();
           }
         },
+
+        //
         child: Scaffold(
           appBar: AppBar(
             backgroundColor: Theme.of(context).colorScheme.background,
@@ -107,11 +123,30 @@ class ArticleScreen extends StatelessWidget {
                 SizedBox(height: 35.h),
 
                 // Author card
-                AuthorCard(
-                  profileImageUrl: article.author.image,
-                  authorName: article.author.fullName,
-                  publishedAt:
-                      timePassedFormatter(timePassedCalculator(article.date)),
+                BlocConsumer<BookmarkBloc, BookmarkState>(
+                  listener: (context, state) {
+                    if (state is BookmarkErrorState) {
+                      showError(context, state.message);
+                    } else if (state is BookmarkAddedState) {
+                      showSuccess(context, 'Article bookmarked');
+                      context.read<BookmarkBloc>().add(LoadBookmarksEvent());
+                    } else if (state is BookmarkRemovedState) {
+                      showSuccess(context, 'Article removed from bookmarks');
+                      context.read<BookmarkBloc>().add(LoadBookmarksEvent());
+                    }
+                  },
+
+                  //
+                  builder: (context, state) {
+                    if (state is BookmarkLoadedState) {
+                      return AuthorCard(
+                        article: article,
+                        isBookmarked: _isBookmarked(state.articles),
+                      );
+                    } else {
+                      return AuthorCard(article: article, isBookmarked: false);
+                    }
+                  },
                 ),
               ],
             ),
