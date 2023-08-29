@@ -26,7 +26,14 @@ namespace WebApi.Controllers
 
             var response = await _mediator.Send(command);
 
-           return Ok(response);
+            if (response.IsSuccess)
+            {
+                return Ok(response.Value);
+            }
+            else
+            {
+                return BadRequest(response.Message);
+            }
         }
 
 
@@ -36,7 +43,14 @@ namespace WebApi.Controllers
             var command = new UserUnFollowCommand { UnfollowunFollowDto = unFollowDto };
             var response = await _mediator.Send(command);
 
-            return Ok(response);
+            if (response.IsSuccess)
+            {
+                return Ok(response.Value);
+            }
+            else
+            {
+                return BadRequest(response.Message);
+            }
         }
 
 
@@ -45,7 +59,14 @@ namespace WebApi.Controllers
         {
             var command = new  UserUpdateCommand { Userdto = userDto };
             var response = await _mediator.Send(command);
-            return Ok(response);
+            if (response.IsSuccess)
+            {
+                return Ok(response.Value);
+            }
+            else
+            {
+                return BadRequest(response.Message);
+            }
         }
 
 
