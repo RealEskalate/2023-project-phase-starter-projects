@@ -45,7 +45,7 @@ const BlogCard: React.FC<BlogProps> = ({
 
           {!author && (
             <img
-              src={'../assets/profile.svg' }
+              src={'../assets/profile.png' }
               alt={`Avatar`}
               className="w-16 h-16 rounded-full"
             />

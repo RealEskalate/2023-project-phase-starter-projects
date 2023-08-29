@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useState } from "react";
+import React, { useMemo, useState } from "react";
 import BlogCard from "@/components/blog/BlogCard";
 import SearchBar from "@/components/blog/SearchBar";
 import Pagination from "@/components/blog/Pagination";
@@ -9,12 +9,18 @@ import Error from "@/components/commons/Error";
 import { useGetBlogsQuery } from "@/store/features/blogs/blogs-api";
 import Loading from "@/components/commons/Loading";
 
-const itemsPerPage = 4;
+const PageSize = 4;
 
 const BlogPage: React.FC = () => {
     const {data:blogs, error, isLoading  } = useGetBlogsQuery();
-    const [currentPage, setCurrentPage] = useState(1)
+    const [currentPage, setCurrentPage] = useState(1);
 
+    const currentBlogs = useMemo(() => {
+      const firstPageIndex = (currentPage - 1) * PageSize;
+      const lastPageIndex = firstPageIndex + PageSize;
+      return blogs?.slice(firstPageIndex, lastPageIndex);
+    }, [currentPage]);
+    
     if (isLoading){ 
       return <Loading />
     
@@ -22,6 +28,7 @@ const BlogPage: React.FC = () => {
     if (error){
         return <Error />    
     }
+
     if (blogs) {
 
       const indexOfLastBlog = currentPage * itemsPerPage;
