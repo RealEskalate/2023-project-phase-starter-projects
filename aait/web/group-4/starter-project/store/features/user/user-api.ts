@@ -1,13 +1,19 @@
 import User, { EditProfileData, EditProfileResponse, LoginInputData } from "@/types/user/user";
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-import { setUser } from "./user-slice";
+import { setMessage, setUser } from "./user-slice";
 import { RootState } from "@/store";
 
 const BASE_URL = "https://a2sv-backend.onrender.com/api/auth/";
 
 export const userApi = createApi({
     reducerPath: "userApi",
-    baseQuery: fetchBaseQuery({ baseUrl: BASE_URL }),
+
+    baseQuery: fetchBaseQuery({ baseUrl: BASE_URL,
+    prepareHeaders: (headers, {getState}) => {
+        const state = getState() as RootState;
+        headers.set("Authorization", `Bearer ${state.user.user.token}`)
+        return headers
+    } }),
     tagTypes: ["user"],
     endpoints: (builder) => ({
 
@@ -24,6 +30,8 @@ export const userApi = createApi({
                 const { data: { body, message } } = await queryFulfilled;
                 const state = getState() as RootState;
 
+                dispatch(setMessage(message));
+
                 dispatch(setUser({
                     token: state.user.user.token,
                     user: body._id,
@@ -34,7 +42,7 @@ export const userApi = createApi({
                 }));
             }
         }),
-        editPassword: builder.mutation<User, LoginInputData>({
+        editPassword: builder.mutation<{message: string}, LoginInputData>({
             query(data) {
                 return {
                     url: 'change-password',
@@ -42,7 +50,12 @@ export const userApi = createApi({
                     body: data,
                 };
             },
-            invalidatesTags: ["user"]
+            invalidatesTags: ["user"],
+            async onQueryStarted(arg, { dispatch, getState, queryFulfilled }) {
+                const { data: { message } } = await queryFulfilled;
+
+                dispatch(setMessage(message));
+            }
 
         })
     }),

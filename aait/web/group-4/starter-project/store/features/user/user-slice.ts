@@ -1,7 +1,7 @@
 import User from "@/types/user/user";
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 
-const initialState = {
+const initialState: {user: User, message: string} = {
     user: {
         token: "",
         user: "",
@@ -38,4 +38,4 @@ export const userSlice = createSlice({
     }
 })
 
-export const { setUser, logout } = userSlice.actions
+export const { setUser, logout, setMessage } = userSlice.actions

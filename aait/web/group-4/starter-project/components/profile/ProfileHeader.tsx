@@ -36,14 +36,10 @@ const ProfileHeader = () => {
               </div>
             ))}
           </nav>
-          {activeLink === 1 && (
-            <button className=" hidden px-10 py-2 text-white mb-1 rounded-lg bg-primary-color md:block">
-              New blog
-            </button>
-          )}
+    
         </div>
         {/* manage section */}
-        <div className="flex flex-col items-center md:items-stretch space-y-4 py-8 border-b md:py-12 md:space-y-2">
+        {/* <div className="flex flex-col items-center md:items-stretch space-y-4 py-8 border-b md:py-12 md:space-y-2">
           <div className="flex justify-between">
             <h2 className=" text-slate-gray text-lg font-semibold md:text-2xl">
               Manage {headerData[activeLink].manageText}
@@ -66,7 +62,7 @@ const ProfileHeader = () => {
               New blog
             </button>
           )}
-        </div>
+        </div> */}
         
       </div>
     </>
