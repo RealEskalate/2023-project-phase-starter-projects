@@ -34,14 +34,43 @@ namespace Application.Tests.Post.Queries
         }
 
         [Fact]
-        public async Task GetFollowingPost()
+        public async Task GetFollowingPost_ValidUserId_ReturnsFollowingPosts()
         {
             var handler = new GetFollowingPostRequestHandler(_mockRepo.Object, _mapper);
 
-            var result = await handler.Handle(new GetFollowingPostRequest() { Id = 3}, CancellationToken.None);
+            var result = await handler.Handle(new GetFollowingPostRequest() { Id = 1 }, CancellationToken.None);
 
+            result.ShouldNotBeNull();
             result.ShouldBeOfType<BaseCommandResponse<List<PostDto>>>();
+            result.Value.ShouldNotBeNull();
+            result.Value.ShouldBeAssignableTo<IEnumerable<PostDto>>();
+        }
 
+        [Fact]
+        public async Task GetFollowingPost_InvalidUserId_ReturnsEmptyList()
+        {
+            var handler = new GetFollowingPostRequestHandler(_mockRepo.Object, _mapper);
+
+            var result = await handler.Handle(new GetFollowingPostRequest() { Id = 999 }, CancellationToken.None);
+
+            result.ShouldNotBeNull();
+            result.ShouldBeOfType<BaseCommandResponse<List<PostDto>>>();
+            result.Value.ShouldNotBeNull();
+            result.Value.ShouldBeEmpty();
+        }
+
+        [Fact]
+        public async Task GetFollowingPost_RepositoryError_Failure()
+        {
+            _mockRepo.Setup(repo => repo.postRepository.GetFollowingPost(It.IsAny<int>())).ThrowsAsync(new Exception("Simulated error"));
+            var handler = new GetFollowingPostRequestHandler(_mockRepo.Object, _mapper);
+
+            var result = await handler.Handle(new GetFollowingPostRequest() { Id = 1 }, CancellationToken.None);
+
+            result.ShouldNotBeNull();
+            result.ShouldBeOfType<BaseCommandResponse<List<PostDto>>>();
+            result.Success.ShouldBeFalse();
+            result.Value.ShouldBeEmpty();
         }
     }
 }

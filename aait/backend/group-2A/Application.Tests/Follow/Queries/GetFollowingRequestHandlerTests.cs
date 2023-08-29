@@ -37,14 +37,48 @@ namespace Application.Tests.Follow.Queries
         }
 
         [Fact]
-        public async Task GetFollowing()
+        public async Task GetFollowing_ValidUserId_ReturnsListOfUserDto()
         {
             var handler = new GetFollowingRequestHandler(_mockRepo.Object, _mapper);
+            var request = new GetFollowingRequest { Id = 1 };
 
-            var result = await handler.Handle(new GetFollowingRequest() { Id = 1}, CancellationToken.None);
+            var result = await handler.Handle(request, CancellationToken.None);
 
+            result.ShouldNotBeNull();
             result.ShouldBeOfType<BaseCommandResponse<List<UserDto>>>();
+            result.Success.ShouldBeTrue();
+            result.Value.ShouldNotBeNull();
+            result.Value.Count.ShouldBe(2);
+        }
 
+        [Fact]
+        public async Task GetFollowing_InvalidUserId_ReturnsEmptyList()
+        {
+            var handler = new GetFollowingRequestHandler(_mockRepo.Object, _mapper);
+            var request = new GetFollowingRequest { Id = 999 };
+
+            var result = await handler.Handle(request, CancellationToken.None);
+
+            result.ShouldNotBeNull();
+            result.ShouldBeOfType<BaseCommandResponse<List<UserDto>>>();
+            result.Success.ShouldBeTrue();
+            result.Value.ShouldNotBeNull();
+            result.Value.ShouldBeEmpty();
+        }
+
+        [Fact]
+        public async Task GetFollowing_RepositoryError_ReturnsFailure()
+        {
+            _mockRepo.Setup(repo => repo.followRepository.GetFollowing(It.IsAny<int>())).ThrowsAsync(new Exception("Simulated error"));
+            var handler = new GetFollowingRequestHandler(_mockRepo.Object, _mapper);
+            var request = new GetFollowingRequest { Id = 1 };
+
+            var result = await handler.Handle(request, CancellationToken.None);
+
+            result.ShouldNotBeNull();
+            result.ShouldBeOfType<BaseCommandResponse<List<UserDto>>>();
+            result.Success.ShouldBeFalse();
+            result.Value.ShouldBeNull();
         }
     }
 }

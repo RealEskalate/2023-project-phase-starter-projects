@@ -36,14 +36,44 @@ namespace Application.Tests.Post.Queries
         }
 
         [Fact]
-        public async Task GetByContent()
+        public async Task GetByContent_ValidContent_ReturnsMatchingPosts()
         {
             var handler = new GetByContentRequestHandler(_mockRepo.Object, _mapper);
 
-            var result = await handler.Handle(new GetByContenetRequest() { Contenet = "Content 2"}, CancellationToken.None);
+            var result = await handler.Handle(new GetByContenetRequest() { Contenet = "Content 2" }, CancellationToken.None);
 
-            result.ShouldBeOfType< BaseCommandResponse<List<PostDto>>> ();
+            result.ShouldNotBeNull();
+            result.ShouldBeOfType<BaseCommandResponse<List<PostDto>>>();
+            result.Value.ShouldNotBeNull();
+            result.Value.ShouldBeAssignableTo<IEnumerable<PostDto>>();
+            result.Value.Any(post => post.Content == "Content 2").ShouldBeTrue();
+        }
 
+        [Fact]
+        public async Task GetByContent_InvalidContent_ReturnsEmptyList()
+        {
+            var handler = new GetByContentRequestHandler(_mockRepo.Object, _mapper);
+
+            var result = await handler.Handle(new GetByContenetRequest() { Contenet = "NonExistentContent" }, CancellationToken.None);
+
+            result.ShouldNotBeNull();
+            result.ShouldBeOfType<BaseCommandResponse<List<PostDto>>>();
+            result.Value.ShouldNotBeNull();
+            result.Value.ShouldBeEmpty();
+        }
+
+        [Fact]
+        public async Task GetByContent_RepositoryError_Failure()
+        {
+            _mockRepo.Setup(repo => repo.postRepository.GetByContent(It.IsAny<string>())).ThrowsAsync(new Exception("Simulated error"));
+            var handler = new GetByContentRequestHandler(_mockRepo.Object, _mapper);
+
+            var result = await handler.Handle(new GetByContenetRequest() { Contenet = "Content 2" }, CancellationToken.None);
+
+            result.ShouldNotBeNull();
+            result.ShouldBeOfType<BaseCommandResponse<List<PostDto>>>();
+            result.Success.ShouldBeFalse();
+            result.Value.ShouldBeEmpty();
         }
     }
 }

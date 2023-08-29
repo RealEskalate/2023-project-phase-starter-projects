@@ -38,7 +38,7 @@ namespace Application.Tests.Mocks
             return mockRepository;
         }
 
-        private static List<Domain.Entities.Follow> GetMockFollow()
+        public static List<Domain.Entities.Follow> GetMockFollow()
         {
             return new List<Domain.Entities.Follow>
             {

@@ -34,15 +34,50 @@ namespace Application.Tests.Post.Commands
             _mapper = mapperConfig.CreateMapper();
         }
 
+
         [Fact]
-        public async Task DeletePostCommandTest()
+        public async Task DeletePostCommand_ValidData_DeletesPost()
+        {
+            var initialPostList = await _mockRepo.Object.postRepository.GetAll();
+            var initialPostCount = initialPostList.Count;
+            var handler = new DeletePostCommandHandler(_mockRepo.Object, _mapper);
+
+            var result = await handler.Handle(new DeletePostCommand() { Id = 1, UserId = 2 }, CancellationToken.None);
+
+            result.ShouldNotBeNull();
+            result.ShouldBeOfType<BaseCommandResponse<Unit>>();
+            result.Success.ShouldBeTrue();
+            result.Value.ShouldBe(Unit.Value);
+
+            var updatedPostList = await _mockRepo.Object.postRepository.GetAll();
+            var updatedPostCount = updatedPostList.Count;
+            updatedPostCount.ShouldBe(initialPostCount - 1);
+        }
+
+        [Fact]
+        public async Task DeletePostCommand_InvalidData_Failure()
         {
             var handler = new DeletePostCommandHandler(_mockRepo.Object, _mapper);
 
-            var result = await handler.Handle(new DeletePostCommand() { Id = 1, UserId = 2}, CancellationToken.None);
+            var result = await handler.Handle(new DeletePostCommand() { Id = 999, UserId = 2 }, CancellationToken.None);
 
+            result.ShouldNotBeNull();
             result.ShouldBeOfType<BaseCommandResponse<Unit>>();
+            result.Success.ShouldBeFalse();
+            result.Value.ShouldBe(Unit.Value);
+        }
 
+        [Fact]
+        public async Task DeletePostCommand_UnauthorizedUser_Failure()
+        {
+            var handler = new DeletePostCommandHandler(_mockRepo.Object, _mapper);
+
+            var result = await handler.Handle(new DeletePostCommand() { Id = 1, UserId = 999 }, CancellationToken.None);
+
+            result.ShouldNotBeNull();
+            result.ShouldBeOfType<BaseCommandResponse<Unit>>();
+            result.Success.ShouldBeFalse();
+            result.Value.ShouldBe(Unit.Value);
         }
     }
 }

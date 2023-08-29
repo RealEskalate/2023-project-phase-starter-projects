@@ -34,14 +34,44 @@ namespace Application.Tests.Post.Queries
         }
 
         [Fact]
-        public async Task GetUserPost()
+        public async Task GetUserPost_ValidUserId_ReturnsUserPosts()
         {
             var handler = new GetUserPostRequestHandler(_mockRepo.Object, _mapper);
 
-            var result = await handler.Handle(new GetUserPostRequest() { Id = 4}, CancellationToken.None);
+            var result = await handler.Handle(new GetUserPostRequest() { Id = 1 }, CancellationToken.None);
 
+            result.ShouldNotBeNull();
             result.ShouldBeOfType<BaseCommandResponse<List<PostDto>>>();
+            result.Value.ShouldNotBeNull();
+            result.Value.ShouldBeAssignableTo<IEnumerable<PostDto>>();
+            result.Value.All(post => post.UserId == 1).ShouldBeTrue();
+        }
 
+        [Fact]
+        public async Task GetUserPost_InvalidUserId_ReturnsEmptyList()
+        {
+            var handler = new GetUserPostRequestHandler(_mockRepo.Object, _mapper);
+
+            var result = await handler.Handle(new GetUserPostRequest() { Id = 999 }, CancellationToken.None);
+
+            result.ShouldNotBeNull();
+            result.ShouldBeOfType<BaseCommandResponse<List<PostDto>>>();
+            result.Value.ShouldNotBeNull();
+            result.Value.ShouldBeEmpty();
+        }
+
+        [Fact]
+        public async Task GetUserPost_RepositoryError_Failure()
+        {
+            _mockRepo.Setup(repo => repo.postRepository.GetUserPost(It.IsAny<int>())).ThrowsAsync(new Exception("Simulated error"));
+            var handler = new GetUserPostRequestHandler(_mockRepo.Object, _mapper);
+
+            var result = await handler.Handle(new GetUserPostRequest() { Id = 1 }, CancellationToken.None);
+
+            result.ShouldNotBeNull();
+            result.ShouldBeOfType<BaseCommandResponse<List<PostDto>>>();
+            result.Success.ShouldBeFalse();
+            result.Value.ShouldBeEmpty();
         }
     }
 }

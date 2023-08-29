@@ -44,14 +44,43 @@ namespace Application.Tests.Post.Commands
         }
 
         [Fact]
-        public async Task UpdatePostCommandTest()
+        public async Task UpdatePostCommand_ValidData_UpdatesPost()
         {
             var handler = new UpdatePostCommandHandler(_mockRepo.Object, _mapper);
 
-            var result = await handler.Handle(new UpdatePostCommand() { UpdatedPost = _postDto}, CancellationToken.None);
+            var result = await handler.Handle(new UpdatePostCommand() { UpdatedPost = _postDto }, CancellationToken.None);
 
+            result.ShouldNotBeNull();
             result.ShouldBeOfType<BaseCommandResponse<Unit>>();
+            result.Success.ShouldBeTrue();
+            result.Value.ShouldBe(Unit.Value);
+        }
 
+        [Fact]
+        public async Task UpdatePostCommand_InvalidData_Failure()
+        {
+            var handler = new UpdatePostCommandHandler(_mockRepo.Object, _mapper);
+
+            var result = await handler.Handle(new UpdatePostCommand() { UpdatedPost = null }, CancellationToken.None);
+
+            result.ShouldNotBeNull();
+            result.ShouldBeOfType<BaseCommandResponse<Unit>>();
+            result.Success.ShouldBeFalse();
+            result.Value.ShouldBe(Unit.Value);
+        }
+
+        [Fact]
+        public async Task UpdatePostCommand_RepositoryError_Failure()
+        {
+            _mockRepo.Setup(repo => repo.postRepository.Update(It.IsAny<Domain.Entities.Post>())).ThrowsAsync(new Exception("Simulated error"));
+            var handler = new UpdatePostCommandHandler(_mockRepo.Object, _mapper);
+
+            var result = await handler.Handle(new UpdatePostCommand() { UpdatedPost = _postDto }, CancellationToken.None);
+
+            result.ShouldNotBeNull();
+            result.ShouldBeOfType<BaseCommandResponse<Unit>>();
+            result.Success.ShouldBeFalse();
+            result.Value.ShouldBe(Unit.Value);
         }
     }
 }

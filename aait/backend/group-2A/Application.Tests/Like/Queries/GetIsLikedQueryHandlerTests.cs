@@ -44,14 +44,48 @@ namespace Application.Tests.Like.Queries
         }
 
         [Fact]
-        public async Task GetIsLiked()
+        public async Task GetIsLiked_LikeExists_ReturnsTrue()
         {
             var handler = new GetIsLikedQueryHander(_mockRepo.Object, _mapper);
 
-            var result = await handler.Handle(new GetIsLikedQuery() { LikedDto = _likedDto}, CancellationToken.None);
+            var result = await handler.Handle(new GetIsLikedQuery() { LikedDto = _likedDto }, CancellationToken.None);
 
+            result.ShouldNotBeNull();
             result.ShouldBeOfType<BaseCommandResponse<bool>>();
+            result.Success.ShouldBeTrue();
+            result.Value.ShouldBeTrue();
+        }
 
+        [Fact]
+        public async Task GetIsLiked_LikeDoesNotExist_ReturnsFalse()
+        {
+            var nonExistentLikeDto = new LikedDto
+            {
+                PostId = 999,
+                UserId = 999,
+            };
+
+            var handler = new GetIsLikedQueryHander(_mockRepo.Object, _mapper);
+
+            var result = await handler.Handle(new GetIsLikedQuery() { LikedDto = nonExistentLikeDto }, CancellationToken.None);
+
+            result.ShouldNotBeNull();
+            result.ShouldBeOfType<BaseCommandResponse<bool>>();
+            result.Success.ShouldBeTrue();
+            result.Value.ShouldBeFalse();
+        }
+
+        [Fact]
+        public async Task GetIsLiked_RepositoryError_ReturnsFailure()
+        {
+            _mockRepo.Setup(repo => repo.likeRepository.isLiked(It.IsAny<Domain.Entities.Like>())).ThrowsAsync(new Exception("Simulated error"));
+            var handler = new GetIsLikedQueryHander(_mockRepo.Object, _mapper);
+
+            var result = await handler.Handle(new GetIsLikedQuery() { LikedDto = _likedDto }, CancellationToken.None);
+
+            result.ShouldNotBeNull();
+            result.ShouldBeOfType<BaseCommandResponse<bool>>();
+            result.Success.ShouldBeFalse();
         }
     }
 }
