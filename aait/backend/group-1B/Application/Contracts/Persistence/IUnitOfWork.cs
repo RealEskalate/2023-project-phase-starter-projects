@@ -8,5 +8,6 @@ public interface IUnitOfWork : IDisposable
     IPostTagRepository PostTagRepository { get; }
     IPostLikesRepository PostLikesRepository { get;  }
     INotificationRepository NotificationRepository { get; }
+    // ITagRepository TagRepository{get;}
     Task Save();
 }
