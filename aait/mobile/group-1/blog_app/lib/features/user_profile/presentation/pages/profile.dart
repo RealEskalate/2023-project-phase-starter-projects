@@ -9,6 +9,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../../../core/utils/colors.dart';
+import '../../../authentication_and_authorization/presentation/pages/signup_login_page.dart';
 import '../bloc/profile_bloc.dart';
 import '../widgets/my_posts.dart';
 
@@ -432,8 +433,11 @@ class _ProfilePageState extends State<ProfilePage> {
                                                 await SharedPreferences
                                                     .getInstance();
                                             prefs.remove('token');
-                                            Navigator.pushNamed(
-                                                context, "/auth");
+                                            Navigator.push(
+                                                context,
+                                                MaterialPageRoute(
+                                                    builder: (context) =>
+                                                        StackOfCards()));
                                           },
                                           child: Column(
                                               mainAxisAlignment:
