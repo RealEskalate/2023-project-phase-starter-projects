@@ -6,6 +6,7 @@ import SingleBlogCard from '../components/blog/SingleBlogCard';
 import Loading from '../components/loading';
 import { Pagination } from '../components/Pagination';
 import Link from '@/node_modules/next/link';
+import { Blog } from '@/lib/types';
 
 const Page: React.FC = () => {
   const [page, setPage] = useState(1);
@@ -18,6 +19,15 @@ const Page: React.FC = () => {
   if (isLoading) {
     return <Loading />;
   }
+
+  const blogsToShow = blogs
+    ?.filter((blog: Blog) => {
+      return (
+        blog.title.toLowerCase().includes(search.toLowerCase()) ||
+        blog.author?.name.toLowerCase().includes(search.toLowerCase())
+      );
+    })
+    .sort((a: Blog, b: Blog) => b?.createdAt?.localeCompare(a?.createdAt));
 
   //let bls = blogsToShow.map((blog) => blog.title);
 
