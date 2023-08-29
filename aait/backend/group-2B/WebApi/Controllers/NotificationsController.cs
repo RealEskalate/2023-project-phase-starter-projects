@@ -42,7 +42,7 @@ public class NotificationsController : ControllerBase
     [HttpDelete("{id}")]
     public async Task<IActionResult> DeleteNotification(int id)
     {
-        int authUserId = int.Parse(_userService.GetUserId());
+        int authUserId = _userService.GetUserId();
         var command = new DeleteNotificationCommand {NotificationId = id};
         var response = await _mediator.Send(command);
 
