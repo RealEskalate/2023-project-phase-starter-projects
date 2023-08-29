@@ -10,6 +10,7 @@ using Domain.Entites;
 using Domain.Entities;
 using SocialSync.Application.DTO;
 using SocialSync.Domain.Entities;using SocialSync.Application.Dtos.Authentication;
+using SocialSync.Domain.Entities;
 
 namespace Application.Profiles
 {
