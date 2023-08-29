@@ -26,7 +26,7 @@ const page = () => {
         <div className="text-center font-bold font-montserrat text-xl">
           {(error as any).data
             ? (error as any).data?.error
-            : "An Error Occured while loading the data"}
+            : "An Error Occurred while loading the data"}
         </div>
       )}
       {!isLoading && !isError && (
@@ -35,15 +35,15 @@ const page = () => {
           <div className="flex justify-center mt-4 space-x-4 text-gray-500 uppercase text-xs">
             <div>
               {blog?.tags.map((tag: string) => (
-                <span className="">{tag}, </span>
+                <span>{tag}, </span>
               ))}
             </div>
             <div className="w-0.5 my-0.5 bg-gray-400"></div>
-            <p className="">6 min Read</p>
+            <p>6 min Read</p>
           </div>
           <Image
             src={blog ? blog.image : "./images/blogs/coder.svg"}
-            alt={""}
+            alt={"Blog's Main image"}
             width={300}
             height={100}
             className="w-3/4 mt-16 mb-12 mx-auto h-96 object-cover"
