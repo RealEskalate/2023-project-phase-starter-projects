@@ -1,0 +1,33 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <ItemGroup>
+    <Compile Remove="Features\NewsFeedItem\**" />
+    <EmbeddedResource Remove="Features\NewsFeedItem\**" />
+    <None Remove="Features\NewsFeedItem\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\SocialMediaApp.Domain\SocialMediaApp.Domain.csproj" />
+  </ItemGroup>
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="12.0.1" />
+    <PackageReference Include="BCrypt.Net-Next" Version="4.0.3" />
+    <PackageReference Include="FluentAssertions" Version="6.11.0" />
+    <PackageReference Include="FluentValidation.DependencyInjectionExtensions" Version="11.7.1" />
+    <PackageReference Include="MediatR" Version="12.1.1" />
+    <PackageReference Include="MediatR.Extensions.Autofac.DependencyInjection" Version="11.1.0" />
+    <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="6.32.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\SocialMediaApp.Domain\SocialMediaApp.Domain.csproj" />
+  </ItemGroup>
+
+</Project>
