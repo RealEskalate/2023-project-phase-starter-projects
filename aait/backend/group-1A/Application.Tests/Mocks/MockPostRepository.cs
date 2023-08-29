@@ -48,8 +48,10 @@ namespace Application.Tests.Mocks
             var mockPostRepository = new Mock<IPostRepository>();
             mockPostRepository.Setup(
                 repo => repo.GetAll(
-                    It.IsAny<Expression<Func<Post, bool>>>())
-                ).ReturnsAsync(posts);
+                    It.IsAny<int>() )
+                ).ReturnsAsync((int id ) => {
+                    return posts.Where( p => p.Id == id ).ToList();
+                });
 
             mockPostRepository.Setup(
                 repo => repo.Get(It.IsAny<int>(), It.IsAny<int>())).
