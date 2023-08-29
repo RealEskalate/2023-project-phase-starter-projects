@@ -23,7 +23,7 @@ export default function SuccessStoryCard() {
       {stories?.map((item, index) => (
         <div
           key={index}
-          className={`lg:px-10 w-full flex lg:flex-row flex-col gap-4 lg:gap-14 rounded-xl ${
+          className={`w-full flex lg:flex-row flex-col gap-4 lg:gap-14 rounded-xl ${
             index % 2 && "lg:flex-row-reverse"
           }`}
         >

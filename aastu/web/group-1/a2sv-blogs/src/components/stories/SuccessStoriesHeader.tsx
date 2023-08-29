@@ -1,6 +1,6 @@
 export default function SuccessStoriesHeader() {
   return (
-    <div className="w-[80%] flex flex-col items-center mx-auto">
+    <div className="flex flex-col items-center mx-auto">
       <h1 className="text-[32px] text-text-header-1 font-semibold text-center font-poppins lg:text-[44px]">
         Impact Stories
       </h1>

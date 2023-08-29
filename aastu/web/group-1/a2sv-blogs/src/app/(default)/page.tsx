@@ -8,7 +8,7 @@ export default function Home() {
   const { data, isLoading, isError } = useGetStoriesQuery();
   console.log(data);
   return (
-    <main className="max-w-screen-xl mx-auto px-3 pt-36 font-sans-serif	font-poppins">
+    <main className="mx-auto lg:px-32 px-5 pt-36 font-sans-serif	font-poppins">
       <header className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-1 lg:grid-cols-2 gap-4 ">
         <div className="sm:grid-cols-1 md:grid-cols-1 lg:grid-cols-2 space-y-10">
           <div className="xl:text-7xl sm:text-6xl text-4xl font-extrabold">
@@ -240,7 +240,9 @@ export default function Home() {
       </section>
       <section className="mt-12 text-center">
         {isLoading ? (
-          <SkeletonLoader />
+          <div className="flex justify-center items-center h-[400px]">
+            <div className="animate-spin rounded-full border-t-4 border-blue-500 border-opacity-75 h-12 w-12"></div>
+          </div>
         ) : data ? (
           <div>
             <h1 className="md:text-5xl text-4xl text-center font-bold my-5">
@@ -254,8 +256,8 @@ export default function Home() {
                 <p className="mt-2 text-dark-chocolate font-medium	text-lg">
                   Software engineer At Google
                 </p>
-                <p className="mt-2 mb-3 text-base	font-normal	text-text-header-2">
-                  “ When I joined A2SV in 2019, I found the concept of data
+                <p className="mt-2 mb-3 text-base text-center	font-normal	text-text-header-2 max-w-[50ch]">
+                  “When I joined A2SV in 2019, I found the concept of data
                   structures and algorithms quite challenging. A2SV's smooth
                   learning process and dedicated team molded me to see the peak
                   of my abilities. Through A2SV's effective education and

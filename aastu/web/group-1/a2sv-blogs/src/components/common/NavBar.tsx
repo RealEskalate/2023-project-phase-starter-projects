@@ -29,7 +29,7 @@ export default function Nav() {
   };
   return (
     <nav className="bg-white fixed w-full z-50 top-0">
-      <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto py-4 px-2">
+      <div className="flex flex-wrap items-center justify-between mx-auto py-4 lg:px-32 px-5">
         <Link href="/">
           <Image
             src="/images/a2sv-logo.svg"
