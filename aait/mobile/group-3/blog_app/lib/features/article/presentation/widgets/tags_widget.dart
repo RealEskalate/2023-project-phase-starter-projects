@@ -80,9 +80,9 @@ class _TagButtonListWidgetState extends State<TagButtonListWidget> {
                 setState(() {
                   selectedTag = ''; // Clear the selected tag
                 });
-                
+
                 // Emit a search event with an empty query when "All" is clicked
-                context.read<ArticleBloc>().add(GetAllArticlesEvent());
+                context.read<ArticleBloc>().add(GetAllArticlesEvent(searchQuery: "",tags:[]));
               },
               style: selectedTag.isEmpty
                   ? elevatedButtonStyle

@@ -21,7 +21,6 @@ import '../widgets/loading_widget.dart';
 
 // ignore: must_be_immutable
 
-
 class HomeScreen extends StatefulWidget {
   HomeScreen({super.key});
 
@@ -30,22 +29,20 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-
-
-  void initState(){
+  void initState() {
     super.initState();
-     BlocProvider.of<ArticleBloc>(context)
-          .add(GetAllArticlesEvent());
+    BlocProvider.of<ArticleBloc>(context).add(GetAllArticlesEvent());
   }
+
   List<String> tagNames = [
     "others",
-        "sports",
-        "oech",
-        "politics",
-        "art",
-        "design",
-        "culture",
-        "production"
+    "sports",
+    "oech",
+    "politics",
+    "art",
+    "design",
+    "culture",
+    "production"
   ];
 
   @override
@@ -61,7 +58,11 @@ class _HomeScreenState extends State<HomeScreen> {
                 children: [
                   SizedBox(height: 56.h),
                   // Header widget displaying the app title.
-                  const HeaderWidget(),
+                  HeaderWidget(
+                    callback: () {
+                      context.push('/profile');
+                    },
+                  ),
                   SizedBox(height: 20.h),
 
                   // Search bar widget for filtering articles.
@@ -75,14 +76,13 @@ class _HomeScreenState extends State<HomeScreen> {
 
                   // List of tag buttons for article filtering.
                   TagButtonListWidget(
-                      tagNames:
-                          tagNames ,
-                          // Dummy tags will be fetched from the database.
-                          SearchByTags: (curTag){
-                             BlocProvider.of<ArticleBloc>(context)
+                    tagNames: tagNames,
+                    // Dummy tags will be fetched from the database.
+                    SearchByTags: (curTag) {
+                      BlocProvider.of<ArticleBloc>(context)
                           .add(GetAllArticlesEvent(tags: [curTag]));
-                          },
-                      ),
+                    },
+                  ),
 
                   SizedBox(height: 15.h),
                   BlocConsumer<ArticleBloc, ArticleState>(

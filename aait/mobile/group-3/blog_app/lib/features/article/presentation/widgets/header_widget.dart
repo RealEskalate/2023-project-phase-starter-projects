@@ -3,14 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 
-class HeaderWidget extends StatefulWidget {
-  const HeaderWidget({super.key});
+class HeaderWidget extends StatelessWidget {
+  final VoidCallback callback;
+  const HeaderWidget({required this.callback, super.key});
 
-  @override
-  State<HeaderWidget> createState() => _HeaderWidgetState();
-}
-
-class _HeaderWidgetState extends State<HeaderWidget> {
   @override
   Widget build(BuildContext context) {
     return Row(
@@ -18,9 +14,7 @@ class _HeaderWidgetState extends State<HeaderWidget> {
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
         GestureDetector(
-          onTap: () {
-            Navigator.pushNamed(context, '/profile');
-          },
+          onTap: callback,
           child: Icon(
             Icons.sort,
             size: 40.sp,
@@ -41,14 +35,14 @@ class _HeaderWidgetState extends State<HeaderWidget> {
         GestureDetector(
           onTap: () {
             //  Navigator.pushNamed(
-            //     context, '/profile'); 
+            //     context, '/profile');
           },
           child: Stack(
             alignment: Alignment.center,
             children: [
               CircleAvatar(
-                backgroundImage:
-                    const AssetImage('assets/images/avator.jpg'), // User's avatar
+                backgroundImage: const AssetImage(
+                    'assets/images/avator.jpg'), // User's avatar
                 radius: 28.sp, // Avatar radius
               ),
               Container(

@@ -111,8 +111,6 @@ class ArticleRemoteDataSourceImpl implements ArticleRemoteDataSource {
   @override
   Future<List<ArticleModel>> getAllArticles(
       ArticleRequest articleRequest) async {
-    print("object");
-    print(articleRequest.toJson());
     String tags = "";
     for (int i = 0; i < articleRequest.tags.length; i++) {
       tags += articleRequest.tags[i] + ",";
