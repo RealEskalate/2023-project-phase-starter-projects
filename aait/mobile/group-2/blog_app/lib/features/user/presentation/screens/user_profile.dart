@@ -5,14 +5,22 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../../../injection_container.dart';
 import '../../../authentication/presentation/bloc/auth_bloc.dart';
 import '../bloc/user_bloc.dart';
+import '../widgets/userprofile/article_grid_view.dart';
 import '../widgets/userprofile/article_list_view.dart';
 import '../widgets/userprofile/gradient_at_bottom.dart';
 import '../widgets/userprofile/profile_bar.dart';
 import '../widgets/userprofile/show_posts_and_bookmarks.dart';
 import '../widgets/userprofile/user_profile_details.dart';
 
-class UserProfile extends StatelessWidget {
+class UserProfile extends StatefulWidget {
   const UserProfile({super.key});
+
+  @override
+  State<UserProfile> createState() => _UserProfileState();
+}
+
+class _UserProfileState extends State<UserProfile> {
+  bool grid = true;
 
   @override
   Widget build(BuildContext context) {
@@ -38,10 +46,18 @@ class UserProfile extends StatelessWidget {
                     Center(
                       child: Transform.translate(
                         offset: Offset(0.w, -32.w),
-                        child: const ShowPostsAndBookmarks(
-                          numBookmarks: 12,
-                          numPosts: 52,
-                        ),
+                        child: BlocBuilder<UserBloc, UserState>(
+                            builder: (context, state) {
+                          if (state is LoadedUserState) {
+                            return ShowPostsAndBookmarks(
+                              numBookmarks: 0,
+                              numPosts: state.userData.articles.length,
+                            );
+                          } else {
+                            return const Center(
+                                child: CircularProgressIndicator());
+                          }
+                        }),
                       ),
                     ),
                     Container(
@@ -54,13 +70,20 @@ class UserProfile extends StatelessWidget {
                           )),
                       child: Container(
                         padding: const EdgeInsets.fromLTRB(40, 32, 30, 27),
-                        child:
-                            // ArticleGridView(articles: articles),
-                            BlocBuilder<UserBloc, UserState>(
-                                builder: (context, state) {
+                        child: BlocBuilder<UserBloc, UserState>(
+                            builder: (context, state) {
                           if (state is LoadedUserState) {
-                            return ArticleListView(
-                                articles: state.userData.articles);
+                            return grid
+                                ? ArticleGridView(
+                                    articles: state.userData.articles,
+                                    onGridView: switchView,
+                                    onListView: switchView,
+                                  )
+                                : ArticleListView(
+                                    articles: state.userData.articles,
+                                    onGridView: switchView,
+                                    onListView: switchView,
+                                  );
                           } else {
                             return const Center(
                                 child: CircularProgressIndicator());
@@ -77,5 +100,12 @@ class UserProfile extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  void switchView() {
+    print(grid);
+    setState(() {
+      grid = !grid;
+    });
   }
 }

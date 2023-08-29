@@ -6,7 +6,6 @@ import '../../../features/article/presentation/screens/screens.dart';
 import '../../../features/authentication/presentation/pages/auth_page.dart';
 import '../../../features/onboard/presentation/screens/initial_screen.dart';
 import '../../../features/onboard/presentation/screens/on_boarding.dart';
-import '../../../features/onboard/presentation/screens/splash_screen.dart';
 import '../../../features/user/presentation/screens/user_profile.dart';
 import 'routes.dart';
 

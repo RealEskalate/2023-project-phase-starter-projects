@@ -7,15 +7,23 @@ import 'posts_bar.dart';
 import 'single_article_post_list_view.dart';
 
 class ArticleListView extends StatelessWidget {
+  final VoidCallback? onGridView;
+  final VoidCallback? onListView;
   final List<Article> articles;
 
-  const ArticleListView({Key? key, required this.articles}) : super(key: key);
+  const ArticleListView(
+      {Key? key, required this.articles, this.onGridView, this.onListView})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Column(
       children: [
-        const ArticleTitleBar(title: "My Posts"),
+        ArticleTitleBar(
+          title: "My Posts",
+          onGridView: onGridView,
+          onListView: onListView,
+        ),
         SizedBox(height: 27.h),
         ListView.builder(
           shrinkWrap: true,

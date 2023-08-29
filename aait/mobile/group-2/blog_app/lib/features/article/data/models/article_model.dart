@@ -22,11 +22,11 @@ class ArticleModel extends Article {
     try {
       author = UserDataModel(
           id: json['user']['id'],
-          fullName: json['user']['fullName'] ?? '',
-          email: json['user']['email'] ?? '',
-          expertise: json['user']['expertise'] ?? '',
-          bio: json['user']['bio'] ?? '',
-          createdAt: json['user']['createdAt'] ?? '',
+          fullName: json['user']['fullName'] ?? 'Tamirat Dereje',
+          email: json['user']['email'] ?? 'tamiratdereje@gmail.com',
+          expertise: json['user']['expertise'] ?? 'Designer',
+          bio: json['user']['bio'] ?? 'A short bio',
+          createdAt: json['user']['createdAt'] ?? '2023-08-20T20:14:00.295Z',
           image: json['user']['image'] ?? '',
           imageCloudinaryPublicId:
               json['user']['imageCloudinaryPublicId'] ?? '',
@@ -34,13 +34,14 @@ class ArticleModel extends Article {
     } catch (e) {
       author = UserDataModel(
           id: json['user'],
-          fullName: '',
-          email: '',
-          expertise: '',
-          bio: '',
-          createdAt: '',
-          image: '',
-          imageCloudinaryPublicId: '',
+          fullName: 'Tamirat Dereje',
+          email: 'tamiratdereje@gmail.com',
+          expertise: 'Designer',
+          bio: 'A short bio',
+          createdAt: '2023-08-20T20:14:00.295Z',
+          image:
+              'https://res.cloudinary.com/dzpmgwb8t/image/upload/v1692562440/p2gekduc9q7ce139u1oe.png',
+          imageCloudinaryPublicId: 'p2gekduc9q7ce139u1oe',
           articles: const []);
     }
 
