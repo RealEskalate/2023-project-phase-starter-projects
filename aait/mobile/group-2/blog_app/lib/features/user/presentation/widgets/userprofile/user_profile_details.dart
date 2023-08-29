@@ -1,7 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:image_picker/image_picker.dart';
 
+import '../../../../article/presentation/widgets/snackbar.dart';
+import '../../../../authentication/presentation/bloc/auth_bloc.dart';
 import '../../../domain/entities/user_data.dart';
+import '../../bloc/user_bloc.dart';
 import 'user_bio.dart';
 import 'user_profile_info.dart';
 import 'user_profile_photo.dart';
@@ -21,50 +26,78 @@ class UserProfileDetails extends StatelessWidget {
     double cardMarginRight = 20.w;
     double cardBorderRadius = 16.0.w;
 
-    return Container(
-      padding: EdgeInsets.fromLTRB(
-        horizontalPadding,
-        topPadding,
-        horizontalPadding,
-        0,
-      ),
-      child: Card(
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(cardBorderRadius),
+    return BlocListener<UserBloc, UserState>(
+      listener: (context, state) {
+        if (state is UserProfileUpdatedState) {
+          showSuccess(context, 'Profile updated successfully');
+          final token = context.read<AuthBloc>().authToken;
+          context.read<UserBloc>().add(GetUserEvent(token: token));
+        }
+      },
+      child: Container(
+        padding: EdgeInsets.fromLTRB(
+          horizontalPadding,
+          topPadding,
+          horizontalPadding,
+          0,
         ),
-        color: Colors.white,
-        child: Container(
-          margin: EdgeInsets.fromLTRB(
-            cardMarginLeft,
-            cardMarginTop,
-            cardMarginRight,
-            0,
+        child: Card(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(cardBorderRadius),
           ),
-          child: Column(
-            children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  UserProfilePhoto(
-                    photoUrl: user.image,
-                  ),
-                  UserProfileInfo(
-                    fullName: user.fullName,
-                    username: user.email,
-                    profession: user.expertise,
-                  ),
-                ],
-              ),
-              UserBio(
-                userInfo: user.bio,
-              ),
-              SizedBox(
-                height: 32.w,
-              )
-            ],
+          color: Colors.white,
+          child: Container(
+            margin: EdgeInsets.fromLTRB(
+              cardMarginLeft,
+              cardMarginTop,
+              cardMarginRight,
+              0,
+            ),
+            child: Column(
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    GestureDetector(
+                      onTap: () => _uploadImage(context),
+                      child: UserProfilePhoto(
+                        photoUrl: user.image,
+                      ),
+                    ),
+                    UserProfileInfo(
+                      fullName: user.fullName,
+                      username: user.email,
+                      profession: user.expertise,
+                    ),
+                  ],
+                ),
+                UserBio(
+                  userInfo: user.bio,
+                ),
+                SizedBox(
+                  height: 32.w,
+                )
+              ],
+            ),
           ),
         ),
       ),
     );
+  }
+
+  void _uploadImage(BuildContext context) async {
+    final token = context.read<AuthBloc>().authToken;
+    final userBloc = context.read<UserBloc>();
+
+    final picker = ImagePicker();
+
+    final pickedFile = await picker.pickImage(source: ImageSource.gallery);
+
+    if (pickedFile != null) {
+      userBloc.add(UpdateUserPhotoEvent(
+        token: token,
+        imagePath: pickedFile.path,
+      ));
+    }
   }
 }
