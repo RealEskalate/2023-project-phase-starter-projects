@@ -60,10 +60,10 @@ const BlogCard: React.FC<BlogProps> = ({
             {author && <p className="uppercase  text-gray-400 mt-1">Software Engineer</p>}
           </div>
         </div>
-        <div className='flex justify-between flex-col xl:flex-row'>
+        <div className='flex justify-between flex-col gap-16 xl:flex-row'>
           <div>
             <h2 className="text-2xl font-bold mt-2">{title}</h2>
-            <p className="text-gray-700 text-wrap">{parse(truncatedDescription)}</p>
+            <p className="text-gray-700 pr-20 text-wrap">{parse(truncatedDescription)}</p>
             {description.length > MAX_DESCRIPTION_LENGTH && (
                 <a className="text-primary">Read more</a>
             )}
