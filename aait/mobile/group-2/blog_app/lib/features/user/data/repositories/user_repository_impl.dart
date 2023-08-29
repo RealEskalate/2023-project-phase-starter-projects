@@ -23,6 +23,12 @@ class UserRespositoryImpl extends UserRepository {
 
   @override
   Future<Either<Failure, UserData>> getUserData(String token) async {
+    if (token.isEmpty) {
+      await localDataSource.clearCache();
+
+      return Left(CacheFailure());
+    }
+
     if (await networkInfo.isConnected) {
       try {
         final user = await remoteDataSource.getUserData(token);

@@ -44,6 +44,11 @@ class AuthLocalDataSourceImpl extends AuthLocalDataSource {
   }
 
   @override
+  Future<void> removeToken() async {
+    await sharedPreferences.remove(LocalStorageConstants.TOKEN);
+  }
+
+  @override
   Future<String> getToken() {
     final token = sharedPreferences.getString(LocalStorageConstants.TOKEN);
     if (token != null) {

@@ -62,7 +62,6 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     failureOrLoginResult.fold(
       (failure) {
         _token = null;
-
         emit(const UserAuthState(null));
       },
       (token) {
