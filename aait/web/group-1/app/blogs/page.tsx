@@ -3,14 +3,13 @@
 import BlogItem from "@/components/blogs/BlogItem";
 import { useGetBlogsQuery } from "@/store/features/blogs/blogs";
 import { Blog } from "@/types/Blog";
+import Link from "next/link";
 import React, { useEffect, useState } from "react";
 
 const page = () => {
   const { data: blogs, isLoading, isError, error } = useGetBlogsQuery();
   const [searchQuery, setSearchQuery] = useState<string>("");
-  const [filteredBlogs, setFilteredBlogs] = useState<Blog[] | undefined>(
-    []
-  );
+  const [filteredBlogs, setFilteredBlogs] = useState<Blog[] | undefined>([]);
 
   useEffect(() => {
     const newFilteredBlogs: Blog[] | undefined = blogs?.filter((blog) =>
@@ -31,7 +30,6 @@ const page = () => {
       )}
       {!isLoading && !isError && (
         <div className="py-10 font-montserrat">
-          
           {/* Search section and header */}
           <div className="px-20 flex flex-col md:flex-row space-y-4 md:space-y-0 md:space-x-96">
             <h1 className="font-semibold text-xl">Blogs</h1>
@@ -44,7 +42,7 @@ const page = () => {
                 onChange={(e) => setSearchQuery(e.target.value)}
               />
               <button className="btn-light bg-blue-800 text-white">
-                + New Blog
+                <Link href={"/blog/addBlog"}>+ New Blog</Link>
               </button>
             </div>
           </div>
@@ -52,7 +50,11 @@ const page = () => {
           {/* Blogs section */}
           <div className="px-56 py-10">
             <div className="w-full">
-              {filteredBlogs?.length == 0 && <div className="text-center font-bold text-xl">No Blogs found</div>}
+              {filteredBlogs?.length == 0 && (
+                <div className="text-center font-bold text-xl">
+                  No Blogs found
+                </div>
+              )}
               {filteredBlogs?.map((blog: Blog) => (
                 <BlogItem
                   _id={blog._id}
