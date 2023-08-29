@@ -34,6 +34,7 @@ export default function RootLayout({
             pauseOnHover
           />
         </ReduxProvider>
+        <Footer />
       </body>
     </html>
   );
