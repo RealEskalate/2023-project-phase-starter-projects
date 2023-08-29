@@ -5,12 +5,9 @@ import Story from "@/components/success-stories/Story";
 import { SuccessStory } from "@/types/story";
 
 export default async function Page() {
-  // Here I should place some dummy data for rendering each story with the Story component
   const response = await fetch('https://a2sv-backend.onrender.com/api/success-stories');
   const allData: SuccessStory[] = await response.json();
 
-
-  // These are the images that will be placed in the partners place
   const partners: string[] = [
     'Google',
     'Palantir',
@@ -73,8 +70,6 @@ export default async function Page() {
         </div>
       </div>
       <div className='font-poppins grid grid-cols-4 h-[360px] space-x-10'>
-        {/* This resembles the Footer component that was made earlier */}
-
         <div className='col-span-1 mt-20'>
           <Image
             className='pt-3'
