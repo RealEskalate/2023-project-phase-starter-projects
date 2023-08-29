@@ -42,13 +42,9 @@ const Header: React.FC<HeaderProps> = ({ title }) => {
 							x-show="!showMenu"
 							fill="none"
 							strokeLinecap="round"
-<<<<<<< HEAD
 							strokeLinejoin ="round"
 							strokeWidth="2"
-=======
-							stroke-linejoin="round"
-							stroke-width="2"
->>>>>>> d9e96d11 (fixing but)
+						
 							viewBox="0 0 24 24"
 							stroke="currentColor"
 						>
