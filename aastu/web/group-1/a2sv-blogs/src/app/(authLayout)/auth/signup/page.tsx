@@ -29,20 +29,40 @@ export default function page() {
     signupHandler({ email, name, password });
   };
   return (
-    <div className="h-screen">
+    <div className="h-screen overflow-hidden">
       <div className="grid lg:grid-cols-2 grid-cols-1 h-full">
-        <div className="bg-gradient-to-br from-primary to-secondary w-full h-full hidden lg:flex lg:justify-center lg:items-center">
-          <Image
-            src="/images/login-illustration.svg"
-            width={500}
-            height={300}
-            alt="Login Illustration"
-            className="w-4/5 object-contain"
-          />
+        <div className="bg-gradient-to-br w-full h-full hidden lg:flex lg:flex-col lg:justify-center lg:items-center">
+          <div className="self-start p-5">
+            <Image
+              src="/images/dark-a2sv.svg"
+              width={150}
+              height={50}
+              alt="A2SV Logo"
+            ></Image>
+          </div>
+          <div className="flex">
+            <Image
+              src="/images/Saly-14person.svg"
+              width={500}
+              height={300}
+              alt="Login Illustration"
+              className="w- object-contain"
+            />
+            <div className="mt-60 -ml-16 space-y-6">
+              <h1 className="text-6xl  font-bold text-text-header-1 space-y-3">
+                <span>Welcome to </span>
+                <br />
+                <span>A2SV</span>
+              </h1>
+              <p className="text-xl text-text-content">
+                Register for free to receive blogs and learn more about A2SV
+              </p>
+            </div>
+          </div>
         </div>
-        <div className="flex justify-center items-center h-full lg:px-0 px-10">
-          <div className="align-center d-flex">
-            <div className="mt-8">
+        <div className="flex justify-center items-center h-full lg:px-0 px-10 bg-primary">
+          <div className="align-center d-flex bg-white p-8 rounded-xl">
+            <div>
               <div className="py-8 flex justify-center items-center">
                 <Image
                   width={200}

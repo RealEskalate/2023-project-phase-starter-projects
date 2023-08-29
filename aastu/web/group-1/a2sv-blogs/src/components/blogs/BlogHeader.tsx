@@ -9,7 +9,7 @@ export default function BlogHeader() {
       </h1>
       <div className="flex lg:gap-5 gap-5 items-center mx-auto lg:px-10">
         <input
-          className="h-10 border border-gray-500 px-5 md:w-60 sm:w-48 w-36 rounded-3xl placeholder:text-sm placeholder:font-montserrat placeholder:font-medium placeholder:pl-4"
+          className="py-3 border border-gray-500 px-5 md:w-60 sm:w-48 w-36 rounded-3xl placeholder:text-sm placeholder:font-montserrat placeholder:font-medium placeholder:pl-4"
           placeholder="Search . . ."
           type="text"
           name=""
@@ -17,7 +17,7 @@ export default function BlogHeader() {
         />
         <Link
           href="/blogs/create"
-          className="h-10 text-white font-montserrat md:text-sm text-xs font-semibold md:w-32 w-32 bg-blue-800 px-5 rounded-full  flex items-center"
+          className="text-white font-montserrat md:text-sm text-xs font-semibold md:w-32 w-32 bg-blue-800 px-5 rounded-full py-3  flex items-center"
         >
           + New Blog
         </Link>

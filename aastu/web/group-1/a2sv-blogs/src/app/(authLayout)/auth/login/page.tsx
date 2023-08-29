@@ -28,22 +28,41 @@ export default function page() {
     ev.preventDefault();
     loginHandler({ email, password });
   };
-
   return (
-    <div className="h-screen">
+    <div className="h-screen overflow-hidden">
       <div className="grid lg:grid-cols-2 grid-cols-1 h-full">
-        <div className="bg-gradient-to-br from-primary to-secondary w-full h-full hidden lg:flex lg:justify-center lg:items-center">
-          <Image
-            src="/images/login-illustration.svg"
-            width={500}
-            height={300}
-            alt="Login Illustration"
-            className="w-4/5 object-contain"
-          />
+        <div className="bg-gradient-to-br w-full h-full hidden lg:flex lg:flex-col lg:justify-center lg:items-center">
+          <div className="self-start p-5">
+            <Image
+              src="/images/dark-a2sv.svg"
+              width={150}
+              height={50}
+              alt="A2SV Logo"
+            ></Image>
+          </div>
+          <div className="flex">
+            <Image
+              src="/images/Saly-14person.svg"
+              width={500}
+              height={300}
+              alt="Login Illustration"
+              className="w- object-contain"
+            />
+            <div className="mt-60 -ml-16 space-y-6">
+              <h1 className="text-6xl  font-bold text-text-header-1">
+                <span>Welcome </span>
+                <br />
+                <span>Back</span>
+              </h1>
+              <p className="text-xl text-text-content max-w-[26ch]">
+                Login to receive blogs and learn more about A2SV
+              </p>
+            </div>
+          </div>
         </div>
-        <div className="flex justify-center items-center h-full lg:px-0 px-10">
-          <div className="align-center d-flex">
-            <div className="mt-8">
+        <div className="flex justify-center items-center h-full lg:px-0 px-10 bg-primary">
+          <div className="align-center d-flex bg-white p-8 rounded-xl">
+            <div>
               <div className="py-8 flex justify-center items-center">
                 <Image
                   width={200}
@@ -66,10 +85,18 @@ export default function page() {
                     className="object-contain cursor-pointer"
                     onClick={() => dispatch(resetAuth())}
                   />
-                  <p>{error?.data.message}</p>
+                  <p>
+                    {error?.status === "FETCH_ERROR"
+                      ? "Network Error"
+                      : error?.data.message}
+                  </p>
                 </div>
               )}
-              <form className="py-4 flex flex-col" onSubmit={handleSubmit}>
+              <form
+                action="POST"
+                className="py-4 flex flex-col"
+                onSubmit={handleSubmit}
+              >
                 <input
                   placeholder="Email"
                   name="email"
