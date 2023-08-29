@@ -39,8 +39,8 @@ export const authApi = createApi({
       { oldPassword: string; newPassword: string }
     >({
       query: ({ oldPassword, newPassword }) => ({
-        url: "/manage-account",
-        method: "POST",
+        url: "/change-password",
+        method: "PATCH",
         body: { oldPassword, newPassword },
       }),
     }),
