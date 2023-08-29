@@ -6,6 +6,7 @@ public class Post : BaseEntity
 {
     public string Content { get; set; } = null!;
     public int UserId { get; set; }
+    public int LikeCount{get; set;}
 
     public virtual User User { get; set; } = null!;
 
