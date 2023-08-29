@@ -9,7 +9,7 @@ using MediatR;
 
 namespace Application.Features.FollowFeature.Handlers.Commands
 {
-    public class CreateFollowCommandHandler : IRequestHandler<CreateFollowCommand, BaseResponse<string>>
+    public class CreateFollowCommandHandler : IRequestHandler<CreateFollowCommand, BaseResponse<int>>
     {
       
         private readonly IFollowRepository _followRepository;
@@ -23,12 +23,12 @@ namespace Application.Features.FollowFeature.Handlers.Commands
             _userRepository = userRepository;
         }
 
-        public async Task<BaseResponse<string>> Handle(CreateFollowCommand request, CancellationToken cancellationToken)
+        public async Task<BaseResponse<int>> Handle(CreateFollowCommand request, CancellationToken cancellationToken)
         {   
 
             var followValidation = new FollowDTOValidation(_userRepository,_followRepository);
             var followValidationResult = await followValidation.ValidateAsync(request.FollowDTO!);
-            var createFollowResponse = new BaseResponse<string>();
+            var createFollowResponse = new BaseResponse<int>();
             
             if (!followValidationResult.IsValid)
             {
@@ -39,6 +39,8 @@ namespace Application.Features.FollowFeature.Handlers.Commands
             var createFollowCommandResult = await _followRepository.AddFollow(followEntity);
             createFollowResponse.Success = true;
             createFollowResponse.Message = "Followed successfully";
+            createFollowResponse.Value = createFollowCommandResult.FollowerId;
+            
             
             return createFollowResponse;
         }

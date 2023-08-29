@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Linq.Expressions;
-using System.Threading.Tasks;
-using Application.Contracts;
-using Application.DTO.PostDTO.DTO;
+﻿using Application.Contracts;
 using Domain.Entities;
 using Moq;
 
@@ -54,10 +48,11 @@ namespace Application.Tests.Mocks
                 });
 
             mockPostRepository.Setup(
-                repo => repo.Get(It.IsAny<int>(), It.IsAny<int>())).
-                ReturnsAsync(
-                    (int id, int userId) =>
-                    posts.FirstOrDefault(post => post.Id == id && post.UserId == userId));
+                repo => repo.Get(It.IsAny<int>())).
+                ReturnsAsync((int id) =>
+                    {
+                        return posts.FirstOrDefault(post => post.Id == id);
+                    });
 
             mockPostRepository.Setup(
                 repo => repo.Add(It.IsAny<Post>())).

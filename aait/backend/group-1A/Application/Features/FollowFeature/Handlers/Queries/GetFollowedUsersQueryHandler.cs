@@ -2,12 +2,13 @@ using Application.Contracts;
 using Application.DTO;
 using Application.DTO.UserDTO.DTO;
 using Application.Features.FollowFeature.Requests.Queries;
+using Application.Response;
 using AutoMapper;
 using Domain.Entites;
 using MediatR;
 namespace Application.Features.FollowFeature.Handlers.Queries
 {
-    public class GetFollowedUsersQueryHandler : IRequestHandler<GetFollowedUsersQuery,List<UserResponseDTO>>
+    public class GetFollowedUsersQueryHandler : IRequestHandler<GetFollowedUsersQuery,BaseResponse<List<UserResponseDTO>>>
     {
         IFollowRepository _followRepository;
         IMapper _mapper;
@@ -17,11 +18,15 @@ namespace Application.Features.FollowFeature.Handlers.Queries
            _mapper = mapper;
         }
 
-        public async Task<List<UserResponseDTO>> Handle(GetFollowedUsersQuery request, CancellationToken cancellationToken)
+        public async Task<BaseResponse<List<UserResponseDTO>>> Handle(GetFollowedUsersQuery request, CancellationToken cancellationToken)
         {
             var followedUsers = await _followRepository.GetFollowedUsers(request.Id);
-            var followedUsersDto = _mapper.Map<List<UserResponseDTO>>(followedUsers);
-            return followedUsersDto;
+
+            return new BaseResponse<List<UserResponseDTO>> () {
+                Success =  true,
+                Message = "List of Users followed by you",
+                Value = _mapper.Map<List<UserResponseDTO>>(followedUsers)
+            };
         }
     }
 }
