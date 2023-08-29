@@ -26,7 +26,7 @@ namespace WebApi.Controllers
         {
             var getAllRequest = new GetAllPostsRequest();
             var response = await _mediator.Send(getAllRequest);
-            return Ok(response.Value);
+            return Ok(response);
         }
 
         [HttpGet("{id}")]
@@ -34,7 +34,7 @@ namespace WebApi.Controllers
         {
             var getPostByIdRequest = new GetPostByIdRequest { Id = id };
             var response = await _mediator.Send(getPostByIdRequest);
-            return Ok(response.Value);
+            return Ok(response);
         }
 
         [HttpPost]
@@ -47,11 +47,11 @@ namespace WebApi.Controllers
             var response = await _mediator.Send(createCommand);
             if (response.IsSuccess)
             {
-                return CreatedAtAction(nameof(Get), new { id = response.Value }, response.Value);
+                return CreatedAtAction(nameof(Get), new { id = response }, response);
             }
             else
             {
-                return BadRequest(response.Error);
+                return BadRequest(response);
             }
         }
 
@@ -70,7 +70,7 @@ namespace WebApi.Controllers
             }
             else
             {
-                return BadRequest(response.Error);
+                return BadRequest(response);
             }
         }
 
@@ -79,7 +79,7 @@ namespace WebApi.Controllers
         {
             var getByAuthorRequest = new GetPostsByUserIdRequest { UserId = userId };
             var response = await _mediator.Send(getByAuthorRequest);
-            return Ok(response.Value);
+            return Ok(response);
         }
 
         [HttpGet("tags")]
@@ -108,7 +108,7 @@ namespace WebApi.Controllers
             }
             else
             {
-                return BadRequest(response.Error);
+                return BadRequest(response);
             }
         }
     }
