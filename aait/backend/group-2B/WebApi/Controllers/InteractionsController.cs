@@ -26,9 +26,10 @@ public class InteractionController : ControllerBase
     }
 
     [Authorize]
-    [HttpPost("like")]
-    public async Task<IActionResult> LikeUnlikePostAsync([FromBody] InteractionDto likeDto)
+    [HttpPost("{postId}/like")]
+    public async Task<IActionResult> LikeUnlikePostAsync(int postId, [FromBody] InteractionDto likeDto)
     {
+        likeDto.PostId = postId;
         likeDto.Type = InteractionType.Like;
         likeDto.Body = null;
         likeDto.UserId = _userService.GetUserId();
@@ -47,9 +48,10 @@ public class InteractionController : ControllerBase
     }
 
     [Authorize]
-    [HttpPost("comment")]
-    public async Task<IActionResult> CommentOnPostAsync([FromBody] InteractionDto interactionDto)
+    [HttpPost("{postId}/comment")]
+    public async Task<IActionResult> CommentOnPostAsync(int postId, [FromBody] InteractionDto interactionDto)
     {
+        interactionDto.PostId = postId;
         interactionDto.Type = InteractionType.Comment;
         interactionDto.UserId = _userService.GetUserId();
         var command = new CreateCommentInteractionCommand { CreateCommentDto = interactionDto };
