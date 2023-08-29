@@ -10,7 +10,7 @@ public class MockUnitOfWork {
 
     var mockUserRepository = MockUserRepository.GetMockUserRepository();
     var mockInteractionRepository = MockInteractionRepository.GetMockInteractionRepository();
-    var mockPostRepository = MockPostRepository.GetRepository();
+    var mockPostRepository = MockPostRepository.GetPostRepository();
 
     unitOfWork.Setup(uow => uow.UserRepository).Returns(mockUserRepository.Object);
     unitOfWork.Setup(uow => uow.SaveAsync()).ReturnsAsync(1);
