@@ -62,6 +62,13 @@ namespace Persistence.Repositories
             return Task.FromResult(result);
         }
 
+        public  Task<List<Post>> GetByTagName(string tagName)
+        {
+            var result = _dbContext.Posts
+                                    .Where(x => x.PostTags.Any(x => x.Tag.Title == tagName)).ToList();
+            return Task.FromResult(result);
+        }
+
 
     }
 }
