@@ -42,7 +42,7 @@ namespace WebApi.Controllers
         public async Task<IActionResult> CreatePostAsync([FromBody] CreatePostDto createPostDto)
         {
             int userId = _userService.GetUserId();
-            createPostDto.UserId  = userId;
+            createPostDto.UserId = userId;
             var createCommand = new CreatePostCommand { CreatePostDto = createPostDto };
             var response = await _mediator.Send(createCommand);
             if (response.IsSuccess)
@@ -55,12 +55,12 @@ namespace WebApi.Controllers
             }
         }
 
-        [HttpPatch]
+        [HttpPatch("{id}")]
         [Authorize]
-        public async Task<IActionResult> Update([FromBody] UpdatePostDto updatePostDto)
+        public async Task<IActionResult> Update(int id, [FromBody] string content)
         {
             int userId = _userService.GetUserId();
-            updatePostDto.UserId = userId;
+            var updatePostDto = new UpdatePostDto{ Id = id, UserId = userId, Content = content };
             var updateCommand = new UpdatePostCommand { UpdatePostDto = updatePostDto };
             var response = await _mediator.Send(updateCommand);
 
@@ -90,9 +90,9 @@ namespace WebApi.Controllers
             return Ok(response);
         }
 
-        [HttpDelete]
+        [HttpDelete("{id:int}")]
         [Authorize]
-        public async Task<IActionResult> DeleteAsync([FromQuery] int id)
+        public async Task<IActionResult> DeleteAsync(int id)
         {
             int userId = _userService.GetUserId();
             var deletePostDto = new DeletePostDto
