@@ -22,7 +22,6 @@ export default function RootLayout({
         <ReduxProvider>
           <Header />
           {children}
-          <Footer />
           <ToastContainer
             position="top-right"
             autoClose={2000}

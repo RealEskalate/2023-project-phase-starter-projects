@@ -6,6 +6,7 @@ import { authApi } from "./features/auth";
 import { teamsApi } from "./features/teams/team-member-api";
 import { storiesApi } from "./features/success-stories/sucess-stories-api";
 import { myblogsApi } from "./features/my-blogs";
+import { createUpdateProfileAPI } from "./update-personal-information";
 
 export const store = configureStore({
   reducer: {
@@ -16,6 +17,7 @@ export const store = configureStore({
     [teamsApi.reducerPath]: teamsApi.reducer,
     [storiesApi.reducerPath]: storiesApi.reducer,
     [myblogsApi.reducerPath]: myblogsApi.reducer,
+    [createUpdateProfileAPI.reducerPath]: createUpdateProfileAPI.reducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware()
@@ -26,6 +28,7 @@ export const store = configureStore({
       .concat(teamsApi.middleware)
       .concat(storiesApi.middleware)
       .concat(myblogsApi.middleware)
+      .concat(createUpdateProfileAPI.middleware),
 });
 
 export type RootState = ReturnType<typeof store.getState>;
