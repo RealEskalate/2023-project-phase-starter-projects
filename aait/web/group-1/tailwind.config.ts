@@ -21,6 +21,8 @@ const config: Config = {
         'form-gray-primary': '#434343',
         'form-input-color': '#767676',
         'form-field-bg': '#EFF3F9',
+        'add-blog-chip-color': '#414141',
+        'add-blog-chip-bg': '#F5F5F5'
       },
       screens: {
         'mobile': '375px',

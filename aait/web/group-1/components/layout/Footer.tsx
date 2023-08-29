@@ -8,7 +8,7 @@ export default function Footer() {
   const socialIcons: string[] = [ 'facebook', 'twitter', 'instagram', 'linkedin', 'youtube' ].map((icon) => `/images/social-icons/${icon}.png`);
 
   return (
-    <footer className='mt-10 h-[450px] flex flex-col justify-center space-y-10 font-montserrat'>
+    <footer className='mt-32 h-[450px] flex flex-col justify-center space-y-10 font-montserrat'>
       <div className='grid grid-cols-5 items-center justify-center gap-5'>
         <div className='col-span-1 h-full flex justify-center items-center'>
           <Image
