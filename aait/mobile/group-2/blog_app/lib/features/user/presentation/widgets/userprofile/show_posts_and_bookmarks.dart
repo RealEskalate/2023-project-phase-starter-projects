@@ -4,8 +4,6 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../../../../core/presentation/theme/app_colors.dart';
 import '../../bloc/profile_page_bloc.dart';
-import '../../bloc/profile_page_event.dart';
-import '../../bloc/profile_page_state.dart';
 import 'show_posts_or_bookmarks_button.dart';
 
 class ShowPostsAndBookmarks extends StatelessWidget {

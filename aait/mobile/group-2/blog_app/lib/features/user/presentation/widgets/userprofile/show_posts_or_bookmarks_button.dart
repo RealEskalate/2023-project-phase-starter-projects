@@ -3,8 +3,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../bloc/profile_page_bloc.dart';
-import '../../bloc/profile_page_event.dart';
-import '../../bloc/profile_page_state.dart';
 
 class ShowPostsOrBookmarksButton extends StatelessWidget {
   final Color col;

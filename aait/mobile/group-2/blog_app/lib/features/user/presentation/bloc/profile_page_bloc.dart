@@ -3,6 +3,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'profile_page_event.dart';
 import 'profile_page_state.dart';
 
+export 'profile_page_event.dart';
+export 'profile_page_state.dart';
+
 class ProfilePageBloc extends Bloc<ProfilePageEvent, ProfilePageState> {
   ProfilePageBloc()
       : super(const ProfilePageState(

@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../../../../core/presentation/theme/app_colors.dart';
+import '../../bloc/profile_page_bloc.dart';
 
 class ArticleTitleBar extends StatelessWidget {
   final String title;
@@ -34,20 +36,42 @@ class ArticleTitleBar extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
             GestureDetector(
-              onTap: () {},
-              child: Icon(
-                Icons.grid_view,
-                color: AppColors.blue,
-                size: iconSize,
+              onTap: () {
+                final currentState = context.read<ProfilePageBloc>().state;
+                if (currentState.layout == ProfileLayout.list) {
+                  context.read<ProfilePageBloc>().add(SwitchToGridViewEvent());
+                }
+              },
+              child: BlocBuilder<ProfilePageBloc, ProfilePageState>(
+                builder: (context, state) {
+                  return Icon(
+                    Icons.grid_view,
+                    color: state.layout == ProfileLayout.grid
+                        ? AppColors.blue
+                        : AppColors.darkGray,
+                    size: iconSize,
+                  );
+                },
               ),
             ),
             SizedBox(width: iconSpacing),
             GestureDetector(
-              onTap: () {},
-              child: Icon(
-                Icons.list,
-                color: AppColors.darkGray,
-                size: iconSize,
+              onTap: () {
+                final currentState = context.read<ProfilePageBloc>().state;
+                if (currentState.layout == ProfileLayout.grid) {
+                  context.read<ProfilePageBloc>().add(SwitchToListViewEvent());
+                }
+              },
+              child: BlocBuilder<ProfilePageBloc, ProfilePageState>(
+                builder: (context, state) {
+                  return Icon(
+                    Icons.list,
+                    color: state.layout == ProfileLayout.list
+                        ? AppColors.blue
+                        : AppColors.darkGray,
+                    size: iconSize,
+                  );
+                },
               ),
             ),
           ],
