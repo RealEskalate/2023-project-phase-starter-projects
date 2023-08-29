@@ -10,8 +10,6 @@ import '../../../article/presentation/bloc/bookmark_bloc.dart';
 import '../../../article/presentation/widgets/snackbar.dart';
 import '../../../authentication/presentation/bloc/auth_bloc.dart';
 import '../bloc/profile_page_bloc.dart';
-import '../bloc/profile_page_event.dart';
-import '../bloc/profile_page_state.dart';
 import '../bloc/user_bloc.dart';
 import '../widgets/userprofile/article_grid_view.dart';
 import '../widgets/userprofile/article_list_view.dart';
@@ -49,6 +47,9 @@ class UserProfile extends StatelessWidget {
             context.go(Routes.home);
           } else if (state is AuthError) {
             showError(context, 'Failed to logout');
+          } else if (state is UserProfileUpdatedState) {
+            context.read<UserBloc>().add(GetUserEvent(
+                token: BlocProvider.of<AuthBloc>(context).authToken));
           }
         },
         child: Scaffold(
