@@ -117,7 +117,7 @@ class _UpdateArticleFormState extends State<UpdateArticleForm> {
                     runSpacing: 10,
                     spacing: 10,
                     children: state.tags
-                        .map((tag) => CustomChip(
+                        .map<Widget>((tag) => CustomChip(
                               label: tag.name,
                               onDelete: () {
                                 context

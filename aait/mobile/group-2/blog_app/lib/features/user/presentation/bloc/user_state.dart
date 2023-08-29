@@ -17,6 +17,8 @@ class LoadedUserState extends UserState {
   const LoadedUserState({required this.userData});
 }
 
+class UserProfileUpdatedState extends UserState {}
+
 class LoadedBookmarkedArticlesState extends UserState {
   final List<Article> articles;
 
