@@ -161,18 +161,13 @@ class BlogImageWidget extends StatelessWidget {
         ClipRRect(
           borderRadius:
               BorderRadius.circular(8), // Rounded corners for the image
-          child: Image.asset(
-            'assets/images/avator.jpg', // Image asset for the blog
+          
+          child: Image.network(
+           article.image, // Replace with the actual image URL
             width: 160.w,
             height: 160.h,
             fit: BoxFit.cover,
           ),
-          // child: Image.network(
-          //  'https://example.com/image.jpg', // Replace with the actual image URL
-          //   width: 160.w,
-          //   height: 160.h,
-          //   fit: BoxFit.cover,
-          // ),
         ),
         Positioned(
           top: 8,
