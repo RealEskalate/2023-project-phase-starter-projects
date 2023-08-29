@@ -8,7 +8,7 @@ interface PropsInterface {
 
 const Story: React.FC<PropsInterface> = ({ data }) => {
   return (
-    <div className={`flex flex-row ${ data.order === 1 && 'flex-row-reverse' } font-montserrat w-full`}>
+    <div className={`flex flex-row ${ data.personName === 'Lydia Gashawtena' && 'flex-row-reverse' } font-montserrat w-full`}>
       <div className='w-2/5 relative border'>
         <div className={`bg-cover bg-center h-full w-full`} style={{ backgroundImage: `url(${data.imgURL})` }}></div>
         <div className='absolute bottom-0 bg-opacity-70 backdrop-blur-md w-full py-14 text-white font-poppins flex flex-col px-6 space-y-4'>
@@ -22,8 +22,8 @@ const Story: React.FC<PropsInterface> = ({ data }) => {
           data.story.map(story => {
             return (
               <div>
-                <h1 className='mb-10 text-3xl font-semibold'>{ story.heading }</h1>
-                <p className='text-lg italic'>{ story.paragraph }</p>
+                <h1 className='mb-10 text-xl font-semibold'>{ story.heading }</h1>
+                <p className='text-md italic'>{ story.paragraph }</p>
               </div>
             );
           })
