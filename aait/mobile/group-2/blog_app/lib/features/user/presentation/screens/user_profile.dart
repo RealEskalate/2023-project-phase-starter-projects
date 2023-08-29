@@ -12,7 +12,6 @@ import '../bloc/user_bloc.dart';
 import '../widgets/userprofile/article_grid_view.dart';
 import '../widgets/userprofile/article_list_view.dart';
 import '../widgets/userprofile/gradient_at_bottom.dart';
-import '../widgets/userprofile/profile_bar.dart';
 import '../widgets/userprofile/show_posts_and_bookmarks.dart';
 import '../widgets/userprofile/user_profile_details.dart';
 
@@ -32,6 +31,8 @@ class _UserProfileState extends State<UserProfile> {
       create: (context) => serviceLocator<UserBloc>()
         ..add(
             GetUserEvent(token: BlocProvider.of<AuthBloc>(context).authToken)),
+
+      //
       child: BlocListener<AuthBloc, AuthState>(
         listener: (context, state) {
           if (state is LogoutSuccessState) {
@@ -51,14 +52,8 @@ class _UserProfileState extends State<UserProfile> {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text(
-                      "Profile",
-                      style: TextStyle(
-                        fontSize: 24.sp,
-                        fontWeight: FontWeight.w500,
-                        color: Color(0xFF0D253C),
-                      ),
-                    ),
+                    Text('Profile',
+                        style: Theme.of(context).textTheme.titleMedium),
                   ],
                 ),
               ),
