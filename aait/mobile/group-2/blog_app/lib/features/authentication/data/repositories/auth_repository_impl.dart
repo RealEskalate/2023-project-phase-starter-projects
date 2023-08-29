@@ -107,22 +107,18 @@ class AuthRepositoryImpl implements AuthRepository {
 
   @override
   Future<Either<Failure, void>> logout(String token) async {
-    if (await networkInfo.isConnected) {
-      try {
-        final result = await authRemoteDataSource.logout(token);
-        await authLocalDataSource.deleteLoggedInUser();
-        return Right(result);
-      } on ServerException catch (e) {
-        // print the error message for debugging
-        debugPrint(e.toString());
-        return Left(ServerFailure());
-      } on LogoutException catch (e) {
-        // print the error message for debugging
-        debugPrint(e.toString());
-        return Left(LogoutFailure());
-      }
-    } else {
-      return Left(NetworkFailure());
+    try {
+      await authLocalDataSource.removeToken();
+      await authLocalDataSource.deleteLoggedInUser();
+      return const Right(null);
+    } on ServerException catch (e) {
+      // print the error message for debugging
+      debugPrint(e.toString());
+      return Left(ServerFailure());
+    } on LogoutException catch (e) {
+      // print the error message for debugging
+      debugPrint(e.toString());
+      return Left(LogoutFailure());
     }
   }
 }

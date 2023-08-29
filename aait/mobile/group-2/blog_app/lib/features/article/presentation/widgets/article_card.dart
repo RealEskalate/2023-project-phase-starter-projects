@@ -29,9 +29,15 @@ class ArticleCard extends StatelessWidget {
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            ArticlePhoto(article: article),
+            ConstrainedBox(
+              constraints: BoxConstraints(maxWidth: 120.w),
+              child: ArticlePhoto(article: article),
+            ),
             const SizedBox(width: 10),
-            ArticleInfo(article: article),
+            ConstrainedBox(
+              constraints: BoxConstraints(maxWidth: 160.w),
+              child: ArticleInfo(article: article),
+            ),
           ],
         ),
       ),

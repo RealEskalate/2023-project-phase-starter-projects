@@ -6,7 +6,6 @@ import '../../../../core/presentation/router/routes.dart';
 import '../../../../injection_container.dart';
 import '../../../authentication/presentation/bloc/auth_bloc.dart';
 import '../../../user/presentation/bloc/user_bloc.dart';
-import 'splash_screen.dart';
 import 'splash_screen_static.dart';
 
 class AppInitialScreen extends StatelessWidget {

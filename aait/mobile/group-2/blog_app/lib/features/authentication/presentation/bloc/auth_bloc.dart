@@ -61,6 +61,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
 
     failureOrLoginResult.fold(
       (failure) {
+        _token = null;
         emit(const UserAuthState(null));
       },
       (token) {
@@ -110,6 +111,8 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     emit(Loading());
 
     final failureOrLogoutResult = await logoutUseCase('');
+
+    _token = null;
 
     failureOrLogoutResult.fold(
       (failure) {

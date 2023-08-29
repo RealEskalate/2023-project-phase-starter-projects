@@ -49,6 +49,7 @@ class UserBloc extends Bloc<UserEvent, UserState> {
   FutureOr<void> _onGetUserData(
       GetUserEvent event, Emitter<UserState> emit) async {
     emit(LoadingState());
+
     final userOrError = await getUser(GetUserDataParams(token: event.token));
 
     userOrError.fold(
