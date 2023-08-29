@@ -2,7 +2,6 @@
 import { usePasswordResetMutation } from "@/store/features/auth";
 import { authTypes } from "@/types/auth/authTypes";
 import Image from "next/image";
-import Link from "next/link";
 import React, { useState } from "react";
 
 const AccountSetting = () => {
@@ -28,8 +27,8 @@ const AccountSetting = () => {
     })
       .unwrap()
       .then((response: any) => {
+        // NOT WORKING, not completed yet
         console.log("success", response);
-        console.log("changed succesfully");
       })
       .catch((err) => {
         // seterrorMessage(err.data.message);

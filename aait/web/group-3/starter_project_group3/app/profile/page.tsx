@@ -4,7 +4,6 @@ import React, { useState } from "react";
 import AccountSetting from "./accountsetting/page";
 import PersonalInformation from "./personalinformation/page";
 import MyBlogs from "./myblogs/page";
-import Footer from "@/components/footer/Footer";
 
 const Profile = () => {
   const [val, setVal] = useState<number>(0);

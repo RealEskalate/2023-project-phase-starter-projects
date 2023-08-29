@@ -1,7 +1,5 @@
 "use client";
-import Footer from "@/components/footer/Footer";
 import { useLoginMutation } from "@/store/features/auth";
-import { authTypes } from "@/types/auth/authTypes";
 import React, { useEffect, useState } from "react";
 
 const LogIn: React.FC = () => {
@@ -16,13 +14,11 @@ const LogIn: React.FC = () => {
     login({ email, password })
       .unwrap()
       .then((response: any) => {
-        console.log("log in success", response);
         localStorage.setItem("user", JSON.stringify(response));
         window.location.href = "/";
       })
       .catch((err) => {
         seterrorMessage(err.data.message);
-        console.error("Login error", err);
       });
   };
 
