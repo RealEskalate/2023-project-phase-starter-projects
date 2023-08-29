@@ -26,13 +26,6 @@ const LogIn: React.FC = () => {
       });
   };
 
-  // useEffect(() => {
-  //   const userString = localStorage.getItem("user");
-  //   const user: authTypes | null = userString ? JSON.parse(userString) : null;
-  //   console.log(user?.token);
-
-  // }, []);
-
   return (
     <>
       <div className="flex flex-col items-center justify-center py-10 w-8/12 mx-auto rounded-lg my-10 font-Montserrat bg-gray-100">
@@ -82,8 +75,6 @@ const LogIn: React.FC = () => {
           </form>
         </div>
       </div>
-
-      <Footer />
     </>
   );
 };

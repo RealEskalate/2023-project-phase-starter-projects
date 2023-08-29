@@ -65,8 +65,6 @@ const Profile = () => {
         {val === 1 && <MyBlogs />}
         {val === 2 && <AccountSetting />}
       </section>
-
-      <Footer />
     </>
   );
 };
