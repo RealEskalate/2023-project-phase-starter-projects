@@ -6,10 +6,12 @@ import React, { useCallback } from 'react';
 import { useDropzone } from 'react-dropzone';
 import uploadIcon from '@/assets/images/Group 9542.svg';
 import { AiOutlineLoading3Quarters } from 'react-icons/ai';
+import Toast from '../components/Toast';
 
 export default function Section() {
   const [profileImage, setProfileImage] = useState<File>();
   const [success, setSuccess] = useState(false);
+  const [open, setOpen] = useState(false);
 
   const createFile = async (url: string) => {
     let response = await fetch(url);
@@ -76,6 +78,7 @@ export default function Section() {
 
       if (res.message === 'Profile updated successfully') {
         setSuccess(true);
+        setOpen(true);
       }
     } catch (error) {
       console.log(error);
@@ -108,12 +111,12 @@ export default function Section() {
 
       <form className="space-y-6 dark:bg-dark-background" action="">
         {isSuccess && (
-          <div
-            className="w-3/6 p-4 mb-4 text-sm bg-green-500 text-white rounded-lg text-center"
-            role="alert"
-          >
-            <span className="font-medium">Yay!</span> You've successfully updated your profile.
-          </div>
+          <Toast
+            message=" You've successfully updated your profile."
+            type="success"
+            open={open}
+            setOpen={setOpen}
+          />
         )}
         <div className="space-x-8 flex dark:border-dark-backgroundLight border-b-[1px] py-6">
           <label className="mr-16 font-semibold dark:text-dark-textColor-50" htmlFor="name">

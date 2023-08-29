@@ -19,15 +19,6 @@ const Page: React.FC = () => {
     return <Loading />;
   }
 
-  const blogsToShow = blogs
-    ?.filter((blog: Blog) => {
-      return (
-        blog.title.toLowerCase().includes(search.toLowerCase()) ||
-        blog.author?.name.toLowerCase().includes(search.toLowerCase())
-      );
-    })
-    .sort((a: Blog, b: Blog) => b?.createdAt?.localeCompare(a?.createdAt));
-
   //let bls = blogsToShow.map((blog) => blog.title);
 
   const totalBlogs = blogsToShow.length; // Calculate total number of blogs

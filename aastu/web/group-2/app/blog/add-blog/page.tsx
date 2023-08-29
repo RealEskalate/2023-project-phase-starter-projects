@@ -8,6 +8,7 @@ import { useEffect, useState } from 'react';
 import { useAddBlogsMutation } from '@/lib/redux/slices/blogsApi';
 import { useRouter } from 'next/navigation';
 import { AiOutlineLoading3Quarters } from 'react-icons/ai';
+import { useAppSelector } from '@/lib/redux/hooks';
 
 const DynamicTextEditor = dynamic(() => import('@/app/components/add-blog/TextEditor'), {
   ssr: false,
@@ -20,7 +21,14 @@ const AddBlog: React.FC = () => {
   const [selectedTags, setSelectedTags] = useState<string[]>(['development']);
   const [blogContent, setBlogContent] = useState<string>('');
 
+  const loginState = useAppSelector((state: any) => state.login);
   const [addBlogs, { isLoading }] = useAddBlogsMutation();
+
+  if (!loginState) {
+    router.replace('/login');
+    return <></>;
+  }
+
   const handleSaveChanges = () => {
     const formData = new FormData();
     formData.append('image', file!);
@@ -68,13 +76,6 @@ const AddBlog: React.FC = () => {
       });
     }
   };
-
-  useEffect(() => {
-    if (!localStorage.getItem('login')) {
-      router.replace('/login');
-      // return <></>;
-    }
-  }, []);
 
   return (
     <div className=" md:px-20 px-2 w-full font-primaryFont py-8 bg-white  dark:bg-dark-background transition-colors ease-linear">
