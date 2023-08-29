@@ -19,3 +19,17 @@ a {
 * {
   box-sizing: border-box;
 }
+
+
+div.ql-tooltip.ql-editing {
+  border: 1px solid #00000057;
+  padding: 6px 10px;
+  border-radius: 6px;
+  margin: auto;
+  position: absolute;
+  left: 10px !important;
+}
+
+.my-button {
+  white-space: nowrap;
+}
