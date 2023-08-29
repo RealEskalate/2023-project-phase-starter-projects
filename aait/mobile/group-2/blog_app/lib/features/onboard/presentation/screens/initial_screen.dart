@@ -6,7 +6,6 @@ import '../../../../core/presentation/router/routes.dart';
 import '../../../../injection_container.dart';
 import '../../../authentication/presentation/bloc/auth_bloc.dart';
 import '../../../user/presentation/bloc/user_bloc.dart';
-import 'splash_screen.dart';
 import 'splash_screen_static.dart';
 
 class AppInitialScreen extends StatelessWidget {
@@ -15,19 +14,29 @@ class AppInitialScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider<UserBloc>(
-      create: (context) => serviceLocator<UserBloc>()
-        ..add(GetUserEvent(token: context.read<AuthBloc>().authToken)),
+      create: (context) => serviceLocator<UserBloc>(),
 
       //
-      child: BlocListener<UserBloc, UserState>(
+      child: BlocListener<AuthBloc, AuthState>(
         listener: (context, state) {
-          if (state is LoadedUserState) {
-            context.go(Routes.articles);
-          } else if (state is ErrorState) {
-            context.go(Routes.onBoard);
+          if (state is UserAuthState) {
+            if (state.token != null) {
+              context.read<UserBloc>().add(GetUserEvent(token: state.token!));
+            } else {
+              context.go(Routes.onBoard);
+            }
           }
         },
-        child: const SplashScreenStatic(),
+        child: BlocListener<UserBloc, UserState>(
+          listener: (context, state) {
+            if (state is LoadedUserState) {
+              context.go(Routes.articles);
+            } else if (state is ErrorState) {
+              context.go(Routes.onBoard);
+            }
+          },
+          child: const SplashScreenStatic(),
+        ),
       ),
     );
   }

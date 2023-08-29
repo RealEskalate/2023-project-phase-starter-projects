@@ -7,6 +7,7 @@ import '../../domain/entities/tag.dart';
 import '../bloc/tag_selector_bloc.dart';
 import 'custom_text_field.dart';
 
+// ignore: must_be_immutable
 class TagSelector extends StatelessWidget {
   final List<Tag> tags;
 

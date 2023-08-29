@@ -91,39 +91,42 @@ class ArticleScreen extends StatelessWidget {
 
   Widget _buildBody(BuildContext context) {
     return GradientScrollView(
-      child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-        // Article title
-        Padding(
-          padding: EdgeInsets.symmetric(horizontal: 40.w),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(article.title,
-                  style: Theme.of(context).textTheme.titleLarge),
+      child: Padding(
+        padding: const EdgeInsets.symmetric(vertical: 10),
+        child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+          // Article title
+          Padding(
+            padding: EdgeInsets.symmetric(horizontal: 40.w),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(article.title,
+                    style: Theme.of(context).textTheme.titleLarge),
 
-              SizedBox(height: 35.h),
+                SizedBox(height: 35.h),
 
-              // Author card
-              AuthorCard(
-                profileImageUrl: article.author.image,
-                authorName: article.author.fullName,
-                publishedAt: '2m ago',
-              ),
-            ],
+                // Author card
+                AuthorCard(
+                  profileImageUrl: article.author.image,
+                  authorName: article.author.fullName,
+                  publishedAt: '2m ago',
+                ),
+              ],
+            ),
           ),
-        ),
-        SizedBox(height: 30.h),
+          SizedBox(height: 30.h),
 
-        // Article image
-        ArticleImage(imageUrl: article.photoUrl),
-        const SizedBox(height: 15),
+          // Article image
+          ArticleImage(imageUrl: article.photoUrl),
+          const SizedBox(height: 15),
 
-        // Article content
-        ArticleContent(
-          paragraphs: [article.content],
-        ),
-        SizedBox(height: 100.h)
-      ]),
+          // Article content
+          ArticleContent(
+            paragraphs: [article.content],
+          ),
+          SizedBox(height: 100.h)
+        ]),
+      ),
     );
   }
 }

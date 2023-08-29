@@ -6,6 +6,8 @@ abstract class AuthLocalDataSource {
   /// Throws a [CacheException] for cache errors
   Future<void> cacheToken(String token);
 
+  Future<void> removeToken();
+
   /// Gets the cached token from the local data source
   ///
   /// Throws a [CacheException] for cache errors

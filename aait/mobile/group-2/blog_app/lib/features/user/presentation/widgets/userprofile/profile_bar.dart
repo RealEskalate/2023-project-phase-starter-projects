@@ -16,7 +16,8 @@ class ProfileBar extends StatelessWidget {
     double iconSize = 24.w;
 
     return Container(
-      margin: EdgeInsets.fromLTRB(marginHorizontal, marginTop, marginHorizontal, 0),
+      margin:
+          EdgeInsets.fromLTRB(marginHorizontal, marginTop, marginHorizontal, 0),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
@@ -28,11 +29,13 @@ class ProfileBar extends StatelessWidget {
               color: Color(0xFF0D253C),
             ),
           ),
-          Icon(
-            Icons.more_horiz,
-            color: Color(0xFF0D253C),
-            size: iconSize,
-          ),
+          GestureDetector(
+            child: Icon(
+              Icons.more_horiz,
+              color: Color(0xFF0D253C),
+              size: iconSize,
+            ),
+          )
         ],
       ),
     );
