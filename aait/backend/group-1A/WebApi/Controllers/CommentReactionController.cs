@@ -1,10 +1,9 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using System.Security.Claims;
 using Application.DTO.Common;
+using Application.DTO.NotificationDTO;
 using Application.Features.CommentReactionFeature.Requests.Commands;
 using Application.Features.CommentReactionFeature.Requests.Queries;
+using Application.Features.NotificationFeaure.Requests.Commands;
 using Application.Response;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
@@ -40,7 +39,10 @@ namespace WebApi.Controllers
         [HttpPost("react")]
         public async Task<ActionResult<BaseResponse<int>>> Post([FromBody] ReactionDTO reactionData)
         {
+            var userId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier)!.Value);
             var result = await _mediator.Send(new MakeReactionOnComment{ UserId = 3, ReactionData = reactionData });
+            await _mediator.Send(new CreateNotification {NotificationData = new NotificationCreateDTO()
+            {Content = $"User with {userId} {reactionData.ReactionType} your comment",NotificationContentId = result.Value,NotificationType = "reaction",UserId = userId}});
             return Ok(result);
         }
     }
