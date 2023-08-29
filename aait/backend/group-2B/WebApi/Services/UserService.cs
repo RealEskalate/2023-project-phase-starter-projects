@@ -15,9 +15,11 @@ public class UserService : IUserService
     public int GetUserId()
     {
         var userId = _httpContextAccessor.HttpContext?.User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+
         if(userId != null){
             return int.Parse(userId);
         }
         return 0;
+
     }
 }
