@@ -79,7 +79,7 @@ namespace WebApi.Controllers
         {
             var getByAuthorRequest = new GetPostsByUserIdRequest { UserId = userId };
             var response = await _mediator.Send(getByAuthorRequest);
-            return Ok(response.Value);
+            return Ok(response);
         }
 
         [HttpGet("tags")]
