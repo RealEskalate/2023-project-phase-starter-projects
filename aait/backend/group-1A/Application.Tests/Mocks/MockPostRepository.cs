@@ -48,10 +48,11 @@ namespace Application.Tests.Mocks
                 });
 
             mockPostRepository.Setup(
-                repo => repo.Get(It.IsAny<int>(), It.IsAny<int>())).
-                ReturnsAsync(
-                    (int id, int userId) =>
-                    posts.FirstOrDefault(post => post.Id == id && post.UserId == userId));
+                repo => repo.Get(It.IsAny<int>())).
+                ReturnsAsync((int id) =>
+                    {
+                        return posts.FirstOrDefault(post => post.Id == id);
+                    });
 
             mockPostRepository.Setup(
                 repo => repo.Add(It.IsAny<Post>())).
