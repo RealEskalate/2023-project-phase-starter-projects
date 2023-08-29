@@ -99,14 +99,14 @@ const AddBlog: React.FC<Props> = ({
 
           <div className="mt-12 flex gap-8 justify-end my-8 mr-20 font-semibold text-sm">
             <button
-              className="bg-none px-6 py-1 text-blue-500 rounded hover:bg-blue-first hover:text-white"
+              className="bg-none border border-red-500 px-6 py-1 text-red-500 rounded active:bg-red-500 active:text-white"
               onClick={handleCancel}
             >
               Cancel
             </button>
 
             <button
-              className="bg-blue-first border rounded-md text-white px-8 py-2"
+              className="bg-blue-first active:bg-blue-500 border rounded-md text-white px-8 py-2"
               onClick={handleSubmit}
             >
               Save changes
