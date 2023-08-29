@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Application.Common;
 using Application.Contracts;
 using Application.Features.CommentFeatures.Requests.Queries;
 using Application.Features.FollowFeature.Requests.Queries;
@@ -30,9 +31,9 @@ namespace Application.Features.NotificationFeaure.Handlers.Commands
         {
             var newNotification = _mapper.Map<Notification>(request.NotificationData);
             // var followers = 
-            switch (request.NotificationData.NotificationType.ToLower())
+            switch (request.NotificationData.NotificationType)
             {
-                case "post":
+                case NotificationEnum.POST:
                     newNotification.Post = true;
                     var followers = await _mediator.Send(new GetFollowersQuery(){
                         Id = request.NotificationData.UserId});
@@ -43,19 +44,19 @@ namespace Application.Features.NotificationFeaure.Handlers.Commands
                     }
                     break;
 
-                case "comment":
+                case NotificationEnum.COMMENT:
                     newNotification.Comment = true;
                     var post = await _mediator.Send(new GetSinglePostQuery(){Id = newNotification.NotificationContentId});
                     newNotification.UserId = post.Value.UserId;
                     await _notificationRepository.Add(newNotification);
                     break;
 
-                case "follow":
+                case NotificationEnum.FOLLOW:
                     newNotification.Follow = true;
                     await _notificationRepository.Add(newNotification);
                     break;
 
-                case "Comment-reaction":
+                case NotificationEnum.COMMENTREACTION:
                     newNotification.Reaction = true;
                     var comment = await _mediator.Send(new GetSingleCommentQuery(){Id = newNotification.NotificationContentId});
                     newNotification.UserId = comment.Value.UserId;
@@ -63,7 +64,7 @@ namespace Application.Features.NotificationFeaure.Handlers.Commands
 
                     break;
 
-                case "Post-reaction":
+                case NotificationEnum.POSTREACTION:
                     newNotification.Reaction = true;
                     var Post = await _mediator.Send(new GetSinglePostQuery(){Id = newNotification.NotificationContentId});
                     newNotification.UserId = Post.Value.UserId;
