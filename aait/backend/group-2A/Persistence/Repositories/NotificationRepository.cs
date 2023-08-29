@@ -24,4 +24,18 @@ public class NotificationRepository : INotificationRepository{
             .ToListAsync();
     }
 
+    public async Task MarkAsRead(int Id)
+    {
+        var notification = await GetNotification(Id);
+        if (notification == null)
+            return;
+
+        notification.IsRead = true;
+    }
+
+    public async Task<Notification> GetNotification(int notificationId)
+    {
+        return await _dbContext.Notifications.FindAsync(notificationId);
+    }
+    
 }

@@ -20,6 +20,7 @@ public class MappingProfile : AutoMapper.Profile
         CreateMap<User, DTO.UserDTO.CreateUserDTO>().ReverseMap();
         CreateMap<User, UpdatePostDto>().ReverseMap();
         CreateMap<User, UserProfileDTO>().ReverseMap();
+        CreateMap<User, UpdateUserDTO>().ReverseMap();
 
         CreateMap<Follow, FollowDto>().ReverseMap();
         CreateMap<Like, LikedDto>().ReverseMap();
