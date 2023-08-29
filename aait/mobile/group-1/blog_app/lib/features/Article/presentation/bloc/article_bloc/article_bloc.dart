@@ -22,12 +22,16 @@ class ArticleBloc extends Bloc<ArticleEvent, ArticleState> {
 
     on<CreateArticleEvent>((CreateArticleEvent event, Emitter emit) async {
       CreateArticle usecase = CreateArticle(repository);
+      emit(Loading());
       await usecase.repository.createArticle(event.article);
+      emit(Idle());
     });
 
     on<UpdateArticleEvent>((UpdateArticleEvent event, Emitter emit) async {
       UpdateArticle usecase = UpdateArticle(repository);
+      emit(Loading());
       await usecase.repository.updateArticle(event.article);
+      emit(Idle());
     });
 
     on<GetArticleEvent>((GetArticleEvent event, Emitter emit) async {
