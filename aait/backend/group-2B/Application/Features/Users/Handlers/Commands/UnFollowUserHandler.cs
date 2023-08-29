@@ -1,12 +1,13 @@
 using Application.Features.Users.Requests.Commands;
 using MediatR;
+using SocialSync.Application.Common.Responses;
 using SocialSync.Application.Contracts.Persistence;
 using SocialSync.Application.DTOs.Users.Validators;
 
 
 namespace Application.Features.Users.Handlers.Commands
 {
-    public class UnFollowUserHandler : IRequestHandler<UnFollowUserCommand ,Unit>
+    public class UnFollowUserHandler : IRequestHandler<UnFollowUserCommand , CommonResponse<int>    >
     {
         private readonly IUserRepository _userRepository;
         private  readonly  IUnitOfWork _unitOfWork;
@@ -17,7 +18,7 @@ namespace Application.Features.Users.Handlers.Commands
             _userRepository = userRepository;
         }
 
-        public async Task<Unit> Handle( UnFollowUserCommand request, CancellationToken cancellationToken)
+        public async Task<CommonResponse<int>> Handle( UnFollowUserCommand request, CancellationToken cancellationToken)
         {
             var validator = new UnFollowDtoValidator(_unitOfWork);
             var validationResult = await validator.ValidateAsync(request.UnfollowunFollowDto);
@@ -25,7 +26,7 @@ namespace Application.Features.Users.Handlers.Commands
             if (!validationResult.IsValid)
             {
                 
-                throw new Exception("Validation failed.");
+                return CommonResponse<int>.Failure("unfollow failed");
             }
 
             await  _unitOfWork.UserRepository.UnFOllowUser(request.UnfollowunFollowDto.FollwerId,request.UnfollowunFollowDto.FollowedId);
@@ -33,7 +34,7 @@ namespace Application.Features.Users.Handlers.Commands
             await _unitOfWork.SaveAsync();
 
 
-            return Unit.Value;
+            return CommonResponse<int>.Success(1);
         }
     }
     }

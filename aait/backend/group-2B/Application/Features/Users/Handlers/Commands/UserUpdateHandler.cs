@@ -3,10 +3,11 @@ using MediatR;
 
 using Application.DTOs.Users.Validators;
 using SocialSync.Application.Contracts.Persistence;
+using SocialSync.Application.Common.Responses;
 
 namespace Application.Features.Users.Handlers.Commands
 {
-    public class UserUpdateHandler : IRequestHandler<UserUpdateCommand, Unit>
+    public class UserUpdateHandler : IRequestHandler<UserUpdateCommand, CommonResponse<int>>
     {
         private readonly IUnitOfWork _unitOfWork;
         private readonly AutoMapper.IMapper _mapper;
@@ -17,7 +18,7 @@ namespace Application.Features.Users.Handlers.Commands
             _mapper = mapper;
         }
 
-        public async Task<Unit> Handle(UserUpdateCommand request, CancellationToken cancellationToken)
+        public async Task<CommonResponse<int>> Handle(UserUpdateCommand request, CancellationToken cancellationToken)
         {
             var validator = new UserDtoVallidator();
             var validationResult = await validator.ValidateAsync(request.Userdto);
@@ -25,7 +26,7 @@ namespace Application.Features.Users.Handlers.Commands
             if (!validationResult.IsValid)
             {
                 
-                throw new Exception("Validation failed.");
+                return CommonResponse<int>.Failure("unable to update");
             }
 
             var user = await _unitOfWork.UserRepository.GetAsync(request.Userdto.Id);
@@ -37,7 +38,7 @@ namespace Application.Features.Users.Handlers.Commands
                 await _unitOfWork.SaveAsync();
             }
 
-            return Unit.Value;
+            return CommonResponse<int>.Success(1);
         }
     }
 }

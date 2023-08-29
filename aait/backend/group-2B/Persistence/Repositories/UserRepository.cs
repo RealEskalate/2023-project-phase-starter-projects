@@ -14,11 +14,23 @@ public class UserRepository : GenericRepository<User>, IUserRepository
     {
         return await _dbContext.Users.AnyAsync(user => user.Email == email);
     }
+
+    public Task FollowUser(int follower, int follewed)
+    {
+        throw new NotImplementedException();
+    }
+
     public async Task<User> GetByUsername(string username)
     {
         var user = await _dbContext.Users.FirstOrDefaultAsync(user => user.Username == username);
         return user!;
     }
+
+    public Task UnFOllowUser(int follower, int follewed)
+    {
+        throw new NotImplementedException();
+    }
+
     public async Task<bool> UsernameExists(string username)
     {
         return await _dbContext.Users.AnyAsync(user => user.Username == username);
@@ -27,14 +39,14 @@ public class UserRepository : GenericRepository<User>, IUserRepository
 
     public async Task FollowUser(int follower, int followed)
     {
-        var followerUser = await _dbContext.Users.FindByIdAsync(follower);
+        var followerUser = await _dbContext.Users.FindAsync(follower);
 
-        var followedUser = await _dbContext.Users.FindByIdAsync(followed);
+        var followedUser = await _dbContext.Users.FindAsync(followed);
 
         if (followerUser != null && followedUser != null)
         {
-            await followerUser.Followings.AddAsync(followedUser);
-            await followedUser.Followers.AddAsync(followerUser);
+             followerUser.Followings.Add(followedUser);
+             followedUser.Followers.Add(followerUser);
 
         }
 
@@ -46,11 +58,9 @@ public class UserRepository : GenericRepository<User>, IUserRepository
         var followedUser = await _dbContext.Users.FindAsync(followed);
 
         if (followedUser != null && followerUser != null){
-            await followerUser.Followings.RemoveAsync(followedUser);
-            await followedUser.Followers.RemoveAsync(followerUser);
+             followerUser.Followings.Remove(followedUser);
+             followedUser.Followers.Remove(followerUser);
         }
         
-
-
     }
 }
