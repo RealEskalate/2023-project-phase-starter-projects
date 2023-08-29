@@ -28,7 +28,6 @@ export default function page() {
     ev.preventDefault();
     loginHandler({ email, password });
   };
-
   return (
     <div className="h-screen overflow-hidden">
       <div className="grid lg:grid-cols-2 grid-cols-1 h-full">
@@ -86,10 +85,18 @@ export default function page() {
                     className="object-contain cursor-pointer"
                     onClick={() => dispatch(resetAuth())}
                   />
-                  <p>{error?.data.message}</p>
+                  <p>
+                    {error?.status === "FETCH_ERROR"
+                      ? "Network Error"
+                      : error?.data.message}
+                  </p>
                 </div>
               )}
-              <form className="py-4 flex flex-col" onSubmit={handleSubmit}>
+              <form
+                action="POST"
+                className="py-4 flex flex-col"
+                onSubmit={handleSubmit}
+              >
                 <input
                   placeholder="Email"
                   name="email"
