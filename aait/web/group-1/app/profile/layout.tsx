@@ -46,20 +46,3 @@ export default function ProfileLayout({
 
 
 
-
-// import React, { ReactNode } from 'react';
-
-// interface PropsInterface {
-//   children: ReactNode;
-// }
-
-// const ProfileLayout: React.FC<PropsInterface> = ({ children }) => {
-//   return (
-//     <div>
-//       <h1>This is Persitent layout accross components.</h1>
-//       { children }
-//     </div>
-//   );
-// }
-
-// export default ProfileLayout;
