@@ -3,7 +3,6 @@ using SocialSync.Domain.Common;
 using SocialSync.Domain.Entities;
 
 namespace SocialSync.Persistence;
-
 public class SocialSyncDbContext : DbContext
 {
     public DbSet<User> Users { get; set; } = null!;
@@ -26,6 +25,8 @@ public class SocialSyncDbContext : DbContext
             entity.HasMany(u => u.NotificationsSent).WithOne(u => u.Sender);
             entity.Property(u => u.CreatedAt).IsRequired();
             entity.Property(u => u.LastModified).IsRequired();
+            entity.HasMany(u => u.NotificationsReceived).WithOne(n => n.Recepient);
+            entity.HasMany(u => u.NotificationsSent).WithOne(n => n.Sender);
         });
 
         modelBuilder.Entity<Post>(entity =>
@@ -52,6 +53,12 @@ public class SocialSyncDbContext : DbContext
                 .HasMany(e => e.Interactions)
                 .WithOne(i => i.Post)
                 .HasForeignKey(i => i.PostId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            entity
+                .HasMany(e => e.Notifications)
+                .WithOne(n => n.Post)
+                .HasForeignKey(n => n.PostId)
                 .OnDelete(DeleteBehavior.Cascade);
         });
 
@@ -87,6 +94,12 @@ public class SocialSyncDbContext : DbContext
                 .WithMany(u => u.NotificationsSent)
                 .HasForeignKey(e => e.SenderId)
                 .OnDelete(DeleteBehavior.Restrict);
+
+            entity
+                .HasOne(e => e.Post)
+                .WithMany(p => p.Notifications)
+                .HasForeignKey(n => n.PostId)
+                .OnDelete(DeleteBehavior.SetNull);
         });
     }
 
@@ -106,9 +119,3 @@ public class SocialSyncDbContext : DbContext
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder) { }
 }
-
-
-
-
-
-

@@ -23,6 +23,9 @@ public class NotificationsController : ControllerBase
     [HttpPost]
     public async Task<IActionResult> CreateNotification([FromBody] NotificationCreateDto notificationCreateDto)
     {
+        if(notificationCreateDto.NotificationType == "Follow"){
+            notificationCreateDto.PostId = null;
+        }
         var command = new CreateNotificationCommand {NotificationCreateDto = notificationCreateDto};
         var response = await _mediator.Send(command);
 
