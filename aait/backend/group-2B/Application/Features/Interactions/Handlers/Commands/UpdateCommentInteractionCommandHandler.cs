@@ -49,7 +49,7 @@ public class UpdateCommentInteractionCommandHandler
                     foundComment);
                 if (await _unitOfWork.SaveAsync() > 0)
                 {
-                    CommonResponse<int>.Success(foundComment.Id);
+                    return CommonResponse<int>.Success(foundComment.Id);
                 }
                 else
                 {
