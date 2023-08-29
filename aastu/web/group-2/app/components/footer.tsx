@@ -47,7 +47,7 @@ const Footer = () => {
       </div>
 
       <div className="flex flex-col-reverse items-center lg:flex-row justify-between px-[40px] py-[35px] border-t-[#C7C7C7] dark:border-dark-backgroundLight border-t-[0.4px]">
-        <div className="mt-8 md:font-secondaryFont font-light text-base">
+        <div className="mt-8 md:font-secondaryFont font-light text-base text-center">
           <span className="text-xl text-[#555555]">&copy;</span> 2020 Africa to Silicon Valley ,
           Inc. All right reserved.
         </div>

@@ -45,7 +45,7 @@ const Donate = () => {
         <div className="h-full w-full top-0 fixed overflow-y-scroll bg-slate-900/70 z-20 flex justify-center items-center flex-wrap pb-4">
             <div>
                 <div className="fixed top-0 z-30 right-0 mt-5 mr-5">
-                    <button onClick={(e: any) => handleClose(e)} className="text-3xl text-blue-700 dark:bg-dark-backgroundLight bg-slate-50 rounded-full flex border-[3px] border-blue-800 justify-center items-center p-2">
+                    <button onClick={(e: any) => handleClose(e)} className="text-3xl text-blue-700 dark:bg-dark-backgroundLight bg-slate-50 rounded-full flex border-[3px] border-blue-800 hover:dark:border-dark-textColor-100 hover:dark:text-dark-textColor-100 justify-center items-center p-2">
                         <AiOutlineClose />
                     </button>
                 </div>
@@ -54,7 +54,7 @@ const Donate = () => {
                         <div className="h-full rounded-xl md:mt-0 bg-slate-100  dark:bg-dark-background">
                             <Image src={team} alt="" className="rounded-tr-lg rounded-tl-lg" />
                             <Image src={A2SVLogo} alt="" className="rounded-tr-lg rounded-tl-lg mt-4 ml-4" />
-                            <h1 className="font-primaryFont text-2xl font-bold text-primaryColor p-4">
+                            <h1 className="font-primaryFont text-2xl font-bold text-primaryColor dark:text-dark-textColor-100 text-center sm:text-left p-4">
                                 {' '}
                                 Join us in building a digital bridge
                             </h1>
@@ -76,8 +76,8 @@ const Donate = () => {
                                 <div className="rounded-lg border border-slate-700 dark:border-dark-backgroundLight flex justify-between w-64 cursor-pointer">
                                     <label
                                         htmlFor="give-once"
-                                        className={`dark:border-dark-textColor-50 w-1/2 flex items-center justify-center border px-4 py-2 ${toggleOption == 'give-once' && 'border-2 border-blue-700 '
-                                            } rounded-lg dark:text-dark-textColor-50`}
+                                        className={`dark:border-dark-textColor-100 w-1/2 flex items-center justify-center border px-4 py-2 ${toggleOption == 'give-once' && 'border-2 border-blue-700 dark:text-dark-textColor-100'
+                                            } rounded-lg`}
                                     >
                                         <input
                                             type="radio"
@@ -92,8 +92,8 @@ const Donate = () => {
                                     </label>
                                     <label
                                         htmlFor="monthly"
-                                        className={`flex items-center w-1/2 justify-center border px-4 py-2 ${toggleOption == 'monthly' && 'border-2 border-blue-700 dark:border-dark-textColor-100'
-                                            } rounded-lg dark:text-dark-textColor-50`}
+                                        className={`flex items-center w-1/2 justify-center border px-4 py-2 ${toggleOption == 'monthly' && 'border-2 border-blue-700 dark:border-dark-textColor-100 dark:text-dark-textColor-100'
+                                            } rounded-lg`}
                                     >
                                         <input
                                             type="radio"
@@ -127,8 +127,8 @@ const Donate = () => {
                                                 />
                                                 <label
                                                     htmlFor={option.id}
-                                                    className={`dark:border-dark-textColor-50 dark:text-dark-textColor-50 w-20 flex justify-center border px-4 py-2 rounded-lg ${selectedOption === option.id
-                                                            ? 'border-blue-500 border-2'
+                                                    className={`dark:border-dark-textColor-100 w-20 flex justify-center border px-4 py-2 rounded-lg ${selectedOption === option.id
+                                                            ? 'border-blue-500 border-2 dark:text-dark-textColor-100'
                                                             : 'border-gray-300'
                                                         }`}
                                                 >
