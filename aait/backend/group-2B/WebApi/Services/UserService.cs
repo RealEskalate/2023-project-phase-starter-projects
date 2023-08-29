@@ -12,9 +12,9 @@ public class UserService : IUserService
         _httpContextAccessor = httpContextAccessor;
     }
 
-    public string GetUserId()
+    public int GetUserId()
     {
         var userId = _httpContextAccessor.HttpContext?.User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
-        return userId!;
+        return int.Parse(userId);
     }
 }

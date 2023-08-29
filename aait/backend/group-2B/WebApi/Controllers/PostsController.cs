@@ -3,6 +3,8 @@ using Microsoft.AspNetCore.Mvc;
 using SocialSync.Application.Features.Posts.Requests.Commands;
 using SocialSync.Application.Features.Posts.Requests.Queries;
 using SocialSync.Application.DTOs.PostDtos;
+using SocialSync.WebApi.Services.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 
 namespace WebApi.Controllers
 {
@@ -11,56 +13,64 @@ namespace WebApi.Controllers
     public class PostsController : ControllerBase
     {
         private readonly IMediator _mediator;
+        private readonly IUserService _userService;
 
-        public PostsController(IMediator mediator)
+        public PostsController(IMediator mediator, IUserService userService)
         {
             _mediator = mediator;
+            _userService = userService;
         }
 
         [HttpGet]
         public async Task<IActionResult> GetAllAsync()
         {
             var getAllRequest = new GetAllPostsRequest();
-            var posts = await _mediator.Send(getAllRequest);
-            return Ok(posts);
+            var response = await _mediator.Send(getAllRequest);
+            return Ok(response.Value);
         }
 
         [HttpGet("{id}")]
         public async Task<IActionResult> Get(int id)
         {
             var getPostByIdRequest = new GetPostByIdRequest { Id = id };
-            var post = await _mediator.Send(getPostByIdRequest);
-            return Ok(post);
+            var response = await _mediator.Send(getPostByIdRequest);
+            return Ok(response.Value);
         }
 
         [HttpPost]
+        [Authorize]
         public async Task<IActionResult> CreatePostAsync([FromBody] CreatePostDto createPostDto)
         {
+            int userId = _userService.GetUserId();
+            createPostDto.UserId  = userId;
             var createCommand = new CreatePostCommand { CreatePostDto = createPostDto };
             var response = await _mediator.Send(createCommand);
             if (response.IsSuccess)
             {
-                return CreatedAtAction(nameof(Get), new { id = response.Value }, response);
+                return CreatedAtAction(nameof(Get), new { id = response.Value }, response.Value);
             }
             else
             {
-                return BadRequest(response.Message);
+                return BadRequest(response.Error);
             }
         }
 
         [HttpPatch]
+        [Authorize]
         public async Task<IActionResult> Update([FromBody] UpdatePostDto updatePostDto)
         {
+            int userId = _userService.GetUserId();
+            updatePostDto.UserId = userId;
             var updateCommand = new UpdatePostCommand { UpdatePostDto = updatePostDto };
             var response = await _mediator.Send(updateCommand);
 
             if (response.IsSuccess)
             {
-                return Ok();
+                return Ok(response);
             }
             else
             {
-                return BadRequest(response.Message);
+                return BadRequest(response.Error);
             }
         }
 
@@ -69,7 +79,7 @@ namespace WebApi.Controllers
         {
             var getByAuthorRequest = new GetPostsByUserIdRequest { UserId = userId };
             var response = await _mediator.Send(getByAuthorRequest);
-            return Ok(response);
+            return Ok(response.Value);
         }
 
         [HttpGet("tags")]
@@ -81,22 +91,24 @@ namespace WebApi.Controllers
         }
 
         [HttpDelete]
+        [Authorize]
         public async Task<IActionResult> DeleteAsync([FromQuery] int id)
         {
+            int userId = _userService.GetUserId();
             var deletePostDto = new DeletePostDto
             {
                 Id = id,
-                UserId = 1
+                UserId = userId
             };
             var deletePostCommand = new DeletePostCommand { DeletePostDto = deletePostDto };
             var response = await _mediator.Send(deletePostCommand);
             if (response.IsSuccess)
             {
-                return Ok();
+                return Ok(response);
             }
             else
             {
-                return BadRequest(response.Message);
+                return BadRequest(response.Error);
             }
         }
     }
