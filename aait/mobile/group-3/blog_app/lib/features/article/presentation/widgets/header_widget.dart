@@ -38,35 +38,33 @@ class _HeaderWidgetState extends State<HeaderWidget> {
             ),
           ),
         ),
-        Stack(
-          alignment: Alignment.center,
-          children: [
-            InkWell(
-              onTap: () {
-                setState(() {
-                  context.go('/profile');
-                  print("Here I am being pressed");
-                });
-              },
-              child: CircleAvatar(
-                backgroundImage: const AssetImage(
-                    'assets/images/onboarding2.jpg'), // User's avatar
+        GestureDetector(
+          onTap: () {
+            //  Navigator.pushNamed(
+            //     context, '/profile'); 
+          },
+          child: Stack(
+            alignment: Alignment.center,
+            children: [
+              CircleAvatar(
+                backgroundImage:
+                    const AssetImage('assets/images/avator.jpg'), // User's avatar
                 radius: 28.sp, // Avatar radius
               ),
-            ),
-            Container(
-              width: 65.w,
-              height: 65.h,
-              decoration: BoxDecoration(
-                shape: BoxShape.circle,
-                border: Border.all(
-                  color: AppColors
-                      .whiteColor, // Color of the border around the avatar
-                  width: 2.sp, // Border width
+              Container(
+                width: 55.w,
+                height: 55.h,
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  border: Border.all(
+                    color: AppColors
+                        .whiteColor, // Color of the border around the avatar
+                    width: 2.sp, // Border width
+                  ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ],
     );

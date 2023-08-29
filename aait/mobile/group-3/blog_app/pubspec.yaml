@@ -53,6 +53,8 @@ dependencies:
   smooth_page_indicator: ^1.1.0
   http_parser: ^4.0.2
   mime: ^1.0.4
+  timeago: ^3.5.0
+  intl: ^0.18.1
 
 dev_dependencies:
   flutter_test:
@@ -96,13 +98,12 @@ flutter:
   # list giving the asset and other descriptors for the font. For
   # example:
   fonts:
-    - family: Poppins 
+    - family: Poppins
       fonts:
-        - asset: fonts/Poppins-Regular.ttf
         - asset: fonts/Poppins-Light.ttf
         - asset: fonts/Poppins-Medium.ttf
+        - asset: fonts/Poppins-Regular.ttf
         - asset: fonts/Poppins-SemiBold.ttf
-  #         style: italic
     - family: Urbanist
       fonts:
         - asset: fonts/Urbanist-Regular.ttf

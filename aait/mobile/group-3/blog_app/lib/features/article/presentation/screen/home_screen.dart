@@ -17,6 +17,7 @@ import 'package:go_router/go_router.dart';
 
 import '../../data/models/user_model.dart';
 import '../../domain/entity/article.dart';
+import '../widgets/loading_widget.dart';
 
 // ignore: must_be_immutable
 class HomeScreen extends StatelessWidget {
@@ -132,23 +133,19 @@ class HomeScreen extends StatelessWidget {
                 //   },
                 //   builder: (context, state) {
                 //     // Display filtered tasks
-                //     if (state is ArticleInitial) {
-                //       bloc.add(GetAllArticlesEvent());
-                //     }
-                //     if (state is ArticlesLoaded && state.articles.isNotEmpty) {
+                //     if (state is ArticleLoaded && state.filteredArticles.isNotEmpty) {
                 //       return Expanded(
                 //         child: ListView.separated(
-                //           itemCount: state.articles.length,
+                //           itemCount: state.filteredArticles.length,
                 //           separatorBuilder: (context, index) =>
                 //               const SizedBox(height: 20),
                 //           itemBuilder: (context, index) {
                 //             return BlogCardWidget(
-                //                 article: state.articles[index]);
+                //                 article: state.filteredArticles[index]);
                 //           },
                 //         ),
                 //       );
-                //     } else if (state is ArticlesLoaded &&
-                //         state.articles.isNotEmpty) {
+                //     } else if (state is ArticleLoaded && state.articles.isNotEmpty) {
                 //       // Display loaded tasks
                 //       return Expanded(
                 //         child: ListView.separated(
@@ -163,9 +160,9 @@ class HomeScreen extends StatelessWidget {
                 //       );
                 //     } else {
                 //       // Display "No task" message
-                //       return const Expanded(
-                //         child: LoadingWidget(message: "Loading"),
-                //       );
+                //       return  const Expanded(
+                // child:  LoadingWidget(message: "Loading"),
+                // );
                 //     }
                 //   },
                 // ),
@@ -179,6 +176,7 @@ class HomeScreen extends StatelessWidget {
                     },
                   ),
                 ),
+                
               ],
             ),
           ),
