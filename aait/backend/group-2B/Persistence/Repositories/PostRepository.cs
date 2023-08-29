@@ -48,5 +48,23 @@ public class PostRepository : GenericRepository<Post>, IPostRepository
 
 
     }
+    public async Task LikePostAsync(int id)
+    {
+        var post = await _dbContext.Posts
+                        .FindAsync(id);
+        if (post != null)
+        {
+            post.LikeCount += 1;
+        }
+    }
+    public async Task UnlikePostAsync(int id)
+    {
+        var post = await _dbContext.Posts
+                        .FindAsync(id);
+        if (post != null)
+        {
+            post.LikeCount -= 1;
+        }
+    }
 
 }
