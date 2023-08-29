@@ -18,12 +18,12 @@ export interface RegisterResponseData {
     token: string;
 }
 
-export interface LoginInputData{
+export interface LoginInputData {
     email: string;
     password: string;
 }
 
-export interface EditProfileData{
+export interface EditProfileData {
 
     email: string;
     name: string;
@@ -33,14 +33,14 @@ export interface EditProfileData{
 export interface EditProfileResponse {
     message: string;
     body: {
-      _id: string;
-      name: string;
-      email: string;
-      password: string;
-      image: string;
-      role: string;
-      __v: number;
+        _id: string;
+        name: string;
+        email: string;
+        password: string;
+        image: string;
+        role: string;
+        __v: number;
     };
-  }
-  
+}
+
 
