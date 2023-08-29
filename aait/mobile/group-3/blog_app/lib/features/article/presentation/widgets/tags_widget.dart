@@ -1,4 +1,6 @@
+import 'package:blog_app/features/article/presentation/bloc/article_bloc.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../core/util/app_colors.dart';
 
@@ -9,15 +11,26 @@ class TagButtonListWidget extends StatefulWidget {
   final Color buttonColor;
   final Color outlineColor;
   final double spaceBetweenButtons;
+  final Function SearchByTags;
 
   const TagButtonListWidget({
     Key? key,
-    this.tagNames = const ['Sports', 'Tech', 'Politics', 'Education'],
+    this.tagNames = const [
+      "others",
+      "sports",
+      "oech",
+      "politics",
+      "art",
+      "design",
+      "culture",
+      "production"
+    ],
     this.borderRadius = 20,
     this.horizontalPadding = 25,
     this.buttonColor = const Color(0xFF376AED),
     this.outlineColor = const Color(0xFF376AED),
     this.spaceBetweenButtons = 10,
+    required this.SearchByTags
   }) : super(key: key);
 
   @override
@@ -30,6 +43,8 @@ class _TagButtonListWidgetState extends State<TagButtonListWidget> {
 
   @override
   Widget build(BuildContext context) {
+    final bloc = context.watch<ArticleBloc>();
+
     var outlinedButtonStyle = OutlinedButton.styleFrom(
       side: BorderSide(color: widget.outlineColor),
       padding: EdgeInsets.symmetric(
@@ -65,9 +80,9 @@ class _TagButtonListWidgetState extends State<TagButtonListWidget> {
                 setState(() {
                   selectedTag = ''; // Clear the selected tag
                 });
-
+                
                 // Emit a search event with an empty query when "All" is clicked
-                // context.read<ArticleBloc>().add(const LoadArticles());
+                context.read<ArticleBloc>().add(GetAllArticlesEvent());
               },
               style: selectedTag.isEmpty
                   ? elevatedButtonStyle
@@ -94,8 +109,8 @@ class _TagButtonListWidgetState extends State<TagButtonListWidget> {
                     setState(() {
                       selectedTag = tagName; // Update selected tag
                     });
+                    widget.SearchByTags(selectedTag);
                     // Emit a search event with the clicked tag as the query
-                    // context.read<ArticleBloc>().add(FilterArticles(query: tagName));
                   },
                   style: selectedTag == tagName
                       ? elevatedButtonStyle

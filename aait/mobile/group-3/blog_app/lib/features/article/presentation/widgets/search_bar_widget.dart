@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
+import '../bloc/article_bloc.dart';
+
 class SearchBarWidget extends StatefulWidget {
-  const SearchBarWidget({Key? key}) : super(key: key);
+  final Function searchByName;
+  SearchBarWidget({required this.searchByName});
 
   @override
   // ignore: library_private_types_in_public_api
@@ -16,36 +20,34 @@ class _SearchBarWidgetState extends State<SearchBarWidget> {
   Widget build(BuildContext context) {
     return Stack(
       children: [
-        Expanded(
-          child: Container(
-            width: 379.w,
-            height: 70.5.h,
-            padding: EdgeInsets.only(left: 15.w),
-            decoration: BoxDecoration(
-              border: Border.all(color: Colors.grey.withOpacity(0.1)),
-              color: Colors.white,
-              borderRadius: BorderRadius.circular(10),
-              boxShadow: [
-                BoxShadow(
-                  color: Colors.grey.withOpacity(0.1),
-                  spreadRadius: 5,
-                  blurRadius: 7,
-                  offset: const Offset(0, 2),
+        Container(
+          width: 379.w,
+          height: 70.5.h,
+          padding: EdgeInsets.only(left: 15.w),
+          decoration: BoxDecoration(
+            border: Border.all(color: Colors.grey.withOpacity(0.1)),
+            color: Colors.white,
+            borderRadius: BorderRadius.circular(10),
+            boxShadow: [
+              BoxShadow(
+                color: Colors.grey.withOpacity(0.1),
+                spreadRadius: 5,
+                blurRadius: 7,
+                offset: const Offset(0, 2),
+              ),
+            ],
+          ),
+          child: Center(
+            child: TextField(
+              controller: queryController,
+              decoration: InputDecoration(
+                hintText: 'Search tasks...',
+                hintStyle: TextStyle(
+                  color: Theme.of(context).hintColor,
+                  fontSize: 15,
+                  fontWeight: FontWeight.w300,
                 ),
-              ],
-            ),
-            child: Center(
-              child: TextField(
-                controller: queryController,
-                decoration: InputDecoration(
-                  hintText: 'Search tasks...',
-                  hintStyle: TextStyle(
-                    color: Theme.of(context).hintColor,
-                    fontSize: 15,
-                    fontWeight: FontWeight.w300,
-                  ),
-                  border: InputBorder.none,
-                ),
+                border: InputBorder.none,
               ),
             ),
           ),
@@ -56,7 +58,7 @@ class _SearchBarWidgetState extends State<SearchBarWidget> {
           height: 70.5.h,
           child: ElevatedButton(
             onPressed: () {
-              _filterArticles(context); // Clear the search query
+              widget.searchByName(queryController.text);
             },
             style: ElevatedButton.styleFrom(
               padding: EdgeInsets.symmetric(vertical: 16.h, horizontal: 16.w),

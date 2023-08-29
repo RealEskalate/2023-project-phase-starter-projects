@@ -1,3 +1,4 @@
+import 'package:blog_app/features/article/domain/entity/getArticlesEntity.dart';
 import 'package:blog_app/features/article/data/models/user_model.dart';
 import 'package:blog_app/features/profile/domain/use_case/get_profile.dart';
 import 'package:dartz/dartz.dart';
@@ -70,13 +71,13 @@ class ArticleRepositoryImpl implements ArticleRepository {
   }
 
   @override
-  ResultFuture<List<Article>> getAllArticles() async {
+  Future<Either<Failure, List<Article>>> getAllArticles(ArticleRequest articleRequest) async {
     if (await networkInfo.isConnected) {
       try {
-        final result = await remoteDataSource.getAllArticles();
+        final result = await remoteDataSource.getAllArticles(articleRequest);
         return Right(result);
       } on ServerException catch (e) {
-        return Left(ServerFailure.fromException(e));
+        return const Left(ServerFailure(message: "Could not get", statusCode: 500), );
       }
     } else {
       return const Left(ServerFailure(

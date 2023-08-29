@@ -68,10 +68,11 @@ class ArticleModel extends Article {
   String toJson() => json.encode(toMap());
 
   factory ArticleModel.fromJson(Map<String, dynamic> json) {
-    print(json);
-    print("I also have reached here");
+    final resTags = json['tags'] ?? [];
+    print(resTags);
+
     return ArticleModel(
-      tags: (json['tags'] as List<dynamic>?)?.cast<String>() ?? [],
+      tags: resTags.map<String>((e) => e.toString()).toList(),
       content: json['content'] ?? "No Content",
       title: json['title'] ?? "No Title",
       subTitle: json['subTitle'] ?? "No subTitle",
