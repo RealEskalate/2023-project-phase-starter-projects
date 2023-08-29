@@ -2,11 +2,11 @@
 
 import { useState } from "react";
 import {useRouter} from 'next/navigation'
-// import { useAddBlogMutation } from "@/store/features/create-blog/create-blog-api";
 import AddBlog from "@/components/blog/AddBlog";
+import Cookies from "js-cookie";
+
 
 const CreateBlogPage: React.FC = () => {
-    // const [addBlog, {isError, isLoading}] = useAddBlogMutation()
     const [title, setTitle] = useState("");
     const [image, setImage] = useState<File | null>(null);
     const [content, setContent] = useState("");
@@ -66,23 +66,36 @@ const CreateBlogPage: React.FC = () => {
             formData.append("image", image as Blob);
           }
           console.log(title, content,selectedTags);
-      //     try {
-            
-      //       const response = await addBlog(formData);
-      //       if (response) {
-      //           router.push('/blogs')
-      //       }else{
-      //         setImage(null)
-      //         setImageText('Please upload image')
-      //         setContent('')
-      //         setTitle('')
-      //         setSelectedTags([])
-              
-      //       }
+          if (Cookies.get("user")){
+            const user = JSON.parse(Cookies.get("user") || "");
+            const token = user?.token;
+            // make request here
+            try {
 
-      //     } catch (error) {
-            
-      //     }
+              const response = await fetch('https://a2sv-backend.onrender.com/api/blogs', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    Authorization: `Bearer ${token}`,
+                },
+                body: formData,
+              });
+
+              if (response.ok) {
+                const responseData = await response.json();
+                console.log('Blog created:', responseData);
+              } else {
+                console.error('Error creating blog:', response);
+              }
+
+            }catch (error) {
+              console.error('Error creating blog:', error);
+            }
+          }
+          
+          else{
+            router.push("/signin")
+          }
          
       };
 

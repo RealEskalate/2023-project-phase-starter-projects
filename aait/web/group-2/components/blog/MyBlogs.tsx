@@ -9,7 +9,14 @@ const MyBlogs = () => {
   useEffect(() => {
     fetch('https://a2sv-backend.onrender.com/api/blogs') 
       .then(response => response.json())
-      .then(data => setBlogs(data))
+      .then(data => {
+        if (data.length > 13){
+          const partial = data.slice(0, 12);
+          setBlogs(partial)
+        }else{
+          setBlogs(data)
+        }
+      })
       .catch(error => console.error('Error fetching blogs:', error));
   }, []);
 
