@@ -27,6 +27,7 @@ class ArticleInfo extends StatelessWidget {
             style: const TextStyle(
               fontFamily: 'Poppins',
               fontSize: 20,
+              color: AppColors.gray700,
             ),
             softWrap: true,
             overflow: TextOverflow.ellipsis, // Add this line
@@ -40,7 +41,7 @@ class ArticleInfo extends StatelessWidget {
           width: 160.w,
           child: Text(
             'by ${article.author.fullName}',
-            style: const TextStyle(fontSize: 15.0),
+            style: const TextStyle(color: AppColors.grayDark, fontSize: 18.0),
             softWrap: true,
             overflow: TextOverflow.ellipsis, // Add this line
             maxLines: 1,
