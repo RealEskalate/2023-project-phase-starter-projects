@@ -94,7 +94,9 @@ class _OnboardingPageState extends State<OnboardingPage> {
                             child: Text(
                               "You can read thousands of articles on Blog Club, save them in the application and share them with your loved ones.",
                               style: TextStyle(
-                                  fontFamily: "Poppins", fontSize: 14),
+                                  fontFamily: "Poppins",
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.w500),
                             ),
                           ),
                         ],
@@ -121,7 +123,9 @@ class _OnboardingPageState extends State<OnboardingPage> {
                             child: Text(
                               "You can read thousands of articles on Blog Club, save them in the application and share them with your loved ones.",
                               style: TextStyle(
-                                  fontFamily: "Poppins", fontSize: 14),
+                                  fontFamily: "Poppins",
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.w500),
                             ),
                           ),
                         ],
@@ -148,7 +152,9 @@ class _OnboardingPageState extends State<OnboardingPage> {
                             child: Text(
                               "You can read thousands of articles on Blog Club, save them in the application and share them with your loved ones.",
                               style: TextStyle(
-                                  fontFamily: "Poppins", fontSize: 14),
+                                  fontFamily: "Poppins",
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.w500),
                             ),
                           ),
                         ],
