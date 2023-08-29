@@ -1,7 +1,6 @@
 import 'package:equatable/equatable.dart';
 
 import '../../domain/entities/article.dart';
-import '../../domain/entities/tag.dart';
 
 sealed class ArticleState extends Equatable {
   const ArticleState();
@@ -14,7 +13,6 @@ final class ArticleInitialState extends ArticleState {}
 
 final class ArticleLoadingState extends ArticleState {}
 
-final class TagLoadingState extends ArticleState {}
 
 final class SingleArticleLoadedState extends ArticleState {
   final Article article;
@@ -34,14 +32,17 @@ final class AllArticlesLoadedState extends ArticleState {
   List<Object> get props => [articles];
 }
 
-final class AllTagsLoadedState extends ArticleState {
-  final List<Tag> tags;
+final class AllArticlesFilteredState extends ArticleState {
+  final List<Article> articles;
 
-  const AllTagsLoadedState(this.tags);
+  const AllArticlesFilteredState(this.articles);
 
   @override
-  List<Object> get props => [tags];
+  List<Object> get props => [articles];
 }
+
+
+
 
 final class ArticleCreatedState extends ArticleState {
   final Article article;

@@ -1,5 +1,7 @@
 import "react-quill/dist/quill.snow.css";
+import ReactQuill from "react-quill";
 import dynamic from "next/dynamic";
+import QuillToolbar from "./QuillToolbar";
 
 const DynamicReactQuill = dynamic(() => import("react-quill"), {
   ssr: false,
@@ -13,19 +15,9 @@ type Props = {
 
 const CreateForm: React.FC<Props> = ({ description, setDescription }) => {
   const modules = {
-    toolbar: [
-      [{ header: "1" }, { header: "2" }, { font: [] }],
-      [{ size: [] }],
-      ["bold", "italic", "underline", "strike", "blockquote"],
-      [
-        { list: "ordered" },
-        { list: "bullet" },
-        { indent: "-1" },
-        { indent: "+1" },
-      ],
-      ["link", "image", "video"],
-      ["clean"],
-    ],
+    toolbar: {
+      container: "#toolbar",
+    },
     clipboard: {
       matchVisual: false,
     },
@@ -42,17 +34,21 @@ const CreateForm: React.FC<Props> = ({ description, setDescription }) => {
     "indent",
     "link",
     "image",
+    "color",
   ];
 
   return (
-    <DynamicReactQuill
-      theme="snow"
-      value={description}
-      onChange={(value: string) => setDescription(value)}
-      modules={modules}
-      formats={formats}
-      className="border-l-2 border-primary w-full md:w-3/4"
-    />
+    <div className="flex flex-col gap-4 md:w-9/12">
+      <QuillToolbar />
+      <ReactQuill
+        theme="snow"
+        value={description}
+        onChange={(value: string) => setDescription(value)}
+        modules={modules}
+        formats={formats}
+        className="h-48 md:h-80 !border-l border-primary"
+      />
+    </div>
   );
 };
 

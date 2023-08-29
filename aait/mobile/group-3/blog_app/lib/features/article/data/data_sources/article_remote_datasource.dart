@@ -25,11 +25,9 @@ abstract class ArticleRemoteDataSource {
 class ArticleRemoteDataSourceImpl implements ArticleRemoteDataSource {
   final http.Client client;
   final SharedPreferences sharedPreferences;
-  final http.MultipartRequest request;
   ArticleRemoteDataSourceImpl({
     required this.client,
     required this.sharedPreferences,
-    required this.request,
   });
 
   final uriString = 'https://blog-api-4z3m.onrender.com/';

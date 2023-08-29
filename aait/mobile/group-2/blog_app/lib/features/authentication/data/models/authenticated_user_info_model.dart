@@ -1,3 +1,7 @@
+import 'dart:convert';
+
+import 'package:flutter/foundation.dart';
+
 import '../../domain/entities/authenticated_user_info.dart';
 
 class AuthenticatedUserInfoModel extends AuthenticatedUserInfo {
@@ -10,6 +14,9 @@ class AuthenticatedUserInfoModel extends AuthenticatedUserInfo {
       super.imageCloudinaryPublicId});
 
   factory AuthenticatedUserInfoModel.fromJson(Map<String, dynamic> json) {
+    if (kDebugMode) {
+      print('from json.....  ${jsonEncode(json)}');
+    }
     return AuthenticatedUserInfoModel(
       fullName: json['fullName'],
       email: json['email'],

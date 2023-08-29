@@ -46,3 +46,11 @@ export interface Stories {
   location: string;
   story: Story[];
 }
+
+export interface NavProps {
+  isLink: boolean;
+  href?: string;
+  name: string;
+  onClick?: () => void;
+  className?: string;
+}

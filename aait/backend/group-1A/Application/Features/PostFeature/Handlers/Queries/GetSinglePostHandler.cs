@@ -25,8 +25,6 @@ namespace Application.Features.PostFeature.Handlers.Queries
             if (result == null)
             {
                 throw new NotFoundException("Post is not found");
-                throw new BadRequestException("Post is not found"
-                );
             }
 
             var post = _mapper.Map<PostResponseDTO>(result);

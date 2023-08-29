@@ -4,6 +4,7 @@ import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../core/error/failure.dart';
+import '../../../../core/network/custom_client.dart';
 import '../../domain/entities/authenticated_user_info.dart';
 import '../../domain/entities/authentication_entity.dart';
 import '../../domain/entities/login_entity.dart';
@@ -32,10 +33,12 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
   final LoginUseCase loginUseCase;
   final SignUpUseCase signUpUseCase;
   final LogoutUseCase logoutUseCase;
+  final CustomClient customClient;
   AuthBloc({
     required this.loginUseCase,
     required this.signUpUseCase,
     required this.logoutUseCase,
+    required this.customClient,
   }) : super(AuthInitial()) {
     on<LoginEvent>(_onLoginEvent);
     on<SignUpEvent>(_onSignUpEvent);
@@ -51,6 +54,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
         emit(AuthError(message: _mapErrorToMessage(failure)));
       },
       (loginResult) {
+        customClient.authToken = loginResult.token;
         emit(LoginSuccessState(authenticationEntity: loginResult));
       },
     );
@@ -83,6 +87,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
         emit(AuthError(message: _mapErrorToMessage(failure)));
       },
       (logoutResult) {
+        customClient.authToken = null;
         emit(LogoutSuccessState());
       },
     );

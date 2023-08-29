@@ -4,12 +4,14 @@ using System.Linq;
 using System.Threading.Tasks;
 using Application.Contracts;
 using Application.DTO.PostDTO.DTO;
+using Application.Exceptions;
 using Application.Features.PostFeature.Handlers.Queries;
 using Application.Features.PostFeature.Requests.Queries;
 using Application.Profiles;
 using Application.Response;
 using Application.Tests.Mocks;
 using AutoMapper;
+using Domain.Entities;
 using Moq;
 using Shouldly;
 
@@ -39,6 +41,19 @@ namespace Application.Tests.Features.PostFeatureTest.Queries
             var result = await handler.Handle(new GetSinglePostQuery(){userId = 1, Id = 1}, CancellationToken.None);
 
             result.ShouldBeOfType<BaseResponse<PostResponseDTO>>();
+        }
+
+
+        [Fact]
+        public async Task NonExistingPostTest()
+        {
+            // Arrange
+            _mockRepo.Setup(repo => repo.Get(It.IsAny<int>(), It.IsAny<int>())).ReturnsAsync((Post)null);
+            var handler = new GetSinglePostHandler(_mockRepo.Object, _mapper);
+
+            // Act & Assert
+            await Should.ThrowAsync<NotFoundException>(async () =>
+                await handler.Handle(new GetSinglePostQuery() { userId = 1, Id = 1 }, CancellationToken.None));
         }
     }
 }

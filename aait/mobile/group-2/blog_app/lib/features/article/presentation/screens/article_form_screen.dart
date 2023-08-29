@@ -5,6 +5,8 @@ import 'package:go_router/go_router.dart';
 import '../../../../core/presentation/router/routes.dart';
 import '../../../../injection_container.dart';
 import '../bloc/article_bloc.dart';
+import '../bloc/tag_bloc.dart';
+import '../bloc/tag_event.dart';
 import '../bloc/tag_selector_bloc.dart';
 import '../widgets/create_article_form.dart';
 import '../widgets/snackbar.dart';
@@ -27,9 +29,9 @@ class ArticleFormScreen extends StatelessWidget {
       //
       body: MultiBlocProvider(
         providers: [
-          BlocProvider<ArticleBloc>(
+          BlocProvider<TagBloc>(
             create: (context) =>
-                serviceLocator<ArticleBloc>()..add(LoadAllTagsEvent()),
+                serviceLocator<TagBloc>()..add(LoadAllTagsEvent()),
           ),
           BlocProvider<TagSelectorBloc>(
             create: (context) => serviceLocator<TagSelectorBloc>(),

@@ -2,6 +2,7 @@
 using System.Linq.Expressions;
 using Application.Contracts;
 using Domain.Entites;
+using Microsoft.EntityFrameworkCore;
 
 namespace Persistence.Repositories.NotificationRepository
 {
@@ -22,9 +23,11 @@ namespace Persistence.Repositories.NotificationRepository
 
         
 
-        public async Task<bool> MarkAllAsRead(Expression<Func<Notification, bool>> predicate)
+        public async Task<bool> MarkAllAsRead(int userId)
         {
-            var allUnread = await GetAll(predicate);
+            var allUnread = await _dbContext.Notifications
+                                .Where(x => x.IsRead == false && x.UserId == userId)
+                                .ToListAsync();
             
             foreach(var notification in allUnread){
                 notification.IsRead = true;
@@ -47,6 +50,22 @@ namespace Persistence.Repositories.NotificationRepository
         {
             var result = await _dbContext.Notifications.FindAsync(id);
             return result != null;
+        }
+
+        public async Task<List<Notification>> GetAllUnread(int userId)
+        {
+            var allUnread = await _dbContext.Notifications
+                                .Where(x => x.IsRead == false && x.UserId == userId)
+                                .ToListAsync();
+            
+            return allUnread;
+        }
+
+        public async Task<List<Notification>> GetAll(int userId)
+        {
+            return await _dbContext.Notifications
+                                .Where(x => x.UserId == userId)
+                                .ToListAsync();
         }
     }
 }

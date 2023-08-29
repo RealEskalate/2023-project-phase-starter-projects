@@ -8,7 +8,7 @@ using MediatR;
 
 namespace Application.Features.CommentReactionFeature.Requests.Commands
 {
-    public class MakeReactionOnComment : IRequest<BaseResponse<string>>
+    public class MakeReactionOnComment : IRequest<BaseResponse<int>>
     {
         public int UserId { get; set; }
         public ReactionDTO ReactionData { get; set; }

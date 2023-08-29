@@ -1,10 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:go_router/go_router.dart';
 
+import '../../../../core/presentation/router/routes.dart';
+import '../../../../core/presentation/theme/app_colors.dart';
 import '../../../../injection_container.dart';
 
 import '../bloc/article_bloc.dart';
+import '../bloc/tag_bloc.dart';
 import '../widgets/widgets.dart';
 
 class HomePage extends StatefulWidget {
@@ -38,7 +42,7 @@ class _HomePageState extends State<HomePage> {
           ),
           BlocProvider(
             create: (context) =>
-                serviceLocator<ArticleBloc>()..add(LoadAllTagsEvent()),
+                serviceLocator<TagBloc>()..add(LoadAllTagsEvent()),
           ),
         ],
         child: BlocBuilder<ArticleBloc, ArticleState>(
@@ -49,8 +53,10 @@ class _HomePageState extends State<HomePage> {
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(8.0),
         ),
-        backgroundColor: Theme.of(context).colorScheme.surface,
-        onPressed: () {},
+        backgroundColor: AppColors.lightBlue,
+        onPressed: () {
+          context.push(Routes.createArticle);
+        },
         child: const Icon(
           Icons.add,
           size: 35,
@@ -73,9 +79,9 @@ class _HomePageState extends State<HomePage> {
               height: 20,
             ),
 
-            BlocConsumer<ArticleBloc, ArticleState>(
+            BlocConsumer<TagBloc, TagState>(
               listener: (context, state) {
-                if (state is ArticleErrorState) {
+                if (state is TagErrorState) {
                   showError(context, state.message);
                 }
               },
@@ -104,6 +110,8 @@ class _HomePageState extends State<HomePage> {
               builder: (context, state) {
                 if (state is ArticleLoadingState) {
                   return const LoadingWidget();
+                } else if (state is AllArticlesFilteredState) {
+                  return ArticleList(articles: state.articles);
                 } else if (state is AllArticlesLoadedState) {
                   return ArticleList(articles: state.articles);
                 }

@@ -11,6 +11,7 @@ const Create: React.FC = () => {
   const [description, setDescription] = useState<string>("");
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const [tags, setTags] = useState<string[]>([]);
+  // Error states
   const [titleError, setTitleError] = useState<string | null>(null);
   const [descriptionError, setDescriptionError] = useState<string | null>(null);
   const { createBlog, isSuccess, error, isLoading } = useBlogCreate();
