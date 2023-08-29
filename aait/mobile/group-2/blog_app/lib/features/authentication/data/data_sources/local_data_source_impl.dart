@@ -35,7 +35,7 @@ class AuthLocalDataSourceImpl extends AuthLocalDataSource {
 
   @override
   Future<void> cacheToken(String token) async {
-    sharedPreferences.setString(LocalStorageConstants.TOKEN, token);
+    await sharedPreferences.setString(LocalStorageConstants.TOKEN, token);
   }
 
   @override

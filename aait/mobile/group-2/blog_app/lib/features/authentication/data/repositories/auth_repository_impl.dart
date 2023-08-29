@@ -25,6 +25,7 @@ class AuthRepositoryImpl implements AuthRepository {
       required this.authRemoteDataSource,
       required this.networkInfo});
 
+  @override
   Future<Either<Failure, String>> getToken() async {
     try {
       final token = await authLocalDataSource.getToken();
@@ -61,6 +62,7 @@ class AuthRepositoryImpl implements AuthRepository {
 
         await authLocalDataSource.cacheLoggedInUser(authenticatedUserInfoModel);
         await authLocalDataSource.cacheToken(authenticationEntity.token);
+
         return Right(authenticationEntity);
       } on ServerException catch (e) {
         // print the error message for debugging
