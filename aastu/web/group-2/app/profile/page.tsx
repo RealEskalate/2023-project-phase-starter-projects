@@ -15,7 +15,6 @@ export default function Section() {
   const [open, setOpen] = useState(false);
   const loginState = useAppSelector((state: any) => state.login);
   const dispatch = useAppDispatch();
-  const [isClient, setClient] = useState(false);
 
   const createFile = async (url: string) => {
     let response = await fetch(url);
