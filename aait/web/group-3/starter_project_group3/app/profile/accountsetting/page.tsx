@@ -17,11 +17,6 @@ const AccountSetting = () => {
     usePasswordResetMutation();
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-    const userString = localStorage.getItem("user");
-    const user: authTypes | null = userString ? JSON.parse(userString) : null;
-    const token = user?.token;
-    console.log(token);
-
     event.preventDefault(); // Prevent default form submission behavior
     passwordReset({
       oldPassword: currentPassword,
