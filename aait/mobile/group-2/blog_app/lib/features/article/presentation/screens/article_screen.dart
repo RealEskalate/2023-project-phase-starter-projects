@@ -5,6 +5,7 @@ import 'package:go_router/go_router.dart';
 
 import '../../../../core/presentation/router/routes.dart';
 import '../../../../core/presentation/theme/app_colors.dart';
+import '../../../../core/utils/time_calculator.dart';
 import '../../../../injection_container.dart';
 import '../../domain/entities/article.dart';
 import '../bloc/article_bloc.dart';
@@ -109,7 +110,8 @@ class ArticleScreen extends StatelessWidget {
                 AuthorCard(
                   profileImageUrl: article.author.image,
                   authorName: article.author.fullName,
-                  publishedAt: '2m ago',
+                  publishedAt:
+                      timePassedFormatter(timePassedCalculator(article.date)),
                 ),
               ],
             ),
