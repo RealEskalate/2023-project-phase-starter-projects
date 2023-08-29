@@ -3,7 +3,7 @@ using Domain.Entities;
 namespace Application.Contracts.Persistance;
 
 public interface INotificationRepository{
-     Task<List<Notification>> GetNotifications(int id);
+     Task<List<Notification>> GetNotifications(int userid);
      Task<Notification> GetNotification(int notifiactionId);
      Task  AddNotification(Notification notify);
      

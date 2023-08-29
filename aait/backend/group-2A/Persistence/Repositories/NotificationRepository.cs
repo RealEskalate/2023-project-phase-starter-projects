@@ -17,10 +17,10 @@ public class NotificationRepository : INotificationRepository{
         await _dbContext.Notifications.AddAsync(notify);
     }
 
-    public async Task<List<Notification>> GetNotifications(int Id)
+    public async Task<List<Notification>> GetNotifications(int UserId)
     {
         return await _dbContext.Notifications
-            .Where(notify => notify.UserId == Id)
+            .Where(notify => notify.UserId == UserId)
             .ToListAsync();
     }
 

@@ -25,7 +25,7 @@ namespace WebApi.Controllers
 
         [HttpGet("Notifications")]
         public async Task<IActionResult> GetNotification(){
-            var command = new GetNotifications(){Id = int.Parse(User.FindFirst("reader").Value)};
+            var command = new GetNotifications(){UserId  = int.Parse(User.FindFirst("reader").Value)};
             var notifcations = await _mediator.Send(command);
             return ResponseHandler<List<Notification>>.HandleResponse(notifcations, 200);
         }
