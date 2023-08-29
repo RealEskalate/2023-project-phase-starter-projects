@@ -1,9 +1,11 @@
-﻿using Application.DTO.Common;
+﻿using System.Security.Claims;
+using Application.DTO.Common;
 using Application.DTO.UserDTO.DTO;
 using Application.Features.UserFeature.Requests.Commands;
 using Application.Features.UserFeature.Requests.Queries;
 using Application.Response;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace WebApi.Controllers
@@ -37,9 +39,10 @@ namespace WebApi.Controllers
 
         
         [HttpPut("{id}")]
+        [Authorize]
         public async Task<ActionResult<UserResponseDTO>> Put(int id, [FromBody] UserUpdateDTO UpdateUserData)
         {
-            var userId = 3;
+            var userId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier)!.Value);
             var result = await _mediator.Send(new UpdateUserCommand { userId = userId, UserUpdateData = UpdateUserData});
             return Ok(result);
         }
@@ -47,9 +50,10 @@ namespace WebApi.Controllers
 
 
         [HttpDelete("{id}")]
+        [Authorize]
         public async Task<ActionResult<BaseResponse<string>>> Delete(int id)
         {
-            var userId = 3;
+            var userId =  int.Parse(User.FindFirst(ClaimTypes.NameIdentifier)!.Value);
             var result = await _mediator.Send(new DeleteUserCommand { userId = id});
             return Ok(result);
         }

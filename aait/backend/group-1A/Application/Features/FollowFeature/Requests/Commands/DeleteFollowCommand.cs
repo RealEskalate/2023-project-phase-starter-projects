@@ -5,7 +5,7 @@ using MediatR;
 
 namespace Application.Features.FollowFeature.Requests.Commands
 {
-    public class DeleteFollowCommand : IRequest<BaseResponse<string>>
+    public class DeleteFollowCommand : IRequest<BaseResponse<int>>
     {
         public FollowDTO? FollowDTO { get; set; }
     }

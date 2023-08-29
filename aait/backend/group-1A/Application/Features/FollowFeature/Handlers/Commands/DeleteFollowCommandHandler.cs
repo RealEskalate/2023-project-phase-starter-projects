@@ -9,7 +9,7 @@ using MediatR;
 
 namespace Application.Features.FollowFeature.Handlers.Commands
 {
-     public class DeleteFollowCommandHandler : IRequestHandler<DeleteFollowCommand, BaseResponse<string>>
+     public class DeleteFollowCommandHandler : IRequestHandler<DeleteFollowCommand, BaseResponse<int>>
     {
       
         private readonly IFollowRepository _followRepository;
@@ -24,11 +24,11 @@ namespace Application.Features.FollowFeature.Handlers.Commands
 
         }
 
-        public async Task<BaseResponse<string>> Handle(DeleteFollowCommand request, CancellationToken cancellationToken)
+        public async Task<BaseResponse<int>> Handle(DeleteFollowCommand request, CancellationToken cancellationToken)
         {   
             var followValidation = new FollowDTOValidation(_userRepository,_followRepository);
             var followValidationResult = await followValidation.ValidateAsync(request.FollowDTO!);
-            var createFollowResponse = new BaseResponse<string>();
+            var createFollowResponse = new BaseResponse<int>();
 
             if (!followValidationResult.IsValid)
             {
@@ -39,8 +39,9 @@ namespace Application.Features.FollowFeature.Handlers.Commands
             await _followRepository.DeleteFollow(followEntity);
             
             createFollowResponse.Success = true;
-            createFollowResponse.Message = "Follow deleted successfully";
-            return  createFollowResponse;
+            createFollowResponse.Message = $"User with Id {followEntity.FollowerId} has un followed you";
+            createFollowResponse.Value = followEntity.FolloweeId;
+            return createFollowResponse;
         }
     }
 }

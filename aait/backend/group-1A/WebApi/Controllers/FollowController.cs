@@ -3,6 +3,8 @@ using Application.DTO.FollowDTo;
 using Application.DTO.UserDTO.DTO;
 using Application.Features.FollowFeature.Requests.Commands;
 using Application.Features.FollowFeature.Requests.Queries;
+using Application.DTO.NotificationDTO;
+using Application.Features.NotificationFeaure.Requests.Commands;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -45,6 +47,8 @@ namespace WebApi.Controllers
             var userId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier)!.Value);
             var newFollowData = new FollowDTO() {FollowerId = userId, FolloweeId = Id };
             var result = await _mediator.Send(new CreateFollowCommand() { FollowDTO = newFollowData });
+            await _mediator.Send(new CreateNotification {NotificationData = new NotificationCreateDTO()
+            {Content = $"The user with {userId} is currently following you",NotificationType = "follow",UserId = userId}});
             return Ok(result);
         }
 
@@ -55,6 +59,8 @@ namespace WebApi.Controllers
             var userId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier)!.Value);
             var followToDelete = new FollowDTO() {FollowerId = userId, FolloweeId = Id };
             var result = await _mediator.Send(new DeleteFollowCommand() { FollowDTO = followToDelete });
+            await _mediator.Send(new CreateNotification {NotificationData = new NotificationCreateDTO()
+            {Content = $"The user with {userId} has currently un followed you",NotificationContentId = result.Value ,NotificationType = "follow",UserId = userId}});
             return Ok(result);
         }
     }
