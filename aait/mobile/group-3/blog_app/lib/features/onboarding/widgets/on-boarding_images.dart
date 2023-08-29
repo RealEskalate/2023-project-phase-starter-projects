@@ -15,14 +15,14 @@ class OnboardingImagesWidget extends StatelessWidget {
           Row(
             children: [
               OnboardingImage(
-                imagePath: "assets/images/onboarding1.png",
+                imagePath: "assets/images/onboarding1.jpg",
                 width: 92,
               ),
               SizedBox(
                 width: ScreenUtil().setWidth(10),
               ),
               OnboardingImage(
-                imagePath: "assets/images/onboarding2.png",
+                imagePath: "assets/images/onboarding2.jpg",
                 width: 180,
               ),
             ],
@@ -31,14 +31,14 @@ class OnboardingImagesWidget extends StatelessWidget {
           Row(
             children: [
               OnboardingImage(
-                imagePath: "assets/images/onboarding3.png",
+                imagePath: "assets/images/onboarding3.jpg",
                 width: 180,
               ),
               SizedBox(
                 width: ScreenUtil().setWidth(10),
               ),
               OnboardingImage(
-                imagePath: "assets/images/onboarding4.png",
+                imagePath: "assets/images/onboarding4.jpg",
                 width: 92,
               ),
             ],

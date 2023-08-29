@@ -19,9 +19,9 @@ class BlogApp extends StatelessWidget {
   Widget build(BuildContext context) {
     final GoRouter _router =
         GoRouter(navigatorKey: GlobalKey<NavigatorState>(), routes: [
-      // GoRoute(path: '/mmb', builder: (context,state)=>SplashScreen()), 
-      // GoRoute(path: '/onboarding', builder: (context,state)=>OnboardingScreen()), 
-      GoRoute(path: '/', builder: (context,state)=>LoginSignUpPage()), 
+      GoRoute(path: '/', builder: (context,state)=>SplashScreen()), 
+      GoRoute(path: '/onboarding', builder: (context,state)=>OnboardingScreen()), 
+      GoRoute(path: '/login', builder: (context,state)=>LoginSignUpPage()), 
       // GoRoute(path: '/home', builder: null), //=> TODO: IMPLEMENT HOME SCREEN,
       // GoRoute(
       //     path: '/article', builder: null), //=> TODO: IMPLEMENT ARTICLE SCREEN

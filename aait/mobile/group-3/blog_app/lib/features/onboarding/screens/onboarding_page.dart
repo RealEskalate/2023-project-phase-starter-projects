@@ -1,9 +1,10 @@
+import 'package:blog_app/core/color/colors.dart';
 import 'package:blog_app/features/onboarding/widgets/on-boarding_images.dart';
 import 'package:blog_app/features/onboarding/widgets/scrollable_content.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-
 
 class OnboardingScreen extends StatefulWidget {
   const OnboardingScreen({Key? key});
@@ -36,8 +37,6 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
     super.dispose();
   }
 
-
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -45,16 +44,16 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
       body: Column(
         children: [
           SizedBox(
-            height: ScreenUtil().setHeight(100),
+            height: ScreenUtil().setHeight(116),
           ),
           OnboardingImagesWidget(),
           SizedBox(
-            height: ScreenUtil().setHeight(60),
+            height: ScreenUtil().setHeight(40),
           ),
           Expanded(
             child: Container(
               decoration: BoxDecoration(
-                color: Colors.white,
+                color: whiteColor,
                 borderRadius: BorderRadius.only(
                   topLeft: Radius.circular(28.r),
                   topRight: Radius.circular(28.r),
@@ -78,7 +77,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
             padding:
                 EdgeInsets.symmetric(horizontal: ScreenUtil().setWidth(40)),
             decoration: BoxDecoration(
-              color: Colors.white,
+              color: whiteColor,
             ),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -89,8 +88,8 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                   effect: WormEffect(
                     dotWidth: 10.h,
                     dotHeight: 10.w,
-                    activeDotColor: Colors.blue,
-                    dotColor: Colors.grey,
+                    activeDotColor: blue,
+                    dotColor: lightGrey,
                   ),
                 ),
                 GestureDetector(
@@ -101,20 +100,18 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                         curve: Curves.easeInOut,
                       );
                     } else {
-                      Navigator.of(context).pushReplacement(
-                        MaterialPageRoute(builder: (context) => Container()),
-                      );
+                      context.go('/login');
                     }
                   },
                   child: Container(
                     height: 50.h,
                     width: 88.w,
                     decoration: BoxDecoration(
-                        color: Colors.blue,
+                        color: blue,
                         borderRadius: BorderRadius.circular(12.r)),
                     child: Icon(
                       Icons.arrow_forward,
-                      color: Colors.white,
+                      color: whiteColor,
                     ),
                   ),
                 )
@@ -124,7 +121,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
           Container(
             height: 40.h,
             decoration: BoxDecoration(
-              color: Colors.white,
+              color: whiteColor,
               borderRadius: BorderRadius.only(
                 topLeft: Radius.circular(28.r),
                 topRight: Radius.circular(28.r),
