@@ -29,9 +29,13 @@ namespace Application.Features.CommentFeatures.Handlers.Queries
             }
 
             var comment = _mapper.Map<CommentResponseDTO>(result);
-            comment.Like = result.CommentReactions.Where(x => x.Like == true).Count();
-            comment.Dislike = result.CommentReactions.Where(x => x.Like == false).Count();
-            
+
+            if (result.CommentReactions != null)
+            {
+                comment.Like = result.CommentReactions.Where(x => x.Like == true).Count();
+                comment.Dislike = result.CommentReactions.Where(x => x.Like == false).Count();
+            }
+
             return new BaseResponse<CommentResponseDTO>{
                 Success = true,
                 Message = "The Comment is retrieved successfully",

@@ -1,4 +1,5 @@
 using Application.Contracts;
+using Application.DTO.FollowDTo;
 using Domain.Entites;
 using Moq;
 
@@ -68,6 +69,11 @@ namespace Application.Tests.Mocs
                 var followersId = Follows.Where(f => f.FolloweeId == Id).Select(f => f.FollowerId).ToList();
                 var users = followersId.Select(Id => mockUserRepo.Object.Get(Id)!.Result);
                 return users.ToList();
+            });
+
+            mockRepo.Setup(r => r.Get(It.IsAny<FollowDTO>() )).ReturnsAsync((FollowDTO follow) => 
+            {
+               return Follows.Where(f => f.FolloweeId == follow.FolloweeId && f.FollowerId == follow.FollowerId).FirstOrDefault();
             });
 
             return mockRepo;
