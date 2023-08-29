@@ -20,11 +20,7 @@ namespace Application.DTO.FollowDTo.Validations
             {
                 return await _userRepository.Exists(followeeId);
             }).WithMessage("Followee does not exist");
-
-            RuleFor(x => x).MustAsync(async (follow, cancellation) =>
-            {
-                return await _followRepository.Get(follow)! == null;
-            }).WithMessage("Follower already follows followee");
+                
         }
     }
 }

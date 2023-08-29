@@ -35,6 +35,11 @@ namespace Application.Features.FollowFeature.Handlers.Commands
                 throw new BadRequestException("Unable to follo the user");
             }
 
+            if (await _followRepository.Get(request.FollowDTO) != null)  
+            {
+                throw new BadRequestException("You already follow this user");   
+            }
+
             var followEntity = _mapper.Map<Follow>(request.FollowDTO);
             var createFollowCommandResult = await _followRepository.AddFollow(followEntity);
             createFollowResponse.Success = true;
