@@ -9,7 +9,8 @@ export const blogApi = createApi({
   baseQuery: fetchBaseQuery({ 
     baseUrl: BASE_URL,
     prepareHeaders: (headers, { getState }) => {
-      const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NGU3ZTk2ZDQzMTM4ZTE1NzMxMjVjZTkiLCJuYW1lIjoidGFyaWsiLCJyb2xlIjoidXNlciIsImlhdCI6MTY5MzIwNjQwMiwiZXhwIjoxNjk1Nzk4NDAyfQ.0boFB9HfNPgt9B8vr81nSvoPDElcG7_ozudCxVrzUdo'
+      const userData = localStorage.getItem('user')
+      const token = userData ? JSON.parse(userData)?.token : null
       if(token) {
         headers.set('Authorization', `Bearer ${token}`)
       }

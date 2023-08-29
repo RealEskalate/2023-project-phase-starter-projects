@@ -63,17 +63,7 @@ const CreateBlogPage: React.FC = () => {
           if (image) {
             formData.append("image", image);
           }
-  
-          try {
-            const response = await addBlog(formData);
-            if (response) {
-                console.log(response)
-            }
-
-          } catch (error) {
-            
-          }
-         
+          addBlog(formData)         
       };
 
     return (
