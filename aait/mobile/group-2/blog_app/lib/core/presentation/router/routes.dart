@@ -6,8 +6,8 @@ class Routes {
   static const createArticle = '/create-article';
   static const editArticle = '/edit-article';
 
-  static const splashScreen = '/splash-screen';
   static const onBoard = '/onboarding';
 
   static const auth = '/auth';
+  static const profileScreen = '/profile';
 }

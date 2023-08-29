@@ -19,7 +19,7 @@ public class AuthRepository : IAuthRepository
         //check if user exists
         //check if password is correct
         //return user
-        var newUser = _socialMediaDbContext.Users.FirstOrDefault(x => x.Username == user.Username);
+        var newUser = _socialMediaDbContext.Users.FirstOrDefault(x =>  x.Email == user.Email);
         if (newUser == null)
         {
             return Task.FromResult<User>(null);

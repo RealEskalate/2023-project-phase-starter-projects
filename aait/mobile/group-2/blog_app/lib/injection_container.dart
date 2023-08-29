@@ -10,8 +10,10 @@ import 'features/article/data/datasources/local/local.dart';
 import 'features/article/data/datasources/remote/remote.dart';
 import 'features/article/data/repositories/article_repository_impl.dart';
 import 'features/article/domain/repositories/article_repository.dart';
+import 'features/article/domain/usecases/filter_articles.dart';
 import 'features/article/domain/usecases/usecases.dart';
 import 'features/article/presentation/bloc/article_bloc.dart';
+import 'features/article/presentation/bloc/tag_bloc.dart';
 import 'features/article/presentation/bloc/tag_selector_bloc.dart';
 import 'features/authentication/data/data_sources/local_data_source.dart';
 import 'features/authentication/data/data_sources/local_data_source_impl.dart';
@@ -39,16 +41,18 @@ Future<void> init() async {
   // Bloc
   serviceLocator.registerFactory(
     () => ArticleBloc(
-      getTags: serviceLocator(),
-      createArticle: serviceLocator(),
-      deleteArticle: serviceLocator(),
-      getAllArticles: serviceLocator(),
-      getArticle: serviceLocator(),
-      updateArticle: serviceLocator(),
-    ),
+        createArticle: serviceLocator(),
+        deleteArticle: serviceLocator(),
+        getAllArticles: serviceLocator(),
+        getArticle: serviceLocator(),
+        updateArticle: serviceLocator(),
+        filterArticles: serviceLocator()),
   );
   serviceLocator.registerFactory(
     () => TagSelectorBloc(),
+  );
+  serviceLocator.registerFactory(
+    () => TagBloc(getTags: serviceLocator()),
   );
 
   serviceLocator.registerFactory(() => UserBloc(
@@ -61,6 +65,7 @@ Future<void> init() async {
   serviceLocator.registerLazySingleton(
     () => GetTags(serviceLocator()),
   );
+
   serviceLocator.registerLazySingleton(
     () => CreateArticle(serviceLocator()),
   );
@@ -76,6 +81,9 @@ Future<void> init() async {
   serviceLocator.registerLazySingleton(
     () => GetArticle(serviceLocator()),
   );
+  serviceLocator.registerLazySingleton(
+    () => FilterArticles(serviceLocator()),
+  );
 
   serviceLocator.registerLazySingleton(
     () => GetBookmarkedArticles(serviceLocator()),
@@ -87,6 +95,10 @@ Future<void> init() async {
 
   serviceLocator.registerLazySingleton(
     () => UpdateUserPhoto(serviceLocator()),
+  );
+
+  serviceLocator.registerLazySingleton(
+    () => GetTokenUseCase(authRepository: serviceLocator()),
   );
 
   // Core
@@ -132,6 +144,7 @@ Future<void> init() async {
   //! Bloc
   serviceLocator.registerFactory(
     () => AuthBloc(
+      getTokenUsecase: serviceLocator(),
       loginUseCase: serviceLocator(),
       signUpUseCase: serviceLocator(),
       logoutUseCase: serviceLocator(),

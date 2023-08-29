@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 
 class ProfileAvatar extends StatelessWidget {
@@ -9,10 +10,17 @@ class ProfileAvatar extends StatelessWidget {
     return Stack(
       alignment: Alignment.center,
       children: [
-        CircleAvatar(
-          radius: 20.0,
-          backgroundColor: Colors.blue,
-          backgroundImage: AssetImage(image),
+        CachedNetworkImage(
+          imageUrl: image,
+          imageBuilder: (context, imageProvider) => CircleAvatar(
+            radius: 20.0,
+            backgroundColor: Colors.blue,
+            backgroundImage: imageProvider,
+          ),
+          placeholder: (context, url) => const Icon(Icons.person),
+          errorWidget: (context, url, error) {
+            return const Icon(Icons.person);
+          },
         ),
         Container(
           width: 38.0,

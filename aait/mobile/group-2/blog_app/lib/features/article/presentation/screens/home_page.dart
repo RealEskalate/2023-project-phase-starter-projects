@@ -1,10 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:go_router/go_router.dart';
 
+import '../../../../core/network/custom_client.dart';
+import '../../../../core/presentation/router/routes.dart';
+import '../../../../core/presentation/theme/app_colors.dart';
 import '../../../../injection_container.dart';
 
+import '../../../authentication/presentation/bloc/auth_bloc.dart';
+import '../../../user/presentation/bloc/user_bloc.dart';
 import '../bloc/article_bloc.dart';
+import '../bloc/tag_bloc.dart';
 import '../widgets/widgets.dart';
 
 class HomePage extends StatefulWidget {
@@ -19,41 +26,61 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     //
-    return Scaffold(
-      appBar: CustomAppBar(
-        leading: SvgPicture.asset(
-          'assets/svg/menu.svg',
-          fit: BoxFit.scaleDown,
+    return BlocProvider<UserBloc>(
+      create: (_) => serviceLocator<UserBloc>()
+        ..add(
+          GetUserEvent(token: BlocProvider.of<AuthBloc>(context).authToken),
         ),
-        title: 'Welcome Back!',
-        actions: const [
-          ProfileAvatar(image: 'assets/images/profile.png'),
-        ],
-      ),
-      body: MultiBlocProvider(
-        providers: [
-          BlocProvider(
-            create: (context) =>
-                serviceLocator<ArticleBloc>()..add(LoadAllArticlesEvent()),
+      child: Scaffold(
+        appBar: CustomAppBar(
+          leading: SvgPicture.asset(
+            'assets/svg/menu.svg',
+            fit: BoxFit.scaleDown,
           ),
-          BlocProvider(
-            create: (context) =>
-                serviceLocator<ArticleBloc>()..add(LoadAllTagsEvent()),
+          title: 'Welcome Back!',
+          actions: [
+            BlocBuilder<UserBloc, UserState>(builder: (context, state) {
+              if (state is LoadedUserState) {
+                return GestureDetector(
+                  onTap: () {
+                    context.push(Routes.profileScreen);
+                  },
+                  child: ProfileAvatar(
+                    image: state.userData.image,
+                  ),
+                );
+              }
+              return const Icon(Icons.person);
+            }),
+          ],
+        ),
+        body: MultiBlocProvider(
+          providers: [
+            BlocProvider(
+              create: (context) =>
+                  serviceLocator<ArticleBloc>()..add(LoadAllArticlesEvent()),
+            ),
+            BlocProvider(
+              create: (context) =>
+                  serviceLocator<TagBloc>()..add(LoadAllTagsEvent()),
+            ),
+          ],
+          child: BlocBuilder<ArticleBloc, ArticleState>(
+            builder: (context, _) => buildBody(context),
           ),
-        ],
-        child: BlocBuilder<ArticleBloc, ArticleState>(
-          builder: (context, _) => buildBody(context),
         ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(8.0),
-        ),
-        backgroundColor: Theme.of(context).colorScheme.surface,
-        onPressed: () {},
-        child: const Icon(
-          Icons.add,
-          size: 35,
+        floatingActionButton: FloatingActionButton(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(8.0),
+          ),
+          backgroundColor: AppColors.lightBlue,
+          onPressed: () {
+            context.push(Routes.createArticle);
+          },
+          child: const Icon(
+            Icons.add,
+            size: 35,
+          ),
         ),
       ),
     );
@@ -73,9 +100,9 @@ class _HomePageState extends State<HomePage> {
               height: 20,
             ),
 
-            BlocConsumer<ArticleBloc, ArticleState>(
+            BlocConsumer<TagBloc, TagState>(
               listener: (context, state) {
-                if (state is ArticleErrorState) {
+                if (state is TagErrorState) {
                   showError(context, state.message);
                 }
               },
@@ -104,6 +131,8 @@ class _HomePageState extends State<HomePage> {
               builder: (context, state) {
                 if (state is ArticleLoadingState) {
                   return const LoadingWidget();
+                } else if (state is AllArticlesFilteredState) {
+                  return ArticleList(articles: state.articles);
                 } else if (state is AllArticlesLoadedState) {
                   return ArticleList(articles: state.articles);
                 }

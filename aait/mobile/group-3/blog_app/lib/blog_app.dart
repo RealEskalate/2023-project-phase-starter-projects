@@ -1,3 +1,7 @@
+import 'package:blog_app/features/article/presentation/bloc/article_bloc.dart';
+import 'package:blog_app/features/article/presentation/screen/article_reading.dart';
+import 'package:blog_app/features/article/presentation/screen/home_screen.dart';
+import 'package:blog_app/features/article/presentation/screen/write_aricle_page.dart';
 import 'package:blog_app/features/auth/presentation/bloc/login_bloc/bloc/login_bloc.dart';
 import 'package:blog_app/features/auth/presentation/bloc/signup_bloc/bloc/signup_bloc.dart';
 import 'package:blog_app/features/auth/presentation/screen/login_signup_page.dart';
@@ -19,12 +23,19 @@ class BlogApp extends StatelessWidget {
   Widget build(BuildContext context) {
     final GoRouter _router =
         GoRouter(navigatorKey: GlobalKey<NavigatorState>(), routes: [
-      // GoRoute(path: '/mmb', builder: (context,state)=>SplashScreen()), 
-      // GoRoute(path: '/onboarding', builder: (context,state)=>OnboardingScreen()), 
-      GoRoute(path: '/', builder: (context,state)=>LoginSignUpPage()), 
-      // GoRoute(path: '/home', builder: null), //=> TODO: IMPLEMENT HOME SCREEN,
-      // GoRoute(
-      //     path: '/article', builder: null), //=> TODO: IMPLEMENT ARTICLE SCREEN
+      GoRoute(path: '/', builder: (context, state) => SplashScreen()),
+      GoRoute(
+          path: '/onboarding', builder: (context, state) => OnboardingScreen()),
+      GoRoute(path: '/login', builder: (context, state) => LoginSignUpPage()),
+      GoRoute(path: '/home', builder: (context, state) => HomeScreen()),
+      GoRoute(
+          path: '/create_article',
+          builder: (context, state) => WriteArticlePage()),
+      GoRoute(
+          path: '/article',
+          builder: (context, state) => ArticleReadingPage(
+                id: state.extra! as String,
+              )),
       GoRoute(path: '/profile', builder: (context, state) => ProfileScreen()),
     ]);
     //TODO: ADD BLOC
@@ -41,8 +52,12 @@ class BlogApp extends StatelessWidget {
             ),
             BlocProvider(
               create: (context) => serviceLocator<LoginBloc>(),
-            ),BlocProvider(
+            ),
+            BlocProvider(
               create: (context) => serviceLocator<SignupBloc>(),
+            ),
+            BlocProvider(
+              create: (context) => serviceLocator<ArticleBloc>(),
             ),
           ],
           child: MaterialApp.router(

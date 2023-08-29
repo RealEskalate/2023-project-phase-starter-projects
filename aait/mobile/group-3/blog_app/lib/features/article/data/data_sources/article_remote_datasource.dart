@@ -25,14 +25,12 @@ abstract class ArticleRemoteDataSource {
 class ArticleRemoteDataSourceImpl implements ArticleRemoteDataSource {
   final http.Client client;
   final SharedPreferences sharedPreferences;
-  final http.MultipartRequest request;
   ArticleRemoteDataSourceImpl({
     required this.client,
     required this.sharedPreferences,
-    required this.request,
   });
 
-  final uriString = 'https://blog-api-4z3m.onrender.com/';
+  final uriString = 'https://blog-api-4z3m.onrender.com';
 
   String baseUrl = getBaseUrl();
 
@@ -103,14 +101,13 @@ class ArticleRemoteDataSourceImpl implements ArticleRemoteDataSource {
 
   @override
   Future<List<ArticleModel>> getAllArticles() async {
+    String token = jsonDecode(sharedPreferences.getString(cachedToken)!);
     var request = http.Request('GET', Uri.parse('$baseUrl/article'));
-
+    request.headers['Authorization'] = 'Bearer $token';
     http.StreamedResponse response = await request.send();
-
     if (response.statusCode == 200) {
       final http.Response result = await http.Response.fromStream(response);
-      final jsonResponse = jsonDecode(result.body)["data"] as List;
-
+      final jsonResponse = jsonDecode(result.body)["data"];
       return List<Map<String, dynamic>>.from(jsonResponse)
           .map((articleData) => ArticleModel.fromJson(articleData))
           .toList();
@@ -142,6 +139,7 @@ class ArticleRemoteDataSourceImpl implements ArticleRemoteDataSource {
           .toList();
     } else {
       final result = await http.Response.fromStream(response);
+      print(jsonDecode(result.body));
       throw ServerException(
           statusCode: result.statusCode, message: "Failed to fetch articles");
     }

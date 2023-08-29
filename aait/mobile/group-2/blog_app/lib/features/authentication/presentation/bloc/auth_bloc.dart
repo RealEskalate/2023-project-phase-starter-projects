@@ -5,6 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../core/error/failure.dart';
 import '../../../../core/network/custom_client.dart';
+import '../../../../core/usecase/usecase.dart';
 import '../../domain/entities/authenticated_user_info.dart';
 import '../../domain/entities/authentication_entity.dart';
 import '../../domain/entities/login_entity.dart';
@@ -33,8 +34,15 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
   final LoginUseCase loginUseCase;
   final SignUpUseCase signUpUseCase;
   final LogoutUseCase logoutUseCase;
+  final GetTokenUseCase getTokenUsecase;
   final CustomClient customClient;
+
+  String? _token;
+
+  String get authToken => _token ?? '';
+
   AuthBloc({
+    required this.getTokenUsecase,
     required this.loginUseCase,
     required this.signUpUseCase,
     required this.logoutUseCase,
@@ -43,6 +51,25 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     on<LoginEvent>(_onLoginEvent);
     on<SignUpEvent>(_onSignUpEvent);
     on<LogoutEvent>(_onLogoutEvent);
+    on<GetTokenEvent>(_onGetTokenEvent);
+  }
+
+  Future<void> _onGetTokenEvent(
+      GetTokenEvent event, Emitter<AuthState> emit) async {
+    emit(Loading());
+    final failureOrLoginResult = await getTokenUsecase(NoParams());
+
+    failureOrLoginResult.fold(
+      (failure) {
+        emit(const UserAuthState(null));
+      },
+      (token) {
+        customClient.authToken = token;
+        _token = token;
+
+        emit(UserAuthState(token));
+      },
+    );
   }
 
   Future<void> _onLoginEvent(LoginEvent event, Emitter<AuthState> emit) async {
@@ -55,6 +82,8 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       },
       (loginResult) {
         customClient.authToken = loginResult.token;
+        _token = loginResult.token;
+
         emit(LoginSuccessState(authenticationEntity: loginResult));
       },
     );
@@ -88,6 +117,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       },
       (logoutResult) {
         customClient.authToken = null;
+        _token = null;
         emit(LogoutSuccessState());
       },
     );

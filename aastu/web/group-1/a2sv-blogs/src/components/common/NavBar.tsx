@@ -29,7 +29,7 @@ export default function Nav() {
   };
   return (
     <nav className="bg-white fixed w-full z-50 top-0">
-      <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto py-4 px-2">
+      <div className="flex flex-wrap items-center justify-between mx-auto py-4 lg:px-32 px-5">
         <Link href="/">
           <Image
             src="/images/a2sv-logo.svg"
@@ -40,19 +40,19 @@ export default function Nav() {
           />
         </Link>
         <div className="flex lg:order-2 items-center">
+          {auth ? (
+            <div className="md:mr-0 -mr-12">
+              <ProfileAvatar imageUrl={imageUrl!} />
+            </div>
+          ) : (
+            <Link
+              href="/auth/login"
+              className={`text-[#3C3C3C] text-base font-semibold font-montserrat px-5 cursor-pointer`}
+            >
+              Login
+            </Link>
+          )}
           <div className="hidden content-end row-span-1 lg:flex lg:gap-0 lg:items-center">
-            {auth ? (
-              <div className=" translate-x-5 -translate-y-1">
-                <ProfileAvatar imageUrl={imageUrl} />
-              </div>
-            ) : (
-              <span
-                onClick={() => router.push("/auth/login")}
-                className={`text-[#3C3C3C] text-base font-semibold font-montserrat px-5 cursor-pointer`}
-              >
-                Login
-              </span>
-            )}
             <span>
               <button
                 onClick={() => router.push("/")}
@@ -67,7 +67,7 @@ export default function Nav() {
             data-collapse-toggle="navbar-sticky"
             type="button"
             onClick={handleToggle}
-            className="inline-flex items-center p-2 w-10 h-10 justify-center text-sm text-gray-500 rounded-lg lg:hidden hover:bg-gray-100 lg focus:outline-none focus:ring-2"
+            className="inline-flex items-center p-2 w-10 h-10 justify-center text-sm text-gray-500 rounded-lg lg:hidden hover:bg-gray-100 lg focus:outline-none focus:ring-2 z-50"
             aria-controls="navbar-sticky"
             aria-expanded="false"
           >
@@ -175,15 +175,7 @@ export default function Nav() {
                 Get Involved
               </Link>
             </li>
-            <li>
-              <Link
-                href="/auth/login"
-                onClick={handleToggle}
-                className="lg:hidden block py-2 pl-3 pr-4  text-[#3C3C3C] text-base font-semibold font-montserrat hover:bg-gray-100 lg:hover:bg-white   lg:p-0   "
-              >
-                Login
-              </Link>
-            </li>
+            <li></li>
             <li>
               <Link
                 href="/donate"

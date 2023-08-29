@@ -1,18 +1,28 @@
-import 'package:blog_app/features/user/presentation/widgets/userprofile/posts_bar.dart';
-import 'package:blog_app/features/user/presentation/widgets/userprofile/single_article_post_grid_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-class ArticleGridView extends StatelessWidget {
-  final List<ArticleData> articles;
+import '../../../../article/domain/entities/article.dart';
+import 'posts_bar.dart';
+import 'single_article_post_grid_view.dart';
 
-  const ArticleGridView({Key? key, required this.articles}) : super(key: key);
+class ArticleGridView extends StatelessWidget {
+  final List<Article> articles;
+  final VoidCallback? onGridView;
+  final VoidCallback? onListView;
+
+  const ArticleGridView(
+      {Key? key, required this.articles, this.onGridView, this.onListView})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Column(
       children: [
-        const ArticleTitleBar(title: "My Bookmarks"),
+        ArticleTitleBar(
+          title: "My Bookmarks",
+          onGridView: onGridView,
+          onListView: onListView,
+        ),
         SizedBox(height: 27.h),
         GridView.builder(
           shrinkWrap: true,
@@ -25,11 +35,11 @@ class ArticleGridView extends StatelessWidget {
           itemCount: articles.length,
           itemBuilder: (context, index) {
             return SingleArticlePostGridView(
-              imageUrl: articles[index].imageUrl,
-              articleTitle: articles[index].articleTitle,
-              articleSubTitle: articles[index].articleSubTitle,
-              likes: articles[index].likes,
-              timeSincePosted: articles[index].timeSincePosted,
+              imageUrl: articles[index].photoUrl,
+              articleTitle: articles[index].title,
+              articleSubTitle: articles[index].subTitle,
+              likes: '2.1k',
+              timeSincePosted: 1,
             );
           },
         ),

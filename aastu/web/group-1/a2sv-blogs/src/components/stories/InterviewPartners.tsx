@@ -4,7 +4,7 @@ import Image from "next/image";
 export default function InterviewPartners() {
   return (
     <div className="w-full flex justify-center mt-16">
-      <div className=" w-[65%] mb-20">
+      <div className="mb-20">
         {/* title for partner */}
         <div className="flex justify-center mb-10">
           <h1 className="text-2xl lg:text-4xl text-center h-10 leading-10 text-text-header-1 font-medium font-DmSans mb-5">

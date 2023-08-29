@@ -25,11 +25,12 @@ class UserProfileInfo extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          username,
+          username.length > 7 ? '${username.substring(0, 7)}...' : username,
           style: TextStyle(
             fontSize: usernameFontSize,
             fontWeight: FontWeight.w900,
             color: Color(0xFF2D4379),
+            overflow: TextOverflow.ellipsis,
           ),
         ),
         SizedBox(
@@ -42,6 +43,7 @@ class UserProfileInfo extends StatelessWidget {
             fontWeight: FontWeight.w100,
             fontStyle: FontStyle.italic,
             color: Color(0xFF0D253C),
+            overflow: TextOverflow.ellipsis,
           ),
         ),
         SizedBox(
@@ -54,6 +56,7 @@ class UserProfileInfo extends StatelessWidget {
             fontStyle: FontStyle.italic,
             fontWeight: FontWeight.w100,
             color: Color(0xFF376AED),
+            overflow: TextOverflow.ellipsis,
           ),
         ),
       ],

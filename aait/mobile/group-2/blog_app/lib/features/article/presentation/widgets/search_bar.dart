@@ -1,5 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+
+import '../../../../core/presentation/theme/app_colors.dart';
+import '../../domain/entities/tag.dart';
+import '../bloc/article_bloc.dart';
 
 class CustomSearchBar extends StatelessWidget {
   const CustomSearchBar({super.key});
@@ -18,17 +23,34 @@ class CustomSearchBar extends StatelessWidget {
         ),
       ], borderRadius: BorderRadius.circular(10.0), color: Colors.white),
       child: TextField(
+        style: const TextStyle(
+          color: AppColors.darkerBlue,
+          fontFamily: 'Poppins',
+          fontSize: 15,
+        ),
         decoration: InputDecoration(
           hintText: 'Search an article...',
+          hintStyle: const TextStyle(
+            color: AppColors.gray300,
+            fontFamily: 'Poppins',
+            fontSize: 18,
+            fontWeight: FontWeight.w200,
+          ),
           suffixIcon: const SearchIcon(),
-          border: InputBorder.none,
-          contentPadding: const EdgeInsets.fromLTRB(5.0, 10.0, 0.0, 0.0).w,
+          border: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(10.0),
+            borderSide: const BorderSide(color: Colors.transparent),
+          ),
+          contentPadding: const EdgeInsets.fromLTRB(5.0, 10.0, 10.0, 0.0).w,
           focusedBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(10.0),
-            borderSide:
-                BorderSide(color: Theme.of(context).colorScheme.primary),
+            borderSide: const BorderSide(color: AppColors.blue),
           ),
         ),
+        onSubmitted: (value) {
+          BlocProvider.of<ArticleBloc>(context)
+              .add(FilterArticlesEvent(Tag(name: ''), value));
+        },
       ),
     );
   }
@@ -43,12 +65,13 @@ class SearchIcon extends StatelessWidget {
       height: 60.h,
       width: 52.w,
       decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(10.0),
-          color: Theme.of(context).colorScheme.surface),
+        borderRadius: BorderRadius.circular(10.0),
+        color: AppColors.lightBlue,
+      ),
       child: const Icon(
         Icons.search,
         size: 30,
-        color: Colors.white,
+        color: AppColors.white,
       ),
     );
   }

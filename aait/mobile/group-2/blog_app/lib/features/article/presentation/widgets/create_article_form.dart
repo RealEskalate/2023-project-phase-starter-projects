@@ -7,10 +7,13 @@ import '../../../../core/presentation/theme/app_colors.dart';
 import '../../../user/domain/entities/user_data.dart';
 import '../../domain/entities/article.dart';
 import '../bloc/article_bloc.dart';
+import '../bloc/tag_bloc.dart';
 import '../bloc/tag_selector_bloc.dart';
 import 'custom_chip.dart';
 import 'custom_text_field.dart';
+import 'image_selector.dart';
 import 'multiline_text_field.dart';
+import 'snackbar.dart';
 import 'tag_selector.dart';
 
 class CreateArticleForm extends StatefulWidget {
@@ -24,6 +27,8 @@ class _CreateArticleFormState extends State<CreateArticleForm> {
   final titleFieldController = TextEditingController();
   final subtitleFieldController = TextEditingController();
   final contentFieldController = TextEditingController();
+
+  XFile? image;
 
   @override
   Widget build(BuildContext context) {
@@ -51,7 +56,7 @@ class _CreateArticleFormState extends State<CreateArticleForm> {
             const SizedBox(height: 15),
 
             // Tag field
-            BlocBuilder<ArticleBloc, ArticleState>(
+            BlocBuilder<TagBloc, TagState>(
               builder: (context, state) {
                 if (state is AllTagsLoadedState) {
                   return TagSelector(tags: state.tags);
@@ -98,6 +103,12 @@ class _CreateArticleFormState extends State<CreateArticleForm> {
             ),
             const SizedBox(height: 30),
 
+            // Article Image
+            ImageSelector(
+              onImageSelected: _selectImage,
+            ),
+            const SizedBox(height: 30),
+
             // Content field
             MultilineTextInput(
               controller: contentFieldController,
@@ -118,21 +129,23 @@ class _CreateArticleFormState extends State<CreateArticleForm> {
     );
   }
 
-  void _publishArticle(BuildContext context) async {
+  void _selectImage(XFile? file) {
+    setState(() {
+      image = file;
+    });
+  }
+
+  void _publishArticle(BuildContext context) {
     final articleBloc = context.read<ArticleBloc>();
     final tagsBloc = context.read<TagSelectorBloc>();
 
-    final picker = ImagePicker();
-
-    final pickedFile = await picker.pickImage(source: ImageSource.gallery);
-
-    if (pickedFile != null) {
+    if (image != null) {
       final article = Article(
         id: '',
         title: titleFieldController.text,
         subTitle: subtitleFieldController.text,
         content: contentFieldController.text,
-        photoUrl: pickedFile.path,
+        photoUrl: image!.path,
         tags: tagsBloc.selectedTags.toList(),
         author: const UserData(
             articles: [],
@@ -148,6 +161,8 @@ class _CreateArticleFormState extends State<CreateArticleForm> {
         estimatedReadTime: '3min',
       );
       articleBloc.add(CreateArticleEvent(article));
+    } else {
+      showError(context, 'Please select an image');
     }
   }
 }

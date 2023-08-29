@@ -5,7 +5,7 @@ import React from "react";
 
 export default function page() {
   return (
-    <div className="flex flex-col mt-36 gap-14 w-[90%] mx-auto">
+    <div className="flex flex-col mt-36 gap-14 lg:px-32 px-5 mx-auto">
       <div className="">
         <SuccessStoriesHeader />
       </div>

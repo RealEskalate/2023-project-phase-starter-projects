@@ -13,4 +13,5 @@ abstract class AuthRepository {
       SignUpEntity signUpEntity);
 
   Future<Either<Failure, void>> logout(String token);
+  Future<Either<Failure, String>> getToken();
 }

@@ -31,7 +31,7 @@ public class CommentDtoValidator : AbstractValidator<InteractionDto>
                 }
             )
             .WithMessage("{PropertyName} doesn't exist");
-
+        
         RuleFor(interaction => interaction.UserId)
             .GreaterThan(0)
             .MustAsync(
@@ -39,7 +39,7 @@ public class CommentDtoValidator : AbstractValidator<InteractionDto>
                 {
                     var userExists = await _unitOfWork.UserRepository.GetAsync(id);
                     return userExists != null;
-
+        
                 }
             )
             .WithMessage("{PropertyName} doesn't exist");

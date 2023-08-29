@@ -1,44 +1,28 @@
 ﻿using Application.Contracts;
 using Application.DTO.Common;
-using Application.DTO.NotificationDTO;
-<<<<<<< HEAD
 using Application.Exceptions;
-using Application.Features.NotificationFeaure.Requests.Commands;
-=======
->>>>>>> 144f3669 (feat(AAiT-backend-1A): updated comment feature)
-using Application.Exceptions;
-using Application.Features.NotificationFeaure.Requests.Commands;
 using Application.Features.PostFeature.Requests.Commands;
-using Application.Response;
 using Application.Response;
 using AutoMapper;
 using Domain.Entities;
 using MediatR;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+
 
 namespace Application.Features.PostFeature.Handlers.Commands
 {
-    public class PostReactionHandler : IRequestHandler<PostReactionCommand, BaseResponse<string>>
-    public class PostReactionHandler : IRequestHandler<PostReactionCommand, BaseResponse<string>>
+    public class PostReactionHandler : IRequestHandler<PostReactionCommand, BaseResponse<int>>
     {
         private readonly IPostReactionRepository _postReactionRespository;
         private readonly IMapper _mapper;
-        private readonly IMediator _mediator;
         private readonly IPostRepository _postRepository;
 
-        public PostReactionHandler(IPostReactionRepository postReactionRepository, IMapper mapper, IMediator mediator, IPostRepository postRepository)
+        public PostReactionHandler(IPostReactionRepository postReactionRepository, IMapper mapper, IPostRepository postRepository)
         {
             _postReactionRespository = postReactionRepository;
             _mapper = mapper;
-            _mediator = mediator;
             _postRepository = postRepository;
-        }
-        public async Task<BaseResponse<string>> Handle(PostReactionCommand request, CancellationToken cancellationToken)
-        public async Task<BaseResponse<string>> Handle(PostReactionCommand request, CancellationToken cancellationToken)
+        }        
+        public async Task<BaseResponse<int>> Handle(PostReactionCommand request, CancellationToken cancellationToken)
         {
             var validator = new ReactionValidator();
             var validationResult = await validator.ValidateAsync(request.ReactionData);
@@ -51,11 +35,7 @@ namespace Application.Features.PostFeature.Handlers.Commands
             var exists = await _postRepository.Exists(request.ReactionData.ReactedId);
             if (exists == false)
             {
-<<<<<<< HEAD
-                throw new NotFoundValidationException(validationResult"Post is not found to make the Reactions");
-=======
                 throw new NotFoundException("Post is not found to make the Reactions");
->>>>>>> 144f3669 (feat(AAiT-backend-1A): updated comment feature)
             }
 
 
@@ -78,34 +58,15 @@ namespace Application.Features.PostFeature.Handlers.Commands
 
             var result = await _postReactionRespository.MakeReaction(request.UserId, postReaction);
             if (result == null)
-            if (result == null)
             {
-                throw new BadRequestException("Post is not found"
-                );
-                throw new BadRequestException("Post is not found"
-                );
+                throw new BadRequestException("Post is not found");
             }
 
-
-            // notification
-            var notificationData = new NotificationCreateDTO
-            {
-                Content = $"User with id : {request.UserId} made reaction on post with id : {postReaction.PostId}",
-                NotificationContentId = postReaction.PostId,
-                NotificationType = "reaction",
-                UserId = request.UserId
-            };
-            await _mediator.Send(new CreateNotification { NotificationData = notificationData });
-
-
-
-            return new BaseResponse<string>()
-            {
-            
-            return new BaseResponse<string>()
+            return new BaseResponse<int>()
             {
                 Success = true,
-                Message = "Reaction is made successfully"
+                Message = "Reaction is made successfully",
+                Value = request.ReactionData.ReactedId
             };
         }
     }

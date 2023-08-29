@@ -13,8 +13,12 @@ namespace Application.Contracts
 
         Task<bool> MarkAsRead(int id, int userId);
 
-        Task<bool> MarkAllAsRead(Expression<Func<Notification, bool>> predicate);
+        Task<bool> MarkAllAsRead(int UserId);
 
         Task<bool> Exists(int id);
+
+        Task<List<Notification>> GetAllUnread(int userId);
+
+        Task<List<Notification>> GetAll(int userId);
     }
 }

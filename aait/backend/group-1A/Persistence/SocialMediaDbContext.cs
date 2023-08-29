@@ -1,7 +1,7 @@
 ﻿using Domain.Entites;
+using Domain.Entites;
 using Domain.Entities;
 using Microsoft.EntityFrameworkCore;
-
 using SocialSync.Domain.Entities;
 using System;
 using System.Collections.Generic;
@@ -16,10 +16,17 @@ namespace Persistence
         public virtual DbSet<Post> Posts { get; set; }
         public virtual DbSet<Comment> Comments { get; set; }
 
+        public virtual DbSet<User> Users { get; set; }
+
         public virtual DbSet<PostReaction> PostReactions { get; set; }
+        public virtual DbSet<Follow> Follow { get; set; }
+
         public virtual DbSet<CommentReaction> CommentReaction { get; set; }
 
+        public virtual DbSet<Tag> Tags { get; set; }
+
         public virtual DbSet<Notification> Notifications {get ; set ;}
+        public virtual DbSet<PostTag> PostTags {get;set;}
 
         public SocialMediaDbContext(DbContextOptions<SocialMediaDbContext> options) : base(options) { }
 
@@ -28,7 +35,6 @@ namespace Persistence
             base.OnModelCreating(modelBuilder);
 
             modelBuilder.ApplyConfigurationsFromAssembly(typeof(SocialMediaDbContext).Assembly);
-
         }
     }
 }

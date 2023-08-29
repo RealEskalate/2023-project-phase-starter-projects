@@ -1,10 +1,16 @@
 import 'package:blog_app/core/util/app_colors.dart'; // Importing app-specific colors
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:go_router/go_router.dart';
 
-class HeaderWidget extends StatelessWidget {
+class HeaderWidget extends StatefulWidget {
   const HeaderWidget({super.key});
 
+  @override
+  State<HeaderWidget> createState() => _HeaderWidgetState();
+}
+
+class _HeaderWidgetState extends State<HeaderWidget> {
   @override
   Widget build(BuildContext context) {
     return Row(
@@ -13,8 +19,7 @@ class HeaderWidget extends StatelessWidget {
       children: [
         GestureDetector(
           onTap: () {
-            Navigator.pushNamed(
-                context, '/profile'); 
+            Navigator.pushNamed(context, '/profile');
           },
           child: Icon(
             Icons.sort,
@@ -36,10 +41,18 @@ class HeaderWidget extends StatelessWidget {
         Stack(
           alignment: Alignment.center,
           children: [
-            CircleAvatar(
-              backgroundImage:
-                  const AssetImage('images/avator.jpg'), // User's avatar
-              radius: 28.sp, // Avatar radius
+            InkWell(
+              onTap: () {
+                setState(() {
+                  context.go('/profile');
+                  print("Here I am being pressed");
+                });
+              },
+              child: CircleAvatar(
+                backgroundImage: const AssetImage(
+                    'assets/images/onboarding2.jpg'), // User's avatar
+                radius: 28.sp, // Avatar radius
+              ),
             ),
             Container(
               width: 65.w,

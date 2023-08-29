@@ -9,11 +9,10 @@ import 'features/authentication/presentation/bloc/auth_bloc.dart';
 import 'injection_container.dart' as di;
 
 Future<void> main() async {
-  Bloc.observer = SimpleBlocObserver();
-
   WidgetsFlutterBinding.ensureInitialized();
 
   await di.init();
+  Bloc.observer = SimpleBlocObserver();
 
   runApp(const App());
 }
@@ -30,7 +29,7 @@ class App extends StatelessWidget {
       builder: (_, child) => MultiBlocProvider(
         providers: [
           BlocProvider<AuthBloc>(
-            create: (_) => di.serviceLocator<AuthBloc>(),
+            create: (_) => di.serviceLocator<AuthBloc>()..add(GetTokenEvent()),
           ),
         ],
         child: MaterialApp.router(

@@ -1,3 +1,5 @@
+import '../../../article/data/models/article_mapper.dart';
+import '../../../article/data/models/article_model.dart';
 import '../../domain/entities/user_data.dart';
 
 class UserDataModel extends UserData {
@@ -21,9 +23,11 @@ class UserDataModel extends UserData {
       expertise: json['expertise'],
       bio: json['bio'],
       createdAt: json['createdAt'],
-      image: json['image'],
-      imageCloudinaryPublicId: json['imageCloudinaryPublicId'],
-      articles: json['articles'],
+      image: json['image'] ?? '',
+      imageCloudinaryPublicId: json['imageCloudinaryPublicId'] ?? '',
+      articles: json['articles']
+          .map<ArticleModel>((m) => ArticleModel.fromJson(m))
+          .toList(),
     );
   }
   Map<String, dynamic> toJson() {
@@ -36,7 +40,7 @@ class UserDataModel extends UserData {
       'createdAt': createdAt,
       'image': image,
       'imageCloudinaryPublicId': imageCloudinaryPublicId,
-      'articles': articles,
+      'articles': articles.map((e) => e.toArticleModel().toJson()).toList(),
     };
   }
 }

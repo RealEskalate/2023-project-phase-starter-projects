@@ -62,9 +62,9 @@ class BlogExcerptWidget extends StatelessWidget {
     required this.article,
   });
 
-  Article article;
+  final Article article;
 
-  List<String> tags = ["education", "Entertainment", "education", "Entertainment",];
+  final List<String> tags = ["education", "Entertainment", "education", "Entertainment",];
 
   @override
   Widget build(BuildContext context) {

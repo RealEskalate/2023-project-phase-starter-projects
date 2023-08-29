@@ -12,5 +12,7 @@ namespace Application.Contracts
         Task<List<PostResponseDTO>> GetAllPostsWithReaction(int userId);
 
         Task<bool> Exists(int id);
+
+        Task<List<Post>> GetAll(int userId);
     }
 }

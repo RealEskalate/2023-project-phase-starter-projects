@@ -23,7 +23,7 @@ namespace Application.Features.NotificationFeaure.Handlers.Commands
         }
         public async Task<BaseResponse<string>> Handle(MarkReadAllRequest request, CancellationToken cancellationToken)
         {
-            var result = await _notificationRepository.MarkAllAsRead(entity => entity.UserId == request.UserId && entity.IsRead == false);
+            var result = await _notificationRepository.MarkAllAsRead(request.UserId);
 
             return new BaseResponse<string> ()
             {

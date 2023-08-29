@@ -10,6 +10,7 @@ public class PostsMappingProfile: Profile{
         CreateMap<Post, PostDto>().ReverseMap();
         CreateMap<Post, CreatePostDto>().ReverseMap();
         CreateMap<Post, UpdatePostDto>().ReverseMap();
+
     }
 
 }

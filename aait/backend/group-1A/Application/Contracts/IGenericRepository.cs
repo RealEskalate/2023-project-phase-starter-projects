@@ -10,15 +10,10 @@ namespace Application.Contracts
 {
     public interface IGenericRepository<T>
     {
-        public Task<List<T>> GetAll(Expression<Func<T, bool>> predicate);
-
         public Task<T> Add(T entity);
-
-        public Task<bool> Delete(T entity);
-
-        
+        public Task<bool> Delete(T entit );
         public Task<T> Update(T entity);
-
+        
 
     }
 }
