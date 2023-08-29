@@ -30,10 +30,10 @@ class ArticleCard extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             ConstrainedBox(
-              constraints: BoxConstraints(maxWidth: 120.w),
+              constraints: BoxConstraints(maxWidth: 130.w),
               child: ArticlePhoto(article: article),
             ),
-            const SizedBox(width: 10),
+            SizedBox(width: 20.w),
             ConstrainedBox(
               constraints: BoxConstraints(maxWidth: 160.w),
               child: ArticleInfo(article: article),
