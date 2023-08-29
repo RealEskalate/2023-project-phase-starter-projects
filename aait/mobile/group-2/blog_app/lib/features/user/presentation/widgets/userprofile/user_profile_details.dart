@@ -38,7 +38,7 @@ class UserProfileDetails extends StatelessWidget {
         padding: EdgeInsets.fromLTRB(
           horizontalPadding,
           topPadding,
-          horizontalPadding,
+          20.w,
           0,
         ),
         child: Card(

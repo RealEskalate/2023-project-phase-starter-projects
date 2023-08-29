@@ -3,6 +3,7 @@ import 'package:dartz/dartz.dart';
 import '../../../../core/error/exception.dart';
 import '../../../../core/error/failure.dart';
 import '../../../../core/network/network_info.dart';
+import '../../../article/data/models/article_model.dart';
 import '../../../article/domain/entities/article.dart';
 import '../../domain/entities/user_data.dart';
 import '../../domain/repositories/user_repository.dart';
@@ -70,6 +71,17 @@ class UserRespositoryImpl extends UserRepository {
     try {
       final bookmark = await localDataSource.getAllBookmarkedArticles();
       return Right(bookmark);
+    } catch (e) {
+      return Left(CacheFailure());
+    }
+  }
+
+  @override
+  Future<Either<Failure, ArticleModel>> addBookmark(
+      ArticleModel article) async {
+    try {
+      await localDataSource.cacheBookmarkedArticles(article);
+      return Right(article);
     } catch (e) {
       return Left(CacheFailure());
     }

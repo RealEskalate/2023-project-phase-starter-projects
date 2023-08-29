@@ -17,13 +17,9 @@ class UserLocalDataSourceImpl implements UserLocalDataSource {
   UserLocalDataSourceImpl({required this.sharedPreferences});
 
   @override
-  Future<void> cacheBookmarkedArticles(List<ArticleModel> articlesToCache) {
-    final articleJsonList =
-        articlesToCache.map((article) => article.toJson()).toList();
-    final jsonStringList =
-        articleJsonList.map((json) => jsonEncode(json)).toList();
-    return sharedPreferences.setStringList(
-        CACHED_BOOKMARKED_ARTICLES, jsonStringList);
+  Future<void> cacheBookmarkedArticles(ArticleModel articleToCache) {
+    final jsonString = json.encode(articleToCache.toJson());
+    return sharedPreferences.setString(CACHED_BOOKMARKED_ARTICLES, jsonString);
   }
 
   @override
@@ -44,12 +40,13 @@ class UserLocalDataSourceImpl implements UserLocalDataSource {
 
   @override
   Future<void> removeBookmark(String articleId) async {
-    final bookmarks = await getAllBookmarkedArticles();
+    // final bookmarks = await getAllBookmarkedArticles();
 
-    final filteredBookmarks =
-        bookmarks.where((bookmark) => (bookmark.id) != articleId);
+    // final filteredBookmarks =
+    //     bookmarks.where((bookmark) => (bookmark.id) != articleId);
 
-    await cacheBookmarkedArticles(filteredBookmarks.toList());
+    // await cacheBookmarkedArticles(filteredBookmarks.toList());
+    await sharedPreferences.remove(articleId);
   }
 
   @override

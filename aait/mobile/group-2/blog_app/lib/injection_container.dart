@@ -29,6 +29,7 @@ import 'features/user/data/datasources/user_remote_data_source.dart';
 import 'features/user/data/datasources/user_remote_data_source_impl.dart';
 import 'features/user/data/repositories/user_repository_impl.dart';
 import 'features/user/domain/repositories/user_repository.dart';
+import 'features/user/domain/usecases/user_usecases/add_bookmart_usecase.dart';
 import 'features/user/domain/usecases/user_usecases/get_bookmarked_articles_usecase.dart';
 import 'features/user/domain/usecases/user_usecases/get_user_data_usecase.dart';
 import 'features/user/domain/usecases/user_usecases/update_user_photo_usecase.dart';
@@ -59,6 +60,7 @@ Future<void> init() async {
         getUser: serviceLocator(),
         updateUserPhoto: serviceLocator(),
         getBookmarkedArticles: serviceLocator(),
+        addBookmark: serviceLocator(),
       ));
 
   // Use cases
@@ -87,6 +89,10 @@ Future<void> init() async {
 
   serviceLocator.registerLazySingleton(
     () => GetBookmarkedArticles(serviceLocator()),
+  );
+
+  serviceLocator.registerLazySingleton(
+    () => AddBookmark(serviceLocator()),
   );
 
   serviceLocator.registerLazySingleton(

@@ -23,3 +23,9 @@ class UpdateUserPhotoEvent extends UserEvent {
 class GetBookmarkedArticlesEvent extends UserEvent {
   const GetBookmarkedArticlesEvent();
 }
+
+class BookmarkButtonClickedEvent extends UserEvent {
+  final ArticleModel article;
+
+  const BookmarkButtonClickedEvent({required this.article});
+}
