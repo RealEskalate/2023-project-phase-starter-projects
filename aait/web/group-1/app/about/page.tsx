@@ -5,7 +5,7 @@ import Sessions from '@/components/about/Sessions'
 import Social from '@/components/about/Social'
 
 
-const page = () => {
+const Page = () => {
   return (
     <div>
       <About_section/>
@@ -17,4 +17,4 @@ const page = () => {
   )
 }
 
-export default page
+export default Page
