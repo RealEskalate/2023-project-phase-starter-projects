@@ -14,5 +14,7 @@ namespace Application.Contracts
         Task<bool> Exists(int id);
 
         Task<List<Post>> GetAll(int userId);
+
+        Task<List<Post>> GetByTagName(string tagName);
     }
 }
