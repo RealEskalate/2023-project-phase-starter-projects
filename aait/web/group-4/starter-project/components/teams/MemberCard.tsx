@@ -1,8 +1,8 @@
 import React from "react";
 import Image from 'next/image'
 
-import Member from "@/types/teams/Member";
-import SocialMedia from "@/types/teams/SocialMedia";
+import Member from "@/types/team/Member";
+import SocialMedia from "@/types/team/SocialMedia";
 
 interface MemberProps {
     member: Member

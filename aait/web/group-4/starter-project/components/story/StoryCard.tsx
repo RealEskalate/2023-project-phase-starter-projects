@@ -1,5 +1,5 @@
 import Image from 'next/image'
-import { Story } from '@/types/Story/story-type';
+import { Story } from '@/types/story/story-type';
 
 interface StoryCardProps {
     successStory: Story

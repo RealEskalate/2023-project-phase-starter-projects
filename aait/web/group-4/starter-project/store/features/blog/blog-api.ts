@@ -1,10 +1,9 @@
 import { createApi, fetchBaseQuery} from "@reduxjs/toolkit/query/react";
+import BlogData from "@/types/blog/blog";
+import Member from "@/types/team/Member";
 
-import BlogData from "@/types/blogs/BlogData";
-import Member from "@/types/teams/Member";
-
-export const api = createApi({
-    reducerPath: "blogapi",
+export const blogsApi = createApi({
+    reducerPath: "blogsApi",
     baseQuery: fetchBaseQuery({baseUrl: "https://a2sv-backend.onrender.com/api"}),
     tagTypes: ["blog"],
     endpoints: (builder)=>({
@@ -17,4 +16,4 @@ export const api = createApi({
     }),
 })
 
-export const { useGetBlogsQuery, useGetMembersQuery} = api;
+export const { useGetBlogsQuery, useGetMembersQuery} = blogsApi;

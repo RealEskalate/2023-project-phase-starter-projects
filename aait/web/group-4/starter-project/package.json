@@ -25,6 +25,7 @@
     "typescript": "5.1.6"
   },
   "devDependencies": {
+    "@types/react-redux": "^7.1.26",
     "prettier": "^3.0.2",
     "prettier-plugin-tailwindcss": "^0.5.3"
   }

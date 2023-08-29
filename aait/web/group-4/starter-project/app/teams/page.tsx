@@ -4,7 +4,7 @@ import {useState} from "react";
 import Image from 'next/image'
 
 import MemberCard from "@/components/teams/MemberCard";
-import {useGetMembersQuery} from "@/store//blogs/BlogApi";
+import {useGetMembersQuery} from "@/store/features/blog/blog-api";
 
 
 export default function Teams(){

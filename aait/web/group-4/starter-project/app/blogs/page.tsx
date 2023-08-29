@@ -2,7 +2,7 @@
 
 import {useState} from "react";
 
-import {useGetBlogsQuery} from "@/store/blogs/BlogApi";
+import {useGetBlogsQuery} from "@/store/features/blog/blog-api";
 import BlogCard from "@/components/blogs/BlogCard";
 
 export default function Blogs(){

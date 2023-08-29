@@ -1,7 +1,7 @@
 import React from "react";
 import Image from 'next/image'
 
-import BlogData from "@/types/blogs/BlogData";
+import BlogData from "@/types/blog/blog";
 import BlogCardSmall from "@/components/blogs/SmallBlogCard";
 import dummyAuthor from "@/data/dummyAuthor.json"
 

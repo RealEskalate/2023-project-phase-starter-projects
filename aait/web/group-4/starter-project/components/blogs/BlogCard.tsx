@@ -4,7 +4,7 @@ import React from "react";
 import Link from "next/link";
 import Image from "next/image"
 
-import BlogData from "@/types/blogs/BlogData";
+import BlogData from "@/types/blog/blog";
 import dummyAuthor from "@/data/dummyAuthor.json"
 interface BlogProps {
     blog: BlogData;

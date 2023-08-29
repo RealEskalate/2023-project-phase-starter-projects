@@ -1,5 +1,5 @@
 'use client'
-import { Story } from "@/types/Story/story-type";
+import { Story } from "@/types/story/story-type";
 import { useGetAllStoriesQuery } from "@/store/story/story-api";
 import {SuccessStoryCard} from '@/components/story//StoryCard'
 import {Partners} from "@/components/story//Partners";
