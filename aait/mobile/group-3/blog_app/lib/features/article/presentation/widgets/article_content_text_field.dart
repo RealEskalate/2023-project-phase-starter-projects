@@ -8,8 +8,10 @@ import '../../../../core/color/colors.dart';
 class ArticleContentTextField extends StatelessWidget {
   const ArticleContentTextField({
     super.key,
+    required this.controller,
   });
 
+  final TextEditingController controller;
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -22,10 +24,11 @@ class ArticleContentTextField extends StatelessWidget {
           ),
           borderRadius: BorderRadius.circular(10.r)),
       child: TextField(
+        controller: controller,
         maxLines: null,
         decoration: InputDecoration(
-          contentPadding: const EdgeInsets.only(
-              top: 0, left: 0, bottom: 0, right: 0),
+          contentPadding:
+              const EdgeInsets.only(top: 0, left: 0, bottom: 0, right: 0),
           filled: true,
           fillColor: fieldFillColor,
           border: InputBorder.none,

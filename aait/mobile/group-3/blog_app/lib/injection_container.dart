@@ -9,6 +9,8 @@ import 'package:blog_app/features/article/domain/use_case/get_article_by_id.dart
 import 'package:blog_app/features/article/domain/use_case/get_tags.dart';
 import 'package:blog_app/features/article/domain/use_case/update_article.dart';
 import 'package:blog_app/features/article/presentation/bloc/article_bloc.dart';
+import 'package:blog_app/features/article/presentation/bloc/create_article_bloc.dart';
+import 'package:blog_app/features/article/presentation/bloc/update_article_bloc.dart';
 import 'package:get_it/get_it.dart';
 import 'package:http/http.dart' as http;
 import 'package:internet_connection_checker/internet_connection_checker.dart';
@@ -47,7 +49,11 @@ Future<void> init() async {
         getTags: serviceLocator(),
       ),
     )
-
+    ..registerFactory(() => CreateArticleBloc(serviceLocator()))
+    ..registerFactory(() => UpdateArticleBloc(
+          updateArticleUsecase: serviceLocator(),
+          getArticleByIdUsecase: serviceLocator(),
+        ))
     // Use Cases
     ..registerLazySingleton(() => CreateArticleUsecase(serviceLocator()))
     ..registerLazySingleton(() => UpdateArticleUsecase(serviceLocator()))

@@ -32,7 +32,7 @@ class UserInfo extends StatelessWidget {
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(12.r),
                   image: DecorationImage(
-                    image: AssetImage(
+                    image: NetworkImage(
                       authorImageUrl,
                     ),
                     fit: BoxFit.cover,
