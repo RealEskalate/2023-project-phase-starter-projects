@@ -104,7 +104,7 @@ const SignUp = () => {
   },[nameError,passwordError,emailError])
   
   return (
-    <main className="flex w-full">
+    <main className="flex w-full mt-24">
       <div className="hidden md:block w-1/2 pl-12">
         <img
           src="./images/signup/a2sv-logo.svg"
