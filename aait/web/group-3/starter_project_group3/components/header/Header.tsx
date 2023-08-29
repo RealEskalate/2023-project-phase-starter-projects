@@ -51,6 +51,7 @@ const Header: React.FC = () => {
         {/* Button container with gap, aligning items in a row */}
         <div className="button_contnet flex gap-7 items-center ">
           {/* Text for Login */}
+          <>
           {!isLoggedIn && (
             <Link
               href={"/login"}
@@ -77,6 +78,7 @@ const Header: React.FC = () => {
               Log Out
             </button>
           )}
+          </>
 
           {/* hamburger icon */}
           <button
