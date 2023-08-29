@@ -5,5 +5,5 @@ import '../entities/user_entity.dart';
 
 abstract class UserRepository {
   Future<Either<Failure, User>> getUserInfo();
-  Future<Either<Failure, User>> updateUserInfo();
+  Future<Either<Failure, User>> updateUserImage(User user);
 }

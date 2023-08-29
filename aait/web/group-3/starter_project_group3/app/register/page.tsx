@@ -1,5 +1,4 @@
 "use client";
-import Footer from "@/components/footer/Footer";
 import { useRegisterMutation } from "@/store/features/auth";
 import React, { useState } from "react";
 
@@ -16,13 +15,11 @@ const Register: React.FC = () => {
     register({ name, email, password })
       .unwrap()
       .then((response) => {
-        console.log("register success message");
         localStorage.setItem("user", JSON.stringify(response));
-        window.location.href = '/login';
+        window.location.href = "/login";
       })
       .catch((err) => {
         // seterrorMessage(err.message.data);
-        console.error("Registration error", err);
         seterrorMessage(err.data.message);
       });
   };
@@ -102,8 +99,6 @@ const Register: React.FC = () => {
           </form>
         </div>
       </div>
-
-      <Footer />
     </>
   );
 };

@@ -4,7 +4,7 @@ namespace SocialSync.Domain.Entities;
 
 public enum NotificationType
 {
-    Like,
+    Like = 1,
     Follow
 }
 public class Notification : BaseEntity

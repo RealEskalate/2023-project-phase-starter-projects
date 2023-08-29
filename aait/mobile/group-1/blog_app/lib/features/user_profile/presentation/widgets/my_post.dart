@@ -1,26 +1,16 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
 import "package:blog_app/core/utils/colors.dart";
+import "package:blog_app/features/user_profile/domain/entities/article.dart";
 import "package:flutter/material.dart";
 
 class MyPost extends StatefulWidget {
-  MyPost({
+  const MyPost({
     super.key,
-    required this.title,
-    required this.subtitle,
-    required this.likes,
-    required this.isSaved,
-    required this.postImageSrc,
-    required this.isLiked,
+    required this.article,
   });
 
-  final String title;
-  final String subtitle;
-  int likes;
-  bool isSaved;
-  final String postImageSrc;
-  bool isLiked;
-
+  final Article article;
   @override
   State<MyPost> createState() => _MyPostState();
 }
@@ -50,7 +40,7 @@ class _MyPostState extends State<MyPost> {
           width: 92,
           decoration: ShapeDecoration(
             image: DecorationImage(
-              image: AssetImage(widget.postImageSrc),
+              image: NetworkImage(widget.article.image!),
               fit: BoxFit.fill,
             ),
             shape: RoundedRectangleBorder(
@@ -61,11 +51,11 @@ class _MyPostState extends State<MyPost> {
         SizedBox(
           width: 200,
           child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                widget.title,
+                widget.article.title,
                 style: TextStyle(
                   color: kLightBlue,
                   fontSize: 18,
@@ -78,7 +68,7 @@ class _MyPostState extends State<MyPost> {
               SizedBox(
                 width: 163,
                 child: Text(
-                  widget.subtitle,
+                  widget.article.subTitle,
                   style: TextStyle(
                     color: Color(0xFF0D253C),
                     fontSize: 15,
@@ -88,81 +78,8 @@ class _MyPostState extends State<MyPost> {
                   ),
                 ),
               ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Row(
-                    children: [
-                      IconButton(
-                        onPressed: () {
-                          setState(() {
-                            if (widget.isLiked) {
-                              widget.likes += 1;
-                            } else {
-                              widget.likes -= 1;
-                            }
-                            widget.isLiked = !widget.isLiked;
-                          });
-                        },
-                        icon: Icon(
-                          widget.isLiked
-                              ? Icons.thumb_up_outlined
-                              : Icons.thumb_up,
-                          size: 18,
-                          color: Colors.blue[800],
-                        ),
-                      ),
-                      Container(
-                        margin: EdgeInsets.only(right: 10),
-                        child: Text(
-                          widget.likes.toString(),
-                          style: TextStyle(
-                            color: Colors.grey[800],
-                            fontSize: 14,
-                            fontFamily: 'Urbanist',
-                            fontWeight: FontWeight.w500,
-                            height: 1.33,
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                  Row(
-                    children: [
-                      Icon(
-                        Icons.history_outlined,
-                        size: 20,
-                        color: Colors.blue[800],
-                      ),
-                      Container(
-                        margin: EdgeInsets.only(left: 5),
-                        child: Text(
-                          '1hr ago',
-                          style: TextStyle(
-                            color: Colors.grey[800],
-                            fontSize: 14,
-                            fontFamily: 'Urbanist',
-                            fontWeight: FontWeight.w500,
-                            height: 1.33,
-                          ),
-                        ),
-                      )
-                    ],
-                  ),
-                  IconButton(
-                    onPressed: () {
-                      setState(() {
-                        widget.isSaved = !widget.isSaved;
-                      });
-                    },
-                    icon: Icon(
-                      widget.isSaved
-                          ? Icons.bookmark
-                          : Icons.bookmark_add_outlined,
-                      color: Colors.blue[800],
-                    ),
-                  )
-                ],
+              SizedBox(
+                height: 10,
               )
             ],
           ),
@@ -171,3 +88,80 @@ class _MyPostState extends State<MyPost> {
     );
   }
 }
+
+              // Row(
+              //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              //   children: [
+              //     Row(
+              //       children: [
+              //         IconButton(
+              //           onPressed: () {
+              //             setState(() {
+              //               if (widget.isLiked) {
+              //                 widget.likes += 1;
+              //               } else {
+              //                 widget.likes -= 1;
+              //               }
+              //               widget.isLiked = !widget.isLiked;
+              //             });
+              //           },
+              //           icon: Icon(
+              //             widget.isLiked
+              //                 ? Icons.thumb_up_outlined
+              //                 : Icons.thumb_up,
+              //             size: 18,
+              //             color: Colors.blue[800],
+              //           ),
+              //         ),
+              //         Container(
+              //           margin: EdgeInsets.only(right: 10),
+              //           child: Text(
+              //             widget.likes.toString(),
+              //             style: TextStyle(
+              //               color: Colors.grey[800],
+              //               fontSize: 14,
+              //               fontFamily: 'Urbanist',
+              //               fontWeight: FontWeight.w500,
+              //               height: 1.33,
+              //             ),
+              //           ),
+              //         ),
+              //       ],
+              //     ),
+              //     Row(
+              //       children: [
+              //         Icon(
+              //           Icons.history_outlined,
+              //           size: 20,
+              //           color: Colors.blue[800],
+              //         ),
+              //         Container(
+              //           margin: EdgeInsets.only(left: 5),
+              //           child: Text(
+              //             '1hr ago',
+              //             style: TextStyle(
+              //               color: Colors.grey[800],
+              //               fontSize: 14,
+              //               fontFamily: 'Urbanist',
+              //               fontWeight: FontWeight.w500,
+              //               height: 1.33,
+              //             ),
+              //           ),
+              //         )
+              //       ],
+              //     ),
+              //     IconButton(
+              //       onPressed: () {
+              //         setState(() {
+              //           widget.isSaved = !widget.isSaved;
+              //         });
+              //       },
+              //       icon: Icon(
+              //         widget.isSaved
+              //             ? Icons.bookmark
+              //             : Icons.bookmark_add_outlined,
+              //         color: Colors.blue[800],
+              //       ),
+              //     )
+              //   ],
+              // )

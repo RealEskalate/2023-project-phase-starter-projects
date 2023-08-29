@@ -4,6 +4,7 @@ import { useEditPasswordMutation } from '@/lib/redux/slices/usersApi';
 import React, { useState } from 'react';
 import { CgDanger } from 'react-icons/cg';
 import { AiOutlineLoading3Quarters } from 'react-icons/ai';
+import Toast from '../Toast';
 
 const AccountSettingsSection = () => {
   const [passwordMatch, setPasswordMatch] = useState(false);
@@ -12,6 +13,7 @@ const AccountSettingsSection = () => {
   const [newPassword, setNewPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [success, setSuccess] = useState(false);
+  const [open, setOpen] = useState(false);
 
   const [editPassword, { isLoading, isSuccess }] = useEditPasswordMutation();
 
@@ -20,8 +22,10 @@ const AccountSettingsSection = () => {
 
     if (!currentPassword.length || !newPassword.length || !confirmPassword.length) {
       setEmptyFields(true);
+      setOpen(true);
     } else if (newPassword !== confirmPassword) {
       setPasswordMatch(true);
+      setOpen(true);
     } else {
       const passwords = {
         oldPassword: currentPassword,
@@ -34,6 +38,7 @@ const AccountSettingsSection = () => {
 
         if (res.message === 'Password updated successfully') {
           setSuccess(true);
+          setOpen(true);
         }
       } catch (error) {
         console.log(error);
@@ -72,24 +77,18 @@ const AccountSettingsSection = () => {
       <div>
         <form className="flex flex-col items-center gap-y-6 mt-16 md:mb-96 mb-20">
           {isSuccess && (
-            <div
-              className="w-3/6 p-4 mb-4 text-sm bg-green-500 text-white rounded-lg text-center"
-              role="alert"
-            >
-              <span className="font-medium">Yay!</span> You've successfully updated your password.
-            </div>
+            <Toast
+              type="success"
+              message="You've successfully updated your password."
+              open={open}
+              setOpen={setOpen}
+            />
           )}
           {passwordMatch && (
-            <div className="text-base font-semibold text-white bg-red-600 rounded-md p-2">
-              <CgDanger className="text-xl m-2 inline-block" />
-              <span>Passwords do not match</span>
-            </div>
+            <Toast type="error" message="Passwords do not match " open={open} setOpen={setOpen} />
           )}
           {emptyFields && (
-            <div className="text-base font-semibold text-white bg-red-600 rounded-md p-2">
-              <CgDanger className="text-xl m-2 inline-block" />
-              <span>All fields are required</span>
-            </div>
+            <Toast type="error" message="All fields are required" open={open} setOpen={setOpen} />
           )}
           <div className="flex flex-col items-start md:flex-row md:justify-between md:items-center md:gap-x-7 gap-y-3">
             <label

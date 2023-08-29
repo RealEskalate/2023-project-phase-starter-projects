@@ -2,7 +2,6 @@
 import { usePasswordResetMutation } from "@/store/features/auth";
 import { authTypes } from "@/types/auth/authTypes";
 import Image from "next/image";
-import Link from "next/link";
 import React, { useState } from "react";
 
 const AccountSetting = () => {
@@ -15,25 +14,30 @@ const AccountSetting = () => {
     usePasswordResetMutation();
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+
+    const userString = localStorage.getItem("user");
+    const user: authTypes | null = userString ? JSON.parse(userString) : null;
+    const token = user?.token;
+    console.log(token);
+
     event.preventDefault(); // Prevent default form submission behavior
     passwordReset({
-      oldPassword: confirmPassword,
-      newPassword: currentPassword,
+      oldPassword: currentPassword,
+      newPassword: confirmPassword,
     })
       .unwrap()
       .then((response: any) => {
+        // NOT WORKING, not completed yet
         console.log("success", response);
-
-        // router.push('/')
       })
       .catch((err) => {
-        seterrorMessage(err.data.message);
+        // seterrorMessage(err.data.message);
         console.error("password change error", err);
       });
   };
 
   return (
-    <div>
+    <form onSubmit={handleSubmit}>
       <div className=" py-10 text-blog_list_sub_text_color flex justify-between items-center ">
         <p>
           <p className="text-xl  font-bold">Manage Personal Information</p>
@@ -41,16 +45,16 @@ const AccountSetting = () => {
             Add all the required information about yourself
           </p>
         </p>
-        <Link
-          href={""}
+        <button
+          type="submit"
           className="px-8 py-2 mr-10 text-white bg-primary rounded-md font-semibold"
         >
           {isLoading ? "Procesessing" : " Save Changes"}
-        </Link>
+        </button>
       </div>
       <hr className="py-1" />
 
-      <form onSubmit={handleSubmit} className="  p-6 py-20 w-7/12 mx-auto ">
+      <div className="  p-6 py-20 w-7/12 mx-auto ">
         {/* current password */}
         <div className="py-5 flex p-1 justify-between items-center">
           {/* label */}
@@ -144,8 +148,8 @@ const AccountSetting = () => {
           </div>
         </div>
         {isError ? errorMessage : ""}
-      </form>
-    </div>
+      </div>
+    </form>
   );
 };
 
