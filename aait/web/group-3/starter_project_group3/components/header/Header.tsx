@@ -23,7 +23,7 @@ const Header: React.FC = () => {
 
   const handleLogout = () => {
     localStorage.clear();
-    window.location.href = '/';
+    window.location.href = "/";
   };
 
   // Function to toggle the mobile menu state
@@ -51,10 +51,11 @@ const Header: React.FC = () => {
         {/* Button container with gap, aligning items in a row */}
         <div className="button_contnet flex gap-7 items-center ">
           {/* Text for Login */}
+          <>
           {!isLoggedIn && (
             <Link
               href={"/login"}
-              className="text-login_color hidden nav_bar_screen:inline-block"
+              className="text-login_color hidden nav_bar_screen:inline-block p-3 border-2 border-white rounded-lg hover:border-primary transition ease-in-out duration-200"
             >
               Login
             </Link>
@@ -64,7 +65,7 @@ const Header: React.FC = () => {
           {!isLoggedIn && (
             <Link
               href={"/register"}
-              className="p-3 bg-primary text-white rounded-lg hidden nav_bar_screen:inline-block"
+              className="p-3 bg-primary text-white rounded-lg hidden nav_bar_screen:inline-block border-2 border-primary hover:bg-white hover:text-primary transition ease-in-out duration-200"
             >
               Register
             </Link>
@@ -77,6 +78,7 @@ const Header: React.FC = () => {
               Log Out
             </button>
           )}
+          </>
 
           {/* hamburger icon */}
           <button

@@ -1,5 +1,4 @@
 using FluentValidation;
-using SocialSync.Application.DTOs.Notifications;
 
 namespace SocialSync.Application.DTOs.Notifications.Validators;
 

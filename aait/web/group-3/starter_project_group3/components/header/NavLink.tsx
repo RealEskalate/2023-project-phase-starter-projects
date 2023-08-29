@@ -1,17 +1,14 @@
-// Import necessary hooks and components
 "use client";
 import { usePathname } from "next/navigation";
 import Link from "next/link";
 
-// Define the NavLink component
-const NavLink : React.FC<{ to: string; children: React.ReactNode; }> = ({
+const NavLink: React.FC<{ to: string; children: React.ReactNode }> = ({
   to,
   children,
 }: {
   to: string;
   children: React.ReactNode;
 }) => {
-  // Get the current pathname using the usePathname hook
   const pathname = usePathname();
 
   // Check if the current pathname matches the "to" prop
@@ -20,7 +17,12 @@ const NavLink : React.FC<{ to: string; children: React.ReactNode; }> = ({
   return (
     <div>
       {/* Create a Link component with the provided "to" prop */}
-      <Link href={to} className={isActive ? "text-primary" : ""}>
+      <Link
+        href={to}
+        className={`${
+          isActive ? "text-primary" : ""
+        } hover:text-black hover:font-bold`}
+      >
         {children}
       </Link>
 
@@ -36,5 +38,4 @@ const NavLink : React.FC<{ to: string; children: React.ReactNode; }> = ({
   );
 };
 
-// Export the NavLink component
 export default NavLink;
