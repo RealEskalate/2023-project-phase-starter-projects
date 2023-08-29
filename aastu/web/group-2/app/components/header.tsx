@@ -10,10 +10,23 @@ import ProfileDropDown from './home/ProfileDropDown';
 import { useClickOutside } from '../hooks/useClickOutside';
 import { useAppDispatch, useAppSelector } from '@/lib/redux/hooks';
 import { unsetUser } from '@/lib/redux/slices/loginSlice';
+import useDarkMode from '@/lib/useDarkMode';
+import { NavProps } from '@/lib/types';
+import { Nav } from './Nav';
 
 const Header: FC = () => {
   const currentRoute = usePathname();
   const [openMenu, setOpenMenu] = useState<boolean>(false);
+  const [loggedIn, setLoggedIn] = useState(false);
+  // console.log(useDarkMode());
+  const [colorTheme, setTheme] = useDarkMode();
+
+  const handleDarkMode = () => {
+    console.log('color theme', colorTheme);
+
+    setTheme(colorTheme === 'light' ? 'light' : 'dark');
+  };
+
   const wrapperRef = useRef(null);
 
   const dispatch = useAppDispatch();
@@ -26,14 +39,6 @@ const Header: FC = () => {
   const handleSignOut = () => {
     dispatch(unsetUser());
   };
-
-  interface NavProps {
-    isLink: boolean;
-    href?: string;
-    name: string;
-    onClick?: () => void;
-    className?: string;
-  }
 
   const links: NavProps[] = [
     {
@@ -85,7 +90,7 @@ const Header: FC = () => {
   ];
 
   return (
-    <div className="shadow-sm sticky z-10 top-0 bg-white flex lg:justify-between text-center w-full h-[90px] py-4 px-9">
+    <div className="shadow-sm sticky z-10 top-0 bg-white dark:bg-dark-backgroundLight transition-colors ease-linear flex lg:justify-between text-center w-full h-[90px] py-4 px-9">
       <div className="w-[165px] h-[45px] py-2 flex-1 lg:flex-none">
         <Image width={165} height={45} src={A2SVLogo} alt="A2SV Logo" />
       </div>
@@ -93,8 +98,8 @@ const Header: FC = () => {
         <li
           className={`mr-9 font-secondaryFont font-semibold ${
             currentRoute === '/'
-              ? 'text-[#264FAD] pb-8 border-b-[4px] border-[#264FAD] rounded-sm'
-              : ' text-[#565656]'
+              ? 'text-blue-500 pb-8 border-b-[4px] border-blue-500 rounded-sm'
+              : ' text-[#565656] dark:text-dark-textColor-100'
           }`}
         >
           <Link href="/">Home</Link>
@@ -102,8 +107,8 @@ const Header: FC = () => {
         <li
           className={`mr-9 font-secondaryFont font-semibold ${
             currentRoute === '/teams'
-              ? 'text-[#264FAD] pb-8 border-b-[4px] border-[#264FAD] rounded-sm'
-              : ' text-[#565656]'
+              ? 'text-blue-500 pb-8 border-b-[4px] border-blue-500 rounded-sm'
+              : ' text-[#565656] dark:text-dark-textColor-100'
           }`}
         >
           <Link href="/teams">Teams</Link>
@@ -111,8 +116,8 @@ const Header: FC = () => {
         <li
           className={`mr-9 font-secondaryFont font-semibold ${
             currentRoute === '/stories'
-              ? 'text-[#264FAD] pb-8 border-b-[4px] border-[#264FAD] rounded-sm'
-              : ' text-[#565656]'
+              ? 'text-blue-500 pb-8 border-b-[4px] border-blue-500 rounded-sm'
+              : ' text-[#565656] dark:text-dark-textColor-100'
           }`}
         >
           <Link href="/stories">Success Stories</Link>
@@ -120,8 +125,8 @@ const Header: FC = () => {
         <li
           className={`mr-9 font-secondaryFont font-semibold ${
             currentRoute === '/about'
-              ? 'text-[#264FAD] pb-8 border-b-[4px] border-[#264FAD] rounded-sm'
-              : ' text-[#565656]'
+              ? 'text-blue-500 pb-8 border-b-[4px] border-blue-500 rounded-sm'
+              : ' text-[#565656] dark:text-dark-textColor-100'
           }`}
         >
           <Link href="/about">About Us</Link>
@@ -129,8 +134,8 @@ const Header: FC = () => {
         <li
           className={`mr-9 font-secondaryFont font-semibold ${
             currentRoute === '/blog'
-              ? 'text-[#264FAD] pb-8 border-b-[4px] border-[#264FAD] rounded-sm'
-              : ' text-[#565656]'
+              ? 'text-blue-500 pb-8 border-b-[4px] border-blue-500 rounded-sm'
+              : ' text-[#565656] dark:text-dark-textColor-100'
           }`}
         >
           <Link href="/blog">Blogs</Link>
@@ -138,16 +143,17 @@ const Header: FC = () => {
         <li
           className={`mr-9 font-secondaryFont font-semibold ${
             currentRoute === '/donate'
-              ? 'text-[#264FAD] pb-8 border-b-[4px] border-[#264FAD] rounded-sm'
-              : ' text-[#565656]'
+              ? 'text-blue-500 pb-8 border-b-[4px] border-blue-500 rounded-sm'
+              : ' text-[#565656] dark:text-dark-textColor-100'
           }`}
         >
           <Link href="/donate">Get Involved</Link>
         </li>
       </nav>
+
       {openMenu && (
         <nav
-          className={`absolute right-5 w-48 px-4 py-2  mt-12 bg-slate-100 text-left flex flex-col lg:hidden shadow-md`}
+          className={`absolute right-5 w-48 px-4 py-2  mt-12 bg-slate-100 dark:bg-dark-backgroundLight text-left flex flex-col lg:hidden shadow-md`}
           ref={wrapperRef}
         >
           {links
@@ -165,82 +171,69 @@ const Header: FC = () => {
             })}
         </nav>
       )}
-
-      <button className="text-2xl lg:hidden " onClick={() => setOpenMenu(!openMenu)}>
-        {' '}
-        {openMenu ? <AiOutlineClose /> : <AiOutlineMenu />}
-      </button>
-      <div className="flex py-4 h-full items-center gap-5">
-        <Link
-          className="bg-[#264FAD] text-white font-secondaryFont font-bold rounded-lg px-4 py-2 hidden lg:block"
-          href="/donate"
-        >
-          Donate
-        </Link>
-        {loginState ? (
-          <ProfileDropDown handleSignOut={handleSignOut} />
-        ) : (
+      <div className="flex gap-2">
+        <div className="flex py-4 h-full items-center gap-5">
           <Link
-            href="/login"
-            className="mr-4 font-secondaryFont font-bold hover:text-primaryColor transition-all ease-linear hidden lg:block  "
+            className="bg-[#264FAD] text-white font-secondaryFont font-bold rounded-lg px-4 py-2 hidden lg:block"
+            href="/donate"
           >
-            Login
+            Donate
           </Link>
-        )}{' '}
+          {loginState ? (
+            <ProfileDropDown handleSignOut={handleSignOut} />
+          ) : (
+            <Link
+              href="/login"
+              className="mr-4 font-secondaryFont font-bold hover:text-primaryColor transition-all ease-linear hidden lg:block  "
+            >
+              Login
+            </Link>
+          )}{' '}
+        </div>
+        <div onClick={handleDarkMode} className="h-full flex items-center justify-center">
+          <div className="flex items-center justify-center px-3 py-3 dark:text-dark-textColor-100 hover:bg-dark-background/[0.1] dark:hover:bg-dark-textColor-100/[0.1] transition-all ease-linear rounded-full">
+            {colorTheme === 'light' ? (
+              <svg
+                // onClick={() => handleDarkMode}
+                xmlns="http://www.w3.org/2000/svg"
+                className="h-6 w-6"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"
+                />
+              </svg>
+            ) : (
+              <svg
+                // onClick={() => handleDarkMode}
+                xmlns="http://www.w3.org/2000/svg"
+                className="h-6 w-6"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"
+                />
+              </svg>
+            )}
+          </div>
+        </div>
+        <button className="text-2xl lg:hidden " onClick={() => setOpenMenu(!openMenu)}>
+          {' '}
+          {openMenu ? <AiOutlineClose /> : <AiOutlineMenu />}
+        </button>
       </div>
     </div>
   );
 };
 
 export default Header;
-
-export const Nav = ({
-  isLink,
-  href,
-  name,
-  onClick,
-  className,
-}: {
-  isLink: boolean;
-  href?: string;
-  name: string;
-  onClick?: () => void;
-  className?: string;
-}) => {
-  const currentRoute = usePathname();
-  if (isLink) {
-    return (
-      <Link
-        href={href}
-        className={`w-full px-2 py-2 flex gap-4 items-center  hover:bg-slate-300 transition-all ease-in-out rounded`}
-      >
-        <span
-          className={` ${
-            currentRoute === `${href}`
-              ? 'text-[#264FAD] font-medium border-b-[4px] border-[#264FAD] rounded-sm'
-              : ' text-[#565656]'
-          }`}
-        >
-          {name}
-        </span>
-      </Link>
-    );
-  }
-  if (onClick) {
-    return (
-      <span
-        onClick={() => onClick()}
-        className={`w-full px-2 py-2 flex gap-4 items-center  hover:bg-slate-300 transition-all ease-in-out rounded text-[#565656] cursor-pointer`}
-      >
-        {name}
-      </span>
-    );
-  }
-  return (
-    <button
-      className={`w-full px-2 py-2 flex gap-4 items-center  hover:bg-slate-300 transition-all ease-in-out rounded text-[#565656] cursor-pointer`}
-    >
-      {name}
-    </button>
-  );
-};

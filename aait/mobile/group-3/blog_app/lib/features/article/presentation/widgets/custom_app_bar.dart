@@ -70,13 +70,7 @@ class CustomAppBarNewArticle extends StatelessWidget {
               context,
               MaterialPageRoute(
                 builder: (context) => const ArticleReadingPage(
-                  headTitle: "headTitle",
-                  authorName: "authorName",
-                  postedAt: "postedAt",
-                  authorImageUrl: "authorImageUrl",
-                  postText: "postText",
-                  postImageUrl: "postImageUrl",
-                  likeCount: "likeCount",
+                id: "hjkijhgvbnkjhgvbnjh",
                 ),
               ),
             );

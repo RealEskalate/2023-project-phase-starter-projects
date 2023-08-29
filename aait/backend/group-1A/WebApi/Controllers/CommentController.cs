@@ -1,12 +1,12 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using System.Security.Claims;
 using Application.DTO.CommentDTO.DTO;
+using Application.DTO.NotificationDTO;
 using Application.Features.CommentFeatures.Requests.Commands;
 using Application.Features.CommentFeatures.Requests.Queries;
+using Application.Features.NotificationFeaure.Requests.Commands;
 using Application.Response;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace WebApi.Controllers
@@ -42,18 +42,23 @@ namespace WebApi.Controllers
         [HttpPost]
         public async Task<ActionResult<BaseResponse<CommentResponseDTO>>> Post([FromBody] CommentCreateDTO newCommentData)
         {
-            var userId = 3;
+            var userId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier)!.Value);
             var result = await _mediator.Send(new CommentCreateCommand{ NewCommentData = newCommentData, userId = userId });
+            await _mediator.Send(new CreateNotification {NotificationData = new NotificationCreateDTO()
+            {Content = "A Comment has been given on your post",NotificationContentId = result.Value.Id,NotificationType = "comment",UserId = userId}});
             return Ok(result);
             
         }
 
         
         [HttpPut("{id}")]
+        [Authorize]
         public async Task<ActionResult<BaseResponse<CommentResponseDTO>>> Put(int id, [FromBody] CommentUpdateDTO UpdateCommentData)
         {
-            var userId = 3;
+            var userId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier)!.Value);
             var result = await _mediator.Send(new UpdateCommentCommand { Id = id, CommentData = UpdateCommentData , userId = userId });
+             await _mediator.Send(new CreateNotification {NotificationData = new NotificationCreateDTO()
+            {Content = "A comment on your post has been Updated",NotificationContentId = result.Value.Id,NotificationType = "comment",UserId = userId}});
             return Ok(result);
             
         }
@@ -61,10 +66,13 @@ namespace WebApi.Controllers
 
 
         [HttpDelete("{id}")]
+        [Authorize]
         public async Task<ActionResult<BaseResponse<string>>> Delete(int id)
         {
-            var userId = 3;
-            var result = await _mediator.Send(new CommentDeleteCommand { userId = userId, Id = id });            
+            var userId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier)!.Value);
+            var result = await _mediator.Send(new CommentDeleteCommand { userId = userId, Id = id });     
+             await _mediator.Send(new CreateNotification {NotificationData = new NotificationCreateDTO()
+            {Content = "A comment on you post has been removed",NotificationContentId = result.Value,NotificationType = "comment",UserId = userId}});       
             return Ok(result);
             
         }

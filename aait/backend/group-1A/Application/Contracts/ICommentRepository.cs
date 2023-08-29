@@ -11,9 +11,10 @@ namespace Application.Contracts
 
         Task<List<CommentResponseDTO>> GetByPostId(int postId);
 
-        Task<List<CommentResponseDTO>> GetAllCommentsWithReaction(Expression<Func<Comment, bool>> predicate, int userId);
+        Task<List<CommentResponseDTO>> GetAllCommentsWithReaction(int userId);
 
         Task<bool> Exists(int id);
 
+        Task<List<Comment>> GetAll(int userId);
     }
 }

@@ -28,11 +28,11 @@ namespace Persistence.Repositories.CommentRespositories
             return result;
         }
 
-        public async Task<List<CommentResponseDTO>> GetAllCommentsWithReaction(Expression<Func<Comment, bool>> predicate, int userId)
+        public async Task<List<CommentResponseDTO>> GetAllCommentsWithReaction(int userId)
         {
             var allComments = await _dbContext.Comments
                     .Include(x => x.CommentReactions)
-                    .Where(predicate)
+                    .Where(x => x.UserId == userId)
                     .ToListAsync();
 
             var result = new List<CommentResponseDTO> ();
@@ -71,6 +71,11 @@ namespace Persistence.Repositories.CommentRespositories
         {
             var result = await _dbContext.Comments.FindAsync(id);
             return result != null;
+        }
+
+        public Task<List<Comment>> GetAll(int userId)
+        {
+            return _dbContext.Comments.Where(x => x.UserId == userId).ToListAsync();
         }
     }
 }

@@ -1,5 +1,5 @@
 String getBaseUrl() {
-  return 'http://localhost:4500/api/v1';
+  return 'https://blog-api-4z3m.onrender.com';
 }
 
 String cachedToken = 'token';

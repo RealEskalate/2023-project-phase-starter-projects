@@ -1,11 +1,15 @@
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:http/http.dart' as http;
+import 'package:http_parser/http_parser.dart';
+import 'package:mime/mime.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../../../core/error/exception.dart';
 import '../../../../core/util/constants.dart';
 import '../models/article_model.dart';
+import '../models/user_model.dart';
 
 abstract class ArticleRemoteDataSource {
   Future<ArticleModel> createArticle(ArticleModel article);
@@ -15,154 +19,167 @@ abstract class ArticleRemoteDataSource {
   Future<ArticleModel> getArticleById(String id);
   Future<List<ArticleModel>> getAllArticles();
   Future<List<String>> getTags();
+  Future<UserModel> getUser();
 }
 
 class ArticleRemoteDataSourceImpl implements ArticleRemoteDataSource {
   final http.Client client;
   final SharedPreferences sharedPreferences;
-  final http.MultipartRequest request;
   ArticleRemoteDataSourceImpl({
     required this.client,
     required this.sharedPreferences,
-    required this.request,
   });
 
-  final uriString = 'http://localhost:4500/api/v1';
+  final uriString = 'https://blog-api-4z3m.onrender.com';
+
   String baseUrl = getBaseUrl();
 
   @override
   Future<ArticleModel> createArticle(ArticleModel article) async {
-    String token =
-        jsonDecode(sharedPreferences.getString(cachedToken)!);
-    request.headers['Authorization'] = "Bearer $token";
-    try {
-      final responseArticle = await client.post(
-        Uri.parse('$baseUrl/article'),
-        body: jsonEncode(article.toMap()),
-      );
+    final String token = jsonDecode(sharedPreferences.getString(cachedToken)!);
+    final photoFile = File(article.image);
+    final String mimeType = lookupMimeType(article.image)!;
 
-      if (responseArticle.statusCode == 200) {
-        final responseUser = await client.get(Uri.parse('$baseUrl/user'));
-        if (responseUser.statusCode == 200) {
-          final newArticle = jsonDecode(responseArticle.body)["data"];
-          final author = jsonDecode(responseUser.body)["data"];
-          newArticle['user'] = author;
-          return ArticleModel.fromJson(newArticle);
-        }
-        return ArticleModel.fromJson(jsonDecode(responseArticle.body));
-      } else {
-        throw ServerException(
-            message: "Failed to create an article",
-            statusCode: responseArticle.statusCode);
-      }
-    } catch (e) {
+    var request = http.MultipartRequest('POST', Uri.parse('$baseUrl/article'));
+
+    //  final token =
+    // "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0ZTg0ZDg3YWMyNDQ1NjZjNzcyNjA1MCIsImlhdCI6MTY5Mjk3MjAzMiwiZXhwIjoxNjk1NTY0MDMyfQ.SgdYuy3wvMEsDFhL_vs-e77s2D7txtMGUw5ew2hD-jI";
+    request.headers['Authorization'] = 'Bearer $token';
+
+    // Loop through the tags list and add a separate field for each tag
+    for (int i = 0; i < article.tags.length; i++) {
+      request.fields['tags[$i]'] = article.tags[i];
+    }
+    request.fields.addAll({
+      'content': article.content,
+      'title': article.title,
+      'subTitle': article.subTitle,
+      'estimatedReadTime': article.estimatedReadTime,
+    });
+    request.files.add(http.MultipartFile.fromBytes(
+      'photo',
+      photoFile.readAsBytesSync(),
+      filename: photoFile.path,
+      contentType: MediaType.parse(mimeType),
+    ));
+
+    http.StreamedResponse response = await request.send();
+
+    if (response.statusCode == 200) {
+      final http.Response result = await http.Response.fromStream(response);
+      final jsonResponse = jsonDecode(result.body);
+      final newArticle = await getArticleById(jsonResponse["data"]["id"]);
+      return newArticle;
+    } else {
+      final result = await http.Response.fromStream(response);
       throw ServerException(
-          message: "Faild to create the article: $e", statusCode: 400);
+          statusCode: result.statusCode,
+          message: "Failed to Create an article!");
     }
   }
 
   @override
   Future<ArticleModel> deleteArticle(String id) async {
-    String token =
-        jsonDecode(sharedPreferences.getString(cachedToken)!);
+    final String token = jsonDecode(sharedPreferences.getString(cachedToken)!);
+    var request = http.Request('DELETE', Uri.parse('$baseUrl/article/$id'));
     request.headers['Authorization'] = "Bearer $token";
-    try {
-      final responseArticle =
-          await client.delete(Uri.parse('$baseUrl/article/$id'));
-      if (responseArticle.statusCode == 200) {
-        final responseUser = await client.get(Uri.parse('$baseUrl/user'));
-        if (responseUser.statusCode == 200) {
-          final deletedArticle = jsonDecode(responseArticle.body)['data'];
-          final author = jsonDecode(responseUser.body)["data"];
-          deletedArticle['user'] = author;
-          return ArticleModel.fromJson(deletedArticle);
-        }
-        return ArticleModel.fromJson(jsonDecode(responseArticle.body));
-      } else {
-        throw ServerException(
-            message: "Failed to delete the article",
-            statusCode: responseArticle.statusCode);
-      }
-    } catch (e) {
+
+    http.StreamedResponse response = await request.send();
+
+    if (response.statusCode == 200) {
+      final http.Response result = await http.Response.fromStream(response);
+      final jsonResponse = jsonDecode(result.body);
+      final newArticle = await getArticleById(jsonResponse["data"]["id"]);
+      return newArticle;
+    } else {
+      final result = await http.Response.fromStream(response);
       throw ServerException(
-          message: "Faild to delete the article: $e", statusCode: 400);
+          statusCode: result.statusCode,
+          message: "Failed to delete an article!");
     }
   }
 
   @override
   Future<List<ArticleModel>> getAllArticles() async {
-    String token =
-        jsonDecode(sharedPreferences.getString(cachedToken)!);
-    request.headers['Authorization'] = "Bearer $token";
-    try {
-      final response = await client.get(Uri.parse('$baseUrl/article'));
-      if (response.statusCode == 200) {
-        final responseMap = jsonDecode(response.body) as Map<String, dynamic>;
-        final responseData = responseMap["data"] as List;
-
-        return List<Map<String, dynamic>>.from(responseData)
+    String token = jsonDecode(sharedPreferences.getString(cachedToken)!);
+    var request = http.Request('GET', Uri.parse('$baseUrl/article'));
+    request.headers['Authorization'] = 'Bearer $token';
+    http.StreamedResponse response = await request.send();
+    if (response.statusCode == 200) {
+      final http.Response result = await http.Response.fromStream(response);
+      final jsonResponse = jsonDecode(result.body)["data"];
+      return List<Map<String, dynamic>>.from(jsonResponse)
           .map((articleData) => ArticleModel.fromJson(articleData))
           .toList();
-      } else {
-        throw ServerException(statusCode: response.statusCode, message: "Failed to fetch articles");
-      }
-    } catch (e) {
+    } else {
+      final result = await http.Response.fromStream(response);
       throw ServerException(
-          message: "Failed to fetch articles: $e", statusCode: 400);
+          statusCode: result.statusCode, message: "Failed to fetch articles");
     }
   }
 
   @override
-  Future<List<ArticleModel>> getArticle(String tags, String searchParams) async {
+  Future<List<ArticleModel>> getArticle(
+      String tags, String searchParams) async {
     String token = jsonDecode(sharedPreferences.getString(cachedToken)!);
+
+    var request = http.Request('GET',
+        Uri.parse('$baseUrl/article?tags=$tags&searchParams=$searchParams'));
+
     request.headers['Authorization'] = "Bearer $token";
 
-    try {
-      final String url = '$baseUrl/article?tags=$tags&searchParams=$searchParams';
-      final response = await client.get(Uri.parse(url));
+    http.StreamedResponse response = await request.send();
 
-      if (response.statusCode == 200) {
-        final responseMap = jsonDecode(response.body);
-        final responseData = responseMap['data'] as List;
+    if (response.statusCode == 200) {
+      final http.Response result = await http.Response.fromStream(response);
+      final jsonResponse = jsonDecode(result.body)["data"] as List;
 
-        return List<Map<String, dynamic>>.from(responseData)
+      return List<Map<String, dynamic>>.from(jsonResponse)
           .map((articleData) => ArticleModel.fromJson(articleData))
           .toList();
-      } else {
-        throw ServerException(statusCode: response.statusCode, message: "Failed to fetch article");
-      }
-    } catch (e) {
-      throw ServerException(statusCode: 400, message: "Failed to fetch article: $e");
+    } else {
+      final result = await http.Response.fromStream(response);
+      print(jsonDecode(result.body));
+      throw ServerException(
+          statusCode: result.statusCode, message: "Failed to fetch articles");
     }
   }
 
   @override
   Future<ArticleModel> getArticleById(String id) async {
-    final String token = jsonDecode(sharedPreferences.getString(cachedToken)!);
-    request.headers['Authorization'] = "Bearer $token";
+    String token = jsonDecode(sharedPreferences.getString(cachedToken)!);
 
-    try {
-      final response = await client.get(Uri.parse('$baseUrl/article/$id'));
-      if (response.statusCode == 200) {
-        final responseMap = jsonDecode(response.body) as Map<String, dynamic>;
-        final responseData = responseMap["data"];
+    var request = http.Request('GET', Uri.parse('$baseUrl/article/$id'));
+    request.headers['Authorization'] = 'Bearer $token';
 
-        return ArticleModel.fromJson(responseData);
-      } else {
-        throw ServerException(statusCode: response.statusCode, message: "Failed to fetch article");
-      }
-    } catch(e) {
-      throw ServerException(message: "Failed to fetch article: $e", statusCode: 400);
+    http.StreamedResponse response = await request.send();
+
+    if (response.statusCode == 200) {
+      final http.Response result = await http.Response.fromStream(response);
+      final jsonResponse = jsonDecode(result.body);
+      final article = ArticleModel.fromJson(jsonResponse["data"]);
+      return article;
+    } else {
+      final result = await http.Response.fromStream(response);
+      throw ServerException(
+          statusCode: result.statusCode, message: "Failed to get the article");
     }
   }
 
   @override
   Future<List<String>> getTags() async {
-    final response = await client.get(Uri.parse('$baseUrl/tags'));
-    if (response.statusCode == 200 || response.statusCode == 201) {
-      final responseMap = jsonDecode(response.body) as Map<String, dynamic>;
-      final responseData = responseMap["tags"];
-      return List<String>.from(responseData)
+    String token = jsonDecode(sharedPreferences.getString(cachedToken)!);
+    var request = http.Request('GET', Uri.parse('$baseUrl/tags'));
+    request.headers['Authorization'] = 'Bearer $token';
+
+    http.StreamedResponse response = await request.send();
+
+    if (response.statusCode == 200) {
+      final http.Response result = await http.Response.fromStream(response);
+      final jsonResponse = jsonDecode(result.body);
+      final tags = jsonResponse['data'];
+
+      return List<String>.from(tags)
           .map((tagData) => tagData.toString())
           .toList();
     } else {
@@ -173,33 +190,60 @@ class ArticleRemoteDataSourceImpl implements ArticleRemoteDataSource {
 
   @override
   Future<ArticleModel> updateArticle(ArticleModel article) async {
+    String token = jsonDecode(sharedPreferences.getString(cachedToken)!);
     final String id = article.id;
-    String token =
-        jsonDecode(sharedPreferences.getString(cachedToken)!);
-    request.headers['Authorization'] = "Bearer $token";
-    try {
-      final responseArticle = await client.put(
-        Uri.parse('$baseUrl/article/$id'),
-        body: jsonEncode(article.toMap()),
-      );
+    final photoFile = File(article.image);
+    final String mimeType = lookupMimeType(article.image)!;
 
-      if (responseArticle.statusCode == 200) {
-        final responseUser = await client.get(Uri.parse('$baseUrl/user'));
-        if (responseUser.statusCode == 200) {
-          final updatedArticle = jsonDecode(responseArticle.body)["data"];
-          final author = jsonDecode(responseUser.body)["data"];
-          updatedArticle['user'] = author;
-          return ArticleModel.fromJson(updatedArticle);
-        }
-        return ArticleModel.fromJson(jsonDecode(responseArticle.body));
-      } else {
-        throw ServerException(
-            message: "Failed to updtate an article",
-            statusCode: responseArticle.statusCode);
-      }
-    } catch (e) {
+    var request =
+        http.MultipartRequest('PUT', Uri.parse('$baseUrl/article/$id'));
+    request.headers['Authorization'] = 'Bearer $token';
+
+    for (int i = 0; i < article.tags.length; i++) {
+      request.fields['tags[$i]'] = article.tags[i];
+    }
+    request.fields.addAll({
+      'content': article.content,
+      'title': article.title,
+      'subTitle': article.subTitle,
+      'estimatedReadTime': article.estimatedReadTime,
+    });
+    request.files.add(http.MultipartFile.fromBytes(
+      'photo',
+      photoFile.readAsBytesSync(),
+      filename: photoFile.path,
+      contentType: MediaType.parse(mimeType),
+    ));
+
+    http.StreamedResponse response = await request.send();
+
+    if (response.statusCode == 200) {
+      final http.Response result = await http.Response.fromStream(response);
+      final jsonResponse = jsonDecode(result.body);
+      final newArticle = await getArticleById(jsonResponse["data"]["id"]);
+      return newArticle;
+    } else {
+      final result = await http.Response.fromStream(response);
       throw ServerException(
-          message: "Faild to updtate the article: $e", statusCode: 400);
+          statusCode: result.statusCode,
+          message: "Failed to Update an article!");
+    }
+  }
+
+  @override
+  Future<UserModel> getUser() async {
+    String token = jsonDecode(sharedPreferences.getString(cachedToken)!);
+    final result = await client.get(Uri.parse('$baseUrl/user'),
+        headers: {"Authorization": "Bearer $token"});
+
+    if (result.statusCode == 200) {
+      final jsonResponse = jsonDecode(result.body);
+      final UserModel user = UserModel.fromJson(jsonResponse);
+      return user;
+    } else {
+      throw ServerException(
+          message: "Could not connect to the server",
+          statusCode: result.statusCode);
     }
   }
 }

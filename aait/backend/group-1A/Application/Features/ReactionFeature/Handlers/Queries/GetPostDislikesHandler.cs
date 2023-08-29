@@ -1,6 +1,7 @@
 ﻿using Application.Contracts;
 using Application.DTO.Common;
 using Application.Exceptions;
+using Application.Exceptions;
 using Application.Features.PostFeature.Requests.Queries;
 using Application.Response;
 using AutoMapper;
@@ -29,13 +30,18 @@ namespace Application.Features.PostFeature.Handlers.Queries
             {
                 throw new NotFoundException("Post is not found to get the Reactions");
             }
+
+            
             var result = await _postReaction.DisLikes(request.PostId);
+
             return new BaseResponse<List<ReactionResponseDTO>> () {
                 Success = true,
                 Message = "Dislikes are retrieved successfully",
+                
                 Value = _mapper.Map<List<ReactionResponseDTO>>(result)
             };
-
         }
     }
+
 }
+

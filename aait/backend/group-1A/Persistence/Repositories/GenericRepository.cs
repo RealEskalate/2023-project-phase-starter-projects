@@ -18,6 +18,7 @@ namespace Persistence.Repositories
         public async Task<T> Add(T entity)
         {   
             await _dbContext.Set<T>().AddAsync(entity);
+             
             await _dbContext.SaveChangesAsync();
             return entity;
         }
@@ -27,26 +28,6 @@ namespace Persistence.Repositories
             _dbContext.Set<T>().Remove(entity);
             await _dbContext.SaveChangesAsync();
             return true;
-        }
-
-        
-        
-
-
-        public async Task<List<T>> GetAll(Expression<Func<T, bool>> predicate)
-        {
-            var result = await _dbContext.Set<T>()
-                    .Where(predicate)
-                    .ToListAsync();
-            return result;
-        }
-
-        
-
-
-        public Task<T> MakeReaction(int Id, T entity)
-        {
-            throw new NotImplementedException();
         }
 
         public async Task<T> Update(T entity)

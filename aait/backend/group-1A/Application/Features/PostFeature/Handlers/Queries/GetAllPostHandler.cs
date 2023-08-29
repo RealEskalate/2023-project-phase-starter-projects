@@ -24,7 +24,7 @@ namespace Application.Features.PostFeature.Handlers.Queries
         }
         public async Task<BaseResponse<List<PostResponseDTO>>> Handle(GetAllPostsQuery request, CancellationToken cancellationToken)
         {
-            var result = await _postRepository.GetAllPostsWithReaction(entity => entity.UserId == request.userId, request.userId);
+            var result = await _postRepository.GetAllPostsWithReaction(request.userId);
             return new BaseResponse<List<PostResponseDTO>> {
                 Success = true,
                 Message = "Posts are retrieved successfully",

@@ -1,11 +1,9 @@
 ﻿
 
 using Application.Contracts;
-using Application.DTO.NotificationDTO;
 using Application.DTO.PostDTO.DTO;
 using Application.DTO.PostDTO.validations;
 using Application.Exceptions;
-using Application.Features.NotificationFeaure.Requests.Commands;
 using Application.Features.PostFeature.Requests.Commands;
 using Application.Response;
 using AutoMapper;
@@ -18,12 +16,10 @@ namespace Application.Features.PostFeature.Handlers.Commands
     {
         private readonly IPostRepository _postRepository;
         private readonly IMapper _mapper;
-        private readonly IMediator _mediator;
-        public UpdatePostHandler(IPostRepository postRepository, IMapper mapper, IMediator mediator)
+        public UpdatePostHandler(IPostRepository postRepository, IMapper mapper)
         {
             _postRepository = postRepository;
             _mapper = mapper;
-            _mediator = mediator;
         }
 
         public async Task<BaseResponse<PostResponseDTO>> Handle(UpdatePostCommand request, CancellationToken cancellationToken)
@@ -37,6 +33,7 @@ namespace Application.Features.PostFeature.Handlers.Commands
             }
             var exists = await _postRepository.Exists(request.Id);
 
+
             if (!exists) 
             {
                 throw new NotFoundException("Post is not found");
@@ -47,17 +44,6 @@ namespace Application.Features.PostFeature.Handlers.Commands
             newPost.UserId = request.userId;
             var updationResult = await _postRepository.Update(newPost);
             var result = _mapper.Map<PostResponseDTO>(updationResult);
-
-            // notification
-            var notificationData = new NotificationCreateDTO
-            {
-                Content = $"The Post with id {request.userId} is updated",
-                NotificationContentId = result.Id,
-                NotificationType = "post",
-                UserId = request.userId,
-            };
-
-            await _mediator.Send(new CreateNotification { NotificationData = notificationData });
 
             return new BaseResponse<PostResponseDTO> {
                 Success = true,

@@ -3,6 +3,7 @@
 using Application.DTO.Post;
 using Application.Features.Post.Request.Commands;
 using Application.Features.Post.Request.Queries;
+using Application.Responses;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -21,11 +22,13 @@ public class PostController : ControllerBase
     }
 
     [HttpGet("User/{UserId}")]
-    public async Task<IActionResult> GetUserPosts( int UserId ){
-        var command = new GetUserPostRequest(){Id = UserId};
+    public async Task<IActionResult> GetUserPosts(int UserId)
+    {
+        var command = new GetUserPostRequest() { Id = UserId };
         var posts = await _mediator.Send(command);
-        return Ok(posts);
+        return ResponseHandler<List<PostDto>>.HandleResponse(posts, 200);
     }
+
     
     
     [HttpGet]
@@ -36,19 +39,19 @@ public class PostController : ControllerBase
         {
             var command = new GetByContenetRequest() { Contenet = search };
             var posts = await _mediator.Send(command);
-            return Ok(posts);
+            return ResponseHandler<List<PostDto>>.HandleResponse(posts, 200);
         }
         else if (!string.IsNullOrEmpty(tag))
         {
             var command = new GetByTagRequest { Tag = tag };
             var posts = await _mediator.Send(command);
-            return Ok(posts);
+            return ResponseHandler<List<PostDto>>.HandleResponse(posts, 200);
         }
         else
         {
             var command = new GetFollowingPostRequest{Id = int.Parse(User.FindFirst("reader").Value)};
             var posts = await _mediator.Send(command);
-            return Ok(posts);
+            return ResponseHandler<List<PostDto>>.HandleResponse(posts, 200);
         }
     }
     
@@ -59,7 +62,7 @@ public class PostController : ControllerBase
         createPost.UserId = int.Parse(User.FindFirst("reader").Value);
         var command = new CreatePostCommand {CreatePost = createPost};
         var postId = await _mediator.Send(command);
-        return Ok(postId);
+        return ResponseHandler<int>.HandleResponse(postId, 201);
     }
     
     
@@ -69,8 +72,8 @@ public class PostController : ControllerBase
         updatePost.UserId = int.Parse(User.FindFirst("reader").Value);;
         updatePost.Id = PostId;
         var command = new UpdatePostCommand { UpdatedPost= updatePost};
-        await _mediator.Send(command);
-        return NoContent();
+        var result = await _mediator.Send(command);
+        return ResponseHandler<Unit>.HandleResponse(result, 204);
     }
     
     
@@ -78,8 +81,8 @@ public class PostController : ControllerBase
     public async Task<IActionResult> DeletePoset(int PostId){
         
         var command = new DeletePostCommand { Id= PostId, UserId = int.Parse(User.FindFirst("reader").Value)};
-        await _mediator.Send(command);
-        return NoContent();
+        var result = await _mediator.Send(command);
+        return ResponseHandler<Unit>.HandleResponse(result, 204);
     }
 }
 

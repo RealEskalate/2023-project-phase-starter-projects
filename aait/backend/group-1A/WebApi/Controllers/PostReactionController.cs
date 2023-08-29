@@ -1,8 +1,10 @@
-﻿using Application.DTO.Common;
+﻿using System.Security.Claims;
+using Application.DTO.Common;
+using Application.DTO.NotificationDTO;
+using Application.Features.NotificationFeaure.Requests.Commands;
 using Application.Features.PostFeature.Requests.Commands;
 using Application.Features.PostFeature.Requests.Queries;
 using Application.Response;
-using AutoMapper;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -21,7 +23,8 @@ namespace WebApi.Controllers
 
         [HttpGet("likes/{id}")]
         public async Task<ActionResult<BaseResponse<List<ReactionResponseDTO>>>>  GetLikes(int id)
-        {
+        {   
+            
             var result = await _mediator.Send(new GetPostLikesQuery{ PostId = id });
             return Ok(result);
         }
@@ -35,10 +38,12 @@ namespace WebApi.Controllers
         }
         
         [HttpPost("react")]
-        public async Task<ActionResult<BaseResponse<string>>> Post([FromBody] ReactionDTO reactionData)
+        public async Task<ActionResult<BaseResponse<int>>> Post([FromBody] ReactionDTO reactionData)
         {
-            // var user id from the context
-            var result = await _mediator.Send(new PostReactionCommand{ UserId = 3, ReactionData = reactionData });
+            var userId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier)!.Value);
+            var result = await _mediator.Send(new PostReactionCommand{ UserId = userId, ReactionData = reactionData });
+            await _mediator.Send(new CreateNotification {NotificationData = new NotificationCreateDTO()
+            {Content = $"User with {userId} {reactionData.ReactionType} your post",NotificationContentId = result.Value,NotificationType = "Post",UserId = userId}});
             return Ok(result);
         }
     }

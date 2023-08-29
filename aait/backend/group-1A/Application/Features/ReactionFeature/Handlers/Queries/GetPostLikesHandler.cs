@@ -30,6 +30,7 @@ namespace Application.Features.PostFeature.Handlers.Queries
             {
                 throw new NotFoundException( "Post is not found to get the Reactions");
             }
+            
 
             var result = await _postReaction.Likes(request.PostId);
             return new BaseResponse<List<ReactionResponseDTO>> () {
@@ -40,3 +41,4 @@ namespace Application.Features.PostFeature.Handlers.Queries
         }
     }
 }
+    

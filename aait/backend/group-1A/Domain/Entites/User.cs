@@ -1,3 +1,5 @@
+using Domain.Entites;
+
 namespace SocialSync.Domain.Entities
 {
     public class User
@@ -17,6 +19,9 @@ namespace SocialSync.Domain.Entities
         public string Bio { get; set; } = string.Empty;
 
         
+        public virtual ICollection<Follow> Follower { get; set; }
+
+        public virtual ICollection<Follow> Followee { get; set; }
 
     }
 }

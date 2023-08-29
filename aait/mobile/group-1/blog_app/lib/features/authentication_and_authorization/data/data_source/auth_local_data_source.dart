@@ -1,5 +1,9 @@
+import '../models/user_data_model.dart';
+
 abstract class AuthLocalDataSource {
-  Future<void> cacheToken(String key, String token);
-  Future<String> getToken(String key);
-  Future<void> deleteUser(String key);
+  Future<void> cacheToken(String token);
+  Future<String> getToken();
+  Future<void> deleteUser();
+  Future<void> setUser(DataModel userDataModel);
+  Future<DataModel> getUser();
 }

@@ -78,6 +78,8 @@ class CustomClient {
       Uri.parse('$apiBaseUrl$relativeUrl'),
     );
 
+    print('/// $apiBaseUrl$relativeUrl');
+
     request.headers.addAll(headersWithAuth);
 
     _setRequestData(request, body);

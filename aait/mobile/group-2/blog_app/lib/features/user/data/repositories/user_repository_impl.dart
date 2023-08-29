@@ -1,10 +1,10 @@
+import 'package:dartz/dartz.dart';
+
 import '../../../../core/error/exception.dart';
 import '../../../../core/error/failure.dart';
 import '../../../../core/network/network_info.dart';
 import '../../../article/domain/entities/article.dart';
 import '../../domain/entities/user_data.dart';
-import 'package:dartz/dartz.dart';
-
 import '../../domain/repositories/user_repository.dart';
 import '../datasources/local/user_local_data_source.dart';
 import '../datasources/user_remote_data_source.dart';

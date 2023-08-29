@@ -10,9 +10,29 @@ import 'features/article/data/datasources/local/local.dart';
 import 'features/article/data/datasources/remote/remote.dart';
 import 'features/article/data/repositories/article_repository_impl.dart';
 import 'features/article/domain/repositories/article_repository.dart';
+import 'features/article/domain/usecases/filter_articles.dart';
 import 'features/article/domain/usecases/usecases.dart';
 import 'features/article/presentation/bloc/article_bloc.dart';
+import 'features/article/presentation/bloc/tag_bloc.dart';
 import 'features/article/presentation/bloc/tag_selector_bloc.dart';
+import 'features/authentication/data/data_sources/local_data_source.dart';
+import 'features/authentication/data/data_sources/local_data_source_impl.dart';
+import 'features/authentication/data/data_sources/remote_data_source.dart';
+import 'features/authentication/data/data_sources/remote_data_source_impl.dart';
+import 'features/authentication/data/repositories/auth_repository_impl.dart';
+import 'features/authentication/domain/repositories/auth_repo.dart';
+import 'features/authentication/domain/use_cases/auth_use_case.dart';
+import 'features/authentication/presentation/bloc/auth_bloc.dart';
+import 'features/user/data/datasources/local/user_local_data_source.dart';
+import 'features/user/data/datasources/local/user_local_data_source_impl.dart';
+import 'features/user/data/datasources/user_remote_data_source.dart';
+import 'features/user/data/datasources/user_remote_data_source_impl.dart';
+import 'features/user/data/repositories/user_repository_impl.dart';
+import 'features/user/domain/repositories/user_repository.dart';
+import 'features/user/domain/usecases/user_usecases/get_bookmarked_articles_usecase.dart';
+import 'features/user/domain/usecases/user_usecases/get_user_data_usecase.dart';
+import 'features/user/domain/usecases/user_usecases/update_user_photo_usecase.dart';
+import 'features/user/presentation/bloc/user_bloc.dart';
 
 final serviceLocator = GetIt.instance;
 
@@ -21,22 +41,31 @@ Future<void> init() async {
   // Bloc
   serviceLocator.registerFactory(
     () => ArticleBloc(
-      getTags: serviceLocator(),
-      createArticle: serviceLocator(),
-      deleteArticle: serviceLocator(),
-      getAllArticles: serviceLocator(),
-      getArticle: serviceLocator(),
-      updateArticle: serviceLocator(),
-    ),
+        createArticle: serviceLocator(),
+        deleteArticle: serviceLocator(),
+        getAllArticles: serviceLocator(),
+        getArticle: serviceLocator(),
+        updateArticle: serviceLocator(),
+        filterArticles: serviceLocator()),
   );
   serviceLocator.registerFactory(
     () => TagSelectorBloc(),
   );
+  serviceLocator.registerFactory(
+    () => TagBloc(getTags: serviceLocator()),
+  );
+
+  serviceLocator.registerFactory(() => UserBloc(
+        getUser: serviceLocator(),
+        updateUserPhoto: serviceLocator(),
+        getBookmarkedArticles: serviceLocator(),
+      ));
 
   // Use cases
   serviceLocator.registerLazySingleton(
     () => GetTags(serviceLocator()),
   );
+
   serviceLocator.registerLazySingleton(
     () => CreateArticle(serviceLocator()),
   );
@@ -52,12 +81,32 @@ Future<void> init() async {
   serviceLocator.registerLazySingleton(
     () => GetArticle(serviceLocator()),
   );
+  serviceLocator.registerLazySingleton(
+    () => FilterArticles(serviceLocator()),
+  );
+
+  serviceLocator.registerLazySingleton(
+    () => GetBookmarkedArticles(serviceLocator()),
+  );
+
+  serviceLocator.registerLazySingleton(
+    () => GetUserData(serviceLocator()),
+  );
+
+  serviceLocator.registerLazySingleton(
+    () => UpdateUserPhoto(serviceLocator()),
+  );
+
+  serviceLocator.registerLazySingleton(
+    () => GetTokenUseCase(authRepository: serviceLocator()),
+  );
 
   // Core
   serviceLocator.registerLazySingleton<NetworkInfo>(
       () => NetworkInfoImpl(serviceLocator()));
   serviceLocator.registerLazySingleton<CustomClient>(
-      () => CustomClient(serviceLocator(), apiBaseUrl: apiBaseUrl),);
+    () => CustomClient(serviceLocator(), apiBaseUrl: apiBaseUrl),
+  );
 
   // Repository
   serviceLocator.registerLazySingleton<ArticleRepository>(
@@ -68,12 +117,80 @@ Future<void> init() async {
     ),
   );
 
+  serviceLocator.registerLazySingleton<UserRepository>(
+    () => UserRespositoryImpl(
+      networkInfo: serviceLocator(),
+      remoteDataSource: serviceLocator(),
+      localDataSource: serviceLocator(),
+    ),
+  );
+
   // Data sources
   serviceLocator.registerLazySingleton<ArticleLocalDataSource>(
     () => ArticleLocalDataSourceImpl(sharedPreferences: serviceLocator()),
   );
   serviceLocator.registerLazySingleton<ArticleRemoteDataSource>(
     () => ArticleRemoteDataSourceImpl(client: serviceLocator()),
+  );
+
+  serviceLocator.registerLazySingleton<UserLocalDataSource>(
+    () => UserLocalDataSourceImpl(sharedPreferences: serviceLocator()),
+  );
+  serviceLocator.registerLazySingleton<UserRemoteDataSource>(
+    () => UserRemoteDataSourceImpl(client: serviceLocator()),
+  );
+
+  // Feature-Authentication
+  //! Bloc
+  serviceLocator.registerFactory(
+    () => AuthBloc(
+      getTokenUsecase: serviceLocator(),
+      loginUseCase: serviceLocator(),
+      signUpUseCase: serviceLocator(),
+      logoutUseCase: serviceLocator(),
+      customClient: serviceLocator(),
+    ),
+  );
+
+  //! Use cases
+  serviceLocator.registerLazySingleton(
+    () => LoginUseCase(
+      authRepository: serviceLocator(),
+    ),
+  );
+
+  serviceLocator.registerLazySingleton(
+    () => SignUpUseCase(
+      authRepository: serviceLocator(),
+    ),
+  );
+
+  serviceLocator.registerLazySingleton(
+    () => LogoutUseCase(
+      authRepository: serviceLocator(),
+    ),
+  );
+
+  //! Repository
+  serviceLocator.registerLazySingleton<AuthRepository>(
+    () => AuthRepositoryImpl(
+      authRemoteDataSource: serviceLocator(),
+      authLocalDataSource: serviceLocator(),
+      networkInfo: serviceLocator(),
+    ),
+  );
+
+  //! Data sources
+  serviceLocator.registerLazySingleton<AuthRemoteDataSource>(
+    () => AuthRemoteDataSourceImpl(
+      client: serviceLocator(),
+    ),
+  );
+
+  serviceLocator.registerLazySingleton<AuthLocalDataSource>(
+    () => AuthLocalDataSourceImpl(
+      sharedPreferences: serviceLocator(),
+    ),
   );
 
   // External

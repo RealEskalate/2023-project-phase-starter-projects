@@ -13,7 +13,7 @@ const SmallBlogCard = ({ blogs }: BlogCardProps) => {
         <div key={blog.title} className=" w-[23%] rounded-md ">
           <div className=" shadow-lg flex justify-center items-center">
             <Image
-              className=" rounded-md"
+              className="rounded-md"
               src={blog.image}
               alt="blog image"
               width={350}
@@ -64,7 +64,7 @@ const SmallBlogCard = ({ blogs }: BlogCardProps) => {
                 height={20}
               />
               <span className="text-sm text-blog_pending_icon_text_color font-bold">
-                Pending
+                {blog.likes}
               </span>
             </span>
 

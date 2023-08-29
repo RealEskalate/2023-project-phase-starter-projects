@@ -9,4 +9,6 @@ public interface IAuthRepository{
     Task<User> LoginUser(User user);
 
     Task<bool> UserExists(string username);
+
+
 }

@@ -7,7 +7,7 @@ import 'package:blog_app/features/profile/domain/entity/profile.dart';
 import 'package:http/http.dart' as http;
 import 'package:http_parser/http_parser.dart';
 import 'package:mime/mime.dart';
-// import 'package:shared_preferences/shared_preferences.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:image_picker/image_picker.dart';
 
 abstract class ProfileRemoteDataSource {
@@ -16,13 +16,14 @@ abstract class ProfileRemoteDataSource {
 }
 
 class ProfileRemoteDataSourceImpl implements ProfileRemoteDataSource {
-  final token =
-      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0ZTg0ZDg3YWMyNDQ1NjZjNzcyNjA1MCIsImlhdCI6MTY5Mjk3MjAzMiwiZXhwIjoxNjk1NTY0MDMyfQ.SgdYuy3wvMEsDFhL_vs-e77s2D7txtMGUw5ew2hD-jI";
+  // final token =
+  //     "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0ZTg0ZDg3YWMyNDQ1NjZjNzcyNjA1MCIsImlhdCI6MTY5Mjk3MjAzMiwiZXhwIjoxNjk1NTY0MDMyfQ.SgdYuy3wvMEsDFhL_vs-e77s2D7txtMGUw5ew2hD-jI";
   final http.Client client;
   final String url = 'https://blog-api-4z3m.onrender.com/api/v1/user';
   ProfileRemoteDataSourceImpl({required this.client});
   @override
   Future<Profile> getProfile() async {
+    final token =await getStoredToken();
     final result = await client
         .get(Uri.parse(url), headers: {"Authorization": "Bearer $token"});
     if (result.statusCode == 200) {
@@ -39,6 +40,7 @@ class ProfileRemoteDataSourceImpl implements ProfileRemoteDataSource {
 
   @override
   Future<Profile> updateProfilePicture(XFile photoXFile) async {
+    final token = await getStoredToken();
     final photoFile = File(photoXFile.path);
     final String updateUrl = url + '/update/image';
     final String mimeType = lookupMimeType(photoFile.path)!;
@@ -74,10 +76,9 @@ class ProfileRemoteDataSourceImpl implements ProfileRemoteDataSource {
     }
   }
 
-// Comment left on purpose will uncomment when SharedPreferences for getting token is done
-  // Future<String> getStoredToken() async {
-  //   final SharedPreferences pref = await SharedPreferences.getInstance();
-  //   final String token = pref.getString('token')!;
-  //   return token;
-  // }
+  Future<String> getStoredToken() async {
+    final SharedPreferences pref = await SharedPreferences.getInstance();
+    final String token = pref.getString('token')!;
+    return token;
+  }
 }

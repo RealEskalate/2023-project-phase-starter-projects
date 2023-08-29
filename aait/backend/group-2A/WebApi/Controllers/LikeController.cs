@@ -24,7 +24,7 @@ public class LikeController : ControllerBase
     
   
     [HttpPost("{PostId}")]
-    public async Task<ActionResult> AddLike( int PostId)
+    public async Task<IActionResult> AddLike( int PostId)
     {
         var command = new CreateLikeCommand(){
             like = new LikedDto{
@@ -32,13 +32,13 @@ public class LikeController : ControllerBase
                 PostId = PostId
             }
         };
-        await _mediator.Send(command);
-        return NoContent();
+        var result = await _mediator.Send(command);
+        return ResponseHandler<Unit>.HandleResponse(result, 201);
     }
     
 
     [HttpDelete("{PostId}")]
-    public async Task<ActionResult> RemoveLike(int PostId)
+    public async Task<IActionResult> RemoveLike(int PostId)
     {
         var command = new DeleteLikeCommand(){
             like = new LikedDto{
@@ -46,22 +46,22 @@ public class LikeController : ControllerBase
                 PostId = PostId
             }
         };
-        await _mediator.Send(command);
-        return NoContent();
+        var result = await _mediator.Send(command);
+        return ResponseHandler<Unit>.HandleResponse(result, 204);
     }
 
     [HttpGet("{PostId}")]
-    public async Task<ActionResult<List<UserDto>>> GetLikes(int PostId){
+    public async Task<IActionResult> GetLikes(int PostId){
         var command = new GetPostLikesQuery(){ Id = PostId };
         var users = await _mediator.Send(command);
-        return Ok(users);
+        return ResponseHandler<List<UserDto>>.HandleResponse(users, 200);
     }
     
     [HttpGet]
-    public async Task<ActionResult<List<PostDto>>> GetLikedPost(){
+    public async Task<IActionResult> GetLikedPost(){
         var command = new GetLikedPostRequest(){ Id = int.Parse(User.FindFirst("reader").Value) };
         var posts = await _mediator.Send(command);
-        return Ok(posts);
+        return ResponseHandler<List<PostDto>>.HandleResponse(posts, 200);
     }
 
     

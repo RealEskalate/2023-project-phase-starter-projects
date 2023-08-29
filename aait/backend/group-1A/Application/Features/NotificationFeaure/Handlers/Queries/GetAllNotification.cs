@@ -26,7 +26,7 @@ namespace Application.Features.NotificationFeaure.Handlers.Queries
         public async Task<BaseResponse<List<NotificationResponseDTO>>> Handle(GetAllNotificationsQuery request, CancellationToken cancellationToken)
         {
             
-            var result = await _notificationRepository.GetAll(entity => entity.UserId == request.UserId);
+            var result = await _notificationRepository.GetAll(request.UserId);
             return new BaseResponse<List<NotificationResponseDTO>> () {
                 Success = true,
                 Message = "Notifications are retrieved successfully",

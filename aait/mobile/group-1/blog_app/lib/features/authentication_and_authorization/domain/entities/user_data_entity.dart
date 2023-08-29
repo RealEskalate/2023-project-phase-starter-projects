@@ -4,7 +4,7 @@ class UserDataEntity extends Equatable{
   final Data data;
   final String token;
 
-  UserDataEntity({
+  const UserDataEntity({
     required this.data,
     required this.token,
   });
@@ -22,7 +22,6 @@ class Data {
   String expertise;
   String bio;
   DateTime createdAt;
-  int v;
   String image;
   String imageCloudinaryPublicId;
 
@@ -34,7 +33,6 @@ class Data {
     required this.expertise,
     required this.bio,
     required this.createdAt,
-    required this.v,
     required this.image,
     required this.imageCloudinaryPublicId,
   });
