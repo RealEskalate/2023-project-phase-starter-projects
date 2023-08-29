@@ -1,7 +1,7 @@
 import Image from "next/image";
 
 import Listitems from "@/components/ListItem";
-import { content} from '@/data/about-us'
+import { content} from '@/dta/about-us'
 import Link from "next/link";
 
 
