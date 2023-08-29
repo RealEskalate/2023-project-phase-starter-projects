@@ -9,4 +9,6 @@ public class InteractionDto : BaseDto
     public int UserId { get; set; }
     public InteractionType Type { get; set; }
     public string? Body { get; set; }
+    public DateTime? CreatedAt { get; set; }
+    public DateTime? LastModified { get; set; }
 }
