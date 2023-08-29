@@ -22,7 +22,9 @@ class ArticleRepositoryImpl extends ArticleRepository {
         title: article.title,
         subTitle: article.subTitle,
         tags: article.tags,
-        content: article.content);
+        content: article.content,
+        image: article.image,
+        estimatedtime: article.estimatedtime);
     final isConnected = await networkInfo.isConnected;
     if (isConnected) {
       final article = await remoteDataSource.postArticle(createArticleModel);
@@ -39,7 +41,9 @@ class ArticleRepositoryImpl extends ArticleRepository {
         title: article.title,
         subTitle: article.subTitle,
         tags: article.tags,
-        content: article.content);
+        content: article.content,
+        image: article.image,
+        estimatedtime: article.estimatedtime);
     final isConnected = await networkInfo.isConnected;
     if (isConnected) {
       final article = await remoteDataSource.updateArticle(createArticleModel);

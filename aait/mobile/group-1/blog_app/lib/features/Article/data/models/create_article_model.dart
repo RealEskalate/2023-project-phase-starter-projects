@@ -11,8 +11,8 @@ class CreateArticleModel extends CreateArticleEntity implements Equatable {
     required this.tags,
     required this.content,
     this.id,
-    this.image,
-    this.estimatedtime,
+    required this.image,
+    required this.estimatedtime,
   }) : super(
           title: title,
           subTitle: subTitle,
@@ -33,9 +33,9 @@ class CreateArticleModel extends CreateArticleEntity implements Equatable {
   @override
   final String content;
   @override
-  final String? image;
+  final String image;
   @override
-  final String? estimatedtime;
+  final String estimatedtime;
 
   factory CreateArticleModel.fromJson(Map<String, dynamic> json) {
     return CreateArticleModel(
@@ -52,7 +52,9 @@ class CreateArticleModel extends CreateArticleEntity implements Equatable {
       'title': title,
       'subTitle': subTitle,
       'content': content,
-      'tags': tags
+      'tags': tags,
+      'image': image,
+      'estimatedReadTime': estimatedtime
     };
   }
 
