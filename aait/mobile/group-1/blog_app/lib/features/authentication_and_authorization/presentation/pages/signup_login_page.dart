@@ -9,6 +9,7 @@ import 'package:blog_app/features/authentication_and_authorization/presentation/
 import 'package:blog_app/features/authentication_and_authorization/presentation/pages/circular_indicator.dart';
 import 'package:blog_app/features/authentication_and_authorization/presentation/pages/success_page.dart';
 import 'package:blog_app/features/authentication_and_authorization/presentation/pages/wait_page.dart';
+import 'package:blog_app/features/home_page/presentation/pages/home_page.dart';
 import 'package:blog_app/features/user_profile/presentation/bloc/profile_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -113,7 +114,7 @@ class _LogInState extends State<LogIn> {
       listener: (context, state) {
         if (state is LoginLoadedState) {
           Navigator.push(
-              context, MaterialPageRoute(builder: (context) => ProfilePage()));
+              context, MaterialPageRoute(builder: (context) => HomePage()));
         } else if (state is ErrorState) {
           ScaffoldMessenger.of(context)
               .showSnackBar(SnackBar(content: Text(state.message)));

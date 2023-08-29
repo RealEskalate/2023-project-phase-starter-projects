@@ -1,4 +1,4 @@
-import 'package:blog_app/features/article_reading/domain/entities/article.dart';
+import 'package:blog_app/features/home_page/domain/entities/article.dart';
 import 'package:flutter/material.dart';
 
 import '../../../../core/utils/colors.dart';
@@ -71,10 +71,10 @@ class ArticleDetailState extends State<ArticleDetail> {
                   Row(
                     children: [
                       // avatar
-                      (widget.article.user?.image != null)
+                      (widget.article.author.image != null)
                           ? CircleAvatar(
                               backgroundImage: NetworkImage(
-                                  widget.article.user?.image ?? ""),
+                                  widget.article.author.image ?? ""),
                             )
                           : Icon(Icons.person),
 
@@ -86,7 +86,7 @@ class ArticleDetailState extends State<ArticleDetail> {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Text(
-                            widget.article.user?.fullName ?? "",
+                            widget.article.author.fullName ?? "",
                             style: TextStyle(
                                 fontSize: 18, fontWeight: FontWeight.w400),
                           ),
@@ -121,10 +121,10 @@ class ArticleDetailState extends State<ArticleDetail> {
                       topLeft: Radius.circular(45),
                       topRight: Radius.circular(45),
                     ),
-                    child: (widget.article.image != null)
+                    child: (widget.article.photoUrl != null)
                         ? Image(
                             image: NetworkImage(
-                            widget.article.image ?? "",
+                            widget.article.photoUrl ?? "",
                           ))
                         : Container())
               ]),

@@ -7,13 +7,20 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import './Injection/injection_container.dart' as di;
 import './Injection/auth_injection.dart' as authdi;
+import './Injection/main_injection.dart' as maindi;
+
 import 'features/Article/presentation/bloc/article_bloc/article_bloc.dart';
+import 'features/home_page/presentation/pages/home_page.dart';
 import 'features/intro_screens/onboarding_screens/onboarding_screen1.dart';
+import 'features/user_profile/presentation/pages/profile.dart';
+import 'package:blog_app/features/home_page/presentation/bloc/article_bloc.dart'
+    as newBloc;
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await di.init();
   await authdi.init();
+  await maindi.init();
 
   runApp(DevicePreview(
       enabled: !kReleaseMode,
@@ -21,6 +28,7 @@ void main() async {
             BlocProvider(create: (context) => authdi.sl<LogInBloc>()),
             BlocProvider(create: (context) => authdi.sl<ArticleBloc>()),
             BlocProvider(create: (context) => authdi.sl<SignUpBloc>()),
+            BlocProvider(create: (context) => authdi.sl<newBloc.ArticleBloc>()),
             BlocProvider<ProfileBloc>(
               create: (context) => ProfileBloc(),
             ),
