@@ -9,9 +9,9 @@ const SignInPage = () => {
     return (
         <section className="font-login w-full grid grid-cols-1 md:grid-cols-2 md:px-14 px-4 bg-gray-100 py-16" >
             <div className="flex flex-col bg-white">
-                <img className="w-36 py-6 px-8" src="/images/A2SVLogo.png" alt="A2SV logo" />
+                <Image className="w-36 py-6 px-8" width={30} height={30} src="/images/blog/A2SVLogo.png" alt="A2SV logo" />
                 <div className="grid grid-cols-2 place-items-center">
-                    <Image className="h-full" width={40} height={40} src="/images/signupAndLoginAvatar.png" alt="cartoon avatar" />
+                    <Image className="h-full" width={40} height={40} src="/images/blog/signupAndLoginAvatar.png" alt="cartoon avatar" />
                     <div className="flex flex-col self-center p-2">
                         <h2
                             className="text-form-gray-primary font-extrabold text-4xl mb-6"

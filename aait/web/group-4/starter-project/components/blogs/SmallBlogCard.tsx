@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image"
 
 import data from "@/data/relatedBlog.json"
 export default function BlogCardSmall(){
@@ -7,13 +8,13 @@ export default function BlogCardSmall(){
 
     return (
         <div className="flex flex-col rounded-t-md shadow-md font-nav">
-            <img className="w-full h-[250px] object-cover rounded-md" src={data.image}/>
+            <Image className="w-full h-[250px] object-cover rounded-md" width={250} height={250} src={data.image} alt={"blog image"}/>
             <div className="flex flex-col p-6 gap-4">
                 <h2 className="text-[1.2rem] font-medium ">
                     {data.title}
                 </h2>
                 <div className="flex justify-start gap-2 items-center">
-                    <img className=" rounded-full w-[30px] h-[30px]" src={data.author.image} />
+                    <Image className=" rounded-full w-[30px] h-[30px]" width={30} height={30} src={data.author.image} alt={"author's image"} />
                     <span className="flex gap-2 justify-between font-nav text-gray-400 items-center align-text-bottom">
                         <p className="text-[0.9rem]">by</p>
                         <p className="text-black text-[1rem] font-bold">{ data.author.name }</p>

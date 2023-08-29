@@ -13,7 +13,7 @@ const SignupPage = () => {
             <div className="flex flex-col bg-white">
                 <img className="w-36 py-6 px-8" src="/images/A2SVLogo.png" alt="A2SV logo" />
                 <div className="grid grid-cols-2 place-items-center">
-                    <Image className="h-full" width={40} height={40} src="/images/signupAndLoginAvatar.png" alt="cartoon avatar" />
+                    <Image className="h-full" width={40} height={40} src="/images/blog/signupAndLoginAvatar.png" alt="cartoon avatar" />
                     <div className="flex flex-col self-center p-2">
                         <h2
                             className="text-form-gray-primary font-bold text-4xl mb-6"

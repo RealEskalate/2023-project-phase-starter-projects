@@ -88,7 +88,7 @@ export default function Teams(){
                         Meet our development team is a small but highly skilled and experienced group of professionals. We have a talented mix of web developers, software engineers, project managers and quality assurance specialists who are passionate about developing exceptional products and services.
                     </p>
                 </div>
-                <Image className="w-[100%] p-6 float-right" width={100} height={100} src="/images/landing%20image%20area.png" alt={"teams hero image"} />
+                <Image className="w-[100%] p-6 float-right" width={100} height={100} src="/images/blog/landing%20image%20area.png" alt={"teams hero image"} />
 
             </div>
             <div id="MembersContainer" className="grid md:grid-cols-3 grid-cols-1 gap-2 px-20">
