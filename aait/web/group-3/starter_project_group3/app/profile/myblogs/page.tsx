@@ -5,7 +5,7 @@ import { useGetMyBlogsQuery } from "@/store/features/my-blogs";
 import Loading from "@/components/commons/Loading";
 
 const MyBlogs = () => {
-  const { data: myblogsList, error, isLoading } = useGetMyBlogsQuery();
+  const { data: blogs, error, isLoading } = useGetMyBlogsQuery();
 
   if (isLoading) {
     return <Loading />;
@@ -19,13 +19,13 @@ const MyBlogs = () => {
         </p>
       </div>
       <hr className="py-1" />
-      {myblogsList && myblogsList.length === 0 && (
+      {blogs && blogs.length === 0 && (
         <p className="capitalize font-Montserrat text-6xl my-20  font-bold w-9/12 mx-auto text-gray-400">
           No blogs added yet.
         </p>
       )}
-      {myblogsList && myblogsList.length > 0 && (
-        <SmallBlogCard blogs={myblogsList} />
+      {blogs && blogs.length > 0 && (
+        <SmallBlogCard blogs={blogs} />
       )}
     </div>
   );
