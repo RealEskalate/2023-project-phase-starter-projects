@@ -35,7 +35,7 @@ namespace WebApi.Controllers
         {
             var command = new Login() { LogInDto = userDto };
             var token = await _mediator.Send(command);
-            return ResponseHandler<AuthResponse>.HandleResponse(token, 201);
+            return ResponseHandler<AuthResponse>.HandleResponse(token, 200);
         }
         
        
