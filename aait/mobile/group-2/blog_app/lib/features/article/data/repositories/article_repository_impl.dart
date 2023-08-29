@@ -151,4 +151,22 @@ class ArticleRepositoryImpl extends ArticleRepository {
       return Right(tags);
     }
   }
+
+  @override
+  Future<Either<Failure, Article>> addToBookmark(Article article) {
+    // TODO: implement addToBookmark
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<Either<Failure, List<Article>>> getBookmarkedArticles() {
+    // TODO: implement getBookmarkedArticles
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<Either<Failure, Article>> removeFromBookmark(String articleId) {
+    // TODO: implement removeFromBookmark
+    throw UnimplementedError();
+  }
 }
