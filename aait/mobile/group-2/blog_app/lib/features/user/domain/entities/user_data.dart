@@ -25,6 +25,17 @@ class UserData extends Equatable {
     required this.articles,
   });
 
+  static get empty => const UserData(
+      articles: [],
+      bio: '',
+      createdAt: '',
+      email: '',
+      expertise: '',
+      fullName: '',
+      id: '',
+      image: '',
+      imageCloudinaryPublicId: '');
+
   @override
   List<Object?> get props => [
         id,

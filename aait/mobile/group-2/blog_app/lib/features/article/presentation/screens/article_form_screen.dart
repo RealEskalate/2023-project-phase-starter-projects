@@ -48,13 +48,13 @@ class ArticleFormScreen extends StatelessWidget {
           listener: (context, state) {
             if (state is ArticleCreatedState) {
               showSuccess(context, 'Article created successfully');
-              context.go(Routes.articleDetail, extra: state.article);
+              context.push(Routes.articleDetail, extra: state.article);
             }
 
             //
             else if (state is ArticleUpdatedState) {
               showSuccess(context, 'Article updated successfully');
-              context.go(Routes.articleDetail, extra: state.article);
+              context.push(Routes.articleDetail, extra: state.article);
             }
 
             // Show error
