@@ -90,7 +90,7 @@ const Header: FC = () => {
   ];
 
   return (
-    <div className="shadow-sm sticky z-10 top-0 bg-white dark:bg-dark-backgroundLight transition-colors ease-linear flex lg:justify-between text-center w-full h-[90px] py-4 px-9">
+    <div className="shadow-sm sticky z-20 top-0 bg-white dark:bg-dark-backgroundLight transition-colors ease-linear flex lg:justify-between text-center w-full h-[90px] py-4 px-9">
       <div className="w-[165px] h-[45px] py-2 flex-1 lg:flex-none">
         <Image width={165} height={45} src={A2SVLogo} alt="A2SV Logo" />
       </div>
