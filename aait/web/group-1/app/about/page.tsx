@@ -3,7 +3,7 @@ import About_section from '@/components/about/About_section'
 import Problems from '@/components/about/Problems'
 import Sessions from '@/components/about/Sessions'
 import Social from '@/components/about/Social'
-import Props from '../../types/about/session_card'
+// import Props from '../../types/about/session_card'
 
 const page = () => {
   return (

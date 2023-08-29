@@ -45,14 +45,15 @@ const Sessions = () => {
   return (
     <>
       <div className="">
-        <h1 className="text-bold text-5xl text-center">
-          A2SV <span className="text-primary">Sessions</span>
+        <h1 className="font-poppins font-bold text-5xl text-center">
+          A2SV <span className="text-blue-first">Sessions</span>
         </h1>
       </div>
-      <div className="p-10 mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+      <div className="p-12 mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 ">
         {data.map((each, index) => {
           return (
             <SessionsCard
+              key={index}
               title={each.title}
               description={each.description}
               imageUrl={each.imageUrl}
@@ -65,5 +66,3 @@ const Sessions = () => {
 };
 
 export default Sessions;
-
- 
