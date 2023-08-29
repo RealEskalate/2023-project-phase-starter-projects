@@ -4,6 +4,7 @@ import ImpactStoriesSection from "@/components/homepage/ImpactStoriesSection";
 import LandingSection from "@/components/homepage/LandingSection";
 import SuccessRateSection from "@/components/homepage/SuccessRateSection";
 
+
 export default function Home() {
   return (
       <div className="flex flex-col space-y-24">
