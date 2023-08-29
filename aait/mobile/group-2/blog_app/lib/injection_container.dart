@@ -31,6 +31,7 @@ import 'features/user/data/repositories/user_repository_impl.dart';
 import 'features/user/domain/repositories/user_repository.dart';
 import 'features/user/domain/usecases/user_usecases/get_user_data_usecase.dart';
 import 'features/user/domain/usecases/user_usecases/update_user_photo_usecase.dart';
+import 'features/user/presentation/bloc/profile_page_bloc.dart';
 import 'features/user/presentation/bloc/user_bloc.dart';
 
 final serviceLocator = GetIt.instance;
@@ -59,6 +60,9 @@ Future<void> init() async {
   );
   serviceLocator.registerFactory(
     () => TagBloc(getTags: serviceLocator()),
+  );
+  serviceLocator.registerFactory(
+    () => ProfilePageBloc(),
   );
 
   serviceLocator.registerFactory(() => UserBloc(
