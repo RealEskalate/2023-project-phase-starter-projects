@@ -9,6 +9,7 @@ import '../../../../injection_container.dart';
 import '../../../article/presentation/widgets/snackbar.dart';
 import '../../../authentication/presentation/bloc/auth_bloc.dart';
 import '../bloc/user_bloc.dart';
+import '../widgets/userprofile/article_grid_view.dart';
 import '../widgets/userprofile/article_list_view.dart';
 import '../widgets/userprofile/gradient_at_bottom.dart';
 import '../widgets/userprofile/show_posts_and_bookmarks.dart';
