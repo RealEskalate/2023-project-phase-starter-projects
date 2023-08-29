@@ -1,9 +1,26 @@
 "use client";
+import { authTypes } from "@/types/auth/authTypes";
 import Image from "next/image";
 import Link from "next/link";
-import React from "react";
+import React, { useEffect, useState } from "react";
 
 const PersonalInformation = () => {
+  const [name, setName] = useState("");
+  const [FatherName, setFatherName] = useState("");
+  const [email, setemail] = useState("");
+  const [image, setimage] = useState("");
+
+  useEffect(() => {
+    const userString = localStorage.getItem("user");
+    const user: authTypes | null = userString ? JSON.parse(userString) : null;
+    if (user) {
+      const [firstName, lastName] = user.userName.split(" ");
+      setName(firstName);
+      setFatherName(lastName);
+      setemail(user.userEmail);
+    }
+  });
+
   return (
     <div className="mb-32">
       <div className=" py-10 text-blog_list_sub_text_color flex justify-between items-center ">
@@ -35,8 +52,8 @@ const PersonalInformation = () => {
               type="text"
               id="name"
               name="name"
-              // value={formData.name}
-              // onChange={handleChange}
+              value={name}
+              onChange={(e) => setName(e.target.value)}
               className="mt-1 px-4 py-2 outline-none border font-semibold text-nav_text_color  rounded-md "
               required
             />
@@ -44,8 +61,8 @@ const PersonalInformation = () => {
               type="text"
               id="fatherName"
               name="fatherName"
-              // value={formData.fatherName}
-              // onChange={handleChange}
+              value={FatherName}
+              onChange={(e) => setFatherName(e.target.value)}
               className="mt-1 px-4 py-2 outline-none border font-semibold text-nav_text_color  rounded-md "
               required
             />
@@ -64,8 +81,8 @@ const PersonalInformation = () => {
               type="email"
               id="email"
               name="email"
-              // value={formData.email}
-              // onChange={handleChange}
+              value={email}
+              onChange={(e) => setemail(e.target.value)}
               className=" px-4 outline-none w-11/12 mx-auto py-2 border font-semibold text-nav_text_color rounded-md  "
               required
             />

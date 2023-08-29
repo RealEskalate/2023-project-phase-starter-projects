@@ -38,7 +38,7 @@ const BlogPage: React.FC = () => {
         <SearchBar />
         <div className="flex flex-col gap-4">
           {currentBlogs.map((blog) => (
-            <Link href={`/blogs/${blog._id}`}>
+            <Link key={blog._id} href={`/blogs/${blog._id}`}>
                 <BlogCard key={blog._id} {...blog} />
             </Link>
           ))}
