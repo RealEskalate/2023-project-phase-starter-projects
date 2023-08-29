@@ -25,7 +25,7 @@ public class DeletePostDtoValidator : AbstractValidator<DeletePostDto>
             var post = await _postRepository.GetAsync(dto.Id);
             var user = await _userRepository.GetAsync(dto.UserId);
 
-            return user != null && post.UserId == user.Id;
+            return user != null && post != null && post.UserId == user.Id;
 
         }).WithMessage("Post author id does not match with the id of author of the post being deleted.");
     }
