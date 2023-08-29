@@ -5,7 +5,7 @@ import Image from 'next/image';
 import A2SVLogo from '@/assets/images/Group 39.svg';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { AiOutlineMenu, AiOutlineClose } from 'react-icons/ai';
+import { AiOutlineMenu, AiOutlineClose, AiOutlineArrowUp } from 'react-icons/ai';
 import ProfileDropDown from './home/ProfileDropDown';
 import { useClickOutside } from '../hooks/useClickOutside';
 import { useAppDispatch, useAppSelector } from '@/lib/redux/hooks';
@@ -21,6 +21,25 @@ const Header: FC = () => {
   const [isClient, setClient] = useState(false);
   // console.log(useDarkMode());
   const [colorTheme, setTheme] = useDarkMode();
+  const[backToTopState, setbackToTopState] = useState<boolean>(false)
+
+  const BackToTop = ()=>{
+    window.scrollTo(0, 0);
+  }
+
+  const handleScroll = () => {
+    if (window.scrollY > 300) {
+      console.log(window.scrollY)
+      setbackToTopState(true);
+    } else {
+      setbackToTopState(false);
+    }
+  };
+
+  useEffect(() => {
+    window.addEventListener('scroll', handleScroll, true);
+    return () => window.removeEventListener('scroll', handleScroll, true);
+  });
 
   const handleDarkMode = () => {
     console.log('color theme', colorTheme);
@@ -97,7 +116,9 @@ const Header: FC = () => {
   return (
     <div className="shadow-sm sticky z-20 top-0 bg-white dark:bg-dark-backgroundLight transition-colors ease-linear flex lg:justify-between text-center w-full h-[90px] py-4 px-9">
       <div className="w-[165px] h-[45px] py-2 flex-1 lg:flex-none">
-        <Image width={165} height={45} src={A2SVLogo} alt="A2SV Logo" />
+        <Link href="/">
+          <Image width={165} height={45} src={A2SVLogo} alt="A2SV Logo" />
+        </Link>
       </div>
       <nav className="hidden lg:flex list-none py-4 px-9">
         <li
@@ -236,6 +257,9 @@ const Header: FC = () => {
           {' '}
           {openMenu ? <AiOutlineClose /> : <AiOutlineMenu />}
         </button>
+        <div onClick={BackToTop} className={`z-40 transition-all delay-50 ${backToTopState ? 'scale-1' : "scale-0"} fixed bottom-10 right-10 rounded-full bg-primaryColor text-white text-2xl p-4 font-bold cursor-pointer hover:scale-110 shadow-lg shadow-black/30 dark:shadow-white/201`}>
+            <AiOutlineArrowUp />
+        </div>
       </div>
     </div>
   );

@@ -11,7 +11,7 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en">
+    <html lang="en" className='scroll-smooth'>
       <body className="bg-white dark:bg-dark-background dark:text-dark-textColor-50 transition-colors ease-linear">
         <ReduxProvider>
           <Header />
