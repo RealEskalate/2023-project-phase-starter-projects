@@ -17,7 +17,7 @@ class CustomElevatedLikeButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return ElevatedButton(
       onPressed: () async {
-        final imageFile = await ImageSheet().show(context);
+        await ImageSheet().show(context);
       },
       style: ElevatedButton.styleFrom(
           padding: EdgeInsets.symmetric(horizontal: 24.w, vertical: 12.h),
