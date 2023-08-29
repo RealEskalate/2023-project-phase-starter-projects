@@ -46,7 +46,7 @@ class _LoginComponentState extends State<LoginComponent> {
             ),
           );
 
-          context.go(Routes.home);
+          context.go(Routes.articles);
         }
       },
       builder: (context, state) {

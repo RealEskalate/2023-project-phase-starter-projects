@@ -3,7 +3,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import 'bloc_observer.dart';
-import 'core/observers/bloc_observer.dart';
 import 'core/presentation/router/router.dart';
 import 'core/presentation/theme/app_theme.dart';
 import 'features/authentication/presentation/bloc/auth_bloc.dart';
@@ -13,7 +12,7 @@ Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
   await di.init();
-  Bloc.observer = AppBlocObserver();
+  Bloc.observer = SimpleBlocObserver();
 
   runApp(const App());
 }
@@ -30,7 +29,7 @@ class App extends StatelessWidget {
       builder: (_, child) => MultiBlocProvider(
         providers: [
           BlocProvider<AuthBloc>(
-            create: (_) => di.serviceLocator<AuthBloc>(),
+            create: (_) => di.serviceLocator<AuthBloc>()..add(GetTokenEvent()),
           ),
         ],
         child: MaterialApp.router(

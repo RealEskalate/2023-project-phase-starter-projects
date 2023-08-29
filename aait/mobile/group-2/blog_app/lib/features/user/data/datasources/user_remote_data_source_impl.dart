@@ -3,6 +3,7 @@ import 'dart:io';
 
 import 'package:http/http.dart' as http;
 
+import '../../../../core/constants/constants.dart';
 import '../../../../core/error/exception.dart';
 import '../../domain/entities/user_data.dart';
 import '../models/user_data_model.dart';
@@ -15,14 +16,18 @@ class UserRemoteDataSourceImpl implements UserRemoteDataSource {
 
   @override
   Future<UserData> getUserData(String token) async {
-    final http.Response response = await client
-        .get(Uri.parse('http://localhost:4500/api/v1/user'), headers: {
-      'Content-Type': 'application/json',
+    final http.Response response =
+        await client.get(Uri.parse('${apiBaseUrl}user'), headers: {
       'Authorization': 'Bearer $token',
     });
 
     if (response.statusCode == 200) {
-      return UserDataModel.fromJson(jsonDecode(response.body));
+      try {
+        return UserDataModel.fromJson(jsonDecode(response.body)['data']);
+      } catch (e) {
+        print(e);
+        throw const ServerException();
+      }
     } else {
       throw const ServerException();
     }

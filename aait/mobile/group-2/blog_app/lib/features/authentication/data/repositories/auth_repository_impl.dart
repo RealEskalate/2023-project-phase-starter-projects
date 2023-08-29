@@ -24,6 +24,18 @@ class AuthRepositoryImpl implements AuthRepository {
       {required this.authLocalDataSource,
       required this.authRemoteDataSource,
       required this.networkInfo});
+
+  Future<Either<Failure, String>> getToken() async {
+    try {
+      final token = await authLocalDataSource.getToken();
+      return Right(token);
+    } on CacheException catch (e) {
+      // print the error message for debugging
+      debugPrint(e.toString());
+      return Left(CacheFailure());
+    }
+  }
+
   @override
   Future<Either<Failure, AuthenticationEntity>> login(
       LoginRequestEntity loginRequestEntity) async {

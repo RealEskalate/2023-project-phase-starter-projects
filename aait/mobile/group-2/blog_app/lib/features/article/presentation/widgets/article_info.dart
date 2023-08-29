@@ -42,7 +42,7 @@ class ArticleInfo extends StatelessWidget {
         SizedBox(
           width: 160.w,
           child: Text(
-            'by ${article.author}',
+            'by ${article.author.fullName}',
             style: const TextStyle(fontSize: 15.0),
             softWrap: true,
             overflow: TextOverflow.ellipsis, // Add this line

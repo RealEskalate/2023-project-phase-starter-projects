@@ -15,6 +15,11 @@ class MultilineTextInput extends StatelessWidget {
       maxLines: 11,
       minLines: 5,
       controller: controller,
+      style: const TextStyle(
+        color: AppColors.darkerBlue,
+        fontFamily: 'Poppins',
+        fontSize: 18,
+      ),
       decoration: InputDecoration(
         border: const OutlineInputBorder(
           borderRadius: BorderRadius.all(Radius.circular(10)),

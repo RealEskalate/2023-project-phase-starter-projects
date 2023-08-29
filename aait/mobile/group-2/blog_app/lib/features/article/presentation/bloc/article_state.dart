@@ -13,7 +13,6 @@ final class ArticleInitialState extends ArticleState {}
 
 final class ArticleLoadingState extends ArticleState {}
 
-
 final class SingleArticleLoadedState extends ArticleState {
   final Article article;
 
@@ -40,9 +39,6 @@ final class AllArticlesFilteredState extends ArticleState {
   @override
   List<Object> get props => [articles];
 }
-
-
-
 
 final class ArticleCreatedState extends ArticleState {
   final Article article;

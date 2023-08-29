@@ -4,6 +4,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:image_picker/image_picker.dart';
 
 import '../../../../core/presentation/theme/app_colors.dart';
+import '../../../../core/utils/url_to_file.dart';
 import '../../../user/domain/entities/user_data.dart';
 import '../../domain/entities/article.dart';
 import '../bloc/article_bloc.dart';
@@ -16,19 +17,47 @@ import 'multiline_text_field.dart';
 import 'snackbar.dart';
 import 'tag_selector.dart';
 
-class CreateArticleForm extends StatefulWidget {
-  const CreateArticleForm({super.key});
+class UpdateArticleForm extends StatefulWidget {
+  final Article article;
+
+  const UpdateArticleForm({super.key, required this.article});
 
   @override
-  State<CreateArticleForm> createState() => _CreateArticleFormState();
+  State<UpdateArticleForm> createState() => _UpdateArticleFormState();
 }
 
-class _CreateArticleFormState extends State<CreateArticleForm> {
+class _UpdateArticleFormState extends State<UpdateArticleForm> {
   final titleFieldController = TextEditingController();
   final subtitleFieldController = TextEditingController();
   final contentFieldController = TextEditingController();
 
   XFile? image;
+
+  @override
+  void initState() {
+    titleFieldController.text = widget.article.title;
+    subtitleFieldController.text = widget.article.subTitle;
+    contentFieldController.text = widget.article.content;
+
+    for (final tag in widget.article.tags) {
+      context.read<TagSelectorBloc>().add(AddTagEvent(tag));
+    }
+
+    urlToFile(widget.article.photoUrl).then((file) {
+      file.fold(
+        (l) => showError(context, 'Error loading image'),
+        (r) {
+          if (mounted) {
+            setState(() {
+              image = XFile(r.path);
+            });
+          }
+        },
+      );
+    });
+
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -104,9 +133,7 @@ class _CreateArticleFormState extends State<CreateArticleForm> {
             const SizedBox(height: 30),
 
             // Article Image
-            ImageSelector(
-              onImageSelected: _selectImage,
-            ),
+            ImageSelector(onImageSelected: _selectImage, image: image),
             const SizedBox(height: 30),
 
             // Content field
@@ -120,7 +147,7 @@ class _CreateArticleFormState extends State<CreateArticleForm> {
             Center(
               child: ElevatedButton(
                 onPressed: () => _publishArticle(context),
-                child: const Text('Publish'),
+                child: const Text('Update'),
               ),
             ),
           ],
@@ -141,7 +168,7 @@ class _CreateArticleFormState extends State<CreateArticleForm> {
 
     if (image != null) {
       final article = Article(
-        id: '',
+        id: widget.article.id,
         title: titleFieldController.text,
         subTitle: subtitleFieldController.text,
         content: contentFieldController.text,
@@ -160,7 +187,7 @@ class _CreateArticleFormState extends State<CreateArticleForm> {
         date: DateTime.now(),
         estimatedReadTime: '3min',
       );
-      articleBloc.add(CreateArticleEvent(article));
+      articleBloc.add(UpdateArticleEvent(article));
     } else {
       showError(context, 'Please select an image');
     }

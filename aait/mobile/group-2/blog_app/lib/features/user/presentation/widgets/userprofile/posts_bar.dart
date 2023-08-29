@@ -3,10 +3,14 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class ArticleTitleBar extends StatelessWidget {
   final String title;
+  final VoidCallback? onGridView;
+  final VoidCallback? onListView;
 
   const ArticleTitleBar({
     Key? key,
     required this.title,
+    this.onGridView,
+    this.onListView,
   }) : super(key: key);
 
   @override
@@ -31,16 +35,22 @@ class ArticleTitleBar extends StatelessWidget {
         Row(
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
-            Icon(
-              Icons.grid_view,
-              color: Color(0xFF376AED),
-              size: iconSize,
+            GestureDetector(
+              onTap: onListView,
+              child: Icon(
+                Icons.grid_view,
+                color: Color(0xFF376AED),
+                size: iconSize,
+              ),
             ),
             SizedBox(width: iconSpacing),
-            Icon(
-              Icons.list,
-              color: Color(0xFF7B8BB2),
-              size: iconSize,
+            GestureDetector(
+              onTap: onGridView,
+              child: Icon(
+                Icons.list,
+                color: Color(0xFF7B8BB2),
+                size: iconSize,
+              ),
             ),
           ],
         ),
