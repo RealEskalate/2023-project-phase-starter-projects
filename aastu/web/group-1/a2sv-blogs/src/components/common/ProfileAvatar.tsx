@@ -43,7 +43,7 @@ export default function ProfileAvatar({ imageUrl }: Props) {
 
   return (
     <div className="relative" onClick={handleClickOutside}>
-      <div className="px-16 rounded-full h-14 flex justify-center">
+      <div className="md:ml-3 md:px-0 px-14 rounded-full h-14 flex justify-center items-center">
         <button onClick={togglePopover} ref={buttonRef}>
           <Image
             width={100}

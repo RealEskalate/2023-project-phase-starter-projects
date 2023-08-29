@@ -61,7 +61,6 @@ class ArticleBloc extends Bloc<ArticleEvent, ArticleState> {
       FilterArticlesEvent event, Emitter<ArticleState> emit) async {
     final result = await filterArticles(
         FilterParams(tag: event.tag, title: event.searchParams));
-    print(result);
 
     result.fold(
       (failure) => emit(ArticleErrorState(failure.toString())),

@@ -29,7 +29,7 @@ export default function page() {
     loginHandler({ email, password });
   };
   return (
-    <div className="h-screen overflow-hidden">
+    <div className="h-screen ">
       <div className="grid lg:grid-cols-2 grid-cols-1 h-full">
         <div className="bg-gradient-to-br w-full h-full hidden lg:flex lg:flex-col lg:justify-center lg:items-center">
           <div className="self-start p-5">
@@ -40,16 +40,16 @@ export default function page() {
               alt="A2SV Logo"
             ></Image>
           </div>
-          <div className="flex">
+          <div className="flex items-center">
             <Image
               src="/images/Saly-14person.svg"
-              width={500}
-              height={300}
+              width={400}
+              height={823}
               alt="Login Illustration"
-              className="w- object-contain"
+              className="object-contain"
             />
-            <div className="mt-60 -ml-16 space-y-6">
-              <h1 className="text-6xl  font-bold text-text-header-1">
+            <div className="-ml-16 space-y-6">
+              <h1 className="text-5xl  font-bold text-text-header-1">
                 <span>Welcome </span>
                 <br />
                 <span>Back</span>

@@ -1,20 +1,26 @@
 "use client";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Image from "next/image";
 import { useGetBlogsQuery } from "@/lib/redux/features/blog";
 import Link from "next/link";
+import { Blog } from "@/types";
 
-export default function BlogCard() {
+export default function BlogCard({ searchQuery }: { searchQuery: string }) {
   const [currentPage, setCurrentPage] = useState(1);
   const pageSize = 3;
+  const [filteredData, setFilteredData] = useState<Blog[]>([]); // filtered data state
   const { data, isLoading, error } = useGetBlogsQuery();
-
+  useEffect(() => {
+    if (data) {
+      setFilteredData(data);
+    }
+  }, [data]);
   const totalItems = data?.length ?? 0;
   const totalPages = Math.ceil(totalItems / pageSize);
 
   const startIndex = (currentPage - 1) * pageSize;
   const endIndex = Math.min(startIndex + pageSize - 1, totalItems - 1);
-  const currentItems = data?.slice(startIndex, endIndex + 1);
+  const currentItems = filteredData?.slice(startIndex, endIndex + 1);
 
   const options = { year: "numeric", month: "short", day: "2-digit" };
 
@@ -56,32 +62,46 @@ export default function BlogCard() {
 
     return pageButtons;
   };
+
+  useEffect(() => {
+    if (searchQuery !== "") {
+      const filteredData = data?.filter((item) =>
+        item.title.toLowerCase().includes(searchQuery.toLowerCase())
+      );
+      setFilteredData(filteredData!);
+    } else {
+      setFilteredData(data!);
+    }
+    console.log(searchQuery);
+  }, [searchQuery]);
+
   const LoadingSkeleton = () => {
     return (
       <>
         {Array(3)
           .fill(null)
           .map((i) => (
-            <div className="w-full border-t border-[#D7D7D7] py-5">
-              <div className="h-[25%] w-full flex items-center gap-3 px-4">
-                <div className="w-14 h-14 rounded-full bg-gray-300"></div>
-                <div className="flex flex-col gap-0.5 ">
-                  <h1 className="font-montserrat font-semibold text-base leading-5 h-4 w-32 flex gap-0 bg-gray-300 rounded-md"></h1>
-                  <p className="font-montserrat font-semibold tracking-wide text-xs h-4 w-32  text-[#9c9c9c] bg-gray-300 rounded-md"></p>
+            <div className="xl:w-[1200px] md:w-[900px] sm:w-[600px] w-[300px] ">
+              <div className="w-full border-t border-[#D7D7D7] py-5 flex flex-col gap-1 animate-pulse">
+                <div className="h-[25%] flex items-center gap-3 px-10">
+                  <div className="w-14 h-14 rounded-full bg-gray-300"></div>
+                  <div className="flex flex-col gap-0.5">
+                    <div className="md:w-96 w-52 h-4 bg-gray-300"></div>
+                    <div className="md:w-80 w-40 h-3 bg-gray-300"></div>
+                  </div>
                 </div>
-              </div>
-              <div className="h-[60%] flex w-full lg:flex-row flex-col items-center  px-4 lg:gap-14 gap-5 py-5 justify-between">
-                <div className="flex flex-col w-full gap-2">
-                  <h1 className="font-montserrat h-4 w-full text-xl font-black leading-9 text-black line-clamp-4 bg-gray-300 rounded-md"></h1>
-                  <p className="font-montserrat h-36 w-full text-base font-normal leading-7 text-[#737373] line-clamp-4 bg-gray-300 rounded-md"></p>
+                <div className="h-[60%] flex lg:flex-row flex-col items-center px-4 lg:gap-14 gap-5 justify-between">
+                  <div className="hidden lg:flex flex-col h-full gap-5 px-2">
+                    <div className="w-44 h-6 bg-gray-300"></div>
+                    <div className="w-full h-24 bg-gray-300"></div>
+                  </div>
+                  <div className="w-72 h-48 rounded-xl bg-gray-300"></div>
                 </div>
-                <div className="lg:w-72 w-full h-48 rounded-xl bg-gray-300"></div>
-              </div>
-              <div className="flex items-center bg-white">
-                {/* Placeholder for the tags */}
-                <ul className="h-[15%] flex items-center gap-10 px-3 justify-start">
-                  <li className="px-5 py-1.5 font-montserrat font-semibold text-sm text-[#8E8E8E] bg-[#ededf0] rounded-full flex bg-gray-300"></li>
-                </ul>
+                <div className="flex items-center bg-white flex-wrap lg:gap-1 gap-3 px-2">
+                  <div className="h-[15%] flex items-center gap-10 px-3 justify-start">
+                    <div className="px-5 py-1.5 font-montserrat font-semibold lg:text-sm text-xs text-[#8E8E8E] bg-[#ededf0] rounded-full flex w-20 h-6"></div>
+                  </div>
+                </div>
               </div>
             </div>
           ))}
@@ -95,7 +115,7 @@ export default function BlogCard() {
       ) : (
         currentItems?.map((item) => (
           <Link className="w-full" href={`/blogs/${item._id}`}>
-            <div className="w-full border-t border-[#D7D7D7] py-5 flex flex-col gap-1">
+            <div className="w-full border-t border-[#D7D7D7] py-5 flex flex-col gap-1 space-y-5">
               <div className="h-[25%] flex items-center gap-3 px-4">
                 <Image
                   className="w-14 h-14 rounded-full object-cover"
@@ -156,19 +176,19 @@ export default function BlogCard() {
                 />
               </div>
               <div className="flex items-center bg-white flex-wrap lg:gap-1 gap-3 px-2">
-                {item?.tags?.map(
-                  (tag, index) =>
-                    tag && (
-                      <ul
-                        className="h-[15%] flex items-center gap-10 px-3 justify-start"
-                        key={index}
-                      >
-                        <li className="px-5 py-1.5 font-montserrat font-semibold lg:text-sm text-xs text-[#8E8E8E] bg-[#ededf0] rounded-full flex">
+                <ul className="h-[15%] flex flex-wrap items-center sm:gap-6 gap-3 px-3 justify-start">
+                  {item?.tags?.map(
+                    (tag, index) =>
+                      tag && (
+                        <li
+                          key={index}
+                          className="px-5 py-2 font-montserrat font-semibold lg:text-sm text-xs text-[#8E8E8E] bg-[#ededf0] rounded-full flex"
+                        >
                           {tag}
                         </li>
-                      </ul>
-                    )
-                )}
+                      )
+                  )}
+                </ul>
               </div>
             </div>
           </Link>

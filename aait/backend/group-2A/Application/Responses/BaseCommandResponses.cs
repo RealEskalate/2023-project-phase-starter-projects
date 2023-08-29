@@ -23,10 +23,11 @@ namespace Application.Responses
         {
             var response = new BaseCommandResponse<T>();
             response.Success = false;
+            Console.WriteLine(response);
             if (exception is ValidationException validationException)
             {
                 response.StatusCode = StatusCodes.Status422UnprocessableEntity;
-                response.Errors = new List<string> { validationException.Message };
+                response.Errors = validationException.Errors;
             }
             else if (exception is BadRequestException badRequestException)
             {

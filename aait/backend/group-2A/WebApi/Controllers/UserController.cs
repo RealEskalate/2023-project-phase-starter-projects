@@ -1,10 +1,10 @@
-﻿using Application.Features.User.Request.Commands;
+﻿using Application.DTO.NotificationDTO;
+using Application.Features.User.Request.Commands;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Application.DTO.UserDTO;
 using Application.Features.User.Request;
 using Application.Features.User.Request.Queries;
-using Application.Model;
 using Domain.Entities;
 using Microsoft.AspNetCore.Authorization;
 
@@ -23,9 +23,9 @@ namespace WebApi.Controllers
             _mediator = mediator;
         }
 
-        [HttpGet("{notifications}")]
+        [HttpGet("Notifications")]
         public async Task<IActionResult> GetNotification(){
-            var command = new GetNotifications(){Id = int.Parse(User.FindFirst("reader").Value)};
+            var command = new GetNotifications(){UserId  = int.Parse(User.FindFirst("reader").Value)};
             var notifcations = await _mediator.Send(command);
             return ResponseHandler<List<Notification>>.HandleResponse(notifcations, 200);
         }
@@ -53,6 +53,34 @@ namespace WebApi.Controllers
             var users = await _mediator.Send(command);
             return ResponseHandler<List<UserDto>>.HandleResponse(users, 200);
         }
+        
+        [HttpPut]
+        public async Task<IActionResult> UpdateProfile([FromBody] UpdateUserDTO updateUser)
+        {   
+            var userId = int.Parse(User.FindFirst("reader").Value);
+            updateUser.Id = userId;
+            var command = new UpdateUserCommand() { updateUser = updateUser };
+            Console.WriteLine("Mediater command");
+            var token = await _mediator.Send(command);
+            return ResponseHandler<Unit>.HandleResponse(token, 204);
+        }
 
+        [HttpPatch("Notifcations/{id:int}")]
+        public async Task<IActionResult> MarkNotificationAsRead(int id)
+        {
+            var userId = int.Parse(User.FindFirst("reader").Value);
+            var updateDto = new UpdateNotificationDto() { UserId = userId, Id = id };
+            var command = new MakeNotificationReadCommand() { UpdateDto = updateDto };
+            var result = await _mediator.Send(command);
+            return ResponseHandler<Unit?>.HandleResponse(result, 204);
+        }
+        
+        [HttpGet("Notifcations/{id:int}")]
+        public async Task<IActionResult> GetASingleNotification (int id)
+        {
+            var command = new GetSingleNotificationRequest() { Id = id };
+            var result = await _mediator.Send(command);
+            return ResponseHandler<Notification>.HandleResponse(result, 200);
+        }
     }
 }

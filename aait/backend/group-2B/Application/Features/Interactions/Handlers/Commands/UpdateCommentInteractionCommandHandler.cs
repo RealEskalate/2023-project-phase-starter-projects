@@ -45,6 +45,7 @@ public class UpdateCommentInteractionCommandHandler
             if (foundComment != null && foundComment.PostId == command.UpdateCommentDto.PostId &&
                 command.UpdateCommentDto.UserId == foundComment.UserId)
             {
+                foundComment.Body = command.UpdateCommentDto.Body;
                 await _unitOfWork.InteractionRepository.UpdateAsync(
                     foundComment);
                 if (await _unitOfWork.SaveAsync() > 0)
