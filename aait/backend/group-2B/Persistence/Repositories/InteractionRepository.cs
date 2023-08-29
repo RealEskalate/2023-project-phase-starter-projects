@@ -33,6 +33,6 @@ public class InteractionRepository : GenericRepository<Interaction>, IInteractio
         );
 
        
-        return interaction;
+        return existingInteraction;
     }
 }
