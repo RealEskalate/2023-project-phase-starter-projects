@@ -1,3 +1,5 @@
+import 'package:blog_app/features/Article/data/datasources/remote_remote_data_source.dart';
+import 'package:blog_app/features/Article/presentation/bloc/article_bloc/article_bloc.dart';
 import 'package:blog_app/features/authentication_and_authorization/domain/usecases/login_use_case.dart';
 import 'package:get_it/get_it.dart';
 import 'package:internet_connection_checker/internet_connection_checker.dart';
@@ -19,6 +21,7 @@ Future<void> init() async {
   //! Features - Task Management
   // Bloc
   sl.registerFactory(() => ProfileBloc());
+  sl.registerFactory(() => ArticleBloc());
 
   // Use cases
   sl.registerLazySingleton(() => GetUserInfo(sl()));
@@ -32,6 +35,8 @@ Future<void> init() async {
   // Data sources
   sl.registerLazySingleton<ProfileLocalDataSource>(
       () => ProfileLocalDataSourceImpl());
+  sl.registerLazySingleton<ArticleRemoteDataSource>(
+      () => ArticleRemoteDataSourceImpl());
 
   sl.registerLazySingleton<ProfileRemoteDataSource>(
       () => ProfileRemoteDataSourceImpl());

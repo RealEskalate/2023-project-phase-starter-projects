@@ -11,6 +11,9 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import './features/user_profile/presentation/pages/profile.dart';
 import './Injection/injection_container.dart' as di;
 import './Injection/auth_injection.dart' as authdi;
+import 'features/Article/presentation/bloc/article_bloc/article_bloc.dart';
+import 'features/Article/presentation/pages/create_article.dart';
+import 'features/blog/presentation/pages/create_blog.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -21,6 +24,7 @@ void main() async {
       enabled: !kReleaseMode,
       builder: (context) => MultiBlocProvider(providers: [
             BlocProvider(create: (context) => authdi.sl<LogInBloc>()),
+            BlocProvider(create: (context) => authdi.sl<ArticleBloc>()),
             BlocProvider(create: (context) => authdi.sl<SignUpBloc>()),
             BlocProvider<ProfileBloc>(
               create: (context) => ProfileBloc(),
