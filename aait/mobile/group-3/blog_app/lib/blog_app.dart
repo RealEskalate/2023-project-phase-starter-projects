@@ -1,4 +1,6 @@
 import 'package:blog_app/features/article/presentation/bloc/article_bloc.dart';
+import 'package:blog_app/features/article/presentation/bloc/create_article_bloc.dart';
+import 'package:blog_app/features/article/presentation/bloc/update_article_bloc.dart';
 import 'package:blog_app/features/article/presentation/screen/article_reading.dart';
 import 'package:blog_app/features/article/presentation/screen/home_screen.dart';
 import 'package:blog_app/features/article/presentation/screen/write_aricle_page.dart';
@@ -59,6 +61,11 @@ class BlogApp extends StatelessWidget {
             BlocProvider(
               create: (context) => serviceLocator<ArticleBloc>(),
             ),
+            BlocProvider(
+              create: (context) => serviceLocator<CreateArticleBloc>(),
+            ),
+            BlocProvider(
+                create: (context) => serviceLocator<UpdateArticleBloc>())
           ],
           child: MaterialApp.router(
             routerConfig: _router,

@@ -6,14 +6,17 @@ import 'package:google_fonts/google_fonts.dart';
 import '../../../../core/color/colors.dart';
 
 class CustomTextField extends StatelessWidget {
-  const CustomTextField({
-    super.key,
-    required this.hint,
-  });
+  const CustomTextField(
+      {super.key,
+      required this.hint,
+      required this.controller,
+      });
   final String hint;
+  final TextEditingController controller;
   @override
   Widget build(BuildContext context) {
-    return TextField(
+    return TextFormField(
+      controller: controller,
       decoration: InputDecoration(
         enabledBorder: UnderlineInputBorder(
             borderSide: BorderSide(color: fieldBorderColor, width: 3.42.h)),

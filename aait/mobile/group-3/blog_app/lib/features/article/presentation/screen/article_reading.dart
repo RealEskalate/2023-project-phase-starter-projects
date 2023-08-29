@@ -10,13 +10,6 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../widgets/widgets.dart';
 
 class ArticleReadingPage extends StatelessWidget {
-  // final String headTitle;
-  // final String authorImageUrl;
-  // final String postedAt;
-  // final String authorName;
-  // final String postText;
-  // final String postImageUrl;
-  // final String likeCount;
   final String id;
 
   const ArticleReadingPage({
@@ -30,9 +23,17 @@ class ArticleReadingPage extends StatelessWidget {
     final state = bloc.state;
 
     switch (state) {
+      case GettingArticle():
+        return Scaffold(
+            body: LoadingWidget(
+          message: "Fetching Article please wait",
+        ));
       case ArticleInitial():
-        bloc.add(GetArticleByIdEvent(id: "something"));
-        return LoadingWidget(message: "Fetching Article please wait");
+        bloc.add(GetArticleByIdEvent(id: this.id));
+        return Scaffold(
+            body: LoadingWidget(
+          message: "Fetching Article please wait",
+        ));
       case ArticleLoaded():
         return ScreenUtilInit(
           designSize: const Size(375, 812),
@@ -84,7 +85,8 @@ class ArticleReadingPage extends StatelessWidget {
       default:
         return Scaffold(
           body: Center(
-            child: Text("Unimplemented state error from ArticleReadingPage"),
+            child: Text(
+                "Unimplemented state error from ArticleReadingPage $state"),
           ),
         );
     }
