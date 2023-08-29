@@ -3,14 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 
-class HeaderWidget extends StatefulWidget {
-  const HeaderWidget({super.key});
+class HeaderWidget extends StatelessWidget {
+  final VoidCallback callback;
+  const HeaderWidget({required this.callback, super.key});
 
-  @override
-  State<HeaderWidget> createState() => _HeaderWidgetState();
-}
-
-class _HeaderWidgetState extends State<HeaderWidget> {
   @override
   Widget build(BuildContext context) {
     return Row(
@@ -18,9 +14,7 @@ class _HeaderWidgetState extends State<HeaderWidget> {
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
         GestureDetector(
-          onTap: () {
-            Navigator.pushNamed(context, '/profile');
-          },
+          onTap: callback,
           child: Icon(
             Icons.sort,
             size: 40.sp,
@@ -38,35 +32,33 @@ class _HeaderWidgetState extends State<HeaderWidget> {
             ),
           ),
         ),
-        Stack(
-          alignment: Alignment.center,
-          children: [
-            InkWell(
-              onTap: () {
-                setState(() {
-                  context.go('/profile');
-                  print("Here I am being pressed");
-                });
-              },
-              child: CircleAvatar(
+        GestureDetector(
+          onTap: () {
+            //  Navigator.pushNamed(
+            //     context, '/profile');
+          },
+          child: Stack(
+            alignment: Alignment.center,
+            children: [
+              CircleAvatar(
                 backgroundImage: const AssetImage(
-                    'assets/images/onboarding2.jpg'), // User's avatar
+                    'assets/images/avator.jpg'), // User's avatar
                 radius: 28.sp, // Avatar radius
               ),
-            ),
-            Container(
-              width: 65.w,
-              height: 65.h,
-              decoration: BoxDecoration(
-                shape: BoxShape.circle,
-                border: Border.all(
-                  color: AppColors
-                      .whiteColor, // Color of the border around the avatar
-                  width: 2.sp, // Border width
+              Container(
+                width: 55.w,
+                height: 55.h,
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  border: Border.all(
+                    color: AppColors
+                        .whiteColor, // Color of the border around the avatar
+                    width: 2.sp, // Border width
+                  ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ],
     );

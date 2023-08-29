@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:blog_app/features/article/domain/entity/getArticlesEntity.dart';
 import 'package:http/http.dart' as http;
 import 'package:http_parser/http_parser.dart';
 import 'package:mime/mime.dart';
@@ -17,7 +18,7 @@ abstract class ArticleRemoteDataSource {
   Future<ArticleModel> deleteArticle(String id);
   Future<List<ArticleModel>> getArticle(String tags, String searchParams);
   Future<ArticleModel> getArticleById(String id);
-  Future<List<ArticleModel>> getAllArticles();
+  Future<List<ArticleModel>> getAllArticles(ArticleRequest articleRequest);
   Future<List<String>> getTags();
   Future<UserModel> getUser();
 }
@@ -108,21 +109,29 @@ class ArticleRemoteDataSourceImpl implements ArticleRemoteDataSource {
   }
 
   @override
-  Future<List<ArticleModel>> getAllArticles() async {
-    String token = await getStoredToken();
-    var request = http.Request('GET', Uri.parse('$baseUrl/article'));
-    request.headers['Authorization'] = 'Bearer $token';
-    http.StreamedResponse response = await request.send();
+  Future<List<ArticleModel>> getAllArticles(
+      ArticleRequest articleRequest) async {
+    String tags = "";
+    for (int i = 0; i < articleRequest.tags.length; i++) {
+      tags += articleRequest.tags[i] + ",";
+    }
+    final response = await client.get(
+      Uri.parse(
+          'https://blog-api-4z3m.onrender.com/api/v1/article?searchParams=${articleRequest.queryString}&tags=${tags}'),
+      headers: {"Content-Type": 'application/json'},
+    );
     if (response.statusCode == 200) {
-      final http.Response result = await http.Response.fromStream(response);
-      final jsonResponse = jsonDecode(result.body)["data"];
-      return List<Map<String, dynamic>>.from(jsonResponse)
+      print("object found");
+      print(response.body);
+      print("object found");
+      List<dynamic> jsonResponse = jsonDecode(response.body)["data"];
+      List<ArticleModel> result = jsonResponse
           .map((articleData) => ArticleModel.fromJson(articleData))
           .toList();
+      return result;
     } else {
-      final result = await http.Response.fromStream(response);
       throw ServerException(
-          statusCode: result.statusCode, message: "Failed to fetch articles");
+          statusCode: 500, message: "Failed to fetch articles");
     }
   }
 
