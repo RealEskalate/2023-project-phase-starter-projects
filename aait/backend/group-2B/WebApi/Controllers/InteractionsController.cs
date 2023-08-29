@@ -31,7 +31,7 @@ public class InteractionController : ControllerBase
     {
         likeDto.Type = InteractionType.Like;
         likeDto.Body = null;
-        likeDto.UserId = int.Parse(_userService.GetUserId());
+        likeDto.UserId = _userService.GetUserId();
         var command = new LikeUnlikePostInteractionCommand { LikeDto = likeDto };
 
         var response = await _mediator.Send(command);
@@ -51,13 +51,14 @@ public class InteractionController : ControllerBase
     public async Task<IActionResult> CommentOnPostAsync([FromBody] InteractionDto interactionDto)
     {
         interactionDto.Type = InteractionType.Comment;
-        interactionDto.UserId = int.Parse(_userService.GetUserId());
+        interactionDto.UserId = _userService.GetUserId();
         var command = new CreateCommentInteractionCommand { CreateCommentDto = interactionDto };
         var response = await _mediator.Send(command);
 
         if (response.IsSuccess)
         {
-            return CreatedAtAction(nameof(GetCommentOfAPost), new { id = response.Value }, response);
+            return CreatedAtAction(nameof(GetCommentOfAPost), new { id = response.Value },
+                response);
         }
         else
         {
@@ -66,12 +67,13 @@ public class InteractionController : ControllerBase
     }
 
     [Authorize]
-    [HttpPut("comment")]
-    public async Task<IActionResult> UpdateCommentOfAPostAsync(
+    [HttpPut("comment/{commentId}")]
+    public async Task<IActionResult> UpdateCommentOfAPostAsync(int commentId,
         [FromBody] UpdateCommentInteractionDto interactionDto
     )
     {
-        interactionDto.UserId = int.Parse(_userService.GetUserId());
+        interactionDto.Id = commentId;
+        interactionDto.UserId = _userService.GetUserId();
         var command = new UpdateCommentInteractionCommand { UpdateCommentDto = interactionDto };
         var response = await _mediator.Send(command);
         if (response.IsSuccess)
@@ -85,12 +87,13 @@ public class InteractionController : ControllerBase
     }
 
     [Authorize]
-    [HttpDelete("comment")]
-    public async Task<IActionResult> DeleteCommentOfAPost(
+    [HttpDelete("comment/{commentId}")]
+    public async Task<IActionResult> DeleteCommentOfAPost(int commentId,
         [FromBody] DeleteCommentInteractionDto interactionDto
     )
     {
-        interactionDto.UserId = int.Parse(_userService.GetUserId());
+        interactionDto.Id = commentId;
+        interactionDto.UserId = _userService.GetUserId();
         var command =
             new DeleteCommentInteractionCommand { DeleteCommentInteractionDto = interactionDto };
         var response = await _mediator.Send(command);
