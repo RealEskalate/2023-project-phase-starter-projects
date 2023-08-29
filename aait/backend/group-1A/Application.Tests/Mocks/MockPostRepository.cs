@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Linq.Expressions;
-using System.Threading.Tasks;
-using Application.Contracts;
-using Application.DTO.PostDTO.DTO;
+﻿using Application.Contracts;
 using Domain.Entities;
 using Moq;
 

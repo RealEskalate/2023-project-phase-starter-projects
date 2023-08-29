@@ -1,10 +1,4 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Linq.Expressions;
-using System.Threading.Tasks;
 using Application.Contracts;
-using Domain.Entites;
 using Microsoft.EntityFrameworkCore;
 using SocialSync.Domain.Entities;
 
@@ -22,10 +16,6 @@ namespace Persistence.Repositories
         {
             var user =  _socialMediaDbContext.Users.Where(u => u.Id == Id).FirstOrDefaultAsync();
             return user!;
-        }
-        public new Task<List<User>> GetAll(Expression<Func<User, bool>> predicate)
-        {
-            throw new NotImplementedException();
         }
 
         public async Task<List<User>> GetAllUsers()

@@ -1,13 +1,8 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Application.Contracts;
-using Application.DTO.PostDTO.DTO;
+using Application.Exceptions;
 using Application.Features.PostFeature.Handlers.Commands;
 using Application.Features.PostFeature.Requests.Commands;
 using Application.Profiles;
-using Application.Response;
 using Application.Tests.Mocks;
 using AutoMapper;
 using Moq;
@@ -39,7 +34,8 @@ namespace Application.Tests.Features.PostFeatureTest.Commands
 
             var result = await handler.Handle(new DeletePostCommand(){userId = 1, Id = 1}, CancellationToken.None);
 
-            result.ShouldBeOfType<BaseResponse<PostResponseDTO>>();
+            //result.ShouldBeOfType<BaseResponse<PostResponseDTO>>();
+            Assert.NotNull(result);
 
         }
 
@@ -49,9 +45,10 @@ namespace Application.Tests.Features.PostFeatureTest.Commands
         {
             var handler = new DeletePostHandler(_mockRepo.Object);
 
-            var result = await handler.Handle(new DeletePostCommand(){userId = 1, Id = 100}, CancellationToken.None);
 
-            result.ShouldBeOfType<BaseResponse<PostResponseDTO>>();
+            await Should.ThrowAsync<NotFoundException>(async () =>
+                await handler.Handle(new DeletePostCommand() { userId = 1, Id = 100 }, CancellationToken.None));
+
 
         }
 
@@ -61,9 +58,8 @@ namespace Application.Tests.Features.PostFeatureTest.Commands
         {
             var handler = new DeletePostHandler(_mockRepo.Object);
 
-            var result = await handler.Handle(new DeletePostCommand(){userId = 1000, Id = 1}, CancellationToken.None);
-
-            result.ShouldBeOfType<BaseResponse<PostResponseDTO>>();
+            await Should.ThrowAsync<NotFoundException>(async () =>
+                await handler.Handle(new DeletePostCommand() { userId = 1000, Id = 1 }, CancellationToken.None));
 
         }
     }

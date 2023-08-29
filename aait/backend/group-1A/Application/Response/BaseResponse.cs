@@ -7,7 +7,7 @@ namespace Application.Response
 {
     public class BaseResponse<T>
     {
-        public bool Success { get; set; }
+        public bool Success { get; set; } = false;
 
         public string Message { get; set; } = "";
 

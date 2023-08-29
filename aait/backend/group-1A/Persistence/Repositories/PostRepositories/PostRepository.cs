@@ -18,12 +18,12 @@ namespace Persistence.Repositories
             _mapper = mapper;
             _dbContext = dbContext;
         }
-        public async Task<Post> Get(int id, int userId)
+        public async Task<Post> Get(int id)
         {
             var result = await _dbContext.Posts
                     .Include(x => x.Comments)
                     .Include(x => x.PostReactions)
-                    .Where(x => x.Id == id && x.UserId == userId)
+                    .Where(x => x.Id == id)
                     .SingleOrDefaultAsync();
             return result;
         }

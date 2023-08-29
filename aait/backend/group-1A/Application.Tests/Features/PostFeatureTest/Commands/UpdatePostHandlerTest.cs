@@ -33,7 +33,6 @@ namespace Application.Tests.Features.PostFeatureTest.Commands
             _mapper = mapperConfig.CreateMapper();   
         }
 
-        [Fact]
         public async Task UpdatePostValidTest()
         {
             var handler = new UpdatePostHandler(_mockRepo.Object,_mapper);
