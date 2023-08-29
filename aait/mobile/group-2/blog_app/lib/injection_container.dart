@@ -12,6 +12,7 @@ import 'features/article/data/repositories/article_repository_impl.dart';
 import 'features/article/domain/repositories/article_repository.dart';
 import 'features/article/domain/usecases/usecases.dart';
 import 'features/article/presentation/bloc/article_bloc.dart';
+import 'features/article/presentation/bloc/bookmark_bloc.dart';
 import 'features/article/presentation/bloc/tag_bloc.dart';
 import 'features/article/presentation/bloc/tag_selector_bloc.dart';
 import 'features/authentication/data/data_sources/local_data_source.dart';
@@ -45,6 +46,13 @@ Future<void> init() async {
         getArticle: serviceLocator(),
         updateArticle: serviceLocator(),
         filterArticles: serviceLocator()),
+  );
+  serviceLocator.registerFactory(
+    () => BookmarkBloc(
+      loadBookmarks: serviceLocator(),
+      addToBookmark: serviceLocator(),
+      removeFromBookmark: serviceLocator(),
+    ),
   );
   serviceLocator.registerFactory(
     () => TagSelectorBloc(),
@@ -84,6 +92,12 @@ Future<void> init() async {
 
   serviceLocator.registerLazySingleton(
     () => LoadBookmarks(serviceLocator()),
+  );
+  serviceLocator.registerLazySingleton(
+    () => AddToBookmark(serviceLocator()),
+  );
+  serviceLocator.registerLazySingleton(
+    () => RemoveFromBookmark(serviceLocator()),
   );
 
   serviceLocator.registerLazySingleton(
