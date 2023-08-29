@@ -12,5 +12,5 @@ abstract class ArticleLocalDataSource {
 
   Future<List<ArticleModel>> getBookmarkedArticles();
   Future<void> addToBookmark(ArticleModel article);
-  Future<void> removeFromBookmark(String articleId);
+  Future<ArticleModel> removeFromBookmark(String articleId);
 }

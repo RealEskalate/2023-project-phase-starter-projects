@@ -105,6 +105,12 @@ class ArticleLocalDataSourceImpl extends ArticleLocalDataSource {
     await sharedPreferences.setString(tagKey, jsonEncoded);
   }
 
+  Future<void> _cacheBookmarks(List<ArticleModel> articles) async {
+    final jsonEncoded = jsonEncode(articles);
+
+    await sharedPreferences.setString(bookmarkKey, jsonEncoded);
+  }
+
   @override
   Future<List<ArticleModel>> getBookmarkedArticles() async {
     final jsonEncoded = sharedPreferences.getString(bookmarkKey);
@@ -138,16 +144,18 @@ class ArticleLocalDataSourceImpl extends ArticleLocalDataSource {
       articles[articleIndex] = article;
     }
 
-    await cacheArticles(articles);
+    await _cacheBookmarks(articles);
   }
 
   @override
-  Future<void> removeFromBookmark(String articleId) async {
+  Future<ArticleModel> removeFromBookmark(String articleId) async {
     final articles = await getBookmarkedArticles();
 
     final filteredArticles =
         articles.where((article) => article.id != articleId);
 
-    await cacheArticles(filteredArticles.toList());
+    await _cacheBookmarks(filteredArticles.toList());
+
+    return articles.firstWhere((article) => article.id == articleId);
   }
 }

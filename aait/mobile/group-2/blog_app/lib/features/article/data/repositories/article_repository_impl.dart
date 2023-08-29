@@ -153,20 +153,20 @@ class ArticleRepositoryImpl extends ArticleRepository {
   }
 
   @override
-  Future<Either<Failure, Article>> addToBookmark(Article article) {
-    // TODO: implement addToBookmark
-    throw UnimplementedError();
+  Future<Either<Failure, List<Article>>> getBookmarkedArticles() async {
+    final articles = await localDataSource.getBookmarkedArticles();
+    return Right(articles);
   }
 
   @override
-  Future<Either<Failure, List<Article>>> getBookmarkedArticles() {
-    // TODO: implement getBookmarkedArticles
-    throw UnimplementedError();
+  Future<Either<Failure, Article>> addToBookmark(Article article) async {
+    await localDataSource.addToBookmark(article.toArticleModel());
+    return Right(article);
   }
 
   @override
-  Future<Either<Failure, Article>> removeFromBookmark(String articleId) {
-    // TODO: implement removeFromBookmark
-    throw UnimplementedError();
+  Future<Either<Failure, Article>> removeFromBookmark(String articleId) async {
+    final article = await localDataSource.removeFromBookmark(articleId);
+    return Right(article);
   }
 }
