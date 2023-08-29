@@ -1,0 +1,27 @@
+{
+  "_id": "64dfe9dd50d83607285ffa10",
+  "image": "/images/blog_detail.png",
+  "title": "The essential guide to Competitive Programming",
+  "description": "Code refactoring is an essential practice in software development that often separates novice programmers.",
+  "author": {
+    "_id": "64dfe6fb50961c55ce93e7de",
+    "name": "Bruk Mekonen",
+    "email": "bruk@gmail.com",
+    "image": "/images/user profile area.png",
+    "role": "user"
+  },
+  "isPending": true,
+  "tags": [
+    "Programming",
+    "Code"
+  ],
+  "likes": 0,
+  "relatedBlogs": [],
+  "skills": [
+    "Web Development",
+    "Mobile"
+  ],
+  "createdAt": "2023-08-18T21:59:57.206Z",
+  "updatedAt": "2023-08-18T21:59:57.206Z",
+  "__v": 0
+}
