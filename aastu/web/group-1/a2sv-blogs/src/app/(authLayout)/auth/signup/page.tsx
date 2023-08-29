@@ -40,16 +40,16 @@ export default function page() {
               alt="A2SV Logo"
             ></Image>
           </div>
-          <div className="flex">
+          <div className="flex items-center">
             <Image
               src="/images/Saly-14person.svg"
-              width={500}
-              height={300}
+              width={400}
+              height={823}
               alt="Login Illustration"
-              className="w- object-contain"
+              className="object-contain"
             />
-            <div className="mt-60 -ml-16 space-y-6">
-              <h1 className="text-6xl  font-bold text-text-header-1 space-y-3">
+            <div className="-ml-16 space-y-6">
+              <h1 className="text-5xl  font-bold text-text-header-1">
                 <span>Welcome to </span>
                 <br />
                 <span>A2SV</span>
