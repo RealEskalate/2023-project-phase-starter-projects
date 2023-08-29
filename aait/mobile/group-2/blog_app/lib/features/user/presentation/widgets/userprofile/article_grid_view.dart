@@ -19,7 +19,7 @@ class ArticleGridView extends StatelessWidget {
     return Column(
       children: [
         ArticleTitleBar(
-          title: "My Bookmarks",
+          title: "My Posts",
           onGridView: onGridView,
           onListView: onListView,
         ),

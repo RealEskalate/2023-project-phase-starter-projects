@@ -12,6 +12,8 @@ import '../bloc/user_bloc.dart';
 import '../widgets/userprofile/article_grid_view.dart';
 import '../widgets/userprofile/article_list_view.dart';
 import '../widgets/userprofile/gradient_at_bottom.dart';
+import '../widgets/userprofile/posts_bar.dart';
+import '../widgets/userprofile/profile_bar.dart';
 import '../widgets/userprofile/show_posts_and_bookmarks.dart';
 import '../widgets/userprofile/user_profile_details.dart';
 
@@ -24,6 +26,7 @@ class UserProfile extends StatefulWidget {
 
 class _UserProfileState extends State<UserProfile> {
   bool grid = true;
+  String currPosts = 'Posts';
 
   @override
   Widget build(BuildContext context) {
@@ -103,6 +106,8 @@ class _UserProfileState extends State<UserProfile> {
                               return ShowPostsAndBookmarks(
                                 numBookmarks: 0,
                                 numPosts: state.userData.articles.length,
+                                handlePostChoice: _handleChoiceTap,
+                                currPosts: currPosts,
                               );
                             } else {
                               return const Center(
@@ -125,16 +130,20 @@ class _UserProfileState extends State<UserProfile> {
                               builder: (context, state) {
                             if (state is LoadedUserState) {
                               return grid
-                                  ? ArticleGridView(
-                                      articles: state.userData.articles,
-                                      onGridView: switchView,
-                                      onListView: switchView,
-                                    )
-                                  : ArticleListView(
-                                      articles: state.userData.articles,
-                                      onGridView: switchView,
-                                      onListView: switchView,
-                                    );
+                                  ? currPosts == 'Posts'
+                                      ? ArticleGridView(
+                                          articles: state.userData.articles,
+                                          onGridView: switchView,
+                                          onListView: switchView,
+                                        )
+                                      : ArticleTitleBar(title: "My Bookmarks")
+                                  : currPosts == 'Posts'
+                                      ? ArticleListView(
+                                          articles: state.userData.articles,
+                                          onGridView: switchView,
+                                          onListView: switchView,
+                                        )
+                                      : ArticleTitleBar(title: "My Bookmarks");
                             } else {
                               return const Center(
                                   child: CircularProgressIndicator());
@@ -157,6 +166,13 @@ class _UserProfileState extends State<UserProfile> {
   void switchView() {
     setState(() {
       grid = !grid;
+    });
+  }
+
+  void _handleChoiceTap(String choice) {
+    print("Clicked");
+    setState(() {
+      currPosts = choice;
     });
   }
 }

@@ -4,11 +4,19 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class ShowPostsAndBookmarks extends StatelessWidget {
   final int numPosts, numBookmarks;
-  const ShowPostsAndBookmarks({
+  final Function(String) handlePostChoice;
+  final String currPosts;
+
+  ShowPostsAndBookmarks({
     Key? key,
     required this.numPosts,
     required this.numBookmarks,
+    required this.handlePostChoice,
+    required this.currPosts,
   }) : super(key: key);
+
+  Color col1 = Color(0xFF2151CD);
+  Color col2 = Color(0xFF386BED);
 
   @override
   Widget build(BuildContext context) {
@@ -22,19 +30,31 @@ class ShowPostsAndBookmarks extends StatelessWidget {
         width: 230.w,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(12.0),
-          color: Color(0xFF386BED),
+          color: col2,
         ),
         child: Row(
           children: [
-            ShowPostsOrBookmarksButton(
-              count: numPosts,
-              col: Color(0xFF2151CD),
-              typeOfChoice: 'Posts',
+            GestureDetector(
+              behavior: HitTestBehavior.deferToChild,
+              onTap: () => handlePostChoice('Posts'),
+              child: Container(
+                child: ShowPostsOrBookmarksButton(
+                  count: numPosts,
+                  col: currPosts == 'Posts' ? col1 : col2,
+                  typeOfChoice: 'Posts',
+                ),
+              ),
             ),
-            ShowPostsOrBookmarksButton(
-              count: numBookmarks,
-              col: Color(0xFF386BED),
-              typeOfChoice: 'Bookmarks',
+            GestureDetector(
+              behavior: HitTestBehavior.opaque,
+              onTap: () => handlePostChoice('Bookmarks'),
+              child: Container(
+                child: ShowPostsOrBookmarksButton(
+                  count: numBookmarks,
+                  col: currPosts == "Bookmarks" ? col1 : col2,
+                  typeOfChoice: 'Bookmarks',
+                ),
+              ),
             ),
           ],
         ),

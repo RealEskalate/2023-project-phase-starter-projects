@@ -3,7 +3,7 @@ import '../../../../article/data/models/article_model.dart';
 import '../../models/user_data_model.dart';
 
 abstract class UserLocalDataSource {
-  Future<void> cacheBookmarkedArticles(List<ArticleModel> articlesToCache);
+  Future<void> cacheBookmarkedArticles(ArticleModel articleToCache);
   Future<List<ArticleModel>> getAllBookmarkedArticles();
   Future<void> removeBookmark(String userArticleId);
 

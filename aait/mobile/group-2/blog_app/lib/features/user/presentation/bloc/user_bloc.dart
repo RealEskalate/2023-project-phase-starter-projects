@@ -5,8 +5,10 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../core/error/failure.dart';
 import '../../../../core/usecase/usecase.dart';
+import '../../../article/data/models/article_model.dart';
 import '../../../article/domain/entities/article.dart';
 import '../../domain/entities/user_data.dart';
+import '../../domain/usecases/user_usecases/add_bookmart_usecase.dart';
 import '../../domain/usecases/user_usecases/get_bookmarked_articles_usecase.dart';
 import '../../domain/usecases/user_usecases/get_user_data_usecase.dart';
 import '../../domain/usecases/user_usecases/update_user_photo_usecase.dart';
@@ -22,15 +24,18 @@ class UserBloc extends Bloc<UserEvent, UserState> {
   final GetUserData getUser;
   final UpdateUserPhoto updateUserPhoto;
   final GetBookmarkedArticles getBookmarkedArticles;
+  final AddBookmark addBookmark;
 
   UserBloc(
-      {required this.getUser,
+      {required this.addBookmark,
+      required this.getUser,
       required this.updateUserPhoto,
       required this.getBookmarkedArticles})
       : super(UserInitial()) {
     on<GetUserEvent>(_onGetUserData);
     on<UpdateUserPhotoEvent>(_onUpdateUserPhoto);
     on<GetBookmarkedArticlesEvent>(_onGetBookmarkedArticles);
+    on<BookmarkButtonClickedEvent>(_onBookmarkButtonClicked);
   }
 
   String _mapFailureToMessage(Failure failure) {
@@ -98,5 +103,21 @@ class UserBloc extends Bloc<UserEvent, UserState> {
         LoadedBookmarkedArticlesState(articles: articles),
       ),
     );
+  }
+
+  Future<FutureOr<void>> _onBookmarkButtonClicked(
+      BookmarkButtonClickedEvent event, Emitter<UserState> emit) async {
+    final articleOrError =
+        await addBookmark(GetArticleParams(article: event.article));
+
+    articleOrError.fold(
+        (failure) => emit(
+              ErrorState(
+                message: _mapFailureToMessage(failure),
+              ),
+            ),
+        (article) => emit(
+              BookmarkButtonClickedState(),
+            ));
   }
 }

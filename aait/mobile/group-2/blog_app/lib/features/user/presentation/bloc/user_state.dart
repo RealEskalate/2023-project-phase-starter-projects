@@ -30,3 +30,5 @@ class ErrorState extends UserState {
 
   const ErrorState({required this.message});
 }
+
+class BookmarkButtonClickedState extends UserState {}
