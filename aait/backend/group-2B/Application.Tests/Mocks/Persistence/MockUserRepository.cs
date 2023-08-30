@@ -1,6 +1,7 @@
 using Moq;
 using SocialSync.Application.Contracts.Persistence;
 using SocialSync.Domain.Entities;
+using SocialSync.Infrastructure.PasswordService;
 
 namespace SocialSync.Application.Tests.Mocks;
 
@@ -8,6 +9,7 @@ public class MockUserRepository
 {
     public static Mock<IUserRepository> GetMockUserRepository()
     {
+        var _passwordHasher = new PasswordHasher();
         var users = new List<User>
         {
             new User
@@ -16,7 +18,7 @@ public class MockUserRepository
                 LastName = "User1",
                 Email = "User1@gmail.com",
                 Username = "User1",
-                Password = "User1",
+                Password = _passwordHasher.HashPassword("User1password"),
                 Phone = "1234567890",
                 Id = 1
             },
@@ -26,7 +28,7 @@ public class MockUserRepository
                 LastName = "User2",
                 Email = "User2@gmail.com",
                 Username = "User2",
-                Password = "User2",
+                Password = _passwordHasher.HashPassword("User2password"),
                 Phone = "1234567890",
                 Id = 2
             },
@@ -36,7 +38,7 @@ public class MockUserRepository
                 LastName = "User3",
                 Email = "user3@gmail.com",
                 Username = "User3",
-                Password = "User3password",
+                Password = _passwordHasher.HashPassword("User3password"),
                 Phone = "1234567890",
                 Id = 3
             }
