@@ -19,8 +19,8 @@ export interface RegisterResponseData {
 }
 
 export interface LoginInputData {
-    oldPassword: string,
-    newPassword: string
+    email: string;
+    password: string;
 }
 
 export interface EditProfileData {
@@ -43,4 +43,8 @@ export interface EditProfileResponse {
     };
 }
 
+export interface EditPasswordData{
+    oldPassword: string;
+    newPassword: string;
+}
 

@@ -1,4 +1,4 @@
-import User, { EditProfileData, EditProfileResponse, LoginInputData } from "@/types/user/user";
+import User, { EditPasswordData, EditProfileData, EditProfileResponse, LoginInputData } from "@/types/user/user";
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { setMessage, setUser } from "./user-slice";
 import { RootState } from "@/store";
@@ -42,7 +42,7 @@ export const userApi = createApi({
                 }));
             }
         }),
-        editPassword: builder.mutation<{message: string}, LoginInputData>({
+        editPassword: builder.mutation<{message: string}, EditPasswordData>({
             query(data) {
                 return {
                     url: 'change-password',

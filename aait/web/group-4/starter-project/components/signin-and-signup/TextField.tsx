@@ -12,7 +12,7 @@ interface TextFieldProps {
 const TextField: React.FC<TextFieldProps> = ({ type, name, id, placeholder, value, onChange }) => {
     return (
         <input
-            className="font-semibold p-2 bg-gray-100 text-gray-600 border-0 rounded-md"
+            className="font-semibold p-4 bg-gray-100 text-gray-600 border-0 rounded-md"
             type={type}
             name={name}
             id={id}

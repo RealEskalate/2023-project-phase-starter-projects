@@ -11,7 +11,6 @@ const NavMenu = () => {
     { name: "Blogs", link: "/blogs" },
     { name: "Get Involved", link: "/get-involved" },
   ];
-  const pathname = usePathname();
   const [activeLink, setActiveLink] = useState(0);
   
   return (

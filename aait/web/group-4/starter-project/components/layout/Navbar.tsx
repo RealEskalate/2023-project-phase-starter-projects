@@ -4,6 +4,7 @@ import { usePathname } from "next/navigation";
 import { useState } from "react";
 import Image from "next/image";
 import NavMenu from "./NavMenu";
+import Link from "next/link";
 
 export default function Navbar() {
   const [nav, setNav] = useState(false);
@@ -12,10 +13,15 @@ export default function Navbar() {
 
   const loginDonateBtn = (
     <div className={`flex text-[16px] font-bold gap-8  justify-center `}>
-      <button className="rounded-lg border-none bg-none">Login</button>
-      <button className="px-5 py-3 rounded-lg border-none bg-blue-800 text-white">
+      <Link
+        href="/signin"
+        className="rounded-lg border-none py-4 px-6  hover:bg-primary-color hover:text-white transition duration-300"
+      >
+        Login
+      </Link>
+      <a className="px-5 py-3 rounded-lg border-none bg-blue-800 text-white">
         Donate
-      </button>
+      </a>
     </div>
   );
 
@@ -33,7 +39,7 @@ export default function Navbar() {
         </div>
         <div className="flex relative justify-between text-gunmetal-gray md:w-fit">
           <nav className="lg-1:flex hidden flex-col lg-1:flex-row gap-10 font-semibold text-xl">
-            <NavMenu/>
+            <NavMenu />
           </nav>
           <Image
             onClick={() => setNav(!nav)}
@@ -45,12 +51,7 @@ export default function Navbar() {
           />
         </div>
 
-        <div className="hidden text-[16px] font-bold gap-8 lg-1:flex">
-          <button className="rounded-lg border-none bg-none">Login</button>
-          <button className="px-5 py-3 rounded-lg border-none bg-blue-800 text-white">
-            Donate
-          </button>
-        </div>
+        {loginDonateBtn}
       </div>
       {/* Mobile menu */}
       <nav
@@ -58,7 +59,7 @@ export default function Navbar() {
           nav ? "flex-col" : "hidden"
         } gap-4 items-center text-[#565656] text-xl lg-1:hidden`}
       >
-        <NavMenu/>
+        <NavMenu />
         {loginDonateBtn}
       </nav>
     </>
