@@ -4,18 +4,18 @@ using SocialSync.Application.Contracts.Persistence;
 
 namespace SocialSync.Application.DTOs.Users.Validators;
 
-public class FollowUnfollowDtoValidator : AbstractValidator<FollowUnFollowDto>
+public class FollowDtoValidator : AbstractValidator<FollowUnFollowDto>
 {
     private readonly IUnitOfWork _unitOfWork;
 
 
-    public FollowUnfollowDtoValidator(IUnitOfWork unitOfWork)
+    public FollowDtoValidator(IUnitOfWork unitOfWork)
     {
 
         _unitOfWork = unitOfWork;
 
 
-        _ = RuleFor(f => f)
+        RuleFor(f => f)
                 .NotEmpty().WithMessage("{propertyNmae} is Required")
                 .NotNull().WithMessage("{propertyName} is Required")
                 .MustAsync(async (f, token) =>
@@ -29,19 +29,18 @@ public class FollowUnfollowDtoValidator : AbstractValidator<FollowUnFollowDto>
                     var result = await _unitOfWork.UserRepository.GetAsync(f.FollwerId);
                     var result2 = await _unitOfWork.UserRepository.GetAsync(f.FollowedId);
 
-                    var uer1 =  result.Followings.FirstOrDefault(t => t.Id == f.FollowedId);
+                    var uer1 = result.Followings.FirstOrDefault(t => t.Id == f.FollowedId);
                     return uer1 == null;
                 }
-        ).WithMessage("you are already following");
+                ).WithMessage("you are already following");
 
 
         RuleFor(f => f)
-                        
-                        .MustAsync(async (f, token) =>
-                        {
-                var result = await _unitOfWork.UserRepository.GetAsync(f.FollwerId);
-                return result != null;
-        }).WithMessage("user not found");
+                    .MustAsync(async (f, token) =>
+                    {
+                        var result = await _unitOfWork.UserRepository.GetAsync(f.FollwerId);
+                        return result != null;
+                    }).WithMessage("user not found");
 
     }
 }

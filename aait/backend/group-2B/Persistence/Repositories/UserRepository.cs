@@ -15,10 +15,7 @@ public class UserRepository : GenericRepository<User>, IUserRepository
         return await _dbContext.Users.AnyAsync(user => user.Email == email);
     }
 
-    public Task FollowUser(int follower, int follewed)
-    {
-        throw new NotImplementedException();
-    }
+
 
     public async Task<User> GetByUsername(string username)
     {
@@ -26,16 +23,13 @@ public class UserRepository : GenericRepository<User>, IUserRepository
         return user!;
     }
 
-    public Task UnFOllowUser(int follower, int follewed)
-    {
-        throw new NotImplementedException();
-    }
+
 
     public async Task<bool> UsernameExists(string username)
     {
         return await _dbContext.Users.AnyAsync(user => user.Username == username);
     }
-}
+
 
     public async Task FollowUser(int follower, int followed)
     {
@@ -45,22 +39,23 @@ public class UserRepository : GenericRepository<User>, IUserRepository
 
         if (followerUser != null && followedUser != null)
         {
-             followerUser.Followings.Add(followedUser);
-             followedUser.Followers.Add(followerUser);
+            followerUser.Followings.Add(followedUser);
+            followedUser.Followers.Add(followerUser);
 
         }
 
     }
 
-    public async Task UnFOllowUser(int follower, int followed)
+    public async Task UnfollowUser(int follower, int followed)
     {
         var followerUser = await _dbContext.Users.FindAsync(follower);
         var followedUser = await _dbContext.Users.FindAsync(followed);
 
-        if (followedUser != null && followerUser != null){
-             followerUser.Followings.Remove(followedUser);
-             followedUser.Followers.Remove(followerUser);
+        if (followedUser != null && followerUser != null)
+        {
+            followerUser.Followings.Remove(followedUser);
+            followedUser.Followers.Remove(followerUser);
         }
-        
+
     }
 }
