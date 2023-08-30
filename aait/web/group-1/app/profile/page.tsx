@@ -82,7 +82,7 @@ export default function Page() {
         <div className='col-span-2 flex items-start justify-center md:justify-start space-x-0 md:space-x-16'>
           <Image
               className='hidden md:block'
-              src={photo ? URL.createObjectURL(photo): currUser?.userProfile}
+              src={photo ? URL.createObjectURL(photo) : currUser?.userProfile}
               width={ 50 }
               height={ 50 }
               alt='small profile image'

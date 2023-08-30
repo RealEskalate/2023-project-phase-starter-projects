@@ -23,7 +23,14 @@ export const profileApi = createApi({
         body: newUserData,
       }),
     }),
+    changePassword: builder.mutation({
+      query: (newPasswordInfo) => ({
+        url: '/auth/change-password',
+        method: 'PATCH',
+        body: newPasswordInfo,
+      }),
+    }),
   }),
 });
 
-export const { useEditProfileMutation } = profileApi;
+export const { useEditProfileMutation, useChangePasswordMutation } = profileApi;
