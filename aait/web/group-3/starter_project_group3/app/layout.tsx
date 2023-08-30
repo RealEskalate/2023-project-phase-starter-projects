@@ -3,6 +3,8 @@ import type { Metadata } from "next";
 import ReduxProvider from "@/components/blog/ReduxProvider";
 import Header from "@/components/header/Header";
 import Footer from "@/components/footer/Footer";
+import "react-toastify/dist/ReactToastify.css";
+import { ToastContainer } from "react-toastify";
 
 export const metadata: Metadata = {
   title: "A2SV",
@@ -21,7 +23,18 @@ export default function RootLayout({
           <Header />
           {children}
           <Footer />
+          <ToastContainer
+            position="top-right"
+            autoClose={2000}
+            hideProgressBar
+            newestOnTop={false}
+            closeOnClick
+            rtl={false}
+            draggable
+            pauseOnHover
+          />
         </ReduxProvider>
+        <Footer />
       </body>
     </html>
   );

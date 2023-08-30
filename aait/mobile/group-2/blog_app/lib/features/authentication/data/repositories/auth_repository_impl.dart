@@ -25,6 +25,7 @@ class AuthRepositoryImpl implements AuthRepository {
       required this.authRemoteDataSource,
       required this.networkInfo});
 
+  @override
   Future<Either<Failure, String>> getToken() async {
     try {
       final token = await authLocalDataSource.getToken();
@@ -61,6 +62,7 @@ class AuthRepositoryImpl implements AuthRepository {
 
         await authLocalDataSource.cacheLoggedInUser(authenticatedUserInfoModel);
         await authLocalDataSource.cacheToken(authenticationEntity.token);
+
         return Right(authenticationEntity);
       } on ServerException catch (e) {
         // print the error message for debugging
@@ -107,22 +109,18 @@ class AuthRepositoryImpl implements AuthRepository {
 
   @override
   Future<Either<Failure, void>> logout(String token) async {
-    if (await networkInfo.isConnected) {
-      try {
-        final result = await authRemoteDataSource.logout(token);
-        await authLocalDataSource.deleteLoggedInUser();
-        return Right(result);
-      } on ServerException catch (e) {
-        // print the error message for debugging
-        debugPrint(e.toString());
-        return Left(ServerFailure());
-      } on LogoutException catch (e) {
-        // print the error message for debugging
-        debugPrint(e.toString());
-        return Left(LogoutFailure());
-      }
-    } else {
-      return Left(NetworkFailure());
+    try {
+      await authLocalDataSource.removeToken();
+      await authLocalDataSource.deleteLoggedInUser();
+      return const Right(null);
+    } on ServerException catch (e) {
+      // print the error message for debugging
+      debugPrint(e.toString());
+      return Left(ServerFailure());
+    } on LogoutException catch (e) {
+      // print the error message for debugging
+      debugPrint(e.toString());
+      return Left(LogoutFailure());
     }
   }
 }

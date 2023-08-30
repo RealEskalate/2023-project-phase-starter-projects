@@ -1,7 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Application.Contracts;
 using Application.DTO.PostDTO.DTO;
 using Application.Exceptions;
@@ -33,7 +29,6 @@ namespace Application.Tests.Features.PostFeatureTest.Commands
             _mapper = mapperConfig.CreateMapper();   
         }
 
-        [Fact]
         public async Task UpdatePostValidTest()
         {
             var handler = new UpdatePostHandler(_mockRepo.Object,_mapper);

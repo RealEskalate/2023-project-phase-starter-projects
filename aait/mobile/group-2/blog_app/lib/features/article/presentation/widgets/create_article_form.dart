@@ -4,6 +4,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:image_picker/image_picker.dart';
 
 import '../../../../core/presentation/theme/app_colors.dart';
+import '../../../../core/utils/time_calculator.dart';
 import '../../../user/domain/entities/user_data.dart';
 import '../../domain/entities/article.dart';
 import '../bloc/article_bloc.dart';
@@ -140,6 +141,9 @@ class _CreateArticleFormState extends State<CreateArticleForm> {
     final tagsBloc = context.read<TagSelectorBloc>();
 
     if (image != null) {
+      final estimatedReadTime =
+          estimatedReadTimeCalculator(contentFieldController.text);
+
       final article = Article(
         id: '',
         title: titleFieldController.text,
@@ -147,19 +151,11 @@ class _CreateArticleFormState extends State<CreateArticleForm> {
         content: contentFieldController.text,
         photoUrl: image!.path,
         tags: tagsBloc.selectedTags.toList(),
-        author: const UserData(
-            articles: [],
-            bio: '',
-            createdAt: '',
-            email: '',
-            expertise: '',
-            fullName: '',
-            id: '',
-            image: '',
-            imageCloudinaryPublicId: ''),
+        author: UserData.empty,
         date: DateTime.now(),
-        estimatedReadTime: '3min',
+        estimatedReadTime: '${estimatedReadTime.inMinutes} min',
       );
+
       articleBloc.add(CreateArticleEvent(article));
     } else {
       showError(context, 'Please select an image');

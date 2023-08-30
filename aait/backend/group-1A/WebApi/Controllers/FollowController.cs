@@ -8,6 +8,8 @@ using Application.Features.NotificationFeaure.Requests.Commands;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Application.Response;
+using Application.Common;
 
 namespace WebApi.Controllers
 {
@@ -24,7 +26,7 @@ namespace WebApi.Controllers
 
         [HttpGet("followers")]
         [Authorize]
-        public async Task<ActionResult<List<UserResponseDTO>>> GetFollowers()
+        public async Task<ActionResult<BaseResponse<List<UserResponseDTO>>>> GetFollowers()
         {
             var userId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier)!.Value);
             var result = await _mediator.Send(new GetFollowersQuery(){Id = userId});
@@ -33,7 +35,7 @@ namespace WebApi.Controllers
        
         [HttpGet("followees")]
         [Authorize]
-        public async Task<ActionResult<List<UserResponseDTO>>> GetFollowees()
+        public async Task<ActionResult<BaseResponse<List<UserResponseDTO>>>> GetFollowees()
         {
             var userId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier)!.Value);
             var result = await _mediator.Send(new GetFollowedUsersQuery(){Id = userId});
@@ -42,25 +44,33 @@ namespace WebApi.Controllers
 
         [HttpPost]
         [Authorize]
-        public async Task<ActionResult> Post(int Id)
+        public async Task<ActionResult<BaseResponse<int>>> Post(int Id)
         {
             var userId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier)!.Value);
             var newFollowData = new FollowDTO() {FollowerId = userId, FolloweeId = Id };
             var result = await _mediator.Send(new CreateFollowCommand() { FollowDTO = newFollowData });
             await _mediator.Send(new CreateNotification {NotificationData = new NotificationCreateDTO()
-            {Content = $"The user with {userId} is currently following you",NotificationType = "follow",UserId = userId}});
+                        {
+                            Content = $"The user with {userId} is currently following you",
+                            NotificationType = NotificationEnum.FOLLOW,
+                            UserId = result.Value}});
             return Ok(result);
         }
 
         [HttpDelete]
         [Authorize]
-        public async Task<ActionResult> Delete(int Id)
+        public async Task<ActionResult<BaseResponse<int>>> Delete(int Id)
         {
             var userId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier)!.Value);
             var followToDelete = new FollowDTO() {FollowerId = userId, FolloweeId = Id };
             var result = await _mediator.Send(new DeleteFollowCommand() { FollowDTO = followToDelete });
             await _mediator.Send(new CreateNotification {NotificationData = new NotificationCreateDTO()
-            {Content = $"The user with {userId} has currently un followed you",NotificationContentId = result.Value ,NotificationType = "follow",UserId = userId}});
+                        {
+                            Content = $"The user with {userId} has currently un followed you",
+                            NotificationContentId = result.Value ,
+                            NotificationType = NotificationEnum.FOLLOW,
+                            UserId = result.Value
+            }});
             return Ok(result);
         }
     }

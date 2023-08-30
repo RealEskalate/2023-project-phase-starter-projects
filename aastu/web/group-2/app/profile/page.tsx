@@ -7,11 +7,14 @@ import { useDropzone } from 'react-dropzone';
 import uploadIcon from '@/assets/images/Group 9542.svg';
 import { AiOutlineLoading3Quarters } from 'react-icons/ai';
 import Toast from '../components/Toast';
+import { useAppDispatch, useAppSelector } from '@/lib/redux/hooks';
+import { setUser, unsetUser } from '@/lib/redux/slices/loginSlice';
 
 export default function Section() {
   const [profileImage, setProfileImage] = useState<File>();
-  const [success, setSuccess] = useState(false);
   const [open, setOpen] = useState(false);
+  const loginState = useAppSelector((state: any) => state.login);
+  const dispatch = useAppDispatch();
 
   const createFile = async (url: string) => {
     let response = await fetch(url);
@@ -24,24 +27,26 @@ export default function Section() {
     setProfileImage(file);
   };
 
-  const data = localStorage.getItem('login');
+  const user = loginState;
 
-  let user: any = null;
-  if (data) {
-    user = JSON.parse(data);
-  }
+  const [isLoadingImage, setLoadingImage] = useState(true);
 
   useEffect(() => {
-    createFile(user.userProfile);
+    const fetchImage = async () => {
+      await createFile(user.userProfile);
+      setLoadingImage(false);
+    };
+
+    fetchImage();
   }, []);
 
   const [editUser, { isLoading, isSuccess }] = useEditUserMutation();
 
-  const [first, setFirst] = useState(user.userName.split(' ')[0]);
-  const [second, setSecond] = useState(user.userName.split(' ')[1]);
-  const [email, setEmail] = useState(user.userEmail);
+  const [first, setFirst] = useState(user?.userName.split(' ')[0]);
+  const [second, setSecond] = useState(user?.userName.split(' ')[1]);
+  const [email, setEmail] = useState(user?.userEmail);
 
-  const [imgPath, setImgPath] = useState<any>(user.userProfile || '');
+  const [imgPath, setImgPath] = useState<any>(user?.userProfile || '');
 
   const onDrop = useCallback((acceptedFiles: File[]) => {
     setImgPath(URL.createObjectURL(acceptedFiles[0]));
@@ -64,20 +69,19 @@ export default function Section() {
 
     try {
       const res = await editUser(form).unwrap();
-      const userData = JSON.parse(localStorage.getItem('login') || '');
+      const userData = loginState || '';
       const obj = { ...userData };
 
       console.log(res);
 
-      obj.userEmail = res.body.email;
-      obj.userProfile = res.body.image;
-      obj.userName = res.body.name;
+      obj['userEmail'] = res.body.email;
+      obj['userProfile'] = res.body.image;
+      obj['userName'] = res.body.name;
 
-      localStorage.removeItem('login');
-      localStorage.setItem('login', JSON.stringify(obj));
+      dispatch(unsetUser());
+      dispatch(setUser(obj));
 
       if (res.message === 'Profile updated successfully') {
-        setSuccess(true);
         setOpen(true);
       }
     } catch (error) {
@@ -160,13 +164,17 @@ export default function Section() {
           <label className="font-semibold ml-4 dark:text-dark-textColor-50" htmlFor="picture">
             Your Photo
           </label>
-          <Image
-            src={imgPath}
-            alt={'profile'}
-            width={100}
-            height={100}
-            className="inline-block rounded-full h-24 self-center w-24"
-          />
+          {isLoadingImage ? (
+            <div className="w-[100px] h-[100px] rounded-full bg-gray-300 animate-pulse"></div>
+          ) : (
+            <Image
+              src={imgPath}
+              alt={'profile'}
+              width={100}
+              height={100}
+              className="inline-block rounded-full h-24 self-center w-24"
+            />
+          )}
 
           <div
             {...getRootProps()}

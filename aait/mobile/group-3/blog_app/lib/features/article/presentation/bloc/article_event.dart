@@ -30,7 +30,10 @@ class CreateArticleEvent extends ArticleEvent {
 }
 
 class GetAllArticlesEvent extends ArticleEvent {
-  const GetAllArticlesEvent();
+  String? searchQuery;
+  List tags;
+
+   GetAllArticlesEvent({this.searchQuery = "", this.tags = const [] });
 }
 
 class GetArticleEvent extends ArticleEvent {
@@ -73,7 +76,8 @@ class UpdateArticleEvent extends ArticleEvent {
   });
 
   @override
-  List<Object> get props => [tags, content, title, subTitle, estimatedReadTime, image, id];
+  List<Object> get props =>
+      [tags, content, title, subTitle, estimatedReadTime, image, id];
 }
 
 class DeleteArticleEvent extends ArticleEvent {

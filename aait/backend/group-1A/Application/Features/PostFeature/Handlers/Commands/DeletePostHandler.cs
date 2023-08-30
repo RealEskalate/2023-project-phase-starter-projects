@@ -20,12 +20,17 @@ namespace Application.Features.PostFeature.Handlers.Commands
         }
         public async Task<BaseResponse<int>> Handle(DeletePostCommand request, CancellationToken cancellationToken)
         {
-            var post = await _postRepository.Get(request.Id, request.userId);
+            var post = await _postRepository.Get(request.Id);
             if (post == null) 
             {
                 
                 throw new NotFoundException("Post is not found");
                 
+            }
+
+            if (post.UserId != request.userId)
+            {
+                throw new BadRequestException("You cannot delete other people's posts");
             }
             
             var result = await _postRepository.Delete(post);

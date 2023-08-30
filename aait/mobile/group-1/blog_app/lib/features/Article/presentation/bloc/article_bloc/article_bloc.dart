@@ -3,7 +3,7 @@ import 'package:blog_app/features/Article/domain/usecases/create_article.dart';
 import 'package:blog_app/features/Article/domain/usecases/get_article.dart';
 import 'package:blog_app/features/Article/domain/usecases/update_article.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
+import '../../../../../Injection/article_injection.dart';
 import '../../../../../Injection/injection_container.dart';
 import '../../../../../core/network/network_info.dart';
 import '../../../data/datasources/remote_remote_data_source.dart';
@@ -22,12 +22,16 @@ class ArticleBloc extends Bloc<ArticleEvent, ArticleState> {
 
     on<CreateArticleEvent>((CreateArticleEvent event, Emitter emit) async {
       CreateArticle usecase = CreateArticle(repository);
+      emit(Loading());
       await usecase.repository.createArticle(event.article);
+      emit(Idle());
     });
 
     on<UpdateArticleEvent>((UpdateArticleEvent event, Emitter emit) async {
       UpdateArticle usecase = UpdateArticle(repository);
+      emit(Loading());
       await usecase.repository.updateArticle(event.article);
+      emit(Idle());
     });
 
     on<GetArticleEvent>((GetArticleEvent event, Emitter emit) async {

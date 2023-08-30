@@ -1,4 +1,5 @@
 ﻿using System.Security.Claims;
+using Application.Common;
 using Application.DTO.Common;
 using Application.DTO.NotificationDTO;
 using Application.Features.NotificationFeaure.Requests.Commands;
@@ -43,7 +44,11 @@ namespace WebApi.Controllers
             var userId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier)!.Value);
             var result = await _mediator.Send(new PostReactionCommand{ UserId = userId, ReactionData = reactionData });
             await _mediator.Send(new CreateNotification {NotificationData = new NotificationCreateDTO()
-            {Content = $"User with {userId} {reactionData.ReactionType} your post",NotificationContentId = result.Value,NotificationType = "Post",UserId = userId}});
+                    {
+                        Content = $"User with {userId} reacted on your post",
+                        NotificationContentId = result.Value, 
+                        NotificationType = NotificationEnum.POST,
+                        UserId = userId}});
             return Ok(result);
         }
     }

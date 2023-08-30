@@ -9,7 +9,6 @@ import '../../domain/repositories/article_repository.dart';
 import '../datasources/local/local_datasource.dart';
 import '../datasources/remote/remote_datasource.dart';
 import '../models/article_mapper.dart';
-import '../models/article_model.dart';
 
 class ArticleRepositoryImpl extends ArticleRepository {
   final ArticleLocalDataSource localDataSource;
@@ -151,5 +150,23 @@ class ArticleRepositoryImpl extends ArticleRepository {
       final tags = await localDataSource.getTags();
       return Right(tags);
     }
+  }
+
+  @override
+  Future<Either<Failure, List<Article>>> getBookmarkedArticles() async {
+    final articles = await localDataSource.getBookmarkedArticles();
+    return Right(articles);
+  }
+
+  @override
+  Future<Either<Failure, Article>> addToBookmark(Article article) async {
+    await localDataSource.addToBookmark(article.toArticleModel());
+    return Right(article);
+  }
+
+  @override
+  Future<Either<Failure, Article>> removeFromBookmark(String articleId) async {
+    final article = await localDataSource.removeFromBookmark(articleId);
+    return Right(article);
   }
 }

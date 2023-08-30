@@ -58,7 +58,8 @@ class ArticleModel extends Article {
       estimatedReadTime: map['estimatedReadTime'] ?? 'No Etimated Read Time',
       user: UserModel.fromJson(map['user']),
       image: map['image'] ?? 'assets/images/article-image.jpg',
-      imageCloudinaryPublicId: map['imageCloudinaryPublicId'] ?? 'No imageCloudinaryPublicId',
+      imageCloudinaryPublicId:
+          map['imageCloudinaryPublicId'] ?? 'No imageCloudinaryPublicId',
       createdAt: _dateTimeFromJson(map['createdAt']),
       id: map['id'] ?? 'No Id',
     );
@@ -66,17 +67,22 @@ class ArticleModel extends Article {
 
   String toJson() => json.encode(toMap());
 
-
   factory ArticleModel.fromJson(Map<String, dynamic> json) {
+    final resTags = json['tags'] ?? [];
+    print(resTags);
+
     return ArticleModel(
-      tags: json['tags'] ?? [],
+      tags: resTags.map<String>((e) => e.toString()).toList(),
       content: json['content'] ?? "No Content",
       title: json['title'] ?? "No Title",
       subTitle: json['subTitle'] ?? "No subTitle",
       estimatedReadTime: json['estimatedReadTime'] ?? "5 min",
-      user: json['user'] is String? UserModel.empty() : UserModel.fromJson(json['user']),
+      user: json['user'] is String
+          ? UserModel.empty()
+          : UserModel.fromJson(json['user']),
       image: json['image'] ?? "assets/images/article-image.jpg",
-      imageCloudinaryPublicId: json['imageCloudinaryPublicId'] ?? "No imageCloudinaryPublicId",
+      imageCloudinaryPublicId:
+          json['imageCloudinaryPublicId'] ?? "No imageCloudinaryPublicId",
       createdAt: _dateTimeFromJson(json['createdAt']),
       id: json['id'] ?? "No ID",
     );
@@ -103,7 +109,7 @@ class ArticleModel extends Article {
         user: user ?? this.user,
         image: image ?? this.image,
         imageCloudinaryPublicId:
-        imageCloudinaryPublicId ?? this.imageCloudinaryPublicId,
+            imageCloudinaryPublicId ?? this.imageCloudinaryPublicId,
         createdAt: createdAt ?? this.createdAt,
         id: id ?? this.id);
   }

@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -39,9 +40,9 @@ class UserProfilePhoto extends StatelessWidget {
             padding: EdgeInsets.all(paddingSize),
             child: ClipRRect(
               borderRadius: BorderRadius.circular(borderRadius - marginSize),
-              child: Image.network(
-                photoUrl,
+              child: CachedNetworkImage(
                 fit: BoxFit.cover,
+                imageUrl: photoUrl,
               ),
             ),
           ),

@@ -22,18 +22,16 @@ class ArticleInfo extends StatelessWidget {
       children: [
         SizedBox(
           width: 160.w,
-          child: Expanded(
-            // child:
-            // child:
-            child: Text(
-              article.title.toUpperCase(),
-              style: const TextStyle(
-                fontSize: 16.5,
-              ),
-              softWrap: true,
-              overflow: TextOverflow.ellipsis, // Add this line
-              maxLines: 2,
+          child: Text(
+            article.title.toUpperCase(),
+            style: const TextStyle(
+              fontFamily: 'Poppins',
+              fontSize: 20,
+              color: AppColors.gray700,
             ),
+            softWrap: true,
+            overflow: TextOverflow.ellipsis, // Add this line
+            maxLines: 2,
           ),
         ),
         SizedBox(height: 10.h),
@@ -43,7 +41,7 @@ class ArticleInfo extends StatelessWidget {
           width: 160.w,
           child: Text(
             'by ${article.author.fullName}',
-            style: const TextStyle(fontSize: 15.0),
+            style: const TextStyle(color: AppColors.grayDark, fontSize: 18.0),
             softWrap: true,
             overflow: TextOverflow.ellipsis, // Add this line
             maxLines: 1,
@@ -52,13 +50,21 @@ class ArticleInfo extends StatelessWidget {
         SizedBox(
           height: 50.h,
         ),
-        Align(
-          alignment: Alignment.bottomRight,
-          child: Text(
-            dateTimeToString(article.date),
-            style: const TextStyle(color: AppColors.gray300),
+        Expanded(
+          child: SizedBox(
+            width: 160,
+            child: Row(children: [
+              const Expanded(child: SizedBox()),
+              SizedBox(
+                width: 100,
+                child: Text(
+                  dateTimeToString(article.date),
+                  style: const TextStyle(color: AppColors.gray300),
+                ),
+              ),
+            ]),
           ),
-        ),
+        )
       ],
     );
   }

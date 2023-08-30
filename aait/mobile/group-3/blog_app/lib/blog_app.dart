@@ -1,4 +1,6 @@
 import 'package:blog_app/features/article/presentation/bloc/article_bloc.dart';
+import 'package:blog_app/features/article/presentation/bloc/create_article_bloc.dart';
+import 'package:blog_app/features/article/presentation/bloc/update_article_bloc.dart';
 import 'package:blog_app/features/article/presentation/screen/article_reading.dart';
 import 'package:blog_app/features/article/presentation/screen/home_screen.dart';
 import 'package:blog_app/features/article/presentation/screen/write_aricle_page.dart';
@@ -23,7 +25,7 @@ class BlogApp extends StatelessWidget {
   Widget build(BuildContext context) {
     final GoRouter _router =
         GoRouter(navigatorKey: GlobalKey<NavigatorState>(), routes: [
-      GoRoute(path: '/', builder: (context, state) => SplashScreen()),
+      GoRoute(path: '/', builder: (context, state) => HomeScreen()),
       GoRoute(
           path: '/onboarding', builder: (context, state) => OnboardingScreen()),
       GoRoute(path: '/login', builder: (context, state) => LoginSignUpPage()),
@@ -38,7 +40,6 @@ class BlogApp extends StatelessWidget {
               )),
       GoRoute(path: '/profile', builder: (context, state) => ProfileScreen()),
     ]);
-    //TODO: ADD BLOC
     return ScreenUtilInit(
       designSize: const Size(375, 812),
       minTextAdapt: true,
@@ -59,6 +60,11 @@ class BlogApp extends StatelessWidget {
             BlocProvider(
               create: (context) => serviceLocator<ArticleBloc>(),
             ),
+            BlocProvider(
+              create: (context) => serviceLocator<CreateArticleBloc>(),
+            ),
+            BlocProvider(
+                create: (context) => serviceLocator<UpdateArticleBloc>())
           ],
           child: MaterialApp.router(
             routerConfig: _router,

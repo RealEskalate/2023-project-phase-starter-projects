@@ -1,5 +1,8 @@
+import 'package:blog_app/features/article/domain/entity/getArticlesEntity.dart';
+import 'package:dartz/dartz.dart';
 import 'package:image_picker/image_picker.dart';
 
+import '../../../../core/error/failure.dart';
 import '../../../../core/util/typedef.dart';
 import '../entity/article.dart';
 
@@ -19,7 +22,7 @@ abstract class ArticleRepository {
     required String searchParams,
   });
   ResultFuture<Article> getArticleById(String id);
-  ResultFuture<List<Article>> getAllArticles();
+  Future<Either<Failure, List<Article>>> getAllArticles(ArticleRequest articleRequest);
   // Update Article
   ResultFuture<Article> updateArticle({
     required List<String> tags,

@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+
+import '../../../../../core/presentation/theme/app_colors.dart';
+import '../../bloc/profile_page_bloc.dart';
 
 class ArticleTitleBar extends StatelessWidget {
   final String title;
-  final VoidCallback? onGridView;
-  final VoidCallback? onListView;
 
   const ArticleTitleBar({
     Key? key,
     required this.title,
-    this.onGridView,
-    this.onListView,
   }) : super(key: key);
 
   @override
@@ -29,27 +29,49 @@ class ArticleTitleBar extends StatelessWidget {
           style: TextStyle(
             fontSize: titleFontSize,
             fontWeight: FontWeight.w500,
-            color: Color(0xFF0D253C),
+            color: AppColors.darkerBlue,
           ),
         ),
         Row(
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
             GestureDetector(
-              onTap: onListView,
-              child: Icon(
-                Icons.grid_view,
-                color: Color(0xFF376AED),
-                size: iconSize,
+              onTap: () {
+                final currentState = context.read<ProfilePageBloc>().state;
+                if (currentState.layout == ProfileLayout.list) {
+                  context.read<ProfilePageBloc>().add(SwitchToGridViewEvent());
+                }
+              },
+              child: BlocBuilder<ProfilePageBloc, ProfilePageState>(
+                builder: (context, state) {
+                  return Icon(
+                    Icons.grid_view,
+                    color: state.layout == ProfileLayout.grid
+                        ? AppColors.blue
+                        : AppColors.darkGray,
+                    size: iconSize,
+                  );
+                },
               ),
             ),
             SizedBox(width: iconSpacing),
             GestureDetector(
-              onTap: onGridView,
-              child: Icon(
-                Icons.list,
-                color: Color(0xFF7B8BB2),
-                size: iconSize,
+              onTap: () {
+                final currentState = context.read<ProfilePageBloc>().state;
+                if (currentState.layout == ProfileLayout.grid) {
+                  context.read<ProfilePageBloc>().add(SwitchToListViewEvent());
+                }
+              },
+              child: BlocBuilder<ProfilePageBloc, ProfilePageState>(
+                builder: (context, state) {
+                  return Icon(
+                    Icons.list,
+                    color: state.layout == ProfileLayout.list
+                        ? AppColors.blue
+                        : AppColors.darkGray,
+                    size: iconSize,
+                  );
+                },
               ),
             ),
           ],

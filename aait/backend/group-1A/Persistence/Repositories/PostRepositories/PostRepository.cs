@@ -18,12 +18,12 @@ namespace Persistence.Repositories
             _mapper = mapper;
             _dbContext = dbContext;
         }
-        public async Task<Post> Get(int id, int userId)
+        public async Task<Post> Get(int id)
         {
             var result = await _dbContext.Posts
                     .Include(x => x.Comments)
                     .Include(x => x.PostReactions)
-                    .Where(x => x.Id == id && x.UserId == userId)
+                    .Where(x => x.Id == id)
                     .SingleOrDefaultAsync();
             return result;
         }
@@ -55,11 +55,18 @@ namespace Persistence.Repositories
         }
 
 
-        public async Task<List<Post>> GetAll(int userd)
+        public Task<List<Post>> GetAll(int userd)
         {
             var result =  _dbContext.Posts
                                     .Where(x => x.UserId == userd).ToList();
-            return result;
+            return Task.FromResult(result);
+        }
+
+        public  Task<List<Post>> GetByTagName(string tagName)
+        {
+            var result = _dbContext.Posts
+                                    .Where(x => x.PostTags.Any(x => x.Tag.Title == tagName)).ToList();
+            return Task.FromResult(result);
         }
 
 

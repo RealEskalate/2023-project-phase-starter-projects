@@ -1,92 +1,127 @@
-import 'package:blog_app/core/util/app_colors.dart'; // Importing app-specific colors
+import 'package:blog_app/features/article/presentation/bloc/article_bloc.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
-class TagButtonListWidget extends StatelessWidget {
+import '../../../../core/util/app_colors.dart';
+
+class TagButtonListWidget extends StatefulWidget {
   final List<String> tagNames;
   final double borderRadius;
   final double horizontalPadding;
   final Color buttonColor;
   final Color outlineColor;
   final double spaceBetweenButtons;
+  final Function SearchByTags;
 
   const TagButtonListWidget({
     Key? key,
-    required this.tagNames,
-    this.borderRadius = 20, // Default border radius
-    this.horizontalPadding = 25, // Default horizontal padding
-    this.buttonColor = const Color(0xFF376AED), // Default button color
-    this.outlineColor = const Color(0xFF376AED), // Default border color
-    this.spaceBetweenButtons = 10, // Default spacing between buttons
+    this.tagNames = const [
+      "others",
+      "sports",
+      "oech",
+      "politics",
+      "art",
+      "design",
+      "culture",
+      "production"
+    ],
+    this.borderRadius = 20,
+    this.horizontalPadding = 25,
+    this.buttonColor = const Color(0xFF376AED),
+    this.outlineColor = const Color(0xFF376AED),
+    this.spaceBetweenButtons = 10,
+    required this.SearchByTags
   }) : super(key: key);
 
   @override
+  // ignore: library_private_types_in_public_api
+  _TagButtonListWidgetState createState() => _TagButtonListWidgetState();
+}
+
+class _TagButtonListWidgetState extends State<TagButtonListWidget> {
+  String selectedTag = '';
+
+  @override
   Widget build(BuildContext context) {
-    // Button styles for selected and unselected buttons
+    final bloc = context.watch<ArticleBloc>();
+
     var outlinedButtonStyle = OutlinedButton.styleFrom(
-      side: BorderSide(color: outlineColor),
+      side: BorderSide(color: widget.outlineColor),
       padding: EdgeInsets.symmetric(
-        vertical: 5.h,
-        horizontal: horizontalPadding,
+        vertical: 5,
+        horizontal: widget.horizontalPadding,
       ),
       shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(borderRadius),
+        borderRadius: BorderRadius.circular(widget.borderRadius),
       ),
     );
 
     var elevatedButtonStyle = ElevatedButton.styleFrom(
-      backgroundColor: buttonColor,
+      backgroundColor: widget.buttonColor,
       padding: EdgeInsets.symmetric(
-        vertical: 2.h,
-        horizontal: horizontalPadding,
+        vertical: 2,
+        horizontal: widget.horizontalPadding,
       ),
       shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(borderRadius),
+        borderRadius: BorderRadius.circular(widget.borderRadius),
       ),
     );
 
     return SingleChildScrollView(
-      // Allow tags horizontal scrolling
       scrollDirection: Axis.horizontal,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
-          // "All" button
           SizedBox(
-            height: 28.h,
-            width: 77.w,
+            height: 30,
+            width: 100,
             child: ElevatedButton(
               onPressed: () {
-                // Action for the "All" button
+                setState(() {
+                  selectedTag = ''; // Clear the selected tag
+                });
+
+                // Emit a search event with an empty query when "All" is clicked
+                context.read<ArticleBloc>().add(GetAllArticlesEvent(searchQuery: "",tags:[]));
               },
-              style: elevatedButtonStyle, 
+              style: selectedTag.isEmpty
+                  ? elevatedButtonStyle
+                  : outlinedButtonStyle,
               child: const Text(
                 'All',
                 style: TextStyle(
-                  color: AppColors.whiteColor,
+                  color: Colors.white,
                 ),
+                maxLines: 1,
                 overflow: TextOverflow.ellipsis,
               ),
             ),
           ),
-          // Space between "All" and other buttons
-          SizedBox(width: spaceBetweenButtons),
-          // Create buttons for each tag name in the list
-          ...tagNames.map(
+          SizedBox(width: widget.spaceBetweenButtons),
+          ...widget.tagNames.map(
             (tagName) {
               return Container(
-                height: 28.h,
-                margin: EdgeInsets.only(right: spaceBetweenButtons),
+                height: 30,
+                width: 100,
+                margin: EdgeInsets.only(right: widget.spaceBetweenButtons),
                 child: OutlinedButton(
-                  onPressed: () {}, // Action for each tag button
-                  style: outlinedButtonStyle, // Apply unselected button style
+                  onPressed: () {
+                    setState(() {
+                      selectedTag = tagName; // Update selected tag
+                    });
+                    widget.SearchByTags(selectedTag);
+                    // Emit a search event with the clicked tag as the query
+                  },
+                  style: selectedTag == tagName
+                      ? elevatedButtonStyle
+                      : outlinedButtonStyle,
                   child: Text(
-                    tagName, // Display the tag name on the button
+                    tagName,
                     style: TextStyle(
-                      color: outlineColor,
+                      color: selectedTag == tagName
+                          ? AppColors.whiteColor
+                          : widget.outlineColor,
                       fontFamily: 'Urbanist',
-                      fontSize: 12.sp,
-                      fontWeight: FontWeight.bold,
                     ),
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,

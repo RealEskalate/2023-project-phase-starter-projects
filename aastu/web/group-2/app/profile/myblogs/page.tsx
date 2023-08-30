@@ -8,6 +8,7 @@ import Loading from '@/app/components/loading';
 import { Pagination } from '@/app/components/Pagination';
 import { useState } from 'react';
 import { useAppSelector } from '@/lib/redux/hooks';
+import MyBlogCardSkeleton from '@/app/components/profile/MyBlogCardSkeleton';
 
 export default function Section() {
   const { data: blogs, error, isSuccess, isLoading } = useMyBlogsQuery();
@@ -17,7 +18,7 @@ export default function Section() {
   const [search, setSearch] = useState('');
 
   if (isLoading) {
-    return <Loading />;
+    return <MyBlogCardSkeleton />;
   }
 
   const blogsToShow = blogs

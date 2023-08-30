@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:blog_app/features/article/domain/entity/getArticlesEntity.dart';
 import 'package:blog_app/features/article/domain/use_case/get_tags.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:equatable/equatable.dart';
@@ -86,7 +87,6 @@ class ArticleBloc extends Bloc<ArticleEvent, ArticleState> {
     emit(const GettingArticle());
     final result = await _getArticleById(event.id);
 
-    print(result);
     result.fold((failure) => emit(ArticleError(failure.errorMessage)),
         (article) => emit(ArticleLoaded(article)));
   }
@@ -94,7 +94,9 @@ class ArticleBloc extends Bloc<ArticleEvent, ArticleState> {
   FutureOr<void> _getAllArticlesHandler(
       GetAllArticlesEvent event, Emitter<ArticleState> emit) async {
     emit(const GettingArticles());
-    final result = await _getAllArticles(NoParams());
+    
+
+    final result = await _getAllArticles(ArticleRequest(queryString: event.searchQuery, tags: event.tags,));
 
     result.fold((failure) => emit(ArticleError(failure.errorMessage)),
         (articles) => emit(ArticlesLoaded(articles)));

@@ -1,7 +1,6 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../core/usecase/usecase.dart';
-import '../../domain/usecases/filter_articles.dart';
 import '../../domain/usecases/usecases.dart';
 import 'article_event.dart';
 import 'article_state.dart';
@@ -61,7 +60,6 @@ class ArticleBloc extends Bloc<ArticleEvent, ArticleState> {
       FilterArticlesEvent event, Emitter<ArticleState> emit) async {
     final result = await filterArticles(
         FilterParams(tag: event.tag, title: event.searchParams));
-    print(result);
 
     result.fold(
       (failure) => emit(ArticleErrorState(failure.toString())),

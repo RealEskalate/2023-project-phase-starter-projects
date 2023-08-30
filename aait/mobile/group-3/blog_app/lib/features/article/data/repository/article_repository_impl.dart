@@ -1,3 +1,6 @@
+import 'package:blog_app/features/article/domain/entity/getArticlesEntity.dart';
+import 'package:blog_app/features/article/data/models/user_model.dart';
+import 'package:blog_app/features/profile/domain/use_case/get_profile.dart';
 import 'package:dartz/dartz.dart';
 import 'package:image_picker/image_picker.dart';
 
@@ -37,6 +40,7 @@ class ArticleRepositoryImpl implements ArticleRepository {
           "content": content,
           "estimatedReadTime": estimatedReadTime,
           "image": image.path,
+          "user": "semere"
         };
 
         final article = ArticleModel.fromJson(articleMap);
@@ -67,13 +71,13 @@ class ArticleRepositoryImpl implements ArticleRepository {
   }
 
   @override
-  ResultFuture<List<Article>> getAllArticles() async {
+  Future<Either<Failure, List<Article>>> getAllArticles(ArticleRequest articleRequest) async {
     if (await networkInfo.isConnected) {
       try {
-        final result = await remoteDataSource.getAllArticles();
+        final result = await remoteDataSource.getAllArticles(articleRequest);
         return Right(result);
       } on ServerException catch (e) {
-        return Left(ServerFailure.fromException(e));
+        return const Left(ServerFailure(message: "Could not get", statusCode: 500), );
       }
     } else {
       return const Left(ServerFailure(
@@ -130,17 +134,16 @@ class ArticleRepositoryImpl implements ArticleRepository {
     }
   }
 
-
   @override
-  ResultFuture<Article> updateArticle(
-      {required List<String> tags,
-      required String content,
-      required String title,
-      required String subTitle,
-      required String estimatedReadTime,
-      required XFile image,
-      required String id,
-      }) async {
+  ResultFuture<Article> updateArticle({
+    required List<String> tags,
+    required String content,
+    required String title,
+    required String subTitle,
+    required String estimatedReadTime,
+    required XFile image,
+    required String id,
+  }) async {
     if (await networkInfo.isConnected) {
       try {
         final articleMap = {

@@ -5,8 +5,8 @@ class Article {
   final String? user;
   final List<String> tags;
   final String content;
-  final String? image;
-  final String? estimatedtime;
+  final String image;
+  final String estimatedtime;
   final String? imageCloudinaryPublicId;
   final DateTime? createdAt;
 
@@ -17,8 +17,8 @@ class Article {
       required this.tags,
       this.user,
       required this.content,
-      this.image,
-      this.estimatedtime,
+      required this.image,
+      required this.estimatedtime,
       this.imageCloudinaryPublicId,
       this.createdAt});
 }

@@ -7,12 +7,14 @@ namespace Application.Contracts
 {
     public interface IPostRepository : IGenericRepository<Post>
     {
-        Task<Post> Get(int id, int userId);
+        Task<Post> Get(int id);
 
         Task<List<PostResponseDTO>> GetAllPostsWithReaction(int userId);
 
         Task<bool> Exists(int id);
 
         Task<List<Post>> GetAll(int userId);
+
+        Task<List<Post>> GetByTagName(string tagName);
     }
 }
