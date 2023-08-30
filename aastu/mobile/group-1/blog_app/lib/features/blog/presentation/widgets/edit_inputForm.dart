@@ -1,6 +1,7 @@
 import 'dart:developer';
 import 'dart:io';
 
+import 'package:blog_app/features/blog/domain/entities/article.dart';
 import 'package:blog_app/features/blog/domain/usecases/create_article.dart';
 import 'package:blog_app/features/blog/domain/usecases/get_all_articles.dart';
 import 'package:blog_app/features/blog/domain/usecases/get_single_article.dart';
@@ -23,12 +24,15 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
 
-class InputForm extends StatefulWidget {
+class EditInputForm extends StatefulWidget {
+  final Article article;
+
+  const EditInputForm({super.key, required this.article});
   @override
-  State<InputForm> createState() => _InputFormState();
+  State<EditInputForm> createState() => _EditInputFormState();
 }
 
-class _InputFormState extends State<InputForm> {
+class _EditInputFormState extends State<EditInputForm> {
   var add_image = "Add image";
 
   File photo = File('');
@@ -174,6 +178,11 @@ class _InputFormState extends State<InputForm> {
   }
 
   Widget buildBody(BuildContext context) {
+    titleController.text = widget.article.title!;
+    subTitleController.text = widget.article.subTitle!;
+    articleContentController.text = widget.article.content!;
+    photo = File(widget.article.image!);
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.center,
       // mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -365,7 +374,7 @@ class _InputFormState extends State<InputForm> {
             title: Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
-                Text('Generate text'),
+                // Text('Generate text'),
                 IconButton(
                     icon: const Icon(Icons.close),
                     onPressed: () {

@@ -1,92 +1,151 @@
+import 'package:blog_app/features/blog/domain/entities/article.dart';
+import 'package:blog_app/features/user/presentation/widgets/post_list.dart';
+import 'package:blog_app/features/user/presentation/widgets/post_list_grid.dart';
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import '../widgets/post_list.dart';
+import 'package:skeletons/skeletons.dart';
 
-class Myposts extends StatefulWidget {
-  const Myposts({super.key});
-
-  @override
-  State<Myposts> createState() => _MypostsState();
-}
-
-class _MypostsState extends State<Myposts> {
-  @override
-  Widget build(BuildContext context) {
+Widget blogListView(
+    bool showGridView, List<Article> blogs, List<Article> gridBlogs) {
+  if (blogs.isEmpty) {
     return Container(
-      width: MediaQuery.of(context).size.width,
-      // height: 200,
-
-      decoration: const BoxDecoration(
-        color: Colors.white, // Set your desired background color
-        borderRadius: BorderRadius.only(
-          topLeft: Radius.circular(20),
-          topRight: Radius.circular(20),
-        ),
-        boxShadow: [
-          BoxShadow(
-            color: Color(0x0F5182FF),
-            blurRadius: 30,
-            offset: Offset(0, 10),
-            spreadRadius: 0,
-          ),
-        ],
-      ),
-
+      height: 100,
+      width: double.infinity,
+      padding: const EdgeInsets.fromLTRB(15, 5, 15, 5),
       child: Column(
-        children: [
-          const SizedBox(
-            height: 10,
-          ),
-          Row(
-            children: [
-              const SizedBox(width: 20),
-              const Text(
-                "My Posts",
-                style: TextStyle(
-                  color: Color(0xFF1A1A1A),
-                  fontWeight: FontWeight.w400,
-                  fontFamily: 'Urbanist',
-                  fontSize: 20,
-                ),
-              ),
-              const Spacer(),
-              IconButton(
-                onPressed: () {},
-                icon: const Stack(
-                  children: [
-                    FaIcon(FontAwesomeIcons.gripHorizontal,
-                        size: 34,
-                        color: Color.fromARGB(255, 95, 55, 252)), // Stroke icon
-                    // FaIcon(FontAwesomeIcons.gripHorizontal,
-                    //     size: 32,
-                    //     color: const Color.fromARGB(
-                    //         255, 255, 255, 255)), // Main icon
-                  ],
-                ),
-              ),
-              const Padding(
-                padding: const EdgeInsets.only(right: 20.0, left: 16),
-                child: Icon(
-                  FontAwesomeIcons.gripLines,
-                  color: Color.fromARGB(255, 96, 96, 96),
-                  size: 30,
-                ),
-              ),
-              // SizedBox(
-              //   width: 20,
-              // ),
-            ],
-          ),
+        children: <Widget>[
           Expanded(
-            child: ListView.builder(
-              itemCount: blogs.length,
-              itemBuilder: (context, index) {
-                return BlogCards(index: index, object: blogs[index]);
-              },
+            child: Row(
+              children: <Widget>[
+                SizedBox(
+                  height: 160,
+                  width: 100,
+                  child: SkeletonItem(
+                    child: Container(
+                      height: double.infinity,
+                      width: double.infinity,
+                      decoration: const BoxDecoration(
+                        gradient: LinearGradient(
+                          begin: Alignment.topCenter,
+                          end: Alignment.bottomCenter,
+                          colors: [
+                            Color(0xFF222222),
+                            Color(0xFF242424),
+                            Color(0xFF2B2B2B),
+                            Color(0xFF242424),
+                            Color(0xFF222222),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+                Container(width: 20),
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment:
+                        CrossAxisAlignment.start, // Align text to the left
+                    children: <Widget>[
+                      Container(height: 65),
+                      SizedBox(
+                        height: 20,
+                        width: 150,
+                        child: SkeletonItem(
+                          child: Container(
+                            height: double.infinity,
+                            width: double.infinity,
+                            decoration: const BoxDecoration(
+                              gradient: LinearGradient(
+                                begin: Alignment.topCenter,
+                                end: Alignment.bottomCenter,
+                                colors: [
+                                  Color(0xFF222222),
+                                  Color(0xFF242424),
+                                  Color(0xFF2B2B2B),
+                                  Color(0xFF242424),
+                                  Color(0xFF222222),
+                                ],
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(
+                            top: 6.0, bottom: 8.0, left: 0, right: 8.0),
+                        child: SizedBox(
+                          height: 20,
+                          width: 150,
+                          child: SkeletonItem(
+                            child: Container(
+                              height: double.infinity,
+                              width: double.infinity,
+                              decoration: const BoxDecoration(
+                                gradient: LinearGradient(
+                                  begin: Alignment.topCenter,
+                                  end: Alignment.bottomCenter,
+                                  colors: [
+                                    Color(0xFF222222),
+                                    Color(0xFF242424),
+                                    Color(0xFF2B2B2B),
+                                    Color(0xFF242424),
+                                    Color(0xFF222222),
+                                  ],
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                      SizedBox(
+                        height: 20,
+                        width: 150,
+                        child: SkeletonItem(
+                          child: Container(
+                            height: double.infinity,
+                            width: double.infinity,
+                            decoration: const BoxDecoration(
+                              gradient: LinearGradient(
+                                begin: Alignment.topCenter,
+                                end: Alignment.bottomCenter,
+                                colors: [
+                                  Color(0xFF222222),
+                                  Color(0xFF242424),
+                                  Color(0xFF2B2B2B),
+                                  Color(0xFF242424),
+                                  Color(0xFF222222),
+                                ],
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                )
+              ],
             ),
           ),
+          Container(height: 10),
+          const Divider(height: 0),
         ],
       ),
     );
+  } else {
+    return showGridView
+        ? GridView.builder(
+            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+              crossAxisCount: 2,
+            ),
+            itemCount: gridBlogs.length,
+            itemBuilder: (context, index) {
+              return BlogGridCards(index: index, object: gridBlogs[index]);
+            },
+          )
+        : ListView.builder(
+            itemCount: blogs.length,
+            itemBuilder: (context, index) {
+              return BlogCards(index: index, object: blogs[index]);
+            },
+          );
   }
 }
