@@ -93,7 +93,7 @@ export default function BlogCard({ searchQuery }: { searchQuery: string }) {
                 <div className="h-[60%] flex lg:flex-row flex-col items-center px-4 lg:gap-14 gap-5 justify-between">
                   <div className="hidden lg:flex flex-col h-full gap-5 px-2">
                     <div className="w-44 h-6 bg-gray-300"></div>
-                    <div className="w-full h-24 bg-gray-300"></div>
+                    <div className="w-[700px] h-24 bg-gray-300"></div>
                   </div>
                   <div className="w-72 h-48 rounded-xl bg-gray-300"></div>
                 </div>

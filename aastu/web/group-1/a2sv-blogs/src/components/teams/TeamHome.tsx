@@ -4,7 +4,7 @@ export default function TeamHome() {
   return (
     <div className="text-center md:text-left ">
       <div className="flex flex-col md:flex-row md:items-center">
-        <div className="md:w-1/2 md:pr-4 md:pt-[3px]">
+        <div className="md:w-1/2 md:pr-4 md:pt-[3px]" data-aos="fade-right">
           <h1 className="font-bold font-poppins text-2xl md:text-5xl text-gray-800 uppercase mb-3 pt-20 ">
             THE TEAM WE'RE <br /> CURRENTLY <br /> WORKING WITH
           </h1>
@@ -16,7 +16,10 @@ export default function TeamHome() {
             exceptional products and services.
           </p>
         </div>
-        <div className="md:w-1/2 md:pl-16 md: pt-[80px]">
+        <div
+          className="md:w-1/2 md:pl-16 md: pt-[80px]"
+          data-aos="fade-up-left"
+        >
           <Image
             src="/images/team_.png"
             alt="team image"

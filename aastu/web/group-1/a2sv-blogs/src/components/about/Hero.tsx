@@ -8,7 +8,10 @@ const Hero = () => {
       <section>
         <div>
           <div className="grid lg:grid-cols-2 grid-cols-1 justify-center">
-            <div className="flex flex-col w-full mt-6 items-center md:items-start">
+            <div
+              className="flex flex-col w-full mt-6 items-center md:items-start"
+              data-aos="fade-right"
+            >
               <h3 className="text-5xl font-bold mb-5">
                 <span className="text-primary">Africa</span> to Silicon Valley
               </h3>
@@ -28,8 +31,8 @@ const Hero = () => {
                 pressing problems.
               </p>
             </div>
-            <div className="hidden lg:block">
-              <h6>Group activity</h6>
+            <div className="hidden lg:block" data-aos="fade-left">
+              <h6 className="text-4xl">Group activity</h6>
               <div className="grid grid-cols-2 gap-5 mt-6 w-full">
                 <Image
                   width={200}
@@ -61,7 +64,7 @@ const Hero = () => {
           </div>
         </div>
       </section>
-      <section>
+      <section data-aos="fade-up">
         <div>
           <div className="grid lg:grid-cols-2 grid-cols-1 mt-10">
             <div className="py-10 justify-center">

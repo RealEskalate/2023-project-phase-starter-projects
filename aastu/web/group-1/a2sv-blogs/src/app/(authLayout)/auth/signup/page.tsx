@@ -1,15 +1,17 @@
 "use client";
 import { useAuth } from "@/hooks/useAuth";
+import { resetAuth } from "@/lib/redux/slices/authSlice";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
+import { useDispatch } from "react-redux";
 
 export default function page() {
   const [email, setEmail] = useState<string>("");
   const [name, setName] = useState<string>("");
   const [password, setPassword] = useState<string>("");
-
+  const dispatch = useDispatch();
   const {
     auth: { isAuthenticated, error, isLoading },
     signupHandler,
@@ -75,6 +77,23 @@ export default function page() {
                 <span className="text-primary ">Please register </span>
                 into the system!
               </h4>
+              {error && (
+                <div className="w-full bg-red-400 text-white rounded-lg py-1 flex items-center justify-center space-x-5">
+                  <Image
+                    src="/images/sign-error.svg"
+                    width={23}
+                    height={23}
+                    alt="error sign"
+                    className="object-contain cursor-pointer"
+                    onClick={() => dispatch(resetAuth())}
+                  />
+                  <p>
+                    {error?.status === "FETCH_ERROR"
+                      ? "Network Error"
+                      : error?.data.message}
+                  </p>
+                </div>
+              )}
               <form className="py-4 flex flex-col" onSubmit={handleSubmit}>
                 <input
                   type="email"
