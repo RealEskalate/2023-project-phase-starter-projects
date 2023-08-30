@@ -1,80 +1,108 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:go_router/go_router.dart';
 
+import '../../../../../core/presentation/router/routes.dart';
 import '../../../../../core/presentation/theme/app_colors.dart';
+import '../../../../../core/utils/time_calculator.dart';
+import '../../../../article/domain/entities/article.dart';
+
+import '../../../../article/presentation/bloc/bookmark_bloc.dart';
+import '../../../../authentication/presentation/bloc/auth_bloc.dart';
+import '../../bloc/user_bloc.dart';
 
 class SingleArticlePostGridView extends StatelessWidget {
-  final String imageUrl, articleTitle, articleSubTitle, likes;
-  final double timeSincePosted;
+  final Article article;
 
   const SingleArticlePostGridView({
     Key? key,
-    required this.imageUrl,
-    required this.articleTitle,
-    required this.articleSubTitle,
-    required this.likes,
-    required this.timeSincePosted,
+    required this.article,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(16.0),
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Container(
-            width: double.infinity,
-            height: 150,
-            child: ClipRRect(
-              borderRadius: BorderRadius.circular(16),
-              child: CachedNetworkImage(
-                imageUrl: imageUrl,
-                fit: BoxFit.cover,
+    double imageWidth = double.infinity;
+    double imageHeight = 150.w;
+    double titleFontSize = 14.sp;
+    double subTitleFontSize = 14.sp;
+    double statsFontSize = 12.sp;
+    double iconSize = 14.w;
+    double statsSpacing = 4.w;
+
+    const likes = '2.1k';
+
+    final imageUrl = article.photoUrl;
+    final articleTitle = article.title;
+    final articleSubTitle = article.subTitle;
+    final timeSincePosted =
+        timePassedFormatter(timePassedCalculator(article.date));
+
+    return GestureDetector(
+      onTap: () async {
+        final userBloc = context.read<UserBloc>();
+        final authBloc = context.read<AuthBloc>();
+        final bookmarkBloc = context.read<BookmarkBloc>();
+        await context.push(Routes.articleDetail, extra: article);
+        userBloc.add(GetUserEvent(token: authBloc.authToken));
+        bookmarkBloc.add(LoadBookmarksEvent());
+      },
+      child: Card(
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(16.0),
+        ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Container(
+              width: imageWidth,
+              height: imageHeight,
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(16),
+                child: CachedNetworkImage(
+                  imageUrl: imageUrl,
+                  fit: BoxFit.cover,
+                ),
               ),
             ),
-          ),
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Column(
+            Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
                   articleTitle,
-                  style: const TextStyle(
+                  style: TextStyle(
                     fontWeight: FontWeight.w100,
-                    fontSize: 14,
+                    fontSize: titleFontSize,
                     color: AppColors.blue,
                   ),
                 ),
-                const SizedBox(height: 4),
+                SizedBox(height: statsSpacing),
                 Text(
                   articleSubTitle,
-                  style: const TextStyle(
+                  style: TextStyle(
                     fontWeight: FontWeight.w500,
-                    fontSize: 14,
+                    fontSize: subTitleFontSize,
                     color: AppColors.darkerBlue,
                   ),
                 ),
-                const SizedBox(height: 8),
+                SizedBox(height: 8.w),
                 Row(
                   children: [
                     Row(
                       children: [
-                        const Icon(
+                        Icon(
                           Icons.thumb_up_alt_outlined,
-                          color: Color(0xFF2D4379),
-                          size: 16,
+                          color: AppColors.darkBlue,
+                          size: iconSize,
                         ),
-                        const SizedBox(width: 4),
+                        SizedBox(width: statsSpacing),
                         Text(
                           likes,
-                          style: const TextStyle(
-                            fontSize: 12,
+                          style: TextStyle(
+                            fontSize: statsFontSize,
                             fontWeight: FontWeight.w500,
-                            color: Color(0xFF2D4379),
+                            color: AppColors.darkBlue,
                           ),
                         ),
                       ],
@@ -82,34 +110,34 @@ class SingleArticlePostGridView extends StatelessWidget {
                     const Spacer(),
                     Row(
                       children: [
-                        const Icon(
+                        Icon(
                           Icons.access_time,
-                          color: Color(0xFF2D4379),
-                          size: 16,
+                          color: AppColors.darkBlue,
+                          size: iconSize,
                         ),
                         const SizedBox(width: 4),
                         Text(
-                          "$timeSincePosted hr ago",
+                          timeSincePosted,
                           style: const TextStyle(
                             fontSize: 12,
                             fontWeight: FontWeight.w500,
-                            color: Color(0xFF2D4379),
+                            color: AppColors.darkBlue,
                           ),
                         ),
                       ],
                     ),
-                    const SizedBox(width: 4),
-                    const Icon(
+                    SizedBox(width: statsSpacing),
+                    Icon(
                       Icons.bookmark_outlined,
                       color: AppColors.blue,
-                      size: 16,
+                      size: iconSize,
                     ),
                   ],
                 ),
               ],
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

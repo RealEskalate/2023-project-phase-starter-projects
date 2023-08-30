@@ -47,7 +47,7 @@ class UserBio extends StatelessWidget {
             fontSize: textFontSize,
             fontStyle: FontStyle.italic,
             fontWeight: FontWeight.w100,
-            color: Color(0xFF2D4379),
+            color: AppColors.darkBlue,
           ),
         ),
         SizedBox(

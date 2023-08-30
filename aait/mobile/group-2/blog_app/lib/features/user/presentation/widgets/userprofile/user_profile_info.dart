@@ -31,7 +31,7 @@ class UserProfileInfo extends StatelessWidget {
           style: TextStyle(
             fontSize: usernameFontSize,
             fontWeight: FontWeight.w900,
-            color: Color(0xFF2D4379),
+            color: AppColors.darkBlue,
             overflow: TextOverflow.ellipsis,
           ),
         ),
