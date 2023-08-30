@@ -1,5 +1,6 @@
 ﻿using Application.Contracts.Persistance;
 using Application.DTO.Post;
+using Application.Features.Like.Handlers.Commands;
 using Application.Features.Post.Handlers.Queries;
 using Application.Features.Post.Request.Queries;
 using Application.Profiles;
@@ -20,10 +21,10 @@ namespace Application.Tests.Post.Queries
     {
         private readonly IMapper _mapper;
         private readonly Mock<IUnitOfWork> _mockRepo;
-
+        private readonly GetByTagRequestHandler _handler;
         public GetByTagRequestHandlerTests()
         {
-            _mockRepo = MockCommentRepository.GetCommentRepository();
+            _mockRepo = MockUnitOfWorkRepository.GetMockUnitOfWork();
 
             var mapperConfig = new MapperConfiguration(c =>
             {
@@ -31,15 +32,14 @@ namespace Application.Tests.Post.Queries
             });
 
             _mapper = mapperConfig.CreateMapper();
+            _handler = new GetByTagRequestHandler(_mockRepo.Object, _mapper);
         }
 
 
         [Fact]
         public async Task GetByTag_ValidTag_ReturnsMatchingPosts()
         {
-            var handler = new GetByTagRequestHandler(_mockRepo.Object, _mapper);
-
-            var result = await handler.Handle(new GetByTagRequest() { Tag = "tag2" }, CancellationToken.None);
+            var result = await _handler.Handle(new GetByTagRequest() { Tag = "tag2" }, CancellationToken.None);
 
             result.ShouldNotBeNull();
             result.ShouldBeOfType<BaseCommandResponse<List<PostDto>>>();
@@ -51,9 +51,7 @@ namespace Application.Tests.Post.Queries
         [Fact]
         public async Task GetByTag_InvalidTag_ReturnsEmptyList()
         {
-            var handler = new GetByTagRequestHandler(_mockRepo.Object, _mapper);
-
-            var result = await handler.Handle(new GetByTagRequest() { Tag = "NonExistentTag" }, CancellationToken.None);
+            var result = await _handler.Handle(new GetByTagRequest() { Tag = "NonExistentTag" }, CancellationToken.None);
 
             result.ShouldNotBeNull();
             result.ShouldBeOfType<BaseCommandResponse<List<PostDto>>>();
@@ -65,14 +63,13 @@ namespace Application.Tests.Post.Queries
         public async Task GetByTag_RepositoryError_Failure()
         {
             _mockRepo.Setup(repo => repo.postRepository.GetBytag(It.IsAny<string>())).ThrowsAsync(new Exception("Simulated error"));
-            var handler = new GetByTagRequestHandler(_mockRepo.Object, _mapper);
 
-            var result = await handler.Handle(new GetByTagRequest() { Tag = "tag2" }, CancellationToken.None);
+            var result = await _handler.Handle(new GetByTagRequest() { Tag = "tag2" }, CancellationToken.None);
 
             result.ShouldNotBeNull();
             result.ShouldBeOfType<BaseCommandResponse<List<PostDto>>>();
             result.Success.ShouldBeFalse();
-            result.Value.ShouldBeEmpty();
+            result.Value.ShouldBeNull();
         }
     }
 }

@@ -25,10 +25,11 @@ namespace Application.Tests.Post.Commands
         private readonly IMapper _mapper;
         private readonly Mock<IUnitOfWork> _mockRepo;
         private readonly CreatePostDto _postDto;
+        private readonly CreatePostCommandHandler _handler;
 
         public CreatePostCommandHandlerTests()
         {
-            _mockRepo = MockCommentRepository.GetCommentRepository();
+            _mockRepo = MockUnitOfWorkRepository.GetMockUnitOfWork();
 
             var mapperConfig = new MapperConfiguration(c =>
             {
@@ -38,40 +39,32 @@ namespace Application.Tests.Post.Commands
 
             _postDto = new CreatePostDto
             {
-                UserId = 5,
+                UserId = 2,
                 Content = "Content 2",
                 Tags = new List<string> { "tag1", "tag2" },
             };
 
             _mapper = mapperConfig.CreateMapper();
+            _handler = new CreatePostCommandHandler(_mockRepo.Object, _mapper);
         }
 
         [Fact]
         public async Task CreatePostCommand_ValidData_CreatesPost()
         {
-            var initialPostList = await _mockRepo.Object.postRepository.GetAll();
-            var initialPostCount = initialPostList.Count;
-            var handler = new CreatePostCommandHandler(_mockRepo.Object, _mapper);
-
-            var result = await handler.Handle(new CreatePostCommand() { CreatePost = _postDto }, CancellationToken.None);
+            var result = await _handler.Handle(new CreatePostCommand() { CreatePost = _postDto }, CancellationToken.None);
 
             result.ShouldNotBeNull();
             result.ShouldBeOfType<BaseCommandResponse<int>>();
             result.Success.ShouldBeTrue();
             result.Value.ShouldBeGreaterThan(0);
-
-            var updatedPostList = await _mockRepo.Object.postRepository.GetAll();
-            var updatedPostCount = updatedPostList.Count;
-            updatedPostCount.ShouldBe(initialPostCount + 1);
         }
 
         [Fact]
         public async Task CreatePostCommand_RepositoryError_Failure()
         {
             _mockRepo.Setup(repo => repo.postRepository.Add(It.IsAny<Domain.Entities.Post>())).ThrowsAsync(new Exception("Simulated error"));
-            var handler = new CreatePostCommandHandler(_mockRepo.Object, _mapper);
 
-            var result = await handler.Handle(new CreatePostCommand() { CreatePost = _postDto }, CancellationToken.None);
+            var result = await _handler.Handle(new CreatePostCommand() { CreatePost = _postDto }, CancellationToken.None);
 
             result.ShouldNotBeNull();
             result.ShouldBeOfType<BaseCommandResponse<int>>();

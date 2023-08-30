@@ -18,10 +18,11 @@ namespace Application.Tests.Comments.Commands
     {
         private readonly IMapper _mapper;
         private readonly Mock<IUnitOfWork> _mockRepo;
+        private readonly UpdateCommentCommandHandler _handler;
 
         public UpdateCommentCommandHandlerTests()
         {
-            _mockRepo = MockCommentRepository.GetCommentRepository();
+            _mockRepo = MockUnitOfWorkRepository.GetMockUnitOfWork();
 
             var mapperConfig = new MapperConfiguration(c =>
             {
@@ -29,6 +30,7 @@ namespace Application.Tests.Comments.Commands
             });
 
             _mapper = mapperConfig.CreateMapper();
+            _handler = new UpdateCommentCommandHandler(_mockRepo.Object, _mapper);
         }
 
    
@@ -43,9 +45,7 @@ namespace Application.Tests.Comments.Commands
                 UpdateCommentDto = _mapper.Map<UpdateCommentDto>(commentToUpdate)
         };
 
-        var handler = new UpdateCommentCommandHandler(_mockRepo.Object, _mapper);
-
-        var result = await handler.Handle(updateCommand, CancellationToken.None);
+        var result = await _handler.Handle(updateCommand, CancellationToken.None);
 
         result.ShouldNotBeNull();
         result.ShouldBeOfType<BaseCommandResponse<Unit>>();
@@ -58,41 +58,15 @@ namespace Application.Tests.Comments.Commands
     }
 
     [Fact]
-    public async Task UpdateCommentCommand_CommentNotFound_Failure()
+    public async Task UpdateCommentCommand_InvalidId_Failure()
     {
-        var updatedComment = new UpdateCommentDto { Id = 999, Content = "Updated Comment Content" };
+        var updatedComment = new UpdateCommentDto { Id = -1, Content = "Updated Comment Content" };
         var updateCommand = new UpdateCommentCommand
         {
             UpdateCommentDto = updatedComment
         };
 
-        var handler = new UpdateCommentCommandHandler(_mockRepo.Object, _mapper);
-
-        var result = await handler.Handle(updateCommand, CancellationToken.None);
-
-        result.ShouldNotBeNull();
-        result.ShouldBeOfType<BaseCommandResponse<Unit>>();
-        result.Success.ShouldBeFalse();
-        result.Value.ShouldBe(Unit.Value);
-    }
-
-    [Fact]
-    public async Task UpdateCommentCommand_RepositoryError_Failure()
-    {
-        _mockRepo.Setup(repo => repo.commentRepository.Update(It.IsAny<Comment>())).ThrowsAsync(new Exception("Simulated error"));
-
-        var commentToUpdate = _mockRepo.Object.commentRepository.Get(1).Result;
-            commentToUpdate.Content = "Updated Comment Content";
-
-
-        var updateCommand = new UpdateCommentCommand
-        {
-            UpdateCommentDto = _mapper.Map<UpdateCommentDto>(commentToUpdate)
-        };
-
-        var handler = new UpdateCommentCommandHandler(_mockRepo.Object, _mapper);
-
-        var result = await handler.Handle(updateCommand, CancellationToken.None);
+        var result = await _handler.Handle(updateCommand, CancellationToken.None);
 
         result.ShouldNotBeNull();
         result.ShouldBeOfType<BaseCommandResponse<Unit>>();

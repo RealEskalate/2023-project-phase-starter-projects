@@ -21,10 +21,13 @@ namespace Application.Tests.Mocks
                           .ReturnsAsync((int id) => GetMockUsers().Where(u => GetMockLikes().Any(l => l.PostId == id && l.UserId == u.Id)).ToList());
 
             mockRepository.Setup(repo => repo.LikePost(It.IsAny<Domain.Entities.Like>()))
-                          .Returns(Task.CompletedTask);
+                          .Returns(Task.CompletedTask)
+                          .Callback(() => { MockUnitOfWorkRepository.Changes += 1; });
 
             mockRepository.Setup(repo => repo.UnlikePost(It.IsAny<Domain.Entities.Like>()))
-                          .Returns(Task.CompletedTask);
+                          .Returns(Task.CompletedTask)
+                          .Callback(() => { MockUnitOfWorkRepository.Changes += 1; });
+
 
             mockRepository.Setup(repo => repo.GetLikedPost(It.IsAny<int>()))
                           .ReturnsAsync((int id) => GetMockPosts().Where(p => GetMockLikes().Any(l => l.UserId == id && l.PostId == p.Id)).ToList());

@@ -1,5 +1,6 @@
 ﻿using Application.Contracts.Persistance;
 using Application.DTO.FollowDTO;
+using Application.Features.Comment.Handlers.Queries;
 using Application.Features.FollowFeatures.Handlers.Command;
 using Application.Features.FollowFeatures.Request.Command;
 using Application.Profiles;
@@ -22,9 +23,10 @@ namespace Application.Tests.Follow.Commands
         private readonly IMapper _mapper;
         private readonly Mock<IUnitOfWork> _mockRepo;
         private readonly FollowDto _followDto;
+        private readonly DeleteFollowCommandHandler _handler;
         public DeleteFollowCommandHandlerTests()
         {
-            _mockRepo = MockCommentRepository.GetCommentRepository();
+            _mockRepo = MockUnitOfWorkRepository.GetMockUnitOfWork();
 
             var mapperConfig = new MapperConfiguration(c =>
             {
@@ -38,14 +40,13 @@ namespace Application.Tests.Follow.Commands
             };
 
             _mapper = mapperConfig.CreateMapper();
+            _handler = new DeleteFollowCommandHandler(_mockRepo.Object, _mapper);
         }
 
         [Fact]
         public async Task DeleteFollowCommandTest()
         {
-            var handler = new DeleteFollowCommandHandler(_mockRepo.Object, _mapper);
-
-            var result = await handler.Handle(new DeleteFollowCommand() { follow = _followDto }, CancellationToken.None);
+            var result = await _handler.Handle(new DeleteFollowCommand() { follow = _followDto }, CancellationToken.None);
 
             result.ShouldNotBeNull();
             result.ShouldBeOfType<BaseCommandResponse<Unit>>();
@@ -58,9 +59,8 @@ namespace Application.Tests.Follow.Commands
         public async Task DeleteFollowCommand_FollowerNotFound_Failure()
         {
             _followDto.FollowerId = 999;
-            var handler = new DeleteFollowCommandHandler(_mockRepo.Object, _mapper);
 
-            var result = await handler.Handle(new DeleteFollowCommand { follow = _followDto }, CancellationToken.None);
+            var result = await _handler.Handle(new DeleteFollowCommand { follow = _followDto }, CancellationToken.None);
 
             result.ShouldNotBeNull();
             result.ShouldBeOfType<BaseCommandResponse<Unit>>();
@@ -72,9 +72,8 @@ namespace Application.Tests.Follow.Commands
         public async Task DeleteFollowCommand_FollowedNotFound_Failure()
         {
             _followDto.FollowedId = 999;
-            var handler = new DeleteFollowCommandHandler(_mockRepo.Object, _mapper);
 
-            var result = await handler.Handle(new DeleteFollowCommand { follow = _followDto }, CancellationToken.None);
+            var result = await _handler.Handle(new DeleteFollowCommand { follow = _followDto }, CancellationToken.None);
 
             result.ShouldNotBeNull();
             result.ShouldBeOfType<BaseCommandResponse<Unit>>();
@@ -87,9 +86,8 @@ namespace Application.Tests.Follow.Commands
         {
             _followDto.FollowerId = 1;
             _followDto.FollowedId = 3;
-            var handler = new DeleteFollowCommandHandler(_mockRepo.Object, _mapper);
 
-            var result = await handler.Handle(new DeleteFollowCommand { follow = _followDto }, CancellationToken.None);
+            var result = await _handler.Handle(new DeleteFollowCommand { follow = _followDto }, CancellationToken.None);
 
             result.ShouldNotBeNull();
             result.ShouldBeOfType<BaseCommandResponse<Unit>>();

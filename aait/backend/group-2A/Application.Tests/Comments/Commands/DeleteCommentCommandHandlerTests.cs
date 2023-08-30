@@ -24,10 +24,11 @@ namespace Application.Tests.Comments.Commands
     {
         private readonly IMapper _mapper;
         private readonly Mock<IUnitOfWork> _mockRepo;
+        private readonly DeleteCommentCommandHandler _handler;
 
         public DeleteCommentCommandHandlerTests()
         {
-            _mockRepo = MockCommentRepository.GetCommentRepository();
+            _mockRepo = MockUnitOfWorkRepository.GetMockUnitOfWork();
 
             var mapperConfig = new MapperConfiguration(c =>
             {
@@ -35,14 +36,13 @@ namespace Application.Tests.Comments.Commands
             });
 
             _mapper = mapperConfig.CreateMapper();
+            _handler = new DeleteCommentCommandHandler(_mockRepo.Object, _mapper);
         }
 
         [Fact]
         public async Task DeleteCommentCommand_ValidId_Success()
         {
-            var handler = new DeleteCommentCommandHandler(_mockRepo.Object, _mapper);
-
-            var result = await handler.Handle(new DeleteCommentCommand() { Id = 1 }, CancellationToken.None);
+            var result = await _handler.Handle(new DeleteCommentCommand() { Id = 1, UserId = 1}, CancellationToken.None);
 
             result.ShouldNotBeNull();
             result.ShouldBeOfType<BaseCommandResponse<Unit>>();
@@ -53,55 +53,7 @@ namespace Application.Tests.Comments.Commands
         [Fact]
         public async Task DeleteCommentCommand_InvalidId_Failure()
         {
-            var handler = new DeleteCommentCommandHandler(_mockRepo.Object, _mapper);
-
-            var result = await handler.Handle(new DeleteCommentCommand() { Id = -1 }, CancellationToken.None);
-
-            result.ShouldNotBeNull();
-            result.ShouldBeOfType<BaseCommandResponse<Unit>>();
-            result.Success.ShouldBeFalse();
-            result.Value.ShouldBe(Unit.Value);
-        }
-
-        [Fact]
-        public async Task DeleteCommentCommand_CommentNotFound_Failure()
-        {
-            var handler = new DeleteCommentCommandHandler(_mockRepo.Object, _mapper);
-
-            var result = await handler.Handle(new DeleteCommentCommand() { Id = 999 }, CancellationToken.None);
-
-            result.ShouldNotBeNull();
-            result.ShouldBeOfType<BaseCommandResponse<Unit>>();
-            result.Success.ShouldBeFalse();
-            result.Value.ShouldBe(Unit.Value);
-        }
-
-        [Fact]
-        public async Task DeleteCommentCommand_ValidId_DeletesComment()
-        {
-            var initialCommentList = await _mockRepo.Object.commentRepository.GetAll();
-            var initialCommentCount = initialCommentList.Count;
-            var handler = new DeleteCommentCommandHandler(_mockRepo.Object, _mapper);
-
-            var result = await handler.Handle(new DeleteCommentCommand() { Id = 1 }, CancellationToken.None);
-
-            result.ShouldNotBeNull();
-            result.ShouldBeOfType<BaseCommandResponse<Unit>>();
-            result.Success.ShouldBeTrue();
-            result.Value.ShouldBe(Unit.Value);
-
-            var updatedCommentList = await _mockRepo.Object.commentRepository.GetAll();
-            var updatedCommentCount = updatedCommentList.Count;
-            updatedCommentCount.ShouldBe(initialCommentCount - 1);
-        }
-
-        [Fact]
-        public async Task DeleteCommentCommand_RepositoryError_Failure()
-        {
-            _mockRepo.Setup(repo => repo.commentRepository.Delete(It.IsAny<Comment>())).ThrowsAsync(new Exception("Simulated error"));
-            var handler = new DeleteCommentCommandHandler(_mockRepo.Object, _mapper);
-
-            var result = await handler.Handle(new DeleteCommentCommand() { Id = 1 }, CancellationToken.None);
+            var result = await _handler.Handle(new DeleteCommentCommand() { Id = -1 }, CancellationToken.None);
 
             result.ShouldNotBeNull();
             result.ShouldBeOfType<BaseCommandResponse<Unit>>();

@@ -30,7 +30,8 @@ namespace Application.Tests.Mocks
                           });
 
             mockRepository.Setup(repo => repo.Follow(It.IsAny<Domain.Entities.Follow>()))
-                          .Returns(Task.CompletedTask);
+                          .Returns(Task.CompletedTask)
+                          .Callback(() =>{ MockUnitOfWorkRepository.Changes += 1; });
 
             mockRepository.Setup(repo => repo.Unfollow(It.IsAny<Domain.Entities.Follow>()))
                           .Returns(Task.CompletedTask);

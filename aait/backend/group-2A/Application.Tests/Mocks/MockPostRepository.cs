@@ -10,7 +10,7 @@ namespace Application.Tests.Mocks
 {
     public static class MockPostRepository
     {
-        public static Mock<IUnitOfWork> GetPostRepository()
+        public static Mock<IPostRepository> GetPostRepository()
         {
             int userId = 1;
             var mockPosts = new List<Domain.Entities.Post>
@@ -18,7 +18,7 @@ namespace Application.Tests.Mocks
                 new Domain.Entities.Post
                 {
                     Id = 1,
-                    UserId = userId,
+                    UserId = 2,
                     Content = "Content 1",
                     Tags = new List<string>{"tag1", "tag2"},
                     CreatedAt = DateTime.Now,
@@ -54,38 +54,39 @@ namespace Application.Tests.Mocks
 
             };
 
-            var mockRepository = new Mock<IUnitOfWork>();
+            var mockRepository = new Mock<IPostRepository>();
 
-            mockRepository.Setup(repo => repo.postRepository.GetFollowingPost(It.IsAny<int>()))
+            mockRepository.Setup(repo => repo.GetFollowingPost(It.IsAny<int>()))
                           .ReturnsAsync((int id) => mockPosts.Where(p => p.UserId == id).ToList());
 
-            mockRepository.Setup(repo => repo.postRepository.GetUserPost(It.IsAny<int>()))
+            mockRepository.Setup(repo => repo.GetUserPost(It.IsAny<int>()))
                           .ReturnsAsync((int id) => mockPosts.Where(p => p.UserId == id).ToList());
 
-            mockRepository.Setup(repo => repo.postRepository.GetBytag(It.IsAny<string>()))
+            mockRepository.Setup(repo => repo.GetBytag(It.IsAny<string>()))
                           .ReturnsAsync((string tag) => mockPosts.Where(p => p.Tags.Contains(tag)).ToList());
 
-            mockRepository.Setup(repo => repo.postRepository.GetByContent(It.IsAny<string>()))
+            mockRepository.Setup(repo => repo.GetByContent(It.IsAny<string>()))
                           .ReturnsAsync((string content) => mockPosts.Where(p => p.Content.Contains(content)).ToList());
 
-            mockRepository.Setup(repo => repo.postRepository.Get(It.IsAny<int>()))
+            mockRepository.Setup(repo => repo.Get(It.IsAny<int>()))
                           .ReturnsAsync((int id) => mockPosts.FirstOrDefault(p => p.Id == id));
 
-            mockRepository.Setup(repo => repo.postRepository.GetAll())
+            mockRepository.Setup(repo => repo.GetAll())
                           .ReturnsAsync(mockPosts);
 
-            mockRepository.Setup(repo => repo.postRepository.Add(It.IsAny<Domain.Entities.Post>()))
+            mockRepository.Setup(repo => repo.Add(It.IsAny<Domain.Entities.Post>()))
                           .ReturnsAsync((Domain.Entities.Post post) =>
                           {
                               post.Id = mockPosts.Max(p => p.Id) + 1;
                               mockPosts.Add(post);
+                              MockUnitOfWorkRepository.Changes += 1;
                               return post;
                           });
 
-            mockRepository.Setup(repo => repo.postRepository.Exists(It.IsAny<int>()))
+            mockRepository.Setup(repo => repo.Exists(It.IsAny<int>()))
                           .ReturnsAsync((int id) => mockPosts.Any(p => p.Id == id));
 
-            mockRepository.Setup(repo => repo.postRepository.Update(It.IsAny<Domain.Entities.Post>()))
+            mockRepository.Setup(repo => repo.Update(It.IsAny<Domain.Entities.Post>()))
                           .Returns(Task.CompletedTask)
                           .Callback((Domain.Entities.Post post) =>
                           {
@@ -95,9 +96,10 @@ namespace Application.Tests.Mocks
                                   existingPost.Content = post.Content;
                                   existingPost.UpdatedAt = DateTime.Now;
                               }
+                              MockUnitOfWorkRepository.Changes += 1;
                           });
 
-            mockRepository.Setup(repo => repo.postRepository.Delete(It.IsAny<Domain.Entities.Post>()))
+            mockRepository.Setup(repo => repo.Delete(It.IsAny<Domain.Entities.Post>()))
                           .Returns(Task.CompletedTask)
                           .Callback((Domain.Entities.Post post) =>
                           {
@@ -106,6 +108,7 @@ namespace Application.Tests.Mocks
                               {
                                   mockPosts.Remove(existingPost);
                               }
+                              MockUnitOfWorkRepository.Changes += 1;
                           });
 
             return mockRepository;

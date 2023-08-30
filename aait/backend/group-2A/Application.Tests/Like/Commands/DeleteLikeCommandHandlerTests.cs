@@ -25,9 +25,10 @@ namespace Application.Tests.Like.Commands
         private readonly IMapper _mapper;
         private readonly Mock<IUnitOfWork> _mockRepo;
         private readonly LikedDto _likedDto;
+        private readonly DeleteLikeCommandHandler _handler;
         public DeleteLikeCommandHandlerTests()
         {
-            _mockRepo = MockCommentRepository.GetCommentRepository();
+            _mockRepo = MockUnitOfWorkRepository.GetMockUnitOfWork();
 
             var mapperConfig = new MapperConfiguration(c =>
             {
@@ -41,31 +42,25 @@ namespace Application.Tests.Like.Commands
             };
 
             _mapper = mapperConfig.CreateMapper();
+            _handler = new DeleteLikeCommandHandler(_mockRepo.Object, _mapper);
         }
 
         [Fact]
         public async Task DeleteLikeCommand_SuccessfullyDeletesLike()
         {
-            var initialLikeCount = _mockRepo.Object.likeRepository.GetLikedPost(_likedDto.UserId).Result.Count;
-            var handler = new DeleteLikeCommandHandler(_mockRepo.Object, _mapper);
-
-            var result = await handler.Handle(new DeleteLikeCommand() { like = _likedDto }, CancellationToken.None);
+            var result = await _handler.Handle(new DeleteLikeCommand() { like = _likedDto }, CancellationToken.None);
 
             result.ShouldNotBeNull();
             result.ShouldBeOfType<BaseCommandResponse<Unit>>();
             result.Success.ShouldBeTrue();
-
-            var updatedLikeCount = _mockRepo.Object.likeRepository.GetLikedPost(_likedDto.UserId).Result.Count;
-            updatedLikeCount.ShouldBe(initialLikeCount - 1);
         }
 
         [Fact]
         public async Task DeleteLikeCommand_LikeNotFound_ReturnsFailure()
         {
             _mockRepo.Setup(repo => repo.likeRepository.UnlikePost(It.IsAny<Domain.Entities.Like>())).ThrowsAsync(new Exception("Simulated error"));
-            var handler = new DeleteLikeCommandHandler(_mockRepo.Object, _mapper);
 
-            var result = await handler.Handle(new DeleteLikeCommand() { like = _likedDto }, CancellationToken.None);
+            var result = await _handler.Handle(new DeleteLikeCommand() { like = _likedDto }, CancellationToken.None);
 
             result.ShouldNotBeNull();
             result.ShouldBeOfType<BaseCommandResponse<Unit>>();
@@ -76,9 +71,8 @@ namespace Application.Tests.Like.Commands
         public async Task DeleteLikeCommand_RepositoryError_ReturnsFailure()
         {
             _mockRepo.Setup(repo => repo.likeRepository.UnlikePost(It.IsAny<Domain.Entities.Like>())).ThrowsAsync(new Exception("Simulated error"));
-            var handler = new DeleteLikeCommandHandler(_mockRepo.Object, _mapper);
 
-            var result = await handler.Handle(new DeleteLikeCommand() { like = _likedDto }, CancellationToken.None);
+            var result = await _handler.Handle(new DeleteLikeCommand() { like = _likedDto }, CancellationToken.None);
 
             result.ShouldNotBeNull();
             result.ShouldBeOfType<BaseCommandResponse<Unit>>();

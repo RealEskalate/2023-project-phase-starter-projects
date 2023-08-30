@@ -1,5 +1,6 @@
 ﻿using Application.Contracts.Persistance;
 using Application.DTO.Post;
+using Application.Features.Like.Handlers.Commands;
 using Application.Features.Post.Handlers.Command;
 using Application.Features.Post.Request.Commands;
 using Application.Profiles;
@@ -21,10 +22,11 @@ namespace Application.Tests.Post.Commands
     {
         private readonly IMapper _mapper;
         private readonly Mock<IUnitOfWork> _mockRepo;
+        private readonly DeletePostCommandHandler _handler;
 
         public DeletePostCommandHandlerTests()
         {
-            _mockRepo = MockCommentRepository.GetCommentRepository();
+            _mockRepo = MockUnitOfWorkRepository.GetMockUnitOfWork();
 
             var mapperConfig = new MapperConfiguration(c =>
             {
@@ -32,17 +34,17 @@ namespace Application.Tests.Post.Commands
             });
 
             _mapper = mapperConfig.CreateMapper();
+            _handler = new DeletePostCommandHandler(_mockRepo.Object, _mapper);
         }
 
 
         [Fact]
-        public async Task DeletePostCommand_ValidData_DeletesPost()
+        public async Task DeletePostCommand_ValidId_DeletesPost()
         {
             var initialPostList = await _mockRepo.Object.postRepository.GetAll();
             var initialPostCount = initialPostList.Count;
-            var handler = new DeletePostCommandHandler(_mockRepo.Object, _mapper);
 
-            var result = await handler.Handle(new DeletePostCommand() { Id = 1, UserId = 2 }, CancellationToken.None);
+            var result = await _handler.Handle(new DeletePostCommand() { Id = 1, UserId = 2 }, CancellationToken.None);
 
             result.ShouldNotBeNull();
             result.ShouldBeOfType<BaseCommandResponse<Unit>>();
@@ -55,11 +57,9 @@ namespace Application.Tests.Post.Commands
         }
 
         [Fact]
-        public async Task DeletePostCommand_InvalidData_Failure()
+        public async Task DeletePostCommand_InvalidId_Failure()
         {
-            var handler = new DeletePostCommandHandler(_mockRepo.Object, _mapper);
-
-            var result = await handler.Handle(new DeletePostCommand() { Id = 999, UserId = 2 }, CancellationToken.None);
+            var result = await _handler.Handle(new DeletePostCommand() { Id = 999, UserId = 2 }, CancellationToken.None);
 
             result.ShouldNotBeNull();
             result.ShouldBeOfType<BaseCommandResponse<Unit>>();
@@ -70,9 +70,7 @@ namespace Application.Tests.Post.Commands
         [Fact]
         public async Task DeletePostCommand_UnauthorizedUser_Failure()
         {
-            var handler = new DeletePostCommandHandler(_mockRepo.Object, _mapper);
-
-            var result = await handler.Handle(new DeletePostCommand() { Id = 1, UserId = 999 }, CancellationToken.None);
+            var result = await _handler.Handle(new DeletePostCommand() { Id = 1, UserId = 999 }, CancellationToken.None);
 
             result.ShouldNotBeNull();
             result.ShouldBeOfType<BaseCommandResponse<Unit>>();

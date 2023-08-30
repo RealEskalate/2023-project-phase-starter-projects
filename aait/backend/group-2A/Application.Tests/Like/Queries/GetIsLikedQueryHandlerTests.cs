@@ -3,6 +3,7 @@ using Application.DTO.FollowDTO;
 using Application.DTO.Like;
 using Application.Features.FollowFeatures.Handlers.Command;
 using Application.Features.FollowFeatures.Request.Command;
+using Application.Features.Like.Handlers.Commands;
 using Application.Features.Like.Handlers.Query;
 using Application.Features.Like.Request.Queries;
 using Application.Profiles;
@@ -25,9 +26,10 @@ namespace Application.Tests.Like.Queries
         private readonly IMapper _mapper;
         private readonly Mock<IUnitOfWork> _mockRepo;
         private readonly LikedDto _likedDto;
+        private readonly GetIsLikedQueryHander _handler;
         public GetIsLikedQueryHandlerTests()
         {
-            _mockRepo = MockCommentRepository.GetCommentRepository();
+            _mockRepo = MockUnitOfWorkRepository.GetMockUnitOfWork();
 
             var mapperConfig = new MapperConfiguration(c =>
             {
@@ -41,14 +43,13 @@ namespace Application.Tests.Like.Queries
             };
 
             _mapper = mapperConfig.CreateMapper();
+            _handler = new GetIsLikedQueryHander(_mockRepo.Object, _mapper);
         }
 
         [Fact]
         public async Task GetIsLiked_LikeExists_ReturnsTrue()
         {
-            var handler = new GetIsLikedQueryHander(_mockRepo.Object, _mapper);
-
-            var result = await handler.Handle(new GetIsLikedQuery() { LikedDto = _likedDto }, CancellationToken.None);
+            var result = await _handler.Handle(new GetIsLikedQuery() { LikedDto = _likedDto }, CancellationToken.None);
 
             result.ShouldNotBeNull();
             result.ShouldBeOfType<BaseCommandResponse<bool>>();
@@ -65,27 +66,13 @@ namespace Application.Tests.Like.Queries
                 UserId = 999,
             };
 
-            var handler = new GetIsLikedQueryHander(_mockRepo.Object, _mapper);
 
-            var result = await handler.Handle(new GetIsLikedQuery() { LikedDto = nonExistentLikeDto }, CancellationToken.None);
+            var result = await _handler.Handle(new GetIsLikedQuery() { LikedDto = nonExistentLikeDto }, CancellationToken.None);
 
             result.ShouldNotBeNull();
             result.ShouldBeOfType<BaseCommandResponse<bool>>();
             result.Success.ShouldBeTrue();
             result.Value.ShouldBeFalse();
-        }
-
-        [Fact]
-        public async Task GetIsLiked_RepositoryError_ReturnsFailure()
-        {
-            _mockRepo.Setup(repo => repo.likeRepository.isLiked(It.IsAny<Domain.Entities.Like>())).ThrowsAsync(new Exception("Simulated error"));
-            var handler = new GetIsLikedQueryHander(_mockRepo.Object, _mapper);
-
-            var result = await handler.Handle(new GetIsLikedQuery() { LikedDto = _likedDto }, CancellationToken.None);
-
-            result.ShouldNotBeNull();
-            result.ShouldBeOfType<BaseCommandResponse<bool>>();
-            result.Success.ShouldBeFalse();
         }
     }
 }

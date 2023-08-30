@@ -1,6 +1,7 @@
 ﻿using Application.Contracts.Persistance;
 using Application.DTO.FollowDTO;
 using Application.DTO.UserDTO;
+using Application.Features.Comment.Handlers.Queries;
 using Application.Features.FollowFeatures.Handlers.Command;
 using Application.Features.FollowFeatures.Handlers.Queries;
 using Application.Features.FollowFeatures.Request.Command;
@@ -24,9 +25,10 @@ namespace Application.Tests.Follow.Queries
     {
         private readonly IMapper _mapper;
         private readonly Mock<IUnitOfWork> _mockRepo;
+        private readonly GetFollowerRequestHandler _handler;
         public GetFollowerRequestHandlerTests()
         {
-            _mockRepo = MockCommentRepository.GetCommentRepository();
+            _mockRepo = MockUnitOfWorkRepository.GetMockUnitOfWork();
 
             var mapperConfig = new MapperConfiguration(c =>
             {
@@ -34,16 +36,16 @@ namespace Application.Tests.Follow.Queries
             });
 
             _mapper = mapperConfig.CreateMapper();
+            _handler = new GetFollowerRequestHandler(_mockRepo.Object, _mapper);
         }
 
 
         [Fact]
         public async Task GetFollower_ValidUserId_ReturnsListOfUserDto()
         {
-            var handler = new GetFollowerRequestHandler(_mockRepo.Object, _mapper);
             var request = new GetFollowerRequest { Id = 2 };
 
-            var result = await handler.Handle(request, CancellationToken.None);
+            var result = await _handler.Handle(request, CancellationToken.None);
 
             result.ShouldNotBeNull();
             result.ShouldBeOfType<BaseCommandResponse<List<UserDto>>>();
@@ -55,10 +57,9 @@ namespace Application.Tests.Follow.Queries
         [Fact]
         public async Task GetFollower_InvalidUserId_ReturnsEmptyList()
         {
-            var handler = new GetFollowerRequestHandler(_mockRepo.Object, _mapper);
             var request = new GetFollowerRequest { Id = 999 };
 
-            var result = await handler.Handle(request, CancellationToken.None);
+            var result = await _handler.Handle(request, CancellationToken.None);
 
             result.ShouldNotBeNull();
             result.ShouldBeOfType<BaseCommandResponse<List<UserDto>>>();
@@ -71,10 +72,9 @@ namespace Application.Tests.Follow.Queries
         public async Task GetFollower_RepositoryError_ReturnsFailure()
         {
             _mockRepo.Setup(repo => repo.followRepository.GetFollower(It.IsAny<int>())).ThrowsAsync(new Exception("Simulated error"));
-            var handler = new GetFollowerRequestHandler(_mockRepo.Object, _mapper);
             var request = new GetFollowerRequest { Id = 2 };
 
-            var result = await handler.Handle(request, CancellationToken.None);
+            var result = await _handler.Handle(request, CancellationToken.None);
 
             result.ShouldNotBeNull();
             result.ShouldBeOfType<BaseCommandResponse<List<UserDto>>>();

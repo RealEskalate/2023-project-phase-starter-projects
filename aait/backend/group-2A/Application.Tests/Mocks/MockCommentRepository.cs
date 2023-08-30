@@ -11,7 +11,7 @@ namespace Application.Tests.Mocks
 {
     public static class MockCommentRepository
     {
-        public static Mock<IUnitOfWork> GetCommentRepository()
+        public static Mock<ICommentRepository> GetCommentRepository()
         {
             int postId = 1;
             int userId = 1;
@@ -55,29 +55,31 @@ namespace Application.Tests.Mocks
                 },
             };
 
-            var mockRepository = new Mock<IUnitOfWork>();
+            var mockRepository = new Mock<ICommentRepository>();
 
-            mockRepository.Setup(repo => repo.commentRepository.GetCommentByPost(It.IsAny<int>()))
+            mockRepository.Setup(repo => repo.GetCommentByPost(It.IsAny<int>()))
                           .ReturnsAsync((int postId) => mockComments.Where(c => c.PostId == postId).ToList());
+            
 
-            mockRepository.Setup(repo => repo.commentRepository.Get(It.IsAny<int>()))
+            mockRepository.Setup(repo => repo.Get(It.IsAny<int>()))
                           .ReturnsAsync((int id) => mockComments.FirstOrDefault(c => c.Id == id));
 
-            mockRepository.Setup(repo => repo.commentRepository.GetAll())
+            mockRepository.Setup(repo => repo.GetAll())
                           .ReturnsAsync(mockComments);
 
-            mockRepository.Setup(repo => repo.commentRepository.Add(It.IsAny<Comment>()))
+            mockRepository.Setup(repo => repo.Add(It.IsAny<Comment>()))
                           .ReturnsAsync((Comment comment) =>
                           {
                               comment.Id = mockComments.Max(c => c.Id) + 1;
                               mockComments.Add(comment);
+                              MockUnitOfWorkRepository.Changes += 1;
                               return comment;
                           });
 
-            mockRepository.Setup(repo => repo.commentRepository.Exists(It.IsAny<int>()))
+            mockRepository.Setup(repo => repo.Exists(It.IsAny<int>()))
                           .ReturnsAsync((int id) => mockComments.Any(c => c.Id == id));
 
-            mockRepository.Setup(repo => repo.commentRepository.Update(It.IsAny<Comment>()))
+            mockRepository.Setup(repo => repo.Update(It.IsAny<Comment>()))
                           .Returns(Task.CompletedTask)
                           .Callback((Comment comment) =>
                           {
@@ -87,9 +89,10 @@ namespace Application.Tests.Mocks
                                   existingComment.Content = comment.Content;
                                   existingComment.UpdatedAt = DateTime.Now;
                               }
+                              MockUnitOfWorkRepository.Changes += 1;
                           });
 
-            mockRepository.Setup(repo => repo.commentRepository.Delete(It.IsAny<Comment>()))
+            mockRepository.Setup(repo => repo.Delete(It.IsAny<Comment>()))
                           .Returns(Task.CompletedTask)
                           .Callback((Comment comment) =>
                           {
@@ -98,6 +101,7 @@ namespace Application.Tests.Mocks
                               {
                                   mockComments.Remove(existingComment);
                               }
+                              MockUnitOfWorkRepository.Changes += 1;
                           });
 
             return mockRepository;

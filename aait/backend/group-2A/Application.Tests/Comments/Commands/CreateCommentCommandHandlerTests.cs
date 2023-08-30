@@ -22,35 +22,33 @@ namespace Application.Tests.Comments.Commands
     {
         private readonly IMapper _mapper;
         private readonly Mock<IUnitOfWork> _mockRepo;
-        private readonly CreateCommentDto _commentDto;
+        private readonly CreateCommentCommandHandler _handler;
 
         public CreateCommentCommandHandlerTests()
         {
-            _mockRepo = MockCommentRepository.GetCommentRepository();
+            _mockRepo = MockUnitOfWorkRepository.GetMockUnitOfWork();
+            
 
             var mapperConfig = new MapperConfiguration(c =>
             {
                 c.AddProfile<MappingProfile>();
             });
 
+            _mapper = mapperConfig.CreateMapper();
+            _handler = new CreateCommentCommandHandler(_mockRepo.Object, _mapper);
+        }
 
-            _commentDto = new CreateCommentDto
+        [Fact]
+        public async Task CreateCommentCommand_Success()
+        {
+            CreateCommentDto _commentDto = new CreateCommentDto
             {
                 Content = "New Comment",
                 PostId = 2,
                 UserId = 1,
             };
 
-            _mapper = mapperConfig.CreateMapper();
-        }
-
-        [Fact]
-        public async Task CreateCommentCommand_Success()
-        {
-
-            var handler = new CreateCommentCommandHandler(_mockRepo.Object, _mapper);
-
-            var result = await handler.Handle(new CreateCommentCommand() { CommentDto = _commentDto }, CancellationToken.None);
+            var result = await _handler.Handle(new CreateCommentCommand() { CommentDto = _commentDto }, CancellationToken.None);
 
             result.ShouldNotBeNull();
             result.ShouldBeOfType<BaseCommandResponse<int>>();
@@ -63,9 +61,7 @@ namespace Application.Tests.Comments.Commands
         {
             var invalidDto = new CreateCommentDto();
 
-            var handler = new CreateCommentCommandHandler(_mockRepo.Object, _mapper);
-
-            var result = await handler.Handle(new CreateCommentCommand() { CommentDto = invalidDto }, CancellationToken.None);
+            var result = await _handler.Handle(new CreateCommentCommand() { CommentDto = invalidDto }, CancellationToken.None);
 
             result.ShouldNotBeNull();
             result.ShouldBeOfType<BaseCommandResponse<int>>();
@@ -83,9 +79,8 @@ namespace Application.Tests.Comments.Commands
                 UserId = 1,
             };
 
-            var handler = new CreateCommentCommandHandler(_mockRepo.Object, _mapper);
 
-            var result = await handler.Handle(new CreateCommentCommand() { CommentDto = invalidDto }, CancellationToken.None);
+            var result = await _handler.Handle(new CreateCommentCommand() { CommentDto = invalidDto }, CancellationToken.None);
 
             result.ShouldNotBeNull();
             result.ShouldBeOfType<BaseCommandResponse<int>>();
@@ -103,9 +98,8 @@ namespace Application.Tests.Comments.Commands
                 UserId = -1,
             };
 
-            var handler = new CreateCommentCommandHandler(_mockRepo.Object, _mapper);
 
-            var result = await handler.Handle(new CreateCommentCommand() { CommentDto = invalidDto }, CancellationToken.None);
+            var result = await _handler.Handle(new CreateCommentCommand() { CommentDto = invalidDto }, CancellationToken.None);
 
             result.ShouldNotBeNull();
             result.ShouldBeOfType<BaseCommandResponse<int>>();

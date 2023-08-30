@@ -1,5 +1,6 @@
 ﻿using Application.Contracts.Persistance;
 using Application.DTO.Post;
+using Application.Features.Like.Handlers.Commands;
 using Application.Features.Post.Handlers.Command;
 using Application.Features.Post.Request.Commands;
 using Application.Profiles;
@@ -22,10 +23,10 @@ namespace Application.Tests.Post.Commands
         private readonly IMapper _mapper;
         private readonly Mock<IUnitOfWork> _mockRepo;
         private readonly UpdatePostDto _postDto;
-
+        private readonly UpdatePostCommandHandler _handler;
         public UpdatePostCommandHandlerTests()
         {
-            _mockRepo = MockCommentRepository.GetCommentRepository();
+            _mockRepo = MockUnitOfWorkRepository.GetMockUnitOfWork();
 
             var mapperConfig = new MapperConfiguration(c =>
             {
@@ -35,20 +36,20 @@ namespace Application.Tests.Post.Commands
 
             _postDto = new UpdatePostDto
             {
-                UserId = 3,
+                Id = 2,
+                UserId = 1,
                 Content = "Content 7",
                 Tags = new List<string> { "tag5", "tag2" },
             };
 
             _mapper = mapperConfig.CreateMapper();
+            _handler = new UpdatePostCommandHandler(_mockRepo.Object, _mapper);
         }
 
         [Fact]
         public async Task UpdatePostCommand_ValidData_UpdatesPost()
         {
-            var handler = new UpdatePostCommandHandler(_mockRepo.Object, _mapper);
-
-            var result = await handler.Handle(new UpdatePostCommand() { UpdatedPost = _postDto }, CancellationToken.None);
+            var result = await _handler.Handle(new UpdatePostCommand() { UpdatedPost = _postDto }, CancellationToken.None);
 
             result.ShouldNotBeNull();
             result.ShouldBeOfType<BaseCommandResponse<Unit>>();
@@ -59,9 +60,7 @@ namespace Application.Tests.Post.Commands
         [Fact]
         public async Task UpdatePostCommand_InvalidData_Failure()
         {
-            var handler = new UpdatePostCommandHandler(_mockRepo.Object, _mapper);
-
-            var result = await handler.Handle(new UpdatePostCommand() { UpdatedPost = null }, CancellationToken.None);
+            var result = await _handler.Handle(new UpdatePostCommand() { UpdatedPost = null }, CancellationToken.None);
 
             result.ShouldNotBeNull();
             result.ShouldBeOfType<BaseCommandResponse<Unit>>();
@@ -73,9 +72,8 @@ namespace Application.Tests.Post.Commands
         public async Task UpdatePostCommand_RepositoryError_Failure()
         {
             _mockRepo.Setup(repo => repo.postRepository.Update(It.IsAny<Domain.Entities.Post>())).ThrowsAsync(new Exception("Simulated error"));
-            var handler = new UpdatePostCommandHandler(_mockRepo.Object, _mapper);
 
-            var result = await handler.Handle(new UpdatePostCommand() { UpdatedPost = _postDto }, CancellationToken.None);
+            var result = await _handler.Handle(new UpdatePostCommand() { UpdatedPost = _postDto }, CancellationToken.None);
 
             result.ShouldNotBeNull();
             result.ShouldBeOfType<BaseCommandResponse<Unit>>();
