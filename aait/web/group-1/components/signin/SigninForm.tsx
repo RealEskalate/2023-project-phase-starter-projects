@@ -6,6 +6,8 @@ import { useLoginMutation } from "@/store/auth/authApi"
 import TextField from "../signup/TextField"
 import { useRouter } from "next/navigation"
 
+import { toast } from 'react-toastify'
+
 const fieldInfo: Array<Array<string>> = [
   ["text", "email", "Email"], 
   ["password", "password", "Password"]
@@ -26,6 +28,9 @@ const SignInForm = () => {
   }
 
   const handleSignin = () => {
+    if(!credentials.email || !credentials.password) {
+      toast.error("Please fill all fields")
+    }
     login(credentials)
       .unwrap()
       .then((response) => {
@@ -60,8 +65,9 @@ const SignInForm = () => {
       >
         {isLoading ? 'Signing in...' : 'Sign in'}
       </button>
-      {isError && <p className="text-red-500 mt-2">ERROR!!!</p>}
-      {isSuccess && <p className="text-green-500 mt-2">Signin successful!</p>}
+      {isError && toast.error('Unable to signin')}
+      {isSuccess && toast.success('Signed in successfully')}
+
     </div>
   )
 }
