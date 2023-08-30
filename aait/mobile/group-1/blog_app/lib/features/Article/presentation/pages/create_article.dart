@@ -13,7 +13,7 @@ import 'package:image_picker/image_picker.dart';
 import 'dart:io';
 
 class ArticlePage extends StatefulWidget {
-  const ArticlePage({super.key, this.id = "64eda97cb00b3d3d2fe86ec5"});
+  const ArticlePage({super.key, this.id});
   final String? id;
 
   @override
@@ -329,7 +329,7 @@ class _ArticlePageState extends State<ArticlePage> {
                       child: Column(children: [
                         const Text("Estimated read time:"),
                         TextFormField(
-                          controller: articleContent,
+                          controller: estimatedReadTimeContoller,
                           keyboardType: TextInputType.number,
                           decoration: const InputDecoration(
                             border: OutlineInputBorder(
@@ -352,7 +352,7 @@ class _ArticlePageState extends State<ArticlePage> {
                               ),
                           validator: (String? name) {
                             if (name == null || name.isEmpty) {
-                              return "Name can not be empty";
+                              return "Estimated read can not be empty";
                             }
                             return null;
                           },
