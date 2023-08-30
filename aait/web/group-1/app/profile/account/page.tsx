@@ -89,25 +89,3 @@ export default function Page() {
   );
 }
 
-
-///<div className='flex flex-col items-center text-[11px] font-poppins'>
-{/* <div className='flex space-x-3 justify-between items-center border p-3'>
-
-<h4 className='font-semibold text-[#565656]'>Current Password</h4>
-
-<div className='flex items-center bg-[#EFF3F9] p-2 rounded-md'>
-  <input
-    type="password"
-    className='bg-[#EFF3F9] focus:outline-none'
-    placeholder='Enter your current password'
-    />
-  <Image
-    src='/images/toggle-password-status.png'
-    width={ 12 }
-    height={ 12 }
-    alt=' toggle password visiblity '
-  />
-</div>
-
-</div>
-</div> */}
