@@ -6,6 +6,6 @@ namespace Application.DTO.Common
     {
         public int ReactedId { get; set; }
 
-        public ReactionEnum ReactionType { get; set; }
+        public string ReactionType { get; set; }
     }
 }
