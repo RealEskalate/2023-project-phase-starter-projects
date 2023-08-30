@@ -52,7 +52,7 @@ const AddBlog:React.FC<Props> = ({
             <img
                 src={image ? URL.createObjectURL(image) : "../assets/upload_image.png"}
                 alt="Blog Image"
-                className="mx-auto mt-24 mb-8 object-center object-cover"
+                className="mx-auto mt-24 mb-8 w-64 h-64 object-center object-cover"
             />
             <div className="flex md:justify-center items-center">
                 <label className="cursor-pointer">

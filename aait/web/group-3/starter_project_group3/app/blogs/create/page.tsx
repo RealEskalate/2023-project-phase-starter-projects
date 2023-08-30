@@ -4,6 +4,7 @@ import { useState } from "react";
 import {useRouter} from 'next/navigation'
 import { useAddBlogMutation } from "@/store/features/create-blog/create-blog-api";
 import AddBlog from "@/components/blog/AddBlog";
+import Toast from "@/components/toast-Messages/toast-message";
 
 const CreateBlogPage: React.FC = () => {
     const [addBlog, {isError, isLoading}] = useAddBlogMutation()
@@ -70,7 +71,9 @@ const CreateBlogPage: React.FC = () => {
             
             const response = await addBlog(formData);
             if (response) {
+                <Toast message="Successfully added" />
                 router.push('/blogs')
+
             }else{
               setImage(null)
               setImageText('Please upload image')
