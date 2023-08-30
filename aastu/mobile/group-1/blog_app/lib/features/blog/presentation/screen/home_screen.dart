@@ -3,6 +3,7 @@ import 'package:blog_app/core/utils/capitalize.dart';
 import 'package:blog_app/core/utils/clear_token.dart';
 import 'package:blog_app/core/utils/greeting.dart';
 import 'package:blog_app/features/blog/domain/entities/article.dart';
+import 'package:blog_app/features/blog/domain/usecases/create_article.dart';
 import 'package:blog_app/features/user/domain/entities/user.dart' as UserEntity;
 import 'package:blog_app/features/blog/domain/usecases/get_all_articles.dart';
 import 'package:blog_app/features/blog/domain/usecases/get_single_article.dart';
@@ -16,16 +17,17 @@ import 'package:blog_app/features/blog/presentation/screen/search_result.dart';
 import 'package:blog_app/features/blog/presentation/widgets/tag_selector_widget.dart';
 import 'package:blog_app/features/onboarding/widgets/loading_widget.dart';
 import 'package:blog_app/features/user/presentation/blocs/bloc.dart';
+import 'package:blog_app/features/user/presentation/blocs/bloc_state.dart';
 import 'package:blog_app/features/user/presentation/blocs/get_user.dart/user_event.dart';
 import 'package:blog_app/features/user/presentation/blocs/get_user.dart/user_state.dart';
 import 'package:blog_app/injection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:animated_text_kit/animated_text_kit.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class Home extends StatefulWidget {
-  final String userId;
-  const Home({Key? key, required this.userId}) : super(key: key);
+  const Home({super.key});
 
   @override
   State<Home> createState() => _HomeState();
@@ -45,6 +47,7 @@ class _HomeState extends State<Home> {
         getAllArticle: sl<GetArticleUseCase>(),
         getSingleArticle: sl<GetSingleArticleUseCase>(),
         getTags: sl<GetTagsUseCase>(),
+        createArticle: sl<CreateArticleUseCase>(),
       ),
       child: BlocConsumer<BlogBloc, BlogState>(
         listener: (context, state) {
@@ -64,9 +67,21 @@ class _HomeState extends State<Home> {
     );
   }
 
+  String fullName = '';
+
+  Future<void> _loadFullNameFromSharedPrefs() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String savedFullName = prefs.getString("fullName") ?? '';
+    setState(() {
+      fullName = savedFullName;
+    });
+  }
+
   @override
   void initState() {
     super.initState();
+    _loadFullNameFromSharedPrefs(); // Load the value when the widget initializes
+
     // Articles
     context.read<BlogBloc>().add(const GetAllArticlesEvent());
 
@@ -75,16 +90,6 @@ class _HomeState extends State<Home> {
     context.read<BlogBloc>().stream.listen((state) {
       if (state is LoadedTagsState) {
         tags.addAll(state.tags.map((tag) => capitalizeFirstLetter(tag)));
-      }
-    });
-
-    // Get User
-    context.read<UserBloc>().add(const GetUserEvent());
-    context.read<UserBloc>().stream.listen((state) {
-      if (state is LoadedGetUserState) {
-        setState(() {
-          user = state.user;
-        });
       }
     });
   }
@@ -130,7 +135,7 @@ class _HomeState extends State<Home> {
                       ),
                     ),
                     TyperAnimatedText(
-                      "Hello, ${user.fullName!}",
+                      "Hello, $fullName",
                       textStyle: const TextStyle(
                         fontFamily: 'Poppins-SemiBold',
                         fontWeight: FontWeight.bold,
@@ -157,8 +162,6 @@ class _HomeState extends State<Home> {
                 ),
 
                 const SizedBox(height: 10), // Add some spacing between lines
-
-                // Hide if user name is empty
               ],
             ),
           ),
@@ -169,14 +172,19 @@ class _HomeState extends State<Home> {
                 margin: const EdgeInsets.only(
                     left: 0, right: 20, top: 0, bottom: 0),
                 child: GestureDetector(
-                  onTap: () {
-                    Navigator.pushNamed(context, '/profile');
-                  },
-                  child: const CircleAvatar(
-                    radius: 40,
-                    backgroundImage: AssetImage("assets/images/doctor.jpg"),
-                  ),
-                )),
+                    onTap: () {
+                      Navigator.pushNamed(context, '/profile');
+                    },
+                    // child: const CircleAvatar(
+                    //   radius: 40,
+                    //   backgroundImage: AssetImage("assets/images/no_profile.png"),
+                    // ),
+                    child: Image.asset(
+                      "assets/images/no_profile.png",
+                      width: 42,
+                      height: 42,
+                      fit: BoxFit.cover,
+                    ))),
           ],
         ),
         drawer: Drawer(
@@ -188,7 +196,7 @@ class _HomeState extends State<Home> {
                   child: Stack(
                     children: <Widget>[
                       Image.asset(
-                        "assets/images/doctor.jpg",
+                        "assets/images/banner_1.png",
                         width: double.infinity,
                         height: double.infinity,
                         fit: BoxFit.cover,
@@ -202,7 +210,7 @@ class _HomeState extends State<Home> {
                           child: const CircleAvatar(
                             radius: 33,
                             backgroundImage:
-                                AssetImage("assets/images/doctor.jpg"),
+                                AssetImage("assets/images/no_profile.png"),
                           ),
                         ),
                       ),
@@ -215,12 +223,12 @@ class _HomeState extends State<Home> {
                             mainAxisSize: MainAxisSize.min,
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: <Widget>[
-                              Text("John Miller",
+                              Text(fullName,
                                   style: TextStyle(
                                       color: Colors.grey[100],
                                       fontWeight: FontWeight.bold)),
                               Container(height: 5),
-                              Text("johnmiller@mail.com",
+                              Text("",
                                   style: TextStyle(color: Colors.grey[100]))
                             ],
                           ),

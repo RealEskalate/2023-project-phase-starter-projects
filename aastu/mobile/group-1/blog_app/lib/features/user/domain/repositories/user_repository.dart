@@ -20,5 +20,5 @@ abstract class UserRepository {
   Future<Either<Failure, User>> getUser();
 
   Future<Either<Failure, void>> updateProfilePhoto(
-      String userId, String imageUrl, String imagePublicId);
+      Map<String, dynamic> userData);
 }

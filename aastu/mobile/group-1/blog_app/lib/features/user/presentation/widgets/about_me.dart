@@ -167,13 +167,14 @@ class _AboutmeState extends State<Aboutme> {
                                 decoration: ShapeDecoration(
                                   shape: RoundedRectangleBorder(
                                     side: const BorderSide(
-                                        width: 1, color: Color(0xFF376AED)),
+                                        width: 0,
+                                        color: Color.fromARGB(0, 55, 107, 237)),
                                     borderRadius: BorderRadius.circular(22),
                                   ),
                                   image: const DecorationImage(
-                                    image:
-                                        AssetImage("assets/images/profile.png"),
-                                    fit: BoxFit.fill,
+                                    image: AssetImage(
+                                        "assets/images/no_profile.png"),
+                                    fit: BoxFit.contain,
                                   ),
                                 ),
                               ),

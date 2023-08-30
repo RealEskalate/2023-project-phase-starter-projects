@@ -1,16 +1,27 @@
+import 'package:blog_app/features/blog/domain/entities/article.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:skeletons/skeletons.dart';
 
 import '../widgets/MiniBlogInfo.dart';
 import '../widgets/inputForm.dart';
 
-class ViewBlog extends StatelessWidget {
-  const ViewBlog({super.key});
+class ViewBlog extends StatefulWidget {
+  final Article article;
+  final String fullName;
 
+  const ViewBlog({super.key, required this.article, required this.fullName});
+
+  @override
+  State<ViewBlog> createState() => _ViewBlogState();
+}
+
+class _ViewBlogState extends State<ViewBlog> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Color(0XFFF8FAFF),
+        backgroundColor: const Color(0XFFF8FAFF),
         foregroundColor: Colors.black,
         leading: Padding(
           padding: const EdgeInsets.only(left: 20),
@@ -18,7 +29,7 @@ class ViewBlog extends StatelessWidget {
               onPressed: () {
                 Navigator.of(context).pop();
               },
-              icon: Icon(
+              icon: const Icon(
                 Icons.arrow_back_ios,
               )),
         ),
@@ -35,7 +46,7 @@ class ViewBlog extends StatelessWidget {
         ],
       ),
       body: Container(
-        color: Color(0XFFF8FAFF),
+        color: const Color(0XFFF8FAFF),
         child: SafeArea(
           child: Stack(
             children: [
@@ -43,30 +54,34 @@ class ViewBlog extends StatelessWidget {
                 child: Column(
                   children: [
                     Container(
-                      margin: EdgeInsets.fromLTRB(30, 20, 30, 20),
+                      margin: const EdgeInsets.fromLTRB(30, 20, 30, 20),
                       child: Column(
                         children: [
-                          const Text(
-                            "Four Things Every Programmer Needs To Know",
-                            style: TextStyle(
+                          Text(
+                            widget.article.title!,
+                            style: const TextStyle(
                                 color: Color(0xFF0D253C),
                                 fontSize: 24,
                                 fontWeight: FontWeight.w600,
                                 fontFamily: "poppins"),
                           ),
                           Container(
-                            padding:
-                                EdgeInsets.only(top: 15, left: 10, right: 10),
-                            child: const Row(
+                            padding: const EdgeInsets.only(
+                                top: 15, left: 10, right: 10),
+                            child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 Row(
                                   children: [
-                                    MiniBlogInfo(),
+                                    MiniBlogInfo(
+                                        image: widget.article.user!.image!,
+                                        fullName:
+                                            widget.article.user!.fullName!,
+                                        createdAt: widget.article.createdAt!),
                                   ],
                                 ),
                                 //bookmark icon here
-                                Icon(
+                                const Icon(
                                   Icons.bookmark_border_outlined,
                                   color: Color(0xff376AED),
                                   size: 24,
@@ -74,32 +89,64 @@ class ViewBlog extends StatelessWidget {
                               ],
                             ),
                           ),
-                          Text("")
+                          const Text("")
                         ],
                       ),
                     ),
                     Container(
                       width: MediaQuery.of(context).size.width,
                       height: 219,
-                      child: Image.asset("assets/images/banner.png"),
                       decoration: const BoxDecoration(
                         borderRadius: BorderRadius.only(
                           topLeft: Radius.circular(20),
                           topRight: Radius.circular(20),
                         ),
                       ),
+                      child: widget.article.image != null
+                          ? CachedNetworkImage(
+                              key: Key(widget.article.image!),
+                              imageUrl: widget.article.image!,
+                              height: 140,
+                              width: 130,
+                              fit: BoxFit.cover,
+                              placeholder: (context, url) => SkeletonItem(
+                                child: Container(
+                                  height: double.infinity,
+                                  width: double.infinity,
+                                  decoration: const BoxDecoration(
+                                    gradient: LinearGradient(
+                                      begin: Alignment.topCenter,
+                                      end: Alignment.bottomCenter,
+                                      colors: [
+                                        Color(0xFF222222),
+                                        Color(0xFF242424),
+                                        Color(0xFF2B2B2B),
+                                        Color(0xFF242424),
+                                        Color(0xFF222222),
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            )
+                          : Image.asset(
+                              "assets/images/no_image.jpg",
+                              height: 130,
+                              width: 130,
+                              fit: BoxFit.cover,
+                            ),
                     ),
                     Container(
-                      margin: EdgeInsets.fromLTRB(40, 40, 40, 20),
+                      margin: const EdgeInsets.fromLTRB(40, 40, 40, 20),
                       child: Column(
                         children: [
                           Text(
-                              style: TextStyle(
+                              style: const TextStyle(
                                 color: Color(0xff2D4379),
                                 fontFamily: "Poppins",
                                 fontSize: 16,
                               ),
-                              "In publishing and graphic design,\ Lorem ipsum is a placeholder text commonly used to demonstrate the visual form of a document or a typeface without relying on meaningful content. Lorem ipsum may be used as a placeholder before final copy is available. In publishing and graphic design, Lorem ipsum is a placeholder text commonly used to demonstrate the visual form of a document or a typeface without relying on meaningful content. Lorem ipsum may be used as a placeholder before final copy is available")
+                              widget.article.content!)
                         ],
                       ),
                     )
@@ -114,14 +161,14 @@ class ViewBlog extends StatelessWidget {
         width: 111,
         height: 48,
         decoration: BoxDecoration(
-            color: Color(0xff376AED),
+            color: const Color(0xff376AED),
             border: Border.all(
               // width: 2,
-              color: Color(0xff376AED),
+              color: const Color(0xff376AED),
             ),
-            borderRadius: BorderRadius.all(Radius.circular(10))),
+            borderRadius: const BorderRadius.all(Radius.circular(10))),
         //like button icon
-        padding: EdgeInsets.fromLTRB(15, 13, 15, 13),
+        padding: const EdgeInsets.fromLTRB(15, 13, 15, 13),
 
         child: const Row(
           mainAxisAlignment: MainAxisAlignment.center,

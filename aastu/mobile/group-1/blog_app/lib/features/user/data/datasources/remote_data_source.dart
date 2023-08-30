@@ -1,8 +1,12 @@
 import 'dart:convert';
 import 'dart:developer';
+import 'package:blog_app/core/error/failure.dart';
 import 'package:blog_app/features/user/data/datasources/data_source_api.dart';
 import 'package:blog_app/features/user/domain/entities/user.dart';
+import 'package:blog_app/injection.dart';
+import 'package:dartz/dartz.dart';
 import 'package:http/http.dart' as http;
+import 'package:http_parser/http_parser.dart';
 import 'package:shared_preferences/shared_preferences.dart'; // Import SharedPreferences package
 
 class UserApiDataSource implements UserRemoteDataSource {
@@ -75,12 +79,9 @@ class UserApiDataSource implements UserRemoteDataSource {
   }
 
   @override
-  Future<void> updateProfilePhoto(
-      String userId, String imageUrl, String imagePublicId) async {
-    await _fetchData('user/$userId/update-profile-photo', {
-      'imageUrl': imageUrl,
-      'imageCloudinaryPublicId': imagePublicId,
-    });
+  Future<Map<String, dynamic>> updateProfilePhoto(
+      Map<String, dynamic> userData) async {
+    return await _updateUser('user', userData);
   }
 
   Future<String?> fetchAuthToken() async {
@@ -109,6 +110,61 @@ class UserApiDataSource implements UserRemoteDataSource {
         return responseData['data'];
       } else {
         log("error: $responseData");
+        final errorMessage =
+            responseData['message'] as String? ?? 'Unknown error';
+        throw Exception(errorMessage);
+      }
+    } catch (e) {
+      log("error:: $e");
+      throw Exception('An error occurred: $e');
+    }
+  }
+
+  Future<Map<String, dynamic>> _updateUser(
+    String endpoint,
+    Map<String, dynamic> userData,
+  ) async {
+    final sharedPreferences = sl<SharedPreferences>();
+    final token = sharedPreferences.getString('auth_token');
+    log("Base url: $baseUrl/$endpoint");
+    log('Token is ready: $token');
+    final image = userData['image'];
+    log('File is received: $image');
+
+    var headers = {
+      'Authorization': 'Bearer $token',
+      'Content-Type': 'multipart/form-data',
+      'Accept': '*/*',
+      'Accept-Encoding': 'gzip, deflate, br',
+      'Connection': 'keep-alive',
+    };
+
+    final request = http.MultipartRequest(
+      'POST',
+      Uri.parse('$baseUrl/$endpoint'),
+    );
+
+    request.headers.addAll(headers);
+
+    if (image != null) {
+      var ext = image.path.split('.').last;
+
+      request.files.add(await http.MultipartFile.fromPath('photo', image.path,
+          contentType: MediaType('image', ext)));
+      log("File length: ${request.files.length}");
+    }
+
+    try {
+      final streamedResponse = await request.send();
+      final response = await http.Response.fromStream(streamedResponse);
+
+      final responseData = json.decode(response.body);
+      log(responseData.toString());
+      if (response.statusCode == 200 && responseData['success'] == true) {
+        log("fetched: $responseData");
+        return responseData['data'];
+      } else {
+        log("error (user datalayer): $responseData");
         final errorMessage =
             responseData['message'] as String? ?? 'Unknown error';
         throw Exception(errorMessage);

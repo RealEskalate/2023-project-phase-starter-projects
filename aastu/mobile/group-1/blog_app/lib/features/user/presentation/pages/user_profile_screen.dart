@@ -1,5 +1,10 @@
 import 'dart:developer';
+import 'package:blog_app/features/blog/domain/entities/article.dart';
+import 'package:blog_app/features/blog/presentation/blocs/bloc.dart';
+import 'package:blog_app/features/blog/presentation/blocs/bloc_event.dart';
+import 'package:blog_app/features/blog/presentation/blocs/bloc_state.dart';
 import 'package:blog_app/features/user/presentation/blocs/bloc.dart';
+import 'package:blog_app/features/user/presentation/blocs/bloc_state.dart';
 import 'package:blog_app/features/user/presentation/blocs/get_user.dart/user_event.dart';
 import 'package:blog_app/features/user/presentation/blocs/get_user.dart/user_state.dart';
 import 'package:blog_app/features/user/presentation/widgets/about_me.dart';
@@ -28,16 +33,52 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
 
   UserEntity.User user =
       UserEntity.User(fullName: '', email: '', expertise: '', bio: '');
+
+  List<Article> articles = [];
+  bool _isDisposed = false; // Flag to track widget disposal
+
+  @override
+  void dispose() {
+    _isDisposed = true;
+    super.dispose();
+  }
+
   @override
   void initState() {
     super.initState();
+ 
+    // Articles
+    context.read<BlogBloc>().add(const GetAllArticlesEvent());
+    context.read<BlogBloc>().stream.listen((state) {
+      if (!_isDisposed) {
+        if (state is LoadedGetBlogState) {
+          log("Articles are fetched on User Profile Page");
+          setState(() {
+            articles = state.articles;
+          });
+        }
+      }
+    });
+
     // Get User
     context.read<UserBloc>().add(const GetUserEvent());
     context.read<UserBloc>().stream.listen((state) {
-      if (state is LoadedGetUserState) {
-        setState(() {
-          user = state.user;
-        });
+      if (!_isDisposed) {
+        // Check if widget is disposed before using setState
+        if (state is LoadedGetUserState) {
+          setState(() {
+            user = state.user;
+          });
+        } else if (state is UserLoading) {
+          log("Loading on User Profile Page");
+          user = UserEntity.User(
+            id: "123123",
+            fullName: "loading ..",
+            email: "loading ..",
+            expertise: "loading ..",
+            bio: "loading ..",
+          );
+        }
       }
     });
   }
@@ -71,7 +112,7 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                       ..color = const Color.fromARGB(
                           255, 253, 239, 239), // Stroke color (#000000)
                     fontFamily: "Urbanist",
-                    fontWeight: FontWeight.w700,
+                    fontWeight: FontWeight.w400,
                     fontSize: 24,
                   ),
                 ),
@@ -110,7 +151,8 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
             ),
             const SizedBox(height: 20),
             Expanded(
-              child: MyActivity(activity: selectedActivity),
+              child: MyActivity(
+                  activity: selectedActivity, articles: articles, user: user),
             ),
           ],
         ),

@@ -1,6 +1,8 @@
 import 'package:blog_app/features/blog/domain/entities/article.dart';
+import 'package:blog_app/features/blog/presentation/screen/viewBlog.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:skeletons/skeletons.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 
@@ -13,6 +15,22 @@ class CustomizedCard extends StatefulWidget {
 }
 
 class _CustomizedCardState extends State<CustomizedCard> {
+  String fullName = '';
+
+  Future<void> _loadFullNameFromSharedPrefs() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String savedFullName = prefs.getString("fullName") ?? '';
+    setState(() {
+      fullName = savedFullName;
+    });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _loadFullNameFromSharedPrefs(); // Load the value when the widget initializes
+  }
+
   @override
   Widget build(BuildContext context) {
     String tag = "Other"; // If tags are null
@@ -28,10 +46,16 @@ class _CustomizedCardState extends State<CustomizedCard> {
             bottom: 10, left: 10, right: 10), // Adjust the padding as needed
         child: InkWell(
           onTap: () {
-            Navigator.pushNamed(context, '/viewBlog');
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) =>
+                    ViewBlog(article: widget.article, fullName: fullName),
+              ),
+            );
           },
           child: Container(
-            height: 175,
+            height: 190,
             width: double.infinity,
             padding: const EdgeInsets.fromLTRB(15, 5, 15, 5),
             decoration: BoxDecoration(
@@ -64,7 +88,7 @@ class _CustomizedCardState extends State<CustomizedCard> {
                                     key: Key(widget.article.image!),
                                     imageUrl: widget.article.image!,
                                     height: 140,
-                                    width: 130,
+                                    width: 140,
                                     fit: BoxFit.cover,
                                     placeholder: (context, url) => SkeletonItem(
                                       child: Container(
@@ -126,9 +150,10 @@ class _CustomizedCardState extends State<CustomizedCard> {
                         child: Column(
                           children: <Widget>[
                             Text(
-                              "Students should work on improving their writing skill"
-                                  .toUpperCase(),
-                              //widget.article.title!.toUpperCase()  ,
+                              textAlign: TextAlign.left,
+                              // "Students should work on improving their writing skill"
+                              //     .toUpperCase(),
+                              widget.article.title!.toUpperCase(),
 
                               maxLines: 3,
                               style: const TextStyle(

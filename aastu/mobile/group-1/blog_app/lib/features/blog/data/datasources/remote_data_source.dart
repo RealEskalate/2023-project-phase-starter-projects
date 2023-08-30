@@ -1,11 +1,13 @@
 import 'dart:convert';
 import 'dart:developer';
-
-import 'package:blog_app/core/error/failure.dart';
+import 'dart:io';
 import 'package:blog_app/features/blog/data/datasources/data_source_api.dart';
 import 'package:blog_app/features/blog/domain/entities/article.dart';
-import 'package:dartz/dartz.dart';
 import 'package:http/http.dart' as http;
+import 'package:blog_app/injection.dart';
+import 'package:http_parser/http_parser.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:path/path.dart' as path;
 
 class RemoteDataSource implements BlogRemoteDataSource {
   final String baseUrl;
@@ -99,9 +101,10 @@ class RemoteDataSource implements BlogRemoteDataSource {
   }
 
   @override
-  Future<void> postBlog(Map<String, dynamic> blogData) {
-    // TODO: implement postBlog
-    throw UnimplementedError();
+  Future<Map<String, dynamic>> postBlog(Map<String, dynamic> blogData) async {
+    log('Posting blog $blogData');
+    final responseData = await _createData('article', blogData);
+    return responseData;
   }
 
   @override
@@ -123,6 +126,65 @@ class RemoteDataSource implements BlogRemoteDataSource {
       return articles;
     } catch (e) {
       log("Error fetching search articles: $e");
+      throw Exception('An error occurred: $e');
+    }
+  }
+
+  Future<dynamic> _createData(
+    String endpoint,
+    Map<String, dynamic> blogData,
+  ) async {
+    final sharedPreferences = sl<SharedPreferences>();
+    final token = sharedPreferences.getString('auth_token');
+    log("Base url: $baseUrl/$endpoint");
+    log('Token is ready: $token');
+    final image = blogData['image'];
+    log('File is received: $image');
+
+    var headers = {
+      'Authorization': 'Bearer $token',
+      'Content-Type': 'multipart/form-data',
+    };
+
+    final request = http.MultipartRequest(
+      'POST',
+      Uri.parse('$baseUrl/$endpoint'),
+    );
+
+    request.fields.addAll({
+      'title': blogData['title'],
+      'content': blogData['content'],
+      'subTitle': blogData['subTitle'],
+      'tags': blogData['tags'],
+      'estimatedReadTime': '5 min'
+    });
+    request.headers.addAll(headers);
+
+    if (image != null && image is File) {
+      request.files.add(await http.MultipartFile.fromPath('photo', image.path,
+          contentType: MediaType('image', 'jpeg')));
+      log("File length: ${request.files.length}");
+    } else {
+      log("File is null");
+    }
+
+    try {
+      final streamedResponse = await request.send();
+      final response = await http.Response.fromStream(streamedResponse);
+
+      final responseData = json.decode(response.body);
+      log(responseData.toString());
+      if (response.statusCode == 200 && responseData['success'] == true) {
+        log("fetched: $responseData");
+        return responseData['data'];
+      } else {
+        log("error (datalayer): $responseData");
+        final errorMessage =
+            responseData['message'] as String? ?? 'Unknown error';
+        throw Exception(errorMessage);
+      }
+    } catch (e) {
+      log("error (datalayer) $e");
       throw Exception('An error occurred: $e');
     }
   }

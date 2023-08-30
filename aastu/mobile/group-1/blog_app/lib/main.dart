@@ -1,3 +1,5 @@
+import 'package:blog_app/features/blog/domain/entities/article.dart';
+import 'package:blog_app/features/blog/domain/usecases/create_article.dart';
 import 'package:blog_app/features/blog/domain/usecases/get_tags.dart';
 import 'package:blog_app/features/blog/presentation/screen/viewBlog.dart';
 import 'package:blog_app/features/user/presentation/blocs/bloc.dart';
@@ -69,6 +71,7 @@ class MyApp extends StatelessWidget {
                   getAllArticle: sl<GetArticleUseCase>(),
                   getSingleArticle: sl<GetSingleArticleUseCase>(),
                   getTags: sl<GetTagsUseCase>(),
+                  createArticle: sl<CreateArticleUseCase>(),
                 ),
               ),
               // Other BlocProviders if needed
@@ -86,13 +89,10 @@ class MyApp extends StatelessWidget {
                   initialRoute, // Use initialRoute based on 'auth_token'
               routes: {
                 '/splash': (context) => const Splash(),
-                '/home': (context) => const Home(
-                      userId: '64e839adac244566c7725f35',
-                    ),
+                '/home': (context) => const Home(),
                 '/profile': (context) => const UserProfileScreen(),
                 '/login': (context) => const Login(),
                 '/addBlog': (context) => const AddBlog(),
-                '/viewBlog': (context) => const ViewBlog(),
 
                 // Define routes here
               },

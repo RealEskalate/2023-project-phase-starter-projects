@@ -1,11 +1,13 @@
+import 'package:blog_app/core/error/failure.dart';
 import 'package:blog_app/features/user/domain/entities/user.dart';
+import 'package:dartz/dartz.dart';
 
 abstract class UserRemoteDataSource {
   Future<void> registerUser(Map<String, dynamic> userData);
   Future<Map<String, dynamic>> loginUser(Map<String, dynamic> loginData);
   Future<User> getUser();
-  Future<void> updateProfilePhoto(
-      String userId, String imageUrl, String imagePublicId);
+  Future<Map<String, dynamic>> updateProfilePhoto(
+      Map<String, dynamic> userData);
 }
 
 abstract class UserLocalDataSource {

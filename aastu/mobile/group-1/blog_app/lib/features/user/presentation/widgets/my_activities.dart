@@ -1,13 +1,24 @@
+import 'dart:developer';
+
+import 'package:blog_app/features/blog/domain/entities/article.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:blog_app/features/user/domain/entities/user.dart' as UserEntity;
+
 // import 'package:profile/widgets/my_post.dart';
 
 import 'my_post.dart';
 
 class MyActivity extends StatefulWidget {
   final String activity;
+  final UserEntity.User user;
+  final List<Article> articles;
 
-  MyActivity({required this.activity});
+  const MyActivity(
+      {super.key,
+      required this.activity,
+      required this.articles,
+      required this.user});
 
   @override
   State<MyActivity> createState() => _MyActivityState();
@@ -15,14 +26,20 @@ class MyActivity extends StatefulWidget {
 
 class _MyActivityState extends State<MyActivity> {
   bool showGridView = false;
+  List<Article> filteredArticles = [];
 
-// Widget generateMetricWidget(bool gridView) {
   @override
   Widget build(BuildContext context) {
+    String userIdToFilter = widget.user.id ?? "123";
+    log("User ID to filter: $userIdToFilter");
+    filteredArticles = widget.articles
+        .where((article) => article.user?.id == userIdToFilter)
+        .toList();
+
     Map<String, Widget> metricData = {
-      'Posts': blogListView(showGridView),
-      'Following': Text('Following'),
-      'Follower': Text('Follower'),
+      'Posts': blogListView(showGridView, widget.articles, widget.articles),
+      'Following': const Text('Following'),
+      'Follower': const Text('Follower'),
       // ... More key-value pairs
     };
 
@@ -56,7 +73,7 @@ class _MyActivityState extends State<MyActivity> {
               const SizedBox(width: 20),
               Text(
                 widget.activity,
-                style: TextStyle(
+                style: const TextStyle(
                   color: Color(0xFF1A1A1A),
                   fontWeight: FontWeight.w400,
                   fontFamily: 'Urbanist',
@@ -75,8 +92,9 @@ class _MyActivityState extends State<MyActivity> {
                     Icon(Icons.grid_view,
                         size: 34,
                         color: showGridView
-                            ? Color.fromARGB(255, 95, 55, 252)
-                            : Color.fromARGB(255, 96, 96, 96)), // Stroke icon
+                            ? const Color.fromARGB(255, 95, 55, 252)
+                            : const Color.fromARGB(
+                                255, 96, 96, 96)), // Stroke icon
                     // FaIcon(FontAwesomeIcons.gripHorizontal,
                     //     size: 32,
                     //     color: const Color.fromARGB(
@@ -95,8 +113,8 @@ class _MyActivityState extends State<MyActivity> {
                     icon: Icon(
                       Icons.menu,
                       color: showGridView
-                          ? Color.fromARGB(255, 96, 96, 96)
-                          : Color.fromARGB(255, 95, 55, 252),
+                          ? const Color.fromARGB(255, 96, 96, 96)
+                          : const Color.fromARGB(255, 95, 55, 252),
                       size: 30,
                     )),
               ),

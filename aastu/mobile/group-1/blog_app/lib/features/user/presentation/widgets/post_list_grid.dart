@@ -1,52 +1,14 @@
 import 'package:blog_app/core/utils/human_readable_time.dart';
+import 'package:blog_app/features/blog/domain/entities/article.dart';
+import 'package:blog_app/features/blog/presentation/screen/editBlog.dart';
 import 'package:blog_app/features/blog/presentation/screen/viewBlog.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import '../widgets/like_button.dart';
 
-class Blog {
-  final String image;
-  final String title;
-  final String subtitle;
-  final String date;
-  final String category;
-  final int likes;
-
-  Blog(
-      {required this.category,
-      required this.image,
-      required this.title,
-      required this.subtitle,
-      required this.date,
-      required this.likes});
-}
-
-List<Blog> grid_blogs = [
-  Blog(
-      image: 'assets/images/bigdata.png',
-      title: 'Blog Title 1',
-      subtitle: 'Subtitle 1',
-      date: '2023-08-01',
-      category: 'Big Data',
-      likes: 200),
-  Blog(
-      image: 'assets/images/bif.jpg',
-      title: 'Blog Title 2',
-      subtitle: 'Subtitle 2',
-      date: '2023-08-02',
-      category: 'Scocial',
-      likes: 100),
-  Blog(
-      image: 'assets/images/images.jpg',
-      title: 'Blog Title 3',
-      subtitle: 'Subtitle 3',
-      date: '2023-08-03',
-      category: 'Data science',
-      likes: 300),
-];
-
 class BlogGridCards extends StatelessWidget {
-  final Blog object;
+  final Article object;
   final int index;
 
   const BlogGridCards({
@@ -65,13 +27,25 @@ class BlogGridCards extends StatelessWidget {
         Navigator.push(
           context,
           MaterialPageRoute(
-            builder: (context) => ViewBlog(),
+            builder: (context) => EditBlog(
+              article: object,
+            ),
           ),
         );
       },
       child: Container(
         height: 210,
-        color: Color(0xFFF8FAFF),
+        decoration: BoxDecoration(
+          color: Colors.white, // Set the background color
+          borderRadius: BorderRadius.circular(10), // Set the border radius
+          boxShadow: const [
+            BoxShadow(
+              color: Color.fromRGBO(149, 157, 165, 0.2),
+              blurRadius: 24,
+              offset: Offset(0, 8),
+            ),
+          ],
+        ),
         padding: const EdgeInsets.fromLTRB(20, 5, 20, 5),
         margin: const EdgeInsets.all(5),
         child: Center(
@@ -85,8 +59,8 @@ class BlogGridCards extends StatelessWidget {
                     borderRadius: BorderRadius.circular(8),
                   ),
                   clipBehavior: Clip.antiAliasWithSaveLayer,
-                  child: Image.asset(
-                    object.image,
+                  child: CachedNetworkImage(
+                    imageUrl: object.image!,
                     height: screenHeight * 0.14,
                     width: screenWidth * 0.25,
                     fit: BoxFit.cover,
@@ -99,8 +73,8 @@ class BlogGridCards extends StatelessWidget {
                       CrossAxisAlignment.center, // Align text to the left
                   children: <Widget>[
                     Text(
-                      object.category,
-                      maxLines: 3,
+                      object.title!,
+                      maxLines: 1,
                       style: const TextStyle(
                         color: Color.fromARGB(255, 70, 66, 66),
                         fontWeight: FontWeight.w200,
@@ -111,7 +85,7 @@ class BlogGridCards extends StatelessWidget {
                     Row(
                       children: <Widget>[
                         LikeButton(
-                          initialLikes: object.likes,
+                          initialLikes: 4,
                           onLikeChanged: (isLiked, likes) {
                             print('Is Liked: $isLiked,K: $likes');
                           },
@@ -131,8 +105,7 @@ class BlogGridCards extends StatelessWidget {
                         Padding(
                           padding: const EdgeInsets.only(left: 8.0),
                           child: Text(
-                            formatDateTimeDifference(
-                                DateTime.parse(object.date)),
+                            "jan 1, 2021",
                             style: TextStyle(
                               color: Colors.grey[400],
                               fontSize: 12,

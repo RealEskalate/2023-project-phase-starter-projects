@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:blog_app/core/utils/is_email_valid.dart';
 import 'package:blog_app/features/onboarding/widgets/loading_widget.dart';
 import 'package:blog_app/features/user/domain/usecases/get_user.dart';
@@ -11,6 +13,7 @@ import 'package:blog_app/features/user/presentation/blocs/login/login_state.dart
 import 'package:blog_app/injection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class LoginWidget extends StatefulWidget {
   const LoginWidget({Key? key}) : super(key: key);
@@ -42,12 +45,16 @@ class _LoginWidgetState extends State<LoginWidget> {
         updateProfilePhoto: sl<UpdateProfilePhotoUseCase>(),
       ),
       child: BlocConsumer<UserBloc, UserState>(
-        listener: (context, state) {
+        listener: (context, state) async {
           if (state is LoadedUserState) {
             setState(() {
               _isLoading = false;
             });
-            Navigator.pushNamed(context, '/home', arguments: state.user.id);
+            // Store name in SharedPreferences
+            final prefs = await SharedPreferences.getInstance();
+            prefs.setString('fullName', state.user.fullName!);
+
+            Navigator.pushNamed(context, '/home');
           }
           // loading state
           else if (state is UserLoading) {
