@@ -35,7 +35,6 @@ public class FollowUserCommandHandler : IRequestHandler<FollowUserCommandRequest
 
         await _unitOfWork.SaveAsync();
 
-
         return CommonResponse<int> { Success = true, Error = "" };
 
     }

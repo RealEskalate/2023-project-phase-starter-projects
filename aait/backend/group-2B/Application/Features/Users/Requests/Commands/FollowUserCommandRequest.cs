@@ -3,7 +3,7 @@ using Application.DTOs.Common;
 using MediatR;
 using SocialSync.Application.Common.Responses;
 
-namespace Application.Features.Users.Requests.Commands
+namespace Application.Features.Users.Requests.Commands;
 
     public class FollowUserCommandRequest : IRequest<CommonResponse<int>>
 {

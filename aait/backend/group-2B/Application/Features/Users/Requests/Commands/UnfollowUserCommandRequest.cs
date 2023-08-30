@@ -7,7 +7,7 @@ namespace Application.Features.Users.Requests.Commands;
 
     public class UnFollowUserCommandRequest : IRequest<CommonResponse<int>>
 {
-    public required FollowUnFollowDto UnfollowunFollowDto { get; set; }
+    public required FollowUnFollowDto UnfollowDto { get; set; }
 
 
 }

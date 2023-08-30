@@ -7,7 +7,7 @@ using SocialSync.Application.Common.Responses;
 
 namespace Application.Features.Users.Handlers.Commands;
 
-public class UserUpdateCommandHandler : IRequestHandler<UserUpdateCommand, CommonResponse<int>>
+public class UserUpdateCommandHandler : IRequestHandler<UserUpdateCommandRequest, CommonResponse<int>>
 {
     private readonly IUnitOfWork _unitOfWork;
     private readonly AutoMapper.IMapper _mapper;
@@ -18,7 +18,7 @@ public class UserUpdateCommandHandler : IRequestHandler<UserUpdateCommand, Commo
         _mapper = mapper;
     }
 
-    public async Task<CommonResponse<int>> Handle(UserUpdateCommand request, CancellationToken cancellationToken)
+    public async Task<CommonResponse<int>> Handle(UserUpdateCommandRequest request, CancellationToken cancellationToken)
     {
         var validator = new UserDtoValidator();
         var validationResult = await validator.ValidateAsync(request.Userdto);

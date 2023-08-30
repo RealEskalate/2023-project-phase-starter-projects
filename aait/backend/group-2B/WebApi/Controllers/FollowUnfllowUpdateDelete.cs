@@ -3,6 +3,9 @@ using Microsoft.AspNetCore.Mvc;
 using Application.DTOs.Common;
 using Applicatin.Features.Users.Handlers.Commands;
 using Applicatin.Features.Users.Requests.Commands;
+using Applicatin.Features.Users.Requests.Queries;
+using Applicatin.Features.Users.Handlers.Quaries;
+
 using Application.DTOs.Users;
 
 namespace WebApi.Controllers;
@@ -19,16 +22,16 @@ public class FollowUnfllowUpdateDelete : ControllerBase
     {
         _mediator = mediator;
     }
-    [HttpGet("{id}")]
-    public async Task<ActionResult> GetUser(){
-        var user = new GetUserQuerieRequestHanler();
+    [HttpGet("users")]
+    public async Task<ActionResult> GetAllUser(){
+        var user = new GetAllUserQuerieRequestHanler();
         var response = await _mediator.Send(user);
         return Ok(response);
     }
-    [HttpGet("getusers")]
-    public async Task<ActionResult> GetAllUsers(int id)
+    [HttpGet("user/{id}")]
+    public async Task<ActionResult> GetUsers(int id)
     {
-        var user = new GetAllUserQuerieRequestHanler{Id = id};
+        var user = new GetUserQuerieRequestHanler{Id = id};
         var response = await _mediator.Send(user);
         return Ok(response);
     }

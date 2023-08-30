@@ -21,7 +21,7 @@ public class UnFollowUserCommandHandler : IRequestHandler<UnFollowUserCommandReq
     public async Task<CommonResponse<int>> Handle(UnFollowUserCommandRequest request, CancellationToken cancellationToken)
     {
         var validator = new UnFollowDtoValidator(_unitOfWork);
-        var validationResult = await validator.ValidateAsync(request.UnfollowunFollowDto);
+        var validationResult = await validator.ValidateAsync(request.UnfollowfollowDto);
 
         if (!validationResult.IsValid)
         {
@@ -29,7 +29,7 @@ public class UnFollowUserCommandHandler : IRequestHandler<UnFollowUserCommandReq
             return CommonResponse<int>.Failure("unfollow failed");
         }
 
-        await _unitOfWork.UserRepository.UnFOllowUser(request.UnfollowunFollowDto.FollwerId, request.UnfollowunFollowDto.FollowedId);
+        await _unitOfWork.UserRepository.UnfollowUser(request.UnfollowDto.FollwerId, request.UnfollowDto.FollowedId);
 
         await _unitOfWork.SaveAsync();
 
