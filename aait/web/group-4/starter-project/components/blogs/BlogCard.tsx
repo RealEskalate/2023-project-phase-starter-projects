@@ -19,7 +19,7 @@ const BlogCard: React.FC<BlogProps> = ({blog}) => {
                     {
                         blog.author?(
                             <>
-                                <Image className="w-[50px] h-[50px] rounded-full" width={50} height={50} src={blog.author.image} alt={"a2sv logo"} />
+                                <Image className="w-[50px] h-[50px] rounded-full" width={500} height={500} src={blog.author.image} alt={"a2sv logo"} />
                                 <div>
                                     <span className="text-[16px] font-bold">{blog.author.name}</span> &#x2022; <span className="text-gray-600">Apr 16, 2022</span>
                                     <p className="font-bold text-gray-500">{blog.author.role}</p>
@@ -45,7 +45,7 @@ const BlogCard: React.FC<BlogProps> = ({blog}) => {
                             {blog.description}
                         </p>
                     </div>
-                    <Image className="w-3/4 self-center rounded-lg" width={50} height={50} src={blog.image} alt={"blog image"} />
+                    <Image className="w-3/4 self-center rounded-lg" width={500} height={500} src={blog.image} alt={"blog image"} />
                 </div>
                 <div className="flex gap-2">
                     {

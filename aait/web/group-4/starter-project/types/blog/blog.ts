@@ -2,7 +2,7 @@ import Author from "./author";
 
 export default interface Blog {
     _id: string;
-    image: File | null;
+    image: string;
     title: string;
     description: string;
     author: Author;
