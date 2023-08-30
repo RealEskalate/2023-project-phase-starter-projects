@@ -1,5 +1,4 @@
 import { Blog } from "@/types/Blog";
-import { Profile } from "@/types/Profile";
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
 export const blogsApi = createApi({
