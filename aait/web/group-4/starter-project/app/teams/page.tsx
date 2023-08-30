@@ -5,31 +5,20 @@ import Image from 'next/image'
 
 import MemberCard from "@/components/teams/MemberCard";
 import {useGetMembersQuery} from "@/store/features/blog/blog-api";
+import Loading from "@/components/common/Loading";
 
 
 export default function Teams(){
 
     const [page, setPage] = useState(1)
-    const {data: members, error, isLoading} = useGetMembersQuery()
+    const {data: members, isLoading} = useGetMembersQuery()
 
     const goToPage = (pageNumber: number) => {
         setPage(pageNumber);
-        ScrollButton();
     };
 
-    const ScrollButton = () => {
-        const scrollToContent = () => {
-            const targetContentElement = document.getElementById('targetContent');
-
-            if (targetContentElement) {
-                const targetPosition = targetContentElement.getBoundingClientRect().top + window.scrollY;
-
-                window.scrollTo({
-                    top: targetPosition,
-                    behavior: 'smooth',
-                });
-            }
-        };
+    if(isLoading){
+        return <Loading/>
     }
 
 

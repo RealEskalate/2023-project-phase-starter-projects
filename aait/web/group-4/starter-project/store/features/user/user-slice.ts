@@ -1,9 +1,11 @@
 import User from "@/types/user/user";
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 
-const initialState: {user: User | null, message: string} = {
+const initialState: {user: User | null, message: {content: string}} = {
     user: null,
-    message: ""
+    message: {
+        content: ""
+    }
 }
 
 export const userSlice = createSlice({
@@ -13,13 +15,14 @@ export const userSlice = createSlice({
 
         setUser: (state, action: PayloadAction<User>) => {
             state.user = action.payload
+            
         },
 
         logout: (state) => {
             state.user = null
         },
         setMessage: (state, action: PayloadAction<string>) => {
-            state.message = action.payload;
+            state.message.content = action.payload;
         }
     }
 })

@@ -7,7 +7,7 @@ export const blogsApi = createApi({
     reducerPath: "blogsApi",
     baseQuery: fetchBaseQuery({baseUrl: "https://a2sv-backend.onrender.com/api",
     prepareHeaders: (headers, { getState }) => {
-        const token = (getState() as RootState).user.user.token;
+        const token = (getState() as RootState).user.user?.token;
         if (token) {
           headers.set("Authorization", `Bearer ${token}`);
         }

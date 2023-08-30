@@ -32,12 +32,7 @@ export const auhtApi = createApi({
                     body: data,
                 };
             },
-            invalidatesTags: ["auth"],
-            async onQueryStarted(arg, { dispatch, queryFulfilled }) {
-                const { data: user } = await queryFulfilled
-                dispatch(setMessage("Logged in Successfully!"))
-                dispatch(setUser(user))
-            }
+            invalidatesTags: ["auth"]
         })
     }),
 })

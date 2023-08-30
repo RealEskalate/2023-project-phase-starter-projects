@@ -13,9 +13,9 @@ const Blogs = () => {
           <h2 className=" text-slate-gray text-lg font-semibold md:text-2xl">
             Manage {data[1].manageText}
           </h2>
-          <button className=" hidden px-10 py-2 text-white mb-1 rounded-lg bg-primary-color md:block">
+          <Link className=" hidden px-10 py-2 text-white mb-1 rounded-lg bg-primary-color md:block" href="/add-blog">
               New blog
-            </button>
+            </Link>
         </div>
         <p className="text-medium-gray text-sm md:text-xl">
           {data[1].manageDetail}

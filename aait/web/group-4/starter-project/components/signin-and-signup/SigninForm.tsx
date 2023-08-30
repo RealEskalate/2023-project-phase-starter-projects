@@ -2,11 +2,11 @@
 
 import { ChangeEvent, useState } from "react";
 import { useRouter } from "next/navigation";
-import { useDispatch, useSelector } from "react-redux";
+import { shallowEqual, useDispatch, useSelector } from "react-redux";
 
 import { useLoginMutation } from "@/store/features/auth";
 import TextField from "./TextField";
-import { setUser } from "@/store/features/user/user-slice";
+import { setMessage, setUser } from "@/store/features/user/user-slice";
 import { AppDispatch, RootState } from "@/store";
 import { toast } from "react-toastify";
 import { AiOutlineLoading3Quarters } from "react-icons/ai";
@@ -20,13 +20,17 @@ const SignInForm = () => {
   const router = useRouter();
   const [loginUser, loginResult] = useLoginMutation();
   const [formData, setFormData] = useState<{
+    
     email: string;
     password: string;
   }>({
     email: "",
     password: "",
   });
-  const message = useSelector((state: RootState) => state.user.message);
+
+  const user = useSelector((state: RootState) => state.user.message, shallowEqual);
+  console.log("message gg", user.content);
+  
   const dispatch = useDispatch<AppDispatch>();
 
   const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
@@ -38,17 +42,19 @@ const SignInForm = () => {
   };
 
   const handleSignin = () => {
-    loginUser(formData);
+    loginUser(formData).unwrap().then((data) => {
+      console.log("WORKING ...")
+      dispatch(setMessage("Logged in Successfully!"))
+      dispatch(setUser(data));
 
-    if (loginResult.isSuccess) {
-      const result = loginResult.data;
-      dispatch(setUser(result));
-
-      toast(message, {
-        type: "success",
-      });
+      // console.log(user?.message)
+      // toast(user?.message, {
+      //   type: "success",
+      // });
       router.push("/profile");
-    } else if (loginResult.isError) {
+    })
+
+   if (loginResult.isError) {
       toast("Error during Login", {
         type: "error",
       });
@@ -57,7 +63,7 @@ const SignInForm = () => {
 
   return (
     <div
-      className={` flex flex-col text-left gap-6 bg-white text-gray-500 font-login border-0 rounded-lg md:px-14 px-10 pt-10 pb-10 w-full`}
+      className={`${loginResult.isLoading && "blur"} flex flex-col text-left gap-6 bg-white text-gray-500 font-login border-0 rounded-lg md:px-14 px-10 pt-10 pb-10 w-full`}
     >
       {loginResult.isLoading && (
         <div className="absolute top-1/2 left-1/2 flex justify-center items-center">
@@ -85,7 +91,7 @@ const SignInForm = () => {
         className="mt-8 rounded-lg border-0 p-4 bg-primary-color  text-white"
         onClick={handleSignin}
       >
-        Sign up
+        Sign in
       </button>
     </div>
   );

@@ -2,11 +2,12 @@
 
 import { useState } from "react";
 import { AiOutlineCloudUpload } from "react-icons/ai";
-import { data } from "@/data/manage-section-data.json";
+import manageData from "@/data/manage-section-data.json";
 import { useEditProfileMutation } from "@/store/features/user/user-api";
 import { toast } from "react-toastify";
 import { useSelector } from "react-redux";
 import { RootState } from "@/store";
+import Loading from "../common/Loading";
 
 const PersonalInfoForm = () => {
   const initFile = new File([], "", {});
@@ -15,7 +16,7 @@ const PersonalInfoForm = () => {
   const [secondName, setSecondName] = useState("");
   const [email, setEmail] = useState("");
 
-  const [editProfile, {isSuccess, isError}] = useEditProfileMutation();
+  const [editProfile, {isSuccess, isLoading, isError}] = useEditProfileMutation();
   const isValid = Boolean(firstName) && Boolean(secondName) && Boolean(email) && Boolean(selectedFile)
 
   const uploadHandler = (files: FileList | null) => {
@@ -28,8 +29,9 @@ const PersonalInfoForm = () => {
       name: firstName + " " + secondName,
       image: selectedFile
     });
-
-    toast(useSelector((state: RootState) => state.user.message));
+    console.log(isError,isSuccess);
+    
+    // toast(useSelector((state: RootState) => state.user.message));
 
   };
 
@@ -39,20 +41,21 @@ const PersonalInfoForm = () => {
       <div className="flex flex-col items-center md:items-stretch space-y-4 py-8 border-b md:py-12 md:space-y-2">
         <div className="flex justify-between">
           <h2 className=" text-slate-gray text-lg font-semibold md:text-2xl">
-            Manage {data[0].manageText}
+            Manage {manageData.data[0].manageText}
           </h2>
           <button disabled={!isValid} className="hidden px-8 py-4 text-xs text-white font-semibold rounded-lg bg-primary-color disabled:bg-gray-400 md:text-sm md:block">
             Save Changes
           </button>
         </div>
         <p className="text-medium-gray text-sm md:text-xl">
-          {data[0].manageDetail}
+          {manageData.data[0].manageDetail}
         </p>
           <button onClick={() => onSubmitHandler()} disabled={!isValid} className="px-5 py-4 text-xs text-white font-semibold rounded-lg disabled:bg-gray-400 bg-primary-color md:hidden">
             Save Changes
           </button>
       </div>
       <form className="flex flex-col justify-center ">
+        {isLoading && <Loading/>}
         <div className="flex flex-col py-8 gap-2 items-center justify-between lg:w-1/2 md:py-12 md:flex-row">
           <p className="font-semibold">
             Name<span className="text-red-500">*</span>

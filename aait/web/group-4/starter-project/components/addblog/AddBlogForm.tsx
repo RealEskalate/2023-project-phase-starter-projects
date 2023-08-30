@@ -3,10 +3,8 @@ import React, {useState} from 'react';
 import { MultiValue } from 'react-select';
 import SelectBlogTag, { TagOption } from './SelectBlogTag';
 import TextEditor from "./TextEditor";
-import { useAddBlogMutation } from "@/store/blog/blogsApi";
+import { useAddBlogMutation } from "@/store/features/blog/blog-api";
 import { nanoid } from "nanoid";
-import { useSelector } from "react-redux"
-import { getJSDocTemplateTag } from "typescript";
 
 
 interface FileInputProps {
@@ -61,11 +59,12 @@ const BlogForm: React.FC = () => {
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
    addBlog({
-      id: nanoid(),
+
+      _id: nanoid(),
       title:title,
-      content:content,
-      blogImage:selectedFile,
-      tags: selectedTags.map(tag => tag.value),
+      description:content,
+      image:selectedFile,
+      tags: selectedTags.map((tag: any) => tag.value),
     });
      
     setTitle("");
