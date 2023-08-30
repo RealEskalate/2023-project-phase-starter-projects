@@ -23,7 +23,6 @@ export default function ProfileLayout({
       <div className={ `flex justify-between items-center text-md border-b ${ pathname === '/profile/my-blogs' ? 'pb-2' : 'pb-4' }` }>
         <div className='flex space-x-10 text-[12px] text-[#494949] font-semibold'>
           {
-            // links.map(link => <h3 className={ pathname === linkPathname.get(link) && `border-b-2 border-[#264FAD] -mb-5` } >{ link }</h3>)
             links.map(link => (
               <Link
                 href={ linkPathname.get(link) as string }
