@@ -1,17 +1,17 @@
 "use client";
 import Toast from "@/components/toast-Messages/toast-message";
 import { usePasswordResetMutation } from "@/store/features/auth";
-import { authTypes } from "@/types/auth/authTypes";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 import React, { useState } from "react";
 
 const AccountSetting = () => {
+  const router = useRouter();
   const [currentPassword, setcurrentPassword] = useState("");
   const [newPassword, setnewPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [errorMessage, seterrorMessage] = useState("");
   const [showToast, setshowToast] = useState(false);
-
 
   const [passwordReset, { isLoading, isError, data }] =
     usePasswordResetMutation();
@@ -25,10 +25,8 @@ const AccountSetting = () => {
       .unwrap()
       .then((response) => {
         // show success message via toast
-        setshowToast(true)
-        setTimeout(() => {
-          window.location.href = "/";
-        }, 3000);
+        setshowToast(true);
+        router.push("/");
       })
       .catch((err) => {
         // seterrorMessage(err.data.message);

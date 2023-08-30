@@ -1,12 +1,16 @@
 "use client";
+import Toast from "@/components/toast-Messages/toast-message";
 import { useRegisterMutation } from "@/store/features/auth";
+import { useRouter } from "next/navigation";
 import React, { useState } from "react";
 
 const Register: React.FC = () => {
+  const router = useRouter();
   const [name, setName] = useState("");
   const [email, setemail] = useState("");
   const [password, setpassword] = useState("");
   const [errorMessage, seterrorMessage] = useState("");
+  const [isLoggedIN, setisLoggedIN] = useState(false);
 
   const [register, { isLoading, isError, data }] = useRegisterMutation();
 
@@ -16,7 +20,8 @@ const Register: React.FC = () => {
       .unwrap()
       .then((response) => {
         localStorage.setItem("user", JSON.stringify(response));
-        window.location.href = "/login";
+        router.push("/login");
+        setisLoggedIN(true);
       })
       .catch((err) => {
         // seterrorMessage(err.message.data);
@@ -30,6 +35,10 @@ const Register: React.FC = () => {
   }
   return (
     <>
+      {isLoggedIN && (
+        <Toast message="Congratulations, Successfully registed, login here" />
+      )}
+
       <div className="flex flex-col items-center justify-center py-5 w-8/12 my-10 mx-auto rounded-lg font-Montserrat bg-gray-100">
         <div className=" p-8 rounded">
           <h2 className="text-2xl text-nav_text_color font-bold mb-4">

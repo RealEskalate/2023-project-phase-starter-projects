@@ -3,10 +3,11 @@ import Toast from "@/components/toast-Messages/toast-message";
 import { useUpdateProfileMutation } from "@/store/update-personal-information";
 import { authTypes } from "@/types/auth/authTypes";
 import Image from "next/image";
-import Link from "next/link";
+import { useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
 
 const PersonalInformation = () => {
+  const router = useRouter();
   const [updateProfile, { isError, isLoading }] = useUpdateProfileMutation();
 
   const [name, setName] = useState("");
@@ -22,8 +23,8 @@ const PersonalInformation = () => {
     const user: authTypes | null = userString ? JSON.parse(userString) : null;
     if (user) {
       const [firstName, lastName] = user.userName.split(" ");
-      setName(firstName);
-      setFatherName(lastName);
+      setName(firstName || "");
+      setFatherName(lastName || "");
       setemail(user.userEmail);
     }
 
@@ -33,12 +34,6 @@ const PersonalInformation = () => {
       : null;
     setPrevImageLink(updated_user?.image || "");
   }, []);
-
-  if (preveImageLink) {
-    console.log("the link is");
-
-    console.log(preveImageLink);
-  }
 
   const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target.files) {
@@ -76,10 +71,9 @@ const PersonalInformation = () => {
         setIssuccessfull(true);
         localStorage.setItem(
           "updated-user",
-          JSON.stringify(response.data.body) );
-        setTimeout(() => {
-          window.location.href = "/";
-        }, 3000);
+          JSON.stringify(response.data.body)
+        );
+        router.push("/");
       } else {
         handleDeleteImage();
         setImage(null);

@@ -1,21 +1,26 @@
 "use client";
 import { useLoginMutation } from "@/store/features/auth";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
+import Toast from "@/components/toast-Messages/toast-message";
+import { useRouter } from "next/navigation";
 
 const LogIn: React.FC = () => {
+  const router = useRouter();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [errorMessage, seterrorMessage] = useState("");
+  const [isLoggedIN, setisLoggedIN] = useState(false);
 
   const [login, { isLoading, isError, data }] = useLoginMutation();
 
   const handleLogin = (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault(); 
+    event.preventDefault();
     login({ email, password })
       .unwrap()
       .then((response: any) => {
         localStorage.setItem("user", JSON.stringify(response));
-        window.location.href = "/";
+        setisLoggedIN(true)
+        router.push("/");
       })
       .catch((err) => {
         seterrorMessage(err.data.message);
@@ -24,6 +29,7 @@ const LogIn: React.FC = () => {
 
   return (
     <>
+      {isLoggedIN && <Toast message="Successfully logged in" />}
       <div className="flex flex-col items-center justify-center py-10 w-8/12 mx-auto rounded-lg my-10 font-Montserrat bg-gray-100">
         <div className=" p-8 rounded">
           <h2 className="text-2xl font-bold text-nav_text_color mb-4">Login</h2>
