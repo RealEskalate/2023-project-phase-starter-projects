@@ -89,7 +89,7 @@ class _GenerateIconState extends State<GenerateIcon> {
 
 Future<String> textGenerator(String prompt) async {
   log("started gen");
-  String apiKey = "AIzaSyAzaztq3pFR0M0FWEyMvQzcEXWQYpHE2B0",
+  String apiKey = "",
       googleUrl =
           "https://generativelanguage.googleapis.com/v1beta2/models/text-bison-001:generateText?key=$apiKey";
   try {
