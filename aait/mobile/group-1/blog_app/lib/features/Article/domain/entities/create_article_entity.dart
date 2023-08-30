@@ -9,7 +9,7 @@ class CreateArticleEntity {
 
   CreateArticleEntity(
       {this.id,
-      required this.title,
+        required this.title,
       required this.subTitle,
       required this.tags,
       required this.content,

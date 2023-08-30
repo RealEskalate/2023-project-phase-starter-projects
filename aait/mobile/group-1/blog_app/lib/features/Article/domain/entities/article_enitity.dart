@@ -1,10 +1,8 @@
-import 'package:blog_app/features/user_profile/domain/entities/user_entity.dart';
-
 class Article {
   final String id;
   final String title;
   final String subTitle;
-  final User? user;
+  final String? user;
   final List<String> tags;
   final String content;
   final String image;

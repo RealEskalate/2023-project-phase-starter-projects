@@ -51,7 +51,7 @@ class _CreateBlogPageState extends State<CreateBlogPage> {
     return Scaffold(
       body: BlocBuilder<ProfileBloc, ProfileState>(
         builder: (context, state) {
-          if ((state is! Loaded)) {
+          if ((state is Loaded)) {
             return SafeArea(
               child: Container(
                 padding: const EdgeInsets.all(25),
@@ -199,8 +199,8 @@ class _CreateBlogPageState extends State<CreateBlogPage> {
                           ElevatedButton(
                             onPressed: () async {
                               final formValid =
-                                  formKey.currentState!.validate();
-                              if (!formValid) {
+                                  formKey.currentState?.validate();
+                              if (formValid != null && !formValid) {
                                 return;
                               }
                             },
