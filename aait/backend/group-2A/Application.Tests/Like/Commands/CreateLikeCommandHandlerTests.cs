@@ -53,6 +53,7 @@ namespace Application.Tests.Like.Commands
 
             result.ShouldNotBeNull();
             result.ShouldBeOfType<BaseCommandResponse<Unit>>();
+            result.Errors.ShouldBeNull();
             result.Success.ShouldBeTrue();
         }
 

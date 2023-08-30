@@ -36,6 +36,12 @@ namespace Application.Tests.Mocks
             mockRepository.Setup(repo => repo.Unfollow(It.IsAny<Domain.Entities.Follow>()))
                           .Returns(Task.CompletedTask);
 
+            mockRepository.Setup(repo => repo.FollowRelationshipExists(It.IsAny<int>(), It.IsAny<int>()))
+              .ReturnsAsync((int followerId, int followedId) =>
+              {
+                  return mockFollows.Any(f => f.FollowerId == followerId && f.FollowedId == followedId);
+              });
+
             return mockRepository;
         }
 

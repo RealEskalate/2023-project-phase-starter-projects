@@ -53,6 +53,7 @@ namespace Application.Tests.Follow.Commands
 
             result.ShouldNotBeNull();
             result.ShouldBeOfType<BaseCommandResponse<Unit>>();
+            result.Errors.ShouldBeNull();
             result.Success.ShouldBeTrue();
             result.Value.ShouldBe(Unit.Value);
         }

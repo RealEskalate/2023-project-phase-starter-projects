@@ -37,4 +37,10 @@ public class FollowRepository : IFollowRepository
             .ToListAsync();
         return following;
     }
+
+    public async Task<bool> FollowRelationshipExists(int followerId, int followedId)
+    {
+        return await _dbContext.Follows
+            .AnyAsync(f => f.FollowerId == followerId && f.FollowedId == followedId);
+    }
 }
