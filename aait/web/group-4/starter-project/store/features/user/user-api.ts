@@ -11,7 +11,7 @@ export const userApi = createApi({
     baseQuery: fetchBaseQuery({ baseUrl: BASE_URL,
     prepareHeaders: (headers, {getState}) => {
         const state = getState() as RootState;
-        headers.set("Authorization", `Bearer ${state.user.user.token}`)
+        headers.set("Authorization", `Bearer ${state.user.user?.token}`)
         return headers
     } }),
     tagTypes: ["user"],
@@ -33,7 +33,7 @@ export const userApi = createApi({
                 dispatch(setMessage(message));
 
                 dispatch(setUser({
-                    token: state.user.user.token,
+                    token: state.user.user? state.user.user.token : "",
                     user: body._id,
                     userEmail: body.email,
                     userName: body.name,

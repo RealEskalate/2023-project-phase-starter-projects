@@ -4,24 +4,52 @@ import { usePathname } from "next/navigation";
 import { useState } from "react";
 import Image from "next/image";
 import NavMenu from "./NavMenu";
+import {MdAccountCircle} from "react-icons/md";
 import Link from "next/link";
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "@/store";
+import { logout} from "@/store/features/user/user-slice";
 
 export default function Navbar() {
   const [nav, setNav] = useState(false);
 
   const pathname = usePathname();
+  const user = useSelector((state: RootState) => state.user.user);
+  const dispatch = useDispatch();
 
   const loginDonateBtn = (
     <div className={`flex text-[16px] font-bold gap-8  justify-center `}>
-      <Link
-        href="/signin"
-        className="rounded-lg border-none py-4 px-6  hover:bg-primary-color hover:text-white transition duration-300"
-      >
-        Login
-      </Link>
-      <a className="px-5 py-3 rounded-lg border-none bg-blue-800 text-white">
-        Donate
-      </a>
+      {user ? (
+        <>
+          <button
+            onClick={() =>
+              dispatch(
+                logout()
+                )
+            }
+            className="rounded-lg border-none py-4 px-6 hover:bg-primary-color hover:text-white transition duration-300"
+          >
+            Logout
+          </button>
+          <Link
+            href="/profile"
+          >
+            <MdAccountCircle className="w-12 h-12  hover:text-primary-color transition duration-300"/>
+          </Link>
+        </>
+      ) : (
+        <>
+          <Link
+            href="/signin"
+            className="rounded-lg border-none py-4 px-6 hover:bg-primary-color hover:text-white transition duration-300"
+          >
+            Login
+          </Link>
+          <a className="px-5 py-3 rounded-lg border-none bg-blue-800 text-white">
+            Donate
+          </a>
+        </>
+      )}
     </div>
   );
 

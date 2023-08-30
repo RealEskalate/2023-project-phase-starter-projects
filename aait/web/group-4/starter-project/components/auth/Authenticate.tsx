@@ -1,3 +1,4 @@
+"use client";
 import { RootState } from '@/store'
 import { useRouter } from 'next/navigation'
 import React from 'react'

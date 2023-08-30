@@ -21,12 +21,12 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className="font-{poppins}">
-        <ToastContainer/>
+        <Provider store={store}>
+          <ToastContainer />
           <Navbar />
-          <main className="p-10 md:p-20">
-            <Provider store={store}>{children}</Provider>
-          </main>
+          <main className="p-10 md:p-20">{children}</main>
           <Footer />
+        </Provider>
       </body>
     </html>
   );

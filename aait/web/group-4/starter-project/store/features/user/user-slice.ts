@@ -1,15 +1,8 @@
 import User from "@/types/user/user";
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 
-const initialState: {user: User, message: string} = {
-    user: {
-        token: "",
-        user: "",
-        userEmail: "",
-        userName: "",
-        userProfile: "",
-        userRole: ""
-    },
+const initialState: {user: User | null, message: string} = {
+    user: null,
     message: ""
 }
 
@@ -23,14 +16,7 @@ export const userSlice = createSlice({
         },
 
         logout: (state) => {
-            state.user = {
-                token: "",
-                user: "",
-                userEmail: "",
-                userName: "",
-                userProfile: "",
-                userRole: ""
-            }
+            state.user = null
         },
         setMessage: (state, action: PayloadAction<string>) => {
             state.message = action.payload;

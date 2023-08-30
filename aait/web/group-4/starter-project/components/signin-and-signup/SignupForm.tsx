@@ -39,23 +39,28 @@ const SignupForm = () => {
     };
 
     const handleSignup =  () => {
+
          registerUser(formData);
 
         if(registerResult.isSuccess){
-            toast(message)
+            toast(message, {
+                type: "success"
+            })
             console.log("message")
             router.push("/signin")
         }
-        else{
-            
+        else if(registerResult.isError){
+            toast("Error during Sign up", {
+                type: "error"
+            })
         }
     }
 
     return (
         <>
         <div className="flex flex-col text-left gap-6 bg-white text-gray-500 font-login border-0 rounded-lg md:px-14 px-10 pt-10 pb-10 w-full">
-            <h2 className="text-[1.5rem] font-bold text-black">Register</h2>
-            <p className="text-[0.9] mb-6">Hey, enter your detail to sign up
+            <h2 className="text-4xl font-bold text-[#434343]">Sign Up</h2>
+            <p className="text-[0.9] mb-6 text-[#434343]">Hey, enter your detail to sign up
             </p>
             {fieldInfo.map((field) => (
                 <TextField
