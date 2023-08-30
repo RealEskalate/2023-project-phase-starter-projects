@@ -12,7 +12,6 @@ import '../../../../core/util/image_sheet.dart';
 import '../../../profile/presentation/widgets/loading_widget.dart';
 import '../widgets/widgets.dart';
 
-// ignore: must_be_immutable
 class WriteArticlePage extends StatelessWidget {
   WriteArticlePage({super.key});
 
@@ -42,9 +41,13 @@ class WriteArticlePage extends StatelessWidget {
                 builder: (BuildContext context, child) {
                   return Scaffold(
                     backgroundColor: whiteColor,
-                    appBar: PreferredSize(
-                      preferredSize: Size.fromHeight(74.h),
-                      child: const CustomAppBarNewArticle(),
+                    appBar: AppBar(
+                      backgroundColor: whiteColor,
+                      elevation: 0,
+                      leading: BackButton(
+                        color: darkBlue,
+                        onPressed: () => context.pop(),
+                      ),
                     ),
                     body: Padding(
                       padding: EdgeInsets.symmetric(horizontal: 45.w),

@@ -3,7 +3,6 @@ import 'package:dartz/dartz.dart';
 
 import '../../../../core/error/failure.dart';
 import '../../../../core/use_case/usecase.dart';
-import '../../../../core/util/typedef.dart';
 import '../entity/article.dart';
 import '../repository/article_repository.dart';
 

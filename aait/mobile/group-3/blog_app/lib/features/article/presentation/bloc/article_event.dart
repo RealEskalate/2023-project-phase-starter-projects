@@ -30,8 +30,8 @@ class CreateArticleEvent extends ArticleEvent {
 }
 
 class GetAllArticlesEvent extends ArticleEvent {
-  String? searchQuery;
-  List tags;
+  final String? searchQuery;
+  final List tags;
 
    GetAllArticlesEvent({this.searchQuery = "", this.tags = const [] });
 }

@@ -1,7 +1,5 @@
 import 'dart:convert';
 
-import 'package:json_annotation/json_annotation.dart';
-
 import 'package:blog_app/features/article/data/models/user_model.dart';
 import 'package:blog_app/features/article/domain/entity/user.dart';
 
@@ -17,7 +15,6 @@ class ArticleModel extends Article {
     required super.user,
     required super.image,
     required super.imageCloudinaryPublicId,
-    @JsonKey(fromJson: _dateTimeFromJson, toJson: _dateTimeToJson)
     required super.createdAt,
     required super.id,
   });

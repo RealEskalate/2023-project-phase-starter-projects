@@ -1,6 +1,4 @@
 import 'package:blog_app/features/article/domain/entity/getArticlesEntity.dart';
-import 'package:blog_app/features/article/data/models/user_model.dart';
-import 'package:blog_app/features/profile/domain/use_case/get_profile.dart';
 import 'package:dartz/dartz.dart';
 import 'package:image_picker/image_picker.dart';
 
@@ -76,7 +74,7 @@ class ArticleRepositoryImpl implements ArticleRepository {
       try {
         final result = await remoteDataSource.getAllArticles(articleRequest);
         return Right(result);
-      } on ServerException catch (e) {
+      } on ServerException catch (_) {
         return const Left(ServerFailure(message: "Could not get", statusCode: 500), );
       }
     } else {
@@ -154,6 +152,7 @@ class ArticleRepositoryImpl implements ArticleRepository {
           "estimatedReadTime": estimatedReadTime,
           "image": image.path,
           "id": id,
+          "user": "Semere"
         };
         final article = ArticleModel.fromJson(articleMap);
         final result = await remoteDataSource.updateArticle(article);

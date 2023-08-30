@@ -1,7 +1,6 @@
 import 'package:blog_app/core/util/app_colors.dart'; // Importing app-specific colors
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:go_router/go_router.dart';
 
 class HeaderWidget extends StatelessWidget {
   final VoidCallback callback;
@@ -14,7 +13,6 @@ class HeaderWidget extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
         GestureDetector(
-          onTap: callback,
           child: Icon(
             Icons.sort,
             size: 40.sp,
@@ -32,20 +30,20 @@ class HeaderWidget extends StatelessWidget {
             ),
           ),
         ),
-        GestureDetector(
-          onTap: () {
-            //  Navigator.pushNamed(
-            //     context, '/profile');
-          },
-          child: Stack(
-            alignment: Alignment.center,
-            children: [
-              CircleAvatar(
+        Stack(
+          alignment: Alignment.center,
+          children: [
+            GestureDetector(
+              onTap: callback,
+              child: CircleAvatar(
                 backgroundImage: const AssetImage(
                     'assets/images/avator.jpg'), // User's avatar
                 radius: 28.sp, // Avatar radius
               ),
-              Container(
+            ),
+            GestureDetector(
+              onTap: callback,
+              child: Container(
                 width: 55.w,
                 height: 55.h,
                 decoration: BoxDecoration(
@@ -57,8 +55,8 @@ class HeaderWidget extends StatelessWidget {
                   ),
                 ),
               ),
-            ],
-          ),
+            ),
+          ],
         ),
       ],
     );
