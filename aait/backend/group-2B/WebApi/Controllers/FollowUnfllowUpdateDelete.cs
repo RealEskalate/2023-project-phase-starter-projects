@@ -1,6 +1,9 @@
-using Application.DTOs.Common;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using Application.DTOs.Common;
+using Applicatin.Features.Users.Handlers.Commands;
+using Applicatin.Features.Users.Requests.Commands;
+
 
 namespace WebApi.Controllers;
 [ApiController]
@@ -26,7 +29,7 @@ public class FollowUnfllowUpdateDelete : ControllerBase
 
         var response = await _mediator.Send(command);
 
-        return OK(response);
+        return Ok(response);
     }
 
 
