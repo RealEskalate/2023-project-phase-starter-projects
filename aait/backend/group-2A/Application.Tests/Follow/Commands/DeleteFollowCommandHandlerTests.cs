@@ -47,8 +47,54 @@ namespace Application.Tests.Follow.Commands
 
             var result = await handler.Handle(new DeleteFollowCommand() { follow = _followDto }, CancellationToken.None);
 
+            result.ShouldNotBeNull();
             result.ShouldBeOfType<BaseCommandResponse<Unit>>();
+            result.Success.ShouldBeFalse();
+            result.Value.ShouldBe(Unit.Value);
 
+        }
+
+        [Fact]
+        public async Task DeleteFollowCommand_FollowerNotFound_Failure()
+        {
+            _followDto.FollowerId = 999;
+            var handler = new DeleteFollowCommandHandler(_mockRepo.Object, _mapper);
+
+            var result = await handler.Handle(new DeleteFollowCommand { follow = _followDto }, CancellationToken.None);
+
+            result.ShouldNotBeNull();
+            result.ShouldBeOfType<BaseCommandResponse<Unit>>();
+            result.Success.ShouldBeFalse();
+            result.Value.ShouldBe(Unit.Value);
+        }
+
+        [Fact]
+        public async Task DeleteFollowCommand_FollowedNotFound_Failure()
+        {
+            _followDto.FollowedId = 999;
+            var handler = new DeleteFollowCommandHandler(_mockRepo.Object, _mapper);
+
+            var result = await handler.Handle(new DeleteFollowCommand { follow = _followDto }, CancellationToken.None);
+
+            result.ShouldNotBeNull();
+            result.ShouldBeOfType<BaseCommandResponse<Unit>>();
+            result.Success.ShouldBeFalse();
+            result.Value.ShouldBe(Unit.Value);
+        }
+
+        [Fact]
+        public async Task DeleteFollowCommand_NotFollowing_Failure()
+        {
+            _followDto.FollowerId = 1;
+            _followDto.FollowedId = 3;
+            var handler = new DeleteFollowCommandHandler(_mockRepo.Object, _mapper);
+
+            var result = await handler.Handle(new DeleteFollowCommand { follow = _followDto }, CancellationToken.None);
+
+            result.ShouldNotBeNull();
+            result.ShouldBeOfType<BaseCommandResponse<Unit>>();
+            result.Success.ShouldBeFalse();
+            result.Value.ShouldBe(Unit.Value);
         }
     }
 }

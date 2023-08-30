@@ -44,14 +44,32 @@ namespace Application.Tests.Like.Commands
         }
 
         [Fact]
-        public async Task CreateLikeCommandTest()
+        public async Task CreateLikeCommand_SuccessfullyCreatesLike()
         {
+            var initialLikeCount = _mockRepo.Object.likeRepository.GetLikedPost(_likedDto.UserId).Result.Count;
             var handler = new CreateLikeCommandHandler(_mockRepo.Object, _mapper);
 
-            var result = await handler.Handle(new CreateLikeCommand() { like = _likedDto}, CancellationToken.None);
+            var result = await handler.Handle(new CreateLikeCommand() { like = _likedDto }, CancellationToken.None);
 
+            result.ShouldNotBeNull();
             result.ShouldBeOfType<BaseCommandResponse<Unit>>();
+            result.Success.ShouldBeTrue();
 
+            var updatedLikeCount = _mockRepo.Object.likeRepository.GetLikedPost(_likedDto.UserId).Result.Count;
+            updatedLikeCount.ShouldBe(initialLikeCount + 1);
+        }
+
+        [Fact]
+        public async Task CreateLikeCommand_RepositoryError_ReturnsFailure()
+        {
+            _mockRepo.Setup(repo => repo.likeRepository.LikePost(It.IsAny<Domain.Entities.Like>())).ThrowsAsync(new Exception("Simulated error"));
+            var handler = new CreateLikeCommandHandler(_mockRepo.Object, _mapper);
+
+            var result = await handler.Handle(new CreateLikeCommand() { like = _likedDto }, CancellationToken.None);
+
+            result.ShouldNotBeNull();
+            result.ShouldBeOfType<BaseCommandResponse<Unit>>();
+            result.Success.ShouldBeFalse();
         }
     }
 }

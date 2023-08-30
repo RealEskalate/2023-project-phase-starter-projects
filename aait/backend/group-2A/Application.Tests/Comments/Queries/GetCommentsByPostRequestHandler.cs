@@ -34,18 +34,48 @@ namespace Application.Tests.Comments.Queries
         }
 
         [Fact]
-        public async Task GetCommentByPostIdTest()
+        public async Task GetCommentsByPostId_ValidPostId_ReturnsListOfCommentDto()
         {
             var handler = new GetCommentsByPostIdRequestHandler(_mockRepo.Object, _mapper);
-            var temp = new GetCommentsByPostIdRequest();
-            temp.PostId = 1;
+            var request = new GetCommentsByPostIdRequest { PostId = 1 };
 
-            var result = await handler.Handle(temp, CancellationToken.None);
+            var result = await handler.Handle(request, CancellationToken.None);
 
+            result.ShouldNotBeNull();
             result.ShouldBeOfType<BaseCommandResponse<List<CommentDto>>>();
-
+            result.Success.ShouldBeTrue();
+            result.Value.ShouldNotBeNull();
             result.Value.Count.ShouldBe(3);
+        }
 
+        [Fact]
+        public async Task GetCommentsByPostId_InvalidPostId_ReturnsEmptyList()
+        {
+            var handler = new GetCommentsByPostIdRequestHandler(_mockRepo.Object, _mapper);
+            var request = new GetCommentsByPostIdRequest { PostId = 999 };
+
+            var result = await handler.Handle(request, CancellationToken.None);
+
+            result.ShouldNotBeNull();
+            result.ShouldBeOfType<BaseCommandResponse<List<CommentDto>>>();
+            result.Success.ShouldBeTrue();
+            result.Value.ShouldNotBeNull();
+            result.Value.ShouldBeEmpty();
+        }
+
+        [Fact]
+        public async Task GetCommentsByPostId_RepositoryError_ReturnsFailure()
+        {
+            _mockRepo.Setup(repo => repo.commentRepository.GetCommentByPost(It.IsAny<int>())).ThrowsAsync(new Exception("Simulated error"));
+            var handler = new GetCommentsByPostIdRequestHandler(_mockRepo.Object, _mapper);
+            var request = new GetCommentsByPostIdRequest { PostId = 1 };
+
+            var result = await handler.Handle(request, CancellationToken.None);
+
+            result.ShouldNotBeNull();
+            result.ShouldBeOfType<BaseCommandResponse<List<CommentDto>>>();
+            result.Success.ShouldBeFalse();
+            result.Value.ShouldBeNull();
         }
 
     }

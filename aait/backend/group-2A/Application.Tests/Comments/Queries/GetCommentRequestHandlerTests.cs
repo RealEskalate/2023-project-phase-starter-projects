@@ -31,14 +31,43 @@ namespace Application.Tests.Comments.Queries
         }
 
         [Fact]
-        public async Task GetCommentTest()
+        public async Task GetCommentCommand_ExistingComment_ReturnsCommentDto()
         {
             var handler = new GetCommentRequestHandler(_mockRepo.Object, _mapper);
 
-            var result = await handler.Handle(new GetCommentRequest(), CancellationToken.None);
+            var result = await handler.Handle(new GetCommentRequest { commentId = 1 }, CancellationToken.None);
 
+            result.ShouldNotBeNull();
             result.ShouldBeOfType<BaseCommandResponse<CommentDto>>();
+            result.Success.ShouldBeTrue();
+            result.Value.Id.ShouldBe(1);
+        }
 
+        [Fact]
+        public async Task GetCommentCommand_NonExistingComment_ReturnsFailure()
+        {
+            var handler = new GetCommentRequestHandler(_mockRepo.Object, _mapper);
+
+            var result = await handler.Handle(new GetCommentRequest { commentId = 999 }, CancellationToken.None);
+
+            result.ShouldNotBeNull();
+            result.ShouldBeOfType<BaseCommandResponse<CommentDto>>();
+            result.Success.ShouldBeFalse();
+            result.Value.ShouldBeNull();
+        }
+
+        [Fact]
+        public async Task GetCommentCommand_RepositoryError_ReturnsFailure()
+        {
+            _mockRepo.Setup(repo => repo.commentRepository.Get(It.IsAny<int>())).ThrowsAsync(new Exception("Simulated error"));
+            var handler = new GetCommentRequestHandler(_mockRepo.Object, _mapper);
+
+            var result = await handler.Handle(new GetCommentRequest { commentId = 1 }, CancellationToken.None);
+
+            result.ShouldNotBeNull();
+            result.ShouldBeOfType<BaseCommandResponse<CommentDto>>();
+            result.Success.ShouldBeFalse();
+            result.Value.ShouldBeNull();
         }
 
     }

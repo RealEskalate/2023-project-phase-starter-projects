@@ -34,14 +34,45 @@ namespace Application.Tests.Like.Queries
         }
 
         [Fact]
-        public async Task GetPostLikes()
+        public async Task GetPostLikes_ValidPostId_ReturnsLikedUsers()
         {
             var handler = new GetPostLikesQueryHandler(_mockRepo.Object, _mapper);
 
-            var result = await handler.Handle(new GetPostLikesQuery() { Id = 3}, CancellationToken.None);
+            var result = await handler.Handle(new GetPostLikesQuery() { Id = 1 }, CancellationToken.None);
 
+            result.ShouldNotBeNull();
             result.ShouldBeOfType<BaseCommandResponse<List<UserDto>>>();
+            result.Success.ShouldBeTrue();
+            result.Value.ShouldNotBeNull();
+            result.Value.ShouldBeOfType<List<UserDto>>();
+            result.Value.Count.ShouldBe(2);
+        }
 
+        [Fact]
+        public async Task GetPostLikes_InvalidPostId_ReturnsEmptyList()
+        {
+            var handler = new GetPostLikesQueryHandler(_mockRepo.Object, _mapper);
+
+            var result = await handler.Handle(new GetPostLikesQuery() { Id = 999 }, CancellationToken.None);
+
+            result.ShouldNotBeNull();
+            result.ShouldBeOfType<BaseCommandResponse<List<UserDto>>>();
+            result.Success.ShouldBeTrue();
+            result.Value.ShouldNotBeNull();
+            result.Value.ShouldBeEmpty();
+        }
+
+        [Fact]
+        public async Task GetPostLikes_RepositoryError_ReturnsFailure()
+        {
+            _mockRepo.Setup(repo => repo.likeRepository.GetLikers(It.IsAny<int>())).ThrowsAsync(new Exception("Simulated error"));
+            var handler = new GetPostLikesQueryHandler(_mockRepo.Object, _mapper);
+
+            var result = await handler.Handle(new GetPostLikesQuery() { Id = 1 }, CancellationToken.None);
+
+            result.ShouldNotBeNull();
+            result.ShouldBeOfType<BaseCommandResponse<List<UserDto>>>();
+            result.Success.ShouldBeFalse();
         }
     }
 }
