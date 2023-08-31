@@ -8,7 +8,6 @@ public interface IUserRepository : IGenericRepository<User>
     public Task<bool> EmailExists(string email);
     public Task<User> GetByUsername(string username);
 
-    public Task FollowUser (int follower , int follewed);
-    public Task UnfollowUser (int follower, int follewed);
-    
+    public Task FollowUser(int followerId, int followedId);
+    public Task UnfollowUser(int followerId, int unfollowedId);
 }
