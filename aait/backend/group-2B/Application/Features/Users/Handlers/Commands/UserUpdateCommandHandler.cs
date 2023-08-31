@@ -38,7 +38,7 @@ public class UserUpdateCommandHandler : IRequestHandler<UserUpdateCommandRequest
             await _unitOfWork.SaveAsync();
         }
 
-        return CommonResponse<int> { Success = true, Error = "" };
+        return new CommonResponse<int> { IsSuccess = true, Error = "" };
     }
 }
 

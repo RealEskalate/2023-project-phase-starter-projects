@@ -4,7 +4,7 @@ using SocialSync.Application.Contracts.Persistence;
 
 namespace Application.DTOs.Users.Validators;
 
-public class UserDeleteDtoValidator : AbstractValidator<UserDeletDto>
+public class UserDeleteDtoValidator : AbstractValidator<UserDeleteDto>
 {
     private readonly IUnitOfWork _unitOfWork;
     public UserDeleteDtoValidator(IUnitOfWork unitOfWork)

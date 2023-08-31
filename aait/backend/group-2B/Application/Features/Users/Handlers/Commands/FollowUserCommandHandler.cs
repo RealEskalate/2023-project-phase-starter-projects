@@ -7,7 +7,8 @@ using SocialSync.Application.DTOs.Users.Validators;
 
 namespace Applicatin.Features.Users.Handlers.Commands;
 
-public class FollowUserCommandHandler : IRequestHandler<FollowUserCommandRequest, CommonResponse<int>>
+public class FollowUserCommandHandler
+    : IRequestHandler<FollowUserCommandRequest, CommonResponse<int>>
 {
     private readonly IUnitOfWork _unitOfWork;
     private IMapper _mapper;
@@ -16,10 +17,12 @@ public class FollowUserCommandHandler : IRequestHandler<FollowUserCommandRequest
     {
         _mapper = mapper;
         _unitOfWork = unitOfWork;
-
     }
 
-    public async Task<CommonResponse<int>> Handle(FollowUserCommandRequest request, CancellationToken cancellationToken)
+    public async Task<CommonResponse<int>> Handle(
+        FollowUserCommandRequest request,
+        CancellationToken cancellationToken
+    )
     {
         var validator = new FollowDtoValidator(_unitOfWork);
         var vallidationResult = await validator.ValidateAsync(request.FollowUnfollowDto);
@@ -27,19 +30,15 @@ public class FollowUserCommandHandler : IRequestHandler<FollowUserCommandRequest
         if (!vallidationResult.IsValid)
         {
             return CommonResponse<int>.Failure("failed to follow");
-
-
         }
 
-        await _unitOfWork.UserRepository.FollowUser(request.FollowUnfollowDto.FollwerId, request.FollowUnfollowDto.FollowedId);
+        await _unitOfWork.UserRepository.FollowUser(
+            request.FollowUnfollowDto.FollwerId,
+            request.FollowUnfollowDto.FollowedId
+        );
 
         await _unitOfWork.SaveAsync();
 
-        return CommonResponse<int> { Success = true, Error = "" };
-
+        return new CommonResponse<int> { IsSuccess = true, Error = "" };
     }
-
-
 }
-
-

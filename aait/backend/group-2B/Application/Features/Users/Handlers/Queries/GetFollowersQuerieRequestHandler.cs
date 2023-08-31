@@ -1,9 +1,9 @@
-using Application.DTOs.Common;
 using Application.Features.Users.Requests.Queries;
 using AutoMapper;
 using MediatR;
 using SocialSync.Application.Common.Responses;
 using SocialSync.Application.Contracts.Persistence;
+using SocialSync.Application.DTOs.Authentication;
 
 namespace Application.Features.Users.Handlers.Queries;
 
