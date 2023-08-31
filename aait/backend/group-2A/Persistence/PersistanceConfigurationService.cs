@@ -1,10 +1,10 @@
 using Application.Contracts.Persistance;
-using Infrastructure.Persistance.Repository;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Persistence.Persistance.Repository;
 
-namespace Infrastructure;
+namespace Persistence;
 
 public static class PersistanceConfigurationService{
     public static IServiceCollection AddPersistanceServices(this IServiceCollection services, IConfiguration configuration)

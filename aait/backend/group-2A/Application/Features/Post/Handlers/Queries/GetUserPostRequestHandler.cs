@@ -20,7 +20,8 @@ namespace Application.Features.Post.Handlers.Queries{
         public async Task<BaseCommandResponse<List<PostDto>>> Handle(GetUserPostRequest request,
             CancellationToken cancellationToken){
             try{
-                var posts = await _unitOfWork.postRepository.GetUserPost(request.Id);
+                var posts = await _unitOfWork.postRepository.GetUserPost(request.Id, request.PageNumber,
+                    request.PageSize);
 
                 if (posts == null || posts.Count == 0){
                     throw new NotFoundException(nameof(Domain.Entities.Post), request.Id);

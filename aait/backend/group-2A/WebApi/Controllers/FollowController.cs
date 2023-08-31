@@ -5,6 +5,7 @@ using Application.Features.FollowFeatures.Request.Queries;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using WebApi.Middleware;
 
 namespace WebApi.Controllers
 {
@@ -19,45 +20,39 @@ namespace WebApi.Controllers
             _mediator = mediator;
         }
 
-        [HttpGet("followers/{UserId}")]
-        public async Task<IActionResult> GetFollower( int UserId)
+        [HttpGet("followers/{userId:int}")]
+        public async Task<IActionResult> GetFollower( int userId, [FromQuery] int? pageNumber, [FromQuery] int? pageSize)
         {
-            // token getter to be implemented
-            var command = new GetFollowerRequest { Id = UserId };
+            var command = new GetFollowerRequest { Id = userId, PageNumber = pageNumber ?? 0, PageSize = pageSize ?? 10 };
             var follower = await _mediator.Send(command);
-
             return ResponseHandler<List<UserDto>>.HandleResponse(follower, 200);
         }
 
-        [HttpGet("followees/{UserId}")]
-        public async Task<IActionResult> GetFollowee(int UserId)
+        [HttpGet("followees/{userId:int}")]
+        public async Task<IActionResult> GetFollowee(int userId, [FromQuery] int? pageNumber, [FromQuery] int? pageSize)
         {
-            // token getter to be implemented
-            var command = new GetFollowingRequest { Id = UserId };
+            var command = new GetFollowingRequest { Id = userId, PageNumber = pageNumber ?? 0, PageSize = pageSize ?? 10 };
             var followee = await _mediator.Send(command);
-
             return ResponseHandler<List<UserDto>>.HandleResponse(followee, 200);
         }
 
-        [HttpPost("follow/{UserId}")]
-        public async Task<IActionResult> Follow(int UserId)
+        [HttpPost("follow/{userId:int}")]
+        public async Task<IActionResult> Follow(int userId)
         {
-            // token getter to be implemented
             var command = new CreateFollowCommand { follow = new FollowDto{
-                FollowerId = int.Parse(User.FindFirst("reader").Value),
-                FollowedId = UserId
+                FollowerId = int.Parse(User.FindFirst("reader")?.Value ?? "-1"),
+                FollowedId = userId
             } };
             var result = await _mediator.Send(command);
             return ResponseHandler<Unit>.HandleResponse(result, 201);
         }
 
-        [HttpDelete("unfollow/{UserId}")]
-        public async Task<IActionResult> Unfollow(int UserId)
+        [HttpDelete("unfollow/{userId:int}")]
+        public async Task<IActionResult> Unfollow(int userId)
         {
-            // token getter to be implemented
             var command = new DeleteFollowCommand { follow = new FollowDto{
-                FollowerId = int.Parse(User.FindFirst("reader").Value),
-                FollowedId = UserId
+                FollowerId = int.Parse(User.FindFirst("reader")?.Value ?? "-1"),
+                FollowedId = userId
             } };
             var result = await _mediator.Send(command);
             return ResponseHandler<Unit>.HandleResponse(result, 204);

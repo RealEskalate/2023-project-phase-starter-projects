@@ -21,7 +21,8 @@ public class GetNotificationHandler : IRequestHandler<GetNotifications, BaseComm
 
     public async Task<BaseCommandResponse<List<Notification>>> Handle(GetNotifications request, CancellationToken cancellationToken){
         try{
-            var notifications = await _unitOfWork.notificationRepository.GetNotifications(request.UserId);
+            var notifications = await _unitOfWork.notificationRepository.GetNotifications(request.UserId, request.PageNumber,
+                request.PageSize);
             if (notifications == null){
                 throw new NotFoundException(nameof(Notification), request.UserId);
             }

@@ -21,8 +21,8 @@ namespace Application.Tests.Mocks
 
             var mockRepository = new Mock<INotificationRepository>();
 
-            mockRepository.Setup(repo => repo.GetNotifications(It.IsAny<int>()))
-                .ReturnsAsync((int id) => mockNotifications.Where(n => n.UserId == id).ToList());
+            mockRepository.Setup(repo => repo.GetNotifications(It.IsAny<int>(),It.IsAny<int>(),It.IsAny<int>()))
+                .ReturnsAsync((int id,int pageNumber,int pageSize) => mockNotifications.Where(n => n.UserId == id).ToList());
 
             mockRepository.Setup(repo => repo.GetNotification(It.IsAny<int>()))
                 .ReturnsAsync((int id) => mockNotifications.FirstOrDefault(n => n.Id == id));

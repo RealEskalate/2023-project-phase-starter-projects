@@ -61,7 +61,7 @@ namespace Application.Tests.Post.Queries
         [Fact]
         public async Task GetFollowingPost_RepositoryError_Failure()
         {
-            _mockRepo.Setup(repo => repo.postRepository.GetFollowingPost(It.IsAny<int>())).ThrowsAsync(new Exception("Simulated error"));
+            _mockRepo.Setup(repo => repo.postRepository.GetFollowingPost(It.IsAny<int>(), It.IsAny<int>(),It.IsAny<int>())).ThrowsAsync(new Exception("Simulated error"));
 
             var result = await _handler.Handle(new GetFollowingPostRequest() { Id = 1 }, CancellationToken.None);
 

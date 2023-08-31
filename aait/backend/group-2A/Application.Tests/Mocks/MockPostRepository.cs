@@ -56,23 +56,23 @@ namespace Application.Tests.Mocks
 
             var mockRepository = new Mock<IPostRepository>();
 
-            mockRepository.Setup(repo => repo.GetFollowingPost(It.IsAny<int>()))
-                          .ReturnsAsync((int id) => mockPosts.Where(p => p.UserId == id).ToList());
+            mockRepository.Setup(repo => repo.GetFollowingPost(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<int>()))
+                          .ReturnsAsync((int id,int pageNumber, int pageSize) => mockPosts.Where(p => p.UserId == id).ToList());
 
-            mockRepository.Setup(repo => repo.GetUserPost(It.IsAny<int>()))
-                          .ReturnsAsync((int id) => mockPosts.Where(p => p.UserId == id).ToList());
+            mockRepository.Setup(repo => repo.GetUserPost(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<int>()))
+                          .ReturnsAsync((int id,int pageNumber, int pageSize) => mockPosts.Where(p => p.UserId == id).ToList());
 
-            mockRepository.Setup(repo => repo.GetBytag(It.IsAny<string>()))
-                          .ReturnsAsync((string tag) => mockPosts.Where(p => p.Tags.Contains(tag)).ToList());
+            mockRepository.Setup(repo => repo.GetBytag(It.IsAny<string>(), It.IsAny<int>(), It.IsAny<int>()))
+                          .ReturnsAsync((string tag,int pageNumber, int pageSize) => mockPosts.Where(p => p.Tags.Contains(tag)).ToList());
 
-            mockRepository.Setup(repo => repo.GetByContent(It.IsAny<string>()))
-                          .ReturnsAsync((string content) => mockPosts.Where(p => p.Content.Contains(content)).ToList());
+            mockRepository.Setup(repo => repo.GetByContent(It.IsAny<string>(), It.IsAny<int>(), It.IsAny<int>()))
+                          .ReturnsAsync((string content,int pageNumber, int pageSize) => mockPosts.Where(p => p.Content.Contains(content)).ToList());
 
             mockRepository.Setup(repo => repo.Get(It.IsAny<int>()))
                           .ReturnsAsync((int id) => mockPosts.FirstOrDefault(p => p.Id == id));
 
-            mockRepository.Setup(repo => repo.GetAll())
-                          .ReturnsAsync(mockPosts);
+            mockRepository.Setup(repo => repo.GetAll(It.IsAny<int>(), It.IsAny<int>()))
+                          .ReturnsAsync((int pageNumber,int pageSize)=>mockPosts);
 
             mockRepository.Setup(repo => repo.Add(It.IsAny<Domain.Entities.Post>()))
                           .ReturnsAsync((Domain.Entities.Post post) =>

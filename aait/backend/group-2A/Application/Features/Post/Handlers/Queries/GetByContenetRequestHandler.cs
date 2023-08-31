@@ -22,7 +22,8 @@ namespace Application.Features.Post.Handlers.Queries
 
         public async Task<BaseCommandResponse<List<PostDto>>> Handle(GetByContenetRequest request, CancellationToken cancellationToken){
             try{
-                var posts = await _unitOfWork.postRepository.GetByContent(request.Contenet);
+                var posts = await _unitOfWork.postRepository.GetByContent(request.Contenet, request.PageNumber,
+                    request.PageSize);
                 if (posts == null){
                     throw new NotFoundException(nameof(Domain.Entities.Post), request.Contenet);
                 }

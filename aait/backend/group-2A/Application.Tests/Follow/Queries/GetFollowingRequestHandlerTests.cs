@@ -70,7 +70,7 @@ namespace Application.Tests.Follow.Queries
         [Fact]
         public async Task GetFollowing_RepositoryError_ReturnsFailure()
         {
-            _mockRepo.Setup(repo => repo.followRepository.GetFollowing(It.IsAny<int>())).ThrowsAsync(new Exception("Simulated error"));
+            _mockRepo.Setup(repo => repo.followRepository.GetFollowing(It.IsAny<int>(),It.IsAny<int>(),It.IsAny<int>())).ThrowsAsync(new Exception("Simulated error"));
             var request = new GetFollowingRequest { Id = 1 };
 
             var result = await _handler.Handle(request, CancellationToken.None);

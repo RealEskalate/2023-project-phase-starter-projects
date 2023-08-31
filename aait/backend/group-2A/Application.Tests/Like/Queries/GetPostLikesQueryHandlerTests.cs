@@ -64,7 +64,7 @@ namespace Application.Tests.Like.Queries
         [Fact]
         public async Task GetPostLikes_RepositoryError_ReturnsFailure()
         {
-            _mockRepo.Setup(repo => repo.likeRepository.GetLikers(It.IsAny<int>())).ThrowsAsync(new Exception("Simulated error"));
+            _mockRepo.Setup(repo => repo.likeRepository.GetLikers(It.IsAny<int>(),It.IsAny<int>(),It.IsAny<int>())).ThrowsAsync(new Exception("Simulated error"));
 
             var result = await _handler.Handle(new GetPostLikesQuery() { Id = 1 }, CancellationToken.None);
 

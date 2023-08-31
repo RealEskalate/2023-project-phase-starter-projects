@@ -64,7 +64,7 @@ namespace Application.Tests.Post.Queries
         [Fact]
         public async Task GetByContent_RepositoryError_Failure()
         {
-            _mockRepo.Setup(repo => repo.postRepository.GetByContent(It.IsAny<string>())).ThrowsAsync(new Exception("Simulated error"));
+            _mockRepo.Setup(repo => repo.postRepository.GetByContent(It.IsAny<string>(), It.IsAny<int>(),It.IsAny<int>())).ThrowsAsync(new Exception("Simulated error"));
 
             var result = await _handler.Handle(new GetByContenetRequest() { Contenet = "Content 2" }, CancellationToken.None);
 

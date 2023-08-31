@@ -1,13 +1,17 @@
 ﻿using Application.Responses;
 using Microsoft.AspNetCore.Mvc; 
 
-namespace WebApi.Controllers
+namespace WebApi.Middleware
 {
     public class ResponseHandler<T> 
     {
-        public static IActionResult HandleResponse(BaseCommandResponse<T> response, int statusCode)
+        public static IActionResult HandleResponse(BaseCommandResponse<T>? response, int statusCode)
         {
-            if (response.Success)
+            if (response == null)
+            {
+                return new BadRequestObjectResult(response);
+            }
+            else if (response.Success)
             {
                 if (statusCode == 200)
                 {

@@ -2,7 +2,7 @@ using Application.Contracts.Persistance;
 using Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 
-namespace Infrastructure.Persistance.Repository;
+namespace Persistence.Persistance.Repository;
 
 public class PostRepository: GenericRepository<Post>, IPostRepository
 {
@@ -17,13 +17,19 @@ public class PostRepository: GenericRepository<Post>, IPostRepository
         _dbFollowSet = _dbContext.Set<Follow>();
     }
 
-    public async Task<List<Post>> GetBytag(string tag){
-        return  await _dbPostSet.Where(post => post.Tags.Contains(tag)).ToListAsync();
+    public async Task<List<Post>> GetBytag(string tag, int pageNumber = 0, int pageSize = 10){
+        return  await _dbPostSet
+            .Where(post => post.Tags.Contains(tag))
+            .Skip(pageNumber * pageSize)
+            .Take(pageSize)
+            .ToListAsync();
     }
 
-    public async Task<List<Post>> GetFollowingPost(int id){
+    public async Task<List<Post>> GetFollowingPost(int id,int pageNumber = 0, int pageSize = 10){
         var followingPosts = await _dbFollowSet
             .Where(f => f.FollowerId == id)
+            .Skip(pageNumber * pageSize)
+            .Take(pageSize)
             .Join(_dbPostSet,
                 follow => follow.FollowedId,
                 post => post.UserId,
@@ -32,12 +38,20 @@ public class PostRepository: GenericRepository<Post>, IPostRepository
         return followingPosts;
     }
 
-    public async Task<List<Post>> GetByContent(string content){
-        return await _dbPostSet.Where(post => EF.Functions.Like(post.Content, "%" + content + "%")).ToListAsync();
+    public async Task<List<Post>> GetByContent(string content,int pageNumber = 0, int pageSize = 10){
+        return await _dbPostSet
+            .Where(post => EF.Functions.Like(post.Content, "%" + content + "%"))
+            .Skip(pageNumber * pageSize)
+            .Take(pageSize)
+            .ToListAsync();
     }
 
-    public async Task<List<Post>> GetUserPost(int id){
-        return await _dbPostSet.Where(post => post.UserId == id).ToListAsync();
+    public async Task<List<Post>> GetUserPost(int id,int pageNumber = 0, int pageSize = 10){
+        return await _dbPostSet
+            .Where(post => post.UserId == id)
+            .Skip(pageNumber * pageSize)
+            .Take(pageSize)
+            .ToListAsync();
     }
     
 }
