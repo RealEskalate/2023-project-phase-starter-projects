@@ -100,7 +100,29 @@ public class MockUserRepository
 
         userRepository
             .Setup(repo => repo.GetByUsername(It.IsAny<string>()))
-            .ReturnsAsync((string username) => users.FirstOrDefault(u => u.Username == username));
+            .ReturnsAsync((string username) => users.FirstOrDefault(u => u.Username == username)!);
+
+        userRepository
+            .Setup(repo => repo.FollowUser(It.IsAny<int>(), It.IsAny<int>()))
+            .Callback(
+                (int followerId, int followedId) =>
+                {
+                    var follower = users.FirstOrDefault(u => u.Id == followerId);
+                    var followed = users.FirstOrDefault(u => u.Id == followedId);
+                    follower?.Followings.Add(followed!);
+                }
+            );
+
+        userRepository
+            .Setup(repo => repo.UnfollowUser(It.IsAny<int>(), It.IsAny<int>()))
+            .Callback(
+                (int followerId, int unfollowedId) =>
+                {
+                    var follower = users.FirstOrDefault(u => u.Id == followerId);
+                    var unfollowed = users.FirstOrDefault(u => u.Id == unfollowedId);
+                    follower?.Followings.Remove(unfollowed!);
+                }
+            );
 
         return userRepository;
     }
