@@ -1,7 +1,10 @@
+using Application.DTOs.Common;
 using Application.Features.Users.Handlers.Commands;
+using Application.Features.Users.Requests.Commands;
 using AutoMapper;
 using HRLeaveManagement.Application.Profiles;
 using Moq;
+using Shouldly;
 using SocialSync.Application.Contracts.Persistence;
 using SocialSync.Application.Tests.Mocks;
 
@@ -26,5 +29,31 @@ public class UnFollowUserCommandHandlerTest
     }
 
     [Fact]
-    public async Task Valid_UnFollowUser() { }
+    public async Task Valid_UnollowUser()
+    {
+        var followUnfollowDto = new FollowUnFollowDto { FollwerId = 1, FollowedId = 2 };
+        var result = await _handler.Handle(
+            new UnFollowUserCommandRequest { UnfollowDto = followUnfollowDto },
+            CancellationToken.None
+        );
+
+        result.IsSuccess.ShouldBeTrue();
+    }
+
+    [Fact]
+    public async Task Invalid_UnfollowUser()
+    {
+        var followUnfollowDto = new FollowUnFollowDto { FollwerId = 1, FollowedId = 2 };
+        await _handler.Handle(
+            new UnFollowUserCommandRequest { UnfollowDto = followUnfollowDto },
+            CancellationToken.None
+        );
+
+        var result = await _handler.Handle(
+            new UnFollowUserCommandRequest { UnfollowDto = followUnfollowDto },
+            CancellationToken.None
+        );
+
+        result.IsSuccess.ShouldBeFalse();
+    }
 }
