@@ -11,7 +11,7 @@ const AuthorInfo: React.FC<AuthorAndImage> = ({ author, createdAt }) => {
   return (
     <div className="flex space-x-8">
       <Image
-        src={author ? author.image : './images/blogs/Default_pfp.svg'}
+        src={author && author.image ? author.image : './images/blogs/Default_pfp.svg'}
         alt={"Author's profile picture"}
         width={100}
         height={100}
@@ -28,7 +28,7 @@ const AuthorInfo: React.FC<AuthorAndImage> = ({ author, createdAt }) => {
         </div>
         <div className="mt-1">
           <h1 className="text-gray-500 uppercase text-xs">
-            {author ? author.name! : "Anonymous role"}
+            {author ? author.role! : "Anonymous role"}
           </h1>
         </div>
       </div>

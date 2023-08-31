@@ -57,6 +57,7 @@ const page = () => {
               )}
               {filteredBlogs?.map((blog: Blog) => (
                 <BlogItem
+                  key={blog._id}
                   _id={blog._id}
                   image={blog.image}
                   title={blog.title}
