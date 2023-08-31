@@ -10,12 +10,12 @@ using Application.DTOs.Common;
 namespace WebApi.Controllers;
 
 [ApiController]
-[Route("api/ProfileMangment")]
-public class FollowUnfllowUpdateDelete : ControllerBase
+[Route("api/account")]
+public class ProfileManagement : ControllerBase
 {
     private readonly IMediator _mediator;
 
-    public FollowUnfllowUpdateDelete(IMediator mediator)
+    public ProfileManagement(IMediator mediator)
     {
         _mediator = mediator;
     }
