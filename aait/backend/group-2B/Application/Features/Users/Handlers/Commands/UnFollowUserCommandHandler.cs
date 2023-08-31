@@ -9,13 +9,11 @@ namespace Application.Features.Users.Handlers.Commands;
 public class UnFollowUserCommandHandler
     : IRequestHandler<UnFollowUserCommandRequest, CommonResponse<int>>
 {
-    private readonly IUserRepository _userRepository;
     private readonly IUnitOfWork _unitOfWork;
 
-    public UnFollowUserCommandHandler(IUnitOfWork unitOfWork, IUserRepository userRepository)
+    public UnFollowUserCommandHandler(IUnitOfWork unitOfWork)
     {
         _unitOfWork = unitOfWork;
-        _userRepository = userRepository;
     }
 
     public async Task<CommonResponse<int>> Handle(
