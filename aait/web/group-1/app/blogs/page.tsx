@@ -1,7 +1,7 @@
 "use client";
 
 import BlogItem from "@/components/blogs/BlogItem";
-import { useGetBlogsQuery } from "@/store/features/blogs/blogs";
+import { useGetBlogsQuery } from "@/store/blog/blogApi";
 import { Blog } from "@/types/Blog";
 import Link from "next/link";
 import React, { useEffect, useState } from "react";

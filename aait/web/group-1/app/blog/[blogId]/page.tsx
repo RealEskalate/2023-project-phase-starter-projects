@@ -1,10 +1,10 @@
 "use client";
 
-import { useGetSingleBlogQuery } from "@/store/features/blogs/blogs";
 import Image from "next/image";
 import { useParams } from "next/navigation";
 import React from "react";
 import parse from "html-react-parser";
+import { useGetSingleBlogQuery } from "@/store/blog/blogApi";
 
 const page = () => {
   const { blogId } = useParams();
