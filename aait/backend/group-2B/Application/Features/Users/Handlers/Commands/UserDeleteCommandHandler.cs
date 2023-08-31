@@ -25,13 +25,14 @@ public class UserDeleteCommandHandler
         var validateResult = await validator.ValidateAsync(request.UserdeleteDto);
 
         if (!validateResult.IsValid)
-        {
-            return CommonResponse<int>.Failure("unable to Delate account");
-        }
+            return CommonResponse<int>.Failure("Unable to delete user account.");
 
         var user = await _unitOfWork.UserRepository.GetAsync(request.UserdeleteDto.Id);
+        await _unitOfWork.UserRepository.DeleteAsync(user);
 
-        await _unitOfWork.SaveAsync();
+        var status = await _unitOfWork.SaveAsync();
+        if (status < 0)
+            return CommonResponse<int>.Failure("Unable to delete user account.");
 
         return new CommonResponse<int> { IsSuccess = true, Error = "" };
     }

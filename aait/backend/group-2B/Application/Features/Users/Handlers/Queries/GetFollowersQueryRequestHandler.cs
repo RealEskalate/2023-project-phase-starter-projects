@@ -25,7 +25,9 @@ public class GetFollowersQueryRequestHandler
     )
     {
         var user = await _unitOfWork.UserRepository.GetAsync(request.Id);
+        if (user == null)
+            return CommonResponse<List<UserDto>>.Failure("User not found");
 
-        return (CommonResponse<List<UserDto>>)user.Followers;
+        return CommonResponse<List<UserDto>>.Success(_mapper.Map<List<UserDto>>(user.Followers));
     }
 }

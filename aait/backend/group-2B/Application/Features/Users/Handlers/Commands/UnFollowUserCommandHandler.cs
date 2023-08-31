@@ -25,16 +25,16 @@ public class UnFollowUserCommandHandler
         var validationResult = await validator.ValidateAsync(request.UnfollowDto);
 
         if (!validationResult.IsValid)
-        {
-            return CommonResponse<int>.Failure("unfollow failed");
-        }
+            return CommonResponse<int>.Failure("Unfollow user action failed.");
 
         await _unitOfWork.UserRepository.UnfollowUser(
             request.UnfollowDto.FollwerId,
             request.UnfollowDto.FollowedId
         );
 
-        await _unitOfWork.SaveAsync();
+        var status = await _unitOfWork.SaveAsync();
+        if (status < 0)
+            return CommonResponse<int>.Failure("Unfollow user action failed.");
 
         return new CommonResponse<int> { IsSuccess = true, Error = "" };
     }

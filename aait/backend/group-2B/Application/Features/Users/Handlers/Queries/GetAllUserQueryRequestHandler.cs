@@ -24,12 +24,8 @@ public class GetAllUsersQueryRequestHandler
         CancellationToken cancellationToken
     )
     {
-        CommonResponse<List<UserDto>> response;
-
-        response = CommonResponse<List<UserDto>>.Success(
+        return CommonResponse<List<UserDto>>.Success(
             _mapper.Map<List<UserDto>>(await _unitOfWork.UserRepository.GetAsync())
         );
-
-        return response;
     }
 }

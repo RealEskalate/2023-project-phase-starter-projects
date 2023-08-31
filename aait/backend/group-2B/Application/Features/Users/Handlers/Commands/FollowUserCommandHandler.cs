@@ -28,16 +28,16 @@ public class FollowUserCommandHandler
         var vallidationResult = await validator.ValidateAsync(request.FollowUnfollowDto);
 
         if (!vallidationResult.IsValid)
-        {
-            return CommonResponse<int>.Failure("failed to follow");
-        }
+            return CommonResponse<int>.Failure("Follow user action failed.");
 
         await _unitOfWork.UserRepository.FollowUser(
             request.FollowUnfollowDto.FollwerId,
             request.FollowUnfollowDto.FollowedId
         );
 
-        await _unitOfWork.SaveAsync();
+        var status = await _unitOfWork.SaveAsync();
+        if (status < 0)
+            return CommonResponse<int>.Failure("Follow user action failed.");
 
         return new CommonResponse<int> { IsSuccess = true, Error = "" };
     }

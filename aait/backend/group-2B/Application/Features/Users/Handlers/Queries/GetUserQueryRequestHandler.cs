@@ -25,7 +25,9 @@ public class GetUserQueryRequestHandler
     )
     {
         var user = await _unitOfWork.UserRepository.GetAsync(request.Id);
-        var response = CommonResponse<UserDto>.Success(_mapper.Map<UserDto>(user));
-        return response;
+        if (user == null)
+            return CommonResponse<UserDto>.Failure("User not found.");
+
+        return CommonResponse<UserDto>.Success(_mapper.Map<UserDto>(user));
     }
 }
