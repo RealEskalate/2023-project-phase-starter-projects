@@ -14,11 +14,13 @@ namespace Application.Features.PostFeature.Handlers.Commands
 {
     public class UpdatePostHandler : IRequestHandler<UpdatePostCommand, BaseResponse<PostResponseDTO>>
     {
-        private readonly IPostRepository _postRepository;
+        // private readonly IPostRepository _postRepository;
+        private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
-        public UpdatePostHandler(IPostRepository postRepository, IMapper mapper)
+        public UpdatePostHandler(IUnitOfWork unitOfWork, IMapper mapper)
         {
-            _postRepository = postRepository;
+            // _postRepository = postRepository;
+            _unitOfWork = unitOfWork;
             _mapper = mapper;
         }
 
@@ -31,7 +33,7 @@ namespace Application.Features.PostFeature.Handlers.Commands
             {
                 throw new ValidationException(validationResult);
             }
-            var post = await _postRepository.Get(request.Id);
+            var post = await _unitOfWork.PostRepository.Get(request.Id);
 
 
             if (post == null) 
@@ -44,7 +46,7 @@ namespace Application.Features.PostFeature.Handlers.Commands
             //var newPost = _mapper.Map<Post>(request.PostUpdateData);
             //newPost.Id = request.Id;
             //newPost.UserId = request.userId;
-            var updationResult = await _postRepository.Update(post);
+            var updationResult = await _unitOfWork.PostRepository.Update(post);
             var result = _mapper.Map<PostResponseDTO>(updationResult);
 
             return new BaseResponse<PostResponseDTO> {

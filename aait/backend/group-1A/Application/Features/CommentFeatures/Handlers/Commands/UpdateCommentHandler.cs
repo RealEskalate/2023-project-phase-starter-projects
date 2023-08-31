@@ -15,12 +15,14 @@ namespace Application.Features.CommentFeatures.Handlers.Commands
 {
     public class UpdateCommentHandler : IRequestHandler<UpdateCommentCommand, BaseResponse<CommentResponseDTO>>
     {
-        private readonly ICommentRepository _commentRepository;
+        // private readonly ICommentRepository _commentRepository;
+        private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
 
-        public UpdateCommentHandler(ICommentRepository commentRepository, IMapper mapper)
+        public UpdateCommentHandler(IUnitOfWork unitOfWork, IMapper mapper)
         {
-            _commentRepository = commentRepository;
+            // _commentRepository = commentRepository;
+            _unitOfWork = unitOfWork;
             _mapper = mapper;
         }
         public async Task<BaseResponse<CommentResponseDTO>> Handle(UpdateCommentCommand request, CancellationToken cancellationToken)
@@ -33,7 +35,7 @@ namespace Application.Features.CommentFeatures.Handlers.Commands
             {
                 throw new ValidationException(validationResult);
             }
-            var comment = await _commentRepository.Get(request.Id);
+            var comment = await _unitOfWork.CommentRepository.Get(request.Id);
 
             if (comment == null) 
             {
@@ -43,9 +45,10 @@ namespace Application.Features.CommentFeatures.Handlers.Commands
 
             _mapper.Map(request.CommentData, comment);
             
-            var updationResult = await _commentRepository.Update(comment);
+            var updationResult = await _unitOfWork.CommentRepository.Update(comment);
             var result = _mapper.Map<CommentResponseDTO>(updationResult);
 
+            await _unitOfWork.Save();
 
 
 

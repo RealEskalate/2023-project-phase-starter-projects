@@ -14,17 +14,18 @@ namespace Application.Features.PostFeature.Handlers.Queries
 {
     public class GetAllPostHandler : IRequestHandler<GetAllPostsQuery, BaseResponse<List<PostResponseDTO>>>
     {
-        private readonly IPostRepository _postRepository;
+        // private readonly IPostRepository _postRepository;
         private readonly IMapper _mapper;
-
-        public GetAllPostHandler(IPostRepository postRepository, IMapper mapper)
+        private readonly IUnitOfWork _unitOfWork;
+        public GetAllPostHandler(IUnitOfWork unitOfWork,IMapper mapper)
         {
-            _postRepository = postRepository;
+            // _postRepository = postRepository;
+            _unitOfWork = unitOfWork;
             _mapper = mapper;
         }
         public async Task<BaseResponse<List<PostResponseDTO>>> Handle(GetAllPostsQuery request, CancellationToken cancellationToken)
         {
-            var result = await _postRepository.GetAllPostsWithReaction(request.userId);
+            var result = await _unitOfWork.PostRepository.GetAllPostsWithReaction(request.userId);
             return new BaseResponse<List<PostResponseDTO>> {
                 Success = true,
                 Message = "Posts are retrieved successfully",

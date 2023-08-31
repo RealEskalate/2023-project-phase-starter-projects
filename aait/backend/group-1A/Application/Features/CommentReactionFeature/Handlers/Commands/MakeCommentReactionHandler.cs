@@ -12,15 +12,17 @@ namespace Application.Features.CommentReactionFeature.Handlers.Commands
 {
     public class MakeCommentReactionHandler : IRequestHandler<MakeReactionOnComment, BaseResponse<int>>
     {
-        private readonly ICommentReactionRepository _commentReactionRespository;
+        // private readonly ICommentReactionRepository _commentReactionRespository;
         private readonly IMapper _mapper;
-        private readonly ICommentRepository _commentRepository;
+        // private readonly ICommentRepository _commentRepository;
+        private readonly IUnitOfWork _unitOfWork;
 
-        public MakeCommentReactionHandler(ICommentReactionRepository commentReactionRepository, IMapper mapper, ICommentRepository commentRepository)
+        public MakeCommentReactionHandler(IMapper mapper, IUnitOfWork unitOfWork)
         {
-            _commentReactionRespository = commentReactionRepository;
+            // _commentReactionRespository = commentReactionRepository;
             _mapper = mapper;
-            _commentRepository = commentRepository;
+            // _commentRepository = commentRepository;
+            _unitOfWork = unitOfWork;
         }
 
         public async Task<BaseResponse<int>> Handle(MakeReactionOnComment request, CancellationToken cancellationToken)
@@ -33,7 +35,7 @@ namespace Application.Features.CommentReactionFeature.Handlers.Commands
                 throw new ValidationException(validationResult);
             }
 
-            var exists = await _commentRepository.Exists(request.ReactionData.ReactedId);
+            var exists = await _unitOfWork.CommentRepository.Exists(request.ReactionData.ReactedId);
             if (exists == false)
             {
                 throw new NotFoundException("Comment is not found to make the Reactions");
@@ -57,7 +59,7 @@ namespace Application.Features.CommentReactionFeature.Handlers.Commands
 
 
 
-            var result = await _commentReactionRespository.MakeReaction(request.UserId, commentReaction);
+            var result = await _unitOfWork.CommentReactionRepository.MakeReaction(request.UserId, commentReaction);
             if (result == null)
             {
                 throw new BadRequestException("Comment is not found");

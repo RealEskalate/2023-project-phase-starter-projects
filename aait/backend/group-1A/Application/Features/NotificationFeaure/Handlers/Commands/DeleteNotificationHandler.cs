@@ -15,30 +15,32 @@ namespace Application.Features.NotificationFeaure.Handlers.Commands
 {
     public class DeleteNotificationHandler : IRequestHandler<DeleteNotification, BaseResponse<string>>
     {
-        private readonly INotificationRepository _notificationRepository;
+        // private readonly INotificationRepository _notificationRepository;
         private readonly IMapper _mapper;
-        public DeleteNotificationHandler(INotificationRepository notificationRepository, IMapper mapper)
+        private readonly IUnitOfWork _unitOfWork;
+        public DeleteNotificationHandler(IUnitOfWork unitOfWork,IMapper mapper)
         {
             _mapper = mapper;
-            _notificationRepository = notificationRepository;
+            // _notificationRepository = notificationRepository;
+            _unitOfWork = unitOfWork;
             
         }
 
         public async Task<BaseResponse<string>> Handle(DeleteNotification request, CancellationToken cancellationToken)
         {
-            var exists = await _notificationRepository.Exists(request.NotificationId);
+            var exists = await _unitOfWork.NotificationRepository.Exists(request.NotificationId);
             if (!exists) {
                 throw new NotFoundException("Notification is not found");
                 
             }
 
-            var notification = await _notificationRepository.GetSingle(request.NotificationId);
+            var notification = await _unitOfWork.NotificationRepository.GetSingle(request.NotificationId);
 
             if (notification.UserId != request.UserId){
                 throw new BadRequestException("Notification is not found"
                 );
             }
-            var result = await _notificationRepository.Delete(notification);
+            var result = await _unitOfWork.NotificationRepository.Delete(notification);
 
             return new BaseResponse<string> ()
             {

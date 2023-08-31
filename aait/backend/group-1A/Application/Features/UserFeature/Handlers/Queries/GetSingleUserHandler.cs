@@ -9,12 +9,14 @@ namespace Application.Features.UserFeature.Handlers.Queries
 {
     public class GetSingleUserHandler : IRequestHandler<GetSingleUserQuery, UserResponseDTO>
     {
-        private readonly IUserRepository _UserRepository;
+        // private readonly IUserRepository _UserRepository;
         private readonly IMapper _mapper;
+        private readonly IUnitOfWork _unitOfWork;
 
-        public GetSingleUserHandler(IUserRepository UserRepository, IMapper mapper)
+        public GetSingleUserHandler(IUnitOfWork unitOfWork, IMapper mapper)
         {
-            _UserRepository = UserRepository;
+            // _UserRepository = UserRepository;
+            _unitOfWork = unitOfWork;
             _mapper = mapper;
         }
         public async Task<UserResponseDTO> Handle(GetSingleUserQuery request, CancellationToken cancellationToken)
@@ -23,7 +25,7 @@ namespace Application.Features.UserFeature.Handlers.Queries
             {
                 throw new ArgumentNullException(nameof(request));
             }
-            var result = await _UserRepository.Get(request.userId);
+            var result = await _unitOfWork.UserRepository.Get(request.userId);
 
             if (result == null)
             {

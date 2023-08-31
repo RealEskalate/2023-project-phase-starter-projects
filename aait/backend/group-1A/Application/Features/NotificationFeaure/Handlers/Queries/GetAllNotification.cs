@@ -13,12 +13,14 @@ namespace Application.Features.NotificationFeaure.Handlers.Queries
 {
     public class GetAllNotificationHandler : IRequestHandler<GetAllNotificationsQuery, BaseResponse<List<NotificationResponseDTO>>>
     {
-        private readonly INotificationRepository _notificationRepository;
+        // private readonly INotificationRepository _notificationRepository;
         private readonly IMapper _mapper;
+        private readonly IUnitOfWork _unitOfWork;
 
-        public GetAllNotificationHandler(INotificationRepository notificationRepository, IMapper mapper)
+        public GetAllNotificationHandler(IUnitOfWork unitOfWork, IMapper mapper)
         {
-            _notificationRepository = notificationRepository;
+            // _notificationRepository = notificationRepository;
+            _unitOfWork = unitOfWork;
             _mapper = mapper;
         }
 
@@ -26,7 +28,7 @@ namespace Application.Features.NotificationFeaure.Handlers.Queries
         public async Task<BaseResponse<List<NotificationResponseDTO>>> Handle(GetAllNotificationsQuery request, CancellationToken cancellationToken)
         {
             
-            var result = await _notificationRepository.GetAll(request.UserId);
+            var result = await _unitOfWork.NotificationRepository.GetAll(request.UserId);
             return new BaseResponse<List<NotificationResponseDTO>> () {
                 Success = true,
                 Message = "Notifications are retrieved successfully",

@@ -4,7 +4,7 @@ using Application.Contracts;
 using Domain.Entites;
 using Microsoft.EntityFrameworkCore;
 
-namespace Persistence.Repositories.NotificationRepository
+namespace Persistence.Repositories
 {
     public class NotificationRepository : GenericRepository<Notification>, INotificationRepository
     {

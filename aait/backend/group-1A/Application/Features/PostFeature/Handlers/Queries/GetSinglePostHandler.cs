@@ -11,17 +11,19 @@ namespace Application.Features.PostFeature.Handlers.Queries
 {
     public class GetSinglePostHandler : IRequestHandler<GetSinglePostQuery, BaseResponse<PostResponseDTO>>
     {
-        private readonly IPostRepository _postRepository;
+        // private readonly IPostRepository _postRepository;
+        private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
 
-        public GetSinglePostHandler(IPostRepository postRepository, IMapper mapper)
+        public GetSinglePostHandler(IUnitOfWork unitOfWork, IMapper mapper)
         {
-            _postRepository = postRepository;
+            // _postRepository = postRepository;
+            _unitOfWork = unitOfWork;
             _mapper = mapper;
         }
         public async Task<BaseResponse<PostResponseDTO>> Handle(GetSinglePostQuery request, CancellationToken cancellationToken)
         {
-            var result = await _postRepository.Get(request.Id);
+            var result = await _unitOfWork.PostRepository.Get(request.Id);
             if (result == null)
             {
                 throw new NotFoundException("Post is not found");

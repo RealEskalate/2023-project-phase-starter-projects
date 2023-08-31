@@ -12,21 +12,23 @@ namespace Application.Features.FollowFeature.Handlers.Commands
      public class DeleteFollowCommandHandler : IRequestHandler<DeleteFollowCommand, BaseResponse<int>>
     {
       
-        private readonly IFollowRepository _followRepository;
-        private readonly IUserRepository _userRepository;
+        // private readonly IFollowRepository _followRepository;
+        // private readonly IUserRepository _userRepository;
         private readonly IMapper _mapper;
+        private readonly IUnitOfWork _unitOfWork;
 
-        public DeleteFollowCommandHandler(IMapper mapper, IFollowRepository FollowRepository,IUserRepository userRepository)
+        public DeleteFollowCommandHandler(IMapper mapper, IUnitOfWork unitOfWork)
         {
             _mapper = mapper;
-            _followRepository = FollowRepository;
-            _userRepository = userRepository;
+            // _followRepository = FollowRepository;
+            // _userRepository = userRepository;
+            _unitOfWork = unitOfWork;
 
         }
 
         public async Task<BaseResponse<int>> Handle(DeleteFollowCommand request, CancellationToken cancellationToken)
         {   
-            var followValidation = new FollowDTOValidation(_userRepository,_followRepository);
+            var followValidation = new FollowDTOValidation(_unitOfWork.UserRepository,_unitOfWork.FollowRepository);
             var followValidationResult = await followValidation.ValidateAsync(request.FollowDTO!);
             var createFollowResponse = new BaseResponse<int>();
 
@@ -36,7 +38,7 @@ namespace Application.Features.FollowFeature.Handlers.Commands
             }
 
             var followEntity = _mapper.Map<Follow>(request.FollowDTO);
-            await _followRepository.DeleteFollow(followEntity);
+            await _unitOfWork.FollowRepository.DeleteFollow(followEntity);
             
             createFollowResponse.Success = true;
             createFollowResponse.Message = $"User with Id {followEntity.FollowerId} has un followed you";

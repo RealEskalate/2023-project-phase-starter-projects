@@ -2,16 +2,13 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Persistence;
 using Persistence.Repositories;
 using Persistence.Repositories.CommentRespositories;
-using Persistence.Repositories.NotificationRepository;
 using SocialSync.Application.Contracts;
 using SocialSync.Persistence.Repositories.Auth;
-using System.Reflection;
 using Persistence.Repositories.ReactionRespositories;
 using SocialSync.Persistnece.Repositories;
-using SocialSync.Persistence.Repositories;
+
 
 namespace Persistence
 {
@@ -23,6 +20,9 @@ namespace Persistence
                  opt.UseNpgsql(configuration.GetConnectionString("SocialMediaApp")));
 
             services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
+            services.AddScoped<IUnitOfWork, UnitOfWork>();
+
+
             services.AddScoped<IPostRepository, PostRepository>();
             services.AddScoped<IPostReactionRepository, PostReactionRepository>();
             services.AddScoped<ICommentRepository, CommentRepository>(); // Add this line

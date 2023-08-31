@@ -12,16 +12,18 @@ namespace Application.Features.UserFeature.Handlers.Commands
     public class CreateUserHandler : IRequestHandler<CreateUserCommand, BaseResponse<string>>
     {
         private readonly IMapper _mapper;
-        private readonly IUserRepository _UserRepository;
+        // private readonly IUserRepository _UserRepository;
+        private readonly IUnitOfWork _unitOfWork;
 
-        public CreateUserHandler(IMapper mapper, IUserRepository UserRepository)
+        public CreateUserHandler(IMapper mapper, IUnitOfWork unitOfWork)
         {
             _mapper = mapper;
-            _UserRepository = UserRepository;
+            // _UserRepository = UserRepository;
+            _unitOfWork = unitOfWork;
         }
         public async Task<BaseResponse<string>> Handle(CreateUserCommand request, CancellationToken cancellationToken)
         {
-            var validator = new UserCreateValidation(_UserRepository);
+            var validator = new UserCreateValidation(_unitOfWork.UserRepository);
             var validationResult = await validator.ValidateAsync(request.NewUserData!);
 
             var createResponse = new BaseResponse<string>();
@@ -32,7 +34,7 @@ namespace Application.Features.UserFeature.Handlers.Commands
 
 
             var newUser = _mapper.Map<User>(request.NewUserData);
-            var result = await _UserRepository.Add(newUser);
+            var result = await _unitOfWork.UserRepository.Add(newUser);
             
             createResponse.Success = true;
             createResponse.Message = "User created successfully";

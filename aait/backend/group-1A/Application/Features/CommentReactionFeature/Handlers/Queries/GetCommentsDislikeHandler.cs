@@ -14,27 +14,29 @@ namespace Application.Features.CommentReactionFeature.Handlers.Queries
 {
     public class GetCommentsDislikeHandler : IRequestHandler<GetCommentsDislikeQuery, BaseResponse<List<ReactionResponseDTO>>>
     {
-        private readonly ICommentReactionRepository _commentReaction;
+        // private readonly ICommentReactionRepository _commentReaction;
         private readonly IMapper _mapper;
-        private readonly ICommentRepository _commentRepository;
+        // private readonly ICommentRepository _commentRepository;
+        private readonly IUnitOfWork _unitOfWork;
 
-        public GetCommentsDislikeHandler(ICommentReactionRepository commentReaction, IMapper mapper , ICommentRepository commentRepository)
+        public GetCommentsDislikeHandler(IMapper mapper , IUnitOfWork unitOfWork)
         {
-            _commentReaction = commentReaction;
+            // _commentReaction = commentReaction;
             _mapper = mapper;
-            _commentRepository = commentRepository;
+            // _commentRepository = commentRepository;
+            _unitOfWork = unitOfWork;
         }
         
         public async Task<BaseResponse<List<ReactionResponseDTO>>> Handle(GetCommentsDislikeQuery request, CancellationToken cancellationToken)
         {
-            var exists = await _commentRepository.Exists(request.CommentId);
+            var exists = await _unitOfWork.CommentRepository.Exists(request.CommentId);
             if (exists == false)
             {
                 throw new NotFoundException( "Comment is not found to get the Reactions"
                 );
             }
 
-            var result = await _commentReaction.DisLikes(request.CommentId);
+            var result = await _unitOfWork.CommentReactionRepository.DisLikes(request.CommentId);
 
             return new BaseResponse<List<ReactionResponseDTO>> () {
                 Success = true,

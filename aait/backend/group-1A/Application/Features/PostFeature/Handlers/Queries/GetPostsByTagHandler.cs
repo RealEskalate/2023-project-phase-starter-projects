@@ -12,18 +12,20 @@ namespace Application.Features.PostFeature.Handlers.Queries;
 public class GetPostsByTagHandler : IRequestHandler<GetPostsByTagQuery, BaseResponse<List<PostResponseDTO>>>
 {
     private readonly IMapper _mapper;
-    private readonly IPostRepository _postRepository;
+    // private readonly IPostRepository _postRepository;
+    private readonly IUnitOfWork _unitOfWork;
 
-    public GetPostsByTagHandler( IPostRepository postRepository,IMapper mapper )
+    public GetPostsByTagHandler( IUnitOfWork unitOfWork,IMapper mapper )
     {  
         _mapper = mapper;
-        _postRepository = postRepository;
+        // _postRepository = postRepository;
+        _unitOfWork = unitOfWork;
         
     }
 
     public async Task<BaseResponse<List<PostResponseDTO>>> Handle(GetPostsByTagQuery request, CancellationToken cancellationToken)
     {
-        var result = await _postRepository.GetByTagName(request.TagName);
+        var result = await _unitOfWork.PostRepository.GetByTagName(request.TagName);
 
         if(result ==null){
             throw new NotFoundException("Tag Not found");

@@ -1,3 +1,4 @@
+using Application.Contracts;
 using Application.Response;
 using AutoMapper;
 using MediatR;
@@ -11,15 +12,17 @@ namespace SocialSync.Application.Features.Handlers;
 public class GetAllTagsRequestHandler : IRequestHandler<GetAllTagsRequest, BaseResponse<List<TagResponseDto>>>
 {
     private readonly IMapper _mapper;
-    private readonly ITagRepository _tagReposiotry;
-    public GetAllTagsRequestHandler(ITagRepository tagRepository,IMapper mapper)
+    // private readonly ITagRepository _tagReposiotry;
+    private readonly IUnitOfWork _unitOfWork;
+    public GetAllTagsRequestHandler(IUnitOfWork unitOfWork,IMapper mapper)
     {
-        _tagReposiotry = tagRepository;
+        // _tagReposiotry = tagRepository;
+        _unitOfWork = unitOfWork;
         _mapper = mapper;
     }
     public async Task<BaseResponse<List<TagResponseDto>>> Handle(GetAllTagsRequest request, CancellationToken cancellationToken)
     {
-        var tags = await _tagReposiotry.GetAll(request.userId);
+        var tags = await _unitOfWork.TagRepository.GetAll(request.userId);
         Console.WriteLine(tags);
         
         return new BaseResponse<List<TagResponseDto>>(){

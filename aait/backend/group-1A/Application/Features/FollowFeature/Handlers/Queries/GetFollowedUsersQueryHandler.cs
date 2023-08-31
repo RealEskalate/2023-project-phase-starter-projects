@@ -10,17 +10,19 @@ namespace Application.Features.FollowFeature.Handlers.Queries
 {
     public class GetFollowedUsersQueryHandler : IRequestHandler<GetFollowedUsersQuery,BaseResponse<List<UserResponseDTO>>>
     {
-        IFollowRepository _followRepository;
+        // IFollowRepository _followRepository;
+        private readonly IUnitOfWork _unitOfWork;
         IMapper _mapper;
-        public GetFollowedUsersQueryHandler(IFollowRepository followRepository,IMapper mapper)
+        public GetFollowedUsersQueryHandler(IUnitOfWork unitOfWork,IMapper mapper)
         {
-           _followRepository = followRepository; 
+        //    _followRepository = followRepository; 
+        _unitOfWork = unitOfWork;
            _mapper = mapper;
         }
 
         public async Task<BaseResponse<List<UserResponseDTO>>> Handle(GetFollowedUsersQuery request, CancellationToken cancellationToken)
         {
-            var followedUsers = await _followRepository.GetFollowedUsers(request.Id);
+            var followedUsers = await _unitOfWork.FollowRepository.GetFollowedUsers(request.Id);
 
             return new BaseResponse<List<UserResponseDTO>> () {
                 Success =  true,

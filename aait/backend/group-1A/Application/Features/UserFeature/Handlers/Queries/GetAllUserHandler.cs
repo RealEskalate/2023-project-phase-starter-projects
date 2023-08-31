@@ -13,17 +13,19 @@ namespace Application.Features.UserFeature.Handlers.Queries
 {
     public class GetAllUserHandler : IRequestHandler<GetAllUsersQuery, List<UserResponseDTO>>
     {
-        private readonly IUserRepository _UserRepository;
+        // private readonly IUserRepository _UserRepository;
         private readonly IMapper _mapper;
+        private readonly IUnitOfWork _unitOfWork;
 
-        public GetAllUserHandler(IUserRepository UserRepository, IMapper mapper)
+        public GetAllUserHandler(IUnitOfWork unitOfWork, IMapper mapper)
         {
-            _UserRepository = UserRepository;
+            // _UserRepository = UserRepository;
+            _unitOfWork = unitOfWork;
             _mapper = mapper;
         }
         public async Task<List<UserResponseDTO>> Handle(GetAllUsersQuery request, CancellationToken cancellationToken)
         {
-            var result = await _UserRepository.GetAllUsers();
+            var result = await _unitOfWork.UserRepository.GetAllUsers();
 
             return _mapper.Map<List<UserResponseDTO>>(result);
         }

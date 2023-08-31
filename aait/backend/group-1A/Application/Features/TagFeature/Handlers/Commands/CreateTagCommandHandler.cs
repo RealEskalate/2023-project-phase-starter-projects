@@ -1,3 +1,4 @@
+using Application.Contracts;
 using Application.Response;
 using AutoMapper;
 using MediatR;
@@ -12,16 +13,18 @@ public class CreateTagCommandHandler : IRequestHandler<CreateTagCommand, BaseRes
 {
 
     private readonly IMapper _mapper;
-    private readonly ITagRepository _tagReposiotory;
+    // private readonly ITagRepository _tagReposiotory;
+    private readonly IUnitOfWork _unitOfWork;
 
-    public CreateTagCommandHandler(IMapper mapper, ITagRepository tagRepository)
+    public CreateTagCommandHandler(IMapper mapper, IUnitOfWork unitOfWork)
     {
         _mapper = mapper;
-        _tagReposiotory = tagRepository;
+        // _tagReposiotory = tagRepository;
+        _unitOfWork = unitOfWork;
     }
     public async Task<BaseResponse<string>> Handle(CreateTagCommand request, CancellationToken cancellationToken)
     {
-        var result = await _tagReposiotory.Add(_mapper.Map<Tag>(request.CreateTagDto));
+        var result = await _unitOfWork.TagRepository.Add(_mapper.Map<Tag>(request.CreateTagDto));
 
         return new BaseResponse<string>(){
             Value = result.Title
