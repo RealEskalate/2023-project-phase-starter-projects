@@ -74,6 +74,11 @@ flutter:
     - assets/images/profile.png
     - assets/images/post_1.png
     - assets/svg/
+
+  fonts:
+    - family: Urbanist
+      fonts:
+        - asset: assets/fonts/Urbanist/Urbanist-ExtraLightItalic.ttf
   #   - images/a_dot_burr.jpeg
 
   #   - images/a_dot_ham.jpeg

@@ -69,7 +69,8 @@ class AuthRepositoryImpl extends AuthRepository {
             bio: remotelogin.data.bio,
             createdAt: remotelogin.data.createdAt,
             image: remotelogin.data.image,
-            imageCloudinaryPublicId: remotelogin.data.imageCloudinaryPublicId));
+            imageCloudinaryPublicId: remotelogin.data.imageCloudinaryPublicId,
+            articles: []));
 
         return Right(remotelogin);
       } on ServerException catch (e) {

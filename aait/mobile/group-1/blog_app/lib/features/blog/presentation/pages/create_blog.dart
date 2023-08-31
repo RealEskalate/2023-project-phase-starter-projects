@@ -16,6 +16,7 @@ class _CreateBlogPageState extends State<CreateBlogPage> {
     BlocProvider.of<ProfileBloc>(context).add(GetProfileInfo());
     super.initState();
   }
+
   List<String> tags = [
     "Sports",
     "Tech",
@@ -40,8 +41,6 @@ class _CreateBlogPageState extends State<CreateBlogPage> {
 
   @override
   Widget build(BuildContext context) {
-    
-
     bool tonalSelected = true;
 
     final formKey = GlobalKey<FormState>();
@@ -52,7 +51,7 @@ class _CreateBlogPageState extends State<CreateBlogPage> {
     return Scaffold(
       body: BlocBuilder<ProfileBloc, ProfileState>(
         builder: (context, state) {
-          if ((state is! Loaded)) {
+          if ((state is Loaded)) {
             return SafeArea(
               child: Container(
                 padding: const EdgeInsets.all(25),
@@ -63,8 +62,7 @@ class _CreateBlogPageState extends State<CreateBlogPage> {
                       children: [
                         IconButton.filledTonal(
                           isSelected: tonalSelected,
-                          icon: const Icon(Icons
-                              .arrow_back_ios_new_rounded),
+                          icon: const Icon(Icons.arrow_back_ios_new_rounded),
                           onPressed: () {
                             Navigator.of(context).pop();
                           },
@@ -118,12 +116,9 @@ class _CreateBlogPageState extends State<CreateBlogPage> {
                               fontWeight: FontWeight.w300),
                         ),
                         style: const TextStyle(
-
-                            color: Colors.black, 
+                            color: Colors.black,
                             fontSize: 21.0,
-                            fontWeight:
-                                FontWeight.w400
-                            ),
+                            fontWeight: FontWeight.w400),
                         validator: (String? name) {
                           if (name == null || name.isEmpty) {
                             return "Name can not be empty";
@@ -136,8 +131,8 @@ class _CreateBlogPageState extends State<CreateBlogPage> {
                       padding: const EdgeInsets.symmetric(
                           vertical: 7, horizontal: 15),
                       child: Wrap(
-                          spacing: 8.0, 
-                          runSpacing: 4.0, 
+                          spacing: 8.0,
+                          runSpacing: 4.0,
                           children: List.generate(tags.length, (index) {
                             return ChoiceChip(
                               label: Text(tags[index]),
@@ -204,8 +199,8 @@ class _CreateBlogPageState extends State<CreateBlogPage> {
                           ElevatedButton(
                             onPressed: () async {
                               final formValid =
-                                  formKey.currentState!.validate();
-                              if (!formValid) {
+                                  formKey.currentState?.validate();
+                              if (formValid != null && !formValid) {
                                 return;
                               }
                             },
@@ -238,13 +233,23 @@ class _CreateBlogPageState extends State<CreateBlogPage> {
                 ),
               ),
             );
-          } else if (state is Error) {
+          } else if (state is Loading) {
             return const Center(
-              child: Text("Error"),
+              child: CircularProgressIndicator(),
             );
           } else {
-            return const Center(
-              child: Text("Loading"),
+            return Center(
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  const Text("Error occured. Please try again later."),
+                  IconButton(
+                      onPressed: () {
+                        Navigator.pop(context);
+                      },
+                      icon: Icon(Icons.arrow_back_ios_new_rounded))
+                ],
+              ),
             );
           }
         },

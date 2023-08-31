@@ -53,8 +53,14 @@ class _ProfilePageState extends State<ProfilePage> {
                               vertical: 10, horizontal: 30),
                           margin: const EdgeInsets.only(bottom: 15),
                           child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            mainAxisAlignment: MainAxisAlignment.start,
                             children: [
+                              IconButton(
+                                onPressed: () {
+                                  Navigator.pop(context);
+                                },
+                                icon: Icon(Icons.arrow_back_ios),
+                              ),
                               Text(
                                 'Profile',
                                 style: TextStyle(
