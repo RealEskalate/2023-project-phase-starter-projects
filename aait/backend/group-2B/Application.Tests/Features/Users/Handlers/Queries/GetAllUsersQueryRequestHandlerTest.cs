@@ -9,13 +9,13 @@ using SocialSync.Application.Tests.Mocks;
 
 namespace SocialSync.Application.Tests.Features.Authentication.Handlers.Commands;
 
-public class GetAllUserQueryRequestHandlerTest
+public class GetAllUsersQueryRequestHandlerTest
 {
     private readonly IMapper _mapper;
     private readonly Mock<IUnitOfWork> _mockUnitOfWork;
     private readonly GetAllUsersQueryRequestHandler _handler;
 
-    public GetAllUserQueryRequestHandlerTest()
+    public GetAllUsersQueryRequestHandlerTest()
     {
         var mapperConfig = new MapperConfiguration(c =>
         {

@@ -40,13 +40,14 @@ public class GetFollowersQueryRequestHandlerTest
             CancellationToken.None
         );
 
-        result.ShouldBeNull();
+        result.IsSuccess.ShouldBeTrue();
+        result.Value.ShouldBeEmpty();
     }
 
     [Fact]
     public async Task Valid_GetFollowersUserHasFollowers()
     {
-        var followUnfollowDto = new FollowUnFollowDto { FollwerId = 1, FollowedId = 1 };
+        var followUnfollowDto = new FollowUnFollowDto { FollwerId = 1, FollowedId = 2 };
         await _followUserCommandHandler.Handle(
             new FollowUserCommandRequest { FollowUnfollowDto = followUnfollowDto },
             CancellationToken.None
@@ -57,6 +58,6 @@ public class GetFollowersQueryRequestHandlerTest
             CancellationToken.None
         );
 
-        result.ShouldBeNull();
+        result.Value.ShouldNotBeEmpty();
     }
 }
