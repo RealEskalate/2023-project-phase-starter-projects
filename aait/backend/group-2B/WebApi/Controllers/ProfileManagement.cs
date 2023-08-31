@@ -1,11 +1,11 @@
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
-
 using Application.DTOs.Users;
 using Application.Features.Users.Requests.Queries;
 using Application.Features.Users.Requests.Commands;
 using SocialSync.Application.DTOs.Authentication;
 using Application.DTOs.Common;
+using SocialSync.WebApi.Services.Interfaces;
 
 namespace WebApi.Controllers;
 
@@ -14,13 +14,15 @@ namespace WebApi.Controllers;
 public class ProfileManagement : ControllerBase
 {
     private readonly IMediator _mediator;
+    private readonly IUserService _userService;
 
-    public ProfileManagement(IMediator mediator)
+    public ProfileManagement(IMediator mediator, IUserService userService)
     {
         _mediator = mediator;
+        _userService = userService;
     }
 
-    [HttpGet("users:int")]
+    [HttpGet("users")]
     public async Task<ActionResult> GetAllUser()
     {
         var response = await _mediator.Send(new GetAllUserQuerieRequest());
@@ -48,35 +50,38 @@ public class ProfileManagement : ControllerBase
         return Ok(response);
     }
 
-    [HttpPost("follow")]
-    public async Task<IActionResult> UserFollowApi([FromBody] FollowUnFollowDto followDto)
+    [HttpPost("follow/{followedId:int}")]
+    public async Task<IActionResult> UserFollowApi(int followedId)
     {
+        var userId = _userService.GetUserId();
+        var followDto = new FollowUnFollowDto { FollwerId = userId, FollowedId = followedId };
         var response = await _mediator.Send(
             new FollowUserCommandRequest { FollowUnfollowDto = followDto }
         );
-
         return Ok(response);
     }
 
-    [HttpPost("unfollow")]
-    public async Task<IActionResult> UserUnFollowApi([FromBody] FollowUnFollowDto unFollowDto)
+    [HttpPost("unfollow/{unfollowedId:int}")]
+    public async Task<IActionResult> UserUnFollowApi(int unfollowedId)
     {
-        var command = new UnFollowUserCommandRequest { UnfollowDto = unFollowDto };
+        var userId = _userService.GetUserId();
+        var unfollowDto = new FollowUnFollowDto { FollwerId = userId, FollowedId = unfollowedId };
+        var command = new UnFollowUserCommandRequest { UnfollowDto = unfollowDto };
         var response = await _mediator.Send(command);
-
         return Ok(response);
     }
 
-    [HttpPatch("update")]
-    public async Task<IActionResult> UpdateUserProfile([FromBody] UserDto userDto)
+    [HttpPatch("update/{userId:int}")]
+    public async Task<IActionResult> UpdateUserProfile(int userId, [FromBody] UserDto userDto)
     {
         var command = new UserUpdateCommandRequest { Userdto = userDto };
         var response = await _mediator.Send(command);
         return Ok(response);
     }
 
-    [HttpDelete("delete")]
-    public async Task<IActionResult> DelateUserAccount([FromBody] UserDeleteDto userDeleteDto)
+    [HttpDelete("delete/{userId:int}")]
+    public async Task<IActionResult> DelateUserAccount(int userId,
+        [FromBody] UserDeleteDto userDeleteDto)
     {
         var command = new UserDeleteCommandRequest { UserdeleteDto = userDeleteDto };
         var response = await _mediator.Send(command);
