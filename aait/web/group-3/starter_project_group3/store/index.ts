@@ -7,9 +7,11 @@ import { teamsApi } from "./features/teams/team-member-api";
 import { storiesApi } from "./features/success-stories/sucess-stories-api";
 import { myblogsApi } from "./features/my-blogs";
 import { createUpdateProfileAPI } from "./update-personal-information";
+import { stateSlice } from "./user-Slice";
 
 export const store = configureStore({
   reducer: {
+    LogInState:stateSlice.reducer, 
     [blogsApi.reducerPath]: blogsApi.reducer,
     [singleBlogApi.reducerPath]: singleBlogApi.reducer,
     [createBlogApi.reducerPath]: createBlogApi.reducer,
