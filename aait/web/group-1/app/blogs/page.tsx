@@ -1,7 +1,7 @@
 "use client";
 
 import BlogItem from "@/components/blogs/BlogItem";
-import { useGetBlogsQuery } from "@/store/features/blogs/blogs";
+import { useGetBlogsQuery } from "@/store/blog/blogApi";
 import { Blog } from "@/types/Blog";
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
@@ -57,6 +57,7 @@ const page = () => {
               )}
               {filteredBlogs?.map((blog: Blog) => (
                 <BlogItem
+                  key={blog._id}
                   _id={blog._id}
                   image={blog.image}
                   title={blog.title}

@@ -1,17 +1,17 @@
 import { configureStore, getDefaultMiddleware } from '@reduxjs/toolkit'
 import { authApi } from './auth/authApi'
-import { blogsApi } from './features/blogs/blogs'
 import { teamMembersApi } from "./features/team-members/team-members";
+import { blogApi } from './blog/blogApi';
 
 
 export const store = configureStore({
   reducer: {
     [authApi.reducerPath]: authApi.reducer,
-    [blogsApi.reducerPath]: blogsApi.reducer,
+    [blogApi.reducerPath]: blogApi.reducer,
     [teamMembersApi.reducerPath]: teamMembersApi.reducer,
   },
 
-  middleware: getDefaultMiddleware => getDefaultMiddleware().concat(authApi.middleware, blogsApi.middleware, teamMembersApi.middleware)
+  middleware: getDefaultMiddleware => getDefaultMiddleware().concat(authApi.middleware, blogApi.middleware, teamMembersApi.middleware)
 })
 
 export type RootState = ReturnType<typeof store.getState>
