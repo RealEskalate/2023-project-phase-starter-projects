@@ -2,7 +2,7 @@ import { Blog } from "@/types/Blog";
 import Image from "next/image";
 import React from "react";
 import AuthorInfo from "./AuthorInfo";
-import parse from "html-react-parser";
+import parse from 'html-react-parser';
 import Link from "next/link";
 
 const BlogItem: React.FC<Blog> = ({
