@@ -1,9 +1,10 @@
 
 using FluentValidation;
+using SocialSync.Application.DTOs.Authentication;
 
 namespace Application.DTOs.Users.Validators;
 
-public class UserDtoValidator : AbstractValidator<Common.UserDto>
+public class UserDtoValidator : AbstractValidator<UserDto>
 {
     public UserDtoValidator()
     {
