@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
+import '../../../../../core/presentation/theme/app_colors.dart';
+
 class UserProfileInfo extends StatelessWidget {
   final String username, fullName, profession;
 
@@ -29,7 +31,7 @@ class UserProfileInfo extends StatelessWidget {
           style: TextStyle(
             fontSize: usernameFontSize,
             fontWeight: FontWeight.w900,
-            color: Color(0xFF2D4379),
+            color: AppColors.darkBlue,
             overflow: TextOverflow.ellipsis,
           ),
         ),
@@ -42,7 +44,7 @@ class UserProfileInfo extends StatelessWidget {
             fontSize: fullNameFontSize,
             fontWeight: FontWeight.w100,
             fontStyle: FontStyle.italic,
-            color: Color(0xFF0D253C),
+            color: AppColors.darkerBlue,
             overflow: TextOverflow.ellipsis,
           ),
         ),
@@ -55,7 +57,7 @@ class UserProfileInfo extends StatelessWidget {
             fontSize: professionFontSize,
             fontStyle: FontStyle.italic,
             fontWeight: FontWeight.w100,
-            color: Color(0xFF376AED),
+            color: AppColors.blue,
             overflow: TextOverflow.ellipsis,
           ),
         ),

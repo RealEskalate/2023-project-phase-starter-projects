@@ -8,4 +8,5 @@ public interface INotificationDto
     public string NotificationType{get; set;}
 
     public int RecepientId { get; set; }
+    public int? PostId {get; set;}
 }

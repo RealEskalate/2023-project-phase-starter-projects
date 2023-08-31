@@ -76,13 +76,19 @@ namespace Application.Tests.Features.FollowFeature.Commands
 
             await Should.ThrowAsync<BadRequestException>(async () =>
                 await _handler.Handle(new CreateFollowCommand() { FollowDTO = _followDTO }, CancellationToken.None));
+        }
 
-            // var result = await _handler.Handle(new CreateFollowCommand() { FollowDTO = _followDTO }, CancellationToken.None);
-            // var Follows = await mocFollowRepository.GetAll();
-            // Follows.Count.ShouldBe(3);
+        [Fact]
+        public async Task FollowAlreadyFollowedUserTest()
+        {
+             var mocFollowRepository = MockFollowRepository.GetFollowRepository().Object;
+            var mockUserRepository = MockUserRepository.GetUserRepository().Object;
+            _handler = new CreateFollowCommandHandler(_mapper,mocFollowRepository,mockUserRepository);
+            _followDTO.FolloweeId = 2;
+            _followDTO.FollowerId = 1;
 
-            
-            // result.ShouldBeOfType<BaseResponse<Follow>>();
+            await Should.ThrowAsync<BadRequestException>(async () =>
+                await _handler.Handle(new CreateFollowCommand() { FollowDTO = _followDTO }, CancellationToken.None));
         }
     }
 }

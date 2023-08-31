@@ -21,7 +21,8 @@ public class SearchUsersHandler : IRequestHandler<SearchUsers, BaseCommandRespon
 
     public async Task<BaseCommandResponse<List<UserDto>>> Handle(SearchUsers request, CancellationToken cancellationToken){
         try{
-            var users = await _unitOfWork.userRepository.Search(request.Query);
+            var users = await _unitOfWork.userRepository.Search(request.Query, request.PageNumber,
+                request.PageSize);
             if (users == null) throw new NotFoundException(nameof(List<Domain.Entities.User>), "Users Not found");
             return BaseCommandResponse<List<UserDto>>.SuccessHandler(_mapper.Map<List<UserDto>>(users));
         }

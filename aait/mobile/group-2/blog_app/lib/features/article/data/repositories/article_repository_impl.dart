@@ -151,4 +151,22 @@ class ArticleRepositoryImpl extends ArticleRepository {
       return Right(tags);
     }
   }
+
+  @override
+  Future<Either<Failure, List<Article>>> getBookmarkedArticles() async {
+    final articles = await localDataSource.getBookmarkedArticles();
+    return Right(articles);
+  }
+
+  @override
+  Future<Either<Failure, Article>> addToBookmark(Article article) async {
+    await localDataSource.addToBookmark(article.toArticleModel());
+    return Right(article);
+  }
+
+  @override
+  Future<Either<Failure, Article>> removeFromBookmark(String articleId) async {
+    final article = await localDataSource.removeFromBookmark(articleId);
+    return Right(article);
+  }
 }

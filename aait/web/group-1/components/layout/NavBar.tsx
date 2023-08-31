@@ -4,6 +4,7 @@ import Image from "next/image";
 import React, { useState } from "react";
 import A2SVLogo from "../../public/images/A2SV.svg";
 import { LinkItems } from "./LinkItems";
+import Link from "next/link";
 
 interface NavItems {
   link: string;
@@ -23,7 +24,7 @@ export const NavBar = () => {
       name: "teams",
     },
     {
-      link: "/success",
+      link: "/success-stories",
       name: "success stories",
     },
     {
@@ -35,7 +36,7 @@ export const NavBar = () => {
       name: "blogs",
     },
     {
-      link: "/contact",
+      link: "/signup",
       name: "get involved",
     },
   ];
@@ -58,7 +59,7 @@ export const NavBar = () => {
 
         {/* login signup section */}
         <div className="flex gap-2">
-          <button className="btn">Login</button>
+          <Link href={'/signin'} className="btn">Login</Link>
           <button className="btn bg-blue-800 text-white">Donate</button>
         </div>
       </div>

@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
+import '../../../../../core/presentation/theme/app_colors.dart';
+
 class UserBio extends StatelessWidget {
   final String userInfo;
 
@@ -31,7 +33,7 @@ class UserBio extends StatelessWidget {
               fontSize: titleFontSize,
               fontStyle: FontStyle.italic,
               fontWeight: FontWeight.w100,
-              color: Color(0xFF0D253C),
+              color: AppColors.darkerBlue,
             ),
           ),
         ),
@@ -45,7 +47,7 @@ class UserBio extends StatelessWidget {
             fontSize: textFontSize,
             fontStyle: FontStyle.italic,
             fontWeight: FontWeight.w100,
-            color: Color(0xFF2D4379),
+            color: AppColors.darkBlue,
           ),
         ),
         SizedBox(

@@ -1,5 +1,4 @@
-import 'package:blog_app/features/article/data/models/user_model.dart';
-import 'package:blog_app/features/profile/domain/use_case/get_profile.dart';
+import 'package:blog_app/features/article/domain/entity/getArticlesEntity.dart';
 import 'package:dartz/dartz.dart';
 import 'package:image_picker/image_picker.dart';
 
@@ -70,13 +69,13 @@ class ArticleRepositoryImpl implements ArticleRepository {
   }
 
   @override
-  ResultFuture<List<Article>> getAllArticles() async {
+  Future<Either<Failure, List<Article>>> getAllArticles(ArticleRequest articleRequest) async {
     if (await networkInfo.isConnected) {
       try {
-        final result = await remoteDataSource.getAllArticles();
+        final result = await remoteDataSource.getAllArticles(articleRequest);
         return Right(result);
-      } on ServerException catch (e) {
-        return Left(ServerFailure.fromException(e));
+      } on ServerException catch (_) {
+        return const Left(ServerFailure(message: "Could not get", statusCode: 500), );
       }
     } else {
       return const Left(ServerFailure(
@@ -153,6 +152,7 @@ class ArticleRepositoryImpl implements ArticleRepository {
           "estimatedReadTime": estimatedReadTime,
           "image": image.path,
           "id": id,
+          "user": "Semere"
         };
         final article = ArticleModel.fromJson(articleMap);
         final result = await remoteDataSource.updateArticle(article);

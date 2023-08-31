@@ -1,44 +1,40 @@
 "use client";
 import Toast from "@/components/toast-Messages/toast-message";
 import { usePasswordResetMutation } from "@/store/features/auth";
-import { authTypes } from "@/types/auth/authTypes";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 import React, { useState } from "react";
 
 const AccountSetting = () => {
+  const router = useRouter();
   const [currentPassword, setcurrentPassword] = useState("");
   const [newPassword, setnewPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [errorMessage, seterrorMessage] = useState("");
   const [showToast, setshowToast] = useState(false);
 
-
   const [passwordReset, { isLoading, isError, data }] =
     usePasswordResetMutation();
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault(); // Prevent default form submission behavior
+    event.preventDefault();
     passwordReset({
       oldPassword: currentPassword,
       newPassword: confirmPassword,
     })
       .unwrap()
       .then((response) => {
-        // show success message via toast
-        setshowToast(true)
-        setTimeout(() => {
-          window.location.href = "/";
-        }, 3000);
+        setshowToast(true);
+        router.push("/");
       })
       .catch((err) => {
-        // seterrorMessage(err.data.message);
         console.error("password change error", err);
       });
   };
 
   return (
     <form onSubmit={handleSubmit}>
-      {showToast && <Toast message={"password updated succesfully."} />}
+      {showToast && <Toast message="password updated succesfully." isError={false} />}
       <div className=" py-10 text-blog_list_sub_text_color flex justify-between items-center ">
         <p>
           <p className="text-xl  font-bold">Manage Personal Information</p>

@@ -1,10 +1,10 @@
 "use client";
 
-import { useGetSingleBlogQuery } from "@/store/features/blogs/blogs";
-import { Blog } from "@/types/Blog";
 import Image from "next/image";
 import { useParams } from "next/navigation";
 import React from "react";
+import parse from "html-react-parser";
+import { useGetSingleBlogQuery } from "@/store/blog/blogApi";
 
 const page = () => {
   const { blogId } = useParams();
@@ -14,7 +14,7 @@ const page = () => {
     isError,
     error,
   } = useGetSingleBlogQuery(blogId);
-
+  
   return isLoading ? (
     <div className="text-center font-bold font-montserrat text-xl">
       Loading...
@@ -29,11 +29,7 @@ const page = () => {
     <div className="py-20 font-montserrat">
       <div className="text-center text-4xl font-canon">{blog?.title}</div>
       <div className="flex justify-center mt-4 space-x-4 text-gray-500 uppercase text-xs">
-        <div>
-          {blog?.tags.map((tag: string) => (
-            <span>{tag}, </span>
-          ))}
-        </div>
+        <div>{blog?.tags.join(", ")}</div>
         <div className="w-0.5 my-0.5 bg-gray-400"></div>
         <p>6 min Read</p>
       </div>
@@ -47,7 +43,7 @@ const page = () => {
       <div className="flex flex-col items-center space-y-2">
         <Image
           src={
-            blog?.author ? blog.author.image : "./images/blogs/Default_pfp.svg"
+            blog?.author?.image || '../images/blogs/Default_pfp.svg'
           }
           alt={"Author's profile picture"}
           width={100}
@@ -55,16 +51,18 @@ const page = () => {
           className="w-12 h-12 object-cover rounded-full"
         />
         <div className="flex justify-center mt-4 space-x-4 text-gray-500 uppercase text-xs font-medium">
-          <p>{blog?.author.name}</p>
+          <p>{blog?.author?.name || 'anonymus'}</p>
           <div className="w-0.5 my-0.5 bg-gray-400"></div>
-          <p>{blog?.author.role}</p>
+          <p>{blog?.author?.role || 'anonymus'}</p>
         </div>
         <p className="-mt-2 text-xs text-blue-700 uppercase font-medium">
-          @{blog?.author.name}
+          @{blog?.author?.name || 'anonymus'}
         </p>
       </div>
 
-      <div className="mt-10 w-7/12 mx-auto font-light">{blog?.description}</div>
+      <div className="mt-10 w-7/12 mx-auto font-light">
+        {parse(blog?.description as string)}
+      </div>
 
       <div
         className={`${

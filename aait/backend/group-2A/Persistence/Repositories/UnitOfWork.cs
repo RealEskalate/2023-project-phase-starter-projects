@@ -1,6 +1,6 @@
 using Application.Contracts.Persistance;
 
-namespace Infrastructure.Persistance.Repository;
+namespace Persistence.Persistance.Repository;
 
 public class UnitOfWork : IUnitOfWork{
     private readonly SocialSyncDbContext _context;

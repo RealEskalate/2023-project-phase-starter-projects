@@ -1,11 +1,14 @@
 import 'dart:developer';
-
+import 'dart:io';
+import 'package:path/path.dart';
+import 'package:async/async.dart';
 import 'package:blog_app/core/error/failure.dart';
 import 'package:blog_app/features/blog/data/datasources/data_source_api.dart';
 import 'package:blog_app/features/blog/data/models/blog_model.dart';
 import 'package:blog_app/features/blog/domain/entities/article.dart';
 import 'package:blog_app/features/blog/domain/repositories/article_repository.dart';
 import 'package:dartz/dartz.dart';
+import 'package:http/http.dart';
 
 class ArticleRepositoryImpl implements ArticleRepository {
   final BlogRemoteDataSource remoteDataSource;
@@ -25,6 +28,17 @@ class ArticleRepositoryImpl implements ArticleRepository {
   }
 
   @override
+  Future<Either<Failure, List<String>>> getTags() async {
+    try {
+      final tags = await remoteDataSource.getTags();
+      return Right(tags);
+    } catch (e) {
+      log("Error fetching tags: $e");
+      return const Left(ServerFailure('Error fetching tags'));
+    }
+  }
+
+  @override
   Future<Either<Failure, List<Article>>> searchArticle(
       String tag, String key) async {
     try {
@@ -37,9 +51,40 @@ class ArticleRepositoryImpl implements ArticleRepository {
   }
 
   @override
-  Future<Either<Failure, void>> createArticle(Article article) {
-    // TODO: implement createArticle
-    throw UnimplementedError();
+  Future<Either<Failure, Article>> createArticle({
+    required String title,
+    required String content,
+    required String subTitle,
+    required File image,
+    required String tags,
+  }) async {
+    try {
+      log("Converting image to multipart");
+
+      final articleData = {
+        'title': title,
+        'content': content,
+        'subTitle': subTitle,
+        'image': image,
+        'tags': tags,
+      };
+      log('Creating article From Repo imp');
+      final responseData = await remoteDataSource.postBlog(articleData);
+      log('Create article repo = received');
+
+      if (responseData != null) {
+        final article = Article.fromJson(responseData);
+        // Save user data to local storage
+        // await localDataSource.saveUserData(user);
+        log('Article created $article');
+        return Right(article);
+      } else {
+        log("Invalid response data format: $responseData");
+        return const Left(ServerFailure('Invalid response data format'));
+      }
+    } catch (e) {
+      return const Left(ServerFailure('Error registering user'));
+    }
   }
 
   @override
@@ -57,12 +102,6 @@ class ArticleRepositoryImpl implements ArticleRepository {
   @override
   Future<Either<Failure, Article>> getSingleArticle(String articleId) {
     // TODO: implement getSingleArticle
-    throw UnimplementedError();
-  }
-
-  @override
-  Future<List<String>> getTags() {
-    // TODO: implement getTags
     throw UnimplementedError();
   }
 

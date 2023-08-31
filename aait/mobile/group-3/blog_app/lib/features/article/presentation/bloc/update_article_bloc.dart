@@ -1,6 +1,4 @@
 import 'package:bloc/bloc.dart';
-import 'package:blog_app/core/use_case/usecase.dart';
-import 'package:blog_app/features/article/data/models/article_model.dart';
 import 'package:blog_app/features/article/domain/use_case/get_article_by_id.dart';
 import 'package:blog_app/features/article/domain/use_case/update_article.dart';
 import 'package:equatable/equatable.dart';

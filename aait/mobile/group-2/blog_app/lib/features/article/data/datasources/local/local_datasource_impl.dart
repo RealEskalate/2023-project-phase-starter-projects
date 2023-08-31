@@ -9,6 +9,7 @@ import 'local_datasource.dart';
 
 class ArticleLocalDataSourceImpl extends ArticleLocalDataSource {
   final articleKey = 'CACHED_ARTICLES';
+  final bookmarkKey = 'BOOKMARKS';
   final tagKey = 'CACHED_TAGS';
 
   final SharedPreferences sharedPreferences;
@@ -102,5 +103,59 @@ class ArticleLocalDataSourceImpl extends ArticleLocalDataSource {
         jsonEncode(tags.map<String>((tag) => tag.name).toList());
 
     await sharedPreferences.setString(tagKey, jsonEncoded);
+  }
+
+  Future<void> _cacheBookmarks(List<ArticleModel> articles) async {
+    final jsonEncoded = jsonEncode(articles);
+
+    await sharedPreferences.setString(bookmarkKey, jsonEncoded);
+  }
+
+  @override
+  Future<List<ArticleModel>> getBookmarkedArticles() async {
+    final jsonEncoded = sharedPreferences.getString(bookmarkKey);
+
+    if (jsonEncoded != null) {
+      final List<dynamic> jsonDecoded = jsonDecode(jsonEncoded);
+      final articles = jsonDecoded
+          .map<ArticleModel>((map) => ArticleModel.fromJson(map))
+          .toList();
+
+      return articles;
+    }
+
+    return <ArticleModel>[];
+  }
+
+  @override
+  Future<void> addToBookmark(ArticleModel article) async {
+    final articles = await getBookmarkedArticles();
+
+    final articleIndex =
+        articles.indexWhere((element) => element.id == article.id);
+
+    // If article is not in the list, add it
+    if (articleIndex == -1) {
+      articles.add(article);
+    }
+
+    // If article is in the list, replace it
+    else {
+      articles[articleIndex] = article;
+    }
+
+    await _cacheBookmarks(articles);
+  }
+
+  @override
+  Future<ArticleModel> removeFromBookmark(String articleId) async {
+    final articles = await getBookmarkedArticles();
+
+    final filteredArticles =
+        articles.where((article) => article.id != articleId);
+
+    await _cacheBookmarks(filteredArticles.toList());
+
+    return articles.firstWhere((article) => article.id == articleId);
   }
 }

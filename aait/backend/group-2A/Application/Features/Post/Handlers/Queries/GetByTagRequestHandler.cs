@@ -23,7 +23,8 @@ namespace Application.Features.Post.Handlers.Queries
         public async Task<BaseCommandResponse<List<PostDto>>> Handle(GetByTagRequest request, CancellationToken cancellationToken)
         {
             try{
-                var posts = await _unitOfWork.postRepository.GetBytag(request.Tag);
+                var posts = await _unitOfWork.postRepository.GetBytag(request.Tag, request.PageNumber,
+                    request.PageSize);
 
                 if (posts == null){
                     throw new NotFoundException(nameof(Domain.Entities.Post), request.Tag);

@@ -4,10 +4,9 @@ import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../core/error/failure.dart';
-import '../../../../core/usecase/usecase.dart';
+
 import '../../../article/domain/entities/article.dart';
 import '../../domain/entities/user_data.dart';
-import '../../domain/usecases/user_usecases/get_bookmarked_articles_usecase.dart';
 import '../../domain/usecases/user_usecases/get_user_data_usecase.dart';
 import '../../domain/usecases/user_usecases/update_user_photo_usecase.dart';
 
@@ -21,16 +20,13 @@ const String NETWORK_FAILURE_MESSAGE = 'Network Failure';
 class UserBloc extends Bloc<UserEvent, UserState> {
   final GetUserData getUser;
   final UpdateUserPhoto updateUserPhoto;
-  final GetBookmarkedArticles getBookmarkedArticles;
 
-  UserBloc(
-      {required this.getUser,
-      required this.updateUserPhoto,
-      required this.getBookmarkedArticles})
-      : super(UserInitial()) {
+  UserBloc({
+    required this.getUser,
+    required this.updateUserPhoto,
+  }) : super(UserInitial()) {
     on<GetUserEvent>(_onGetUserData);
     on<UpdateUserPhotoEvent>(_onUpdateUserPhoto);
-    on<GetBookmarkedArticlesEvent>(_onGetBookmarkedArticles);
   }
 
   String _mapFailureToMessage(Failure failure) {
@@ -79,23 +75,6 @@ class UserBloc extends Bloc<UserEvent, UserState> {
       ),
       (user) => emit(
         UserProfileUpdatedState(),
-      ),
-    );
-  }
-
-  FutureOr<void> _onGetBookmarkedArticles(
-      GetBookmarkedArticlesEvent event, Emitter<UserState> emit) async {
-    emit(LoadingState());
-    final bookmarkedArticlesOrError = await getBookmarkedArticles(NoParams());
-
-    bookmarkedArticlesOrError.fold(
-      (failure) => emit(
-        ErrorState(
-          message: _mapFailureToMessage(failure),
-        ),
-      ),
-      (articles) => emit(
-        LoadedBookmarkedArticlesState(articles: articles),
       ),
     );
   }

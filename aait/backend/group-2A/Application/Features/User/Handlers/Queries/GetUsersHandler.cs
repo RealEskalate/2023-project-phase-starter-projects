@@ -21,7 +21,8 @@ public class GetUsersHandler : IRequestHandler<GetUsers, BaseCommandResponse<Lis
     }
 
     public async Task<BaseCommandResponse<List<UserDto>>> Handle(GetUsers request, CancellationToken cancellationToken){
-        var user = await _unitOfWork.userRepository.GetAll();
+        var user = await _unitOfWork.userRepository.GetAll( request.PageNumber,
+            request.PageSize);
         if (user == null){
             throw new NotFoundException(nameof(Domain.Entities.User), "User Not Found");
         }

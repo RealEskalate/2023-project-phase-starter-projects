@@ -9,6 +9,7 @@ using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Application.Response;
+using Application.Common;
 
 namespace WebApi.Controllers
 {
@@ -49,7 +50,10 @@ namespace WebApi.Controllers
             var newFollowData = new FollowDTO() {FollowerId = userId, FolloweeId = Id };
             var result = await _mediator.Send(new CreateFollowCommand() { FollowDTO = newFollowData });
             await _mediator.Send(new CreateNotification {NotificationData = new NotificationCreateDTO()
-            {Content = $"The user with {userId} is currently following you",NotificationType = "follow",UserId = result.Value}});
+                        {
+                            Content = $"The user with {userId} is currently following you",
+                            NotificationType = NotificationEnum.FOLLOW,
+                            UserId = result.Value}});
             return Ok(result);
         }
 
@@ -61,7 +65,11 @@ namespace WebApi.Controllers
             var followToDelete = new FollowDTO() {FollowerId = userId, FolloweeId = Id };
             var result = await _mediator.Send(new DeleteFollowCommand() { FollowDTO = followToDelete });
             await _mediator.Send(new CreateNotification {NotificationData = new NotificationCreateDTO()
-            {Content = $"The user with {userId} has currently un followed you",NotificationContentId = result.Value ,NotificationType = "follow",UserId = result.Value
+                        {
+                            Content = $"The user with {userId} has currently un followed you",
+                            NotificationContentId = result.Value ,
+                            NotificationType = NotificationEnum.FOLLOW,
+                            UserId = result.Value
             }});
             return Ok(result);
         }

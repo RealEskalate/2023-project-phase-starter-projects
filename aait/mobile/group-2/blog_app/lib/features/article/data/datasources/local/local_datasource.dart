@@ -9,4 +9,8 @@ abstract class ArticleLocalDataSource {
   Future<void> cacheArticle(ArticleModel article);
   Future<void> cacheArticles(List<ArticleModel> articles);
   Future<void> deleteArticle(String id);
+
+  Future<List<ArticleModel>> getBookmarkedArticles();
+  Future<void> addToBookmark(ArticleModel article);
+  Future<ArticleModel> removeFromBookmark(String articleId);
 }

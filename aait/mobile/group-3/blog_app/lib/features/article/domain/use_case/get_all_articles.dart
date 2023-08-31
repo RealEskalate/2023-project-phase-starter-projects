@@ -1,15 +1,18 @@
+import 'package:blog_app/features/article/domain/entity/getArticlesEntity.dart';
+import 'package:dartz/dartz.dart';
+
+import '../../../../core/error/failure.dart';
 import '../../../../core/use_case/usecase.dart';
-import '../../../../core/util/typedef.dart';
 import '../entity/article.dart';
 import '../repository/article_repository.dart';
 
-class GetAllArticlesUsecase implements UseCase<List<Article>, NoParams> {
+class GetAllArticlesUsecase implements UseCase<List<Article>, ArticleRequest > {
   final ArticleRepository _repository;
   
   GetAllArticlesUsecase(this._repository);
 
   @override
-  ResultFuture<List<Article>> call(NoParams params) async {
-    return _repository.getAllArticles();
+  Future<Either<Failure, List<Article>>> call(ArticleRequest params) async {
+    return _repository.getAllArticles(params);
   }
 }

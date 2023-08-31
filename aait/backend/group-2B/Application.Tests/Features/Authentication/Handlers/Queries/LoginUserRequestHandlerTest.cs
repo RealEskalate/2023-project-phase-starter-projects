@@ -8,7 +8,6 @@ using SocialSync.Application.Contracts.Infrastructure;
 using SocialSync.Application.Contracts.Persistence;
 using SocialSync.Application.DTOs.Authentication;
 using SocialSync.Application.Features.Authentication.Handlers.Queries;
-using SocialSync.Application.Features.Authentication.Requests.Commands;
 using SocialSync.Application.Features.Authentication.Requests.Queries;
 using SocialSync.Application.Tests.Mocks;
 using SocialSync.Infrastructure.DateTimeService;
@@ -81,7 +80,11 @@ public class LoginUserRequestHandlerTest
         var result = await _handler.Handle(
             new LoginUserRequest
             {
-                LoginUserDto = new LoginUserDto { Username = "User3", Password = "User3passwordiswrong" }
+                LoginUserDto = new LoginUserDto
+                {
+                    Username = "User3",
+                    Password = "User3passwordiswrong"
+                }
             },
             CancellationToken.None
         );
@@ -92,18 +95,56 @@ public class LoginUserRequestHandlerTest
     }
 
     [Fact]
-    public async Task Invalid_IncorrectUsernameLoginUser()
+    public async Task Invalid_NonExistingUsernameLoginUser()
     {
         var result = await _handler.Handle(
             new LoginUserRequest
             {
-                LoginUserDto = new LoginUserDto { Username = "User3iswrong", Password = "User3password" }
+                LoginUserDto = new LoginUserDto
+                {
+                    Username = "User3iswrong",
+                    Password = "User3password"
+                }
             },
             CancellationToken.None
         );
 
         result.ShouldBeOfType<CommonResponse<LoggedInUserDto>>();
         result.IsSuccess.ShouldBeFalse();
+        result.Value.ShouldBeNull();
+    }
+
+    [Fact]
+    public async Task Invalid_InvalidUsernameLogin()
+    {
+        var result = await _handler.Handle(
+            new LoginUserRequest
+            {
+                LoginUserDto = new LoginUserDto { Username = "Us", Password = "User3password" }
+            },
+            CancellationToken.None
+        );
+
+        result.ShouldBeOfType<CommonResponse<LoggedInUserDto>>();
+        result.IsSuccess.ShouldBeFalse();
+        result.Error.ShouldBe(new[] { "Username must be at least 3 characters." });
+        result.Value.ShouldBeNull();
+    }
+
+    [Fact]
+    public async Task Invalid_InvalidPasswordLogin()
+    {
+        var result = await _handler.Handle(
+            new LoginUserRequest
+            {
+                LoginUserDto = new LoginUserDto { Username = "User3", Password = "u3" }
+            },
+            CancellationToken.None
+        );
+
+        result.ShouldBeOfType<CommonResponse<LoggedInUserDto>>();
+        result.IsSuccess.ShouldBeFalse();
+        result.Error.ShouldBe(new[] { "Password must be at least 6 characters." });
         result.Value.ShouldBeNull();
     }
 }

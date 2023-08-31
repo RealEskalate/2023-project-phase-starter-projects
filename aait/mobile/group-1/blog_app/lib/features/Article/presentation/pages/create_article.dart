@@ -13,7 +13,7 @@ import 'package:image_picker/image_picker.dart';
 import 'dart:io';
 
 class ArticlePage extends StatefulWidget {
-  const ArticlePage({super.key, this.id});
+  const ArticlePage({super.key, this.id = "64eda97cb00b3d3d2fe86ec5"});
   final String? id;
 
   @override

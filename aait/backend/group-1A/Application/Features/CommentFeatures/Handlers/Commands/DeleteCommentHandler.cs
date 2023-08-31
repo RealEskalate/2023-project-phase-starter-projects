@@ -22,8 +22,7 @@ namespace Application.Features.CommentFeatures.Handlers.Commands
 
         public async Task<BaseResponse<int>> Handle(CommentDeleteCommand request, CancellationToken cancellationToken)
         {
-
-            
+   
              var comment = await _commentRepository.Get(request.Id);
             if (comment == null) 
             {

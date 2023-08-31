@@ -1,7 +1,5 @@
 import 'dart:convert';
 
-import 'package:json_annotation/json_annotation.dart';
-
 import 'package:blog_app/features/article/data/models/user_model.dart';
 import 'package:blog_app/features/article/domain/entity/user.dart';
 
@@ -17,7 +15,6 @@ class ArticleModel extends Article {
     required super.user,
     required super.image,
     required super.imageCloudinaryPublicId,
-    @JsonKey(fromJson: _dateTimeFromJson, toJson: _dateTimeToJson)
     required super.createdAt,
     required super.id,
   });
@@ -68,10 +65,11 @@ class ArticleModel extends Article {
   String toJson() => json.encode(toMap());
 
   factory ArticleModel.fromJson(Map<String, dynamic> json) {
-    print(json);
-    print("I also have reached here");
+    final resTags = json['tags'] ?? [];
+    print(resTags);
+
     return ArticleModel(
-      tags: (json['tags'] as List<dynamic>?)?.cast<String>() ?? [],
+      tags: resTags.map<String>((e) => e.toString()).toList(),
       content: json['content'] ?? "No Content",
       title: json['title'] ?? "No Title",
       subTitle: json['subTitle'] ?? "No subTitle",

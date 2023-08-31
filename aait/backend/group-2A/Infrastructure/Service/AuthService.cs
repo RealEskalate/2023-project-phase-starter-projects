@@ -8,12 +8,12 @@ using Application.DTO.UserDTO;
 using Application.Exceptions;
 using Application.Model;
 using Domain.Entities;
-using Infrastructure.Model;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
+using Persistence.Model;
 
-namespace Infrastructure.Service;
+namespace Persistence.Service;
 
 public class AuthService : IAuthService {
     
