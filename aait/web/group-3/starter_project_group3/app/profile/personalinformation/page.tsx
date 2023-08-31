@@ -50,7 +50,6 @@ const PersonalInformation = () => {
     setimageText("");
     setImage(null);
     setPrevImageLink("");
-    // reset file input
     const fileInput = document.getElementById("image") as HTMLInputElement;
     fileInput.value = "";
   };
@@ -66,12 +65,12 @@ const PersonalInformation = () => {
     }
 
     try {
-      const response = await updateProfile(formData);
+      const response:any = await updateProfile(formData);
       if (response) {
         setIssuccessfull(true);
         localStorage.setItem(
           "updated-user",
-          JSON.stringify(response.data.body)
+          JSON.stringify(response?.data?.body)
         );
         router.push("/");
       } else {
@@ -84,7 +83,7 @@ const PersonalInformation = () => {
 
   return (
     <form onSubmit={handleSubmit} className="mb-32">
-      {issuccessfull && <Toast message="Profile updated successfully" />}
+      {issuccessfull && <Toast message="Profile updated successfully" isError={false} />}
       <div className=" py-10 text-blog_list_sub_text_color flex justify-between items-center ">
         <p>
           <p className="text-xl  font-bold">Manage Personal Information</p>

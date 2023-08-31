@@ -36,7 +36,7 @@ const AddBlog:React.FC<Props> = ({
     handleTitleChange
 }) => {
   return (
-   <form className='pl-16 pr-16 pt-16'>
+   <form className='pl-16 pr-16 pt-16 mb-64'>
     <div className="flex flex-col md:grid grid-cols-4 md:pl-16 md:pr-16 pt-16 h-screen mb-48">
       <div className=" flex flex-col gap-8 md:col-span-3 rounded-lg  max-w-screen-lg w-full">
         <div className="bg-white border-l-4 border-primary p-4">

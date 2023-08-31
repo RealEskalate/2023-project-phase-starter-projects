@@ -13,6 +13,7 @@ const CreateBlogPage: React.FC = () => {
     const [content, setContent] = useState("");
     const [imageText, setImageText] = useState('Please upload image');
     const [selectedTags, setSelectedTags] = useState<string[]>([]);
+    const [isSubmited, setIsSubmited] = useState(false)
     const router = useRouter()
 
     const handleTagClick = (tag: string) => {
@@ -69,11 +70,11 @@ const CreateBlogPage: React.FC = () => {
   
           try {
             
-            const response = await addBlog(formData);
-            if (response) {
-                <Toast message="Successfully added" />
-                router.push('/blogs')
-
+            const response:any = await addBlog(formData);
+            if (response.error.status !== 400) {
+                 setIsSubmited(!isSubmited)
+                 router.push('/blogs')
+                 
             }else{
               setImage(null)
               setImageText('Please upload image')
@@ -82,28 +83,36 @@ const CreateBlogPage: React.FC = () => {
               setSelectedTags([])
               
             }
-
+                
           } catch (error) {
             
           }
-         
+              
       };
-
-    return (
-     <AddBlog
-      title={title}
-      content={content}  
-      image={image} 
-      imageText={imageText} 
-      selectedTags={selectedTags} 
-      handleCancel={handleCancel}
-      handleContentChange={handleContentChange}
-      handleDeleteImage={handleDeleteImage}
-      handleImageChange={handleImageChange}
-      handleSubmit={handleSubmit}
-      handleTagClick={handleTagClick}
-      handleTitleChange={handleTitleChange}
+      
+      return (
+        <>
+        {
+        isSubmited && (<Toast message="Successfully added" isError={false} />)
+        }
+        {
+        isError && (<Toast message="Failed to save changes"  isError={true}/>) 
+        }
+        <AddBlog
+          title={title}
+          content={content}  
+          image={image} 
+          imageText={imageText} 
+          selectedTags={selectedTags} 
+          handleCancel={handleCancel}
+          handleContentChange={handleContentChange}
+          handleDeleteImage={handleDeleteImage}
+          handleImageChange={handleImageChange}
+          handleSubmit={handleSubmit}
+          handleTagClick={handleTagClick}
+          handleTitleChange={handleTitleChange}
       />
+      </>
     );
 };
 
