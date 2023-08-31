@@ -33,18 +33,17 @@ namespace Application.Features.CommentFeatures.Handlers.Commands
             {
                 throw new ValidationException(validationResult);
             }
-            var exists = await _commentRepository.Exists(request.Id);
+            var comment = await _commentRepository.Get(request.Id);
 
-            if (!exists) 
+            if (comment == null) 
             {
                 throw new NotFoundException("Comment is not found");
             }
 
 
-            var newComment = _mapper.Map<Comment>(request.CommentData);
-            newComment.Id = request.Id;
-            newComment.UserId = request.userId;
-            var updationResult = await _commentRepository.Update(newComment);
+            _mapper.Map(request.CommentData, comment);
+            
+            var updationResult = await _commentRepository.Update(comment);
             var result = _mapper.Map<CommentResponseDTO>(updationResult);
 
 

@@ -2,6 +2,7 @@
 using Application.DTO.Common;
 using Application.DTO.UserDTO.DTO;
 using Application.DTO.UserDTO.validations;
+using Application.Exceptions;
 using Application.Features.UserFeature.Requests.Commands;
 using AutoMapper;
 using Domain.Entities;
@@ -33,15 +34,21 @@ namespace Application.Features.UserFeature.Handlers.Commands
 
             if (!validationResult.IsValid)
             {
-                throw new Exception();
+                throw new ValidationException(validationResult);
             }
             if (request.userId <= 0)
             {
-                throw new Exception();
+                throw new BadRequestException("USER with this Id doesnt exist");
             }
-            var newUser = _mapper.Map<User>(request.UserUpdateData);
-            newUser.Id = request.userId;
-            var updationResult = await _UserRepository.Update(newUser);
+            var user = await  _UserRepository.Get(request.userId);
+            if (user == null)
+            {
+                throw new NotFoundException("User is not found");
+            }
+
+            var newUser = _mapper.Map(request.UserUpdateData,user);
+            //newUser.Id = request.userId;
+            var updationResult = await _UserRepository.Update(user);
 
             return _mapper.Map<UserResponseDTO>(updationResult);
         }

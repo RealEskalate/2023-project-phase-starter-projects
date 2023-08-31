@@ -31,18 +31,20 @@ namespace Application.Features.PostFeature.Handlers.Commands
             {
                 throw new ValidationException(validationResult);
             }
-            var exists = await _postRepository.Exists(request.Id);
+            var post = await _postRepository.Get(request.Id);
 
 
-            if (!exists) 
+            if (post == null) 
             {
                 throw new NotFoundException("Post is not found");
             }
 
-            var newPost = _mapper.Map<Post>(request.PostUpdateData);
-            newPost.Id = request.Id;
-            newPost.UserId = request.userId;
-            var updationResult = await _postRepository.Update(newPost);
+            _mapper.Map(request.PostUpdateData, post);
+
+            //var newPost = _mapper.Map<Post>(request.PostUpdateData);
+            //newPost.Id = request.Id;
+            //newPost.UserId = request.userId;
+            var updationResult = await _postRepository.Update(post);
             var result = _mapper.Map<PostResponseDTO>(updationResult);
 
             return new BaseResponse<PostResponseDTO> {
