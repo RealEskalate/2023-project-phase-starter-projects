@@ -57,15 +57,16 @@ namespace Application.Tests.Mocks
 
             var mockRepository = new Mock<ICommentRepository>();
 
-            mockRepository.Setup(repo => repo.GetCommentByPost(It.IsAny<int>()))
-                          .ReturnsAsync((int postId) => mockComments.Where(c => c.PostId == postId).ToList());
+            mockRepository.Setup(repo => repo.GetCommentByPost(It.IsAny<int>(), It.IsAny<int>(),It.IsAny<int>()
+                ))
+                          .ReturnsAsync((int postId,int pageNumber, int pageSize) => mockComments.Where(c => c.PostId == postId).ToList());
             
 
             mockRepository.Setup(repo => repo.Get(It.IsAny<int>()))
                           .ReturnsAsync((int id) => mockComments.FirstOrDefault(c => c.Id == id));
 
-            mockRepository.Setup(repo => repo.GetAll())
-                          .ReturnsAsync(mockComments);
+            mockRepository.Setup(repo => repo.GetAll(It.IsAny<int>(),It.IsAny<int>()))
+                          .ReturnsAsync((int pageNumber, int pageSize)=>mockComments);
 
             mockRepository.Setup(repo => repo.Add(It.IsAny<Comment>()))
                           .ReturnsAsync((Comment comment) =>

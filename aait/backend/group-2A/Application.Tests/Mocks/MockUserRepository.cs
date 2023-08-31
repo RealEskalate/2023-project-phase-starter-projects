@@ -23,7 +23,7 @@ namespace Application.Tests.Mocks
             mockRepository.Setup(repo => repo.Get(It.IsAny<int>()))
                 .ReturnsAsync((int id) => mockUsers.FirstOrDefault(u => u.Id == id));
 
-            mockRepository.Setup(repo => repo.GetAll())
+            mockRepository.Setup(repo => repo.GetAll(It.IsAny<int>(),It.IsAny<int>()))
                 .ReturnsAsync(mockUsers);
 
             mockRepository.Setup(repo => repo.Add(It.IsAny<User>()))
@@ -60,8 +60,8 @@ namespace Application.Tests.Mocks
                     }
                 });
 
-            mockRepository.Setup(repo => repo.Search(It.IsAny<string>()))
-                .ReturnsAsync((string name) => mockUsers
+            mockRepository.Setup(repo => repo.Search(It.IsAny<string>(), It.IsAny<int>(),It.IsAny<int>()))
+                .ReturnsAsync((string name, int pageNumber, int pageSize) => mockUsers
                     .Where(u => u.FullName.Contains(name) || u.UserName.Contains(name))
                     .ToList());
 

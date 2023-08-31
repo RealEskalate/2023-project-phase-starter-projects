@@ -17,8 +17,8 @@ namespace Application.Tests.Mocks
             mockRepository.Setup(repo => repo.isLiked(It.IsAny<Domain.Entities.Like>()))
                           .ReturnsAsync((Domain.Entities.Like like) => GetMockLikes().Any(l => l.PostId == like.PostId && l.UserId == like.UserId));
 
-            mockRepository.Setup(repo => repo.GetLikers(It.IsAny<int>()))
-                          .ReturnsAsync((int id) => GetMockUsers().Where(u => GetMockLikes().Any(l => l.PostId == id && l.UserId == u.Id)).ToList());
+            mockRepository.Setup(repo => repo.GetLikers(It.IsAny<int>(),It.IsAny<int>(),It.IsAny<int>()))
+                          .ReturnsAsync((int id,int pageNumber, int pageSize) => GetMockUsers().Where(u => GetMockLikes().Any(l => l.PostId == id && l.UserId == u.Id)).ToList());
 
             mockRepository.Setup(repo => repo.LikePost(It.IsAny<Domain.Entities.Like>()))
                           .Returns(Task.CompletedTask)
@@ -29,8 +29,8 @@ namespace Application.Tests.Mocks
                           .Callback(() => { MockUnitOfWorkRepository.Changes += 1; });
 
 
-            mockRepository.Setup(repo => repo.GetLikedPost(It.IsAny<int>()))
-                          .ReturnsAsync((int id) => GetMockPosts().Where(p => GetMockLikes().Any(l => l.UserId == id && l.PostId == p.Id)).ToList());
+            mockRepository.Setup(repo => repo.GetLikedPost(It.IsAny<int>(),It.IsAny<int>(),It.IsAny<int>()))
+                          .ReturnsAsync((int id,int pageNumber, int pageSize) => GetMockPosts().Where(p => GetMockLikes().Any(l => l.UserId == id && l.PostId == p.Id)).ToList());
 
             return mockRepository;
         }

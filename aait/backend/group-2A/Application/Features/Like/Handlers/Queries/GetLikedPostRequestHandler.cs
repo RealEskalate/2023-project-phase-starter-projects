@@ -19,7 +19,8 @@ public class GetLikedPostRequestHandler : IRequestHandler<GetLikedPostRequest, B
 
     public async Task<BaseCommandResponse<List<PostDto>>> Handle(GetLikedPostRequest request, CancellationToken cancellationToken){
         try{
-            var posts = await _unitOfWork.likeRepository.GetLikedPost(request.Id);
+            var posts = await _unitOfWork.likeRepository.GetLikedPost(request.Id, request.PageNumber,
+                request.PageSize);
             if (posts == null) throw new NotFoundException(nameof(List<PostDto>), request.Id);
             return BaseCommandResponse<List<PostDto>>.SuccessHandler(_mapper.Map<List<PostDto>>(posts));
         }

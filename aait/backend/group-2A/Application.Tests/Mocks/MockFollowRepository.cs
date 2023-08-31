@@ -15,15 +15,15 @@ namespace Application.Tests.Mocks
 
             var mockFollows = GetMockFollow();
 
-            mockRepository.Setup(repo => repo.GetFollowing(It.IsAny<int>()))
-                          .ReturnsAsync((int id) =>
+            mockRepository.Setup(repo => repo.GetFollowing(It.IsAny<int>(), It.IsAny<int>(),It.IsAny<int>()))
+                          .ReturnsAsync((int id,int pageNumber, int pageSize) =>
                           {
                               var followedIds = mockFollows.Where(f => f.FollowerId == id).Select(f => f.FollowedId).ToList();
                               return GetMockUsers().Where(u => followedIds.Contains(u.Id)).ToList();
                           });
 
-            mockRepository.Setup(repo => repo.GetFollower(It.IsAny<int>()))
-                          .ReturnsAsync((int id) =>
+            mockRepository.Setup(repo => repo.GetFollower(It.IsAny<int>(),It.IsAny<int>(),It.IsAny<int>()))
+                          .ReturnsAsync((int id,int pageNumber, int pageSize) =>
                           {
                               var followerIds = mockFollows.Where(f => f.FollowedId == id).Select(f => f.FollowerId).ToList();
                               return GetMockUsers().Where(u => followerIds.Contains(u.Id)).ToList();

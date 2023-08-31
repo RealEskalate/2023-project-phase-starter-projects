@@ -23,7 +23,9 @@ public class GetCommentsByPostIdRequestHandler : IRequestHandler<GetCommentsByPo
     public async Task<BaseCommandResponse<List<CommentDto>>> Handle(GetCommentsByPostIdRequest request, CancellationToken cancellationToken)
     {
         try{
-            var comments = await _unitOfWork.commentRepository.GetCommentByPost(request.PostId);
+            var comments =
+                await _unitOfWork.commentRepository.GetCommentByPost(request.PostId, request.PageNumber,
+                    request.PageSize);
 
             if (comments == null){
                 throw new NotFoundException(nameof(Domain.Entities.Comment), request.PostId);
