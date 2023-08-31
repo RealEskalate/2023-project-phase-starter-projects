@@ -4,6 +4,7 @@ import { ChangeEvent, useState } from "react"
 import { useRegisterMutation } from "@/store/auth/authApi"
 
 import TextField from "./TextField"
+import { toast } from 'react-toastify'
 
 const fieldInfo: Array<Array<string>> = [
   ["text", "name", "Full Name"], 
@@ -26,6 +27,9 @@ const SignupForm = () => {
   }
 
   const handleSignup = () => {
+    if(!credentials.name || !credentials.email || !credentials.password) {
+      toast.error("Please fill all fields")
+    }
     register(credentials)
   }
 
@@ -52,8 +56,8 @@ const SignupForm = () => {
       >
         {isLoading ? 'Signing up...' : 'Sign up'}
       </button>
-      {isError && <p className="text-red-500 mt-2">ERROR!!!</p>}
-      {isSuccess && <p className="text-green-500 mt-2">Registration successful!</p>}
+      {isError && toast.error('Unable to signin')}
+      {isSuccess && toast.success('Signed up successfully')}
     </div>
   )
 }
