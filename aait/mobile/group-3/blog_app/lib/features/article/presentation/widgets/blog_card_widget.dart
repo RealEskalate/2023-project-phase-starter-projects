@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
 // import 'package:timeago/timeago.dart' as timeago;
 
@@ -20,9 +21,9 @@ class BlogCardWidget extends StatelessWidget {
     // String relativeTime = timeago.format(postDate);
     return SingleChildScrollView(
       child: GestureDetector(
+
         onTap: () {
-          // raise load article by id event
-          // Navigator.pushNamed(context, '/article-detail');
+          context.push('/article', extra: article.id);
         },
         child: Container(
           height: 240.h,

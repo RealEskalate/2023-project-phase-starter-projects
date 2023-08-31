@@ -1,7 +1,7 @@
 import 'package:blog_app/core/color/colors.dart';
 import 'package:blog_app/core/util/value_converter.dart';
 import 'package:blog_app/features/article/presentation/bloc/article_bloc.dart';
-import 'package:blog_app/features/profile/presentation/widgets/loading_widget.dart';
+import 'package:blog_app/features/article/presentation/widgets/loading_widget.dart';
 import 'package:blog_app/injection_container.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import '../../../../core/color/colors.dart';
@@ -44,7 +45,7 @@ class UserInfo extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   TextButton(
-                    onPressed: () {},
+                    onPressed: () {context.push('/profile');},
                     style: TextButton.styleFrom(
                       padding: EdgeInsets.zero,
                       // minimumSize: Size(50, 30),
