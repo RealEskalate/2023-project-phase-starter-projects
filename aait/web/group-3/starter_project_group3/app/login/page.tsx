@@ -29,7 +29,7 @@ const LogIn: React.FC = () => {
 
   return (
     <>
-      {isLoggedIN && <Toast message="Successfully logged in" />}
+      {isLoggedIN && <Toast message="Successfully logged in" isError={false} />}
       <div className="flex flex-col items-center justify-center py-10 w-8/12 mx-auto rounded-lg my-10 font-Montserrat bg-gray-100">
         <div className=" p-8 rounded">
           <h2 className="text-2xl font-bold text-nav_text_color mb-4">Login</h2>
@@ -73,7 +73,7 @@ const LogIn: React.FC = () => {
             >
               {isLoading ? "Logging in..." : "Log In"}
             </button>
-            {isError ? errorMessage : ""}
+            {isError && (<Toast message={errorMessage} isError={true}/>)}
           </form>
         </div>
       </div>

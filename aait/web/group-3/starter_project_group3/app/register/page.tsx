@@ -15,7 +15,7 @@ const Register: React.FC = () => {
   const [register, { isLoading, isError, data }] = useRegisterMutation();
 
   const handleLogin = (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault(); // Prevent default form submission behavior
+    event.preventDefault(); 
     register({ name, email, password })
       .unwrap()
       .then((response) => {
@@ -23,20 +23,15 @@ const Register: React.FC = () => {
         router.push("/login");
         setisLoggedIN(true);
       })
-      .catch((err) => {
-        // seterrorMessage(err.message.data);
-        seterrorMessage(err.data.message);
+      .catch((err:any) => {
+        seterrorMessage(err?.data?.message);
       });
   };
 
-  if (data) {
-    console.log("the data is ");
-    console.log(data);
-  }
   return (
     <>
       {isLoggedIN && (
-        <Toast message="Congratulations, Successfully registed, login here" />
+        <Toast message="Congratulations, Successfully registed, login here"  isError={false}/>
       )}
 
       <div className="flex flex-col items-center justify-center py-5 w-8/12 my-10 mx-auto rounded-lg font-Montserrat bg-gray-100">
@@ -104,7 +99,7 @@ const Register: React.FC = () => {
             >
               {isLoading ? "Processessing" : "Sign Up"}
             </button>
-            {isError ? errorMessage : ""}
+            {isError && (<Toast message={errorMessage} isError={true}/>)}
           </form>
         </div>
       </div>
