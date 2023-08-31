@@ -5,6 +5,7 @@ import React, { useState } from "react";
 import A2SVLogo from "../../public/images/A2SV.svg";
 import { LinkItems } from "./LinkItems";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 
 interface NavItems {
   link: string;
@@ -12,6 +13,7 @@ interface NavItems {
 }
 
 export const NavBar = () => {
+  const router = useRouter()
   const [isMenuToggled, setIsMenuToggled] = useState<boolean>(false);
 
   const navItems: NavItems[] = [
@@ -60,7 +62,12 @@ export const NavBar = () => {
         {/* login signup section */}
         <div className="flex gap-2">
           <Link href={'/signin'} className="btn">Login</Link>
-          <button className="btn bg-blue-800 text-white">Donate</button>
+          <button 
+            className="btn bg-blue-800 text-white"
+            onClick={() => router.push('/profile')}
+            >
+              Profile
+          </button>
         </div>
       </div>
 

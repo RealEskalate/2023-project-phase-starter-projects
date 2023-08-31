@@ -3,8 +3,8 @@ import Image from "next/image";
 import React from "react";
 
 interface AuthorAndImage {
-    author: Author,
-    createdAt: string
+  author: Author;
+  createdAt: string;
 }
 
 const AuthorInfo: React.FC<AuthorAndImage> = ({ author, createdAt }) => {

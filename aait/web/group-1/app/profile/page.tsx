@@ -80,13 +80,16 @@ export default function Page() {
           />
         <h4 className=' text-[#565656] font-semibold font-poppins col-span-1'>Your Photo <span className='text-[#F64040]'>*</span></h4>
         <div className='col-span-2 flex items-start justify-center md:justify-start space-x-0 md:space-x-16'>
-          <Image
-              className='hidden md:block'
-              src={photo ? URL.createObjectURL(photo) : currUser?.userProfile}
-              width={ 50 }
-              height={ 50 }
-              alt='small profile image'
-            />
+          {
+            photo && 
+            <Image
+                className='hidden md:block'
+                src={photo ? URL.createObjectURL(photo) : currUser?.userProfile}
+                width={ 50 }
+                height={ 50 }
+                alt='small profile image'
+              />
+          }
           <div 
             className='text-center border flex flex-col justify-center items-center border-gray-300 rounded-lg h-full px-10 py-12'
             onClick={handleDivClick}

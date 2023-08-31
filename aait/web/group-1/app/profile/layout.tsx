@@ -1,7 +1,7 @@
 'use client';
 
 import React from 'react';
-import { usePathname } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 import Link from 'next/link';
 
 export default function ProfileLayout({
@@ -16,6 +16,7 @@ export default function ProfileLayout({
     ['Account Setting', '/profile/account']
   ]);
   const pathname = usePathname();
+  const router = useRouter()
 
   return (
     <div className='px-[100px] flex flex-col space-y-5 font-montserrat'>
@@ -33,7 +34,16 @@ export default function ProfileLayout({
             ))
           }
         </div>
-        { pathname === linkPathname.get('My Blogs') && <button className='text-[10px] font-semibold bg-[#264FAD] rounded-md text-white px-12 py-2'>New Blog</button> }
+        { 
+          pathname === linkPathname.get('My Blogs') 
+          && 
+          <button 
+            className='text-[10px] font-semibold bg-[#264FAD] rounded-md text-white px-12 py-2'
+            onClick={() => router.push('/blog/addBlog')}
+            >
+              New Blog
+          </button>
+        }
       </div>
       { children }
     </div>

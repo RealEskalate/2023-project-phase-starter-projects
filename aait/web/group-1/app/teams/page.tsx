@@ -6,13 +6,14 @@ import TeamImage from "../../public/images/team-work.svg";
 import { Profile } from "@/types/Profile";
 import Card from "@/components/teams/Card";
 import { useGetTeamMembersQuery } from "@/store/features/team-members/team-members";
+import Loading from "@/components/Loading";
 
 const page = () => {
   const { data: members, isLoading, error } = useGetTeamMembersQuery();
 
   return (
     <div className="py-20 font-poppins">
-      {isLoading && <h1 className="text-center">Loading...</h1>}
+      {isLoading && <Loading />}
       {!isLoading && !error && <div>
         {/* upper hero section */}
         <div className="flex items-center">

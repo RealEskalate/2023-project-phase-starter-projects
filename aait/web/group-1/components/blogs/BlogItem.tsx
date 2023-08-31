@@ -2,7 +2,7 @@ import { Blog } from "@/types/Blog";
 import Image from "next/image";
 import React from "react";
 import AuthorInfo from "./AuthorInfo";
-import parse from 'html-react-parser';
+import parse from "html-react-parser";
 import Link from "next/link";
 
 const BlogItem: React.FC<Blog> = ({
@@ -14,7 +14,6 @@ const BlogItem: React.FC<Blog> = ({
   tags,
   createdAt,
 }) => {
-
   const reducedDescription =
     description.length > 150
       ? `${description.substring(0, 150)}...`
@@ -26,10 +25,9 @@ const BlogItem: React.FC<Blog> = ({
       <div className="mx-2 mb-10 rounded-full bg-gray-200 h-0.05"></div>
 
       <div className="w-full flex items-center space-x-16">
-        
         <div className="w-3/4 flex flex-col space-y-6 mb-10">
           {/* Author info */}
-          <AuthorInfo author={author} createdAt={createdAt} />
+          {author && <AuthorInfo author={author} createdAt={createdAt} />}
 
           {/* Blog content */}
           <div>

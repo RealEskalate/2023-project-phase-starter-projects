@@ -5,7 +5,7 @@ import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 import { tags } from "@/data/blog/tags";
 import Chip from "./Chip";
-
+import { toast } from "react-toastify";
 interface Props {
   title: string;
   content: string;
@@ -19,6 +19,8 @@ interface Props {
   handleDeleteImage: () => void;
   handleContentChange: (newContent: any) => void;
   handleSubmit: (event: React.FormEvent) => void;
+  isError: any;
+  isSuccess: any;
 }
 
 const AddBlog: React.FC<Props> = ({
@@ -34,6 +36,8 @@ const AddBlog: React.FC<Props> = ({
   handleSubmit,
   handleTagClick,
   handleTitleChange,
+  isError,
+  isSuccess
 }) => {
   return (
     <form className="font-montserrat p-16">
@@ -128,6 +132,8 @@ const AddBlog: React.FC<Props> = ({
           </div>
         </div>
       </div>
+      {isError && toast.error('Unable to post a blog')}
+      {isSuccess && toast.success('Blog posted successfuly')}
     </form>
   );
 };

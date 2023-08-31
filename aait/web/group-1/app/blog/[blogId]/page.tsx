@@ -5,6 +5,7 @@ import { useParams } from "next/navigation";
 import React from "react";
 import parse from "html-react-parser";
 import { useGetSingleBlogQuery } from "@/store/blog/blogApi";
+import Loading from "@/components/Loading";
 
 const page = () => {
   const { blogId } = useParams();
@@ -16,9 +17,7 @@ const page = () => {
   } = useGetSingleBlogQuery(blogId);
   
   return isLoading ? (
-    <div className="text-center font-bold font-montserrat text-xl">
-      Loading...
-    </div>
+    <Loading />
   ) : isError ? (
     <div className="text-center font-bold font-montserrat text-xl">
       {(error as any).data
