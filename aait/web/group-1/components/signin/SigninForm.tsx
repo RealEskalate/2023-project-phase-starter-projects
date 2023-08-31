@@ -1,6 +1,6 @@
 "use client";
 
-import { ChangeEvent, useState } from "react";
+import { ChangeEvent, useEffect, useState } from "react";
 import { useLoginMutation } from "@/store/auth/authApi";
 
 import TextField from "../signup/TextField";
@@ -26,15 +26,10 @@ const SignInForm = () => {
     const { name, value } = e.target;
     setCredentials((prevData) => ({ ...prevData, [name]: value }));
   };
-
-  const handleSignin = async (e) => {
-    e.preventDefault();
-    if (!credentials.email || !credentials.password) {
-      toast.error("Please fill all fields");
-    }
-    const response = await login(credentials);
+  
+  useEffect(() => {
     if (isSuccess) {
-      localStorage.setItem("user", JSON.stringify(response));
+      localStorage.setItem("user", JSON.stringify(data));
       toast.success("Signed in successfully");
       router.push("/");
     }
@@ -46,6 +41,15 @@ const SignInForm = () => {
         toast.error(errMsg || 'Unable to signin');
       }
     }
+  }, [isError, isSuccess, data, error])
+
+  const handleSignin = async (e) => {
+    e.preventDefault();
+    if (!credentials.email || !credentials.password) {
+      toast.error("Please fill all fields");
+      return
+    }
+    login(credentials);
   };
 
   return (
@@ -62,7 +66,7 @@ const SignInForm = () => {
           id={field[1]}
           placeholder={field[2]}
           value={credentials[field[1]]}
-          onChange={handleInputChange}
+          onChange={(e) => handleInputChange(e)}
         />
       ))}
       <button

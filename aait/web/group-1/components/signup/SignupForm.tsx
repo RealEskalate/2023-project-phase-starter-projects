@@ -1,10 +1,11 @@
 "use client"
 
-import { ChangeEvent, useState } from "react"
+import { ChangeEvent, useState, useEffect } from "react"
 import { useRegisterMutation } from "@/store/auth/authApi"
 
 import TextField from "./TextField"
 import { toast } from 'react-toastify'
+import { useRouter } from "next/navigation"
 
 const fieldInfo: Array<Array<string>> = [
   ["text", "name", "Full Name"], 
@@ -14,6 +15,7 @@ const fieldInfo: Array<Array<string>> = [
                                             
 
 const SignupForm = () => {
+  const router = useRouter()
   const [register, { isLoading, isError, isSuccess, error }] = useRegisterMutation()
   const [credentials, setCredentials] = useState({
     name: "",
@@ -21,18 +23,30 @@ const SignupForm = () => {
     password: "",
   })
 
+  useEffect(() => {
+    if (isError) {
+      toast.error('Unable to signup')
+    }
+    if(isSuccess) {
+      toast.success('Signed up successfully')
+      router.push('/signin')
+    }
+  }, [isError, isSuccess])
+
+  
   const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target
     setCredentials((prevData) => ({...prevData, [name]: value}))
   }
-
+  
   const handleSignup = () => {
     if(!credentials.name || !credentials.email || !credentials.password) {
       toast.error("Please fill all fields")
+      return
     }
     register(credentials)
   }
-
+  
   return (
     <div className="flex flex-col text-left gap-3.5 bg-white text-white border rounded-lg p-10 w-96">
       <h2 className="text-form-gray-primary font-semibold text-3xl">Sign up</h2>
@@ -56,8 +70,6 @@ const SignupForm = () => {
       >
         {isLoading ? 'Signing up...' : 'Sign up'}
       </button>
-      {isError && toast.error('Unable to signin')}
-      {isSuccess && toast.success('Signed up successfully')}
     </div>
   )
 }
