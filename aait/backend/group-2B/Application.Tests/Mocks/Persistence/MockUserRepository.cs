@@ -109,7 +109,12 @@ public class MockUserRepository
                 {
                     var follower = users.FirstOrDefault(u => u.Id == followerId);
                     var followed = users.FirstOrDefault(u => u.Id == followedId);
-                    follower?.Followings.Add(followed!);
+
+                    if (follower != null && followed != null)
+                    {
+                        follower.Followings.Add(followed);
+                        followed.Followers.Add(follower);
+                    }
                 }
             );
 
