@@ -45,7 +45,7 @@ const BlogCard: React.FC<BlogProps> = ({blog}) => {
                             {blog.description}
                         </p>
                     </div>
-                    <Image className="w-3/4 self-center rounded-lg" width={500} height={500} src={blog.image} alt={"blog image"} />
+                    <Image className="w-3/4 self-center rounded-lg" width={800} height={800} src={blog.image} alt={"blog image"} />
                 </div>
                 <div className="flex gap-2">
                     {

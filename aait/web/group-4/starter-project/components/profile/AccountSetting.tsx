@@ -24,7 +24,7 @@ const AccountSetting = () => {
       oldPassword: currPassword
     });
 
-    toast(useSelector((state: RootState) => state.user.message));
+    // toast(useSelector((state: RootState) => state.user.message));
 
   };
   return (

@@ -58,14 +58,14 @@ const BlogForm: React.FC = () => {
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-   addBlog({
+  //  addBlog({
 
-      _id: nanoid(),
-      title:title,
-      description:content,
-      image:selectedFile,
-      tags: selectedTags.map((tag: any) => tag.value),
-    });
+  //     _id: nanoid(),
+  //     title:title,
+  //     description:content,
+  //     image:selectedFile,
+  //     tags: selectedTags.map((tag: any) => tag.value),
+  //   });
      
     setTitle("");
     setContent("");

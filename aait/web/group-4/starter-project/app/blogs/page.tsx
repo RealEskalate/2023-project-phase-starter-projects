@@ -4,6 +4,7 @@ import {useState} from "react";
 
 import {useGetBlogsQuery} from "@/store/features/blog/blog-api";
 import BlogCard from "@/components/blogs/BlogCard";
+import Loading from "@/components/common/Loading";
 
 export default function Blogs(){
 
@@ -14,6 +15,12 @@ export default function Blogs(){
     const goToPage = (pageNumber: number) => {
         setPage(pageNumber);
     };
+
+    if(isLoading){
+        return (
+            <Loading/>
+        )
+    }
 
     if(blogs){
 

@@ -25,7 +25,6 @@ const SignupForm = () => {
         name: '',
     });
 
-    const message = useSelector((state: RootState) => state.user.message);
     const router = useRouter();
 
     const [registerUser, registerResult] = useRegisterMutation();
@@ -38,15 +37,14 @@ const SignupForm = () => {
         }));
     };
 
-    const handleSignup =  () => {
+    const handleSignup =  async() => {
 
-         registerUser(formData);
+        await registerUser(formData).unwrap();
 
         if(registerResult.isSuccess){
-            toast(message, {
+            toast("Registered Successfully", {
                 type: "success"
             })
-            console.log("message")
             router.push("/signin")
         }
         else if(registerResult.isError){

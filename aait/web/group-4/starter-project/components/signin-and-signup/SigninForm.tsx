@@ -2,12 +2,12 @@
 
 import { ChangeEvent, useState } from "react";
 import { useRouter } from "next/navigation";
-import { shallowEqual, useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 
 import { useLoginMutation } from "@/store/features/auth";
 import TextField from "./TextField";
-import { setMessage, setUser } from "@/store/features/user/user-slice";
-import { AppDispatch, RootState } from "@/store";
+import { setUser } from "@/store/features/user/user-slice";
+import { AppDispatch } from "@/store";
 import { toast } from "react-toastify";
 import { AiOutlineLoading3Quarters } from "react-icons/ai";
 
@@ -20,7 +20,6 @@ const SignInForm = () => {
   const router = useRouter();
   const [loginUser, loginResult] = useLoginMutation();
   const [formData, setFormData] = useState<{
-    
     email: string;
     password: string;
   }>({
@@ -28,9 +27,6 @@ const SignInForm = () => {
     password: "",
   });
 
-  const user = useSelector((state: RootState) => state.user.message, shallowEqual);
-  console.log("message gg", user.content);
-  
   const dispatch = useDispatch<AppDispatch>();
 
   const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
@@ -41,20 +37,17 @@ const SignInForm = () => {
     }));
   };
 
-  const handleSignin = () => {
-    loginUser(formData).unwrap().then((data) => {
-      console.log("WORKING ...")
-      dispatch(setMessage("Logged in Successfully!"))
-      dispatch(setUser(data));
+  const handleSignin = async() => {
+    const user = await loginUser(formData).unwrap()
 
-      // console.log(user?.message)
-      // toast(user?.message, {
-      //   type: "success",
-      // });
-      router.push("/profile");
-    })
+    dispatch(setUser(user));
 
-   if (loginResult.isError) {
+    toast("Logged in Successfully!", {
+      type: "success",
+    });
+
+    router.push("/profile");
+    if (loginResult.isError) {
       toast("Error during Login", {
         type: "error",
       });
@@ -63,7 +56,9 @@ const SignInForm = () => {
 
   return (
     <div
-      className={`${loginResult.isLoading && "blur"} flex flex-col text-left gap-6 bg-white text-gray-500 font-login border-0 rounded-lg md:px-14 px-10 pt-10 pb-10 w-full`}
+      className={`${
+        loginResult.isLoading && "blur"
+      } flex flex-col text-left gap-6 bg-white text-gray-500 font-login border-0 rounded-lg md:px-14 px-10 pt-10 pb-10 w-full`}
     >
       {loginResult.isLoading && (
         <div className="absolute top-1/2 left-1/2 flex justify-center items-center">

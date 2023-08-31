@@ -26,7 +26,7 @@ export default async ({params}: { params: { id: string } }) => {
                 </span>
             </div>
 
-            <Image className="w-full md:py-12 py-7 object-cover" width={40} height={40} alt={"blog image"} src={data.image}/>
+            <Image className="w-full md:py-12 py-7 object-cover" width={800} height={800} alt={"blog image"} src={data.image}/>
 
             {
                 data.author?(
@@ -41,7 +41,7 @@ export default async ({params}: { params: { id: string } }) => {
                     </div>
                 ):(
                     <div className="flex flex-col items-center gap-2 md:pb-12">
-                        <Image className=" rounded-full w-[80px] h-[80px]" width={80} height={80} src={dummyAuthor.image} />
+                        <Image className=" rounded-full w-[80px] h-[80px]" width={80} height={80} src={dummyAuthor.image} alt={""} />
                         <span className="flex gap-2 justify-between font-nav text-gray-400 uppercase text-[1rem]">
                     <p>{ dummyAuthor.name }</p>
                     <p> | </p>
