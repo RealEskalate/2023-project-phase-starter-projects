@@ -6,23 +6,19 @@ import { useEffect, useState } from "react";
 import NavBarMobile from "./NavBarMobile";
 import Link from "next/link";
 import { authTypes } from "@/types/auth/authTypes";
+import { useDispatch, useSelector } from "react-redux";
+import { removeLogInStatus } from "@/store/user-Slice";
 
 // Define a functional component named Header
 const Header: React.FC = () => {
   // State to control the mobile menu open/closed state
   const [isOpen, setIsOpen] = useState(false);
-
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
-  useEffect(() => {
-    const userString = localStorage.getItem("user");
-    const user: authTypes | null = userString ? JSON.parse(userString) : null;
-    if (user) {
-      setIsLoggedIn(true);
-    }
-  }, []);
+  const dispath = useDispatch();
+  const loginStatu = useSelector((state: any) => state.LogInState.status);
 
   const handleLogout = () => {
     localStorage.clear();
+    dispath(removeLogInStatus());
     window.location.href = "/";
   };
 
@@ -52,32 +48,32 @@ const Header: React.FC = () => {
         <div className="button_contnet flex gap-7 items-center ">
           {/* Text for Login */}
           <>
-          {!isLoggedIn && (
-            <Link
-              href={"/login"}
-              className="text-login_color hidden nav_bar_screen:inline-block p-3 border-2 border-white rounded-lg hover:border-primary transition ease-in-out duration-200"
-            >
-              Login
-            </Link>
-          )}
+            {!loginStatu && (
+              <Link
+                href={"/login"}
+                className="text-login_color hidden nav_bar_screen:inline-block p-3 border-2 border-white rounded-lg hover:border-primary transition ease-in-out duration-200"
+              >
+                Login
+              </Link>
+            )}
 
-          {/* Button with padding, background color, text color, and rounded corners */}
-          {!isLoggedIn && (
-            <Link
-              href={"/register"}
-              className="p-3 bg-primary text-white rounded-lg hidden nav_bar_screen:inline-block border-2 border-primary hover:bg-white hover:text-primary transition ease-in-out duration-200"
-            >
-              Register
-            </Link>
-          )}
-          {isLoggedIn && (
-            <button
-              onClick={() => handleLogout()}
-              className="p-3 bg-primary text-white rounded-lg hidden nav_bar_screen:inline-block"
-            >
-              Log Out
-            </button>
-          )}
+            {/* Button with padding, background color, text color, and rounded corners */}
+            {!loginStatu && (
+              <Link
+                href={"/register"}
+                className="p-3 bg-primary text-white rounded-lg hidden nav_bar_screen:inline-block border-2 border-primary hover:bg-white hover:text-primary transition ease-in-out duration-200"
+              >
+                Register
+              </Link>
+            )}
+            {loginStatu && (
+              <button
+                onClick={() => handleLogout()}
+                className="p-3 bg-primary text-white rounded-lg hidden nav_bar_screen:inline-block"
+              >
+                Log Out
+              </button>
+            )}
           </>
 
           {/* hamburger icon */}
@@ -121,3 +117,10 @@ const Header: React.FC = () => {
 
 // Export the Header component as the default export
 export default Header;
+
+export function checkLocalStorage(): boolean {
+  const userString = window.localStorage.getItem("user");
+  const user: authTypes | null = userString ? JSON.parse(userString) : null;
+  if (user) return true;
+  else return false;
+}

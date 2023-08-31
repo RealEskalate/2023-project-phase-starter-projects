@@ -3,8 +3,11 @@ import { useLoginMutation } from "@/store/features/auth";
 import React, { useState } from "react";
 import Toast from "@/components/toast-Messages/toast-message";
 import { useRouter } from "next/navigation";
+import { useDispatch } from "react-redux";
+import { setLogInStatus } from "@/store/user-Slice";
 
 const LogIn: React.FC = () => {
+  const dipatch = useDispatch();
   const router = useRouter();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -19,7 +22,8 @@ const LogIn: React.FC = () => {
       .unwrap()
       .then((response: any) => {
         localStorage.setItem("user", JSON.stringify(response));
-        setisLoggedIN(true)
+        setisLoggedIN(true);
+        dipatch(setLogInStatus());
         router.push("/");
       })
       .catch((err) => {
