@@ -111,7 +111,6 @@ const AboutUs:React.FC = () => {
                     </div>
                 </div>
             </div>
-            {/* How we are solving it */}
 
             <div className="flex flex-row justify-between mt-20">
                 <div className="flex-1">

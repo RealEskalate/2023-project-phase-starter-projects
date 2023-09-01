@@ -1,23 +1,5 @@
-// import { useEditPasswordQuery } from "@/store/features/profile/profile-api";
-// import { useState } from "react";
-
 import { useEffect, useState } from "react";
 
-// interface formField {
-//   oldPassword: string;
-//   newPassword: string;
-// }
-// const initialState: formField = {
-//   oldPassword: "",
-//   newPassword: "",
-// };
-// export default function PasswordForm() {
-//   const { editPassword, isLoading } = useEditPasswordQuery();
-//   const [passwords, setPasswords] = useState(initialState);
-//   const handleCange = (e: any) => {
-//     setPasswords(e.target.value);
-//   };
-//   const andleSumit = () => {};
 export default function PasswordForm() {
   const style =
     "border-gray-400 text-secondary-text px-4 pr-16 py-1 rounded-md m-5 bg-slate-200 focus:outline-none";
