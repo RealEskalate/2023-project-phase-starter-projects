@@ -9,9 +9,7 @@ import { authTypes } from "@/types/auth/authTypes";
 import { useDispatch, useSelector } from "react-redux";
 import { removeLogInStatus } from "@/store/user-Slice";
 
-// Define a functional component named Header
 const Header: React.FC = () => {
-  // State to control the mobile menu open/closed state
   const [isOpen, setIsOpen] = useState(false);
   const dispath = useDispatch();
   const loginStatu = useSelector((state: any) => state.LogInState.status);
@@ -115,7 +113,6 @@ const Header: React.FC = () => {
   );
 };
 
-// Export the Header component as the default export
 export default Header;
 
 export function checkLocalStorage(): boolean {

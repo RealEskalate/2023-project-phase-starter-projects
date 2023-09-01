@@ -26,7 +26,7 @@ const Pagination: React.FC<Props> = ({
     siblingCount,
     pageSize,
   });
-
+  
   if (currentPage === 0 || paginationRange.length < 2) {
     return null;
   }
@@ -54,28 +54,29 @@ const Pagination: React.FC<Props> = ({
           </svg>    
       </div>
       <div className='flex gap-1'>
-      {paginationRange.map((pageNumber) => {
-        if (pageNumber === DOTS) {
-          return (
-            <li className="p-3" key={pageNumber}>
-              &#8230;
-            </li>
-          );
-        }
-        return (
-          <div
-            className={`px-3 h-1/2  rounded-md ${
-              pageNumber === currentPage
-                ? 'bg-primary text-white '
-                : 'hover:bg-gray-400 text-gray-700 '
-            }`}
-            onClick={() => onPageChange(Number(pageNumber))}
-            key={pageNumber}
-          >
-            {pageNumber}
-          </div>
-        );
-      })}
+        {paginationRange.map((pageNumber, index) => {
+          if (pageNumber !== DOTS) {
+            return (
+              <div
+                className={`px-3 h-1/2 rounded-md ${
+                  pageNumber === currentPage
+                    ? 'bg-primary text-white'
+                    : 'hover:bg-gray-400 text-gray-700'
+                }`}
+                onClick={() => onPageChange(Number(pageNumber))}
+                key={index} 
+              >
+                {pageNumber}
+              </div>
+            );
+          } else {
+            return (
+              <li className="p-3" key={index}> 
+                {DOTS}
+              </li>
+            );
+          }
+        })}
       </div>
       <div
         className={`px-2 py-1 ${
