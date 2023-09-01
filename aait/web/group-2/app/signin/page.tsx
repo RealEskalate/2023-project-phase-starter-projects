@@ -27,8 +27,8 @@ const Signin = () => {
   };
 
   const passwordValidator = () => {
-    if (password.length < 4) {
-      setPasswordError("password must be atleast 4 characters");
+    if (password.length < 6) {
+      setPasswordError("password must be atleast 6 characters");
     } else {
       setPasswordError("");
     }
