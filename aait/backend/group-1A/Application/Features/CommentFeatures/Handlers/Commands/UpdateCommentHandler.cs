@@ -1,3 +1,4 @@
+using Application.Common;
 using Application.Contracts;
 using Application.DTO.CommentDTO.DTO;
 using Application.DTO.CommentDTO.Validations;
@@ -15,13 +16,15 @@ namespace Application.Features.CommentFeatures.Handlers.Commands
 {
     public class UpdateCommentHandler : IRequestHandler<UpdateCommentCommand, BaseResponse<CommentResponseDTO>>
     {
-        private readonly ICommentRepository _commentRepository;
+        private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
+        private readonly IMediator _mediator;
 
-        public UpdateCommentHandler(ICommentRepository commentRepository, IMapper mapper)
+        public UpdateCommentHandler(IUnitOfWork unitOfWork, IMapper mapper,IMediator mediator)
         {
-            _commentRepository = commentRepository;
+            _unitOfWork = unitOfWork;
             _mapper = mapper;
+            _mediator = mediator;
         }
         public async Task<BaseResponse<CommentResponseDTO>> Handle(UpdateCommentCommand request, CancellationToken cancellationToken)
         {
@@ -33,20 +36,31 @@ namespace Application.Features.CommentFeatures.Handlers.Commands
             {
                 throw new ValidationException(validationResult);
             }
-            var exists = await _commentRepository.Exists(request.Id);
+            var comment = await _unitOfWork.CommentRepository.Get(request.Id);
 
-            if (!exists) 
+            if (comment == null) 
             {
                 throw new NotFoundException("Comment is not found");
             }
 
 
-            var newComment = _mapper.Map<Comment>(request.CommentData);
-            newComment.Id = request.Id;
-            newComment.UserId = request.userId;
-            var updationResult = await _commentRepository.Update(newComment);
+            _mapper.Map(request.CommentData, comment);
+            
+            var updationResult = await _unitOfWork.CommentRepository.Update(comment);
             var result = _mapper.Map<CommentResponseDTO>(updationResult);
+            var post  = await _unitOfWork.PostRepository.Get(comment.PostId);
 
+            await _mediator.Send(new CreateNotification {NotificationData = new NotificationCreateDTO()
+            {
+                Content = "A comment on your post has been Updated",
+                NotificationContentId = comment.Id,
+                NotificationType = NotificationEnum.COMMENT,
+                UserId = post.UserId}
+                }
+                );
+
+                
+            await _unitOfWork.Save();
 
 
 

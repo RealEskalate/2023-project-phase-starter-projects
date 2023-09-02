@@ -1,5 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 using System.Net;
+using Application.Contracts;
 using Application.Dtos.Authentication;
 using Application.Features.Authentication.Requests;
 using AutoMapper;
@@ -12,15 +13,15 @@ namespace SocialSync.Application.Features.Authentication.Handlers.Commands;
 public class RegisterUserRequestHandler : IRequestHandler<RegisterUserRequest, RegisterResponseDto>
 {
 
-    readonly IAuthRepository _authRepository;
     readonly IMapper _mapper;
     readonly IJwtGenerator _jwtGenerator;
+    private readonly IUnitOfWork _unitOfWork;
 
-    public RegisterUserRequestHandler( IAuthRepository authRepository, IMapper mapper, IJwtGenerator jwtGenerator)
+    public RegisterUserRequestHandler(IUnitOfWork unitOfWork,IMapper mapper, IJwtGenerator jwtGenerator)
     {
-        _authRepository = authRepository;
         _mapper = mapper;
         _jwtGenerator = jwtGenerator;
+        _unitOfWork = unitOfWork;
 
     }
    public async Task<RegisterResponseDto> Handle(RegisterUserRequest request, CancellationToken cancellationToken)
@@ -29,22 +30,17 @@ public class RegisterUserRequestHandler : IRequestHandler<RegisterUserRequest, R
         
         var validator = new RegisterUserDtoValidator();
         var validationResult = await validator.ValidateAsync(request.RegisterUserDto, cancellationToken);
-        // Check if user exists
-        if (await _authRepository.UserExists(request.RegisterUserDto.Email))
+        if (await _unitOfWork.AuthRepository.UserExists(request.RegisterUserDto.Email))
         {
             throw new Exception("User already exists");
         }
 
-        // Map request to user
         var user = _mapper.Map<User>(request.RegisterUserDto);
 
-        // Register user
-        var registeredUser = await _authRepository.RegisterUser(user);
+        var registeredUser = await _unitOfWork.AuthRepository.RegisterUser(user);
         
-
-        // Generate token
         var token = await _jwtGenerator.CreateTokenAsync(registeredUser);
-
+        await _unitOfWork.Save();
         
         return new RegisterResponseDto
         {   

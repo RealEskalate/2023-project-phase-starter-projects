@@ -31,7 +31,7 @@ namespace Application.Tests.Mocs
             };
 
         var mockRepo = new Mock<IPostReactionRepository>();
-        var mockUserRepo = MockUserRepository.GetUserRepository();
+        // var mockUserRepo = MockUserRepository.GetUserRepository();
 
         mockRepo.Setup(r => r.MakeReaction(It.IsAny<int>(), It.IsAny<PostReaction>()))
         .ReturnsAsync((int id, PostReaction entity) => 

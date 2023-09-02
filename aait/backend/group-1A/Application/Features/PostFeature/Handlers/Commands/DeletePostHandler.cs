@@ -1,4 +1,5 @@
-﻿using Application.Contracts;
+﻿using Application.Common;
+using Application.Contracts;
 using Application.DTO.NotificationDTO;
 using Application.DTO.PostDTO.DTO;
 using Application.Exceptions;
@@ -11,16 +12,17 @@ namespace Application.Features.PostFeature.Handlers.Commands
 {
     public class DeletePostHandler : IRequestHandler<DeletePostCommand, BaseResponse<int>>
     {
-        private readonly IPostRepository _postRepository;
-
-        public DeletePostHandler(IPostRepository postRepository)
+        private readonly IUnitOfWork _unitOfWork;
+        private readonly IMediator _mediator;
+        public DeletePostHandler(IUnitOfWork unitOfWork,IMediator mediator)
         {
-            _postRepository = postRepository;
+            _unitOfWork = unitOfWork;
+            _mediator = mediator;
 
         }
         public async Task<BaseResponse<int>> Handle(DeletePostCommand request, CancellationToken cancellationToken)
         {
-            var post = await _postRepository.Get(request.Id);
+            var post = await _unitOfWork.PostRepository.Get(request.Id);
             if (post == null) 
             {
                 
@@ -33,11 +35,19 @@ namespace Application.Features.PostFeature.Handlers.Commands
                 throw new BadRequestException("You cannot delete other people's posts");
             }
             
-            var result = await _postRepository.Delete(post);
+            var result = await _unitOfWork.PostRepository.Delete(post);
 
             if (!result){
                 throw new BadRequestException("The post is not deleted");
             }
+
+
+            await _mediator.Send(new CreateNotification {NotificationData = new NotificationCreateDTO()
+                    {
+                        Content = "A Post has been Deleted",
+                        NotificationType = NotificationEnum.POST,
+                        UserId = request.userId}}); 
+
 
 
             return  new BaseResponse<int> {

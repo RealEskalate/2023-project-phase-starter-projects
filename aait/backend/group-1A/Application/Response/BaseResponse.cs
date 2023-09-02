@@ -11,6 +11,6 @@ namespace Application.Response
 
         public string Message { get; set; } = "";
 
-        public T Value { get; set; }       
+        public T? Value { get; set; }       
     }
 }

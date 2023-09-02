@@ -10,26 +10,24 @@ namespace Application.Features.CommentFeatures.Handlers.Queries
 {
     public class GetPostsComment : IRequestHandler<GetCommentsForPostQuery, BaseResponse<List<CommentResponseDTO>>>
     {
-        private readonly ICommentRepository _commentRepository;
+        private readonly IUnitOfWork _unitOfWork;
             private readonly IMapper _mapper;
-        private readonly IPostRepository _postRepository;
 
-        public GetPostsComment(ICommentRepository commentRepository, IMapper mapper, IPostRepository postRepository)
+        public GetPostsComment(IUnitOfWork unitOfWork, IMapper mapper)
             {
-                _commentRepository = commentRepository;
                 _mapper = mapper;
-                _postRepository = postRepository;
+                _unitOfWork = unitOfWork;
         }
 
         public async Task<BaseResponse<List<CommentResponseDTO>>> Handle(GetCommentsForPostQuery request, CancellationToken cancellationToken)
         {
-            var postExist = await _postRepository.Exists(request.PostId);
+            var postExist = await _unitOfWork.PostRepository.Exists(request.PostId);
             if (!postExist) 
             {
                 throw new NotFoundException("Post with the Provided Id is not found");
             }
 
-            var result = await _commentRepository.GetByPostId(request.PostId);
+            var result = await _unitOfWork.CommentRepository.GetByPostId(request.PostId);
             if (result == null)
             {
                 throw new BadRequestException("Comments are not found");

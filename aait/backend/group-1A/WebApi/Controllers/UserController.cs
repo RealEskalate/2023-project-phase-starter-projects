@@ -38,7 +38,7 @@ namespace WebApi.Controllers
 
 
         
-        [HttpPut("{id}")]
+        [HttpPut("")]
         [Authorize]
         public async Task<ActionResult<UserResponseDTO>> Put(int id, [FromBody] UserUpdateDTO UpdateUserData)
         {

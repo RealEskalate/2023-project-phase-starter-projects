@@ -2,6 +2,7 @@
 using Application.DTO.Common;
 using Application.DTO.UserDTO.DTO;
 using Application.DTO.UserDTO.validations;
+using Application.Exceptions;
 using Application.Features.UserFeature.Requests.Commands;
 using AutoMapper;
 using Domain.Entities;
@@ -17,12 +18,12 @@ namespace Application.Features.UserFeature.Handlers.Commands
 {
     public class UpdateUserHandler : IRequestHandler<UpdateUserCommand, UserResponseDTO>
     {
-        private readonly IUserRepository _UserRepository;
+        private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
 
-        public UpdateUserHandler(IUserRepository UserRepository, IMapper mapper)
+        public UpdateUserHandler(IUnitOfWork unitOfWork, IMapper mapper)
         {
-            _UserRepository = UserRepository;
+            _unitOfWork = unitOfWork;
             _mapper = mapper;
         }
 
@@ -33,15 +34,20 @@ namespace Application.Features.UserFeature.Handlers.Commands
 
             if (!validationResult.IsValid)
             {
-                throw new Exception();
+                throw new ValidationException(validationResult);
             }
             if (request.userId <= 0)
             {
-                throw new Exception();
+                throw new BadRequestException("USER with this Id doesnt exist");
             }
-            var newUser = _mapper.Map<User>(request.UserUpdateData);
-            newUser.Id = request.userId;
-            var updationResult = await _UserRepository.Update(newUser);
+            var user = await  _unitOfWork.UserRepository.Get(request.userId);
+            if (user == null)
+            {
+                throw new NotFoundException("User is not found");
+            }
+
+            var newUser = _mapper.Map(request.UserUpdateData,user);
+            var updationResult = await _unitOfWork.UserRepository.Update(user);
 
             return _mapper.Map<UserResponseDTO>(updationResult);
         }
