@@ -14,12 +14,10 @@ namespace Application.Features.PostFeature.Handlers.Queries
 {
     public class GetAllPostHandler : IRequestHandler<GetAllPostsQuery, BaseResponse<List<PostResponseDTO>>>
     {
-        // private readonly IPostRepository _postRepository;
         private readonly IMapper _mapper;
         private readonly IUnitOfWork _unitOfWork;
         public GetAllPostHandler(IUnitOfWork unitOfWork,IMapper mapper)
         {
-            // _postRepository = postRepository;
             _unitOfWork = unitOfWork;
             _mapper = mapper;
         }

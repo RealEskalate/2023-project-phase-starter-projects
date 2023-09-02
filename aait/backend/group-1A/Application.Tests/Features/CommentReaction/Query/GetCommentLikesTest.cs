@@ -1,7 +1,4 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using Application.Contracts;
 using Application.DTO.Common;
 using Application.Exceptions;
 using Application.Features.CommentReactionFeature.Handlers.Queries;
@@ -11,7 +8,6 @@ using Application.Response;
 using Application.Tests.Mocks;
 using Application.Tests.Mocs;
 using AutoMapper;
-using Domain.Entites;
 using Moq;
 using Shouldly;
 
@@ -20,9 +16,12 @@ namespace Application.Tests.Features.CommentReactionFeature.Commands
     public class GetCommentLikesQueryTest
     {            
             private readonly IMapper _mapper;
+            private readonly Mock<IUnitOfWork> _mockUnitOfWork;    
+
             private ReactionDTO testReaction;
             public GetCommentLikesQueryTest()
             {
+                _mockUnitOfWork = MockUnitOfWork.GetUnitOfWork();
 
                 var mapperConfig = new MapperConfiguration(c => 
                 {
@@ -45,7 +44,7 @@ namespace Application.Tests.Features.CommentReactionFeature.Commands
         {
             var mocCommentReactionRepository = MockCommentReactionRepository.GetCommentReactionRepository().Object;
             var mockCommentRepository = MockCommentRepository.GetCommentRepository().Object;
-            var _handler = new GetCommentsLikeHandler(mocCommentReactionRepository,_mapper,mockCommentRepository);
+            var _handler = new GetCommentsLikeHandler(_mockUnitOfWork.Object,_mapper);
                          
             var result = await _handler.Handle(new GetCommentsLikeQuery() {CommentId = 1}, CancellationToken.None);
             result.ShouldBeOfType<BaseResponse<List<ReactionResponseDTO>>>();
@@ -56,7 +55,7 @@ namespace Application.Tests.Features.CommentReactionFeature.Commands
         {
             var mocCommentReactionRepository = MockCommentReactionRepository.GetCommentReactionRepository().Object;
             var mockCommentRepository = MockCommentRepository.GetCommentRepository().Object;
-            var _handler = new GetCommentsLikeHandler(mocCommentReactionRepository,_mapper,mockCommentRepository);
+            var _handler = new GetCommentsLikeHandler(_mockUnitOfWork.Object,_mapper);
             await Should.ThrowAsync<NotFoundException>(async () =>
                await _handler.Handle(new GetCommentsLikeQuery() { CommentId = 100}, CancellationToken.None));
         }

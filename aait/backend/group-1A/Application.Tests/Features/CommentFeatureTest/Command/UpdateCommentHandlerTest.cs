@@ -1,35 +1,39 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Application.Contracts;
 using Application.DTO.CommentDTO.DTO;
 using Application.Exceptions;
 using Application.Features.CommentFeatures.Handlers.Commands;
 using Application.Features.CommentFeatures.Requests.Commands;
+using Application.Features.NotificationFeaure.Requests.Commands;
 using Application.Profiles;
 using Application.Response;
 using Application.Tests.Mocks;
 using AutoMapper;
+using MediatR;
 using Moq;
 using Shouldly;
-using Xunit;
 
 namespace Application.Tests.Features.CommentFeatureTest.Commands
 {
     public class UpdateCommentHandlerTest
     {
         private readonly IMapper _mapper;
+        private readonly Mock<IUnitOfWork> _mockUnitOfWork;    
+
+        private readonly Mock<IMediator> _mediator; 
         CommentUpdateDTO testComment;
         public UpdateCommentHandlerTest()
         {
 
-            var mapperConfig = new MapperConfiguration(c =>
+            _mockUnitOfWork = MockUnitOfWork.GetUnitOfWork();
+
+            var mapperConfig = new MapperConfiguration(c => 
             {
                 c.AddProfile<MappingProfile>();
             });
 
-            _mapper = mapperConfig.CreateMapper();
+            _mapper = mapperConfig.CreateMapper(); 
+            _mediator = new Mock<IMediator>();
+            
             testComment = new CommentUpdateDTO()
             {
                 Content = "Test comment"
@@ -39,9 +43,12 @@ namespace Application.Tests.Features.CommentFeatureTest.Commands
         [Fact]
         public async Task UpdateCommentValidTest()
         {
+            _mediator.Setup(
+                    x => x.Send(It.IsAny<CreateNotification>(), It.IsAny<CancellationToken>())).ReturnsAsync(true);
+            
             var  _mockRepo = MockCommentRepository.GetCommentRepository();
 
-            var handler = new UpdateCommentHandler(_mockRepo.Object, _mapper);
+            var handler = new UpdateCommentHandler(_mockUnitOfWork.Object, _mapper, _mediator.Object);
 
             testComment.Content = "Updated comment";
             var result = await handler.Handle(new UpdateCommentCommand()
@@ -58,9 +65,12 @@ namespace Application.Tests.Features.CommentFeatureTest.Commands
         [Fact]
         public async Task UpdateCommentWithNoContentTest()
         {
+            _mediator.Setup(
+                    x => x.Send(It.IsAny<CreateNotification>(), It.IsAny<CancellationToken>())).ReturnsAsync(true);
+            
             var  _mockRepo = MockCommentRepository.GetCommentRepository();
 
-            var handler = new UpdateCommentHandler(_mockRepo.Object, _mapper);
+            var handler = new UpdateCommentHandler(_mockUnitOfWork.Object, _mapper, _mediator.Object);
 
             testComment.Content = "";
             await Should.ThrowAsync<ValidationException>(async () => await handler.Handle(new UpdateCommentCommand()
@@ -75,9 +85,12 @@ namespace Application.Tests.Features.CommentFeatureTest.Commands
         [Fact]
         public async Task UpdateNonExistentCommentTest()
         {
+            _mediator.Setup(
+                    x => x.Send(It.IsAny<CreateNotification>(), It.IsAny<CancellationToken>())).ReturnsAsync(true);
+            
             var  _mockRepo = MockCommentRepository.GetCommentRepository();
 
-            var handler = new UpdateCommentHandler(_mockRepo.Object, _mapper);
+            var handler = new UpdateCommentHandler(_mockUnitOfWork.Object, _mapper, _mediator.Object);
 
             testComment.Content = "Updated comment";
             await Should.ThrowAsync<NotFoundException>(async () => await handler.Handle(new UpdateCommentCommand()

@@ -13,13 +13,11 @@ public class CreateTagCommandHandler : IRequestHandler<CreateTagCommand, BaseRes
 {
 
     private readonly IMapper _mapper;
-    // private readonly ITagRepository _tagReposiotory;
     private readonly IUnitOfWork _unitOfWork;
 
     public CreateTagCommandHandler(IMapper mapper, IUnitOfWork unitOfWork)
     {
         _mapper = mapper;
-        // _tagReposiotory = tagRepository;
         _unitOfWork = unitOfWork;
     }
     public async Task<BaseResponse<string>> Handle(CreateTagCommand request, CancellationToken cancellationToken)

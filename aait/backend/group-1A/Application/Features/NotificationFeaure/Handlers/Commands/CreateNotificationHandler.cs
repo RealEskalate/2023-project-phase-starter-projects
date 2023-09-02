@@ -16,7 +16,6 @@ namespace Application.Features.NotificationFeaure.Handlers.Commands
 {
     public class CreateNotificationHandler : IRequestHandler<CreateNotification, bool>
     {
-        // private readonly INotificationRepository _notificationRepository;
         private readonly IMapper _mapper;
         private readonly IMediator _mediator;
         private readonly IUnitOfWork _unitOfWork;
@@ -25,14 +24,13 @@ namespace Application.Features.NotificationFeaure.Handlers.Commands
         {
             _mapper = mapper;
             _mediator = mediator;
-            // _notificationRepository = notificationRepository;
             _unitOfWork = unitOfWork;
             
         }
         public async Task<bool> Handle(CreateNotification request, CancellationToken cancellationToken)
         {
             var newNotification = _mapper.Map<Notification>(request.NotificationData);
-            // var followers = 
+
             switch (request.NotificationData.NotificationType)
             {
                 case NotificationEnum.POST:

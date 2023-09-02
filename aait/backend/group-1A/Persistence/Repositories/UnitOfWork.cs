@@ -34,7 +34,7 @@ namespace Persistence.Repositories
                 if (_authRepository == null){
                     _authRepository = new AuthRepository(_dbContext);
                 }
-                return AuthRepository;
+                return _authRepository;
             }
         }
 
@@ -70,7 +70,7 @@ namespace Persistence.Repositories
                 if (_notificationRepository == null){
                     _notificationRepository = new NotificationRepository(_dbContext);
                 };
-                return NotificationRepository;
+                return _notificationRepository;
             }
         }
 

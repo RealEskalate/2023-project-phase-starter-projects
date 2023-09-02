@@ -18,18 +18,14 @@ namespace Application.Features.CommentFeatures.Handlers.Commands
     public class CommentCreateHandler : IRequestHandler<CommentCreateCommand, BaseResponse<CommentResponseDTO>>
     {
         private readonly IMapper _mapper;
-        // private readonly ICommentRepository _commentRepository;
-
-        // private readonly IPostRepository _postRepository;
-
         private readonly IUnitOfWork _unitOfWork;
+        private readonly IMediator _mediator;
 
-        public CommentCreateHandler(IUnitOfWork unitOfWork,  IMapper mapper)
+        public CommentCreateHandler(IUnitOfWork unitOfWork,  IMapper mapper,IMediator mediator)
         {
             _unitOfWork = unitOfWork;
             _mapper = mapper;
-            // _commentRepository = commentRepository;
-            // _postRepository = postRepository;
+            _mediator = mediator;
         }
 
         public async Task<BaseResponse<CommentResponseDTO>> Handle(CommentCreateCommand request, CancellationToken cancellationToken)
@@ -44,8 +40,8 @@ namespace Application.Features.CommentFeatures.Handlers.Commands
                 throw new ValidationException(validationResult);
             }
 
-            var postExist = await _unitOfWork.PostRepository.Exists(request.NewCommentData.PostId);
-            if (!postExist)
+            var post = await _unitOfWork.PostRepository.Get(request.NewCommentData.PostId);
+            if (post == null)
             {
                 throw new NotFoundException("Post with the Provided Id doesn't exist");
             }
@@ -53,18 +49,19 @@ namespace Application.Features.CommentFeatures.Handlers.Commands
             var newComment = _mapper.Map<Comment>(request.NewCommentData);
             newComment.UserId = request.userId;
             var result = await _unitOfWork.CommentRepository.Add(newComment);
+            
+            
+            await _mediator.Send(new CreateNotification {
+                NotificationData = new NotificationCreateDTO()
+                    {
+                    Content = "A Comment has been given on your post",
+                    NotificationContentId = result.Id,
+                    NotificationType = NotificationEnum.COMMENT,
+                    UserId = post.UserId
+                    }
+                }
+            );
 
-
-            // notification
-            // var post = await _unitOfWork.PostRepository.Get(result.PostId);
-            // var notification = new Notification(){
-            //     Content = "A Comment has been given on your post",
-            //     NotificationContentId = result.PostId,
-            //     UserId = post.UserId,
-            //     Comment = true
-            // };
-
-            // await _unitOfWork.NotificationRepository.Add(notification);
             await _unitOfWork.Save();
             return new BaseResponse<CommentResponseDTO> {
                 Success = true,

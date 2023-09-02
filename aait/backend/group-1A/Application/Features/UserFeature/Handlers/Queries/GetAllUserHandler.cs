@@ -13,13 +13,11 @@ namespace Application.Features.UserFeature.Handlers.Queries
 {
     public class GetAllUserHandler : IRequestHandler<GetAllUsersQuery, List<UserResponseDTO>>
     {
-        // private readonly IUserRepository _UserRepository;
         private readonly IMapper _mapper;
         private readonly IUnitOfWork _unitOfWork;
 
         public GetAllUserHandler(IUnitOfWork unitOfWork, IMapper mapper)
         {
-            // _UserRepository = UserRepository;
             _unitOfWork = unitOfWork;
             _mapper = mapper;
         }

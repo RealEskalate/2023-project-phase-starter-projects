@@ -1,7 +1,6 @@
 ﻿using Application.Contracts;
 using Application.DTO.Common;
 using Application.Exceptions;
-using Application.Exceptions;
 using Application.Features.PostFeature.Requests.Queries;
 using Application.Response;
 using AutoMapper;
@@ -12,16 +11,12 @@ namespace Application.Features.PostFeature.Handlers.Queries
 {
     public class GetPostDislikesHandler : IRequestHandler<GetPostDislikesQuery, BaseResponse<List<ReactionResponseDTO>>>
     {
-        // private readonly IPostReactionRepository _postReaction;
         private readonly IMapper _mapper;
-        // private readonly IPostRepository _postRepository;
         private readonly IUnitOfWork _unitOfWork;
 
         public GetPostDislikesHandler(IMapper mapper,IUnitOfWork unitOfWork)
         {
-            // _postReaction = postReaction;
             _mapper = mapper;
-            // _postRepository = postRepository;
             _unitOfWork = unitOfWork;
         }
 

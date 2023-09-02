@@ -9,12 +9,10 @@ namespace Application.Features.UserFeature.Handlers.Commands
 {
     public class DeleteUserHandler : IRequestHandler<DeleteUserCommand, BaseResponse<string>>
     {
-        // private readonly IUserRepository _UserRepository;
         private readonly IUnitOfWork _unitOfWork;
 
         public DeleteUserHandler(IUnitOfWork unitOfWork)
         {
-            // _UserRepository = UserRepository;
             _unitOfWork = unitOfWork;
         }
         public async Task<BaseResponse<string>> Handle(DeleteUserCommand request, CancellationToken cancellationToken)

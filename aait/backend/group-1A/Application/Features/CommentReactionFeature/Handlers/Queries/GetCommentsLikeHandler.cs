@@ -15,16 +15,12 @@ namespace Application.Features.CommentReactionFeature.Handlers.Queries
 {
     public class GetCommentsLikeHandler : IRequestHandler<GetCommentsLikeQuery, BaseResponse<List<ReactionResponseDTO>>>
     {
-        // private readonly ICommentReactionRepository _commentReaction;
         private readonly IMapper _mapper;
-        // private readonly ICommentRepository _commentRepository;
         private readonly IUnitOfWork _unitOfWork;
 
         public GetCommentsLikeHandler(IUnitOfWork unitOfWork, IMapper mapper)
         {
-            // _commentReaction = commentReaction;
             _mapper = mapper;
-            // _commentRepository = commentRepository;
             _unitOfWork = unitOfWork;
         }
         public async Task<BaseResponse<List<ReactionResponseDTO>>> Handle(GetCommentsLikeQuery request, CancellationToken cancellationToken)

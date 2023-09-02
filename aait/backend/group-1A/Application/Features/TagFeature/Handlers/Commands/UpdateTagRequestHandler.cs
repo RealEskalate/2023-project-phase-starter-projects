@@ -11,12 +11,10 @@ namespace SocialSync.Application.Features;
 public class UpdateTagRequestHandler : IRequestHandler<UpdateTagRequest, TagResponseDto>
 {
     private readonly IMapper _mapper;
-    // private readonly ITagRepository _tagRepository;
     private readonly IUnitOfWork _unitOfWork;
     public UpdateTagRequestHandler(IMapper mapper, IUnitOfWork unitOfWork)
     {
         _mapper = mapper;
-        // _tagRepository = tagRepository;
         _unitOfWork = unitOfWork;
     }
     

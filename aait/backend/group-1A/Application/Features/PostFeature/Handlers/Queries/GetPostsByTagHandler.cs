@@ -12,13 +12,11 @@ namespace Application.Features.PostFeature.Handlers.Queries;
 public class GetPostsByTagHandler : IRequestHandler<GetPostsByTagQuery, BaseResponse<List<PostResponseDTO>>>
 {
     private readonly IMapper _mapper;
-    // private readonly IPostRepository _postRepository;
     private readonly IUnitOfWork _unitOfWork;
 
     public GetPostsByTagHandler( IUnitOfWork unitOfWork,IMapper mapper )
     {  
         _mapper = mapper;
-        // _postRepository = postRepository;
         _unitOfWork = unitOfWork;
         
     }

@@ -10,12 +10,10 @@ namespace Application.Features.FollowFeature.Handlers.Queries
 {
     public class GetFollowedUsersQueryHandler : IRequestHandler<GetFollowedUsersQuery,BaseResponse<List<UserResponseDTO>>>
     {
-        // IFollowRepository _followRepository;
         private readonly IUnitOfWork _unitOfWork;
         IMapper _mapper;
         public GetFollowedUsersQueryHandler(IUnitOfWork unitOfWork,IMapper mapper)
         {
-        //    _followRepository = followRepository; 
         _unitOfWork = unitOfWork;
            _mapper = mapper;
         }

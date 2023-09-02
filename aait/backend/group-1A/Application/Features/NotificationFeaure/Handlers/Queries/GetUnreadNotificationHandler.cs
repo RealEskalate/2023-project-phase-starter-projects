@@ -13,14 +13,12 @@ namespace Application.Features.NotificationFeaure.Handlers.Queries
 {
     public class GetUnreadNotificationHandler : IRequestHandler<GetUnreadNotification, BaseResponse<List<NotificationResponseDTO>>>
     {
-        // private readonly INotificationRepository _notificationRepository;
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
 
         public GetUnreadNotificationHandler(IUnitOfWork unitOfWork, IMapper mapper)
         {
             _mapper = mapper;
-            // _notificationRepository = notificationRepository;
 
             _unitOfWork = unitOfWork;
         }

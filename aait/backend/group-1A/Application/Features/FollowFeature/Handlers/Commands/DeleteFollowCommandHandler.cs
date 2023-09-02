@@ -1,7 +1,10 @@
+using Application.Common;
 using Application.Contracts;
 using Application.DTO.FollowDTo.Validations;
+using Application.DTO.NotificationDTO;
 using Application.Exceptions;
 using Application.Features.FollowFeature.Requests.Commands;
+using Application.Features.NotificationFeaure.Requests.Commands;
 using Application.Response;
 using AutoMapper;
 using Domain.Entites;
@@ -12,16 +15,15 @@ namespace Application.Features.FollowFeature.Handlers.Commands
      public class DeleteFollowCommandHandler : IRequestHandler<DeleteFollowCommand, BaseResponse<int>>
     {
       
-        // private readonly IFollowRepository _followRepository;
-        // private readonly IUserRepository _userRepository;
         private readonly IMapper _mapper;
         private readonly IUnitOfWork _unitOfWork;
 
-        public DeleteFollowCommandHandler(IMapper mapper, IUnitOfWork unitOfWork)
+        private readonly IMediator _mediator;
+
+        public DeleteFollowCommandHandler(IMediator mediator,IMapper mapper, IUnitOfWork unitOfWork)
         {
+            _mediator = mediator;
             _mapper = mapper;
-            // _followRepository = FollowRepository;
-            // _userRepository = userRepository;
             _unitOfWork = unitOfWork;
 
         }
@@ -34,11 +36,22 @@ namespace Application.Features.FollowFeature.Handlers.Commands
 
             if (!followValidationResult.IsValid)
             {
-                throw new BadRequestException("Unable to delete the follow request");
+                throw new ValidationException(followValidationResult);
             }
 
             var followEntity = _mapper.Map<Follow>(request.FollowDTO);
             await _unitOfWork.FollowRepository.DeleteFollow(followEntity);
+            
+
+
+
+            await _mediator.Send(new CreateNotification {NotificationData = new NotificationCreateDTO()
+            {
+                Content = $"The user with {request.FollowDTO.FollowerId} has currently un followed you",
+                NotificationType = NotificationEnum.FOLLOW,
+                UserId = request.FollowDTO.FolloweeId
+            }});
+
             
             createFollowResponse.Success = true;
             createFollowResponse.Message = $"User with Id {followEntity.FollowerId} has un followed you";

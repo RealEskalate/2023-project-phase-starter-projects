@@ -18,13 +18,11 @@ namespace Application.Features.UserFeature.Handlers.Commands
 {
     public class UpdateUserHandler : IRequestHandler<UpdateUserCommand, UserResponseDTO>
     {
-        // private readonly IUserRepository _UserRepository;
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
 
         public UpdateUserHandler(IUnitOfWork unitOfWork, IMapper mapper)
         {
-            // _serRepository = UserRepository;
             _unitOfWork = unitOfWork;
             _mapper = mapper;
         }
@@ -49,7 +47,6 @@ namespace Application.Features.UserFeature.Handlers.Commands
             }
 
             var newUser = _mapper.Map(request.UserUpdateData,user);
-            //newUser.Id = request.userId;
             var updationResult = await _unitOfWork.UserRepository.Update(user);
 
             return _mapper.Map<UserResponseDTO>(updationResult);

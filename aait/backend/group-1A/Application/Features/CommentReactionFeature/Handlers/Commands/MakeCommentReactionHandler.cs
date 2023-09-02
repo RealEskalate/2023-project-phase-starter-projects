@@ -1,8 +1,10 @@
 using Application.Common;
 using Application.Contracts;
 using Application.DTO.Common;
+using Application.DTO.NotificationDTO;
 using Application.Exceptions;
 using Application.Features.CommentReactionFeature.Requests.Commands;
+using Application.Features.NotificationFeaure.Requests.Commands;
 using Application.Response;
 using AutoMapper;
 using Domain.Entities;
@@ -12,17 +14,14 @@ namespace Application.Features.CommentReactionFeature.Handlers.Commands
 {
     public class MakeCommentReactionHandler : IRequestHandler<MakeReactionOnComment, BaseResponse<int>>
     {
-        // private readonly ICommentReactionRepository _commentReactionRespository;
         private readonly IMapper _mapper;
-        // private readonly ICommentRepository _commentRepository;
         private readonly IUnitOfWork _unitOfWork;
-
-        public MakeCommentReactionHandler(IMapper mapper, IUnitOfWork unitOfWork)
+        private readonly IMediator _mediator;
+        public MakeCommentReactionHandler(IMapper mapper, IUnitOfWork unitOfWork,IMediator mediator)
         {
-            // _commentReactionRespository = commentReactionRepository;
             _mapper = mapper;
-            // _commentRepository = commentRepository;
             _unitOfWork = unitOfWork;
+            _mediator = mediator;
         }
 
         public async Task<BaseResponse<int>> Handle(MakeReactionOnComment request, CancellationToken cancellationToken)
@@ -65,7 +64,14 @@ namespace Application.Features.CommentReactionFeature.Handlers.Commands
                 throw new BadRequestException("Comment is not found");
             }
 
-
+            await _mediator.Send(new CreateNotification {
+                NotificationData = new NotificationCreateDTO()
+                    {
+                        Content = $"User with {request.UserId} reacted on your comment",
+                        NotificationType = NotificationEnum.COMMENTREACTION,
+                        UserId = request.UserId}
+                        }
+            );
 
             return new BaseResponse<int>()
             {

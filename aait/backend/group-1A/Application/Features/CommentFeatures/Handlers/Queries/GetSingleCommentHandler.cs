@@ -11,13 +11,11 @@ namespace Application.Features.CommentFeatures.Handlers.Queries
 {
     public class GetCommentQueryHandler : IRequestHandler<GetSingleCommentQuery, BaseResponse<CommentResponseDTO>>
     {
-        // private readonly ICommentRepository _commentRepository;
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
 
         public GetCommentQueryHandler(IUnitOfWork unitOfWork,IMapper mapper)
         {
-            // _commentRepository = commentRepository;
             _unitOfWork = unitOfWork;
             _mapper = mapper;
         }

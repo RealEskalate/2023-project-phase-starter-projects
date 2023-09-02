@@ -1,3 +1,4 @@
+using Application.Common;
 using Application.Contracts;
 using Application.DTO.CommentDTO.DTO;
 using Application.DTO.NotificationDTO;
@@ -14,13 +15,12 @@ namespace Application.Features.CommentFeatures.Handlers.Commands
 {
     public class CommentDeleteHandler : IRequestHandler<CommentDeleteCommand, BaseResponse<int>>
     {
-        // private readonly ICommentRepository _commentRepository;
         private readonly IUnitOfWork _unitOfWork;
-
-        public CommentDeleteHandler(IUnitOfWork unitOfWork)
+        private readonly IMediator _mediator;
+        public CommentDeleteHandler(IUnitOfWork unitOfWork,IMediator mediator)
         {
-            // _commentRepository = commentRepository;
             _unitOfWork = unitOfWork;
+            _mediator = mediator;
         }
 
         public async Task<BaseResponse<int>> Handle(CommentDeleteCommand request, CancellationToken cancellationToken)
@@ -33,15 +33,19 @@ namespace Application.Features.CommentFeatures.Handlers.Commands
             }
             
             var result = await _unitOfWork.CommentRepository.Delete(comment);
+            var post = await _unitOfWork.PostRepository.Get(comment.PostId);
+
+
+            await _mediator.Send(new CreateNotification {NotificationData = new NotificationCreateDTO()
+                    {
+                        Content = "A comment on your post has been removed",
+                        NotificationContentId = comment.Id,
+                        NotificationType = NotificationEnum.COMMENT,
+                        UserId = post.UserId
+                        }});
+
+
             await _unitOfWork.Save();
-            // notification
-        //    var notification =  new Notification()
-        //                 {
-        //                     Content = "Comment is deleted",
-        //                     NotificationContentId = request.Id,
-        //                     UserId = post.UserId,
-        //                     Comment = true
-        //                 };
 
             return new BaseResponse<int> {
                 Success = true,

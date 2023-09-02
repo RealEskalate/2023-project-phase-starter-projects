@@ -12,13 +12,11 @@ namespace Application.Features.UserFeature.Handlers.Commands
     public class CreateUserHandler : IRequestHandler<CreateUserCommand, BaseResponse<string>>
     {
         private readonly IMapper _mapper;
-        // private readonly IUserRepository _UserRepository;
         private readonly IUnitOfWork _unitOfWork;
 
         public CreateUserHandler(IMapper mapper, IUnitOfWork unitOfWork)
         {
             _mapper = mapper;
-            // _UserRepository = UserRepository;
             _unitOfWork = unitOfWork;
         }
         public async Task<BaseResponse<string>> Handle(CreateUserCommand request, CancellationToken cancellationToken)

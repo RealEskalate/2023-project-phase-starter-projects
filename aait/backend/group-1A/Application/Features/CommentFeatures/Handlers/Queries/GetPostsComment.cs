@@ -10,16 +10,12 @@ namespace Application.Features.CommentFeatures.Handlers.Queries
 {
     public class GetPostsComment : IRequestHandler<GetCommentsForPostQuery, BaseResponse<List<CommentResponseDTO>>>
     {
-        // private readonly ICommentRepository _commentRepository;
         private readonly IUnitOfWork _unitOfWork;
             private readonly IMapper _mapper;
-        // private readonly IPostRepository _postRepository;
 
         public GetPostsComment(IUnitOfWork unitOfWork, IMapper mapper)
             {
-                // _commentRepository = commentRepository;
                 _mapper = mapper;
-                // _postRepository = postRepository;
                 _unitOfWork = unitOfWork;
         }
 

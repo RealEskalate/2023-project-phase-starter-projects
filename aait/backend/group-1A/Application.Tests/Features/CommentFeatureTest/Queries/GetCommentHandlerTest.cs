@@ -20,18 +20,18 @@ namespace Application.Tests.Features.CommentFeatureTest.Queries
     public class GetCommentHandlerTest
     {
         private readonly IMapper _mapper;
-        private readonly Mock<ICommentRepository> _mockRepo;
+        private readonly Mock<IUnitOfWork> _mockUnitOfWork;
 
         public GetCommentHandlerTest()
         {
-            _mockRepo = MockCommentRepository.GetCommentRepository();
+            _mockUnitOfWork = MockUnitOfWork.GetUnitOfWork();
 
-            var mapperConfig = new MapperConfiguration(c =>
+            var mapperConfig = new MapperConfiguration(c => 
             {
                 c.AddProfile<MappingProfile>();
             });
 
-            _mapper = mapperConfig.CreateMapper();
+            _mapper = mapperConfig.CreateMapper(); 
         }
 
         [Fact]
@@ -39,7 +39,7 @@ namespace Application.Tests.Features.CommentFeatureTest.Queries
         {
             var  _mockRepo = MockCommentRepository.GetCommentRepository();
 
-            var handler = new GetCommentQueryHandler(_mockRepo.Object, _mapper);
+            var handler = new GetCommentQueryHandler(_mockUnitOfWork.Object, _mapper);
             var result = await handler.Handle(new GetSingleCommentQuery()
             {
              Id  = 1
@@ -52,7 +52,7 @@ namespace Application.Tests.Features.CommentFeatureTest.Queries
         {
             var  _mockRepo = MockCommentRepository.GetCommentRepository();
 
-            var handler = new GetCommentQueryHandler(_mockRepo.Object, _mapper);
+            var handler = new GetCommentQueryHandler(_mockUnitOfWork.Object, _mapper);
 
             await Should.ThrowAsync<BadRequestException>(async () => await handler.Handle(new GetSingleCommentQuery()
             {

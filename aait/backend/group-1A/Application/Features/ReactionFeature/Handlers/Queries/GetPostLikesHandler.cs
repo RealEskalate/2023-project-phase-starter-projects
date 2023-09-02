@@ -1,6 +1,4 @@
-﻿
-
-using Application.Contracts;
+﻿using Application.Contracts;
 using Application.DTO.Common;
 using Application.Exceptions;
 using Application.Features.PostFeature.Requests.Queries;
@@ -12,16 +10,12 @@ namespace Application.Features.PostFeature.Handlers.Queries
 {
     public class GetPostLikesHandler : IRequestHandler<GetPostLikesQuery, BaseResponse<List<ReactionResponseDTO>>>
     {
-        // private readonly IPostReactionRepository _postReaction;
         private readonly IMapper _mapper;
-        // private readonly IPostRepository _postRepository;
         private readonly IUnitOfWork _unitOfWork;
 
         public GetPostLikesHandler(IUnitOfWork unitOfWork, IMapper mapper)
         {
-            // _postReaction = postReaction;
             _mapper = mapper;
-            // _postRepository = postRepository;
             _unitOfWork = unitOfWork;
         }
 

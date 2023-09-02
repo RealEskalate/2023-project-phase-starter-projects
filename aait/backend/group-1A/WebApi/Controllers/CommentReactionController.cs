@@ -42,12 +42,7 @@ namespace WebApi.Controllers
         {
             var userId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier)!.Value);
             var result = await _mediator.Send(new MakeReactionOnComment{ UserId = 3, ReactionData = reactionData });
-            await _mediator.Send(new CreateNotification {NotificationData = new NotificationCreateDTO()
-                    {
-                        Content = $"User with {userId} reacted on your comment",
-                        NotificationContentId = result.Value, 
-                        NotificationType = NotificationEnum.COMMENTREACTION,
-                        UserId = userId}});
+            
             return Ok(result);
         }
     }

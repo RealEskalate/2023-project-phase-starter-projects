@@ -10,13 +10,11 @@ namespace Application.Features.NotificationFeaure.Handlers.Queries
 {
     public class GetSingleNotificationHandler : IRequestHandler<GetSingleNotification, BaseResponse<NotificationResponseDTO>>
     {
-        // private readonly INotificationRepository _notificationRepository;
         private readonly IMapper _mapper;
         private readonly IUnitOfWork _unitOfWork;
 
         public GetSingleNotificationHandler(IUnitOfWork unitOfWork, IMapper mapper)
         {
-            // _notificationRepository = notificationRepository;
             _unitOfWork = unitOfWork;
             _mapper = mapper;
         }

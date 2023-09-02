@@ -14,16 +14,12 @@ namespace Application.Features.CommentReactionFeature.Handlers.Queries
 {
     public class GetCommentsDislikeHandler : IRequestHandler<GetCommentsDislikeQuery, BaseResponse<List<ReactionResponseDTO>>>
     {
-        // private readonly ICommentReactionRepository _commentReaction;
         private readonly IMapper _mapper;
-        // private readonly ICommentRepository _commentRepository;
         private readonly IUnitOfWork _unitOfWork;
 
         public GetCommentsDislikeHandler(IMapper mapper , IUnitOfWork unitOfWork)
         {
-            // _commentReaction = commentReaction;
             _mapper = mapper;
-            // _commentRepository = commentRepository;
             _unitOfWork = unitOfWork;
         }
         

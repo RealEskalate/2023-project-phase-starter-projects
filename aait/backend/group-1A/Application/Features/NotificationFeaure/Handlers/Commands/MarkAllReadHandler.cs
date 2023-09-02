@@ -13,13 +13,11 @@ namespace Application.Features.NotificationFeaure.Handlers.Commands
 {
     public class MarkAllReadHandler : IRequestHandler<MarkReadAllRequest, BaseResponse<string>>
     {
-        // private readonly INotificationRepository _notificationRepository;
         private readonly IMapper _mapper;
         private readonly IUnitOfWork _unitOfWork;
         public MarkAllReadHandler(IUnitOfWork unitOfWork, IMapper mapper)
         {
             _mapper = mapper;
-            // _notificationRepository = notificationRepository;
             _unitOfWork = unitOfWork;
             
         }

@@ -11,13 +11,11 @@ namespace Application.Features.PostFeature.Handlers.Queries
 {
     public class GetSinglePostHandler : IRequestHandler<GetSinglePostQuery, BaseResponse<PostResponseDTO>>
     {
-        // private readonly IPostRepository _postRepository;
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
 
         public GetSinglePostHandler(IUnitOfWork unitOfWork, IMapper mapper)
         {
-            // _postRepository = postRepository;
             _unitOfWork = unitOfWork;
             _mapper = mapper;
         }

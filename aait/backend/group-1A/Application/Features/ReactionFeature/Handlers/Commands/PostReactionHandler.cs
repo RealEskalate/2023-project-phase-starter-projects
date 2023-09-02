@@ -1,7 +1,9 @@
 ﻿using Application.Common;
 using Application.Contracts;
 using Application.DTO.Common;
+using Application.DTO.NotificationDTO;
 using Application.Exceptions;
+using Application.Features.NotificationFeaure.Requests.Commands;
 using Application.Features.PostFeature.Requests.Commands;
 using Application.Response;
 using AutoMapper;
@@ -13,17 +15,15 @@ namespace Application.Features.PostFeature.Handlers.Commands
 {
     public class PostReactionHandler : IRequestHandler<PostReactionCommand, BaseResponse<int>>
     {
-        // private readonly IPostReactionRepository _postReactionRespository;
         private readonly IMapper _mapper;
-        // private readonly IPostRepository _postRepository;
         private readonly IUnitOfWork _unitOfWork;
+        private readonly IMediator _mediator;
 
-        public PostReactionHandler(IUnitOfWork unitOfWork, IMapper mapper)
+        public PostReactionHandler(IMediator mediator,IUnitOfWork unitOfWork, IMapper mapper)
         {
-            // _postReactionRespository = postReactionRepository;
             _mapper = mapper;
-            // _postRepository = postRepository;
             _unitOfWork = unitOfWork;
+            _mediator = mediator;
         }        
         public async Task<BaseResponse<int>> Handle(PostReactionCommand request, CancellationToken cancellationToken)
         {
@@ -65,6 +65,16 @@ namespace Application.Features.PostFeature.Handlers.Commands
                 throw new BadRequestException("Post is not found");
             }
 
+
+
+            await _mediator.Send(new CreateNotification {NotificationData = new NotificationCreateDTO()
+                    {
+                        Content = $"User with {request.UserId} reacted on your post",
+                        NotificationContentId = request.ReactionData.ReactedId,
+                        NotificationType = NotificationEnum.POST,
+                        UserId = request.UserId}});
+
+                        
             return new BaseResponse<int>()
             {
                 Success = true,

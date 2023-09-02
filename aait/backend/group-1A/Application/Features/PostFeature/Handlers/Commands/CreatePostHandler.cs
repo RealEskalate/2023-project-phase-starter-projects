@@ -1,4 +1,5 @@
 ﻿using System.Text.RegularExpressions;
+using Application.Common;
 using Application.Contracts;
 using Application.DTO.NotificationDTO;
 using Application.DTO.PostDTO.DTO;
@@ -18,22 +19,15 @@ namespace Application.Features.PostFeature.Handlers.Commands
     public class CreatePostHandler : IRequestHandler<CreatePostCommand, BaseResponse<PostResponseDTO>>
     {
         private readonly IMapper _mapper;
-        // private readonly IPostRepository _postRepository;
-
-        // private readonly ITagRepository _tagRepository;
-
-        // private readonly IPostTagRepository _postTagRepository;
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMediator _mediator;
 
         public CreatePostHandler(IMapper mapper, IUnitOfWork unitOfWork, IMediator mediator)
         {
             _mapper = mapper;
-            // _postRepository = postRepository;
             _unitOfWork = unitOfWork;
             _mediator = mediator;
-            // _tagRepository = tagRepository;
-            // _postTagRepository = postTagRepository;
+
             
         }
         public async Task<BaseResponse<PostResponseDTO>> Handle(CreatePostCommand request, CancellationToken cancellationToken)
@@ -76,6 +70,19 @@ namespace Application.Features.PostFeature.Handlers.Commands
 
                 } 
             }
+
+
+
+             await _mediator.Send(
+                new CreateNotification () {
+                    NotificationData = new NotificationCreateDTO()
+                        {
+                        Content = "A Post has been Created",
+                        NotificationContentId = result.Id,
+                        NotificationType = NotificationEnum.POST,
+                        UserId = request.userId
+                        }});
+
 
             return new BaseResponse<PostResponseDTO> {
                 Success = true,
