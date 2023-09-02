@@ -3,7 +3,7 @@
 import React, { useState } from 'react';
 import Image from 'next/image';
 import { useChangePasswordMutation } from '@/store/features/user/userApi';
-
+import { toast } from 'react-toastify';
 
 export default function Page() {
   const [changePassword] = useChangePasswordMutation()
@@ -13,10 +13,11 @@ export default function Page() {
 
   const handleSaveChanges = () => {
     if(newPassword !== confirmPass) {
-      window.alert("Password don't match")
+      toast.error('Passwords are not matching')
       return
     }
     changePassword({"oldPassword": oldPassword, "newPassword": newPassword})
+    toast.success("Password changed successfuly")
 
   }
 

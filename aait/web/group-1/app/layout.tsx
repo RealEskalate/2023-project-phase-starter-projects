@@ -3,7 +3,7 @@ import type { Metadata } from "next";
 import { Poppins } from "next/font/google";
 import { NavBar } from "@/components/layout/NavBar";
 
-import { ToastContainer } from 'react-toastify'
+import { ToastContainer } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css'
 
 const inter = Poppins({

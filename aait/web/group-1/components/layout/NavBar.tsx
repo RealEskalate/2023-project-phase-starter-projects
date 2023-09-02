@@ -15,6 +15,8 @@ interface NavItems {
 export const NavBar = () => {
   const router = useRouter()
   const [isMenuToggled, setIsMenuToggled] = useState<boolean>(false);
+  const userData = localStorage.getItem('user');
+  const currUser = userData ? JSON.parse(userData) : null;
 
   const navItems: NavItems[] = [
     {
@@ -61,13 +63,19 @@ export const NavBar = () => {
 
         {/* login signup section */}
         <div className="flex gap-2">
-          <Link href={'/signin'} className="btn">Login</Link>
-          <button 
-            className="btn bg-blue-800 text-white"
-            onClick={() => router.push('/profile')}
-            >
-              Profile
-          </button>
+          <Link href="/signin" className="btn">Login</Link>
+          <Link href="/profile">
+            <div className="relative rounded-full w-10 h-10">
+              <Image
+                src={currUser ? currUser.userProfile: "https://res.cloudinary.com/djtkzulun/image/upload/v1684307248/Portfolio/dgxjqlgpys1imwnw2bhq"}
+                alt="User Avatar"
+                layout="fill"
+                objectFit="cover"
+                className="rounded-full"
+              />
+            </div>
+          </Link>
+          
         </div>
       </div>
 
@@ -80,17 +88,27 @@ export const NavBar = () => {
 
         <div className="flex flex-col items-end relative">
           <button onClick={() => setIsMenuToggled(!isMenuToggled)}>
-            <Image src={"./images/burger.svg"} alt="" width={40} height={40} />
+            <img src="./images/burger.svg" className="w-10 h-10" />
           </button>
 
           {/* Navigation section */}
           {isMenuToggled && (
-            <div className="flex flex-col w-36 items-center space-y-1 absolute top-10 right-0 bg-blue-100 shadow-lg">
+            <div className="flex flex-col w-36 items-center space-y-1 absolute top-10 right-0 bg-opacity-30 backdrop-blur-sm bg-white border border-opacity-20 border-gray-200 rounded-lg shadow-lg">
+              <Link href="/profile">
+                <div className="relative rounded-full w-10 h-10">
+                  <Image
+                    src={currUser ? currUser.userProfile: "https://res.cloudinary.com/djtkzulun/image/upload/v1684307248/Portfolio/dgxjqlgpys1imwnw2bhq"}
+                    alt="User Avatar"
+                    layout="fill"
+                    objectFit="cover"
+                    className="rounded-full"
+                  />
+                </div>
+              </Link>
               {navItems.map((nav: NavItems) => (
                 <LinkItems key={nav.name} name={nav.name} link={nav.link} />
               ))}
-              <button className="btn">Login</button>
-              <button className="btn">Donate</button>
+              <Link className="btn" href="/signin">Login</Link>
             </div>
           )}
         </div>
