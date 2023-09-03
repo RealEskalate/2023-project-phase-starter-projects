@@ -1,6 +1,6 @@
 import 'package:equatable/equatable.dart';
 
-import 'package:blog_app/features/article/domain/entity/user.dart';
+import 'user.dart';
 
 class Article extends Equatable {
   final List<String> tags;

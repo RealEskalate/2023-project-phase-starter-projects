@@ -1,7 +1,10 @@
-import 'package:blog_app/core/color/colors.dart';
 import 'package:flutter/material.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
+import '../../../../core/color/colors.dart';
+import '../bloc/article_bloc.dart';
 
 class OptionsDialog extends StatelessWidget {
   final String articleId;
@@ -12,31 +15,35 @@ class OptionsDialog extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return PopupMenuButton<String>(
-      icon: Icon(
-        Icons.more_horiz,
-        color: darkBlue,
-      ),
-      onSelected: (value) => _handleMenuItemSelected(
-        value,
-        context,
-        this.articleId,
-      ),
-      itemBuilder: (BuildContext context) {
-        return <PopupMenuEntry<String>>[
-          PopupMenuItem<String>(
-            child: Text("Edit article"),
-            value: 'Edit article',
+    return BlocBuilder<ArticleBloc, ArticleState>(
+      builder: (context, state) {
+        return PopupMenuButton<String>(
+          icon: const Icon(
+            Icons.more_horiz,
+            color: darkBlue,
           ),
-          PopupMenuItem<String>(
-            child: Text("Delete article"),
-            value: 'Delete Article',
+          onSelected: (value) => _handleMenuItemSelected(
+            value,
+            context,
+            this.articleId,
           ),
-          PopupMenuItem<String>(
-            child: Text("Logout"),
-            value: 'Logout',
-          ),
-        ];
+          itemBuilder: (BuildContext context) {
+            return <PopupMenuEntry<String>>[
+              const PopupMenuItem<String>(
+                value: 'Edit article',
+                child: Text("Edit article"),
+              ),
+              const PopupMenuItem<String>(
+                value: 'Delete Article',
+                child: Text("Delete article"),
+              ),
+              const PopupMenuItem<String>(
+                value: 'Logout',
+                child: Text("Logout"),
+              ),
+            ];
+          },
+        );
       },
     );
   }
@@ -45,7 +52,8 @@ class OptionsDialog extends StatelessWidget {
     if (value == "Edit article") {
       context.push('/update_article', extra: articleId);
     } else if (value == "Delete Article") {
-      print("I am being pressed here");
+      final bloc = context.read<ArticleBloc>();
+      bloc.add(DeleteArticleEvent(id: articleId));
     } else if (value == "Logout") {
       final SharedPreferences prefs = await SharedPreferences.getInstance();
       prefs.remove('token');

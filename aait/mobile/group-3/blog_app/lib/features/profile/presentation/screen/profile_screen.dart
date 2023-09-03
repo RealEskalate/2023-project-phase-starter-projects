@@ -5,6 +5,7 @@ import 'package:blog_app/injection_container.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:go_router/go_router.dart';
 
 import '../widgets/feed_content.dart';
 import '../widgets/post_content.dart';
@@ -32,47 +33,64 @@ class ProfileScreen extends StatelessWidget {
               );
             case ProfileLoaded():
               return Scaffold(
-                body: SingleChildScrollView(
-                  child: SafeArea(
-                    child: Column(
-                      children: [
-                        TitleBar(),
-                        SizedBox(
-                          height: 25.h,
-                        ),
-                        Stack(children: [
-                          ProfileContent(
-                            profile: state.profile,
-                            onChangeImage: () async {
-                              final file = await ImageSheet().show(context);
-                              BlocProvider.of<ProfileBloc>(context)
-                                  .add(UpdatePicture(imageFile: file));
-                            },
+                  body: SingleChildScrollView(
+                    child: SafeArea(
+                      child: Column(
+                        children: [
+                          TitleBar(),
+                          SizedBox(
+                            height: 25.h,
                           ),
-                          Column(children: [
-                            SizedBox(
-                              height: 52.h,
+                          Stack(children: [
+                            ProfileContent(
+                              profile: state.profile,
+                              onChangeImage: () async {
+                                final file = await ImageSheet().show(context);
+                                BlocProvider.of<ProfileBloc>(context)
+                                    .add(UpdatePicture(imageFile: file));
+                              },
                             ),
-                            Container(
-                              alignment: Alignment.center,
-                              child: RowButton(),
-                            )
+                            Column(children: [
+                              SizedBox(
+                                height: 52.h,
+                              ),
+                              Container(
+                                alignment: Alignment.center,
+                                child: RowButton(),
+                              )
+                            ]),
                           ]),
-                        ]),
-                        SizedBox(
-                          height: 32.h,
-                        ),
-                        FeedContent(innerContent: PostContent()),
-                      ],
+                          SizedBox(
+                            height: 32.h,
+                          ),
+                          FeedContent(innerContent: PostContent()),
+                        ],
+                      ),
                     ),
                   ),
-                ),
-              );
+                  floatingActionButton: FloatingActionButton.extended(
+                    onPressed: () {
+                      context.push('/home');
+                    },
+                    label: Icon(
+                      Icons.home,
+                      size: 32.sp,
+                    ),
+                  ));
             default:
               return Scaffold(
                 body: Center(
                   child: Text("Unimplemeted State error from ProfileScreen"),
                 ),
+                floatingActionButton: FloatingActionButton.extended(
+                    onPressed: () {
+                      context.push('/home');
+                    },
+                    label: Icon(
+                      Icons.home,
+                      size: 32.sp,
+                    ),
+                  )
               );
           }
         },

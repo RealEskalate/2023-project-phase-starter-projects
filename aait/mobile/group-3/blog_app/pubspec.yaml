@@ -55,6 +55,10 @@ dependencies:
   mime: ^1.0.4
   timeago: ^3.5.0
   intl: ^0.18.1
+  top_snackbar_flutter: ^3.1.0
+  loading_animation_widget: ^1.2.0+4
+  flutter_cache_manager: ^3.3.1
+  image: ^4.0.17
 
 dev_dependencies:
   flutter_test:
@@ -68,6 +72,7 @@ dev_dependencies:
   # rules and activating additional ones.
   flutter_lints: ^2.0.0
   bloc_test: ^9.1.4
+  very_good_analysis: ^5.1.0
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec

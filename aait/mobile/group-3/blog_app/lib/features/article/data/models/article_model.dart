@@ -1,7 +1,7 @@
 import 'dart:convert';
 
-import 'package:blog_app/features/article/data/models/user_model.dart';
-import 'package:blog_app/features/article/domain/entity/user.dart';
+import 'user_model.dart';
+import '../../domain/entity/user.dart';
 
 import '../../domain/entity/article.dart';
 
@@ -54,7 +54,7 @@ class ArticleModel extends Article {
       subTitle: map['subTitle'] ?? 'No subTitle',
       estimatedReadTime: map['estimatedReadTime'] ?? 'No Etimated Read Time',
       user: UserModel.fromJson(map['user']),
-      image: map['image'] ?? 'assets/images/article-image.jpg',
+      image: map['image'] ?? '',
       imageCloudinaryPublicId:
           map['imageCloudinaryPublicId'] ?? 'No imageCloudinaryPublicId',
       createdAt: _dateTimeFromJson(map['createdAt']),
@@ -77,7 +77,7 @@ class ArticleModel extends Article {
       user: json['user'] is String
           ? UserModel.empty()
           : UserModel.fromJson(json['user']),
-      image: json['image'] ?? "assets/images/article-image.jpg",
+      image: json['image'] ?? "",
       imageCloudinaryPublicId:
           json['imageCloudinaryPublicId'] ?? "No imageCloudinaryPublicId",
       createdAt: _dateTimeFromJson(json['createdAt']),

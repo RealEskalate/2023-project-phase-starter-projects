@@ -14,8 +14,7 @@ class BlogCardWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    DateTime postDate = DateTime.now().subtract(
-        const Duration(days: 1)); // Replace with your blog post's actual date
+    DateTime postDate = article.createdAt; // Replace with your blog post's actual date
 
     String formattedDate = DateFormat('MMM d, yyyy').format(postDate);
     // String relativeTime = timeago.format(postDate);

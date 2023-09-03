@@ -4,7 +4,8 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class HeaderWidget extends StatelessWidget {
   final VoidCallback callback;
-  const HeaderWidget({required this.callback, super.key});
+  
+  const HeaderWidget({required this.callback, super.key,});
 
   @override
   Widget build(BuildContext context) {

@@ -1,34 +1,35 @@
-// This screen represents the main HomeScreen of the blog app.
-// It displays a list of articles and provides interaction options.
-
-import 'package:blog_app/core/util/app_colors.dart';
-import 'package:blog_app/features/article/presentation/bloc/article_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-
-// Importing necessary widgets for the homepage.
-import 'package:blog_app/features/article/presentation/widgets/blog_card_widget.dart';
-import 'package:blog_app/features/article/presentation/widgets/header_widget.dart';
-import 'package:blog_app/features/article/presentation/widgets/search_bar_widget.dart';
-import 'package:blog_app/features/article/presentation/widgets/tags_widget.dart';
 import 'package:go_router/go_router.dart';
+import 'package:loading_animation_widget/loading_animation_widget.dart';
+import 'package:top_snackbar_flutter/custom_snack_bar.dart';
+import 'package:top_snackbar_flutter/top_snack_bar.dart';
 
-
-
-// ignore: must_be_immutable
+import '../../../../core/util/app_colors.dart';
+import '../bloc/article_bloc.dart';
+import '../widgets/blog_card_widget.dart';
+import '../widgets/header_widget.dart';
+import '../widgets/search_bar_widget.dart';
+import '../widgets/tags_widget.dart';
+import '../../../../core/color/colors.dart';
 
 class HomeScreen extends StatefulWidget {
-  HomeScreen({super.key});
+  const HomeScreen({super.key});
 
   @override
   State<HomeScreen> createState() => _HomeScreenState();
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  late ArticleBloc articleBloc;
+
+  @override
   void initState() {
     super.initState();
-    BlocProvider.of<ArticleBloc>(context).add(GetAllArticlesEvent());
+    articleBloc = BlocProvider.of<ArticleBloc>(context);
+    articleBloc.add(GetAllArticlesEvent());
+    // BlocProvider.of<ArticleBloc>(context).add(GetAllArticlesEvent());
   }
 
   List<String> tagNames = [
@@ -85,10 +86,22 @@ class _HomeScreenState extends State<HomeScreen> {
                   BlocConsumer<ArticleBloc, ArticleState>(
                       listener: (context, state) {},
                       builder: (context, state) {
-                        if (state is GettingArticles) {
-                          return CircularProgressIndicator(
-                            color: Colors.red,
-                          );
+                        if (state is ArticleDeleted) {
+                          BlocProvider.of<ArticleBloc>(context)
+                              .add(GetAllArticlesEvent());
+                          showTopSnackBar(
+                              Overlay.of(context),
+                              const CustomSnackBar.error(
+                                  message: "article deleted"));
+                          return SizedBox.shrink();
+                        } else if (state is ArticleInitial) {
+                          BlocProvider.of<ArticleBloc>(context)
+                              .add(GetAllArticlesEvent());
+                          return LoadingAnimationWidget.discreteCircle(
+                              color: blue, size: 60);
+                        } else if (state is GettingArticles) {
+                          return LoadingAnimationWidget.discreteCircle(
+                              color: blue, size: 60);
                         } else if (state is ArticlesLoaded) {
                           return Expanded(
                               child: ListView.separated(
@@ -102,8 +115,17 @@ class _HomeScreenState extends State<HomeScreen> {
                             },
                           ));
                         } else {
-                          return Center(
-                            child: Text("Error while getting articles"),
+                          return Scaffold(
+                            body: Text("Error while getting articles$state"),
+                            floatingActionButton: FloatingActionButton.extended(
+                              onPressed: () {
+                                context.push('/home');
+                              },
+                              label: Icon(
+                                Icons.home,
+                                size: 32.sp,
+                              ),
+                            ),
                           );
                         }
                       })
@@ -115,7 +137,7 @@ class _HomeScreenState extends State<HomeScreen> {
         // button for adding new articles.
         floatingActionButton: FloatingActionButton.extended(
           onPressed: () {
-            context.go('/create_article');
+            context.push('/create_article');
           },
           label: Icon(
             Icons.add,
