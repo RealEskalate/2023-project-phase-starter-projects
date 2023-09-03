@@ -5,7 +5,6 @@ import { useLoginMutation } from "@/store/auth/authApi";
 
 import TextField from "../signup/TextField";
 import { useRouter } from "next/navigation";
-
 import { toast } from "react-toastify";
 
 const fieldInfo: Array<Array<string>> = [
@@ -32,6 +31,7 @@ const SignInForm = () => {
       localStorage.setItem("user", JSON.stringify(data));
       toast.success("Signed in successfully");
       router.push("/");
+      window.location.reload()
     }
     if (error) {
       if ("status" in error) {

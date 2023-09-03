@@ -1,10 +1,21 @@
 'use client'
-import React, { useRef, useState } from 'react';
+import React, { useRef, useState, useEffect } from 'react';
 import Image from 'next/image';
 import { useEditProfileMutation } from '@/store/features/user/userApi';
+import { getCurrUser } from '@/utils/authHelpers';
+import { toast } from 'react-toastify';
 
-const userData = localStorage.getItem('user');
-const currUser = userData ? JSON.parse(userData) : null;
+const currUser = getCurrUser()
+async function fetchImageAndCreateFile(profileURL: string) {
+  try {
+    const response = await fetch(profileURL);
+    const blob = await response.blob();
+    return new File([blob], 'profile-picture.jpg', { type: 'image/jpeg' });
+  } catch (error) {
+    return null;
+  }
+}
+
 
 export default function Page() {
   const trimmedName = currUser?.userName.trim()
@@ -14,6 +25,17 @@ export default function Page() {
   const [lastName, setLastName] = useState(lName || '')
   const [email, setEmail] = useState(currUser?.userEmail || '')
   const [photo, setPhoto] = useState<File | null>(null)
+
+  useEffect(() => {
+    if (currUser?.userProfile) {
+      fetchImageAndCreateFile(currUser.userProfile).then((file) => {
+        if (file) {
+          setPhoto(file);
+        }
+      });
+    }
+  }, [currUser]);
+
   const [editProfile, {isError, isLoading, isSuccess}] = useEditProfileMutation()
 
   const handleDivClick = () => {
@@ -39,6 +61,11 @@ export default function Page() {
     }
 
     editProfile(newUserData)
+    if(isSuccess) {
+      toast.success('Profile updated successfuly')
+    } else if(isError) {
+      toast.error("Couldn't update profile")
+    }
     
    
   }
@@ -101,14 +128,13 @@ export default function Page() {
               alt='file upload image'
             />
             <p className='text-[10px] font-semibold sm:text-[11px] text-[#858585]'> 
-              {' '}
               <span className='text-[#565656]'>Clik to upload</span> or drag and drop
               SVG, PNG, JPG or GIF(max 800x400px)
             </p>
             <input
               type='file'
               ref={fileInputRef}
-              style={{ display: 'none' }}
+              className='hidden'
               onChange={handleFileChange}
             />
           </div>
