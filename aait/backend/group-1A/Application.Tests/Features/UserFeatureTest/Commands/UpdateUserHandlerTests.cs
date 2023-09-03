@@ -36,7 +36,6 @@ namespace Application.Tests.Features.UserFeatureTests.Handlers
                 {
                     Username = "UpdatedJohn",
                     Email = "updated.john@example.com",
-                    Password = "newPassword123"
                 
             };
 
@@ -55,29 +54,12 @@ namespace Application.Tests.Features.UserFeatureTests.Handlers
                 {
                     Username = "InvalidJohn",
                     Email = "invalid.john@example.com",
-                    Password = "invalidPassword"
                 };
 
             await Should.ThrowAsync<BadRequestException>(
                 async () =>
                     await _handler.Handle(new UpdateUserCommand(){userId = -1, UserUpdateData = UserUpdateData}, CancellationToken.None)
                 );
-        }
-
-        [Fact]
-        public async Task Handle_ShouldThrowExceptionForInvalidData()
-        {
-            var _handler = new UpdateUserHandler(_mockUnitOfWork.Object, _mapper);
-            var UserUpdateData = new UserUpdateDTO{
-                Username = "",
-                Email = "",
-                Password = ""
-            };
-
-            await Should.ThrowAsync<ValidationException>(
-                async () =>
-                    await _handler.Handle(new UpdateUserCommand(){userId = 1,UserUpdateData=UserUpdateData }, CancellationToken.None));
-
         }
 
     }

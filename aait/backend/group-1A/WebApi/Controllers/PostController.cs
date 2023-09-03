@@ -13,7 +13,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace WebApi.Controllers
 {
-    [Route("post/")]
+    [Route("post")]
     [ApiController]
     public class PostController : ControllerBase
     {
@@ -39,6 +39,15 @@ namespace WebApi.Controllers
         {
             var userId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier)!.Value);
             var result = await _mediator.Send(new GetSinglePostQuery { Id = id, userId = userId });
+            return Ok(result);            
+        }
+
+        [HttpGet("Feed")]
+        [Authorize]
+        public async Task<ActionResult<BaseResponse<List<PostResponseDTO>>>> GetFeed()
+        {
+            var userId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier)!.Value);
+            var result = await _mediator.Send(new GetFeedQuery { UserId = userId });
             return Ok(result);            
         }
 

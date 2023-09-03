@@ -7,7 +7,7 @@ namespace Application.DTO.UserDTO.validations
     {
         public UserUpdateValidation()
         {
-            Include(new CommonUserValidation());
+    
         }
     }
 }

@@ -39,11 +39,11 @@ namespace Persistence.Repositories
             if (user != null)
             {
                 var followerIds = user.Followee.Select(f => f.FollowerId).ToList();
-                var usersFollowedByThisUser = await _socialMediaDbContext.Users
+                var usersThatFollowUser = await _socialMediaDbContext.Users
                     .Where(u => followerIds.Contains(u.Id))
                     .ToListAsync();
 
-                return usersFollowedByThisUser;
+                return usersThatFollowUser;
             }
             
             else
@@ -62,11 +62,11 @@ namespace Persistence.Repositories
             if (user != null)
             {
                 var followeeIds = user.Follower.Select(f => f.FolloweeId).ToList();
-                var usersFollowingThisUser = await _socialMediaDbContext.Users
+                var usersFollowedByThisUser = await _socialMediaDbContext.Users
                     .Where(u => followeeIds.Contains(u.Id))
                     .ToListAsync();
 
-                return usersFollowingThisUser;
+                return usersFollowedByThisUser;
             }
 
             else
