@@ -10,7 +10,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace WebApi.Controllers
 {
-    [Route("User/[controller]")]
+    [Route("[controller]")]
     [ApiController]
     public class UserController : ControllerBase
     {
@@ -21,40 +21,51 @@ namespace WebApi.Controllers
             _mediator = mediator;
         }
 
+    
+
         [HttpGet]
-        public async Task<ActionResult<List<UserResponseDTO>>> Get()
+        public async Task<ActionResult<UserResponseDTO>> GetAllUsers()
         {
             var result = await _mediator.Send(new GetAllUsersQuery());
-            return result;
+
+            return Ok(result);
         }
 
-        [HttpGet("{id}")]
-        public async Task<ActionResult<UserResponseDTO>> Get(int id)
+        [HttpGet("Profile")]
+        public async Task<ActionResult<UserResponseDTO>> Get()
         {
-            var result = await _mediator.Send(new GetSingleUserQuery { userId = id });
+            var userId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier)!.Value);
+            var result = await _mediator.Send(new GetSingleUserQuery { userId = userId });
 
-            return result;
+            return Ok(result);
         }
-
-
         
-        [HttpPut("")]
+    [HttpPut("EditProfile")]
         [Authorize]
-        public async Task<ActionResult<UserResponseDTO>> Put(int id, [FromBody] UserUpdateDTO UpdateUserData)
+        public async Task<ActionResult<UserResponseDTO>> EditProfile([FromBody] UserUpdateDTO UpdateUserData)
         {
             var userId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier)!.Value);
             var result = await _mediator.Send(new UpdateUserCommand { userId = userId, UserUpdateData = UpdateUserData});
             return Ok(result);
         }
 
-
-
-        [HttpDelete("{id}")]
+        [HttpPut("UpdatePassword")]
         [Authorize]
-        public async Task<ActionResult<BaseResponse<string>>> Delete(int id)
+        public async Task<ActionResult<BaseResponse<UpdatePasswordDTO>>> UpdatePassword([FromBody] UpdatePasswordDTO updatePasswordDTO)
+        {
+            var userId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier)!.Value);
+            var result = await _mediator.Send(new UpdatePasswordCommand { UserId = userId, UpdatePasswordDTO = updatePasswordDTO});
+            return Ok(result);
+        }
+
+
+
+        [HttpDelete()]
+        [Authorize]
+        public async Task<ActionResult<BaseResponse<string>>> Delete()
         {
             var userId =  int.Parse(User.FindFirst(ClaimTypes.NameIdentifier)!.Value);
-            var result = await _mediator.Send(new DeleteUserCommand { userId = id});
+            var result = await _mediator.Send(new DeleteUserCommand { userId = userId});
             return Ok(result);
         }
     }

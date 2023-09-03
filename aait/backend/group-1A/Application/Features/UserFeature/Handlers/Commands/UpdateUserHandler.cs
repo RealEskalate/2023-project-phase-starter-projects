@@ -20,22 +20,16 @@ namespace Application.Features.UserFeature.Handlers.Commands
     {
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
-
         public UpdateUserHandler(IUnitOfWork unitOfWork, IMapper mapper)
         {
             _unitOfWork = unitOfWork;
             _mapper = mapper;
+
         }
 
         public async Task<UserResponseDTO> Handle(UpdateUserCommand request, CancellationToken cancellationToken)
         {
-            var validator = new UserUpdateValidation();
-            var validationResult = await validator.ValidateAsync(request.UserUpdateData!);
-
-            if (!validationResult.IsValid)
-            {
-                throw new ValidationException(validationResult);
-            }
+            
             if (request.userId <= 0)
             {
                 throw new BadRequestException("USER with this Id doesnt exist");
@@ -45,9 +39,9 @@ namespace Application.Features.UserFeature.Handlers.Commands
             {
                 throw new NotFoundException("User is not found");
             }
+            
 
-            var newUser = _mapper.Map(request.UserUpdateData,user);
-            var updationResult = await _unitOfWork.UserRepository.Update(user);
+            var updationResult = await _unitOfWork.UserRepository.UpdateUser(request.UserUpdateData!,request.userId);
 
             return _mapper.Map<UserResponseDTO>(updationResult);
         }

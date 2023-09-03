@@ -47,8 +47,7 @@ public class RegisterUserRequestHandler : IRequestHandler<RegisterUserRequest, R
             FirstName = registeredUser.FirstName,
             LastName = registeredUser.LastName,
             UserName = registeredUser.Username,
-            Email = registeredUser.Email,
-            Token = token
+            Email = registeredUser.Email
         };
 
     }

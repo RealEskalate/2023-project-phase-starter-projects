@@ -42,8 +42,8 @@ namespace Application.Profiles
             CreateMap<TagResponseDto, Tag>().ReverseMap();
             
         
+
             CreateMap<FollowDTO, Follow>().ReverseMap();
-            CreateMap<UserDto, User>().ReverseMap();
             CreateMap<UserResponseDTO, User>().ReverseMap();
             CreateMap<UserCreateDTO, User>().ReverseMap();
             CreateMap<UserUpdateDTO, User>().ReverseMap();

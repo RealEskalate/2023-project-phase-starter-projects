@@ -41,6 +41,7 @@ namespace Application.Features.PostFeature.Handlers.Commands
             }
 
             var newPost = _mapper.Map<Post>(request.NewPostData);
+
             newPost.UserId = request.userId;
             var result = await _unitOfWork.PostRepository.Add(newPost);
 

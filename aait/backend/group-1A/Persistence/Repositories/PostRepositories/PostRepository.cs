@@ -69,6 +69,29 @@ namespace Persistence.Repositories
             return Task.FromResult(result);
         }
 
+        public async Task<List<Post>> GetFeed(int UserId)
+        {
+            int pageSize = 2; 
+            int pageNumber = 1;
+            var user = await _dbContext.Users
+                .Include(x => x.Followee)
+                .Include(x => x.Follower)
+                .FirstOrDefaultAsync(u => u.Id == UserId);
+            
+
+            if (user != null)
+            {
+                 var followeeIds = user.Follower.Select(f => f.FolloweeId).ToList();
+                return _dbContext.Posts.Where(p => followeeIds.Contains(p.UserId)).Skip((pageNumber - 1 ) * pageSize).Take(pageSize).ToList();
+            }
+            
+            else
+            {
+                return new List<Post>();
+            }
+        }
+
+
 
     }
 }
