@@ -1,4 +1,5 @@
 "use client"
+import { getCurrUser } from "@/utils/authHelpers";
 import Link from "next/link";
 import { usePathname } from 'next/navigation'
 import React from "react";
@@ -7,6 +8,7 @@ interface Props {
   name: string;
   link: string;
 }
+const currUser = getCurrUser()
 
 export const LinkItems: React.FC<Props> = ({ name, link }) => {
   const pathname = usePathname();
@@ -16,7 +18,7 @@ export const LinkItems: React.FC<Props> = ({ name, link }) => {
     <div className={`group ${isCurrentRoute ? 'cursor-pointer font-bold' : 'hover:cursor-pointer font-semibold'}`}>
       <Link
         className={`text-sm capitalize ${isCurrentRoute ? 'text-blue-800' : 'group-hover:text-blue-800'}`}
-        href={link}
+        href={currUser ? link : "/signin"}
       >
         {name}
       </Link>

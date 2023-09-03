@@ -1,5 +1,6 @@
 "use client";
 
+import Loading from "@/components/Loading";
 import BlogItem from "@/components/blogs/BlogItem";
 import { useGetBlogsQuery } from "@/store/blog/blogApi";
 import { Blog } from "@/types/Blog";
@@ -20,9 +21,7 @@ const page = () => {
 
   return (
     <div>
-      {isLoading && (
-        <div className="text-center font-bold text-xl">Loading...</div>
-      )}
+      {isLoading && <Loading />}
       {isError && (
         <div className="text-center font-bold text-xl">
           {(error as Error).message}
