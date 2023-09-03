@@ -45,10 +45,7 @@ const BlogsPage: React.FC = () => {
 
             </div>
 
-            {/* The pagination */}
-            <div className=''>
-                
-            </div>
+          
         </div>
     )
 }
