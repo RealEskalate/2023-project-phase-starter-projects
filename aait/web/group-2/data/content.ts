@@ -22,16 +22,16 @@ export const content: Content = {
     problem: [
         {
             id: "1",
-            imgUrl: "/images/Rectangle-1.png",
+            imgUrl: "/images/africa-a2sv.PNG",
             body: "Africa’s future depends on innovation. Transformative technologies can drive rapid economic growth and lift millions of people out of poverty. However, university computer science education is misaligned with global market needs and fails to incorporate practice-based learning, leaving students unable to apply their skills in real-world contexts.",
         },
         {
             id: "2",
-            imgUrl: "/images/Rectangle-1.png",
+            imgUrl: "/images/coding-a2sv.PNG",
             body: "With few global tech companies on the continent, aspiring engineers don’t have access to experienced mentors, or the opportunity to work on products that operate at scale. Smart and ambitious students who could create life-changing technologies aren’t able to reach their potential."
         },
     ],
-    solution: [{ id: "1", imgUrl: "/images/Rectangle-1.png", body: "Offering students an ecosystem to actualize their ideas means that up-and-coming developers use their skills to benefit Africa, rather than taking their talent elsewhere." }],
+    solution: [{ id: "1", imgUrl: "/images/lamp-a2sv.PNG", body: "Offering students an ecosystem to actualize their ideas means that up-and-coming developers use their skills to benefit Africa, rather than taking their talent elsewhere." }],
 
     sessions: [
         {
