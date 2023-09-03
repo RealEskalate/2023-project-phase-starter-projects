@@ -20,7 +20,7 @@ namespace SocialSync.Application.Tests.Features.Notifications.Handlers.Commands
         {
             var mapperConfig = new MapperConfiguration(c =>
             {
-                c.AddProfile<NotificationMappingProfile>(); // Change to your actual profile
+                c.AddProfile<NotificationMappingProfile>();
             });
 
             _mockMapper = mapperConfig.CreateMapper();
@@ -60,11 +60,36 @@ namespace SocialSync.Application.Tests.Features.Notifications.Handlers.Commands
 
             var notificationDto = new NotificationCreateDto
             {
-                // Set necessary properties
+                // Set invalid notification type properties
                 SenderId = 1,
-                NotificationType = "Comment", // Or "Follow"
+                NotificationType = "Comment",
                 RecepientId = 2,
-                PostId = 3 // Optional
+                PostId = 3
+            };
+
+            var command = new CreateNotificationCommand { NotificationCreateDto = notificationDto };
+
+            // Act
+            var response = await handler.Handle(command, CancellationToken.None);
+
+            // Assert
+            Assert.NotNull(response);
+            Assert.False(response.IsSuccess);
+        }
+
+        [Fact]
+        public async Task Handle_PostDoesnotExist_Returns_Failure()
+        {
+            // Arrange
+            var handler = new CreateNotificationCommandHandler(_mockUnitOfWork.Object, _mockMapper);
+
+            var notificationDto = new NotificationCreateDto
+            {
+                // Set invalid notification type properties
+                SenderId = 1,
+                NotificationType = "Like",
+                RecepientId = 2,
+                PostId = 99
             };
 
             var command = new CreateNotificationCommand { NotificationCreateDto = notificationDto };

@@ -10,55 +10,55 @@ using SocialSync.Application.Profiles;
 using SocialSync.Application.Tests.Mocks;
 
 namespace SocialSync.Application.Tests.Features.Notifications.Handlers.Queries;
-public class GetNotificationListRequestHandlerTests
+
+public class GetNotificationDetailRequestHandlerTests
 {
     private readonly Mock<IUnitOfWork> _mockUnitOfWork;
     private readonly IMapper _mockMapper;
 
-    public GetNotificationListRequestHandlerTests()
+    public GetNotificationDetailRequestHandlerTests()
     {
         var mapperConfig = new MapperConfiguration(c =>
         {
             c.AddProfile<NotificationMappingProfile>();
         });
 
-        _mockMapper = mapperConfig.CreateMapper();
+        _mockMapper = mapperConfig.CreateMapper(); 
         _mockUnitOfWork = MockUnitOfWork.GetMockUnitOfWork();
     }
     [Fact]
-    public async Task ValidNotificationListRetrieval()
+    public async Task ValidNotificationDetailRetrieval_Returns_Succes()
     {
         // Arrange
-        int userId = 1;
-        var handler = new GetNotificationListRequestHandler(_mockUnitOfWork.Object, _mockMapper);
-        var request = new GetNotificationListRequest {UserId = userId};
+        int notificationId = 1;
+        var handler = new GetNotificationDetailRequestHandler(_mockUnitOfWork.Object, _mockMapper);
+        var request = new GetNotificationDetailRequest { Id = notificationId};
 
         // Act
         var response = await handler.Handle(request, CancellationToken.None);
 
         // Assert
         response.ShouldNotBeNull();
-        response.ShouldBeOfType<CommonResponse<List<NotificationListDto>>>();
+        response.ShouldBeOfType<CommonResponse<NotificationDto>>();
         response.IsSuccess.ShouldBeTrue();
     }
 
     [Fact]
-    public async Task UserDoesnotExist()
+    public async Task NotificationNotFound()
     {
         // Arrange
-        int userId = 99;
+        int notificationId = 99;
 
-        var handler = new GetNotificationListRequestHandler(_mockUnitOfWork.Object, _mockMapper);
-        var request = new GetNotificationListRequest {UserId = userId};
+        var handler = new GetNotificationDetailRequestHandler(_mockUnitOfWork.Object, _mockMapper);
+        var request = new GetNotificationDetailRequest { Id = notificationId };
 
         // Act
         var response = await handler.Handle(request, CancellationToken.None);
 
         // Assert
         response.ShouldNotBeNull();
-        response.ShouldBeOfType<CommonResponse<List<NotificationListDto>>>();
+        response.ShouldBeOfType<CommonResponse<NotificationDto>>();
         response.IsSuccess.ShouldBeFalse();
-        response.Message.ShouldBe("User Doesn't Exist");
+        response.Message.ShouldBe("Notification Not Found");
     }
 }
-

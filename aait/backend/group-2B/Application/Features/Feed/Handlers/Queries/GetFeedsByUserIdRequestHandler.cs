@@ -17,6 +17,12 @@ public class GetFeedsByUserIdRequestHandler : IRequestHandler<GetFeedsByUserIdRe
     }
 
     public async Task<CommonResponse<List<PostDto>>> Handle(GetFeedsByUserIdRequest request, CancellationToken cancellationToken){
+        
+        var user = await _unitOfWork.UserRepository.GetAsync(request.UserID);
+        if (user == null){
+            return CommonResponse<List<PostDto>>.Failure("User Doesn't Exist");
+        }
+
         var feeds = await _unitOfWork.PostRepository.GetFeedsByUserIdAsync(request.UserID);
         if(feeds == null){
             CommonResponse<List<PostDto>>.Failure("Feeds Not Found!");
