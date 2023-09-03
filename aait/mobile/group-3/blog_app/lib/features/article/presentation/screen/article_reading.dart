@@ -38,7 +38,7 @@ class _ArticleReadingPageState extends State<ArticleReadingPage> {
                 Overlay.of(context),
                 const CustomSnackBar.error(
                     message: "Oops unable to load the article"));
-            context.pop();
+            context.go('/home');
           } else if (state is ArticleDeleted) {
             showTopSnackBar(
               Overlay.of(context),
@@ -58,10 +58,11 @@ class _ArticleReadingPageState extends State<ArticleReadingPage> {
                         LoadingWidget(message: "Deleting article please wait")),
               );
             case GettingArticle():
-              return const Scaffold(
-                  body: LoadingWidget(
-                message: "Fetching Article please wait",
-              ));
+              return Scaffold(body: LoadingArticlePage());
+            // return const Scaffold(
+            //     body: LoadingWidget(
+            //   message: "Fetching Article please wait",
+            // ));
             case ArticleInitial():
               BlocProvider.of<ArticleBloc>(context)
                   .add(GetArticleByIdEvent(id: this.widget.id));

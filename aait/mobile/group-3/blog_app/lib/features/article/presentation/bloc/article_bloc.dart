@@ -64,7 +64,6 @@ class ArticleBloc extends Bloc<ArticleEvent, ArticleState> {
       DeleteArticleEvent event, Emitter<ArticleState> emit) async {
     emit(DeletingArticle());
     final result = await _deleteArticle(event.id);
-    print(result);
 
     result.fold((failure) => emit(ArticleError(failure.errorMessage)),
         (_) => emit(ArticleDeleted()));
