@@ -5,6 +5,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../domain/entity/getArticlesEntity.dart';
 import '../../domain/use_case/get_tags.dart';
+import '../../domain/entity/getArticlesEntity.dart';
+import '../../domain/use_case/get_tags.dart';
 import '../../../../core/use_case/usecase.dart';
 import '../../domain/use_case/delete_article.dart';
 import '../../domain/use_case/get_all_articles.dart';
@@ -62,6 +64,7 @@ class ArticleBloc extends Bloc<ArticleEvent, ArticleState> {
       DeleteArticleEvent event, Emitter<ArticleState> emit) async {
     emit(DeletingArticle());
     final result = await _deleteArticle(event.id);
+    print(result);
 
     result.fold((failure) => emit(ArticleError(failure.errorMessage)),
         (_) => emit(ArticleDeleted()));

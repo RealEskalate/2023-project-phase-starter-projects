@@ -1,10 +1,6 @@
-import 'package:blog_app/core/color/colors.dart';
-import 'package:blog_app/core/util/value_converter.dart';
-import 'package:blog_app/features/article/presentation/bloc/article_bloc.dart';
-import 'package:blog_app/features/article/presentation/widgets/loading_widget.dart';
-import 'package:blog_app/injection_container.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:top_snackbar_flutter/custom_snack_bar.dart';
 import 'package:top_snackbar_flutter/custom_snack_bar.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
@@ -42,7 +38,7 @@ class _ArticleReadingPageState extends State<ArticleReadingPage> {
                 Overlay.of(context),
                 const CustomSnackBar.error(
                     message: "Oops unable to load the article"));
-            context.go('/home');
+            context.pop();
           } else if (state is ArticleDeleted) {
             showTopSnackBar(
               Overlay.of(context),
@@ -62,11 +58,10 @@ class _ArticleReadingPageState extends State<ArticleReadingPage> {
                         LoadingWidget(message: "Deleting article please wait")),
               );
             case GettingArticle():
-              return Scaffold(body: LoadingArticlePage());
-            // return const Scaffold(
-            //     body: LoadingWidget(
-            //   message: "Fetching Article please wait",
-            // ));
+              return const Scaffold(
+                  body: LoadingWidget(
+                message: "Fetching Article please wait",
+              ));
             case ArticleInitial():
               BlocProvider.of<ArticleBloc>(context)
                   .add(GetArticleByIdEvent(id: this.widget.id));

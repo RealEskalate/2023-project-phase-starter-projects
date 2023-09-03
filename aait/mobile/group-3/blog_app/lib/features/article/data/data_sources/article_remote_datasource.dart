@@ -8,6 +8,9 @@ import 'package:shared_preferences/shared_preferences.dart';
 import '../../../../core/util/convert_to_png.dart';
 import '../../domain/entity/getArticlesEntity.dart';
 
+import '../../../../core/util/convert_to_png.dart';
+import '../../domain/entity/getArticlesEntity.dart';
+
 import '../../../../core/error/exception.dart';
 import '../../../../core/util/constants.dart';
 import '../models/article_model.dart';
@@ -39,6 +42,14 @@ class ArticleRemoteDataSourceImpl implements ArticleRemoteDataSource {
   @override
   Future<ArticleModel> createArticle(ArticleModel article) async {
     String token = await getStoredToken();
+    try {
+      var photoFile = File(article.image);
+      var mimeType = lookupMimeType(photoFile.path)!;
+      if (mimeType != "image/png" || mimeType != "image/jpeg") {
+        final pngImage = convertToPng(photoFile);
+        photoFile = pngImage;
+        mimeType = lookupMimeType(photoFile.path)!;
+      }
     try {
       var photoFile = File(article.image);
       var mimeType = lookupMimeType(photoFile.path)!;
