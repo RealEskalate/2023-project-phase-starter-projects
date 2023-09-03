@@ -52,6 +52,7 @@ const A2svSession = () => {
         {cardData.map((data, index) => (
           <div
             data-aos="zoom-in"
+            data-aos-once="true"
             className="flex flex-col w-fit shadow-xl px-6 py-2 transition-all hover:-translate-y-2 duration-300"
             style={{
               boxShadow:

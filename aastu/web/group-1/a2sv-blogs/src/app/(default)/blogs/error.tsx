@@ -1,7 +1,14 @@
-// app/not-found.js
+"use client";
+
 import Link from "next/link";
 
-export default function NotFound() {
+export default function Error({
+  error,
+  reset,
+}: {
+  error: Error;
+  reset: () => void;
+}) {
   return (
     <div className="w-full h-screen flex flex-col items-center justify-center">
       <svg
@@ -159,12 +166,12 @@ export default function NotFound() {
         <p className="text-3xl md:text-4xl lg:text-5xl text-gray-800 mt-12">
           Page Not Found
         </p>
-        <p className="md:text-lg lg:text-xl text-gray-600 mt-8 px-3 text-base text-center">
+        <p className="md:text-lg lg:text-xl text-gray-600 mt-8">
           Sorry, the page you are looking for could not be found.
         </p>
         <Link
           href="/"
-          className="flex items-center space-x-2 bg-gradient-to-br from-primary to-secondary hover:bg-primary text-gray-100 px-4 py-2 mt-12 rounded transition duration-150"
+          className="flex items-center px-3 py-1 space-x-2 bg-gradient from-primary to-secondary hover:bg-primary text-gray-100 px-4 py-2 mt-12 rounded transition duration-150"
           title="Return Home"
         >
           <svg

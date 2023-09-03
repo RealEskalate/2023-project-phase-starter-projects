@@ -10,6 +10,7 @@ const Hero = () => {
           <div className="grid lg:grid-cols-2 grid-cols-1 justify-center">
             <div
               className="flex flex-col w-full mt-6 items-center md:items-start"
+              data-aos-once="true"
               data-aos="fade-right"
             >
               <h3 className="text-5xl font-bold mb-5">
@@ -31,7 +32,11 @@ const Hero = () => {
                 pressing problems.
               </p>
             </div>
-            <div className="hidden lg:block" data-aos="fade-left">
+            <div
+              className="hidden lg:block"
+              data-aos-once="true"
+              data-aos="fade-left"
+            >
               <h6 className="text-4xl">Group activity</h6>
               <div className="grid grid-cols-2 gap-5 mt-6 w-full">
                 <Image
@@ -64,7 +69,7 @@ const Hero = () => {
           </div>
         </div>
       </section>
-      <section data-aos="fade-up">
+      <section data-aos-once="true" data-aos="fade-up">
         <div>
           <div className="grid lg:grid-cols-2 grid-cols-1 mt-10">
             <div className="py-10 justify-center">
@@ -79,6 +84,8 @@ const Hero = () => {
                     height={50}
                     src="/images/info iconicon1 (1).svg"
                     alt="image"
+                    data-aos-once="true"
+                    data-aos="zoom-in"
                   />
                 </div>
                 <p className="text-neutral-500 text-sm md:text-md mt-6 leading-relaxed">
@@ -96,6 +103,8 @@ const Hero = () => {
                   height={50}
                   src="/images/info iconicon2.png"
                   alt="img"
+                  data-aos-once="true"
+                  data-aos="zoom-in"
                 />
               </div>
               <p className="text-neutral-500 text-sm md:text-md mt-6 leading-relaxed">
@@ -113,6 +122,8 @@ const Hero = () => {
                 height={563}
                 src="/images/amicosolve.png"
                 alt="image"
+                data-aos-once="true"
+                data-aos="zoom-in"
               />
             </div>
           </div>
@@ -124,6 +135,8 @@ const Hero = () => {
                 src="/images/amicopuzzle.png"
                 alt="img"
                 className="w-2/3 hidden lg:block"
+                data-aos-once="true"
+                data-aos="zoom-in"
               />
             </div>
             <div className="">
@@ -136,6 +149,8 @@ const Hero = () => {
                   height={50}
                   src="/images/info iconicon3.png"
                   alt="img"
+                  data-aos-once="true"
+                  data-aos="zoom-in"
                 />
               </div>
               <p className="text-neutral-500 text-sm md:text-md mt-5 leading-relaxed">

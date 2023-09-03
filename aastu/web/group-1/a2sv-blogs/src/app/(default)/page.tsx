@@ -8,6 +8,7 @@ export default function Home() {
     <main className="mx-auto lg:px-24 px-5 pt-36 font-sans-serif	font-poppins">
       <header className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-1 lg:grid-cols-2 gap-4 ">
         <div
+          data-aos-once="true"
           data-aos="fade-up"
           className="sm:grid-cols-1 md:grid-cols-1 lg:grid-cols-2 space-y-10"
         >
@@ -79,6 +80,7 @@ export default function Home() {
         </div>
 
         <div
+          data-aos-once="true"
           data-aos="fade-left"
           className="hidden xl:flex xl:justify-end xl:items-center"
         >
@@ -91,7 +93,11 @@ export default function Home() {
           />
         </div>
       </header>
-      <section className="mt-20 text-center space-y-10" data-aos="fade-up">
+      <section
+        className="mt-20 text-center space-y-10"
+        data-aos-once="true"
+        data-aos="fade-up"
+      >
         <p className="xl:text-5xl sm:text-4xl text-3xl text-text-header-1">
           Lets build a better
           <br />
@@ -120,6 +126,7 @@ export default function Home() {
         </Link>
       </section>
       <div
+        data-aos-once="true"
         data-aos="fade-up"
         className="hidden md:block mt-10 max-h-[515px] overflow-hidden  rounded-lg"
       >
@@ -141,6 +148,7 @@ export default function Home() {
         <div className="bg-slate-100 px-5 py-10 rounded-xl grid grid-cols-1 lg:grid-cols-6  gap-10">
           <div
             className="flex justify-center w-full mt-4 text-text-content font-normal text-xl lg:col-span-1 col-span-6"
+            data-aos-once="true"
             data-aos="fade-right"
           >
             <p>
@@ -156,6 +164,7 @@ export default function Home() {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 lg:col-span-5 col-span-6 gap-7">
             <div
               className="bg-white rounded-xl space-y-3 px-5 py-3 drop-shadow-md w-full mx-auto flex flex-col justify-center items-center"
+              data-aos-once="true"
               data-aos="fade-left"
               data-aos-delay="100"
             >
@@ -165,6 +174,7 @@ export default function Home() {
             </div>
             <div
               className="bg-white rounded-xl space-y-3 px-5 py-3 drop-shadow-md w-full mx-auto flex flex-col justify-center items-center"
+              data-aos-once="true"
               data-aos="fade-left"
               data-aos-delay="110"
             >
@@ -174,6 +184,7 @@ export default function Home() {
             </div>
             <div
               className="bg-white rounded-xl space-y-3 px-5 py-3 drop-shadow-md w-full mx-auto flex flex-col justify-center items-center"
+              data-aos-once="true"
               data-aos="fade-left"
               data-aos-delay="120"
             >
@@ -183,6 +194,7 @@ export default function Home() {
             </div>
             <div
               className="bg-white rounded-xl space-y-3 px-5 py-3 drop-shadow-md w-full mx-auto flex flex-col justify-center items-center"
+              data-aos-once="true"
               data-aos="fade-left"
               data-aos-delay="130"
             >
@@ -195,10 +207,14 @@ export default function Home() {
       </section>
       <section className="my-16 space-y-10">
         <div className="grid md:grid-cols-2 grid-cols-1 mt-12 items-center">
-          <div className="hidden md:block" data-aos="fade-right">
+          <div
+            className="hidden md:block"
+            data-aos-once="true"
+            data-aos="fade-right"
+          >
             <Image src="/images/cir.png" alt="" width={300} height={300} />
           </div>
-          <div className="" data-aos="fade-left">
+          <div className="" data-aos-once="true" data-aos="fade-left">
             <p className="md:text-right text-center text-4xl font-semibold	text-text-header-2 p-4">
               Internships
             </p>
@@ -210,7 +226,7 @@ export default function Home() {
           </div>
         </div>
         <div className="grid md:grid-cols-2 grid-cols-1 items-center">
-          <div data-aos="fade-right">
+          <div data-aos-once="true" data-aos="fade-right">
             <p className="md:text-left text-center text-4xl font-semibold	text-text-header-2 p-4">
               360° Trainings
             </p>
@@ -220,7 +236,11 @@ export default function Home() {
               development.
             </p>
           </div>
-          <div className="hidden md:block" data-aos="fade-left">
+          <div
+            className="hidden md:block"
+            data-aos-once="true"
+            data-aos="fade-left"
+          >
             <Image
               src="/images/360.png"
               alt=""
@@ -232,7 +252,11 @@ export default function Home() {
         </div>
 
         <div className="grid md:grid-cols-2 grid-cols-1 mt-18 items-center">
-          <div className="hidden md:block" data-aos="fade-right">
+          <div
+            className="hidden md:block"
+            data-aos-once="true"
+            data-aos="fade-right"
+          >
             <Image
               src="/images/social-project.png"
               alt=""
@@ -240,7 +264,7 @@ export default function Home() {
               height={300}
             />
           </div>
-          <div data-aos="fade-left">
+          <div data-aos-once="true" data-aos="fade-left">
             <p className="md:text-right text-center text-4xl font-semibold text-text-header-2 p-4">
               Social Projects
             </p>
@@ -255,6 +279,7 @@ export default function Home() {
       <section>
         <div
           className=" bg-gradient-to-r 0% from-primary from-10% to-[#019CFA] to-90% flex flex-col justify-center items-center py-16 rounded-xl relative "
+          data-aos-once="true"
           data-aos="fade-in"
         >
           <Image
@@ -275,12 +300,14 @@ export default function Home() {
       <section className="mt-12 text-center">
         <div>
           <h1
+            data-aos-once="true"
             data-aos="fade-up"
             className="md:text-5xl text-4xl text-center font-bold my-5"
           >
             Impact Stories
           </h1>
           <div
+            data-aos-once="true"
             data-aos="fade-up"
             className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-1 lg:grid-cols-2"
           >

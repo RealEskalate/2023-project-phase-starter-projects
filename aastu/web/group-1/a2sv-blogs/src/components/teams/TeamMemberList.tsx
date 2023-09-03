@@ -48,7 +48,7 @@ export default function TeamMemberList() {
       </div>
       <PaginationButtons
         currentPage={currentPage}
-        totalPages={Math.ceil(teams.length / pageSize)}
+        totalPages={Math.ceil(teams!.length / pageSize)}
         setCurrentPage={setCurrentPage}
       />
     </div>

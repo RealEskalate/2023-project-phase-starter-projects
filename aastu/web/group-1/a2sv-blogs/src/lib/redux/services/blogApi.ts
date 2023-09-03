@@ -5,6 +5,12 @@ const blogApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
     getBlogs: builder.query<Blog[], void>({
       query: () => "/blogs",
+      // sort blogs by createdAt
+      transformResponse: (response: Blog[]) =>
+        response.sort(
+          (a, b) =>
+            new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
+        ),
     }),
     getBlogById: builder.query({
       query: (id: string) => `/blogs/${id}`,
