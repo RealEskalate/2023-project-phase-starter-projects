@@ -31,7 +31,10 @@ export const blogApi = createApi({
     getSingleBlog: builder.query<Blog, any>({
       query: (id) => `/blogs/${id}`,
     }),
+    getMyBlogs: builder.query<Blog[], void>({
+      query: () => "/blogs/my-blogs",
+    })
   }),
 });
 
-export const { useAddBlogMutation, useGetBlogsQuery, useGetSingleBlogQuery } = blogApi;
+export const { useAddBlogMutation, useGetBlogsQuery, useGetSingleBlogQuery, useGetMyBlogsQuery } = blogApi;
