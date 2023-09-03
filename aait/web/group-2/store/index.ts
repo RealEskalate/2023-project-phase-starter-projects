@@ -1,15 +1,17 @@
 import { configureStore } from "@reduxjs/toolkit";
 import { successApi } from "./features/success-stories";
 import authApi from "./features/auth/auth-api";
+import { blogsApi}  from "./features/blogs/blogs-api"
 
 export const store = configureStore({
   reducer: {
     [successApi.reducerPath]: successApi.reducer,
     [authApi.reducerPath]: authApi.reducer,
+    [blogsApi.reducerPath]: blogsApi.reducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware()
-      .concat(authApi.middleware, successApi.middleware),
+      .concat(authApi.middleware, successApi.middleware, blogsApi.middleware),
 });
 
 export type AppDispatch = typeof store.dispatch;

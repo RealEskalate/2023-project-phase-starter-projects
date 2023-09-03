@@ -1,25 +1,20 @@
-import { Blog } from "@/types/blog"
+"use client"
 import Image from "next/image"
-
-export const getBlogDetail = async (blogId: string) => {
-  const res = await fetch(`https://a2sv-backend.onrender.com/api/blogs/${blogId}`)
-  console.log('response', res)
-  const blog: Blog = await res.json()
-
-  return blog
-}
+import { useGetBlogByIdQuery } from "@/store/features/blogs/blogs-api"
 
 
 
-const BlogDetail: React.FC = async ({
+
+
+const BlogDetailPage: React.FC =  ({
   params: { id },
 }: {
   params: { id: string }
 }) => {
 
-  const blogDetail: Blog = await getBlogDetail(id)
+  
+  const { data: blogDetail, isLoading, isFetching} = useGetBlogByIdQuery(id as string)
 
-  console.log('blog details', blogDetail)
 
   return (
     <div className='flex flex-col w-4/5 mx-auto my-20'>
@@ -32,14 +27,16 @@ const BlogDetail: React.FC = async ({
           <h4 className="text-gray-400"> 5 min read</h4>
         </div>
       </div>
+
       {/* Image section */}
       <div className='relative w-full h-[600px] flex flex-col justify-center items-center bg-gray-300 my-16'>
         {/* <Image src={blogDetail.image} alt="blog image" className='absolute w-full h-96 object-cover' objectFit="contain" layout='fill'/> */}
       </div>
+
       {/*Author section */}
       <div className='flex flex-col justify-center items-center'>
         <div className="w-20 h-20 rounded-[40px] bg-primary">
-          <Image src={blogDetail.author} alt="author image" className='w-full h-full object-cover rounded-[40px]' />
+          {/* <Image src={blogDetail. } alt="author image" className='w-full h-full object-cover rounded-[40px]' /> */}
         </div>
         <div className='flex flex-row justify-center items-center mt-6 gap-4'>
           <h4 className="text-gray-400">Chaltu Kebede</h4>
@@ -48,28 +45,15 @@ const BlogDetail: React.FC = async ({
         </div>
         <h4 className="text-blue-300">@Chaltu_Kebede</h4>
       </div>
+
+
       {/* Body section */}
       <div className='w-ful flex flex-row justify-end'>
         <div className="w-11/12 flex flex-col  mt-10 ">
           <div className="w-full flex flex-col items-center">
             <div className='mr-0'>
               <p className="text-justify pt-6">
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam
-                voluptatum, quibusdam, voluptate, quia quod voluptas quos
-                exercitationem voluptatibus quas quibusdam, voluptate, quia quod
-                voluptas quos exercitationem voluptatibus quas
-              </p>
-              <p className="text-justify pt-6">
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam
-                voluptatum, quibusdam, voluptate, quia quod voluptas quos
-                exercitationem voluptatibus quas quibusdam, voluptate, quia quod
-                voluptas quos exercitationem voluptatibus quas
-              </p>
-              <p className="text-justify pt-6">
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam
-                voluptatum, quibusdam, voluptate, quia quod voluptas quos
-                exercitationem voluptatibus quas quibusdam, voluptate, quia quod
-                voluptas quos exercitationem voluptatibus quas
+                {blogDetail.description}
               </p>
             </div>
           </div>
@@ -90,12 +74,11 @@ const BlogDetail: React.FC = async ({
                 <h3 className='text-xl capitalize font-medium'>Design Liberalized Exchange Rate Management</h3>
             </div>
           </div>
-
-
+          
         </div>
       </div>
     </div>
-  )
+    )
 }
 
-export default BlogDetail
+export default BlogDetailPage

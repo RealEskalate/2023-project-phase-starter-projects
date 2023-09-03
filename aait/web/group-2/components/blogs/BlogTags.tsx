@@ -6,8 +6,8 @@ interface BlogTagsProps {
 const BlogTags: React.FC<BlogTagsProps> = ({tag}) => {
 
     return (
-        <div className='bg-gray-200 rounded-md px-2 py-1 mr-2 mt-2'>
-            <h5 className='text-sm'>{tag}</h5>
+        <div className='bg-gray-200 rounded-full  mr-2 my-5'>
+            <h5 className='text-2xl py-5 px-7 text-gray-500 font-semibold'>{tag}</h5>
         </div>
     )
 }
