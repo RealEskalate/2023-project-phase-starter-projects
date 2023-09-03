@@ -29,10 +29,10 @@ export default function Footer() {
               <Link href='/' >Home</Link>
             </li>
             <li>
-              <Link href='/' >Success Stories</Link>
+              <Link href='/success-stories' >Success Stories</Link>
             </li>
             <li>
-              <Link href='/' >About us</Link>
+              <Link href='/about' >About us</Link>
             </li>
             <li>
               <Link href='/' >Get Involved</Link>
@@ -63,7 +63,7 @@ export default function Footer() {
               <Link href='/'>Recent Blogs</Link>
             </li>
             <li>
-              <Link href='/'>New Blog</Link>
+              <Link href='/blog/addBlog'>New Blog</Link>
             </li>
           </ul>
         </div>

@@ -94,7 +94,9 @@ class _OnboardingPageState extends State<OnboardingPage> {
                             child: Text(
                               "You can read thousands of articles on Blog Club, save them in the application and share them with your loved ones.",
                               style: TextStyle(
-                                  fontFamily: "Poppins", fontSize: 14),
+                                  fontFamily: "Poppins",
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.w500),
                             ),
                           ),
                         ],
@@ -108,7 +110,7 @@ class _OnboardingPageState extends State<OnboardingPage> {
                             padding: EdgeInsets.only(
                                 left: 20, top: 20, right: 20, bottom: 10),
                             child: Text(
-                              "Read the article you want instantly",
+                              "Discover, Save, and Share: Your Journey Starts Here!",
                               style: TextStyle(
                                   fontFamily: "Urbanist",
                                   color: Colors.blue[900],
@@ -119,9 +121,11 @@ class _OnboardingPageState extends State<OnboardingPage> {
                             padding: EdgeInsets.only(
                                 left: 20, right: 20, bottom: 18),
                             child: Text(
-                              "You can read thousands of articles on Blog Club, save them in the application and share them with your loved ones.",
+                              "Welcome aboard! With our platform, you're not just accessing articles – you're embarking on a journey of discovery.",
                               style: TextStyle(
-                                  fontFamily: "Poppins", fontSize: 14),
+                                  fontFamily: "Poppins",
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.w500),
                             ),
                           ),
                         ],
@@ -135,7 +139,7 @@ class _OnboardingPageState extends State<OnboardingPage> {
                             padding: EdgeInsets.only(
                                 left: 20, top: 20, right: 20, bottom: 10),
                             child: Text(
-                              "Read the article you want instantly",
+                              "Unleash the Power of Knowledge Instantly!",
                               style: TextStyle(
                                   fontFamily: "Urbanist",
                                   color: Colors.blue[900],
@@ -146,9 +150,11 @@ class _OnboardingPageState extends State<OnboardingPage> {
                             padding: EdgeInsets.only(
                                 left: 20, right: 20, bottom: 18),
                             child: Text(
-                              "You can read thousands of articles on Blog Club, save them in the application and share them with your loved ones.",
+                              "Greetings, knowledge seeker! The doors to enlightenment are wide open on ArticleSphere.",
                               style: TextStyle(
-                                  fontFamily: "Poppins", fontSize: 14),
+                                  fontFamily: "Poppins",
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.w500),
                             ),
                           ),
                         ],

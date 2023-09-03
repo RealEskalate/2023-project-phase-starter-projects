@@ -52,7 +52,7 @@ const Profile = () => {
             </div>
 
             <Link
-              href={"#"}
+              href={"/blogs/create"}
               className="  font-bold  bg-primary text-white px-10 py-1 rounded-lg mb-1 flex items-center"
             >
               New Blog

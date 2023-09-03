@@ -1,5 +1,6 @@
 using Application.Contracts;
 using Application.DTO.FollowDTo;
+using Application.Tests.Features.UserFeatureTests.Mocks;
 using Domain.Entites;
 using Moq;
 

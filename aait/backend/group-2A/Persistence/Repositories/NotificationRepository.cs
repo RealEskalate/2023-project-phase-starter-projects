@@ -2,7 +2,7 @@ using Application.Contracts.Persistance;
 using Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 
-namespace Infrastructure;
+namespace Persistence;
 
 public class NotificationRepository : INotificationRepository{
     private readonly SocialSyncDbContext _dbContext;
@@ -17,10 +17,12 @@ public class NotificationRepository : INotificationRepository{
         await _dbContext.Notifications.AddAsync(notify);
     }
 
-    public async Task<List<Notification>> GetNotifications(int UserId)
+    public async Task<List<Notification>> GetNotifications(int UserId, int pageNumber = 0, int pageSize = 10)
     {
         return await _dbContext.Notifications
             .Where(notify => notify.UserId == UserId)
+            .Skip(pageNumber * pageSize)
+            .Take(pageSize)
             .ToListAsync();
     }
 

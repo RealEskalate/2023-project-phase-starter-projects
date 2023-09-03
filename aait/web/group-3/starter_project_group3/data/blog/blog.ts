@@ -1,4 +1,4 @@
-import { Blog } from "@/types/blog/blog";
+import { Author, Blog } from "@/types/blog/blog";
 
 export const tags:string[] = [
     "development",

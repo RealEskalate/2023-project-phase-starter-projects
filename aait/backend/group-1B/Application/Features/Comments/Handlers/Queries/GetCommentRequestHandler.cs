@@ -1,6 +1,7 @@
 using Application.Common.Exceptions;
 using Application.Contracts.Persistence;
 using Application.Features.Comments.Requests.Queries;
+using AutoMapper;
 using Domain.Entities;
 using MediatR;
 
@@ -10,7 +11,7 @@ public class GetCommentRequestHandler : IRequestHandler<GetCommentRequest, Comme
 {
     private readonly ICommentRepository _commentRepository;
 
-    public GetCommentRequestHandler(ICommentRepository commentRepository)
+    public GetCommentRequestHandler(ICommentRepository commentRepository, IMapper mapper)
     {
         _commentRepository = commentRepository;
     }

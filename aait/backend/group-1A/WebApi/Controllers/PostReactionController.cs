@@ -43,12 +43,7 @@ namespace WebApi.Controllers
         {
             var userId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier)!.Value);
             var result = await _mediator.Send(new PostReactionCommand{ UserId = userId, ReactionData = reactionData });
-            await _mediator.Send(new CreateNotification {NotificationData = new NotificationCreateDTO()
-                    {
-                        Content = $"User with {userId} reacted on your post",
-                        NotificationContentId = result.Value, 
-                        NotificationType = NotificationEnum.POST,
-                        UserId = userId}});
+            
             return Ok(result);
         }
     }

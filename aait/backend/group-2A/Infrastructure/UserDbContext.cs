@@ -1,8 +1,8 @@
-using Infrastructure.Model;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using Persistence.Model;
 
-namespace Infrastructure;
+namespace Persistence;
 
 public class UserIdentityDbContext : IdentityDbContext<ApplicaionUser> 
 { 

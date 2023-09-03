@@ -1,43 +1,36 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Application.Contracts;
-using Application.DTO.CommentDTO.DTO;
 using Application.Exceptions;
 using Application.Features.CommentFeatures.Handlers.Commands;
 using Application.Features.CommentFeatures.Requests.Commands;
-using Application.Profiles;
+using Application.Features.NotificationFeaure.Requests.Commands;
 using Application.Response;
 using Application.Tests.Mocks;
-using AutoMapper;
+using MediatR;
 using Moq;
 using Shouldly;
-using Xunit;
 
 namespace Application.Tests.Features.CommentFeatureTest.Commands
 {
     public class DeleteCommentHandlerTest
     {
-        private readonly IMapper _mapper;
-        private readonly Mock<ICommentRepository> _mockRepo;
+         private readonly Mock<IUnitOfWork> _mockUnitOfWork;    
+
+         private readonly Mock<IMediator> _mediator;
         public DeleteCommentHandlerTest()
         {
-            _mockRepo = MockCommentRepository.GetCommentRepository();
+            _mockUnitOfWork = MockUnitOfWork.GetUnitOfWork();
+            _mediator = new Mock<IMediator>();  
 
-            var mapperConfig = new MapperConfiguration(c =>
-            {
-                c.AddProfile<MappingProfile>();
-            });
-
-            _mapper = mapperConfig.CreateMapper();
         }
 
         [Fact]
         public async Task DeleteCommentValidTest()
         {
+            _mediator.Setup(
+                    x => x.Send(It.IsAny<CreateNotification>(), It.IsAny<CancellationToken>())).ReturnsAsync(true);
+            
            var mocCommentRepository  = MockCommentRepository.GetCommentRepository().Object;
-            var handler = new CommentDeleteHandler(mocCommentRepository);
+            var handler = new CommentDeleteHandler(_mockUnitOfWork.Object, _mediator.Object);
 
             var result = await handler.Handle(new CommentDeleteCommand() { Id = 1 }, CancellationToken.None);
 
@@ -46,8 +39,11 @@ namespace Application.Tests.Features.CommentFeatureTest.Commands
         [Fact]
         public async Task DeleteCommentWithInValidIdTest()
         {
+            _mediator.Setup(
+                    x => x.Send(It.IsAny<CreateNotification>(), It.IsAny<CancellationToken>())).ReturnsAsync(true);
+            
            var mocCommentRepository  = MockCommentRepository.GetCommentRepository().Object;
-            var handler = new CommentDeleteHandler(mocCommentRepository);
+            var handler = new CommentDeleteHandler(_mockUnitOfWork.Object, _mediator.Object);
                             
             await Should.ThrowAsync<NotFoundException>(async () =>
                 await handler.Handle(new CommentDeleteCommand(), CancellationToken.None));

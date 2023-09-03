@@ -1,7 +1,6 @@
 ﻿using Application.Contracts;
 using Application.DTO.Common;
 using Application.Exceptions;
-using Application.Exceptions;
 using Application.Features.PostFeature.Requests.Queries;
 using Application.Response;
 using AutoMapper;
@@ -12,27 +11,25 @@ namespace Application.Features.PostFeature.Handlers.Queries
 {
     public class GetPostDislikesHandler : IRequestHandler<GetPostDislikesQuery, BaseResponse<List<ReactionResponseDTO>>>
     {
-        private readonly IPostReactionRepository _postReaction;
         private readonly IMapper _mapper;
-        private readonly IPostRepository _postRepository;
+        private readonly IUnitOfWork _unitOfWork;
 
-        public GetPostDislikesHandler(IPostReactionRepository postReaction, IMapper mapper, IPostRepository postRepository)
+        public GetPostDislikesHandler(IMapper mapper,IUnitOfWork unitOfWork)
         {
-            _postReaction = postReaction;
             _mapper = mapper;
-            _postRepository = postRepository;
+            _unitOfWork = unitOfWork;
         }
 
         public async Task<BaseResponse<List<ReactionResponseDTO>>> Handle(GetPostDislikesQuery request, CancellationToken cancellationToken)
         {
-            var exists = await _postRepository.Exists(request.PostId);
+            var exists = await _unitOfWork.PostRepository.Exists(request.PostId);
             if (!exists)
             {
                 throw new NotFoundException("Post is not found to get the Reactions");
             }
 
             
-            var result = await _postReaction.DisLikes(request.PostId);
+            var result = await _unitOfWork.PostReactionRepository.DisLikes(request.PostId);
 
             return new BaseResponse<List<ReactionResponseDTO>> () {
                 Success = true,

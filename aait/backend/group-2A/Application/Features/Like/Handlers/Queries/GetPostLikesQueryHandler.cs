@@ -22,7 +22,8 @@ namespace Application.Features.Like.Handlers.Query
         public async Task<BaseCommandResponse<List<UserDto>>> Handle(GetPostLikesQuery request, CancellationToken cancellationToken)
         {
             try{
-                var likes = await _unitOfWork.likeRepository.GetLikers(request.Id);
+                var likes = await _unitOfWork.likeRepository.GetLikers(request.Id, request.PageNumber,
+                    request.PageSize);
 
                 if (likes == null || likes.Count == 0){
                     throw new NotFoundException(nameof(Domain.Entities.Like), request.Id);

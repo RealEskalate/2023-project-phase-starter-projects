@@ -37,7 +37,7 @@ public class PostTagRepository : GenericRepository<PostTag>, IPostTagRepository
         var tagId = tag.Id;
         await Add(new PostTag() { PostId = postId, TagId = tagId });
     }
-    
+        
     public async Task DeletePostTag(int postId, string tagName)
     {
         var tag = await _context.Tags.FirstOrDefaultAsync(t => t.TagName == tagName);

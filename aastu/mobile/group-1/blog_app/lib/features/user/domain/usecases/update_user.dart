@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:blog_app/core/error/failure.dart';
 import 'package:dartz/dartz.dart';
 
@@ -8,13 +10,26 @@ class UpdateProfilePhotoUseCase {
 
   UpdateProfilePhotoUseCase(this.repository);
 
-  Future<Either<Failure, void>> call(
-      String userId, String imageUrl, String imagePublicId) async {
+  Future<Either<Failure, void>> call(UpdateProfilePhotoParams params) async {
+    final userData = {
+      'user_id': params.user_id,
+      'image': params.image,
+    };
     try {
-      await repository.updateProfilePhoto(userId, imageUrl, imagePublicId);
-      return Right(null); // Return success as Right with null value
+      await repository.updateProfilePhoto(userData);
+      return const Right(null); // Return success as Right with null value
     } catch (e) {
-      return Left(ServerFailure('Error updating profile photo'));
+      return const Left(ServerFailure('Error updating profile photo'));
     }
   }
+}
+
+class UpdateProfilePhotoParams {
+  final String user_id;
+  final File image;
+
+  UpdateProfilePhotoParams({
+    required this.user_id,
+    required this.image,
+  });
 }

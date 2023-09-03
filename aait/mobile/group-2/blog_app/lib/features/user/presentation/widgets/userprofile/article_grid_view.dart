@@ -34,11 +34,7 @@ class ArticleGridView extends StatelessWidget {
           itemCount: articles.length,
           itemBuilder: (context, index) {
             return SingleArticlePostGridView(
-              imageUrl: articles[index].photoUrl,
-              articleTitle: articles[index].title,
-              articleSubTitle: articles[index].subTitle,
-              likes: '2.1k',
-              timeSincePosted: 1,
+              article: articles[index],
             );
           },
         ),

@@ -1,86 +1,58 @@
 
-//using Application.Contracts;
-//using Application.DTO.PostDTO.DTO;
-//using Application.Exceptions;
-//using Application.Features.PostFeature.Handlers.Commands;
-//using Application.Features.PostFeature.Requests.Commands;
-//using Application.Profiles;
-//using Application.Response;
-//using Application.Tests.Mocks;
-//using AutoMapper;
-//using Domain.Entities;
-//using Moq;
-//using Shouldly;
+using Application.Contracts;
+using Application.DTO.PostDTO.DTO;
+using Application.Features.NotificationFeaure.Requests.Commands;
+using Application.Features.PostFeature.Handlers.Commands;
+using Application.Features.PostFeature.Requests.Commands;
+using Application.Profiles;
+using Application.Response;
+using Application.Tests.Mocks;
+using AutoMapper;
+using MediatR;
+using Moq;
+using Shouldly;
 
-//namespace Application.Tests.Features.PostFeatureTest.Commands
-//{
-//    public class CreatePostHandlerTest
-//    {
-//        private readonly IMapper _mapper;
-//        private readonly Mock<IPostRepository> _mockRepo;
-//        public CreatePostHandlerTest()
-//        {
-//            _mockRepo = MockPostRepository.GetPostRepository();
+namespace Application.Tests.Features.PostFeatureTest.Commands
+{
+    public class CreatePostHandlerTest
+    {
+         private readonly IMapper _mapper;
+         private readonly Mock<IUnitOfWork> _mockUnitOfWork;    
 
-//            var mapperConfig = new MapperConfiguration(c => 
-//            {
-//                c.AddProfile<MappingProfile>();
-//            });
+         private readonly Mock<IMediator> _mediator;     
 
-//            _mapper = mapperConfig.CreateMapper();
-//        }
+         public CreatePostHandlerTest()
+         {
+            _mockUnitOfWork = MockUnitOfWork.GetUnitOfWork();
 
-//        [Fact]
-//        public async Task ValidCreatePostTest()
-//        {
-//            // arrange 
-//            var handler = new CreatePostHandler(_mapper,_mockRepo.Object);
-//            var newPost = new PostCreateDTO(){
-//                Title = "New post",
-//                Content = "New post Content"
-//            };
+            var mapperConfig = new MapperConfiguration(c => 
+            {
+                c.AddProfile<MappingProfile>();
+            });
 
-//            // act
-//            var result = await handler.Handle(new CreatePostCommand(){userId = 1, NewPostData = newPost}, CancellationToken.None);
-//            // asset
-//            result.ShouldBeOfType<BaseResponse<PostResponseDTO>>();
-//            result.Value.ShouldNotBeNull();
-//        }
+            _mapper = mapperConfig.CreateMapper(); 
+            _mediator = new Mock<IMediator>();
 
+         }
 
+            [Fact]
+            public async Task CreatePostValidTest()
+            {
+               
+                var handler = new CreatePostHandler(_mapper, _mockUnitOfWork.Object, _mediator.Object);
 
-//        [Fact]
-//        public async Task InvalidCreatePostTest_ValidationFailure()
-//        {
-//            // Arrange
-//            var handler = new CreatePostHandler(_mapper, _mockRepo.Object);
-//            var newPost = new PostCreateDTO();
+                var newPost = new PostCreateDTO()
+                {
+                    Title = "new Data",
+                    Content = "new Data content"
+                };
+                _mediator.Setup(
+                    x => x.Send(It.IsAny<CreateNotification>(), It.IsAny<CancellationToken>())).ReturnsAsync(true);
 
-//            // Act & Assert
-//            await Should.ThrowAsync<ValidationException>(async () =>
-//            await handler.Handle(new CreatePostCommand() { userId = 1, NewPostData = newPost }, CancellationToken.None));
-//            _mockRepo.Verify(repo => repo.Add(It.IsAny<Post>()), Times.Never);
-//        }
+                var result = await handler.Handle(new CreatePostCommand() { userId = 1, NewPostData = newPost }, CancellationToken.None);
 
-
-
-//        [Fact]
-//        public async Task InvalidCreatePostTest_ExceptionInRepository()
-//        {
-//            // Arrange
-//            _mockRepo.Setup(repo => repo.Add(It.IsAny<Post>())).ThrowsAsync(new Exception("Repository error"));
-//            var handler = new CreatePostHandler(_mapper, _mockRepo.Object);
-//            var newPost = new PostCreateDTO()
-//            {
-//                Title = "New post",
-//                Content = "New post Content"
-//            };
-
-//            // Act & Assert
-//            await Assert.ThrowsAsync<Exception>(() =>
-//                handler.Handle(new CreatePostCommand() { userId = 1, NewPostData = newPost }, CancellationToken.None));
-//            _mockRepo.Verify(repo => repo.Add(It.IsAny<Post>()), Times.Once);
-//        }
-        
-//    }
-//}
+                result.ShouldBeOfType<BaseResponse<PostResponseDTO>>();                 
+            }
+         
+    }
+}

@@ -1,5 +1,4 @@
 ﻿using Domain.Entites;
-using Domain.Entites;
 using Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 using SocialSync.Domain.Entities;

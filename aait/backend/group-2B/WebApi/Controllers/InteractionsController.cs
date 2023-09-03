@@ -7,7 +7,6 @@ using SocialSync.Application.Features.Comments.Requests.Commands;
 using SocialSync.Application.DTOs.InteractionDTOs.CommentDTOs;
 using SocialSync.Application.Features.Comments.Requests.Queries;
 using SocialSync.Domain.Entities;
-using SocialSync.WebApi.Services;
 using SocialSync.WebApi.Services.Interfaces;
 
 namespace SocialSync.WebApi.Controllers;

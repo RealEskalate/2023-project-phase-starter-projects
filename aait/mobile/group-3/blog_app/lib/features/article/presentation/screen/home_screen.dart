@@ -3,7 +3,6 @@
 
 import 'package:blog_app/core/util/app_colors.dart';
 import 'package:blog_app/features/article/presentation/bloc/article_bloc.dart';
-import 'package:blog_app/features/article/presentation/widgets/loading_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -15,9 +14,7 @@ import 'package:blog_app/features/article/presentation/widgets/search_bar_widget
 import 'package:blog_app/features/article/presentation/widgets/tags_widget.dart';
 import 'package:go_router/go_router.dart';
 
-import '../../data/models/user_model.dart';
-import '../../domain/entity/article.dart';
-import '../widgets/loading_widget.dart';
+
 
 // ignore: must_be_immutable
 

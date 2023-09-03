@@ -58,7 +58,7 @@ abstract class AppTheme {
         fontWeight: FontWeight.w900,
         fontSize: 14,
         fontFamily: 'Poppins',
-        color: AppColors.blue300,
+        color: AppColors.darkBlue,
       ),
 
       displayMedium: GoogleFonts.urbanist(

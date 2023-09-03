@@ -53,9 +53,13 @@ class _UpdateArticlePageState extends State<UpdateArticlePage> {
                 builder: (BuildContext context, child) {
                   return Scaffold(
                     backgroundColor: whiteColor,
-                    appBar: PreferredSize(
-                      preferredSize: Size.fromHeight(74.h),
-                      child: const CustomAppBarUpdateArticle(),
+                    appBar: AppBar(
+                      backgroundColor: whiteColor,
+                      elevation: 0,
+                      leading: BackButton(
+                        color: darkBlue,
+                        onPressed: () => context.pop(),
+                      ),
                     ),
                     body: Padding(
                       padding: EdgeInsets.symmetric(horizontal: 45.w),

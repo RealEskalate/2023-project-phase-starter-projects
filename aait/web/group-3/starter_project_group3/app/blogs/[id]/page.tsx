@@ -40,7 +40,7 @@ const BlogDetailPage :React.FC = () => {
               <img
                 src={blog?.image}
                 alt="Picture of the author"
-                className="w-full h-auto"
+                className="w-full h-auto object-cover"
               />
             </div>
           </div>

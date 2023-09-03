@@ -16,21 +16,21 @@ namespace Application.Features.NotificationFeaure.Handlers.Commands
 {
     public class CreateNotificationHandler : IRequestHandler<CreateNotification, bool>
     {
-        private readonly INotificationRepository _notificationRepository;
         private readonly IMapper _mapper;
         private readonly IMediator _mediator;
+        private readonly IUnitOfWork _unitOfWork;
 
-        public CreateNotificationHandler(INotificationRepository notificationRepository, IMapper mapper,IMediator mediator)
+        public CreateNotificationHandler(IUnitOfWork unitOfWork, IMapper mapper,IMediator mediator)
         {
             _mapper = mapper;
             _mediator = mediator;
-            _notificationRepository = notificationRepository;
+            _unitOfWork = unitOfWork;
             
         }
         public async Task<bool> Handle(CreateNotification request, CancellationToken cancellationToken)
         {
             var newNotification = _mapper.Map<Notification>(request.NotificationData);
-            // var followers = 
+
             switch (request.NotificationData.NotificationType)
             {
                 case NotificationEnum.POST:
@@ -40,7 +40,7 @@ namespace Application.Features.NotificationFeaure.Handlers.Commands
 
                     foreach(var follower in followers.Value){
                         newNotification.UserId = follower.Id;
-                        await _notificationRepository.Add(newNotification);
+                        await _unitOfWork.NotificationRepository.Add(newNotification);
                     }
                     break;
 
@@ -48,19 +48,19 @@ namespace Application.Features.NotificationFeaure.Handlers.Commands
                     newNotification.Comment = true;
                     var post = await _mediator.Send(new GetSinglePostQuery(){Id = newNotification.NotificationContentId});
                     newNotification.UserId = post.Value.UserId;
-                    await _notificationRepository.Add(newNotification);
+                    await _unitOfWork.NotificationRepository.Add(newNotification);
                     break;
 
                 case NotificationEnum.FOLLOW:
                     newNotification.Follow = true;
-                    await _notificationRepository.Add(newNotification);
+                    await _unitOfWork.NotificationRepository.Add(newNotification);
                     break;
 
                 case NotificationEnum.COMMENTREACTION:
                     newNotification.Reaction = true;
                     var comment = await _mediator.Send(new GetSingleCommentQuery(){Id = newNotification.NotificationContentId});
                     newNotification.UserId = comment.Value.UserId;
-                    await _notificationRepository.Add(newNotification);
+                    await _unitOfWork.NotificationRepository.Add(newNotification);
 
                     break;
 
@@ -69,7 +69,7 @@ namespace Application.Features.NotificationFeaure.Handlers.Commands
                     var Post = await _mediator.Send(new GetSinglePostQuery(){Id = newNotification.NotificationContentId});
                     newNotification.UserId = Post.Value.UserId;
 
-                    await _notificationRepository.Add(newNotification);
+                    await _unitOfWork.NotificationRepository.Add(newNotification);
                     break;
 
                 default:

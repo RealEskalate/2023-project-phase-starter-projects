@@ -1,7 +1,10 @@
-import { NavBar } from "@/components/layout/NavBar";
 import "./globals.css";
 import type { Metadata } from "next";
 import { Poppins } from "next/font/google";
+import { NavBar } from "@/components/layout/NavBar";
+
+import { ToastContainer } from "react-toastify";
+import 'react-toastify/dist/ReactToastify.css'
 
 const inter = Poppins({
   weight: "400",
@@ -27,7 +30,21 @@ export default function RootLayout({
           <header>
             <NavBar />
           </header>
-          <main>{children}</main>
+          <main>
+            {children}
+          <ToastContainer
+            position='top-right'
+            autoClose={2000}
+            hideProgressBar={false}
+            newestOnTop={false}
+            closeOnClick
+            rtl={false}
+            pauseOnFocusLoss
+            draggable
+            pauseOnHover
+            theme='colored'
+          />
+          </main>
           <Footer />
         </body>
       </html>

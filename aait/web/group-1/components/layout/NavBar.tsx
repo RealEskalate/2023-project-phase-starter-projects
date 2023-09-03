@@ -4,6 +4,10 @@ import Image from "next/image";
 import React, { useState } from "react";
 import A2SVLogo from "../../public/images/A2SV.svg";
 import { LinkItems } from "./LinkItems";
+import Link from "next/link";
+import { useRouter } from "next/navigation";
+import { getCurrUser } from "@/utils/authHelpers";
+import Avatar from "./Avatar";
 
 interface NavItems {
   link: string;
@@ -11,7 +15,9 @@ interface NavItems {
 }
 
 export const NavBar = () => {
+  const router = useRouter()
   const [isMenuToggled, setIsMenuToggled] = useState<boolean>(false);
+  const currUser = getCurrUser()
 
   const navItems: NavItems[] = [
     {
@@ -23,7 +29,7 @@ export const NavBar = () => {
       name: "teams",
     },
     {
-      link: "/success",
+      link: "/success-stories",
       name: "success stories",
     },
     {
@@ -35,10 +41,16 @@ export const NavBar = () => {
       name: "blogs",
     },
     {
-      link: "/contact",
+      link: "/signup",
       name: "get involved",
     },
   ];
+
+  function handleSignout() {
+    localStorage.removeItem('user')
+    router.push('/')
+    window.location.reload()
+  }
 
   return (
     <div className="w-full py-8 px-6 bg-white">
@@ -58,8 +70,14 @@ export const NavBar = () => {
 
         {/* login signup section */}
         <div className="flex gap-2">
-          <button className="btn">Login</button>
-          <button className="btn bg-blue-800 text-white">Donate</button>
+          {!!currUser ? (
+            <button className="btn" onClick={() => handleSignout()}>Logout</button>
+            ) : (
+            <Link className="btn" href="/signin">
+              Login
+            </Link>
+        )}
+        <Avatar />
         </div>
       </div>
 
@@ -72,17 +90,22 @@ export const NavBar = () => {
 
         <div className="flex flex-col items-end relative">
           <button onClick={() => setIsMenuToggled(!isMenuToggled)}>
-            <Image src={"./images/burger.svg"} alt="" width={40} height={40} />
+            <img src="./images/burger.svg" className="w-10 h-10" />
           </button>
 
           {/* Navigation section */}
           {isMenuToggled && (
-            <div className="flex flex-col w-36 items-center space-y-1 absolute top-10 right-0 bg-blue-100 shadow-lg">
+            <div className="flex flex-col w-36 items-center space-y-1 absolute top-10 right-0 bg-opacity-30 backdrop-blur-sm bg-white border border-opacity-20 border-gray-200 rounded-lg shadow-lg">
+              <Avatar />
               {navItems.map((nav: NavItems) => (
                 <LinkItems key={nav.name} name={nav.name} link={nav.link} />
-              ))}
-              <button className="btn">Login</button>
-              <button className="btn">Donate</button>
+              ))}    
+              {!!currUser ? (
+                <button className="btn" onClick={() => handleSignout()}>Logout</button>
+                ) : (
+                  <Link className="btn" href="/signin">
+                  Login
+                </Link>)}
             </div>
           )}
         </div>

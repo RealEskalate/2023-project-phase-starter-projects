@@ -4,9 +4,9 @@ using SocialSync.Domain.Entities;
 
 namespace Application.Tests.Features.UserFeatureTests.Mocks
 {
-    public static class UserRepositoryMock
+    public static class MockUserRepository
     {
-        public static Mock<IUserRepository> GetRepository()
+        public static Mock<IUserRepository> GetUserRepository()
         {
             var mock = new Mock<IUserRepository>();
             

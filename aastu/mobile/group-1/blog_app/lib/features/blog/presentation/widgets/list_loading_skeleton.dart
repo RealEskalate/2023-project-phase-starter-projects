@@ -1,4 +1,3 @@
-import 'package:blog_app/features/blog/domain/entities/article.dart';
 import 'package:flutter/material.dart';
 import 'package:skeletons/skeletons.dart';
 
@@ -13,7 +12,8 @@ class _ListLoadingState extends State<ListLoading> {
   @override
   Widget build(BuildContext context) {
     return Padding(
-        padding: EdgeInsets.only(bottom: 9), // Adjust the padding as needed
+        padding:
+            const EdgeInsets.only(bottom: 9), // Adjust the padding as needed
         child: InkWell(
           onTap: () {},
           child: Container(

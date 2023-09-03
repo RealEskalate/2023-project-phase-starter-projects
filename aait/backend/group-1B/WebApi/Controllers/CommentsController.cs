@@ -3,11 +3,14 @@ using Application.DTOs.Comments;
 using Application.Features.Comments.Requests.Commands;
 using Application.Features.Comments.Requests.Queries;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
 namespace WebApi.Controllers;
 
 [ApiController]
+[Authorize]
 [Route("api/[controller]")]
 public class CommentsController : ControllerBase
 {
@@ -70,3 +73,4 @@ public class CommentsController : ControllerBase
         return NoContent();
     }
 }
+

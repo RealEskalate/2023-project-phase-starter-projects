@@ -1,4 +1,5 @@
 import 'dart:developer';
+import 'dart:io';
 
 import 'package:blog_app/core/error/failure.dart';
 import 'package:blog_app/features/user/data/datasources/data_source_api.dart';
@@ -78,10 +79,10 @@ class UserRepositoryImpl implements UserRepository {
   }
 
   @override
-  Future<Either<Failure, User>> getUser(String userId) async {
+  Future<Either<Failure, User>> getUser() async {
     try {
-      final responseData = await remoteDataSource.getUser(userId);
-      final user = UserModel.fromJson(responseData) as User;
+      final user = await remoteDataSource.getUser();
+      log("Fetched on Repo Imp $user");
       return Right(user); // Return user as Right with success case
     } catch (e) {
       return const Left(ServerFailure('Error fetching user'));
@@ -90,10 +91,9 @@ class UserRepositoryImpl implements UserRepository {
 
   @override
   Future<Either<Failure, void>> updateProfilePhoto(
-      String userId, String imageUrl, String imagePublicId) async {
+      Map<String, dynamic> userData) async {
     try {
-      await remoteDataSource.updateProfilePhoto(
-          userId, imageUrl, imagePublicId);
+      await remoteDataSource.updateProfilePhoto(userData);
       return const Right(null); // Return success as Right with null value
     } catch (e) {
       return const Left(ServerFailure('Error updating profile photo'));

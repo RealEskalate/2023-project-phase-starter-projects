@@ -19,9 +19,9 @@ const StoriesSection = () => {
     return ( 
       <div className="flex flex-col gap-36 font-Montserrat">
       {stories.map((story) => (
-        <div className="flex flex-col items-center gap-9 nav_bar_screen:flex-row nav_bar_screen:justify-between">
+        <div key={story._id} className="flex flex-col items-center gap-9 nav_bar_screen:flex-row nav_bar_screen:justify-between">
           <div
-            className={`relative rounded-lg w-full h-full ${
+            className={`relative min-w-[40%] rounded-lg w-full h-full ${
               isOrderLast ? "nav_bar_screen:order-last" : ""
             }`}
           >

@@ -43,7 +43,6 @@ class _TagButtonListWidgetState extends State<TagButtonListWidget> {
 
   @override
   Widget build(BuildContext context) {
-    final bloc = context.watch<ArticleBloc>();
 
     var outlinedButtonStyle = OutlinedButton.styleFrom(
       side: BorderSide(color: widget.outlineColor),

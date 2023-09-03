@@ -1,3 +1,4 @@
+import 'package:blog_app/core/utils/is_email_valid.dart';
 import 'package:blog_app/features/onboarding/widgets/loading_widget.dart';
 import 'package:blog_app/features/user/domain/usecases/get_user.dart';
 import 'package:blog_app/features/user/domain/usecases/login_user.dart';
@@ -20,6 +21,7 @@ class SignUpWidget extends StatefulWidget {
 }
 
 class _SignUpWidgetState extends State<SignUpWidget> {
+  bool _isLoading = false;
   final TextEditingController _fullNameController = TextEditingController();
   final TextEditingController _usernameController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
@@ -49,11 +51,16 @@ class _SignUpWidgetState extends State<SignUpWidget> {
       child: BlocConsumer<UserBloc, UserState>(
         listener: (context, state) {
           if (state is UserSignedInState) {
+            setState(() {
+              _isLoading = false;
+            });
             Navigator.pushNamed(context, '/home', arguments: state.user.id);
           }
           // loading state
           else if (state is UserLoading) {
-            loadingDialog(context);
+            setState(() {
+              _isLoading = true;
+            });
           } else if (state is UserError) {
             // Handle error if login fails
             ScaffoldMessenger.of(context).showSnackBar(
@@ -170,26 +177,38 @@ class _SignUpWidgetState extends State<SignUpWidget> {
                     final email = _usernameController.text;
                     final password = _passwordController.text;
                     final fullName = _fullNameController.text;
-
-                    context.read<UserBloc>().add(RegisterUserEvent(
-                          fullName: fullName,
-                          email: email,
-                          password: password,
-                          bio: '',
-                          expertise: '',
-                        ));
+                    if (isEmailValid(email) && password.isNotEmpty) {
+                      context.read<UserBloc>().add(RegisterUserEvent(
+                            fullName: fullName,
+                            email: email,
+                            password: password,
+                            bio: '',
+                            expertise: '',
+                          ));
+                    } else {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(
+                          backgroundColor: Colors.red,
+                          content: Text('Invalid email or Password'),
+                        ),
+                      );
+                    }
                   },
                   style: ElevatedButton.styleFrom(
                       shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(10)),
                       backgroundColor: const Color(0xFF376AED)),
-                  child: const Text(
-                    'SIGNUP',
-                    style: TextStyle(
-                        color: Colors.white,
-                        fontFamily: 'Urbanist-Bold',
-                        fontSize: 16),
-                  ),
+                  child: _isLoading
+                      ? const CircularProgressIndicator(
+                          color: Colors.white,
+                        ) // Show a CircularProgressIndicator if login is in progress
+                      : const Text(
+                          'SIGNUP',
+                          style: TextStyle(
+                              color: Colors.white,
+                              fontFamily: 'Urbanist-Bold',
+                              fontSize: 16),
+                        ),
                 ),
               ),
             ),
@@ -211,13 +230,17 @@ class _SignUpWidgetState extends State<SignUpWidget> {
                           Navigator.pushNamed(context, '/login');
                         });
                       },
-                      child: const Text(
-                        'Login',
-                        style: TextStyle(
-                            color: Color(0xFF376AED),
-                            fontFamily: 'Urbanist-Regular',
-                            fontSize: 14),
-                      )),
+                      child: _isLoading
+                          ? const CircularProgressIndicator(
+                              color: Colors.white,
+                            ) // Show a CircularProgressIndicator if login is in progress
+                          : const Text(
+                              'Login',
+                              style: TextStyle(
+                                  color: Color(0xFF376AED),
+                                  fontFamily: 'Urbanist-Regular',
+                                  fontSize: 14),
+                            )),
                 ],
               ),
             ),

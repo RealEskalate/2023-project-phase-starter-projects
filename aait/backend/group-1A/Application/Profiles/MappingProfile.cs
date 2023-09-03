@@ -26,6 +26,7 @@ namespace Application.Profiles
             CreateMap<ReactionResponseDTO, PostReaction>().ReverseMap();
             CreateMap<ReactionDTO, CommentReaction>().ReverseMap();
             CreateMap<ReactionResponseDTO, CommentReaction>().ReverseMap();
+            CreateMap<PostUpdateDTO, Post>().ReverseMap();
 
 
             CreateMap<NotificationCreateDTO, Notification>().ReverseMap();

@@ -1,7 +1,7 @@
 using Application.Contracts.Persistance;
 using Microsoft.EntityFrameworkCore;
 
-namespace Infrastructure.Persistance.Repository;
+namespace Persistence.Persistance.Repository;
 
 public class GenericRepository<T> : IGenericRepository<T> where T : class{
     private readonly SocialSyncDbContext _dbContext;
@@ -16,8 +16,11 @@ public class GenericRepository<T> : IGenericRepository<T> where T : class{
         return await _dbSet.FindAsync(id);
     }
 
-    public async Task<List<T>> GetAll(){
-        return await _dbSet.ToListAsync();
+    public async Task<List<T>> GetAll(int pageNumber = 0, int pageSize = 10){
+        return await _dbSet
+            .Skip(pageNumber * pageSize)
+            .Take(pageSize)
+            .ToListAsync();
     }
 
     public async Task<T> Add(T entity){

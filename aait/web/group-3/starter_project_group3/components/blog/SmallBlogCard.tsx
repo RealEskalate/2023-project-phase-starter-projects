@@ -1,6 +1,7 @@
 import Image from "next/image";
-import React from "react";
+import React, { useEffect } from "react";
 import { Blog } from "@/types/blog/blog";
+import Link from "next/link";
 
 interface BlogCardProps {
   blogs: Blog[];
@@ -56,19 +57,23 @@ const SmallBlogCard = ({ blogs }: BlogCardProps) => {
           </p>
 
           <p className="flex justify-between items-center mx-1">
-            <span className="flex  gap-x-2">
-              <Image
-                src={"assets/pendingClock.svg"}
-                alt="blog image"
-                width={20}
-                height={20}
-              />
-              <span className="text-sm text-blog_pending_icon_text_color font-bold">
-                {blog.likes}
+            {
+              <span className="flex  gap-x-2">
+                <Image
+                  src={"assets/pendingClock.svg"}
+                  alt="blog image"
+                  width={20}
+                  height={20}
+                />
+                <span className="text-sm text-blog_pending_icon_text_color font-bold">
+                  {"pending"}
+                </span>
               </span>
-            </span>
+            }
 
-            <button className="text-primary font-bold ">Read More</button>
+            <Link href={``} className="text-primary font-bold ">
+              Read More
+            </Link>
           </p>
         </div>
       ))}
