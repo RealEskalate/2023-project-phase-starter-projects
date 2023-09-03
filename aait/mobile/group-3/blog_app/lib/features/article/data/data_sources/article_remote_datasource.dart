@@ -239,7 +239,7 @@ class ArticleRemoteDataSourceImpl implements ArticleRemoteDataSource {
       request.headers['Authorization'] = 'Bearer $token';
       var photoFile = File(article.image);
       var mimeType = lookupMimeType(photoFile.path)!;
-      if (mimeType != "image/png" || mimeType != "image/jpeg") {
+      if (mimeType != "image/png" && mimeType != "image/jpeg") {
         final pngImage = convertToPng(photoFile);
         photoFile = pngImage;
         mimeType = lookupMimeType(photoFile.path)!;

@@ -10,9 +10,10 @@ import '../../../../core/util/value_converter.dart';
 import '../bloc/article_bloc.dart';
 import '../widgets/loading_widget.dart';
 import '../../../../injection_container.dart';
+import '../widgets/shimmer_article_reading_page.dart';
 import '../widgets/widgets.dart';
 
-class ArticleReadingPage extends StatelessWidget {
+class ArticleReadingPage extends StatefulWidget {
   final String id;
 
   const ArticleReadingPage({
@@ -20,6 +21,11 @@ class ArticleReadingPage extends StatelessWidget {
     required this.id,
   });
 
+  @override
+  State<ArticleReadingPage> createState() => _ArticleReadingPageState();
+}
+
+class _ArticleReadingPageState extends State<ArticleReadingPage> {
   @override
   Widget build(BuildContext context) {
     return BlocProvider<ArticleBloc>(
@@ -31,7 +37,7 @@ class ArticleReadingPage extends StatelessWidget {
                 Overlay.of(context),
                 const CustomSnackBar.error(
                     message: "Oops unable to load the article"));
-            context.pop();
+            context.go('/home');
           } else if (state is ArticleDeleted) {
             showTopSnackBar(
               Overlay.of(context),
@@ -42,22 +48,28 @@ class ArticleReadingPage extends StatelessWidget {
         },
         builder: (context, state) {
           switch (state) {
+            case ArticleError():
+              return Scaffold(body: Text("Article reading error"),);
             case DeletingArticle():
               return const Scaffold(
-                body: LoadingWidget(message: "Deleting article please wait"),
+                body: Scaffold(
+                    body:
+                        LoadingWidget(message: "Deleting article please wait")),
               );
             case GettingArticle():
-              return const Scaffold(
-                  body: LoadingWidget(
-                message: "Fetching Article please wait",
-              ));
+              return Scaffold(body: LoadingArticlePage());
+            // return const Scaffold(
+            //     body: LoadingWidget(
+            //   message: "Fetching Article please wait",
+            // ));
             case ArticleInitial():
               BlocProvider.of<ArticleBloc>(context)
-                  .add(GetArticleByIdEvent(id: this.id));
-              return const Scaffold(
-                  body: LoadingWidget(
-                message: "Fetching Article please wait",
-              ));
+                  .add(GetArticleByIdEvent(id: this.widget.id));
+              return Scaffold(body: LoadingArticlePage());
+            // return const Scaffold(
+            //     body: LoadingWidget(
+            //   message: "Fetching Article please wait",
+            // ));
             case ArticleLoaded():
               return ScreenUtilInit(
                 designSize: const Size(375, 812),
@@ -83,6 +95,7 @@ class ArticleReadingPage extends StatelessWidget {
                                   HeadTitle(headTitle: state.article.title),
                                   SizedBox(height: 24.h),
                                   UserInfo(
+                                    article: state.article,
                                     authorName: state.article.user.fullName,
                                     postedAt: ValueConverter()
                                         .formatDate(state.article.createdAt),

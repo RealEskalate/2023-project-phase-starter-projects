@@ -62,7 +62,6 @@ class ArticleBloc extends Bloc<ArticleEvent, ArticleState> {
       DeleteArticleEvent event, Emitter<ArticleState> emit) async {
     emit(DeletingArticle());
     final result = await _deleteArticle(event.id);
-    print(result);
 
     result.fold((failure) => emit(ArticleError(failure.errorMessage)),
         (_) => emit(ArticleDeleted()));
@@ -70,7 +69,7 @@ class ArticleBloc extends Bloc<ArticleEvent, ArticleState> {
 
   FutureOr<void> _getTagsHandler(
       GetTagsEvent event, Emitter<ArticleState> emit) async {
-    emit(GettingTags());
+    emit(const GettingArticle());
     final result = await _getTags(NoParams());
     result.fold((failure) => emit(TagsError(failure.errorMessage)),
         (tags) => emit(TagsLoaded(tags)));

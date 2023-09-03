@@ -54,6 +54,7 @@ class _WriteArticlePageState extends State<WriteArticlePage> {
               Overlay.of(context),
               const CustomSnackBar.error(
                   message: "Oops unable to create the article"));
+          context.pop();
         }
       },
       builder: (context, state) {
