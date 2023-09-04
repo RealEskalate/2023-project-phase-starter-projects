@@ -1,6 +1,5 @@
-import User, { EditPasswordData, EditProfileData, EditProfileResponse, LoginInputData } from "@/types/user/user";
+import User, { EditPasswordData, EditProfileResponse } from "@/types/user/user";
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-import { setMessage, setUser } from "./user-slice";
 import { RootState } from "@/store";
 
 const BASE_URL = "https://a2sv-backend.onrender.com/api/auth/";
@@ -17,7 +16,7 @@ export const userApi = createApi({
     tagTypes: ["user"],
     endpoints: (builder) => ({
 
-        editProfile: builder.mutation<EditProfileResponse, EditProfileData>({
+        editProfile: builder.mutation<EditProfileResponse, FormData>({
             query(data) {
                 return {
                     url: 'edit-profile',
@@ -25,22 +24,7 @@ export const userApi = createApi({
                     body: data,
                 };
             },
-            invalidatesTags: ["user"],
-            async onQueryStarted(arg, { dispatch, getState, queryFulfilled }) {
-                const { data: { body, message } } = await queryFulfilled;
-                const state = getState() as RootState;
-
-                dispatch(setMessage(message));
-
-                dispatch(setUser({
-                    token: state.user.user? state.user.user.token : "",
-                    user: body._id,
-                    userEmail: body.email,
-                    userName: body.name,
-                    userProfile: body.image,
-                    userRole: body.role
-                }));
-            }
+            invalidatesTags: ["user"]
         }),
         editPassword: builder.mutation<{message: string}, EditPasswordData>({
             query(data) {
@@ -50,13 +34,7 @@ export const userApi = createApi({
                     body: data,
                 };
             },
-            invalidatesTags: ["user"],
-            async onQueryStarted(arg, { dispatch, getState, queryFulfilled }) {
-                const { data: { message } } = await queryFulfilled;
-
-                dispatch(setMessage(message));
-            }
-
+            invalidatesTags: ["user"]
         })
     }),
 })

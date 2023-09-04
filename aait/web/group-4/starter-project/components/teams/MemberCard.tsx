@@ -24,8 +24,8 @@ const MemberCard: React.FC<MemberProps> = ({member} )=>{
                 {
                     Object.keys(socialMediaImages).map((link)=>{
                         return (
-                            <a href={socialMediaLinks[link]}>
-                                <img className="w-[20px] h-[20px]" src={socialMediaImages[link]}/>
+                            <a href={socialMediaLinks[link as keyof SocialMedia]}>
+                                <img className="w-[20px] h-[20px]" src={socialMediaImages[link as keyof SocialMedia]}/>
                             </a>
                         )
                     })

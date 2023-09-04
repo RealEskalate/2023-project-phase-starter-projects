@@ -23,7 +23,7 @@ export const blogsApi = createApi({
             query: ()=>"members"
         })
         ,
-        addBlog: builder.mutation<Blog, Partial<Blog>>({
+        addBlog: builder.mutation<Blog, FormData>({
             query: (blog) => ({
               url: '/blogs',
               method: 'POST',
@@ -31,7 +31,11 @@ export const blogsApi = createApi({
             }),
             invalidatesTags:['blog']
           }),
+
+          getMyBlogs: builder.query<Blog[], void>({
+            query: () => "/blogs/my-blogs",
+        }),
     }),
 })
 
-export const { useGetBlogsQuery, useGetMembersQuery, useAddBlogMutation} = blogsApi;
+export const { useGetBlogsQuery, useGetMembersQuery, useAddBlogMutation, useGetMyBlogsQuery} = blogsApi;

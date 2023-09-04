@@ -1,6 +1,5 @@
 import User, { LoginInputData, RegisterInputData, RegisterResponseData } from "@/types/user/user";
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-import { setMessage, setUser } from "../user/user-slice";
 
 const BASE_URL = "https://a2sv-backend.onrender.com/api/auth/";
 
@@ -18,11 +17,8 @@ export const auhtApi = createApi({
                     body: data,
                 };
             },
-            invalidatesTags: ["auth"],
-            async onQueryStarted(arg, { dispatch, queryFulfilled }) {
-                await queryFulfilled
-                dispatch(setMessage("Registered in Successfully!"))
-            }
+            invalidatesTags: ["auth"]
+          
         }),
         login: builder.mutation<User, LoginInputData>({
             query(data) {

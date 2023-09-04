@@ -1,37 +1,62 @@
 "use client";
 
-import { useState } from "react";
+import {useEffect, useState } from "react";
 import { AiOutlineCloudUpload } from "react-icons/ai";
 import manageData from "@/data/manage-section-data.json";
 import { useEditProfileMutation } from "@/store/features/user/user-api";
 import { toast } from "react-toastify";
+import Loading from "../common/Loading";
 import { useSelector } from "react-redux";
 import { RootState } from "@/store";
-import Loading from "../common/Loading";
+import Image from "next/image";
 
 const PersonalInfoForm = () => {
-  const initFile = new File([], "", {});
-  const [selectedFile, setSelectedFile] = useState<File>(initFile);
+  let user = useSelector((state: RootState) => state.user.user);
+
+  const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const [firstName, setFirstName] = useState("");
   const [secondName, setSecondName] = useState("");
   const [email, setEmail] = useState("");
 
-  const [editProfile, {isSuccess, isLoading, isError}] = useEditProfileMutation();
-  const isValid = Boolean(firstName) && Boolean(secondName) && Boolean(email) && Boolean(selectedFile)
+  const [editProfile, result] = useEditProfileMutation();
+  const isValid = Boolean(firstName) && Boolean(email) && Boolean(selectedFile);
 
   const uploadHandler = (files: FileList | null) => {
     setSelectedFile(files![0]);
   };
 
-  const onSubmitHandler = () => {
-    editProfile({
-      email,
-      name: firstName + " " + secondName,
-      image: selectedFile
-    });
-    console.log(isError,isSuccess);
+  useEffect(() => {
+    // Perform localStorage action
     
-    // toast(useSelector((state: RootState) => state.user.message));
+    const user_ = localStorage.getItem('user')
+    user = user_? JSON.parse(user_) : null;
+
+    if(user){
+      setFirstName(user.userName.split(" ")[0]);
+      setSecondName(user.userName.split(" ")[1])
+      setEmail(user.userEmail);
+      console.log(user.token)
+    }
+
+  }, [])
+
+  const onSubmitHandler = () => {
+    const formData = new FormData();
+
+    formData.append("email", email as string);
+    formData.append("name", `${firstName} ${secondName}`);
+    formData.append("image", selectedFile as Blob);
+
+
+    console.log(formData)
+
+    editProfile(formData)
+      .unwrap()
+      .then((data) => {
+        console.log(formData);
+        toast("Profile Updated Successfully", { type: "success" });
+      })
+      .catch((err) => toast("Error during profile update", { type: "error" }));
 
   };
 
@@ -43,19 +68,27 @@ const PersonalInfoForm = () => {
           <h2 className=" text-slate-gray text-lg font-semibold md:text-2xl">
             Manage {manageData.data[0].manageText}
           </h2>
-          <button disabled={!isValid} className="hidden px-8 py-4 text-xs text-white font-semibold rounded-lg bg-primary-color disabled:bg-gray-400 md:text-sm md:block">
+          <button
+            onClick={onSubmitHandler}
+            disabled={!isValid}
+            className="hidden px-8 py-4 text-xs text-white font-semibold rounded-lg bg-primary-color disabled:bg-gray-400 md:text-sm md:block"
+          >
             Save Changes
           </button>
         </div>
         <p className="text-medium-gray text-sm md:text-xl">
           {manageData.data[0].manageDetail}
         </p>
-          <button onClick={() => onSubmitHandler()} disabled={!isValid} className="px-5 py-4 text-xs text-white font-semibold rounded-lg disabled:bg-gray-400 bg-primary-color md:hidden">
-            Save Changes
-          </button>
+        <button
+          onClick={onSubmitHandler}
+          disabled={!isValid}
+          className="px-5 py-4 text-xs text-white font-semibold rounded-lg disabled:bg-gray-400 bg-primary-color md:hidden"
+        >
+          Save Changes
+        </button>
       </div>
       <form className="flex flex-col justify-center ">
-        {isLoading && <Loading/>}
+        {result.isLoading && <Loading />}
         <div className="flex flex-col py-8 gap-2 items-center justify-between lg:w-1/2 md:py-12 md:flex-row">
           <p className="font-semibold">
             Name<span className="text-red-500">*</span>
@@ -96,10 +129,12 @@ const PersonalInfoForm = () => {
             Your Photo<span className="text-red-500">*</span>
           </p>
           <div className="flex flex-col gap-8 items-center md:items-start md:flex-row ">
-            <img
-              className="w-20 h-20 rounded-full object-cover"
-              src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80"
+            <Image
+              className="rounded-full object-cover"
+              src={user?.userProfile as string}
               alt="avatar"
+              width={100}
+              height={100}
             />
 
             <label

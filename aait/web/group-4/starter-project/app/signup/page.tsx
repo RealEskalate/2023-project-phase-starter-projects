@@ -9,7 +9,7 @@ const SignupPage = () => {
   const router = useRouter();
 
   return (
-    <section className=" w-full grid grid-cols-1 md:grid-cols-2 px-14 bg-gray-100 py-16">
+    <section className=" w-full grid grid-cols-1 lg-1:grid-cols-2 px-14 bg-gray-100 py-16">
       <div className="flex flex-col bg-white">
         <img
           className="w-36 py-6 px-8"

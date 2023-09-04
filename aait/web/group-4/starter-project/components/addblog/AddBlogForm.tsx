@@ -1,10 +1,12 @@
+"use client";
+
 import Image from "next/image";
 import React, {useState} from 'react';
 import { MultiValue } from 'react-select';
 import SelectBlogTag, { TagOption } from './SelectBlogTag';
 import TextEditor from "./TextEditor";
 import { useAddBlogMutation } from "@/store/features/blog/blog-api";
-import { nanoid } from "nanoid";
+import Loading from "../common/Loading";
 
 
 interface FileInputProps {
@@ -56,17 +58,22 @@ const BlogForm: React.FC = () => {
   }
 
 
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async(event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-  //  addBlog({
+    const formData = new FormData();
 
-  //     _id: nanoid(),
-  //     title:title,
-  //     description:content,
-  //     image:selectedFile,
-  //     tags: selectedTags.map((tag: any) => tag.value),
-  //   });
-     
+    if(selectedFile){
+      formData.append('image', selectedFile as Blob);
+    }
+
+    formData.append('description', content);
+    formData.append('title', title);
+    selectedTags.forEach((tag) => formData.append('tags', tag.value))
+
+    const res = await addBlog(formData).unwrap();
+      
+    console.log(res)
+
     setTitle("");
     setContent("");
     setSelectedTags([]);
@@ -74,7 +81,7 @@ const BlogForm: React.FC = () => {
     
   };
 
-  const canSaveChanges = Boolean(title) && Boolean(content) && Boolean(selectedTags)
+  const canSaveChanges = Boolean(title) && Boolean(content) && Boolean(selectedTags) && Boolean(selectedFile)
 
   return (
     <form onSubmit={handleSubmit} className="m-5 max-w-screen h-screen">
@@ -120,15 +127,15 @@ const BlogForm: React.FC = () => {
       </div>
 
       <div className="flex flex-col sm:flex-row gap-4 w-9/12 mt-10 lg:mt-2 lg:pr-56 lg:mr-12 justify-end lg:justify-center">
-          <button onClick={handleCancelChange} className="text-primary hover:text-blue-500 font-medium mr-4">
+          <button onClick={handleCancelChange} className="text-primary hover:text-primary-color font-medium mr-4">
             Cancel
           </button>
           <button
-            className="bg-primary text-white rounded-md px-3 py-1 bg-blue-500"
+            className="bg-primary text-white rounded-md px-4 py-2 max-w-md bg-primary-color disabled:bg-gray-400"
             type="submit"
             disabled = {isLoading || !canSaveChanges}
             >
-            { isLoading ? "Adding..." : "Save Changes"}
+            { isLoading ? <Loading/> : "Save Changes"}
           </button>
         </div>
     </form>

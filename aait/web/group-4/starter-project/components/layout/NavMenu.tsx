@@ -15,10 +15,10 @@ const NavMenu = () => {
   
   return (
     <>
-      {links.map((link, i) => {
+      {links.map((link) => {
         return (
-            <div>
-              <div key={link.name} className="flex flex-col group">
+            <div key={link.name}>
+              <div className="flex flex-col group">
                 <Link className="pb-2 hover:text-gray-400" href={`${link.link}`}>
                   {link.name}
                 </Link>

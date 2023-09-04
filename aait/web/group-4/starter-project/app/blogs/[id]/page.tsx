@@ -1,6 +1,6 @@
 import React from "react";
 import Image from 'next/image'
-
+import parse from "html-react-parser";
 import BlogData from "@/types/blog/blog";
 import BlogCardSmall from "@/components/blogs/SmallBlogCard";
 import dummyAuthor from "@/data/dummyAuthor.json"
@@ -56,7 +56,7 @@ export default async ({params}: { params: { id: string } }) => {
 
             <div className="font-nav flex flex-col gap-8 md:pl-32 pl-6 text-left text-gray-500">
                 <h2 className='md:text-[2rem] text-[1.3rem] font-bold text-black'>
-                    {data.description}
+                    {parse(data.description)}
                 </h2>
                 <p className="text-[0.9rem] md:text-[1.2rem]">
                     Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.

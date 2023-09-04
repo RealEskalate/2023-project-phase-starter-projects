@@ -7,7 +7,7 @@ import SigninForm from "@/components/signin-and-signup/SigninForm";
 const SignInPage = () => {
     const router = useRouter()
     return (
-        <section className="font-login w-full grid grid-cols-1 md:grid-cols-2 md:px-14 px-4 bg-gray-100 py-16 text-xl" >
+        <section className="font-login w-full grid grid-cols-1 lg-1:grid-cols-2 md:px-14 px-4 bg-gray-100 py-16 text-xl" >
             <div className="flex flex-col bg-white">
                 <Image className="w-36 py-6 px-8" width={100} height={100} src="/images/blog/A2SVLogo.png" alt="A2SV logo" />
                 <div className="grid grid-cols-2 place-items-center">
