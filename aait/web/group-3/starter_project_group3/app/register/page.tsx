@@ -19,9 +19,10 @@ const Register: React.FC = () => {
     register({ name, email, password })
       .unwrap()
       .then((response) => {
+        if (typeof window !== 'undefined'){
         localStorage.setItem("user", JSON.stringify(response));
         router.push("/login");
-        setisLoggedIN(true);
+        setisLoggedIN(true);}
       })
       .catch((err:any) => {
         seterrorMessage(err?.data?.message);

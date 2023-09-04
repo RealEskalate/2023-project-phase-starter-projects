@@ -19,6 +19,7 @@ const PersonalInformation = () => {
   const [preveImageLink, setPrevImageLink] = useState("");
 
   useEffect(() => {
+    if (typeof window !== 'undefined'){
     const userString = localStorage.getItem("user");
     const user: authTypes | null = userString ? JSON.parse(userString) : null;
     if (user) {
@@ -32,7 +33,7 @@ const PersonalInformation = () => {
     const updated_user: any | null = updated_userString
       ? JSON.parse(updated_userString)
       : null;
-    setPrevImageLink(updated_user?.image || "");
+    setPrevImageLink(updated_user?.image || "");}
   }, []);
 
   const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -67,12 +68,13 @@ const PersonalInformation = () => {
     try {
       const response:any = await updateProfile(formData);
       if (response) {
+        if (typeof window !== 'undefined'){
         setIssuccessfull(true);
         localStorage.setItem(
           "updated-user",
           JSON.stringify(response?.data?.body)
         );
-        router.push("/");
+        router.push("/");}
       } else {
         handleDeleteImage();
         setImage(null);

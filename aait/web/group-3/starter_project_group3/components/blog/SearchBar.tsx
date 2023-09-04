@@ -3,7 +3,9 @@ import Link from 'next/link'
 import React from 'react'
 
 const SearchBar = () => {
-    const userString = localStorage.getItem("user");
+    let userString = null;
+    if (typeof window !== 'undefined'){
+    userString = localStorage.getItem("user");}
     const user: authTypes | null = userString ? JSON.parse(userString) : null;
     const token = user?.token
 
