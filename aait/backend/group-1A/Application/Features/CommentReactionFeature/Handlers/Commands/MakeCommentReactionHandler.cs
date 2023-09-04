@@ -64,14 +64,6 @@ namespace Application.Features.CommentReactionFeature.Handlers.Commands
                 throw new BadRequestException("Comment is not found");
             }
 
-            await _mediator.Send(new CreateNotification {
-                NotificationData = new NotificationCreateDTO()
-                    {
-                        Content = $"User with {request.UserId} reacted on your comment",
-                        NotificationType = NotificationEnum.COMMENTREACTION,
-                        UserId = request.UserId}
-                        }
-            );
 
             return new BaseResponse<int>()
             {

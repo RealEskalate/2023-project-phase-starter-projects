@@ -41,7 +41,7 @@ namespace WebApi.Controllers
         public async Task<ActionResult<BaseResponse<int>>> Post([FromBody] ReactionDTO reactionData)
         {
             var userId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier)!.Value);
-            var result = await _mediator.Send(new MakeReactionOnComment{ UserId = 3, ReactionData = reactionData });
+            var result = await _mediator.Send(new MakeReactionOnComment{ UserId = userId, ReactionData = reactionData });
             
             return Ok(result);
         }

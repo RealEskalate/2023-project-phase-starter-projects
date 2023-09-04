@@ -10,5 +10,4 @@ public interface IAuthRepository{
 
     Task<bool> UserExists(string username);
 
-
 }
