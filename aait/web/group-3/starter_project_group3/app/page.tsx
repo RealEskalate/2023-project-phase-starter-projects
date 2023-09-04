@@ -23,7 +23,10 @@ export default function Home() {
         <p className="font-Montserrat text-xl nav_bar_screen:text-3xl text-white z-10">
           Help us sustain our mission!
         </p>
-        <button className="font-semibold font-Montserrat text-xl text-primary bg-white rounded-md py-3 px-7 z-10">
+        <button
+          className="font-semibold font-Montserrat text-xl text-primary bg-white rounded-md py-3 px-7 z-10 hover:animate-wiggle hover:animate-infinite animate-duration-1000 animate-ease-linear
+"
+        >
           Support Us
         </button>
       </div>

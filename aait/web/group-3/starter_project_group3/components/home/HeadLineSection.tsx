@@ -15,9 +15,10 @@ const HeadLineSection: React.FC = () => {
           <button className="border-primary text-primary rounded-xl border-2 py-3 px-8 nav_bar_screen:px-5 hover:bg-primary hover:text-white transition ease-in-out duration-200">
             Get Started
           </button>
-          <button className="uppercase flex gap-2 items-center bg-primary rounded-xl text-white py-2 px-8 nav_bar_screen:px-5">
+          <button className="uppercase flex gap-2 items-center  bg-primary rounded-xl text-white py-2 px-8 nav_bar_screen:px-5 group">
             support us{" "}
             <Image
+              className="group-hover:animate-fade-right group-hover:animate-infinite animate-duration-2000 animate-ease-linear"
               src="/assets/landing_page_arrow.svg"
               width={30}
               height={30}
