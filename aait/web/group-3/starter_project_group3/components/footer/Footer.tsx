@@ -44,7 +44,11 @@ const Footer = () => {
           <div className=" flex justify-center flex-col font-light gap-y-5">
             <p className="font-semibold ">Links</p>
             {footerLinks.map((link) => (
-              <Link key={link.linkName} href={link.linkPath}>
+              <Link
+                key={link.linkName}
+                href={link.linkPath}
+                className="hover:font-semibold transition ease-in-out duration-200"
+              >
                 {link.linkName}
               </Link>
             ))}
@@ -54,7 +58,11 @@ const Footer = () => {
           <div className=" flex justify-center flex-col font-light gap-y-5">
             <p className="font-semibold">Teams</p>
             {footerBLogLinks.map((link) => (
-              <Link key={link.linkName} href={link.linkPath}>
+              <Link
+                key={link.linkName}
+                href={link.linkPath}
+                className="hover:font-semibold transition ease-in-out duration-200"
+              >
                 {link.linkName}
               </Link>
             ))}
@@ -62,9 +70,13 @@ const Footer = () => {
 
           {/* Blogs */}
           <div className=" flex justify-center flex-col font-light gap-y-5">
-            <p className=" font-semibold">Blogs</p>            
+            <p className=" font-semibold">Blogs</p>
             {footerBLogLinks.map((link) => (
-              <Link key={link.linkName} href={link.linkPath}>
+              <Link
+                key={link.linkName}
+                href={link.linkPath}
+                className="hover:font-semibold transition ease-in-out duration-200"
+              >
                 {link.linkName}
               </Link>
             ))}
