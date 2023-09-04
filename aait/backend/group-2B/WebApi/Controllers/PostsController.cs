@@ -39,10 +39,15 @@ namespace WebApi.Controllers
 
         [HttpPost]
         [Authorize]
-        public async Task<IActionResult> CreatePostAsync([FromBody] CreatePostDto createPostDto)
+        public async Task<IActionResult> CreatePostAsync([FromBody] String content )
         {
+            
             int userId = _userService.GetUserId();
-            createPostDto.UserId = userId;
+            CreatePostDto createPostDto = new()
+            {
+                UserId  = userId,
+                Content = content
+            };
             var createCommand = new CreatePostCommand { CreatePostDto = createPostDto };
             var response = await _mediator.Send(createCommand);
             if (response.IsSuccess)
