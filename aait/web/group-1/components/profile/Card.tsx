@@ -3,17 +3,14 @@ import Image from 'next/image';
 import { Blog } from '@/types/Blog';
 import { BiSolidTime } from 'react-icons/bi';
 import Link from 'next/link';
+import { formatDate } from '@/utils/dateFormater';
 
 interface PropsInterface {
   post: Blog;
 }
 
 const Card: React.FC<PropsInterface> = ({ post }) => {
-  const dateString = post.createdAt;
-  const date = new Date(dateString);
-
-  const options: Intl.DateTimeFormatOptions = { year: 'numeric', month: 'short', day: 'numeric' };
-  const dateFormatted = date.toLocaleDateString('en-US', options);
+  const dateFormatted: string = formatDate(post.createdAt);
 
   return (
     <div className='col-span-1 font-montserrat shadow-lg rounded-md'>
