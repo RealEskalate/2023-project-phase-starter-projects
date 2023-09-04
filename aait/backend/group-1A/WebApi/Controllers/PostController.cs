@@ -85,8 +85,8 @@ namespace WebApi.Controllers
         }
 
         [HttpGet("/tag/{tagname}")]
-        public async Task<ActionResult<BaseResponse<PostResponseDTO>>> GetByTagName(GetPostsByTagQuery query){
-            var result = await _mediator.Send(query);
+        public async Task<ActionResult<BaseResponse<PostResponseDTO>>> GetByTagName(string tagname){
+            var result = await _mediator.Send(new GetPostsByTagQuery { TagName = tagname });
             return Ok(result);
         }
         

@@ -54,7 +54,7 @@ namespace Application.Features.PostFeature.Handlers.Commands
 
                 if (tagEntity == null)
                 {
-                    var newTag = new Tag
+                    var newTag = new Tag()
                     {
                         Title = tag
                     };
@@ -78,7 +78,7 @@ namespace Application.Features.PostFeature.Handlers.Commands
                 new CreateNotification () {
                     NotificationData = new NotificationCreateDTO()
                         {
-                        Content = "A Post has been Created",
+                        Content = $"User with Id {request.userId} has created a post",
                         NotificationContentId = result.Id,
                         NotificationType = NotificationEnum.POST,
                         UserId = request.userId

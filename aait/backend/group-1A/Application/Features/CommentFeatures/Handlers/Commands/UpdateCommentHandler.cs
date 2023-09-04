@@ -52,7 +52,7 @@ namespace Application.Features.CommentFeatures.Handlers.Commands
 
             await _mediator.Send(new CreateNotification {NotificationData = new NotificationCreateDTO()
             {
-                Content = "A comment on your post has been Updated",
+                Content = $"A comment on your post made by user with id {request.userId} has been Updated",
                 NotificationContentId = comment.Id,
                 NotificationType = NotificationEnum.COMMENT,
                 UserId = post.UserId}

@@ -38,7 +38,7 @@ namespace Application.Features.CommentFeatures.Handlers.Commands
 
             await _mediator.Send(new CreateNotification {NotificationData = new NotificationCreateDTO()
                     {
-                        Content = "A comment on your post has been removed",
+                        Content = $"A comment on your post made by user with Id {request.userId} has been removed",
                         NotificationContentId = comment.Id,
                         NotificationType = NotificationEnum.COMMENT,
                         UserId = post.UserId

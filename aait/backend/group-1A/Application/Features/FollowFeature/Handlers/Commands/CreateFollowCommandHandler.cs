@@ -49,7 +49,7 @@ namespace Application.Features.FollowFeature.Handlers.Commands
             
             await _mediator.Send(new CreateNotification {NotificationData = new NotificationCreateDTO()
             {
-                Content = $"The user with {request.FollowDTO.FollowerId} is currently following you",
+                Content = $"The user with Id {request.FollowDTO.FollowerId} is currently following you",
                 NotificationType = NotificationEnum.FOLLOW,
                 UserId = request.FollowDTO.FolloweeId}});
             

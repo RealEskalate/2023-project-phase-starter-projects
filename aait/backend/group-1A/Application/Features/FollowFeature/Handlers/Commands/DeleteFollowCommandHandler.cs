@@ -47,14 +47,14 @@ namespace Application.Features.FollowFeature.Handlers.Commands
 
             await _mediator.Send(new CreateNotification {NotificationData = new NotificationCreateDTO()
             {
-                Content = $"The user with {request.FollowDTO.FollowerId} has currently un followed you",
+                Content = $"The user with Id {request.FollowDTO.FollowerId} has currently un followed you",
                 NotificationType = NotificationEnum.FOLLOW,
                 UserId = request.FollowDTO.FolloweeId
             }});
 
             
             createFollowResponse.Success = true;
-            createFollowResponse.Message = $"User with Id {followEntity.FollowerId} has un followed you";
+            createFollowResponse.Message = $"You have unfollowed the user with Id {request.FollowDTO.FolloweeId}";
             createFollowResponse.Value = followEntity.FolloweeId;
             return createFollowResponse;
         }

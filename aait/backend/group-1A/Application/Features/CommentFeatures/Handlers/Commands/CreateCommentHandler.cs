@@ -54,7 +54,7 @@ namespace Application.Features.CommentFeatures.Handlers.Commands
             await _mediator.Send(new CreateNotification {
                 NotificationData = new NotificationCreateDTO()
                     {
-                    Content = "A Comment has been given on your post",
+                    Content = $"User with Id {request.userId} commented on your post with Id {request.NewCommentData.PostId}",
                     NotificationContentId = result.Id,
                     NotificationType = NotificationEnum.COMMENT,
                     UserId = post.UserId
