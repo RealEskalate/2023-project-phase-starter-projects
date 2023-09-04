@@ -12,7 +12,7 @@ export default function ProfileLayout({
   const links: string[] = [ 'Personal Information', 'My Blogs', 'Account Setting' ];
   const linkPathname = new Map<string, string>([
     ['Personal Information', '/profile'],
-    ['My Blogs', '/blogs/my-blogs'],
+    ['My Blogs', '/profile/my-blogs'],
     ['Account Setting', '/profile/account']
   ]);
   const pathname = usePathname();
