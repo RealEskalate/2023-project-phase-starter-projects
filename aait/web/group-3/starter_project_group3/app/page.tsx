@@ -1,13 +1,14 @@
 import HeadLineSection from "@/components/home/HeadLineSection";
 import ProgramSection from "@/components/home/ProgramSection";
 import RateSection from "@/components/home/RateSection";
+import { ScrollToTop } from "@/components/home/ScrollToTop";
 import StorySection from "@/components/home/StorySection";
 import TeamSection from "@/components/home/TeamSection";
 import Image from "next/image";
 
 export default function Home() {
   return (
-    <div className="flex flex-col items-center mx-8 md:mx-20 gap-56 ">
+    <div className="flex flex-col items-center mx-8 md:mx-20 gap-56 animate-fade-up">
       <HeadLineSection />
       <TeamSection />
       <RateSection />
