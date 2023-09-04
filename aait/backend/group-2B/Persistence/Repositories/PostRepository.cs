@@ -39,6 +39,15 @@ public class PostRepository : GenericRepository<Post>, IPostRepository
         return postsByUser;
     }
 
+    public async Task<IReadOnlyList<Post>> GetFeedsByUserIdAsync(int userID)
+    {
+        var feedsForUser = await _dbContext.Posts
+        .Where(p => p.User.Followers.Any(f => f.Id == userID) || p.Interactions.Any(i => i.User.Followers.Any(f => f.Id == userID)))
+        .ToListAsync();
+
+        return feedsForUser;
+    }
+
     public async Task<bool> ExistsAsync(int id)
     {
         var post = await _dbContext.Posts
