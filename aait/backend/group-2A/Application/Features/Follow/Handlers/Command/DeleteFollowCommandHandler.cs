@@ -28,7 +28,7 @@ namespace Application.Features.FollowFeatures.Handlers.Command
         {
             try
             {
-                var validation = new FollowDtoValidator(_unitOfWork.userRepository, _unitOfWork.followRepository);
+                var validation = new UnFollowDtoValidator(_unitOfWork.userRepository, _unitOfWork.followRepository);
                 var validationResult = await validation.ValidateAsync(request.follow);
                 if (!validationResult.IsValid) throw new ValidationException(validationResult);
                 var unfollow = _mapper.Map<Follow>(request.follow);

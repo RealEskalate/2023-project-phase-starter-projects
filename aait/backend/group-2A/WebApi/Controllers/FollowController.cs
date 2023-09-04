@@ -1,3 +1,4 @@
+using Application.DTO.CommentDTO;
 using Application.DTO.FollowDTO;
 using Application.DTO.UserDTO;
 using Application.Features.FollowFeatures.Request.Command;
@@ -20,17 +21,19 @@ namespace WebApi.Controllers
             _mediator = mediator;
         }
 
-        [HttpGet("followers/{userId:int}")]
-        public async Task<IActionResult> GetFollower( int userId, [FromQuery] int? pageNumber, [FromQuery] int? pageSize)
+        [HttpGet("followers")]
+        public async Task<IActionResult> GetFollower([FromQuery] int? pageNumber, [FromQuery] int? pageSize)
         {
+            var userId = int.Parse(User.FindFirst("reader")?.Value ?? "-1");
             var command = new GetFollowerRequest { Id = userId, PageNumber = pageNumber ?? 0, PageSize = pageSize ?? 10 };
             var follower = await _mediator.Send(command);
             return ResponseHandler<List<UserDto>>.HandleResponse(follower, 200);
         }
 
-        [HttpGet("followees/{userId:int}")]
-        public async Task<IActionResult> GetFollowee(int userId, [FromQuery] int? pageNumber, [FromQuery] int? pageSize)
+        [HttpGet("followees")]
+        public async Task<IActionResult> GetFollowee([FromQuery] int? pageNumber, [FromQuery] int? pageSize)
         {
+            var userId = int.Parse(User.FindFirst("reader")?.Value ?? "-1");
             var command = new GetFollowingRequest { Id = userId, PageNumber = pageNumber ?? 0, PageSize = pageSize ?? 10 };
             var followee = await _mediator.Send(command);
             return ResponseHandler<List<UserDto>>.HandleResponse(followee, 200);
