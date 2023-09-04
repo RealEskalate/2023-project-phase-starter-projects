@@ -9,8 +9,8 @@ const SessionSection: React.FC = () => {
       </h1>
 
       <div className="grid md:grid-cols-2 lg:grid-cols-3 font-Poppins gap-6">
-        {aboutUs.map((data) => (
-          <div className="flex flex-col gap-4 shadow-lg items-start border-2 p-6">
+        {aboutUs.map((data, i) => (
+          <div className="flex flex-col gap-4 shadow-lg items-start border-2 p-6" key={i}>
             <div className="about-us-avatar rounded-full p-4">
               <Image src={data.imageUrl} width={40} height={40} alt="icons" />
             </div>

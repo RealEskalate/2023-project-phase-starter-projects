@@ -1,10 +1,15 @@
 "use client";
 
 import React from "react";
-import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 import { tags } from "@/data/blog/blog";
 import Chip from "./Chip";
+import dynamic from "next/dynamic";
+
+// Dynamically import React Quill
+const ReactQuill = dynamic(() => import("react-quill"), {
+  ssr: false, // Set to false to disable server-side rendering
+});
 
 interface Props {
   title: string;

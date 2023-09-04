@@ -19,12 +19,12 @@ const ProblemSection: React.FC = () => {
               />
             </div>
             <p className="mt-5 text-light_gray_text_color font-Nunito">
-              Africa's future depends on innovation. Transformative technologies
-              can drive rapid economic growth and lift millions of people out of
-              poverty. However, university computer science education is
-              misaligned with global market needs and fails to incorporate
-              practice-based learning, leaving students unable to apply their
-              skills in real-world contexts.
+              Africa&apos;s future depends on innovation. Transformative
+              technologies can drive rapid economic growth and lift millions of
+              people out of poverty. However, university computer science
+              education is misaligned with global market needs and fails to
+              incorporate practice-based learning, leaving students unable to
+              apply their skills in real-world contexts.
             </p>
           </div>
 
@@ -38,12 +38,12 @@ const ProblemSection: React.FC = () => {
               />
             </div>
             <p className="mt-5 text-light_gray_text_color font-Nunito">
-              Africa's future depends on innovation. Transformative technologies
-              can drive rapid economic growth and lift millions of people out of
-              poverty. However, university computer science education is
-              misaligned with global market needs and fails to incorporate
-              practice-based learning, leaving students unable to apply their
-              skills in real-world contexts.
+              Africa&apos;s future depends on innovation. Transformative
+              technologies can drive rapid economic growth and lift millions of
+              people out of poverty. However, university computer science
+              education is misaligned with global market needs and fails to
+              incorporate practice-based learning, leaving students unable to
+              apply their skills in real-world contexts.
             </p>
           </div>
         </div>
