@@ -85,7 +85,12 @@ class SignupSlide extends StatelessWidget {
             SizedBox(
               height: 30.h,
             ),
-            BlocBuilder<SignupBloc, SignupState>(
+            BlocConsumer<SignupBloc, SignupState>(
+              listener: (context, state) {
+                if (state is SignupSuccessState) {
+                  pageChange();
+                }
+              },
               builder: (context, state) {
                 if (state is SignupLoadingState) {
                   return SizedBox(
@@ -102,8 +107,6 @@ class SignupSlide extends StatelessWidget {
                       child: const CircularProgressIndicator.adaptive(),
                     ),
                   );
-                } else if (state is SignupSuccessState) {
-                  // todo
                 } else if (state is SignupErrorState) {
                   return Column(
                     crossAxisAlignment: CrossAxisAlignment.center,
@@ -210,7 +213,9 @@ class SignupSlide extends StatelessWidget {
                 ),
               ],
             ),
-            SizedBox(height: 500.h,),
+            SizedBox(
+              height: 500.h,
+            ),
           ],
         ),
       ),
