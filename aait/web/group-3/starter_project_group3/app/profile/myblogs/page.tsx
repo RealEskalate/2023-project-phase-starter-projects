@@ -24,9 +24,7 @@ const MyBlogs = () => {
           No blogs added yet.
         </p>
       )}
-      {blogs && blogs.length > 0 && (
-        <SmallBlogCard blogs={blogs} />
-      )}
+      {blogs && blogs.length > 0 && <SmallBlogCard blogs={blogs} />}
     </div>
   );
 };

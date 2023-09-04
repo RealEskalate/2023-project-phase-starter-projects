@@ -2,6 +2,7 @@ import Image from "next/image";
 import React, { useEffect } from "react";
 import { Blog } from "@/types/blog/blog";
 import Link from "next/link";
+import parse from "html-react-parser";
 
 interface BlogCardProps {
   blogs: Blog[];
@@ -53,12 +54,12 @@ const SmallBlogCard = ({ blogs }: BlogCardProps) => {
           </div>
 
           <p className="text-[12px] line-clamp-3  pb-5  text-[#8E8E8E]">
-            {blog.description}
+            {parse(blog.description)}
           </p>
 
           <p className="flex justify-between items-center mx-1">
             {
-              <span className="flex  gap-x-2">
+              <span className="flex gap-x-2">
                 <Image
                   src={"assets/pendingClock.svg"}
                   alt="blog image"
@@ -71,7 +72,10 @@ const SmallBlogCard = ({ blogs }: BlogCardProps) => {
               </span>
             }
 
-            <Link href={``} className="text-primary font-bold ">
+            <Link
+              href={`/blogs/${blog._id}`}
+              className="text-primary font-bold "
+            >
               Read More
             </Link>
           </p>
