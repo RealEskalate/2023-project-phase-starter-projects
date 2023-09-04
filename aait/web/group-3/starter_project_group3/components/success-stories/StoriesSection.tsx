@@ -49,7 +49,7 @@ const StoriesSection = () => {
 
             <div className="flex flex-col gap-10 justify-center">
               {story.story.map((content) => (
-                <div>
+                <div key={content._id}>
                   <h1 className="font-semibold leading-relaxed text-lg md:text-2xl">
                     {content.heading}
                   </h1>

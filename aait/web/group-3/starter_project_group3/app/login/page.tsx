@@ -21,10 +21,11 @@ const LogIn: React.FC = () => {
     login({ email, password })
       .unwrap()
       .then((response: any) => {
+        if (typeof window !== 'undefined'){
         localStorage.setItem("user", JSON.stringify(response));
         setisLoggedIN(true);
         dipatch(setLogInStatus());
-        router.push("/");
+        router.push("/");}
       })
       .catch((err) => {
         seterrorMessage(err.data.message);

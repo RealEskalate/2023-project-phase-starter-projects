@@ -10,7 +10,7 @@ const HeadLineSection: React.FC = () => {
 
         <p className="text-lg nav_bar_screen:text-xl text-left leading-relaxed">
           A2SV is a social enterprise that enables high-potential university
-          students to create digital solutions to Africa's most pressing
+          students to create digital solutions to Africa&apos;s most pressing
           problems.
         </p>
 
@@ -20,7 +20,7 @@ const HeadLineSection: React.FC = () => {
 
         <p className="italic font-light text-sm nav_bar_screen:text-lg">
           A2SV is a social enterprise that enables high-potential university
-          students to create digital solutions to Africa's most pressing
+          students to create digital solutions to Africa&apos;s most pressing
           problems.
         </p>
       </div>

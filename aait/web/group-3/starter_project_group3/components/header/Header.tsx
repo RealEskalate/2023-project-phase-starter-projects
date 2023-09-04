@@ -15,9 +15,11 @@ const Header: React.FC = () => {
   const loginStatu = useSelector((state: any) => state.LogInState.status);
 
   const handleLogout = () => {
-    localStorage.clear();
-    dispath(removeLogInStatus());
-    window.location.href = "/";
+    if (typeof window !== "undefined") {
+      localStorage.clear();
+      dispath(removeLogInStatus());
+      window.location.href = "/";
+    }
   };
 
   // Function to toggle the mobile menu state
@@ -116,8 +118,12 @@ const Header: React.FC = () => {
 export default Header;
 
 export function checkLocalStorage(): boolean {
-  const userString = window.localStorage.getItem("user");
-  const user: authTypes | null = userString ? JSON.parse(userString) : null;
+  let userString = null;
+  let user: authTypes | null = null;
+  if (typeof window !== "undefined") {
+    userString = window.localStorage.getItem("user");
+    user = userString ? JSON.parse(userString) : null;
+  }
   if (user) return true;
   else return false;
 }

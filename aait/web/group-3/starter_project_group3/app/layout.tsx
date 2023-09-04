@@ -5,6 +5,7 @@ import Header from "@/components/header/Header";
 import Footer from "@/components/footer/Footer";
 import "react-toastify/dist/ReactToastify.css";
 import { ToastContainer } from "react-toastify";
+import { ScrollToTop } from "@/components/home/ScrollToTop";
 
 export const metadata: Metadata = {
   title: "A2SV",
@@ -33,6 +34,7 @@ export default function RootLayout({
             pauseOnHover
           />
         </ReduxProvider>
+        <ScrollToTop />
         <Footer />
       </body>
     </html>

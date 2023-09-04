@@ -4,8 +4,11 @@ import Image from "next/image";
 const ProgramSection: React.FC = () => {
   return (
     <div className="training_programs flex flex-col gap-36">
-      {training_programs.map((training_program) => (
-        <div className="flex flex-col justify-center min-[1265px]:flex-row min-[1265px]:justify-between items-center gap-9">
+      {training_programs.map((training_program, i) => (
+        <div
+          className="flex flex-col justify-center min-[1265px]:flex-row min-[1265px]:justify-between items-center gap-9"
+          key={i}
+        >
           <Image
             className={`${
               training_program.isOrderLast ? "min-[1265px]:order-last" : ""

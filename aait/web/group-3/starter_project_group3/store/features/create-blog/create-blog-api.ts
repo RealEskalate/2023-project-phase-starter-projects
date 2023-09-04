@@ -8,9 +8,14 @@ export const createBlogApi = createApi({
   reducerPath: 'createBlog',
   baseQuery: fetchBaseQuery({ baseUrl: baseUrl,
     prepareHeaders: (headers, {getState}) =>{
-      const userString = localStorage.getItem("user");
-      const user: authTypes | null = userString ? JSON.parse(userString) : null;
-      const token = user?.token
+      let userString = null;
+      let user : authTypes | null = null;
+      let token = null;
+
+      if (typeof window !== 'undefined'){
+      userString = localStorage.getItem("user");
+      user = userString ? JSON.parse(userString) : null;
+      token = user?.token;}
 
         if(token){
           headers.set('Authorization', `Bearer ${token}`);
