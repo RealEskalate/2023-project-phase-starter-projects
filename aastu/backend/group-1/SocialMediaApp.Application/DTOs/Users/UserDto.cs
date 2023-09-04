@@ -20,4 +20,5 @@ public class UserDto: BaseDto
     public List<PostDto> Post { get; set; }
     public List<NotificationDto> Notifications { get; set; }
     public string Bio { get; set; }
+    public bool IsVerified { get; set; }
 }

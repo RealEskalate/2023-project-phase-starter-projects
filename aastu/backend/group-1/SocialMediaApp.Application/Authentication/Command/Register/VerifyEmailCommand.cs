@@ -8,9 +8,9 @@ using System.Threading.Tasks;
 
 namespace SocialMediaApp.Application.Authentication.Command.Register
 {
-    public record RegisterCommand(
-        string Name,
-        string Email,
-        string Password): IRequest<string>;
-    
+    public class VerifyEmailCommand: IRequest<AuthenticationResult>
+    {
+        public string? Token { get; set; }
+
+    }
 }

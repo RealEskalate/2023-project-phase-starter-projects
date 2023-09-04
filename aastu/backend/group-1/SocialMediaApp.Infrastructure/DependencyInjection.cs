@@ -14,6 +14,8 @@ using SocialMediaApp.Persistence.Repositories;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.Extensions.Options;
+using Infrastructure.Mail;
+using SocialMediaApp.Application.Persistence.Contracts.Infrastructure;
 
 namespace SocialMediaApp.Infrastructure
 {
@@ -43,6 +45,10 @@ namespace SocialMediaApp.Infrastructure
             services.AddSingleton<IJwtTokenGenerator, JwtTokenGenerator>();
 
             services.AddScoped<IPasswordService, BCryptPasswordService>();
+
+            services.AddTransient<IEmailSender, EmailSender>();
+
+            services.AddScoped<IJwtTokenValidation, JwtTokenValidation>();
 
             services.AddAuthentication(defaultScheme: JwtBearerDefaults.AuthenticationScheme)
                 .AddJwtBearer(options => options.TokenValidationParameters = new TokenValidationParameters()

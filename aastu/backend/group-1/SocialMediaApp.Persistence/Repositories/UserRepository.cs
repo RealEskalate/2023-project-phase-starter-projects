@@ -37,4 +37,19 @@ public class UserRepository : GenericRepository<User>, IUserRepository
         return users;
     }
 
+    public User EditUser(User user)
+    {
+        var userToEdit = _dbContext.Users.FirstOrDefault(u => u.Id == user.Id);
+        if (userToEdit == null)
+            throw new Exception("User not found");
+        userToEdit.Name = user.Name;
+        userToEdit.email = user.email;
+        userToEdit.Bio = user.Bio;
+
+        if (_dbContext.SaveChanges() == 0)
+            throw new Exception("User not edited");
+
+        return userToEdit;
+    }
+
 }

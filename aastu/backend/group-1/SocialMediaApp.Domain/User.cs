@@ -16,5 +16,6 @@ public class User: BaseEntity
     public List<Post> Post { get; set; }
     public List<Notification> Notifications { get; set; }
     public string Bio { get; set; }
+    public bool IsVerified { get; set; }
 
 }

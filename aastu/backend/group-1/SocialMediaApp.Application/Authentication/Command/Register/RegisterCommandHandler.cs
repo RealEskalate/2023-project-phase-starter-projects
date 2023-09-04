@@ -11,24 +11,29 @@ using System.Xml.Linq;
 using SocialMediaApp.Application.Authentication.Common;
 using SocialMediaApp.Application.Authentication.Command.Validations;
 using SocialMediaApp.Application.Exceptions;
+using SocialMediaApp.Application.Persistence.Contracts.Infrastructure;
+using Microsoft.AspNetCore.Http;
 
 namespace SocialMediaApp.Application.Authentication.Command.Register
 {
-    public class RegisterCommandHandler : IRequestHandler<RegisterCommand, AuthenticationResult>
+    public class RegisterCommandHandler : IRequestHandler<RegisterCommand, string>
     {
         private readonly IJwtTokenGenerator _jwtTokenGenerator;
 
         private readonly IUserRepository _userRepository;
 
         private readonly IPasswordService _passwordService;
-        public RegisterCommandHandler(IJwtTokenGenerator jwtTokenGenerator, IUserRepository userRepository, IPasswordService passwordService)
+
+        private readonly IEmailSender _emailSender;
+        public RegisterCommandHandler(IJwtTokenGenerator jwtTokenGenerator, IUserRepository userRepository, IPasswordService passwordService, IEmailSender emailSender)
         {
             _jwtTokenGenerator = jwtTokenGenerator;
             _userRepository = userRepository;
             _passwordService = passwordService;
+            _emailSender = emailSender;
         }
 
-        public async Task<AuthenticationResult> Handle(RegisterCommand command, CancellationToken cancellationToken)
+        public async Task<String> Handle(RegisterCommand command, CancellationToken cancellationToken)
         {
 
             
@@ -48,6 +53,7 @@ namespace SocialMediaApp.Application.Authentication.Command.Register
                 email = command.Email,
                 password = h_password,
                 Bio = "",
+                CreatedDate = DateTime.UtcNow,
 
             };
             var validator = new ValidateCreateUserDto(_userRepository);
@@ -59,10 +65,18 @@ namespace SocialMediaApp.Application.Authentication.Command.Register
 
 
                 var token = _jwtTokenGenerator.GenerateToken(user);
+                var http = new HttpContextAccessor();
+                var scheme = http.HttpContext?.Request.Scheme ?? "https";
+                var host = http.HttpContext?.Request.Host.Value ?? "localhost:5293";
 
-                return new AuthenticationResult(
-                    user,
-                    token);
+                await _emailSender.SendEmail(new Email()
+                {
+                    To = user.email,
+                    Subject = "Social Media App Verification",
+                    Body = $"Please verify your account by clicking the link below: <br/> <a href='{scheme}://{host}/api/Authentication/verify-email?token={token}'>Verify Email</a>"
+                });
+
+                return "Please verify your Email";
             }
             else
             {
