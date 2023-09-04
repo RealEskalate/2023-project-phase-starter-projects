@@ -3,15 +3,22 @@ import { toast } from 'react-toastify';
 
 interface ToastProps {
   message: string;
+  isError:boolean
 }
 
-const Toast: React.FC<ToastProps> = ({ message }) => {
+const Toast: React.FC<ToastProps> = ({ message, isError }) => {
   useEffect(() => {
-    toast.success(message, {
-      
-      autoClose: 3000, // Display toast for 2 seconds
-      position: toast.POSITION.TOP_CENTER,
-    });
+    if (!isError){
+      toast.success(message, {
+        autoClose: 4000, 
+        position: toast.POSITION.TOP_CENTER,
+      });
+    }else{
+      toast.error(message, {
+        autoClose: 4000, 
+        position: toast.POSITION.TOP_CENTER,
+      })
+    }
   }, [message]);
 
   return null;

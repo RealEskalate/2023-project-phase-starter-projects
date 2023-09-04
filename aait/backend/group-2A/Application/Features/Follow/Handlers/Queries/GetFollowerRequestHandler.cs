@@ -31,7 +31,8 @@ namespace Application.Features.FollowFeatures.Handlers.Queries
         public async Task<BaseCommandResponse<List<UserDto>>> Handle(GetFollowerRequest request, CancellationToken cancellationToken)
         {
             try{
-                var followers = await _unitOfWork.followRepository.GetFollower(request.Id);
+                var followers = await _unitOfWork.followRepository.GetFollower(request.Id, request.PageNumber,
+                    request.PageSize);
                 if (followers == null){
                     throw new NotFoundException(nameof(Domain.Entities.Comment), request.Id);
                 }

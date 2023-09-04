@@ -1,9 +1,7 @@
 import 'dart:convert';
 
-import 'package:json_annotation/json_annotation.dart';
-
-import 'package:blog_app/features/article/data/models/user_model.dart';
-import 'package:blog_app/features/article/domain/entity/user.dart';
+import 'user_model.dart';
+import '../../domain/entity/user.dart';
 
 import '../../domain/entity/article.dart';
 
@@ -17,7 +15,6 @@ class ArticleModel extends Article {
     required super.user,
     required super.image,
     required super.imageCloudinaryPublicId,
-    @JsonKey(fromJson: _dateTimeFromJson, toJson: _dateTimeToJson)
     required super.createdAt,
     required super.id,
   });
@@ -57,7 +54,7 @@ class ArticleModel extends Article {
       subTitle: map['subTitle'] ?? 'No subTitle',
       estimatedReadTime: map['estimatedReadTime'] ?? 'No Etimated Read Time',
       user: UserModel.fromJson(map['user']),
-      image: map['image'] ?? 'assets/images/article-image.jpg',
+      image: map['image'] ?? '',
       imageCloudinaryPublicId:
           map['imageCloudinaryPublicId'] ?? 'No imageCloudinaryPublicId',
       createdAt: _dateTimeFromJson(map['createdAt']),
@@ -68,10 +65,11 @@ class ArticleModel extends Article {
   String toJson() => json.encode(toMap());
 
   factory ArticleModel.fromJson(Map<String, dynamic> json) {
-    print(json);
-    print("I also have reached here");
+    final resTags = json['tags'] ?? [];
+    print(resTags);
+
     return ArticleModel(
-      tags: (json['tags'] as List<dynamic>?)?.cast<String>() ?? [],
+      tags: resTags.map<String>((e) => e.toString()).toList(),
       content: json['content'] ?? "No Content",
       title: json['title'] ?? "No Title",
       subTitle: json['subTitle'] ?? "No subTitle",
@@ -79,7 +77,7 @@ class ArticleModel extends Article {
       user: json['user'] is String
           ? UserModel.empty()
           : UserModel.fromJson(json['user']),
-      image: json['image'] ?? "assets/images/article-image.jpg",
+      image: json['image'] ?? "",
       imageCloudinaryPublicId:
           json['imageCloudinaryPublicId'] ?? "No imageCloudinaryPublicId",
       createdAt: _dateTimeFromJson(json['createdAt']),

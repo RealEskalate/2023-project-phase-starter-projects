@@ -18,7 +18,6 @@ namespace Domain.Entities
 
         public virtual ICollection<PostTag> PostTags { get; set; } = new HashSet<PostTag>();
 
-
     }
 }
 

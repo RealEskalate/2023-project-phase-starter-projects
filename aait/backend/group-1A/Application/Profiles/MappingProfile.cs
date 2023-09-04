@@ -26,6 +26,7 @@ namespace Application.Profiles
             CreateMap<ReactionResponseDTO, PostReaction>().ReverseMap();
             CreateMap<ReactionDTO, CommentReaction>().ReverseMap();
             CreateMap<ReactionResponseDTO, CommentReaction>().ReverseMap();
+            CreateMap<PostUpdateDTO, Post>().ReverseMap();
 
 
             CreateMap<NotificationCreateDTO, Notification>().ReverseMap();
@@ -41,8 +42,8 @@ namespace Application.Profiles
             CreateMap<TagResponseDto, Tag>().ReverseMap();
             
         
+
             CreateMap<FollowDTO, Follow>().ReverseMap();
-            CreateMap<UserDto, User>().ReverseMap();
             CreateMap<UserResponseDTO, User>().ReverseMap();
             CreateMap<UserCreateDTO, User>().ReverseMap();
             CreateMap<UserUpdateDTO, User>().ReverseMap();

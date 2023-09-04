@@ -1,4 +1,5 @@
 using System.Security.Claims;
+using Application.Common;
 using Application.DTO.CommentDTO.DTO;
 using Application.DTO.NotificationDTO;
 using Application.Features.CommentFeatures.Requests.Commands;
@@ -44,8 +45,7 @@ namespace WebApi.Controllers
         {
             var userId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier)!.Value);
             var result = await _mediator.Send(new CommentCreateCommand{ NewCommentData = newCommentData, userId = userId });
-            await _mediator.Send(new CreateNotification {NotificationData = new NotificationCreateDTO()
-            {Content = "A Comment has been given on your post",NotificationContentId = result.Value.Id,NotificationType = "comment",UserId = userId}});
+            
             return Ok(result);
             
         }
@@ -57,8 +57,6 @@ namespace WebApi.Controllers
         {
             var userId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier)!.Value);
             var result = await _mediator.Send(new UpdateCommentCommand { Id = id, CommentData = UpdateCommentData , userId = userId });
-             await _mediator.Send(new CreateNotification {NotificationData = new NotificationCreateDTO()
-            {Content = "A comment on your post has been Updated",NotificationContentId = result.Value.Id,NotificationType = "comment",UserId = userId}});
             return Ok(result);
             
         }
@@ -71,8 +69,6 @@ namespace WebApi.Controllers
         {
             var userId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier)!.Value);
             var result = await _mediator.Send(new CommentDeleteCommand { userId = userId, Id = id });     
-             await _mediator.Send(new CreateNotification {NotificationData = new NotificationCreateDTO()
-            {Content = "A comment on your post has been removed",NotificationContentId = result.Value,NotificationType = "comment",UserId = userId}});       
             return Ok(result);
             
         }

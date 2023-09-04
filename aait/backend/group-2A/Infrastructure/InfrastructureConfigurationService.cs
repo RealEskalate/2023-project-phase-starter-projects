@@ -6,11 +6,11 @@ using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using Application.Contracts.Identity;
 using Application.Model;
-using Infrastructure.Model;
-using Infrastructure.Service;
 using Microsoft.EntityFrameworkCore;
+using Persistence.Model;
+using Persistence.Service;
 
-namespace Infrastructure
+namespace Persistence
 { 
     public static class InfrastuctureServices 
     { 

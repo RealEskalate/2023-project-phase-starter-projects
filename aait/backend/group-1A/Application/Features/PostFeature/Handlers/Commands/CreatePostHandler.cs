@@ -1,4 +1,5 @@
 ﻿using System.Text.RegularExpressions;
+using Application.Common;
 using Application.Contracts;
 using Application.DTO.NotificationDTO;
 using Application.DTO.PostDTO.DTO;
@@ -18,20 +19,15 @@ namespace Application.Features.PostFeature.Handlers.Commands
     public class CreatePostHandler : IRequestHandler<CreatePostCommand, BaseResponse<PostResponseDTO>>
     {
         private readonly IMapper _mapper;
-        private readonly IPostRepository _postRepository;
-
-        private readonly ITagRepository _tagRepository;
-
-        private readonly IPostTagRepository _postTagRepository;
+        private readonly IUnitOfWork _unitOfWork;
         private readonly IMediator _mediator;
 
-        public CreatePostHandler(IMapper mapper, IPostRepository postRepository,ITagRepository tagRepository,IPostTagRepository postTagRepository, IMediator mediator)
+        public CreatePostHandler(IMapper mapper, IUnitOfWork unitOfWork, IMediator mediator)
         {
             _mapper = mapper;
-            _postRepository = postRepository;
+            _unitOfWork = unitOfWork;
             _mediator = mediator;
-            _tagRepository = tagRepository;
-            _postTagRepository = postTagRepository;
+
             
         }
         public async Task<BaseResponse<PostResponseDTO>> Handle(CreatePostCommand request, CancellationToken cancellationToken)
@@ -45,35 +41,49 @@ namespace Application.Features.PostFeature.Handlers.Commands
             }
 
             var newPost = _mapper.Map<Post>(request.NewPostData);
+
             newPost.UserId = request.userId;
-            var result = await _postRepository.Add(newPost);
+            var result = await _unitOfWork.PostRepository.Add(newPost);
 
             // tags
             var tags = PostTagParser(result);
 
             foreach (var tag in tags)
             {
-                var tagEntity = await _tagRepository.GetTagByName(tag);
+                var tagEntity = await _unitOfWork.TagRepository.GetTagByName(tag);
 
                 if (tagEntity == null)
                 {
-                    var newTag = new Tag
+                    var newTag = new Tag()
                     {
                         Title = tag
                     };
-                    await _tagRepository.Add(newTag);
+                    await _unitOfWork.TagRepository.Add(newTag);
                     var postTag = new PostTag
                     {
                         PostId = result.Id,
                         TagId = newTag.Id
                     };
 
-                    if (!await _postTagRepository.Exists(postTag))
-                        await _postTagRepository.Add(postTag);
+                    if (!await _unitOfWork.PostTagRepository.Exists(postTag))
+                        await _unitOfWork.PostTagRepository.Add(postTag);
                     
 
                 } 
             }
+
+
+
+             await _mediator.Send(
+                new CreateNotification () {
+                    NotificationData = new NotificationCreateDTO()
+                        {
+                        Content = $"User with Id {request.userId} has created a post",
+                        NotificationContentId = result.Id,
+                        NotificationType = NotificationEnum.POST,
+                        UserId = request.userId
+                        }});
+
 
             return new BaseResponse<PostResponseDTO> {
                 Success = true,

@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using Application.DTO.UserDTO;
 using Application.Features.User.Request.Queries;
 using Application.Model;
-using Microsoft.AspNetCore.Authorization;
+using WebApi.Middleware;
 
 namespace WebApi.Controllers
 {

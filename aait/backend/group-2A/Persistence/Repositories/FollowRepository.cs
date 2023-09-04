@@ -3,7 +3,7 @@ using Application.DTO.UserDTO;
 using Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 
-namespace Infrastructure.Persistance.Repository;
+namespace Persistence.Persistance.Repository;
 
 public class FollowRepository : IFollowRepository
 {
@@ -21,20 +21,30 @@ public class FollowRepository : IFollowRepository
         _dbContext.Follows.Remove(Unfollow);
     }
 
-    public async Task<List<User>> GetFollower(int id){
+    public async Task<List<User>> GetFollower(int id, int pageNumber = 0, int pageSize = 10){
         var followers = await _dbContext.Follows
             .Where(f => f.FollowedId == id)
             .Select(f => f.Follower)
+            .Skip(pageNumber * pageSize)
+            .Take(pageSize)
             .ToListAsync();
 
         return followers;
     }
 
-    public async Task<List<User>> GetFollowing(int id){
+    public async Task<List<User>> GetFollowing(int id, int pageNumber = 0, int pageSize = 10){
         var following = await _dbContext.Follows
             .Where(f => f.FollowerId == id)
             .Select(f => f.Followed)
+            .Skip(pageNumber * pageSize)
+            .Take(pageSize)
             .ToListAsync();
         return following;
+    }
+
+    public async Task<bool> FollowRelationshipExists(int followerId, int followedId)
+    {
+        return await _dbContext.Follows
+            .AnyAsync(f => f.FollowerId == followerId && f.FollowedId == followedId);
     }
 }

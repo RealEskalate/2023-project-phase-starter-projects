@@ -24,6 +24,11 @@ public class GetNotificationListRequestHandler : IRequestHandler<GetNotification
         CancellationToken cancellationToken
     )
     {
+        var user = await _unitOfWork.UserRepository.GetAsync(request.UserId);
+        if (user == null){
+            return CommonResponse<List<NotificationListDto>>.Failure("User Doesn't Exist");
+        }
+
         var notifications = await _unitOfWork.NotificationRepository.GetAll(request.UserId);
         // Handle null case
         if(notifications == null)

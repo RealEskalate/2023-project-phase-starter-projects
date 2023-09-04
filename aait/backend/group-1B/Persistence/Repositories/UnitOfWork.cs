@@ -11,6 +11,7 @@ public class UnitOfWork : IUnitOfWork
     private IPostTagRepository _postTagRepository;
     private IPostLikesRepository _postLikesRepository;
     private INotificationRepository _notificationRepository;
+    private ITagRepository _tagRepository;
 
     public UnitOfWork(SocialSyncDbContext context)
     {
@@ -22,6 +23,7 @@ public class UnitOfWork : IUnitOfWork
     public IPostRepository PostRepository => _postRepository ??= new PostRepository(_context);
     public IPostTagRepository PostTagRepository => _postTagRepository ??= new PostTagRepository(_context);
     public IPostLikesRepository PostLikesRepository => _postLikesRepository ??= new PostLikesRepository(_context);
+    // public ITagRepository TagRepository => _tagRepository ??= new TagRepository(_context);
 
     public INotificationRepository NotificationRepository =>
         _notificationRepository ??= new NotificationRepository(_context);

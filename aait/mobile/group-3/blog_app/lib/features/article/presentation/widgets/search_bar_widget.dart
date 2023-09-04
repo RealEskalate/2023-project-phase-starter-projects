@@ -1,78 +1,84 @@
-import 'package:blog_app/core/util/app_colors.dart'; // Importing app-specific colors
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-class SearchBarWidget  extends StatelessWidget {
-  const SearchBarWidget({super.key});
+
+class SearchBarWidget extends StatefulWidget {
+  final Function searchByName;
+  const SearchBarWidget({super.key, required this.searchByName});
+
+  @override
+  _SearchBarWidgetState createState() => _SearchBarWidgetState();
+}
+
+class _SearchBarWidgetState extends State<SearchBarWidget> {
+  TextEditingController queryController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
     return Stack(
       children: [
-        Expanded(
-          child: Container(
-            width: 379.w,
-            height: 70.5.h,
-            padding:
-                EdgeInsets.only(left: 15.w), // Left padding for the text field
-            decoration: BoxDecoration(
-              border: Border.all(color: AppColors.iconGrey.withOpacity(0.1)),
-              color: AppColors.whiteColor,
-              borderRadius: BorderRadius.circular(
-                  10.w), // Rounded corners of the container
-              boxShadow: [
-                BoxShadow(
-                  color: AppColors.iconGrey.withOpacity(0.1), // Shadow color
-                  spreadRadius: 5,
-                  blurRadius: 7,
-                  offset: const Offset(0, 2),
-                ),
-              ],
-            ),
+        Container(
+          width: 379.w,
+          height: 70.5.h,
+          padding: EdgeInsets.only(left: 15.w),
+          decoration: BoxDecoration(
+            border: Border.all(color: Colors.grey.withOpacity(0.1)),
+            color: Colors.white,
+            borderRadius: BorderRadius.circular(10),
+            boxShadow: [
+              BoxShadow(
+                color: Colors.grey.withOpacity(0.1),
+                spreadRadius: 5,
+                blurRadius: 7,
+                offset: const Offset(0, 2),
+              ),
+            ],
+          ),
+          child: Center(
             child: TextField(
+              controller: queryController,
               decoration: InputDecoration(
-                hintText: 'Search articles...',
+                hintText: 'Search tasks...',
                 hintStyle: TextStyle(
-                  color: Theme.of(context)
-                      .hintColor, // Extra light color for the hint text
-                  fontSize: 15.sp,
-                  fontWeight: FontWeight
-                      .w300, // Extra light font weight for the hint text
+                  color: Theme.of(context).hintColor,
+                  fontSize: 15,
+                  fontWeight: FontWeight.w300,
                 ),
-                border:
-                    InputBorder.none, // Remove border around the input field
+                border: InputBorder.none,
               ),
             ),
           ),
         ),
         Positioned(
           right: 0,
-          // height and width of the button
           width: 52.w,
           height: 70.5.h,
           child: ElevatedButton(
             onPressed: () {
-              // Perform search action here
+              widget.searchByName(queryController.text);
             },
             style: ElevatedButton.styleFrom(
-              padding: EdgeInsets.symmetric(
-                  vertical: 16.h, horizontal: 16.w), // Padding for the button
+              padding: EdgeInsets.symmetric(vertical: 16.h, horizontal: 16.w),
               shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(
-                    10.w), // Rounded corners of the button
+                borderRadius: BorderRadius.circular(10),
               ),
             ),
             child: Icon(
-              Icons.search, // Search icon
-              color: AppColors.whiteColor, // Color of the search icon
-              size: 35.h, // Size of the search icon
+              Icons.search, // Clear icon
+              color: Colors.white,
+              size: 24.h,
             ),
           ),
         ),
       ],
     );
   }
+
+  void _filterArticles(BuildContext context) {
+    if (queryController.text.isNotEmpty) {
+      //   BlocProvider.of<ArticleBloc>(context).add(FilterArticles(query: queryController.text));
+    } else {
+      //   BlocProvider.of<ArticleBloc>(context).add(const LoadArticles());
+    }
+  }
 }
-
-
-

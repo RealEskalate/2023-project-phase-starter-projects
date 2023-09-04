@@ -1,12 +1,12 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 import { AddBlogResponse } from '@/types/blog/addBlog/AddBlogResponse'
-
+import { Blog } from "@/types/Blog";
 
 const BASE_URL = 'https://a2sv-backend.onrender.com/api'
 
 export const blogApi = createApi({
   reducerPath: 'blogApi',
-  baseQuery: fetchBaseQuery({ 
+  baseQuery: fetchBaseQuery({
     baseUrl: BASE_URL,
     prepareHeaders: (headers, { getState }) => {
       const userData = localStorage.getItem('user')
@@ -25,8 +25,13 @@ export const blogApi = createApi({
         body: data,
       })
     }),
-  })
-})
+    getBlogs: builder.query<Blog[], void>({
+      query: () => "/blogs",
+    }),
+    getSingleBlog: builder.query<Blog, any>({
+      query: (id) => `/blogs/${id}`,
+    }),
+  }),
+});
 
-export const { useAddBlogMutation } = blogApi
-
+export const { useAddBlogMutation, useGetBlogsQuery, useGetSingleBlogQuery } = blogApi;

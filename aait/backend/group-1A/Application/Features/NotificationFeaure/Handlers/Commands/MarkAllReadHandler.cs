@@ -13,17 +13,17 @@ namespace Application.Features.NotificationFeaure.Handlers.Commands
 {
     public class MarkAllReadHandler : IRequestHandler<MarkReadAllRequest, BaseResponse<string>>
     {
-        private readonly INotificationRepository _notificationRepository;
         private readonly IMapper _mapper;
-        public MarkAllReadHandler(INotificationRepository notificationRepository, IMapper mapper)
+        private readonly IUnitOfWork _unitOfWork;
+        public MarkAllReadHandler(IUnitOfWork unitOfWork, IMapper mapper)
         {
             _mapper = mapper;
-            _notificationRepository = notificationRepository;
+            _unitOfWork = unitOfWork;
             
         }
         public async Task<BaseResponse<string>> Handle(MarkReadAllRequest request, CancellationToken cancellationToken)
         {
-            var result = await _notificationRepository.MarkAllAsRead(request.UserId);
+            var result = await _unitOfWork.NotificationRepository.MarkAllAsRead(request.UserId);
 
             return new BaseResponse<string> ()
             {

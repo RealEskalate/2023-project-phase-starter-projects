@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Application.DTO.UserDTO.DTO
 {
-    public class UserResponseDTO 
+    public class UserResponseDTO : UserUpdateDTO
     {
         public int Id { get; set; }
         public string? Username { get ; set ; }

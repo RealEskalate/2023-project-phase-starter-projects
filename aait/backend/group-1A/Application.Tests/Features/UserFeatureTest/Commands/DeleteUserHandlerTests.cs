@@ -2,7 +2,9 @@ using Application.Contracts;
 using Application.Exceptions;
 using Application.Features.UserFeature.Handlers.Commands;
 using Application.Features.UserFeature.Requests.Commands;
+using Application.Response;
 using Application.Tests.Features.UserFeatureTests.Mocks;
+using Application.Tests.Mocks;
 using Moq;
 using Shouldly;
 
@@ -10,19 +12,19 @@ namespace Application.Tests.Features.UserFeatureTests.Commands
 {
     public class DeleteUserHandlerTests
     {
-        private readonly Mock<IUserRepository> _mockUserRepository;
-        
+        private readonly Mock<IUnitOfWork> _mockUnitOfWork;   
+
         public DeleteUserHandlerTests()
         {
-            _mockUserRepository = UserRepositoryMock.GetRepository();
+           _mockUnitOfWork = MockUnitOfWork.GetUnitOfWork();
         }
 
         [Fact]
         public async Task DeleteUserHandler_UserExists_ReturnsSuccessResponse()
         {
             // Arrange
-            var handler = new DeleteUserHandler(_mockUserRepository.Object);
-            var validUserId = 1;  // Assuming 1 is an ID that exists in our mock data
+            var handler = new DeleteUserHandler(_mockUnitOfWork.Object);
+            var validUserId = 1;  
 
             var deleteUserCommand = new DeleteUserCommand
             {
@@ -33,6 +35,7 @@ namespace Application.Tests.Features.UserFeatureTests.Commands
             var response = await handler.Handle(deleteUserCommand, new CancellationToken());
 
             // Assert
+            response.ShouldBeOfType<BaseResponse<string>>();
             response.Success.ShouldBeTrue();
             response.Message.ShouldBe("User deleted successfully");
         }
@@ -41,8 +44,8 @@ namespace Application.Tests.Features.UserFeatureTests.Commands
         public async Task DeleteUserHandler_UserDoesNotExist_ThrowsNotFoundException()
         {
             // Arrange
-            var handler = new DeleteUserHandler(_mockUserRepository.Object);
-            var invalidUserId = 999;  // Assuming 999 is an ID that doesn't exist in our mock data
+            var handler = new DeleteUserHandler(_mockUnitOfWork.Object);
+            var invalidUserId = 999;
 
             var deleteUserCommand = new DeleteUserCommand
             {
@@ -51,8 +54,6 @@ namespace Application.Tests.Features.UserFeatureTests.Commands
 
             // Act & Assert
             var exception = await Assert.ThrowsAsync<NotFoundException>(() => handler.Handle(deleteUserCommand, new CancellationToken()));
-
-            // Checking if the exception message is as expected
             exception.Message.ShouldBe("user is not found");
         }
     }

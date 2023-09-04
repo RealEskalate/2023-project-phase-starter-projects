@@ -11,4 +11,5 @@ public class Post : BaseEntity
     public virtual User User { get; set; } = null!;
 
     public virtual ICollection<Interaction> Interactions { get; set; } = null!;
+    public virtual ICollection<Notification>? Notifications {get; set;}
 }

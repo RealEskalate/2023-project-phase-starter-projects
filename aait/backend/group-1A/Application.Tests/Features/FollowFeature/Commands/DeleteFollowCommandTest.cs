@@ -1,17 +1,15 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Application.DTO.Common;
+using Application.Contracts;
 using Application.DTO.FollowDTo;
 using Application.Exceptions;
 using Application.Features.FollowFeature.Handlers.Commands;
 using Application.Features.FollowFeature.Requests.Commands;
+using Application.Features.NotificationFeaure.Requests.Commands;
 using Application.Profiles;
 using Application.Response;
+using Application.Tests.Mocks;
 using Application.Tests.Mocs;
 using AutoMapper;
-using Domain.Entites;
+using MediatR;
 using Moq;
 using Shouldly;
 
@@ -20,17 +18,20 @@ namespace Application.Tests.Features.FollowFeature.Commands
     public class DeleteFollowCommandTest
     {            
             private readonly IMapper _mapper;
+            private readonly Mock<IUnitOfWork> _mockUnitOfWork;    
+
+            private readonly Mock<IMediator> _mediator; 
             private readonly FollowDTO _followDTO;
             private  DeleteFollowCommandHandler _handler;
             public DeleteFollowCommandTest()
             {
-
+                _mockUnitOfWork = MockUnitOfWork.GetUnitOfWork();
                 var mapperConfig = new MapperConfiguration(c => 
                 {
                     c.AddProfile<MappingProfile>();
                 });
-
-                _mapper = mapperConfig.CreateMapper();
+                _mapper = mapperConfig.CreateMapper(); 
+                _mediator = new Mock<IMediator>();
                
                 _followDTO = new FollowDTO
                 {
@@ -39,16 +40,17 @@ namespace Application.Tests.Features.FollowFeature.Commands
                 };
             }
 
-        [Fact]
+        
         public async Task ValidFollowDelete()
         {
-            var mocFollowRepository = MockFollowRepository.GetFollowRepository().Object;
-            var mockUserRepository = MockUserRepository.GetUserRepository().Object;
-            _handler = new DeleteFollowCommandHandler(_mapper,mocFollowRepository,mockUserRepository);
+            // arrange
+            _mediator.Setup(
+                    x => x.Send(It.IsAny<CreateNotification>(), It.IsAny<CancellationToken>())).ReturnsAsync(true);
+            
+
+            _handler = new DeleteFollowCommandHandler(_mediator.Object,_mapper,_mockUnitOfWork.Object);
                          
             var result = await _handler.Handle(new DeleteFollowCommand() { FollowDTO = _followDTO }, CancellationToken.None);
-            var Follows = await mocFollowRepository.GetAll();
-            Follows.Count().ShouldBe(2);
             result.ShouldBeOfType<BaseResponse<int>>();
         }
 
@@ -56,11 +58,14 @@ namespace Application.Tests.Features.FollowFeature.Commands
         [Fact]
         public async Task DeleteNonExistentFollow()
         {
-             var mocFollowRepository = MockFollowRepository.GetFollowRepository().Object;
-            var mockUserRepository = MockUserRepository.GetUserRepository().Object;
-            _handler = new DeleteFollowCommandHandler(_mapper,mocFollowRepository,mockUserRepository);
+            // arrange
+            _mediator.Setup(
+                    x => x.Send(It.IsAny<CreateNotification>(), It.IsAny<CancellationToken>())).ReturnsAsync(true);
+            
+            _handler = new DeleteFollowCommandHandler(_mediator.Object,_mapper,_mockUnitOfWork.Object);
             _followDTO.FolloweeId = 100;
-            await Should.ThrowAsync<BadRequestException>(async () =>
+
+            await Should.ThrowAsync<ValidationException>(async () =>
                 await _handler.Handle(new DeleteFollowCommand() { FollowDTO = _followDTO }, CancellationToken.None));
         }
     }

@@ -16,7 +16,10 @@ class LikeButton extends StatelessWidget {
     return Row(
       children: [
         IconButton(
-          icon: const FaIcon(FontAwesomeIcons.thumbsUp),
+          icon: FaIcon(
+            FontAwesomeIcons.thumbsUp,
+            size: 17,
+          ),
           onPressed: () {
             onLikeChanged(true, initialLikes + 1);
           },

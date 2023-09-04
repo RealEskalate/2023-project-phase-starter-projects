@@ -13,9 +13,8 @@ namespace Application.DTO.FollowDTO.Validator
 {
     public class FollowDtoValidator : AbstractValidator<FollowDto>
     {
-        public FollowDtoValidator(IUserRepository userRepository)
+        public FollowDtoValidator(IUserRepository userRepository, IFollowRepository followRepository)
         {
-            
             RuleFor(p => p.FollowerId)
                 .NotEmpty().WithMessage("{PropertyName} is Invalid.")
                 .NotNull()
@@ -38,6 +37,16 @@ namespace Application.DTO.FollowDTO.Validator
                     return follow.FollowerId != follow.FollowedId;
                 })
                 .WithMessage("You can't follow yourself");
+
+            RuleFor(p => p)
+                .MustAsync(async (followDto, cancellation) =>
+                {
+                    var followRelationshipExists = await followRepository.FollowRelationshipExists(
+                        followDto.FollowerId, followDto.FollowedId);
+
+                    return !followRelationshipExists;
+                })
+                .WithMessage("You are already following");
 
         }
     }

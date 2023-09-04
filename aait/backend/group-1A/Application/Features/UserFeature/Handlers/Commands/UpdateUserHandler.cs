@@ -2,6 +2,7 @@
 using Application.DTO.Common;
 using Application.DTO.UserDTO.DTO;
 using Application.DTO.UserDTO.validations;
+using Application.Exceptions;
 using Application.Features.UserFeature.Requests.Commands;
 using AutoMapper;
 using Domain.Entities;
@@ -17,31 +18,30 @@ namespace Application.Features.UserFeature.Handlers.Commands
 {
     public class UpdateUserHandler : IRequestHandler<UpdateUserCommand, UserResponseDTO>
     {
-        private readonly IUserRepository _UserRepository;
+        private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
-
-        public UpdateUserHandler(IUserRepository UserRepository, IMapper mapper)
+        public UpdateUserHandler(IUnitOfWork unitOfWork, IMapper mapper)
         {
-            _UserRepository = UserRepository;
+            _unitOfWork = unitOfWork;
             _mapper = mapper;
+
         }
 
         public async Task<UserResponseDTO> Handle(UpdateUserCommand request, CancellationToken cancellationToken)
         {
-            var validator = new UserUpdateValidation();
-            var validationResult = await validator.ValidateAsync(request.UserUpdateData!);
-
-            if (!validationResult.IsValid)
-            {
-                throw new Exception();
-            }
+            
             if (request.userId <= 0)
             {
-                throw new Exception();
+                throw new BadRequestException("USER with this Id doesnt exist");
             }
-            var newUser = _mapper.Map<User>(request.UserUpdateData);
-            newUser.Id = request.userId;
-            var updationResult = await _UserRepository.Update(newUser);
+            var user = await  _unitOfWork.UserRepository.Get(request.userId);
+            if (user == null)
+            {
+                throw new NotFoundException("User is not found");
+            }
+            
+
+            var updationResult = await _unitOfWork.UserRepository.UpdateUser(request.UserUpdateData!,request.userId);
 
             return _mapper.Map<UserResponseDTO>(updationResult);
         }

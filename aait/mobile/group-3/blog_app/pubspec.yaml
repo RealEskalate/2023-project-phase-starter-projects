@@ -53,6 +53,13 @@ dependencies:
   smooth_page_indicator: ^1.1.0
   http_parser: ^4.0.2
   mime: ^1.0.4
+  timeago: ^3.5.0
+  intl: ^0.18.1
+  top_snackbar_flutter: ^3.1.0
+  loading_animation_widget: ^1.2.0+4
+  flutter_cache_manager: ^3.3.1
+  image: ^4.0.17
+  shimmer: ^3.0.0
 
 dev_dependencies:
   flutter_test:
@@ -66,6 +73,7 @@ dev_dependencies:
   # rules and activating additional ones.
   flutter_lints: ^2.0.0
   bloc_test: ^9.1.4
+  very_good_analysis: ^5.1.0
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
@@ -81,7 +89,6 @@ flutter:
   # To add assets to your application, add an assets section, like this:
   assets:
     - assets/images/
-    - images/avator.jpg
   #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see
@@ -96,13 +103,12 @@ flutter:
   # list giving the asset and other descriptors for the font. For
   # example:
   fonts:
-    - family: Poppins 
+    - family: Poppins
       fonts:
-        - asset: fonts/Poppins-Regular.ttf
         - asset: fonts/Poppins-Light.ttf
         - asset: fonts/Poppins-Medium.ttf
+        - asset: fonts/Poppins-Regular.ttf
         - asset: fonts/Poppins-SemiBold.ttf
-  #         style: italic
     - family: Urbanist
       fonts:
         - asset: fonts/Urbanist-Regular.ttf

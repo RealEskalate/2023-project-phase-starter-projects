@@ -16,5 +16,6 @@ namespace Application.Contracts
         Task<List<Post>> GetAll(int userId);
 
         Task<List<Post>> GetByTagName(string tagName);
+        Task<List<Post>> GetFeed(int UserId);
     }
 }

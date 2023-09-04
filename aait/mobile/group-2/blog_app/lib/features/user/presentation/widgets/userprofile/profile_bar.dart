@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
+import '../../../../../core/presentation/theme/app_colors.dart';
+
 class ProfileBar extends StatelessWidget {
   const ProfileBar({
     Key? key,
@@ -22,17 +24,17 @@ class ProfileBar extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Text(
-            "Profile",
+            'Profile',
             style: TextStyle(
               fontSize: fontSize,
               fontWeight: FontWeight.w500,
-              color: Color(0xFF0D253C),
+              color: AppColors.darkerBlue,
             ),
           ),
           GestureDetector(
             child: Icon(
               Icons.more_horiz,
-              color: Color(0xFF0D253C),
+              color: AppColors.darkerBlue,
               size: iconSize,
             ),
           )

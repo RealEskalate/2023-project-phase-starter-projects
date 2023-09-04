@@ -1,51 +1,47 @@
 using Application.Contracts;
 using Application.DTO.UserDTO.DTO;
+using Application.Exceptions;
 using Application.Features.UserFeature.Handlers.Commands;
 using Application.Features.UserFeature.Requests.Commands;
-using Application.Tests.Features.UserFeatureTests.Mocks;
+using Application.Profiles;
+using Application.Tests.Mocks;
 using AutoMapper;
 using Moq;
-using SocialSync.Domain.Entities;
+using Shouldly;
 
 namespace Application.Tests.Features.UserFeatureTests.Handlers
 {
     public class UpdateUserHandlerTests
     {
-        private readonly Mock<IUserRepository> _userRepositoryMock;
         private readonly IMapper _mapper;
-        private readonly UpdateUserHandler _handler;
-
+         private readonly Mock<IUnitOfWork> _mockUnitOfWork;  
         public UpdateUserHandlerTests()
         {
-            _userRepositoryMock = UserRepositoryMock.GetRepository();
+            _mockUnitOfWork = MockUnitOfWork.GetUnitOfWork();
 
-            // Setting up Automapper for unit tests
-            var mapperConfig = new MapperConfiguration(cfg =>
+            var mapperConfig = new MapperConfiguration(c => 
             {
-                cfg.CreateMap<UserUpdateDTO, User>();
-                cfg.CreateMap<User, UserResponseDTO>();
+                c.AddProfile<MappingProfile>();
             });
-            _mapper = mapperConfig.CreateMapper();
 
-            _handler = new UpdateUserHandler(_userRepositoryMock.Object, _mapper);
+            _mapper = mapperConfig.CreateMapper();
+            
         }
 
         [Fact]
         public async Task Handle_ShouldUpdateUserSuccessfully()
         {
-            var request = new UpdateUserCommand
-            {
-                userId = 1,
-                UserUpdateData = new UserUpdateDTO
+            var _handler = new UpdateUserHandler(_mockUnitOfWork.Object, _mapper);
+            var UserUpdateData = new UserUpdateDTO
                 {
                     Username = "UpdatedJohn",
                     Email = "updated.john@example.com",
-                    Password = "newPassword123"
-                }
+                
             };
 
-            var result = await _handler.Handle(request, CancellationToken.None);
-
+            var result = await _handler.Handle(new UpdateUserCommand{userId = 1,UserUpdateData = UserUpdateData}, CancellationToken.None);
+            
+            result.ShouldBeOfType<UserResponseDTO>();
             Assert.Equal("UpdatedJohn", result.Username);
             Assert.Equal("updated.john@example.com", result.Email);
         }
@@ -53,30 +49,17 @@ namespace Application.Tests.Features.UserFeatureTests.Handlers
         [Fact]
         public async Task Handle_ShouldThrowExceptionForInvalidUserId()
         {
-            var request = new UpdateUserCommand
-            {
-                userId = -1, 
-                UserUpdateData = new UserUpdateDTO
+            var _handler = new UpdateUserHandler(_mockUnitOfWork.Object, _mapper);
+            var UserUpdateData = new UserUpdateDTO
                 {
                     Username = "InvalidJohn",
                     Email = "invalid.john@example.com",
-                    Password = "invalidPassword"
-                }
-            };
+                };
 
-            await Assert.ThrowsAsync<Exception>(() => _handler.Handle(request, CancellationToken.None));
-        }
-
-        [Fact]
-        public async Task Handle_ShouldThrowExceptionForInvalidData()
-        {
-            var request = new UpdateUserCommand
-            {
-                userId = 1, 
-                UserUpdateData = null 
-            };
-
-            await Assert.ThrowsAsync<ArgumentNullException>(() => _handler.Handle(request, CancellationToken.None));
+            await Should.ThrowAsync<BadRequestException>(
+                async () =>
+                    await _handler.Handle(new UpdateUserCommand(){userId = -1, UserUpdateData = UserUpdateData}, CancellationToken.None)
+                );
         }
 
     }

@@ -12,7 +12,7 @@ class Article {
   int? iV;
   String? id;
 
-  Article(
+  Article(Map<String, Object> newArticleMap,
       {this.sId,
       this.tags,
       this.content,

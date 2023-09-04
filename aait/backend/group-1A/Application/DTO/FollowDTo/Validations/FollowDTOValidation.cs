@@ -16,15 +16,13 @@ namespace Application.DTO.FollowDTo.Validations
             _userRepository = userRepository;
             _followRepository = followRepository;
 
-            RuleFor(x => x.FolloweeId).NotEmpty().WithMessage("FolloweeId is required").MustAsync(async (followeeId, cancellation) =>
-            {
-                return await _userRepository.Exists(followeeId);
-            }).WithMessage("Followee does not exist");
-
-            RuleFor(x => x).MustAsync(async (follow, cancellation) =>
-            {
-                return await _followRepository.Get(follow)! == null;
-            }).WithMessage("Follower already follows followee");
+            RuleFor(x => x.FolloweeId)
+                    .NotEmpty().WithMessage("FolloweeId is required")
+                    .MustAsync(async (followeeId, cancellation) =>
+                        {
+                            return await _userRepository.Exists(followeeId);
+                        }).WithMessage("Followee does not exist");
+                
         }
     }
 }

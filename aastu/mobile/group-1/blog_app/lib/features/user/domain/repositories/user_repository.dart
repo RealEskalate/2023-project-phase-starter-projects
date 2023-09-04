@@ -17,8 +17,8 @@ abstract class UserRepository {
     required String password,
   });
 
-  Future<Either<Failure, User>> getUser(String userId);
+  Future<Either<Failure, User>> getUser();
 
   Future<Either<Failure, void>> updateProfilePhoto(
-      String userId, String imageUrl, String imagePublicId);
+      Map<String, dynamic> userData);
 }

@@ -4,6 +4,7 @@ import { useState } from "react";
 import {useRouter} from 'next/navigation'
 import { useAddBlogMutation } from "@/store/features/create-blog/create-blog-api";
 import AddBlog from "@/components/blog/AddBlog";
+import Toast from "@/components/toast-Messages/toast-message";
 
 const CreateBlogPage: React.FC = () => {
     const [addBlog, {isError, isLoading}] = useAddBlogMutation()
@@ -12,6 +13,7 @@ const CreateBlogPage: React.FC = () => {
     const [content, setContent] = useState("");
     const [imageText, setImageText] = useState('Please upload image');
     const [selectedTags, setSelectedTags] = useState<string[]>([]);
+    const [isSubmited, setIsSubmited] = useState(false)
     const router = useRouter()
 
     const handleTagClick = (tag: string) => {
@@ -68,9 +70,11 @@ const CreateBlogPage: React.FC = () => {
   
           try {
             
-            const response = await addBlog(formData);
-            if (response) {
-                router.push('/blogs')
+            const response:any = await addBlog(formData);
+            if (response.error.status !== 400) {
+                 setIsSubmited(!isSubmited)
+                 router.push('/blogs')
+                 
             }else{
               setImage(null)
               setImageText('Please upload image')
@@ -79,28 +83,36 @@ const CreateBlogPage: React.FC = () => {
               setSelectedTags([])
               
             }
-
+                
           } catch (error) {
             
           }
-         
+              
       };
-
-    return (
-     <AddBlog
-      title={title}
-      content={content}  
-      image={image} 
-      imageText={imageText} 
-      selectedTags={selectedTags} 
-      handleCancel={handleCancel}
-      handleContentChange={handleContentChange}
-      handleDeleteImage={handleDeleteImage}
-      handleImageChange={handleImageChange}
-      handleSubmit={handleSubmit}
-      handleTagClick={handleTagClick}
-      handleTitleChange={handleTitleChange}
+      
+      return (
+        <>
+        {
+        isSubmited && (<Toast message="Successfully added" isError={false} />)
+        }
+        {
+        isError && (<Toast message="Failed to save changes"  isError={true}/>) 
+        }
+        <AddBlog
+          title={title}
+          content={content}  
+          image={image} 
+          imageText={imageText} 
+          selectedTags={selectedTags} 
+          handleCancel={handleCancel}
+          handleContentChange={handleContentChange}
+          handleDeleteImage={handleDeleteImage}
+          handleImageChange={handleImageChange}
+          handleSubmit={handleSubmit}
+          handleTagClick={handleTagClick}
+          handleTitleChange={handleTitleChange}
       />
+      </>
     );
 };
 

@@ -41,18 +41,17 @@ Future<void> init() async {
     // App logic
     ..registerFactory(
       () => ArticleBloc(
-        createArticle: serviceLocator(),
-        updateArticle: serviceLocator(),
         getArticleById: serviceLocator(),
         getAllArticles: serviceLocator(),
         deleteArticle: serviceLocator(),
         getTags: serviceLocator(),
       ),
     )
-    ..registerFactory(() => CreateArticleBloc(serviceLocator()))
+    ..registerFactory(() => CreateArticleBloc(serviceLocator(), serviceLocator()))
     ..registerFactory(() => UpdateArticleBloc(
           updateArticleUsecase: serviceLocator(),
           getArticleByIdUsecase: serviceLocator(),
+          getTagsUsecase: serviceLocator(),
         ))
     // Use Cases
     ..registerLazySingleton(() => CreateArticleUsecase(serviceLocator()))

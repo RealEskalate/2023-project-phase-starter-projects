@@ -11,27 +11,31 @@ namespace Application.Features.CommentFeatures.Handlers.Queries
 {
     public class GetCommentQueryHandler : IRequestHandler<GetSingleCommentQuery, BaseResponse<CommentResponseDTO>>
     {
-        private readonly ICommentRepository _commentRepository;
+        private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
 
-        public GetCommentQueryHandler(ICommentRepository commentRepository, IMapper mapper)
+        public GetCommentQueryHandler(IUnitOfWork unitOfWork,IMapper mapper)
         {
-            _commentRepository = commentRepository;
+            _unitOfWork = unitOfWork;
             _mapper = mapper;
         }
 
         public async Task<BaseResponse<CommentResponseDTO>> Handle(GetSingleCommentQuery request, CancellationToken cancellationToken)
         {
-            var result = await _commentRepository.Get(request.Id);
+            var result = await _unitOfWork.CommentRepository.Get(request.Id);
             if (result == null)
             {
                 throw new BadRequestException("Comment is not found");
             }
 
             var comment = _mapper.Map<CommentResponseDTO>(result);
-            comment.Like = result.CommentReactions.Where(x => x.Like == true).Count();
-            comment.Dislike = result.CommentReactions.Where(x => x.Like == false).Count();
-            
+
+            if (result.CommentReactions != null)
+            {
+                comment.Like = result.CommentReactions.Where(x => x.Like == true).Count();
+                comment.Dislike = result.CommentReactions.Where(x => x.Like == false).Count();
+            }
+
             return new BaseResponse<CommentResponseDTO>{
                 Success = true,
                 Message = "The Comment is retrieved successfully",

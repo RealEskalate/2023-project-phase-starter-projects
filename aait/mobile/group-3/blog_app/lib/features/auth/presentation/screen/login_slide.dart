@@ -71,7 +71,7 @@ class _LoginSlideState extends State<LoginSlide> {
             BlocConsumer<LoginBloc, LoginState>(
               listener: (context, state) {
                 if (state is LoginSuccessState) {
-                  context.go('/profile');
+                  context.go('/home');
                 }
               },
               builder: (context, state) {

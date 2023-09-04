@@ -13,18 +13,19 @@ namespace Application.Features.NotificationFeaure.Handlers.Queries
 {
     public class GetUnreadNotificationHandler : IRequestHandler<GetUnreadNotification, BaseResponse<List<NotificationResponseDTO>>>
     {
-        private readonly INotificationRepository _notificationRepository;
+        private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
 
-        public GetUnreadNotificationHandler(INotificationRepository notificationRepository, IMapper mapper)
+        public GetUnreadNotificationHandler(IUnitOfWork unitOfWork, IMapper mapper)
         {
             _mapper = mapper;
-            _notificationRepository = notificationRepository;
+
+            _unitOfWork = unitOfWork;
         }
         public async Task<BaseResponse<List<NotificationResponseDTO>>> Handle(GetUnreadNotification request, CancellationToken cancellationToken)
         {
 
-            var result = await _notificationRepository.GetAllUnread(request.UserId);
+            var result = await _unitOfWork.NotificationRepository.GetAllUnread(request.UserId);
             
             return new BaseResponse<List<NotificationResponseDTO>> () {
                 Success = true,

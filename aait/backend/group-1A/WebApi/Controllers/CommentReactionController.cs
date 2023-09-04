@@ -1,4 +1,5 @@
 using System.Security.Claims;
+using Application.Common;
 using Application.DTO.Common;
 using Application.DTO.NotificationDTO;
 using Application.Features.CommentReactionFeature.Requests.Commands;
@@ -40,9 +41,8 @@ namespace WebApi.Controllers
         public async Task<ActionResult<BaseResponse<int>>> Post([FromBody] ReactionDTO reactionData)
         {
             var userId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier)!.Value);
-            var result = await _mediator.Send(new MakeReactionOnComment{ UserId = 3, ReactionData = reactionData });
-            await _mediator.Send(new CreateNotification {NotificationData = new NotificationCreateDTO()
-            {Content = $"User with {userId} {reactionData.ReactionType} your comment",NotificationContentId = result.Value, NotificationType = "Comment-reaction",UserId = userId}});
+            var result = await _mediator.Send(new MakeReactionOnComment{ UserId = userId, ReactionData = reactionData });
+            
             return Ok(result);
         }
     }

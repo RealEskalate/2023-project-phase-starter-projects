@@ -11,8 +11,12 @@ const config: Config = {
       colors: {
         "primary-color": "#264FAD",
       },
-      fontFamily: {
-        "poppins": ['Poppins', 'sans-serif'],
+      fontFamily:{
+        'lato': ['Lato', 'sans-serif'],
+        'nunito': ['Nunito', 'sans-serif'],
+        'poppins': ['Poppins', 'sans-serif'],
+        'inter': ['Inter', 'sans-serif'],
+        'fira-code': ['Fira Code', 'monospace'],
         "montserrat": ['Montserrat', 'sans-serif'],
         "roboto": ['Roboto', 'sans-serif']
       },

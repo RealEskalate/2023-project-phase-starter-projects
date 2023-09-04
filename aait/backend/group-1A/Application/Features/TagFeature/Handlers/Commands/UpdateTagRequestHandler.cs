@@ -1,3 +1,4 @@
+using Application.Contracts;
 using AutoMapper;
 using MediatR;
 using SocialSync.Application.Contracts;
@@ -10,16 +11,16 @@ namespace SocialSync.Application.Features;
 public class UpdateTagRequestHandler : IRequestHandler<UpdateTagRequest, TagResponseDto>
 {
     private readonly IMapper _mapper;
-    private readonly ITagRepository _tagRepository;
-    public UpdateTagRequestHandler(IMapper mapper, ITagRepository tagRepository)
+    private readonly IUnitOfWork _unitOfWork;
+    public UpdateTagRequestHandler(IMapper mapper, IUnitOfWork unitOfWork)
     {
         _mapper = mapper;
-        _tagRepository = tagRepository;
+        _unitOfWork = unitOfWork;
     }
     
     public Task<TagResponseDto> Handle(UpdateTagRequest request, CancellationToken cancellationToken)
     {
-        var result = _tagRepository.Update(_mapper.Map<Tag>(request.UpdateTagDto));
+        var result = _unitOfWork.TagRepository.Update(_mapper.Map<Tag>(request.UpdateTagDto));
 
         if (result != null)
         {

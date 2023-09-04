@@ -21,7 +21,7 @@ class RegisterUserUseCase implements UseCase<void, RegisterUserParams> {
         expertise: params.expertise,
         bio: params.bio,
       );
-      log("singed up user: $user");
+      // log("singed up user: $user");
 
       return user; // Return success as Right with null value
     } catch (e) {

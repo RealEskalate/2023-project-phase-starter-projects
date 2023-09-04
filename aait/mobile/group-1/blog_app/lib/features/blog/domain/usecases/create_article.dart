@@ -13,4 +13,3 @@ class CreateArticle {
     return await repository.createArticle(article);
   }
 }
-

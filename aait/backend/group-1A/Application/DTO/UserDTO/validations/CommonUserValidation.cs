@@ -17,11 +17,6 @@ namespace Application.DTO.UserDTO.validations
                 .NotEmpty().WithMessage("Email is required")
                 .NotNull().WithMessage("Email is required")
                 .EmailAddress().WithMessage("Invalid email address");
-
-            RuleFor(x => x.Password)
-                .NotEmpty().WithMessage("Password is required")
-                .NotNull().WithMessage("Password is required")
-                .MinimumLength(8).WithMessage("Password must be at least 8 characters long");
         }
     }
 }

@@ -21,7 +21,7 @@ const MyBlogs = () => {
   }, []);
 
   return (
-    <div className="mb-32 mt-20 p-10">
+    <div className="mb-32 p-10">
     <div className=" py-10 text-blog_list_sub_text_color  ">
       <p className="text-xl  font-bold">Manage Blogs</p>
       <p className="text-sm">

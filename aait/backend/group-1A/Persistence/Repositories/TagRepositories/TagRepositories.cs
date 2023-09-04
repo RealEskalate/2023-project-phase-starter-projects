@@ -18,7 +18,9 @@ public class TagReposiotry : ITagRepository
     }
     public Task<Tag> Add(Tag entity)
     {
-        throw new NotImplementedException();
+        _socialMediaDbContext.Tags.Add(entity);
+        _socialMediaDbContext.SaveChanges();
+        return Task.FromResult(entity);   
     }
 
 

@@ -10,9 +10,9 @@ import 'features/article/data/datasources/local/local.dart';
 import 'features/article/data/datasources/remote/remote.dart';
 import 'features/article/data/repositories/article_repository_impl.dart';
 import 'features/article/domain/repositories/article_repository.dart';
-import 'features/article/domain/usecases/filter_articles.dart';
 import 'features/article/domain/usecases/usecases.dart';
 import 'features/article/presentation/bloc/article_bloc.dart';
+import 'features/article/presentation/bloc/bookmark_bloc.dart';
 import 'features/article/presentation/bloc/tag_bloc.dart';
 import 'features/article/presentation/bloc/tag_selector_bloc.dart';
 import 'features/authentication/data/data_sources/local_data_source.dart';
@@ -29,9 +29,9 @@ import 'features/user/data/datasources/user_remote_data_source.dart';
 import 'features/user/data/datasources/user_remote_data_source_impl.dart';
 import 'features/user/data/repositories/user_repository_impl.dart';
 import 'features/user/domain/repositories/user_repository.dart';
-import 'features/user/domain/usecases/user_usecases/get_bookmarked_articles_usecase.dart';
 import 'features/user/domain/usecases/user_usecases/get_user_data_usecase.dart';
 import 'features/user/domain/usecases/user_usecases/update_user_photo_usecase.dart';
+import 'features/user/presentation/bloc/profile_page_bloc.dart';
 import 'features/user/presentation/bloc/user_bloc.dart';
 
 final serviceLocator = GetIt.instance;
@@ -49,16 +49,25 @@ Future<void> init() async {
         filterArticles: serviceLocator()),
   );
   serviceLocator.registerFactory(
+    () => BookmarkBloc(
+      loadBookmarks: serviceLocator(),
+      addToBookmark: serviceLocator(),
+      removeFromBookmark: serviceLocator(),
+    ),
+  );
+  serviceLocator.registerFactory(
     () => TagSelectorBloc(),
   );
   serviceLocator.registerFactory(
     () => TagBloc(getTags: serviceLocator()),
   );
+  serviceLocator.registerFactory(
+    () => ProfilePageBloc(),
+  );
 
   serviceLocator.registerFactory(() => UserBloc(
         getUser: serviceLocator(),
         updateUserPhoto: serviceLocator(),
-        getBookmarkedArticles: serviceLocator(),
       ));
 
   // Use cases
@@ -86,7 +95,13 @@ Future<void> init() async {
   );
 
   serviceLocator.registerLazySingleton(
-    () => GetBookmarkedArticles(serviceLocator()),
+    () => LoadBookmarks(serviceLocator()),
+  );
+  serviceLocator.registerLazySingleton(
+    () => AddToBookmark(serviceLocator()),
+  );
+  serviceLocator.registerLazySingleton(
+    () => RemoveFromBookmark(serviceLocator()),
   );
 
   serviceLocator.registerLazySingleton(

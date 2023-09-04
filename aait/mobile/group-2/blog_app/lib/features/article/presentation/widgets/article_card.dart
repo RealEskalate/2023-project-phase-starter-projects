@@ -33,9 +33,9 @@ class ArticleCard extends StatelessWidget {
               constraints: BoxConstraints(maxWidth: 120.w),
               child: ArticlePhoto(article: article),
             ),
-            const SizedBox(width: 10),
+            SizedBox(width: 20.w),
             ConstrainedBox(
-              constraints: BoxConstraints(maxWidth: 160.w),
+              constraints: BoxConstraints(maxWidth: 140.w),
               child: ArticleInfo(article: article),
             ),
           ],

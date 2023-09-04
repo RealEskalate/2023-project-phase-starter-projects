@@ -29,7 +29,7 @@ class UpdateArticleParams extends Equatable {
   final String title;
   final String subTitle;
   final String estimatedReadTime;
-  final XFile image;
+  final XFile? image;
   final String id;
 
   const UpdateArticleParams({

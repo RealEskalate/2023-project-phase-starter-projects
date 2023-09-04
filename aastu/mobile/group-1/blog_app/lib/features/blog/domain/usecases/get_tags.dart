@@ -1,3 +1,6 @@
+import 'package:blog_app/core/error/failure.dart';
+import 'package:dartz/dartz.dart';
+
 import '../repositories/article_repository.dart';
 
 class GetTagsUseCase {
@@ -5,7 +8,7 @@ class GetTagsUseCase {
 
   GetTagsUseCase(this.repository);
 
-  Future<List<String>> call() async {
+  Future<Either<Failure, List<String>>> call() async {
     return await repository.getTags();
   }
 }
