@@ -3,27 +3,24 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class AddTagsContainer extends StatefulWidget {
+  final List<String> availableTags;
+  final List<String> selectedTags;
+  final Function(List<String>) onlTagsSelected;
+  AddTagsContainer(
+      {required this.availableTags,
+      required this.selectedTags,
+      required this.onlTagsSelected});
   @override
   _AddTagsContainerState createState() => _AddTagsContainerState();
 }
 
 class _AddTagsContainerState extends State<AddTagsContainer> {
-  List<String> availableTags = [
-    'Tag 1',
-    'Tag 2',
-    'Tag 3',
-    'Tag 4',
-    // Add more tags as needed
-  ];
-
-  List<String> selectedTags = [];
-
   void toggleTag(String tag) {
     setState(() {
-      if (selectedTags.contains(tag)) {
-        selectedTags.remove(tag);
+      if (widget.selectedTags.contains(tag)) {
+        widget.selectedTags.remove(tag);
       } else {
-        selectedTags.add(tag);
+        widget.selectedTags.add(tag);
       }
     });
   }
@@ -68,7 +65,7 @@ class _AddTagsContainerState extends State<AddTagsContainer> {
                         width: double.maxFinite,
                         child: Wrap(
                           spacing: 8.0,
-                          children: availableTags.map((tag) {
+                          children: widget.availableTags.map((tag) {
                             return GestureDetector(
                               onTap: () {
                                 toggleTag(tag);
@@ -78,7 +75,7 @@ class _AddTagsContainerState extends State<AddTagsContainer> {
                                 label: Text(
                                   tag,
                                   style: TextStyle(
-                                      color: selectedTags.contains(tag)
+                                      color: widget.selectedTags.contains(tag)
                                           ? Colors.white
                                           : Colors.blue),
                                 ),
@@ -86,9 +83,10 @@ class _AddTagsContainerState extends State<AddTagsContainer> {
                                   borderRadius: BorderRadius.circular(20),
                                   side: BorderSide(color: Colors.blue),
                                 ),
-                                backgroundColor: selectedTags.contains(tag)
-                                    ? Colors.blue
-                                    : Colors.white,
+                                backgroundColor:
+                                    widget.selectedTags.contains(tag)
+                                        ? Colors.blue
+                                        : Colors.white,
                               ),
                             );
                           }).toList(),
@@ -103,7 +101,7 @@ class _AddTagsContainerState extends State<AddTagsContainer> {
         ),
         Wrap(
           spacing: 8.0,
-          children: selectedTags.map((tag) {
+          children: widget.selectedTags.map((tag) {
             return RawChip(
               label: Text(
                 tag,

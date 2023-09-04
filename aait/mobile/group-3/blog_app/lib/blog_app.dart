@@ -45,7 +45,6 @@ class BlogApp extends StatelessWidget {
         path: '/article',
         builder: (context, state) => ArticleReadingPage(
           id: state.extra! as String,
-          
         ),
       ),
       GoRoute(path: '/profile', builder: (context, state) => ProfileScreen()),
@@ -56,30 +55,32 @@ class BlogApp extends StatelessWidget {
       splitScreenMode: true,
       builder: (_, child) {
         return MaterialApp(
+            debugShowCheckedModeBanner: false,
             home: MultiBlocProvider(
-          providers: [
-            BlocProvider(
-              create: (context) => serviceLocator<ProfileBloc>(),
-            ),
-            BlocProvider(
-              create: (context) => serviceLocator<LoginBloc>(),
-            ),
-            BlocProvider(
-              create: (context) => serviceLocator<SignupBloc>(),
-            ),
-            BlocProvider(
-              create: (context) => serviceLocator<ArticleBloc>(),
-            ),
-            BlocProvider(
-              create: (context) => serviceLocator<CreateArticleBloc>(),
-            ),
-            BlocProvider(
-                create: (context) => serviceLocator<UpdateArticleBloc>())
-          ],
-          child: MaterialApp.router(
-            routerConfig: _router,
-          ),
-        ));
+              providers: [
+                BlocProvider(
+                  create: (context) => serviceLocator<ProfileBloc>(),
+                ),
+                BlocProvider(
+                  create: (context) => serviceLocator<LoginBloc>(),
+                ),
+                BlocProvider(
+                  create: (context) => serviceLocator<SignupBloc>(),
+                ),
+                BlocProvider(
+                  create: (context) => serviceLocator<ArticleBloc>(),
+                ),
+                BlocProvider(
+                  create: (context) => serviceLocator<CreateArticleBloc>(),
+                ),
+                BlocProvider(
+                    create: (context) => serviceLocator<UpdateArticleBloc>())
+              ],
+              child: MaterialApp.router(
+                debugShowCheckedModeBanner: false,
+                routerConfig: _router,
+              ),
+            ));
       },
     );
   }

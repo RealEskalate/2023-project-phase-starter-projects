@@ -1,10 +1,10 @@
-import 'package:blog_app/features/article/domain/entity/getArticlesEntity.dart';
 import 'package:dartz/dartz.dart';
 import 'package:image_picker/image_picker.dart';
 
 import '../../../../core/error/failure.dart';
 import '../../../../core/util/typedef.dart';
 import '../entity/article.dart';
+import '../entity/getArticlesEntity.dart';
 
 abstract class ArticleRepository {
   //Create Article
@@ -30,11 +30,11 @@ abstract class ArticleRepository {
     required String title,
     required String subTitle,
     required String estimatedReadTime,
-    required XFile image,
+    required XFile? image,
     required String id,
   });
   // Delete  Article
-  ResultFuture<Article> deleteArticle(String id);
+  ResultFuture<void> deleteArticle(String id);
 
   ResultFuture<List<String>> getTags();
 

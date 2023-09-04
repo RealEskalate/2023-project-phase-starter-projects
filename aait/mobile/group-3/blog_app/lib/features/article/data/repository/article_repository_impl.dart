@@ -54,7 +54,7 @@ class ArticleRepositoryImpl implements ArticleRepository {
   }
 
   @override
-  ResultFuture<Article> deleteArticle(String id) async {
+  ResultFuture<void> deleteArticle(String id) async {
     if (await networkInfo.isConnected) {
       try {
         final result = await remoteDataSource.deleteArticle(id);
@@ -139,7 +139,7 @@ class ArticleRepositoryImpl implements ArticleRepository {
     required String title,
     required String subTitle,
     required String estimatedReadTime,
-    required XFile image,
+    required XFile? image,
     required String id,
   }) async {
     if (await networkInfo.isConnected) {
@@ -150,7 +150,7 @@ class ArticleRepositoryImpl implements ArticleRepository {
           "title": title,
           "subTitle": subTitle,
           "estimatedReadTime": estimatedReadTime,
-          "image": image.path,
+          "image": image?.path,
           "id": id,
           "user": "Semere"
         };

@@ -10,7 +10,7 @@ class UpdateData extends UpdateArticleEvent {
   final String title;
   final String subTitle;
   final String content;
-  final XFile postImage;
+  final XFile? postImage;
   final List<String> tags;
   final String id;
 
@@ -24,7 +24,7 @@ class UpdateData extends UpdateArticleEvent {
   });
 
   @override
-  List<Object> get props => [title, subTitle, content, postImage, tags, id];
+  List<Object> get props => [title, subTitle, content, tags, id];
 }
 
 class GetArticleData extends UpdateArticleEvent {
@@ -34,6 +34,8 @@ class GetArticleData extends UpdateArticleEvent {
   @override
   List<Object> get props => [id];
 }
+
+// class GetAvailableTags extends UpdateArticleEvent {}
 
 class ResetUpdateField extends UpdateArticleEvent {
   final String id;

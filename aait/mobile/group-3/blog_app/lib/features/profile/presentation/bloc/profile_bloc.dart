@@ -23,7 +23,7 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
     on<ToggleUserChoice>(_toggleChoice);
   }
   _fetchData(event, emit) async {
-    emit(ProfileLoading(message: "Updating..."));
+    emit(ProfileLoading(message: "Loading..."));
     final result = await getProfile(NoParams());
 
     result.fold((failure) => emit(ProfileError()), (profile) {

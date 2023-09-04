@@ -4,10 +4,9 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class SearchBarWidget extends StatefulWidget {
   final Function searchByName;
-  SearchBarWidget({required this.searchByName});
+  const SearchBarWidget({super.key, required this.searchByName});
 
   @override
-  // ignore: library_private_types_in_public_api
   _SearchBarWidgetState createState() => _SearchBarWidgetState();
 }
 

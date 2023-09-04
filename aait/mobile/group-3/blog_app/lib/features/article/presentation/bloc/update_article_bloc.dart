@@ -1,11 +1,13 @@
 import 'package:bloc/bloc.dart';
-import 'package:blog_app/features/article/domain/use_case/get_article_by_id.dart';
-import 'package:blog_app/features/article/domain/use_case/update_article.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:meta/meta.dart';
 
+import '../../../../core/use_case/usecase.dart';
+import '../../domain/use_case/get_article_by_id.dart';
+import '../../domain/use_case/get_tags.dart';
+import '../../domain/use_case/update_article.dart';
+import '../../../../core/util/estimate_read_time_calculator.dart';
 import '../../domain/entity/article.dart';
 
 part 'update_article_event.dart';
@@ -14,9 +16,12 @@ part 'update_article_state.dart';
 class UpdateArticleBloc extends Bloc<UpdateArticleEvent, UpdateArticleState> {
   final UpdateArticleUsecase updateArticleUsecase;
   final GetArticleByIdUsecase getArticleByIdUsecase;
+  final GetTagsUsecase getTagsUsecase;
 
   UpdateArticleBloc(
-      {required this.updateArticleUsecase, required this.getArticleByIdUsecase})
+      {required this.updateArticleUsecase,
+      required this.getArticleByIdUsecase,
+      required this.getTagsUsecase})
       : super(UpdateArticleInitial()) {
     on<GetArticleData>(_fetchData);
     on<UpdateData>(_sendToUpdateArticle);
@@ -30,7 +35,7 @@ class UpdateArticleBloc extends Bloc<UpdateArticleEvent, UpdateArticleState> {
         content: event.content,
         title: event.title,
         subTitle: event.subTitle,
-        estimatedReadTime: "10 min",
+        estimatedReadTime: calculateEstimatedReadTime(event.content),
         image: event.postImage,
         id: event.id));
 
@@ -42,28 +47,55 @@ class UpdateArticleBloc extends Bloc<UpdateArticleEvent, UpdateArticleState> {
   _resetUpdateControllers(ResetUpdateField event, emit) async {
     emit(UpdateArticleLoading());
     final article = await getArticleByIdUsecase(event.id);
+    final tags = await getTagsUsecase(NoParams());
     article.fold(
+      (l) => emit(UpdateArticleError(message: l.errorMessage)),
+      (article) => tags.fold(
         (l) => emit(UpdateArticleError(message: l.errorMessage)),
-        (article) => emit(UpdateArticleLoaded(
-              articleId: article.id,
-              content: TextEditingController(text: article.content),
-              title: TextEditingController(text: article.title),
-              subTitle: TextEditingController(text: article.subTitle),
-              photoImage: TextEditingController(text: article.image),
-            )));
+        (tags) => emit(
+          UpdateArticleLoaded(
+            articleId: article.id,
+            content: TextEditingController(text: article.content),
+            title: TextEditingController(text: article.title),
+            subTitle: TextEditingController(text: article.subTitle),
+            photoImage: article.image,
+            selectedTags: article.tags,
+            availableTags: tags,
+          ),
+        ),
+      ),
+    );
   }
 
   _fetchData(GetArticleData event, emit) async {
     emit(UpdateArticleLoading());
-    final article = await getArticleByIdUsecase(event.id);
-    article.fold(
-        (l) => UpdateArticleError(message: l.errorMessage),
-        (article) => emit(UpdateArticleLoaded(
-              articleId: article.id,
-              content: TextEditingController(text: article.content),
-              title: TextEditingController(text: article.title),
-              subTitle: TextEditingController(text: article.subTitle),
-              photoImage: TextEditingController(text: article.image),
-            )));
+    final articleFuture = await getArticleByIdUsecase(event.id);
+    final tagsFuture = await getTagsUsecase(NoParams());
+    articleFuture.fold(
+      (l) => emit(UpdateArticleError(message: l.errorMessage)),
+      (article) => tagsFuture.fold(
+        (l) => emit(UpdateArticleError(message: l.errorMessage)),
+        (tags) => emit(
+          UpdateArticleLoaded(
+            articleId: article.id,
+            content: TextEditingController(text: article.content),
+            title: TextEditingController(text: article.title),
+            subTitle: TextEditingController(text: article.subTitle),
+            photoImage: article.image,
+            selectedTags: article.tags,
+            availableTags: tags,
+          ),
+        ),
+      ),
+    );
   }
 }
+
+//   FutureOr<void> _fetchAllTags(GetAvailableTags event, Emitter<UpdateArticleState> emit) async {
+//     emit(GetTagsLoading());
+//     final tags = await getTagsUsecase(NoParams());
+
+//     tags.fold((l) => emit(UpdateArticleError(message: l.errorMessage)), (tags) => emit(UpdateArticleLoaded(articleId: articleId, content: content, title: title, subTitle: subTitle, photoImage: photoImage, availableTags: availableTags, selectedTags: selectedTags)))
+
+//   }
+// }

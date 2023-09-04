@@ -1,9 +1,9 @@
-import 'package:blog_app/features/article/domain/entity/getArticlesEntity.dart';
 import 'package:dartz/dartz.dart';
 
 import '../../../../core/error/failure.dart';
 import '../../../../core/use_case/usecase.dart';
 import '../entity/article.dart';
+import '../entity/getArticlesEntity.dart';
 import '../repository/article_repository.dart';
 
 class GetAllArticlesUsecase implements UseCase<List<Article>, ArticleRequest > {

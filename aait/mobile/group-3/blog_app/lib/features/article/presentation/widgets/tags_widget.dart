@@ -1,8 +1,8 @@
-import 'package:blog_app/features/article/presentation/bloc/article_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../core/util/app_colors.dart';
+import '../bloc/article_bloc.dart';
 
 class TagButtonListWidget extends StatefulWidget {
   final List<String> tagNames;
@@ -13,25 +13,25 @@ class TagButtonListWidget extends StatefulWidget {
   final double spaceBetweenButtons;
   final Function SearchByTags;
 
-  const TagButtonListWidget({
-    Key? key,
-    this.tagNames = const [
-      "others",
-      "sports",
-      "oech",
-      "politics",
-      "art",
-      "design",
-      "culture",
-      "production"
-    ],
-    this.borderRadius = 20,
-    this.horizontalPadding = 25,
-    this.buttonColor = const Color(0xFF376AED),
-    this.outlineColor = const Color(0xFF376AED),
-    this.spaceBetweenButtons = 10,
-    required this.SearchByTags
-  }) : super(key: key);
+  const TagButtonListWidget(
+      {Key? key,
+      this.tagNames = const [
+        "others",
+        "sports",
+        "oech",
+        "politics",
+        "art",
+        "design",
+        "culture",
+        "production"
+      ],
+      this.borderRadius = 20,
+      this.horizontalPadding = 25,
+      this.buttonColor = const Color(0xFF376AED),
+      this.outlineColor = const Color(0xFF376AED),
+      this.spaceBetweenButtons = 10,
+      required this.SearchByTags})
+      : super(key: key);
 
   @override
   // ignore: library_private_types_in_public_api
@@ -43,7 +43,6 @@ class _TagButtonListWidgetState extends State<TagButtonListWidget> {
 
   @override
   Widget build(BuildContext context) {
-
     var outlinedButtonStyle = OutlinedButton.styleFrom(
       side: BorderSide(color: widget.outlineColor),
       padding: EdgeInsets.symmetric(
@@ -81,7 +80,9 @@ class _TagButtonListWidgetState extends State<TagButtonListWidget> {
                 });
 
                 // Emit a search event with an empty query when "All" is clicked
-                context.read<ArticleBloc>().add(GetAllArticlesEvent(searchQuery: "",tags:[]));
+                context
+                    .read<ArticleBloc>()
+                    .add(GetAllArticlesEvent(searchQuery: "", tags: []));
               },
               style: selectedTag.isEmpty
                   ? elevatedButtonStyle

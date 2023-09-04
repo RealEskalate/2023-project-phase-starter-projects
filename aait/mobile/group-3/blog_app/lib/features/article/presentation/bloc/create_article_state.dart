@@ -7,25 +7,12 @@ sealed class CreateArticleState extends Equatable {
 }
 
 final class CreateArticleInitial extends CreateArticleState {
-  final TextEditingController content;
-  final TextEditingController title;
-  final TextEditingController subTitle;
-  final TextEditingController photoImage;
-
-  CreateArticleInitial({
-    required this.content,
-    required this.title,
-    required this.subTitle,
-    required this.photoImage,
-  });
-
-  @override
-  List<Object> get props => [content, title, subTitle, photoImage];
+  
 }
 
-
-
 final class CreateArticleLoading extends CreateArticleState {}
+
+final class GetAllTagsLoading extends CreateArticleState {}
 
 final class CreateArticleResult extends CreateArticleState {
   final Article article;
@@ -36,8 +23,31 @@ final class CreateArticleResult extends CreateArticleState {
   List<Object> get props => [article];
 }
 
+final class AllTagsLoaded extends CreateArticleState{
+  final List<String> tags;
+  final TextEditingController content;
+  final TextEditingController title;
+  final TextEditingController subTitle;
+  final String photoImage;
+  final List<String> selectedTags;
+
+  AllTagsLoaded({
+    required this.content,
+    required this.title,
+    required this.subTitle,
+    required this.photoImage,
+    required this.tags,
+    this.selectedTags = const [],
+  });
+
+  @override
+  List<Object> get props => [content, title, subTitle, photoImage,tags];
+}
+
 final class CreateArticleError extends CreateArticleState {
   final String errorMessage;
 
   CreateArticleError({required this.errorMessage});
 }
+
+

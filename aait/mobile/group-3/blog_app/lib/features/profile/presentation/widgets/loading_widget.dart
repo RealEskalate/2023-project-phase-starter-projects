@@ -2,6 +2,9 @@
 import 'package:blog_app/features/profile/presentation/widgets/title_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:loading_animation_widget/loading_animation_widget.dart';
+
+import '../../../../core/color/colors.dart';
 
 class LoadingWidget extends StatelessWidget {
   const LoadingWidget({
@@ -22,8 +25,8 @@ class LoadingWidget extends StatelessWidget {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                CircularProgressIndicator(),
-                SizedBox(height: 5.h,),
+                LoadingAnimationWidget.discreteCircle(color: blue, size: 60),
+                SizedBox(height: 10,),
                 Text(message)
               ],
             ),
