@@ -154,7 +154,7 @@ export default function Nav() {
                 href="/blogs"
                 onClick={handleToggle}
                 className={`${
-                  path === "/blogs"
+                  path.slice(0, 6) === "/blogs"
                     ? "text-[#264FAD] border-b-2 border-[#264FAD]"
                     : ""
                 } block py-3 pl-3 pr-4   lg:bg-transparent  lg:p-0 lg:hover:bg-white  text-base hover:bg-gray-100  font-semibold font-montserrat`}
@@ -164,10 +164,10 @@ export default function Nav() {
             </li>
             <li>
               <Link
-                href="/donate"
+                href="/get-involved"
                 onClick={handleToggle}
                 className={`${
-                  path === "/donate"
+                  path === "/get-involved"
                     ? "text-[#264FAD] border-b-2 border-[#264FAD]"
                     : ""
                 } block py-3 pl-3 pr-4   lg:bg-transparent  lg:p-0 lg:hover:bg-white  text-base hover:bg-gray-100  font-semibold font-montserrat`}

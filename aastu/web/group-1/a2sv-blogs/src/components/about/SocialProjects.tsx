@@ -15,6 +15,8 @@ const SocialProjects = () => {
             src="/images/project image areahakimhub.png"
             alt="img"
             className="w-full"
+            data-aos="fade-right"
+            data-aos-once="true"
           />
         </div>
         <div className="flex flex-col items-end justify-center">
@@ -53,6 +55,8 @@ const SocialProjects = () => {
             src="/images/Rectangle 297tracksys (1).png"
             className="w-full"
             alt="img"
+            data-aos="fade-left"
+            data-aos-once="true"
           />
         </div>
       </div>

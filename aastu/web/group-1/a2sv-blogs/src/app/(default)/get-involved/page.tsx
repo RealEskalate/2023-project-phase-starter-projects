@@ -2,7 +2,7 @@ import React from "react";
 import Image from "next/image";
 export default function page() {
   return (
-    <div className="lg:w-full flex lg:flex-row flex-col h-screen mt-32 lg:px-24 md:px-16 px-10 gap-5">
+    <div className="lg:w-full flex lg:flex-row flex-col mt-32 lg:px-24 md:px-16 px-10 gap-5">
       <div className="lg:w-2/3 w-full flex flex-col gap-20 py-10">
         <h1 className="text-4xl text-center font-semibold font-poppins">
           What We Need

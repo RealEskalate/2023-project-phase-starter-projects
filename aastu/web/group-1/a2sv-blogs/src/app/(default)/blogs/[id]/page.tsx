@@ -23,7 +23,7 @@ const Blog = ({ params }: { params: { id: string } }) => {
   if (!blogData) {
     return <div>No blog data available.</div>;
   }
-
+  console.log(blogData);
   return (
     <div className="md:p-20 p-5 flex flex-col items-center gap-10">
       <div className="flex flex-col items-center gap-4 mt-24">
@@ -31,9 +31,10 @@ const Blog = ({ params }: { params: { id: string } }) => {
           {blogData.title}
         </h1>
         <p className="font-montserrat uppercase text-xs text-center">
-          {blogData.tags.map((tag: any, index: any) =>
-            index != blogData.tags.length - 1 ? `${tag}, ` : tag
-          )}
+          {blogData.tags &&
+            blogData.tags.map((tag: any, index: any) =>
+              index != blogData.tags.length - 1 ? `${tag}, ` : tag
+            )}
         </p>
       </div>
       {blogData.image && (
@@ -43,9 +44,9 @@ const Blog = ({ params }: { params: { id: string } }) => {
           width={1000}
           height={450}
         />
-      )}{" "}
+      )}
       <div className="flex flex-col items-center gap-2">
-        {blogData.author && (
+        {blogData.author && blogData.author.image && (
           <Image
             src={blogData.author.image}
             alt="author image"
@@ -59,13 +60,16 @@ const Blog = ({ params }: { params: { id: string } }) => {
         </p>
       </div>
       <div className="md:px-32 flex flex-col gap-8 text-justify py-4">
-        {blogData.description.split("\n").map((paragraph: any, index: any) => (
-          <p
-            key={index}
-            className="font-montserrat text-sm text-left"
-            dangerouslySetInnerHTML={{ __html: paragraph }}
-          ></p>
-        ))}
+        {blogData.description &&
+          blogData.description
+            .split("\n")
+            .map((paragraph: any, index: any) => (
+              <p
+                key={index}
+                className="font-montserrat text-sm text-left"
+                dangerouslySetInnerHTML={{ __html: paragraph }}
+              ></p>
+            ))}
       </div>
       <div className="text-left w-full flex flex-col gap-12">
         <h1 className="font-montserrat text-xl font-bold">Related Blogs</h1>

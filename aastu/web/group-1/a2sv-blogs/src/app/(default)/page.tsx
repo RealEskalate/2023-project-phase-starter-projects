@@ -1,16 +1,17 @@
 "use client";
 import { useAuth } from "@/hooks/useAuth";
-import { useGetStoriesQuery } from "@/lib/redux/features/stories";
 import Image from "next/image";
 import Link from "next/link";
 export default function Home() {
   const { auth } = useAuth();
-  const { data, isLoading, isError } = useGetStoriesQuery();
-  console.log(data);
   return (
     <main className="mx-auto lg:px-24 px-5 pt-36 font-sans-serif	font-poppins">
       <header className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-1 lg:grid-cols-2 gap-4 ">
-        <div className="sm:grid-cols-1 md:grid-cols-1 lg:grid-cols-2 space-y-10">
+        <div
+          data-aos-once="true"
+          data-aos="fade-up"
+          className="sm:grid-cols-1 md:grid-cols-1 lg:grid-cols-2 space-y-10"
+        >
           <div className="xl:text-7xl sm:text-6xl text-4xl font-extrabold">
             <p className="xl:text-left text-center">
               <span className="text-[#160041] leading-10">Africa to </span>
@@ -78,7 +79,11 @@ export default function Home() {
           </div>
         </div>
 
-        <div className="hidden xl:flex xl:justify-end xl:items-center">
+        <div
+          data-aos-once="true"
+          data-aos="fade-left"
+          className="hidden xl:flex xl:justify-end xl:items-center"
+        >
           <Image
             src="/images/teams.png"
             alt=""
@@ -88,7 +93,11 @@ export default function Home() {
           />
         </div>
       </header>
-      <section className="mt-20 text-center space-y-10">
+      <section
+        className="mt-20 text-center space-y-10"
+        data-aos-once="true"
+        data-aos="fade-up"
+      >
         <p className="xl:text-5xl sm:text-4xl text-3xl text-text-header-1">
           Lets build a better
           <br />
@@ -116,13 +125,17 @@ export default function Home() {
           <span>Connect to our team</span>
         </Link>
       </section>
-      <div className="hidden md:block mt-10 h-96 overflow-hidden">
+      <div
+        data-aos-once="true"
+        data-aos="fade-up"
+        className="hidden md:block mt-10 max-h-[515px] overflow-hidden  rounded-lg"
+      >
         <Image
           src="/images/team.jpg"
           width={1120}
           height={515}
           alt="team"
-          className="w-full aspect-video object-cover rounded-lg"
+          className="w-full aspect-video object-cover"
         />
       </div>
       <section className="text-center mt-20 xl:min-h-[60vh] flex flex-col items-center justify-center text-text-header-1">
@@ -133,7 +146,11 @@ export default function Home() {
         </p>
         <br />
         <div className="bg-slate-100 px-5 py-10 rounded-xl grid grid-cols-1 lg:grid-cols-6  gap-10">
-          <div className="flex justify-center w-full mt-4 text-text-content font-normal text-xl lg:col-span-1 col-span-6">
+          <div
+            className="flex justify-center w-full mt-4 text-text-content font-normal text-xl lg:col-span-1 col-span-6"
+            data-aos-once="true"
+            data-aos="fade-right"
+          >
             <p>
               <span>A2SV students are</span>
               <span className="text-[#160041] font-semibold text-xl"> 35</span>
@@ -145,22 +162,42 @@ export default function Home() {
             </p>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 lg:col-span-5 col-span-6 gap-7">
-            <div className="bg-white rounded-xl space-y-3 px-5 py-3 drop-shadow-md w-full mx-auto flex flex-col justify-center items-center">
+            <div
+              className="bg-white rounded-xl space-y-3 px-5 py-3 drop-shadow-md w-full mx-auto flex flex-col justify-center items-center"
+              data-aos-once="true"
+              data-aos="fade-left"
+              data-aos-delay="100"
+            >
               <p className="text-xl	font-semibold	">2019</p>
               <p className="text-2xl	font-semibold	">Founded</p>
               <p className="text-xl	font-normal	">5% average</p>
             </div>
-            <div className="bg-white rounded-xl space-y-3 px-5 py-3 drop-shadow-md w-full mx-auto flex flex-col justify-center items-center">
+            <div
+              className="bg-white rounded-xl space-y-3 px-5 py-3 drop-shadow-md w-full mx-auto flex flex-col justify-center items-center"
+              data-aos-once="true"
+              data-aos="fade-left"
+              data-aos-delay="110"
+            >
               <p className="text-xl	font-semibold	">2020</p>
               <p className="text-2xl	font-semibold	">27%</p>
               <p className="text-xl	font-normal	">5.2% average</p>
             </div>
-            <div className="bg-white rounded-xl space-y-3 px-5 py-3 drop-shadow-md w-full mx-auto flex flex-col justify-center items-center">
+            <div
+              className="bg-white rounded-xl space-y-3 px-5 py-3 drop-shadow-md w-full mx-auto flex flex-col justify-center items-center"
+              data-aos-once="true"
+              data-aos="fade-left"
+              data-aos-delay="120"
+            >
               <p className="text-xl	font-semibold	">2021</p>
               <p className="text-2xl	font-semibold	">59%</p>
               <p className="text-xl	font-normal	">3.2% average</p>
             </div>
-            <div className="bg-white rounded-xl space-y-3 px-5 py-3 drop-shadow-md w-full mx-auto flex flex-col justify-center items-center">
+            <div
+              className="bg-white rounded-xl space-y-3 px-5 py-3 drop-shadow-md w-full mx-auto flex flex-col justify-center items-center"
+              data-aos-once="true"
+              data-aos="fade-left"
+              data-aos-delay="130"
+            >
               <p className="text-xl	font-semibold	">2022</p>
               <p className="text-2xl	font-semibold	">70%</p>
               <p className="text-xl	font-normal	">2.5% average</p>
@@ -170,10 +207,14 @@ export default function Home() {
       </section>
       <section className="my-16 space-y-10">
         <div className="grid md:grid-cols-2 grid-cols-1 mt-12 items-center">
-          <div className="hidden md:block col-span-">
+          <div
+            className="hidden md:block"
+            data-aos-once="true"
+            data-aos="fade-right"
+          >
             <Image src="/images/cir.png" alt="" width={300} height={300} />
           </div>
-          <div className="">
+          <div className="" data-aos-once="true" data-aos="fade-left">
             <p className="md:text-right text-center text-4xl font-semibold	text-text-header-2 p-4">
               Internships
             </p>
@@ -185,7 +226,7 @@ export default function Home() {
           </div>
         </div>
         <div className="grid md:grid-cols-2 grid-cols-1 items-center">
-          <div>
+          <div data-aos-once="true" data-aos="fade-right">
             <p className="md:text-left text-center text-4xl font-semibold	text-text-header-2 p-4">
               360° Trainings
             </p>
@@ -195,7 +236,11 @@ export default function Home() {
               development.
             </p>
           </div>
-          <div className="hidden md:block">
+          <div
+            className="hidden md:block"
+            data-aos-once="true"
+            data-aos="fade-left"
+          >
             <Image
               src="/images/360.png"
               alt=""
@@ -207,7 +252,11 @@ export default function Home() {
         </div>
 
         <div className="grid md:grid-cols-2 grid-cols-1 mt-18 items-center">
-          <div className="hidden md:block">
+          <div
+            className="hidden md:block"
+            data-aos-once="true"
+            data-aos="fade-right"
+          >
             <Image
               src="/images/social-project.png"
               alt=""
@@ -215,7 +264,7 @@ export default function Home() {
               height={300}
             />
           </div>
-          <div>
+          <div data-aos-once="true" data-aos="fade-left">
             <p className="md:text-right text-center text-4xl font-semibold text-text-header-2 p-4">
               Social Projects
             </p>
@@ -228,7 +277,11 @@ export default function Home() {
       </section>
 
       <section>
-        <div className=" bg-gradient-to-r 0% from-primary from-10% to-[#019CFA] to-90% flex flex-col justify-center items-center py-16 rounded-xl relative ">
+        <div
+          className=" bg-gradient-to-r 0% from-primary from-10% to-[#019CFA] to-90% flex flex-col justify-center items-center py-16 rounded-xl relative "
+          data-aos-once="true"
+          data-aos="fade-in"
+        >
           <Image
             src="/images/africa-bg.svg"
             width={200}
@@ -245,61 +298,60 @@ export default function Home() {
         </div>
       </section>
       <section className="mt-12 text-center">
-        {isLoading ? (
-          <div className="flex justify-center items-center h-[400px]">
-            <div className="animate-spin rounded-full border-t-4 border-blue-500 border-opacity-75 h-12 w-12"></div>
-          </div>
-        ) : data ? (
-          <div>
-            <h1 className="md:text-5xl text-4xl text-center font-bold my-5">
-              Impact Stories
-            </h1>
-            <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-1 lg:grid-cols-2">
-              <div className="md:text-left text-center flex flex-col justify-center md:items-center space-y-5">
-                <h2 className="text-2xl font-semibold	text-text-header-2">
-                  {data[0].personName}
-                </h2>
-                <p className="mt-2 text-dark-chocolate font-medium	text-lg">
-                  Software engineer At Google
-                </p>
-                <p className="mt-2 mb-3 text-base text-center	font-normal	text-text-header-2 max-w-[50ch]">
-                  “When I joined A2SV in 2019, I found the concept of data
-                  structures and algorithms quite challenging. A2SV's smooth
-                  learning process and dedicated team molded me to see the peak
-                  of my abilities. Through A2SV's effective education and
-                  continual support, I passed Google's internship interviews and
-                  attended a summer internship at Google in Amsterdam. However,
-                  the A2SV program and training is beyond technical education
-                  and interview preparation. As an A2SVian, I also learned the
-                  values of putting humanity first, giving back to our
-                  community, and utilizing teamwork with my colleagues, which I
-                  can now consider my big family. After completing three
-                  remarkable months at Google, I was offered a full-time
-                  position at Google's London office for 2022. “
-                </p>
-                <Link
-                  href="/stories"
-                  className="border-2	rounded-xl px-5 w-32 h-10 bg-primary text-white text-base font-normal mx-auto flex items-center justify-center"
-                >
-                  See More
-                </Link>
-              </div>
-              <div className="hidden md:block">
-                <Image
-                  src="/images/impact.png"
-                  alt=""
-                  width={300}
-                  height={300}
-                  className="ml-64"
-                />
-              </div>
+        <div>
+          <h1
+            data-aos-once="true"
+            data-aos="fade-up"
+            className="md:text-5xl text-4xl text-center font-bold my-5"
+          >
+            Impact Stories
+          </h1>
+          <div
+            data-aos-once="true"
+            data-aos="fade-up"
+            className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-1 lg:grid-cols-2"
+          >
+            <div className="md:text-left text-center flex flex-col justify-center md:items-center space-y-5">
+              <h2 className="text-2xl font-semibold	text-text-header-2">
+                Yisak Bogale
+              </h2>
+              <p className="mt-2 text-dark-chocolate font-medium	text-lg">
+                Software engineer At Google
+              </p>
+              <p className="mt-2 mb-3 text-base text-center	font-normal	text-text-header-2 max-w-[50ch]">
+                “When I joined A2SV in 2019, I found the concept of data
+                structures and algorithms quite challenging. A2SV's smooth
+                learning process and dedicated team molded me to see the peak of
+                my abilities. Through A2SV's effective education and continual
+                support, I passed Google's internship interviews and attended a
+                summer internship at Google in Amsterdam. However, the A2SV
+                program and training is beyond technical education and interview
+                preparation. As an A2SVian, I also learned the values of putting
+                humanity first, giving back to our community, and utilizing
+                teamwork with my colleagues, which I can now consider my big
+                family. After completing three remarkable months at Google, I
+                was offered a full-time position at Google's London office for
+                2022. “
+              </p>
+              <Link
+                href="/stories"
+                className="border-2	rounded-xl px-5 w-32 h-10 bg-primary text-white text-base font-normal mx-auto flex items-center justify-center"
+              >
+                See More
+              </Link>
+            </div>
+            <div className="hidden md:block">
+              <Image
+                src="/images/impact.png"
+                alt=""
+                width={300}
+                height={300}
+                className="ml-64"
+              />
             </div>
           </div>
-        ) : (
-          <div>Error</div>
-        )}
+        </div>
       </section>
-      <section></section>
     </main>
   );
 }
