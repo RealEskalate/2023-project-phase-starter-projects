@@ -52,7 +52,7 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
     final _state = state as ProfileLoaded;
     if (event.imageFile != null) {
       emit(ProfileLoading(message: "Updating Profile Picture..."));
-      final result = await updateProfilePicture(Params(event.imageFile));
+      final result = await updateProfilePicture(UpdateProfileParams(image: event.imageFile!, userId: _state.profile.id));
       result.fold(
           (failure) => emit(ProfileError()),
           (profile) => emit(ProfileLoaded(

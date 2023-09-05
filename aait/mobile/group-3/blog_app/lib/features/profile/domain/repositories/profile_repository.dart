@@ -5,5 +5,5 @@ import 'package:image_picker/image_picker.dart';
 
 abstract class ProfileRepository {
   Future<Either<Failure, Profile>> getProfile();
-  Future<Either<Failure, Profile>> updateProfilePicture(XFile image);
+  Future<Either<Failure, Profile>> updateProfilePicture({required XFile image, required String userId});
 }
