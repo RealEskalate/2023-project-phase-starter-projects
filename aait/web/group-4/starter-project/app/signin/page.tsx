@@ -7,14 +7,14 @@ import SigninForm from "@/components/signin-and-signup/SigninForm";
 const SignInPage = () => {
     const router = useRouter()
     return (
-        <section className="font-login w-full grid grid-cols-1 md:grid-cols-2 md:px-14 px-4 bg-gray-100 py-16" >
+        <section className="font-login w-full grid grid-cols-1 lg-1:grid-cols-2 md:px-14 px-4 bg-gray-100 py-16 text-xl" >
             <div className="flex flex-col bg-white">
-                <Image className="w-36 py-6 px-8" width={30} height={30} src="/images/blog/A2SVLogo.png" alt="A2SV logo" />
+                <Image className="w-36 py-6 px-8" width={100} height={100} src="/images/blog/A2SVLogo.png" alt="A2SV logo" />
                 <div className="grid grid-cols-2 place-items-center">
-                    <Image className="h-full" width={40} height={40} src="/images/blog/signupAndLoginAvatar.png" alt="cartoon avatar" />
+                    <Image className="h-full" width={800} height={100} src="/images/blog/signupAndLoginAvatar.png" alt="cartoon avatar" />
                     <div className="flex flex-col self-center p-2">
                         <h2
-                            className="text-form-gray-primary font-extrabold text-4xl mb-6"
+                           className="text-form-gray-primary font-bold text-5xl mb-6 text-[#434343]"
                         >
                             Welcome <br/>Back
                         </h2>
@@ -26,7 +26,7 @@ const SignInPage = () => {
             </div>
 
             <div className="relative font-login bg-blue-800 md:px-20 px-4 py-32">
-                <button className="absolute top-0 right-0 mt-10 mr-10 text-white font-semibold text-[0.7rem]" onClick={() => router.push('/signup')}>
+                <button className="absolute top-0 right-0 mt-10 mr-10 p-4 text-lg rounded-lg text-white font-semibold text-[0.7rem] hover:bg-white hover:text-primary-color transition duration-500" onClick={() => router.push('/signup')}>
                     Sign up
                 </button>
                 <SigninForm />

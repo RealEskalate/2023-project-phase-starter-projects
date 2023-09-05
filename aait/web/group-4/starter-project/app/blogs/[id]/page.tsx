@@ -1,7 +1,7 @@
 import React from "react";
 import Image from 'next/image'
-
-import BlogData from "@/types/blogs/BlogData";
+import parse from "html-react-parser";
+import BlogData from "@/types/blog/blog";
 import BlogCardSmall from "@/components/blogs/SmallBlogCard";
 import dummyAuthor from "@/data/dummyAuthor.json"
 
@@ -26,7 +26,7 @@ export default async ({params}: { params: { id: string } }) => {
                 </span>
             </div>
 
-            <Image className="w-full md:py-12 py-7 object-cover" width={40} height={40} alt={"blog image"} src={data.image}/>
+            <Image className="w-full md:py-12 py-7 object-cover" width={800} height={800} alt={"blog image"} src={data.image}/>
 
             {
                 data.author?(
@@ -41,7 +41,7 @@ export default async ({params}: { params: { id: string } }) => {
                     </div>
                 ):(
                     <div className="flex flex-col items-center gap-2 md:pb-12">
-                        <Image className=" rounded-full w-[80px] h-[80px]" width={80} height={80} src={dummyAuthor.image} />
+                        <Image className=" rounded-full w-[80px] h-[80px]" width={80} height={80} src={dummyAuthor.image} alt={""} />
                         <span className="flex gap-2 justify-between font-nav text-gray-400 uppercase text-[1rem]">
                     <p>{ dummyAuthor.name }</p>
                     <p> | </p>
@@ -56,7 +56,7 @@ export default async ({params}: { params: { id: string } }) => {
 
             <div className="font-nav flex flex-col gap-8 md:pl-32 pl-6 text-left text-gray-500">
                 <h2 className='md:text-[2rem] text-[1.3rem] font-bold text-black'>
-                    {data.description}
+                    {parse(data.description)}
                 </h2>
                 <p className="text-[0.9rem] md:text-[1.2rem]">
                     Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.

@@ -1,6 +1,11 @@
+
+"use client"
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 
 export const AboutSection = () => {
+
+  const router = useRouter()
   return (
     <div className="flex flex-col md:m-10 lg:flex-row gap-4 p-4 lg:w-[1446px] lg:h-[854px]">
       <div className="flex flex-col gap-y-14 lg:h-[691px] lg:w-[879px] tablet:w-1/2">
@@ -12,7 +17,7 @@ export const AboutSection = () => {
           A2SV is a social enterprise that enables high-potential university students to create digital solutions to Africa’s most pressing problems. 
         </p>
         
-        <button className="bg-blue-500 h-10 w-36 text-white rounded-md font-nunito font-normal ">
+        <button onClick={() => router.push("/teams")} className="bg-blue-500 h-10 w-36 text-white rounded-md font-nunito font-normal ">
           Meet our team
         </button>
         

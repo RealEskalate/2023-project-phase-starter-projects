@@ -19,8 +19,8 @@ const Footer: React.FC = () => {
           <Image
             src="/images/common/rafiki.png"
             objectFit="cover"
-            width={400}
-            height={400}
+            width={800}
+            height={800}
             alt="Helping a partner"
           />
         </div>

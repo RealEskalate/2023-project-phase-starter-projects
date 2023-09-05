@@ -2,8 +2,10 @@
 
 import {useState} from "react";
 
-import {useGetBlogsQuery} from "@/store/blogs/BlogApi";
+import {useGetBlogsQuery} from "@/store/features/blog/blog-api";
 import BlogCard from "@/components/blogs/BlogCard";
+import Loading from "@/components/common/Loading";
+import { useRouter } from "next/navigation";
 
 export default function Blogs(){
 
@@ -15,39 +17,10 @@ export default function Blogs(){
         setPage(pageNumber);
     };
 
-    if (isLoading){
-
+    if(isLoading){
         return (
-            <div className="flex justify-center items-center">
-                <div
-                    className="inline-block h-60 w-60 animate-spin rounded-full border-8 border-solid border-current border-r-transparent align-[-0.125em] motion-reduce:animate-[spin_1.5s_linear_infinite]"
-                    role="status">
-                  <span
-                      className="!absolute !-m-px !h-px !w-px !overflow-hidden !whitespace-nowrap !border-0 !p-0 ![clip:rect(0,0,0,0)]"
-                  >Loading...</span>
-                </div>
-            </div>
-
+            <Loading/>
         )
-    }
-    if (error){
-        return <div
-            className="mb-3 inline-flex w-full items-center rounded-lg bg-danger-100 px-6 py-5 text-base text-danger-700"
-            role="alert">
-              <span className="mr-2">
-                <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    viewBox="0 0 24 24"
-                    fill="currentColor"
-                    className="h-5 w-5">
-                  <path
-                      fill-rule="evenodd"
-                      d="M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25zm-1.72 6.97a.75.75 0 10-1.06 1.06L10.94 12l-1.72 1.72a.75.75 0 101.06 1.06L12 13.06l1.72 1.72a.75.75 0 101.06-1.06L13.06 12l1.72-1.72a.75.75 0 10-1.06-1.06L12 10.94l-1.72-1.72z"
-                      clip-rule="evenodd" />
-                </svg>
-              </span>
-            Error while fetching data
-        </div>
     }
 
     if(blogs){
@@ -57,14 +30,15 @@ export default function Blogs(){
         const indexOfLastItem = page * 5;
         const indexOfFirstItem = indexOfLastItem - 5;
         const currentItems = blogs.slice(indexOfFirstItem, indexOfLastItem);
+        const router = useRouter()
 
         return (
             <div className="w-full pt-10">
                 <div className="w-full flex justify-center font-cards pb-10">
                     <h2 className="self-start font-bold text-xl">Blogs</h2>
                     <div className="flex justify-center items-center gap-4 w-5/6">
-                        <input placeholder="Search..." className=" px-10 w-[210px] h-[30px] border-2 border-gray-400 rounded-[15px]" type="text" />
-                        <button className="px-6 py-2 rounded-full border-none bg-blue-800 text-white">
+                        <input placeholder="Search..." className=" px-12 w-[210px] h-[30px] border-2 border-gray-400 rounded-[15px]" type="text" />
+                        <button onClick={() => router.push("/profile/add-blog")} className="px-6 py-2 rounded-full border-none bg-blue-800 text-white">
                             + New Blog
                         </button>
                     </div>

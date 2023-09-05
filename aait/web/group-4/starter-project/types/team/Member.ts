@@ -1,4 +1,4 @@
-import SocialMedia from "@/types/teams/SocialMedia";
+import SocialMedia from "@/types/team/SocialMedia";
 
 export default interface Member {
     socialMedia: SocialMedia;

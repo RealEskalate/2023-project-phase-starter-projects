@@ -1,6 +1,5 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useState } from "react";
 
 const NavMenu = () => {
   const links: { link: string; name: string }[] = [
@@ -11,21 +10,21 @@ const NavMenu = () => {
     { name: "Blogs", link: "/blogs" },
     { name: "Get Involved", link: "/get-involved" },
   ];
-  const pathname = usePathname();
-  const [activeLink, setActiveLink] = useState(0);
+
+  const pathname = usePathname()
   
   return (
     <>
-      {links.map((link, i) => {
+      {links.map((link) => {
         return (
-            <div>
-              <div key={link.name} className="flex flex-col group">
-                <Link className="pb-2 hover:text-gray-400" href={`${link.link}`} onClick={() => setActiveLink(i)}>
+            <div key={link.name}>
+              <div className="flex flex-col group">
+                <Link className="pb-2 hover:text-gray-400" href={`${link.link}`}>
                   {link.name}
                 </Link>
                 <span
                   className={`${
-                    activeLink === i ? "w-full" : "w-0"
+                    pathname === link.link ? "w-full" : "w-0"
                   } group-hover:w-full h-[2px] bg-blue-800`}
                   style={{ transition: "width 0.3s ease-in-out" }}
                 ></span>

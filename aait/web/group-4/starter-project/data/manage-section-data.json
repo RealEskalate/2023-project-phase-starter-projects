@@ -1,0 +1,16 @@
+{
+    "data" : [
+        {
+            "manageText": "Personal Information",
+            "manageDetail": "Add all the required information about yourself"
+        },
+        {
+            "manageText": "Blogs",
+            "manageDetail": "Edit, Delete and View the Status of your blogs"
+        },
+        {
+            "manageText": "Your Account",
+            "manageDetail": "You can change your password here"
+        }
+    ] 
+}

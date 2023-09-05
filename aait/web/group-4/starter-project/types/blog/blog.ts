@@ -1,6 +1,6 @@
-import Author from "@/types/blogs/Author";
+import Author from "./author";
 
-export default interface BlogData {
+export default interface Blog {
     _id: string;
     image: string;
     title: string;

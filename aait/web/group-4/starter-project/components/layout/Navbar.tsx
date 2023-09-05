@@ -1,42 +1,93 @@
 "use client";
 
-import { usePathname } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import NavMenu from "./NavMenu";
+import Link from "next/link";
+import { useDispatch, useSelector } from "react-redux";
+import { AppDispatch, RootState } from "@/store";
+import { logout, setUser } from "@/store/features/user/user-slice";
+
+
 
 export default function Navbar() {
-  const [nav, setNav] = useState(false);
 
-  const pathname = usePathname();
 
+  let user = useSelector((state: RootState) => state.user.user);
+  const dispatch = useDispatch<AppDispatch>();
+
+  const ref = useRef<HTMLElement>(null);
+
+  useEffect(() => {
+    let user_ = localStorage.getItem("user");
+
+    user = user_ ? JSON.parse(user_) : null;
+
+    if (user) {
+      dispatch(setUser(user));
+    }
+  }, []);
   const loginDonateBtn = (
     <div className={`flex text-[16px] font-bold gap-8  justify-center `}>
-      <button className="rounded-lg border-none bg-none">Login</button>
-      <button className="px-5 py-3 rounded-lg border-none bg-blue-800 text-white">
-        Donate
-      </button>
+      {user ? (
+        <>
+          <button
+            onClick={() => dispatch(logout())}
+            className="rounded-lg border-none py-4 px-6 hover:bg-primary-color hover:text-white transition duration-300"
+          >
+            Logout
+          </button>
+          <Link href="/profile">
+            <Image
+              className="rounded-full "
+              src={user.userProfile as string}
+              alt="profile"
+              width={65}
+              height={65}
+            />
+          </Link>
+        </>
+      ) : (
+        <>
+          <Link
+            href="/signin"
+            className="rounded-lg border-none py-4 px-6 hover:bg-primary-color hover:text-white transition duration-300"
+          >
+            Login
+          </Link>
+          
+
+          <a className="flex  justify-center items-center rounded-lg overflow-hidden">
+          <button className=" h-full p-4 border-none  bg-primary-color text-white">
+            Donate
+            </button>
+          </a>
+        
+        </>
+      )}
     </div>
   );
 
   return (
     <>
       <div className="px-6 py-4 w-full h-[100] flex justify-between items-center font-{montserrat} ">
-        <div className="w-32 md:w-fit">
-          <Image
+        <div className="w-12 md:w-fit">
+        <Image
             src="/images/common/logo.png"
             alt="Logo"
             objectFit="cover"
             width={200}
-            height={50}
+            height={200}
           />
         </div>
         <div className="flex relative justify-between text-gunmetal-gray md:w-fit">
           <nav className="lg-1:flex hidden flex-col lg-1:flex-row gap-10 font-semibold text-xl">
-            <NavMenu/>
+            <NavMenu />
           </nav>
           <Image
-            onClick={() => setNav(!nav)}
+            onClick={() => {
+              ref.current?.classList.toggle("h-fit")
+            }}
             className="block lg-1:hidden w-10"
             src={"/images/common/menubar.png"}
             alt={"Menu-bar"}
@@ -45,20 +96,17 @@ export default function Navbar() {
           />
         </div>
 
-        <div className="hidden text-[16px] font-bold gap-8 lg-1:flex">
-          <button className="rounded-lg border-none bg-none">Login</button>
-          <button className="px-5 py-3 rounded-lg border-none bg-blue-800 text-white">
-            Donate
-          </button>
-        </div>
+        <div className="hidden lg-1:block">{loginDonateBtn}</div>
       </div>
       {/* Mobile menu */}
       <nav
-        className={`flex ${
-          nav ? "flex-col" : "hidden"
-        } gap-4 items-center text-[#565656] text-xl lg-1:hidden`}
+        ref={ref}
+        style={{ transition: "height 0.7s linear" }}
+        className="flex flex-col h-0 overflow-hidden gap-4 items-center text-[#565656] text-xl lg-1:hidden"
       >
-        <NavMenu/>
+        <div className="w-fit flex flex-col items-start gap-4">
+          <NavMenu />
+        </div>
         {loginDonateBtn}
       </nav>
     </>
