@@ -47,7 +47,6 @@ class ArticleRemoteDataSourceImpl implements ArticleRemoteDataSource {
         photoFile = pngImage;
         mimeType = lookupMimeType(photoFile.path)!;
       }
-
       var request =
           http.MultipartRequest('POST', Uri.parse('$baseUrl/article'));
 
@@ -307,4 +306,4 @@ class ArticleRemoteDataSourceImpl implements ArticleRemoteDataSource {
     final String token = pref.getString(cachedToken)!;
     return token;
   }
-}
+  }

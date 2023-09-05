@@ -1,11 +1,12 @@
 import 'dart:convert';
 
+import 'package:blog_app/core/util/bookmark_preferences.dart';
 import 'package:blog_app/features/profile/data/models/article_model.dart';
 import 'package:blog_app/features/profile/domain/entity/article.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 abstract class ProfileLocalDataSource {
-  Future<List<Article>> getBookmarkArticles();
+  Future<List<Article>> getBookmarkArticles(String userId);
 }
 
 const CACHED_ARTICLE_LIST = 'CACHED_ARTICLE_LIST';
@@ -16,16 +17,23 @@ class ProfileLocalDataSourceImpl implements ProfileLocalDataSource {
   ProfileLocalDataSourceImpl({required this.sharedPreferences});
 
   @override
-  Future<List<Article>> getBookmarkArticles() async {
+  Future<List<Article>> getBookmarkArticles(String userId) async {
     //for testing purpose
     final dummy = _getDummyArticles();
     final jsonVal = jsonEncode(dummy);
     sharedPreferences.setString(CACHED_ARTICLE_LIST, jsonVal);
     ///////////////////////////////////////////////////////////////////
-    final jsonValues = await sharedPreferences.getString(CACHED_ARTICLE_LIST);
+    final jsonValues = await BookmarkPreferences.getAllBookmarked(userId);
     if (jsonValues != null) {
       final List<dynamic> jsonList = jsonDecode(jsonValues);
-      final List<Article> convertedList = jsonList.map<Article>((e) => ArticleModel.fromJson(e))
+      print("111$jsonList");
+      final List<Article> convertedList = jsonList.map<Article>((e) {
+        print("222$e");
+        final art = ArticleModel.fromJson(jsonDecode(e));
+        print("333$art");
+        return art;
+
+      } )
           .toList();
       return Future.value(convertedList);
     } else {

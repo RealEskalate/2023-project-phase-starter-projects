@@ -21,7 +21,7 @@ class ProfileRepositoryImpl implements ProfileRepository {
   Future<Either<Failure, Profile>> getProfile() async {
     try {
       final remoteProfile = await remoteDataSource.getProfile();
-      final bookmarks = await localDataSource.getBookmarkArticles();
+      final bookmarks = await localDataSource.getBookmarkArticles(remoteProfile.id);
       return Right(remoteProfile.copyWith(bookmarks: bookmarks));
     } on ServerException {
       return Left(ServerFailure(
@@ -30,10 +30,10 @@ class ProfileRepositoryImpl implements ProfileRepository {
   }
 
   @override
-  Future<Either<Failure, Profile>> updateProfilePicture(XFile image) async {
+  Future<Either<Failure, Profile>> updateProfilePicture({ required  image, required String userId}) async {
     try {
       final remoteProfile = await remoteDataSource.updateProfilePicture(image);
-      final bookmarks = await localDataSource.getBookmarkArticles();
+      final bookmarks = await localDataSource.getBookmarkArticles(userId);
       return Right(remoteProfile.copyWith(bookmarks: bookmarks));
     } on ServerException {
       return Left(ServerFailure(
