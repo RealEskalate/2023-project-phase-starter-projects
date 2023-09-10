@@ -21,7 +21,7 @@ const BlogAuthor: React.FC<BlogAuthorProps> = ({name, role, date,imgUrl}:BlogAut
                                                 <h4 className='text-lg text-[#9C9C9C] uppercase' >Software Engineer</h4>
                                             </div>
                                             <div className='flex ml-3'>
-                                                <div className='flex justify-center items-center'><div className='w-[6px] h-[6px] rounded-[3px] bg-gray-400'></div><h5 className='text-gray-600 ml-3'> date-month-year</h5></div>
+                                                <div className='flex justify-center items-center'><div className='w-[6px] h-[6px] rounded-[3px] bg-gray-400'></div><h5 className='text-gray-600 ml-3'> {date}</h5></div>
                                             </div>
                                         </div>
 
